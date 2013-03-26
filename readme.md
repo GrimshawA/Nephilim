@@ -1,7 +1,8 @@
 # Nephilim Engine SDK
- Version: 0.8
- License: zlib
- Author: Artur Moreira (artturmoreira@gmail.com)
+
+	Version: 0.8
+	License: zlib
+	Author: Artur Moreira (artturmoreira@gmail.com)
 
 ## License
 
@@ -11,7 +12,7 @@
 
 ## Features
 - Code once, deploy everywhere
-- C++ or AngelScript development
+- C++ and/or AngelScript development
 
 ## Platforms
 - Windows
@@ -20,4 +21,4 @@
 - Android
 - iOS
 - Embedded in browser via plugin
-- Extensible
+- Extending is possible
