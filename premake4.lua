@@ -4,6 +4,7 @@ local libname = "nephilim"
 local enginename = "NephilimEngine"
 local action = _ACTION or ""
 local version = "0.8.3"
+local samplelist = { "SampleBasic" }
 
 newoption {
    trigger     = "samples",
@@ -35,8 +36,15 @@ solution (enginename)
 			
 			
 	-- Prepare the sample projects	
-	configuration "samples"
-		project "SampleBasic"
+	if table.contains(_ARGS, "--samples")  then
+	for i=1 , # samplelist do
+		local sample = samplelist[i]
+		project (sample)
 			language "C++"
 			kind "ConsoleApp"
+			vpaths { ["Headers"] = "**.h" }
+			vpaths { ["Source"] = "**.cpp" }
+			files { "Samples/" .. sample .. "/Source/*" }
+	end
+	end
 				
