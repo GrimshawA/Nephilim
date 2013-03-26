@@ -14,6 +14,14 @@
 - Code once, deploy everywhere
 - C++ and/or AngelScript development
 
+## Documentation
+	
+	You can easily generate reference documentation from the sources using doxygen.
+	You can find sample projects as well within the repository.
+	
+	For additional information:
+	https://github.com/DevilWithin/Nephilim/wiki
+
 ## Platforms
 - Windows
 - Linux
