@@ -1,18 +1,22 @@
-Nephilim Engine SDK
+# Nephilim Engine SDK
 Version: 0.8
 License: zlib
 Author: Artur Moreira (artturmoreira@gmail.com)
 
-This library is designed to make games using C++ and AngelScript and to publish to Desktop(PC/Linux/Mac/Browsers) and to Mobile(iOS/Android) platforms.
 
-You are free to use the library for any purpose without any costs. Credits to the original author and library are appreciated but are not mandatory.
-----------------------------------------------------------------------------
+## License
 
-In order to compile and run games made with this engine, you need to link against its libraries. I provide a few pre-compiled libraries you can use.
-If there are no libraries for the platform you want to run, you will have to compile the engine and its dependencies yourself.
+	This software is free to use. It can be used in commercial and non-commercial projects. Credits to the original author are appreciated but not required.
 
-Binaries
+## Features
+- Code once, deploy everywhere
+- C++ or AngelScript development
 
-ios_simulator_5.1_binaries = http://www.mediafire.com/download.php?qddz8ivve48bif8
-
-android_10_debug_binaries (Android 2.3 API, backwards and frontwards compatible) = http://www.mediafire.com/download.php?dh2xcm8qb32z1py
+## Platforms
+- Windows
+- Linux
+- OS X
+- Android
+- iOS
+- Embedded in browser via plugin
+- Extensible
