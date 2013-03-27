@@ -16,8 +16,19 @@ newoption {
 	description = "Applicable for visual studio solutions. You need vs-android plugin."
 }
 
+newoption {
+	trigger		= "outdir",
+	value		= "path",
+	description = "Changes the output directory of the project files"
+}
+
+local builddir = action
+if _OPTIONS["outdir"] then
+	builddir  = _OPTIONS["outdir"]
+end
+
 solution (enginename)
-	location("Build/" .. action)
+	location("Build/" .. builddir)
 	configurations { "Debug", "Release" }
 	defines ( "ENGINE_VERSION_STRING=" .. version)
 	defines { "MINIMAL_BUILD" }
