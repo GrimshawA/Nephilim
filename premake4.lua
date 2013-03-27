@@ -38,6 +38,7 @@ solution (enginename)
 		kind "StaticLib"
 		includedirs { "Include" , "IncludeExt"}
 		files { "Source/*.cpp" }
+		files { "IncludeExt/AS/AS*.cpp" }
 		files { "Include/*.h" }
 		targetdir("Lib")
 		flags { "Unicode" }
@@ -67,14 +68,23 @@ solution (enginename)
 		project (sample)
 			language "C++"
 			kind "ConsoleApp"
+			location("Build/" .. builddir)
 			vpaths { ["Headers"] = "**.h" }
 			vpaths { ["Source"] = "**.cpp" }
 			files { "Samples/" .. sample .. "/Source/*" }
 			includedirs { "Include" , "IncludeExt"}
 			links (enginename)
+			targetdir  "Bin" 
+			libdirs { "LibExt/" .. builddir }
+			
 		
 			if os.get() == "windows" and not table.contains(_ARGS, "--android") then
-				links("opengl32");
+				links("opengl32")
+				links("sfml-system-s")
+				links("sfml-window-s")
+				links("sfml-graphics-s")
+				links("angelscript")
+				links("libsigcpp")
 			end
 			
 			configuration "Debug"
