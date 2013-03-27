@@ -6,7 +6,7 @@
 #include "StringList.h"
 #include "ASScript.h"
 #include "NameGenerator.h"
-#include "angelscript.h"
+#include "AS/angelscript.h"
 
 #include <map>
 #include <vector>

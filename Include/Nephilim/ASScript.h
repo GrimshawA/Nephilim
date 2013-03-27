@@ -2,7 +2,7 @@
 #define PARABOLA_AS_SCRIPT_H
 
 #include "Platform.h"
-#include "angelscript.h"
+#include "AS/angelscript.h"
 #include "FileStream.h"
 #include "StringID.h"
 
