@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/sparkengine/!svn/ver/343/spark2/include/Rendering/OpenGL
+END
+SPK_GL_LineTrailRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/sparkengine/!svn/ver/310/spark2/include/Rendering/OpenGL/SPK_GL_LineTrailRenderer.h
+END
+SPK_GL_DEF.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/sparkengine/!svn/ver/343/spark2/include/Rendering/OpenGL/SPK_GL_DEF.h
+END
+SPK_GL_LineRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Rendering/OpenGL/SPK_GL_LineRenderer.h
+END
+SPK_GL_PointRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/sparkengine/!svn/ver/294/spark2/include/Rendering/OpenGL/SPK_GL_PointRenderer.h
+END
+SPK_GL_QuadRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/sparkengine/!svn/ver/294/spark2/include/Rendering/OpenGL/SPK_GL_QuadRenderer.h
+END
+SPK_GL_Renderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/sparkengine/!svn/ver/294/spark2/include/Rendering/OpenGL/SPK_GL_Renderer.h
+END
+SPK_GL_Buffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/sparkengine/!svn/ver/268/spark2/include/Rendering/OpenGL/SPK_GL_Buffer.h
+END

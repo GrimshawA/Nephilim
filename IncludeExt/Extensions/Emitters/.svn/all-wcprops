@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Extensions/Emitters
+END
+SPK_StraightEmitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Extensions/Emitters/SPK_StraightEmitter.h
+END
+SPK_StaticEmitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Extensions/Emitters/SPK_StaticEmitter.h
+END
+SPK_NormalEmitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Extensions/Emitters/SPK_NormalEmitter.h
+END
+SPK_SphericEmitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Extensions/Emitters/SPK_SphericEmitter.h
+END
+SPK_RandomEmitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Extensions/Emitters/SPK_RandomEmitter.h
+END

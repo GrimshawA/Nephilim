@@ -1,0 +1,14 @@
+#ifndef PARABOLA_RENDERSTATES_H
+#define PARABOLA_RENDERSTATES_H
+
+#include "Platform.h"
+
+PARABOLA_NAMESPACE_BEGIN
+
+class PARABOLA_API RenderStates{
+public:
+
+};
+
+PARABOLA_NAMESPACE_END
+#endif

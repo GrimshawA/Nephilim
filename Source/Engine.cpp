@@ -1,8 +1,8 @@
-#include <ParabolaCore/Engine.h>
-#include <ParabolaCore/GameCore.h>
-#include <ParabolaCore/Renderer.h>
+#include <Nephilim/Engine.h>
+#include <Nephilim/GameCore.h>
+#include <Nephilim/Renderer.h>
 
-#include <ParabolaCore/View.h>
+#include <Nephilim/View.h>
 
 PARABOLA_NAMESPACE_BEGIN
 	

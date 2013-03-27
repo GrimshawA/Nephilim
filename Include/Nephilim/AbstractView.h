@@ -1,0 +1,14 @@
+#ifndef PARABOLA_ABSTRACTVIEW_H
+#define PARABOLA_ABSTRACTVIEW_H
+
+#include "Platform.h"
+
+PARABOLA_NAMESPACE_BEGIN
+
+class PARABOLA_API AbstractView{
+public:
+	
+};
+
+PARABOLA_NAMESPACE_END
+#endif

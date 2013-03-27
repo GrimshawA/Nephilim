@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9
+END
+SPK_DX9_Buffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9/SPK_DX9_Buffer.h
+END
+SPK_DX9_LineTrailRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9/SPK_DX9_LineTrailRenderer.h
+END
+SPK_DX9_Info.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9/SPK_DX9_Info.h
+END
+SPK_DX9_DEF.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/sparkengine/!svn/ver/289/spark2/include/Rendering/DX9/SPK_DX9_DEF.h
+END
+SPK_DX9_LineRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9/SPK_DX9_LineRenderer.h
+END
+SPK_DX9_PointRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/sparkengine/!svn/ver/289/spark2/include/Rendering/DX9/SPK_DX9_PointRenderer.h
+END
+SPK_DX9_QuadRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/sparkengine/!svn/ver/295/spark2/include/Rendering/DX9/SPK_DX9_QuadRenderer.h
+END
+SPK_DX9_Renderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/sparkengine/!svn/ver/311/spark2/include/Rendering/DX9/SPK_DX9_Renderer.h
+END

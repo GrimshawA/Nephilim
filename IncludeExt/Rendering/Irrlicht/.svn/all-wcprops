@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/sparkengine/!svn/ver/343/spark2/include/Rendering/Irrlicht
+END
+SPK_IRR_PointRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Rendering/Irrlicht/SPK_IRR_PointRenderer.h
+END
+SPK_IRR_QuadRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/276/spark2/include/Rendering/Irrlicht/SPK_IRR_QuadRenderer.h
+END
+CSPKParticleSystemNode.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/sparkengine/!svn/ver/321/spark2/include/Rendering/Irrlicht/CSPKParticleSystemNode.h
+END
+SPK_IRR_Renderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/sparkengine/!svn/ver/324/spark2/include/Rendering/Irrlicht/SPK_IRR_Renderer.h
+END
+SPK_IRR_Buffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/sparkengine/!svn/ver/268/spark2/include/Rendering/Irrlicht/SPK_IRR_Buffer.h
+END
+SPK_IRR_DEF.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/sparkengine/!svn/ver/343/spark2/include/Rendering/Irrlicht/SPK_IRR_DEF.h
+END
+SPK_IRR_LineRenderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Rendering/Irrlicht/SPK_IRR_LineRenderer.h
+END

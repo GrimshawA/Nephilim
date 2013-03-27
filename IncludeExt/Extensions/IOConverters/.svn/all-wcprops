@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Extensions/IOConverters
+END
+SPK_IO_XMLLoader.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Extensions/IOConverters/SPK_IO_XMLLoader.h
+END
+SPK_IO_SPKSaver.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/318/spark2/include/Extensions/IOConverters/SPK_IO_SPKSaver.h
+END
+SPK_IO_XMLSaver.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Extensions/IOConverters/SPK_IO_XMLSaver.h
+END
+SPK_IO_SPKLoader.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/sparkengine/!svn/ver/318/spark2/include/Extensions/IOConverters/SPK_IO_SPKLoader.h
+END

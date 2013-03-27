@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/sparkengine/!svn/ver/337/spark2/include/Core/IO
+END
+SPK_IO_Loader.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/IO/SPK_IO_Loader.h
+END
+SPK_IO_Buffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/IO/SPK_IO_Buffer.h
+END
+SPK_IO_Manager.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/IO/SPK_IO_Manager.h
+END
+SPK_IO_Descriptor.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/sparkengine/!svn/ver/337/spark2/include/Core/IO/SPK_IO_Descriptor.h
+END
+SPK_IO_Saver.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/IO/SPK_IO_Saver.h
+END
+SPK_IO_Attribute.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/IO/SPK_IO_Attribute.h
+END

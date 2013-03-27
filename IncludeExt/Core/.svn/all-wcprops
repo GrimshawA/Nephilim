@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/sparkengine/!svn/ver/340/spark2/include/Core
+END
+SPK_Action.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/sparkengine/!svn/ver/278/spark2/include/Core/SPK_Action.h
+END
+SPK_Color.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/sparkengine/!svn/ver/316/spark2/include/Core/SPK_Color.h
+END
+SPK_Logger.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/sparkengine/!svn/ver/288/spark2/include/Core/SPK_Logger.h
+END
+SPK_Octree.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/SPK_Octree.h
+END
+SPK_Interpolator.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Core/SPK_Interpolator.h
+END
+SPK_System.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/sparkengine/!svn/ver/334/spark2/include/Core/SPK_System.h
+END
+SPK_DataSet.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/sparkengine/!svn/ver/278/spark2/include/Core/SPK_DataSet.h
+END
+SPK_Iterator.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/337/spark2/include/Core/SPK_Iterator.h
+END
+SPK_Vector3D.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/310/spark2/include/Core/SPK_Vector3D.h
+END
+SPK_Group.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/sparkengine/!svn/ver/334/spark2/include/Core/SPK_Group.h
+END
+SPK_Modifier.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/310/spark2/include/Core/SPK_Modifier.h
+END
+SPK_DEF.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/sparkengine/!svn/ver/340/spark2/include/Core/SPK_DEF.h
+END
+SPK_Reference.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/SPK_Reference.h
+END
+SPK_ZonedModifier.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/sparkengine/!svn/ver/338/spark2/include/Core/SPK_ZonedModifier.h
+END
+SPK_Particle.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/333/spark2/include/Core/SPK_Particle.h
+END
+SPK_Object.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/sparkengine/!svn/ver/335/spark2/include/Core/SPK_Object.h
+END
+SPK_Renderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Core/SPK_Renderer.h
+END
+SPK_DataHandler.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Core/SPK_DataHandler.h
+END
+SPK_ArrayData.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/sparkengine/!svn/ver/297/spark2/include/Core/SPK_ArrayData.h
+END
+pstdint.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/sparkengine/!svn/ver/316/spark2/include/Core/pstdint.h
+END
+SPK_MemoryTracer.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/278/spark2/include/Core/SPK_MemoryTracer.h
+END
+SPK_Emitter.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/sparkengine/!svn/ver/269/spark2/include/Core/SPK_Emitter.h
+END
+SPK_RenderBuffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/sparkengine/!svn/ver/271/spark2/include/Core/SPK_RenderBuffer.h
+END
+SPK_Transform.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/sparkengine/!svn/ver/287/spark2/include/Core/SPK_Transform.h
+END
+SPK_Zone.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/sparkengine/!svn/ver/338/spark2/include/Core/SPK_Zone.h
+END
