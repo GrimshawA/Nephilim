@@ -7,7 +7,7 @@ local version = "0.8.3"
 local samplelist = { "SampleBasic" }
 	
 newoption {
-   trigger     = "samples",
+   trigger     = "no-samples",
    description = "Makes project files for the samples"
 }
 
@@ -39,7 +39,7 @@ solution (enginename)
 		includedirs { "Include" , "IncludeExt"}
 		files { "Source/*.cpp" }
 		files { "IncludeExt/AS/AS*.cpp" }
-		files { "Include/*.h" }
+		files { "Include/Nephilim/*.h" }
 		targetdir("Lib")
 		flags { "Unicode" }
 		
@@ -59,10 +59,31 @@ solution (enginename)
 			targetname(libname)
 			flags { "Optimize" }
 			
-			
+	project "NephilimConsole"
+		language "C++"
+		kind "ConsoleApp"
+		files { "Tools/NephilimConsole/Source/*" }
+		location("Build/" .. builddir)
+		vpaths { ["Headers"] = "**.h" }
+		vpaths { ["Source"] = "**.cpp" }
+		includedirs { "Include" , "IncludeExt"}
+		links (enginename)
+		targetdir  "Bin" 
+		
+		if os.isdir("LibExt") then 
+			libdirs { "LibExt/" .. builddir }
+			links("sfml-system-s")
+			links("sfml-window-s")
+			links("sfml-graphics-s")
+			links("angelscript")
+			links("libsigcpp")
+		end
+		
+	configuration "Debug"
+		defines { "DEBUG" }
 			
 	-- Prepare the sample projects	
-	if table.contains(_ARGS, "--samples")  then
+	if not table.contains(_ARGS, "--no-samples")  then
 	for i=1 , # samplelist do
 		local sample = samplelist[i]
 		project (sample)
@@ -75,23 +96,37 @@ solution (enginename)
 			includedirs { "Include" , "IncludeExt"}
 			links (enginename)
 			targetdir  "Bin" 
-			libdirs { "LibExt/" .. builddir }
 			
+			if os.isdir("LibExt") then 
+				print("Found LibExt directory. Will attempt automatic linking to pre-compiled libraries")
+				libdirs { "LibExt/" .. builddir }
+			end
 		
 			if os.get() == "windows" and not table.contains(_ARGS, "--android") then
 				links("opengl32")
-				links("sfml-system-s")
-				links("sfml-window-s")
-				links("sfml-graphics-s")
-				links("angelscript")
-				links("libsigcpp")
 			end
 			
 			configuration "Debug"
 				flags { "Symbols" }
 				
+				if os.isdir("LibExt") then 
+					links("sfml-system-s-d")
+					links("sfml-window-s-d")
+					links("sfml-graphics-s-d")
+					links("angelscript-d")
+					links("libsigcpp-d")
+				end
+				
 			configuration "Release"			
 				flags { "Optimize" }
+				
+				if os.isdir("LibExt") then 
+					links("sfml-system-s")
+					links("sfml-window-s")
+					links("sfml-graphics-s")
+					links("angelscript")
+					links("libsigcpp")
+				end
 	end
 	end
 	
