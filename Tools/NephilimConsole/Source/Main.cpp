@@ -1,4 +1,6 @@
 #include <Nephilim/Strings.h>
+#include <Nephilim/Engine.h>
+#include <Nephilim/ASEngine.h>
 #include <iostream>
 using namespace pE;
 using namespace std;
@@ -10,12 +12,66 @@ using namespace std;
 #include "APKGenerator.h"
 #include "APKAssets.h"
 
-void showHelp(){
-	cout<<":Parabola Engine SDK Streamline tool:"<<endl<<endl;
-	cout<<":Incorrect arguments, usage should be in the following syntax:"<<endl;
-	cout<<"> [gen-apk] <package-name>"<<endl;
+struct scriptAction
+{
+	String description;
+	ASScript* script;
+};
+ASEngine					scriptEngine;
+std::map<String, scriptAction> scriptActions;
 
+void initScriptActions()
+{
+	scriptEngine.exportStrings();
+
+	StringList list = FileSystem::scanDirectory(m_ProgramDir + "NephilimConsoleResources/actions", "*", false);
+	for(unsigned int i = 0; i < list.size(); i++)
+	{
+		String actionName = list[i];
+		actionName.erase(actionName.begin(), actionName.begin() + actionName.find_last_of('/') + 1);
+		actionName.erase(actionName.begin() + actionName.find_last_of('.'), actionName.end());
+		scriptActions[actionName].script = scriptEngine.loadScript(list[i]);
+		if(scriptActions[actionName].script)
+		{
+			scriptActions[actionName].description = scriptActions[actionName].script->fastCall<String>("string description()");
+		}
+	}
+}
+
+void runScriptAction(const String& actionName)
+{
+	ASScript* script = scriptActions[actionName].script;
+	if(script)
+	{
+		script->call(String("void run()"));
+	}
+}
+
+void printcharn(char c, int n)
+{
+	for(int i = 0; i < n; i ++){
+		cout<<c;
+	}
+}
+
+void showHelp(){
 	cout<<endl;
+	cout<<"NephilimConsole v"<<Engine::getVersionString()<<endl;
+	cout<<"Copyright (C) 2010-2013 Artur Moreira and the Nephilim project"<<endl
+		<< endl;
+	cout<<"Usage: action [parameters]"<<endl
+		<< endl;
+	cout<<"ACTIONS"<<endl
+		<<endl;
+	cout<<" "<<"gen-apk"<<endl;
+	cout<<endl;
+
+	for(std::map<String, scriptAction>::iterator it = scriptActions.begin(); it != scriptActions.end(); ++it)
+	{
+		cout << " " << it->first;
+		printcharn(' ', 30 - it->first.length() + 1);
+		cout <<  it->second.description << endl;
+	}
 }
 
 int main(int argc, char** argv){
@@ -23,6 +79,10 @@ int main(int argc, char** argv){
 	m_ProgramDir = FileSystem::getExecutableDirectory();
 	//cout<<m_ProgramDir<<endl;
 //	system("pause");
+
+	initScriptActions();
+
+	
 
 	if(argc < 2){
 		//there are no parameters
@@ -91,6 +151,11 @@ int main(int argc, char** argv){
 				deployAPKAssets(argv[2], argv[3]);
 				cout<<"[Streamline] Finished deploying all assets to the target APK."<<endl;
 			}
+		}
+		else
+		{
+			runScriptAction(arg1);
+
 		}
 
 	}

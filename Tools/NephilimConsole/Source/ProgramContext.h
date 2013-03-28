@@ -4,6 +4,8 @@
 #include <Nephilim/Strings.h>
 using namespace pE;
 
+const String _assets = "NephilimConsoleResources";
+
 class ProgramContext
 {
 public:
