@@ -6,6 +6,13 @@
 
 PARABOLA_NAMESPACE_BEGIN
 	
+
+#ifdef ENGINE_VERSION_STRING
+	String Engine::m_versionString = ENGINE_VERSION_STRING;
+#else
+	String Engine::m_versionString = "unknown";
+#endif
+
 Engine::Engine()
 : m_currentApp(NULL)
 , m_renderer(NULL)
@@ -77,6 +84,12 @@ void Engine::update()
 Renderer* Engine::getRenderer()
 {
 	return m_renderer;
+}
+
+/// Returns a string with the version of the engine build. Usually like x.y.z
+String Engine::getVersionString()
+{
+	return m_versionString;
 }
 
 PARABOLA_NAMESPACE_END
