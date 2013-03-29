@@ -29,14 +29,16 @@ void PortabilityTest::onEvent(Event &event)
         }
 }
 
+float elapsed = 0.f;
+
 void PortabilityTest::onUpdate(Time time)
 {
-
+	elapsed += time.asSeconds();
+	/*printf("Elapsed: %f\n", elapsed);*/
 }
 
 void PortabilityTest::onRender()
 {
-
 	getRenderer()->drawDebugCircle(Vec2f(m_pos.x,200), 30, Vec2f(), Color::Red);
 /*
 	Texture t;

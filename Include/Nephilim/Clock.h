@@ -66,21 +66,11 @@ class NEPHILIM_API Clock{
 public:
 	Clock();
 
-	~Clock();
-
-	void pause();
-
-	void start();
-
 	void reset();
-
 	Time getElapsedTime();
 
 private:
-	bool myPaused;
-
-	class ClockImplementation;
-	ClockImplementation *myClockImpl;
+	Time m_last;
 };
 
 NEPHILIM_NS_END

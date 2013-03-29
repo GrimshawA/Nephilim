@@ -74,6 +74,7 @@
 #define PARABOLA_NOSFML
         #define PARABOLA_UNIX
 		#define PARABOLA_COMPILER "ndk"
+		#define NEPHILIM_UNIX
 		//#define MINIMAL_BUILD // for now build minimally for android
 	#else
         #define PARABOLA_UNIX

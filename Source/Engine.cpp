@@ -67,8 +67,8 @@ void Engine::update()
 
 
 		// Perform the update
-		//m_currentApp->innerUpdate(m_stepClock.getElapsedTime());
-		//m_stepClock.reset();
+		m_currentApp->innerUpdate(m_stepClock.getElapsedTime());
+		m_stepClock.reset();
 
 		// Draw a frame
 		if(m_renderer)
