@@ -13,12 +13,12 @@ Image img;
 
 void PortabilityTest::onCreate()
 {
-	if(img.loadFromFile("Buttons.png"))
+	/*if(img.loadFromFile("Buttons.png"))
 	{
 		cout<<"Image loaded sucessfully."<<endl;
 	}
 
-	img.saveToFile("supnigga.png");
+	img.saveToFile("supnigga.png");*/
 }
 
 void PortabilityTest::onEvent(Event &event)
@@ -36,12 +36,13 @@ void PortabilityTest::onUpdate(Time time)
 
 void PortabilityTest::onRender()
 {
-	getRenderer()->drawDebugCircle(Vec2f(m_pos.x,200), 30, Vec2f(), Color::Red);
 
+	getRenderer()->drawDebugCircle(Vec2f(m_pos.x,200), 30, Vec2f(), Color::Red);
+/*
 	Texture t;
 	t.loadFromImage(img);
 
 	Sprite spr;
 	spr.setTexture(t);
-	getRenderer()->draw(spr);
+	getRenderer()->draw(spr);*/
 }

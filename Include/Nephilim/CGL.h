@@ -3,9 +3,6 @@
 
 #include "Platform.h"
 
-/// Utility
-void cglPrepareExtensions();
-
 /// All desktop platforms
 #if defined PARABOLA_DESKTOP || defined NEPHILIM_DESKTOP
 #include <GL/glew.h>

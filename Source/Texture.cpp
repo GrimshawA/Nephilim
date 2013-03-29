@@ -3,11 +3,13 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/CGL.h>
 
+#include <string.h>
+
 NEPHILIM_NS_BEGIN
 
 /// Create an uninitialised texture
 Texture::Texture() : m_size(0,0), m_actualSize(0,0), m_texture(0), m_pixelsFlipped(false),m_isSmooth(false){
-	
+
 };
 
 /// RAII release of the texture

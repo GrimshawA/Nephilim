@@ -23,7 +23,7 @@ float Time::asSeconds(){
 	return m_microSeconds / 1000000.f;
 }
 
-Int64 Time::asMiliSeconds(){	
+Int64 Time::asMiliSeconds(){
 	return m_microSeconds / 10000.f;
 };
 
@@ -43,7 +43,7 @@ Time Time::fromMiliSeconds(Int64 miliSeconds){
 
 // Static
 Time Time::fromMicroseconds(Int64 microSeconds){
-	return Time(microSeconds);	
+	return Time(microSeconds);
 };
 
 
@@ -76,19 +76,19 @@ public:
 #ifdef PARABOLA_ANDROID
 		timespec time;
 		clock_gettime(CLOCK_MONOTONIC, &time);
-		Time genTime;	
+		Time genTime;
 		genTime.m_microSeconds =  static_cast<Uint64>(time.tv_sec) * 1000000 + time.tv_nsec / 1000;
 		return genTime;
 #elif defined PARABOLA_IPHONE
-    
+
         static mach_timebase_info_data_t frequency = {0,0};
         if(frequency.denom == 0)
             mach_timebase_info(&frequency);
         Uint64 nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
-        Time genTime;	
+        Time genTime;
 		genTime.m_microSeconds =  nanoseconds / 1000;
 		return genTime;
-        
+
 #endif
 	}
 
@@ -117,20 +117,12 @@ void Clock::start(){
 
 
 void Clock::reset(){
-#ifdef PARABOLA_DESKTOP
-	myClockImpl->clock.restart();
-#else
 	myClockImpl->myStartTime = myClockImpl->getCurrentTime();
-#endif
 }
 
-Time Clock::getElapsedTime(){
-
-#ifdef PARABOLA_DESKTOP
-	return Time::fromMicroseconds(myClockImpl->clock.getElapsedTime().asMicroseconds());
-#else
-	return myClockImpl->getCurrentTime() - myClockImpl->myStartTime;
-#endif
-};
+Time Clock::getElapsedTime()
+{
+	return getCurrentTime() - myStartTime;
+}
 
 NEPHILIM_NS_END

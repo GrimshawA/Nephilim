@@ -2,6 +2,7 @@
 #include <Nephilim/ScopedFile.h>
 #include <Nephilim/Logger.h>
 
+#include <string.h>
 
 #include "Nephilim/FileInterface.h"
 
@@ -10,8 +11,12 @@
 using namespace std;
 
 // If SFML is used, use stb_image as header only because it was already defined
-#if defined NEPHILIM_SFML 
+#if defined NEPHILIM_SFML && defined SFML_STATIC
 #define STBI_HEADER_FILE_ONLY
+#endif
+
+#if defined NEPHILIM_SFML && !defined SFML_STATIC
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
 
 #include "stb_image/stb_image.h"

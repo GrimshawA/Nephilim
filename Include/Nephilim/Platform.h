@@ -33,6 +33,7 @@
             #define PARABOLA_COMPILER_GCC
         #endif
 		#define NEPHILIM_SFML
+		#define SFML_STATIC
 		#define PARABOLA_WINDOWS
 		#define PARABOLA_OS "win"
 		#define PARABOLA_DESKTOP
@@ -103,7 +104,7 @@
 		#define NEPHILIM_API __declspec(dllexport)
 	#else
 		#define NEPHILIM_API
-		#define SFML_STATIC
+
 	#endif
 
 	// Build Mode

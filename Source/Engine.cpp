@@ -1,7 +1,7 @@
 #include <Nephilim/Engine.h>
 #include <Nephilim/GameCore.h>
 #include <Nephilim/Renderer.h>
-
+#include <Nephilim/CGL.h>
 #include <Nephilim/View.h>
 
 NEPHILIM_NS_BEGIN
@@ -38,6 +38,9 @@ void Engine::execute(GameCore* app)
 
 void Engine::init()
 {
+
+    cglPrepareExtensions();
+
 	// stub code
 	m_surface.create();
 
@@ -62,9 +65,10 @@ void Engine::update()
 			m_currentApp->onEvent(event);
 		}
 
+
 		// Perform the update
-		m_currentApp->innerUpdate(m_stepClock.getElapsedTime());
-		m_stepClock.reset();
+		//m_currentApp->innerUpdate(m_stepClock.getElapsedTime());
+		//m_stepClock.reset();
 
 		// Draw a frame
 		if(m_renderer)

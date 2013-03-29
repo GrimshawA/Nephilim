@@ -48,9 +48,9 @@ void Window::create(int screenWidth, int screenHeight){
 	myWindowImpl->setVerticalSyncEnabled(true);
 	myWindowImpl->setFramerateLimit(60);
 	m_handle = (int)myWindowImpl->getSystemHandle();
-	printf("Creating window\n");
+
 #endif
-printf("d\n");
+
 };
 
 void Window::create(void* handle){

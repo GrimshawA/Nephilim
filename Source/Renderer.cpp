@@ -14,12 +14,14 @@ Renderer* Renderer::createAutomaticRenderer(RenderTarget* target){
 #ifdef NEPHILIM_DESKTOP
 	RendererOpenGL* renderer = new RendererOpenGL();
 	renderer->m_renderTarget = target;
+	printf("OpenGL Renderer\n");
 	return renderer;
 #elif defined PARABOLA_ANDROID	|| defined PARABOLA_IPHONE
 	RendererGLES* renderer = new RendererGLES();
 	renderer->m_renderTarget = target;
 	return renderer;
 #else
+    TESTLOG("Warning: Tried to create a renderer and failed.\n");
 	return NULL;
 #endif
 };

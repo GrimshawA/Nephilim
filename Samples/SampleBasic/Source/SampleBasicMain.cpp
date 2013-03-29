@@ -18,6 +18,7 @@ void applicationStartup(pE::Engine** engine)
 
 void applicationUpdate()
 {
+
 	sdk.update();
 }
 
