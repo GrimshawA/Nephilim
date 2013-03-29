@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include <math.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Foundation
@@ -25,7 +25,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	*/
 	template <class T>
-	class PARABOLA_API Vec2{
+	class NEPHILIM_API Vec2{
 	public:
 		/// Creates an uninitialized Vec2
 		Vec2();
@@ -121,7 +121,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	*/
 	template<class T>
-	class PARABOLA_API Vec3{
+	class NEPHILIM_API Vec3{
 	public:
 		/// Creates an uninitialized Vec3
 		Vec3();
@@ -216,7 +216,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	*/
 	template<class T>
-	class PARABOLA_API Vec4{
+	class NEPHILIM_API Vec4{
 	public:
 		/// Creates an uninitialized Vec4
 		Vec4();
@@ -288,5 +288,5 @@ PARABOLA_NAMESPACE_BEGIN
 
 	#include "Vectors.inl"
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

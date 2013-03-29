@@ -1,6 +1,6 @@
 #include <Nephilim/VertexArray.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Constructs an empty vertex array with default primitive type - Quads
 VertexArray::VertexArray(){
@@ -61,4 +61,4 @@ void VertexArray::clear(){
 	m_vertices.clear();
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

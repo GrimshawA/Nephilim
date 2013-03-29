@@ -7,7 +7,7 @@
 #include <SFML/System/Lock.hpp>
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class NetworkSocket;
 /**
@@ -26,7 +26,7 @@ class NetworkSocket;
 	\todo Later i will implement a feature to be able to group sockets, in order to block them while the game loses focus.
 
 */
-class PARABOLA_API NetworkThread{
+class NEPHILIM_API NetworkThread{
 public:
 	/// Creates an empty network thread, but it is sleeping until sockets are added
 	NetworkThread();
@@ -50,5 +50,5 @@ private:
 
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

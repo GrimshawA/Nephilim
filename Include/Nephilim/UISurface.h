@@ -6,7 +6,7 @@
 
 #include "UIControl.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
@@ -15,7 +15,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	Note: In a proper hierarchy, only UISurface objects will have a NULL parent
 */
-class PARABOLA_API UISurface : public UIControl{
+class NEPHILIM_API UISurface : public UIControl{
 public:
 	/// Construct the surface
 	UISurface();
@@ -42,5 +42,5 @@ private:
 	bool m_modal;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UISurface_h__

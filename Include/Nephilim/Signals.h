@@ -4,7 +4,7 @@
 #include <sigc++/sigc++.h>
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN	
+NEPHILIM_NS_BEGIN	
 	using sigc::ptr_fun;
 	using sigc::mem_fun;
 	using sigc::signal;
@@ -15,6 +15,6 @@ PARABOLA_NAMESPACE_BEGIN
 #define MAKE_SLOT_FUNCTION(funcname) (ptr_fun(&funcname))
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

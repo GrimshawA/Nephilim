@@ -12,7 +12,7 @@
 #endif
 #include <GL/gl.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 RendererOpenGL::RendererOpenGL() : Renderer(){
 
@@ -307,5 +307,5 @@ void RendererOpenGL::display(){
 	//Engine::instance()->getWindow().swapBuffers();
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -11,7 +11,7 @@
 #include <GL/GLU.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Apply the camera to openGL
 void View3D::apply(){
@@ -67,4 +67,4 @@ void View3D::rotateH(float amount)
 
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -19,7 +19,7 @@ using namespace std;
 #endif
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	Text::Text(): m_string(),
 	m_font(&Font::getDefaultFont()),
@@ -426,6 +426,6 @@ void Text::updateGeometry()
 
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 //#endif

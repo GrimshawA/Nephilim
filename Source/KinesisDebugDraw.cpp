@@ -27,7 +27,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	KinesisDebugDraw::KinesisDebugDraw() : b2Draw(){
 		uint32 flags = 0;
@@ -150,4 +150,4 @@ PARABOLA_NAMESPACE_BEGIN
 		glEnd();*/
 	}
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

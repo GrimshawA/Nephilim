@@ -1,7 +1,7 @@
 #ifndef MINIMAL_BUILD
 #include "Nephilim/EntityComponentFactory.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Spawns a registered component without parameters
 EntityComponent* EntityComponentFactory::spawnComponent(const String &componentName, Entity *parent){
@@ -21,5 +21,5 @@ EntityComponent* EntityComponentFactory::spawnComponent(const String &componentN
 	return NULL;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

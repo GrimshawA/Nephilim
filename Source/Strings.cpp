@@ -7,7 +7,7 @@
 #include <windows.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	// Constructors
 	String::String() : std::string(){
@@ -262,4 +262,4 @@ PARABOLA_NAMESPACE_BEGIN
 
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

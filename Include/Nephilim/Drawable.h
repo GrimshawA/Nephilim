@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class Renderer;
 /**	
@@ -16,5 +16,5 @@ public:
 	virtual void onDraw(Renderer* renderer) = 0;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

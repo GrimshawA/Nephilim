@@ -4,7 +4,7 @@
 #include "Platform.h"
 //#include <SFML/System/Mutex.hpp>
 //
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class NetworkThread;
 /**
@@ -16,7 +16,7 @@ class NetworkThread;
 		and
 		\see NetworkServer
 */
-class PARABOLA_API NetworkSocket{
+class NEPHILIM_API NetworkSocket{
 public:
 	/// Creates a network socket 
 	NetworkSocket();
@@ -100,5 +100,5 @@ private:
 
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

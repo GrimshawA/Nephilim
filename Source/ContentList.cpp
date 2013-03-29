@@ -1,6 +1,6 @@
 #include "Nephilim/ContentList.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates an yet empty list of content
 ContentList::ContentList() : myLocked(false){
@@ -22,4 +22,4 @@ bool ContentList::locked(){
 	return myLocked;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

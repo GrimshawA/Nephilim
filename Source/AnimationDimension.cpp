@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Construct the position animation
 AnimationDimension::AnimationDimension(){
 		m_duration = 0.f;
@@ -85,4 +85,4 @@ void AnimationDimension::update(float elapsedTime){
 	}*/
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

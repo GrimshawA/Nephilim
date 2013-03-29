@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	StateMachineNode::StateMachineNode(){
 		Parent = NULL;
 		RefCount = 0;
@@ -71,4 +71,4 @@ PARABOLA_NAMESPACE_BEGIN
 		return true;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

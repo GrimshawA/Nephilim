@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Core
@@ -16,7 +16,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		\todo example
 	*/
-	class PARABOLA_API EventHandler{
+	class NEPHILIM_API EventHandler{
 	public:
 		/// Called when a mouse button is pressed down
 		/// x and y are the click position
@@ -47,5 +47,5 @@ PARABOLA_NAMESPACE_BEGIN
 		virtual void OnKeyReleased(unsigned int Key, int keyMod);
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include "Clock.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class StateMachine;
 class Renderer;
@@ -23,7 +23,7 @@ class Event;
 
 		If you wish to delete the node yourself, use AddReference() as soon as you create it.
 	*/
-	class PARABOLA_API StateMachineNode{
+	class NEPHILIM_API StateMachineNode{
 	public:
 		/// Creates a default state
 		StateMachineNode();
@@ -79,5 +79,5 @@ class Event;
 		int RefCount;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

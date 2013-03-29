@@ -3,9 +3,9 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API Color{
+class NEPHILIM_API Color{
 public:
 	Color();
 	Color(int byteRed, int byteGreen, int byteBlue, int byteAlpha = 255);
@@ -18,5 +18,5 @@ public:
 	Uint8 r,g,b,a;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

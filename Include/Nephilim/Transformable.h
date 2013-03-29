@@ -32,12 +32,12 @@
 #include "Transform.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////
 /// \brief Decomposed transform defined by a position, a rotation and a scale
 ///
 ////////////////////////////////////////////////////////////
-class PARABOLA_API Transformable
+class NEPHILIM_API Transformable
 {
 public :
 
@@ -325,7 +325,7 @@ private :
     mutable bool      m_inverseTransformNeedUpdate; ///< Does the transform need to be recomputed?
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 
 #endif // SFML_TRANSFORMABLE_HPP

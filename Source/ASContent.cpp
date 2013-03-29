@@ -3,7 +3,7 @@
 #include "Nephilim/ASEngine.h"
 #include "Nephilim/Content.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ContentBank* CBConstructor()
 {
@@ -39,5 +39,5 @@ bool ASEngine::exportContentBanks(){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -13,7 +13,7 @@
 
 #include <enet/enet.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class NetworkThread;
 
@@ -106,5 +106,5 @@ private:
 	bool myListeningState;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

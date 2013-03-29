@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 KinesisWorld* KWFactory()
 {
@@ -83,4 +83,4 @@ bool ASEngine::exportKinesis(){
 	return true;
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

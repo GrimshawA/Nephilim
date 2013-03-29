@@ -7,7 +7,7 @@
 using namespace std;
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 UIControl* UILineEditRefCast(UILineEdit* a) 
 {
@@ -159,4 +159,4 @@ void UILineEdit::draw(Renderer* renderer){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

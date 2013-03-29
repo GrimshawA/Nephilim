@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 UIWindow* UIManager::create(const String &name)
 {
 	if(m_windows.find(name) == m_windows.end())
@@ -40,4 +40,4 @@ void UIManager::setArea(float x, float y, float w, float h)
 	}
 	area = FloatRect(x,y,w,h);
 }
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

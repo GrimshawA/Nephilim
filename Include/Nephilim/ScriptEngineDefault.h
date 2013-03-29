@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "ScriptEngineTask.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Scripting
@@ -13,23 +13,23 @@ PARABOLA_NAMESPACE_BEGIN
 
 	\todo Move to Sources, not useful in here
 */
-class PARABOLA_API EchoTask : public ScriptEngineTask{
+class NEPHILIM_API EchoTask : public ScriptEngineTask{
 public:
 	/// Run the task
 	void run(const String &calledAs, String arguments);
 };
 
-class PARABOLA_API GetHttpTask : public ScriptEngineTask{
+class NEPHILIM_API GetHttpTask : public ScriptEngineTask{
 public:
 	/// Run the task
 	void run(const String &calledAs, String arguments);
 };
 
-class PARABOLA_API ParseTask : public ScriptEngineTask{
+class NEPHILIM_API ParseTask : public ScriptEngineTask{
 public:
 	/// Run the task
 	void run(const String &calledAs, String arguments);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

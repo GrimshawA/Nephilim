@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/// Holds the modes a stream can be opened
 	namespace StreamMode {
@@ -40,7 +40,7 @@ PARABOLA_NAMESPACE_BEGIN
 		
 		\todo Finish the interface.
 	*/	
-	class PARABOLA_API DataStream{
+	class NEPHILIM_API DataStream{
 	public:
 
 		/// Virtual method to check if the stream reached its end
@@ -54,6 +54,6 @@ PARABOLA_NAMESPACE_BEGIN
 		virtual DataStream& operator>>(String &value){return *this;};
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

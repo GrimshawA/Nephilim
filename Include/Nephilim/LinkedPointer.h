@@ -7,7 +7,7 @@
 #include <list>
 
 /// \namespace pE
-PARABOLA_NAMESPACE_BEGIN	
+NEPHILIM_NS_BEGIN	
 
 	/**
 		\ingroup Foundation
@@ -24,7 +24,7 @@ PARABOLA_NAMESPACE_BEGIN
 		them for a NULL value.
 	*/
 	template<class T>
-	class PARABOLA_API linked_ptr{
+	class NEPHILIM_API linked_ptr{
 	public:
 		/**
 			\brief Constructs the smart pointer with NULL by default.
@@ -270,6 +270,6 @@ PARABOLA_NAMESPACE_BEGIN
 		};
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif
 #endif

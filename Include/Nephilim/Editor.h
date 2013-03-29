@@ -10,11 +10,11 @@
 
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class EditorInterface;
 
-class PARABOLA_API EditorServer{
+class NEPHILIM_API EditorServer{
 public:
 	EditorServer(){
 
@@ -24,7 +24,7 @@ public:
 };
 
 /// Either has a local editor server, or talks to an exterior one
-class PARABOLA_API EditorNetworkInterface{
+class NEPHILIM_API EditorNetworkInterface{
 public:
 	EditorNetworkInterface(){
 		networkThread = new NetworkThread();
@@ -67,7 +67,7 @@ public:
 	Editor is extensible through scripting, and EditorInterface can be made at taste, for extending the
 	main abilities.
 */
-class PARABOLA_API Editor : public GameCore{
+class NEPHILIM_API Editor : public GameCore{
 public:
 	/// Creates the editor
 	Editor();
@@ -124,11 +124,11 @@ private:
 	Run simulation:
 
 */
-class PARABOLA_API EditorInterface{
+class NEPHILIM_API EditorInterface{
 public:
 	/// Callback for running the simulation.
 	virtual void runSimulation() = 0;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

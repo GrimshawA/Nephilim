@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 /// Creates a yet empty script, not meant to be instantiated by other than the AS Engine
@@ -269,4 +269,4 @@ void ASBinaryStream::Read(void *ptr, asUINT size){
 		}
 	}
 };*/
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

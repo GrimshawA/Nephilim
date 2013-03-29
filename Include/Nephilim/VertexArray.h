@@ -7,14 +7,14 @@
 #include <vector>
 #include "Color.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 enum PrimitiveType{
 	Triangles = 0,
 	TriangleFan
 };
 
-class PARABOLA_API Vertex{
+class NEPHILIM_API Vertex{
 public:
 	Vertex(){}
 	Vertex(Vec2f pos, Color col, Vec2f tex){
@@ -28,7 +28,7 @@ public:
 	Vec2f texCoords;
 };
 
-class PARABOLA_API VertexArray{
+class NEPHILIM_API VertexArray{
 public:
 	/// Constructs an empty vertex array with default primitive type - Quads
 	VertexArray();
@@ -52,5 +52,5 @@ public:
 	PrimitiveType geometryType;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

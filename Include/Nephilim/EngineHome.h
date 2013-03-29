@@ -7,7 +7,7 @@
 
 namespace pE{
 
-	class PARABOLA_API EngineHome : public GameCore{
+	class NEPHILIM_API EngineHome : public GameCore{
 	public:
 		EngineHome();
 

@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
@@ -15,7 +15,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	You can use this class if you wish to make ref counted objects :)
 */
-class PARABOLA_API RefCountable{
+class NEPHILIM_API RefCountable{
 public:
 	/// Sets the reference count to 1
 	RefCountable();
@@ -39,12 +39,12 @@ public:
 	\class RCPtr
 	\brief An automatic reference manager for any reference counted object
 */
-class PARABOLA_API RCPtr
+class NEPHILIM_API RCPtr
 {
 public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

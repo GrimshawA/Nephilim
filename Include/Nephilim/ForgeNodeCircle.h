@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ForgeNodeCircle : public ForgeWorldNode{
 public:
@@ -25,5 +25,5 @@ public:
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // ForgeNodeCircle_h__

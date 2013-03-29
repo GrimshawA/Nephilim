@@ -3,11 +3,11 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UITabView{
+class NEPHILIM_API UITabView{
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UITabView_h__

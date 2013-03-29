@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Construct the window
 UIWindow::UIWindow() : m_surfaceContainerLock(false), m_timeSinceLastMouseMovement(0.f), m_backgroundColor(Color::White){
@@ -301,4 +301,4 @@ void UIWindow::applyPendingChanges()
 
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

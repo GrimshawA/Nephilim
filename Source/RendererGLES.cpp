@@ -13,7 +13,7 @@
 #include <OpenGLES/ES1/gl.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 RendererGLES::RendererGLES() : Renderer(){
 	
@@ -206,5 +206,5 @@ void RendererGLES::display(){
 #endif
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

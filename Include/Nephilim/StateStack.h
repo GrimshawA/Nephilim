@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	struct StateStackOperation
 	{
@@ -32,7 +32,7 @@ class GameCore;
 
 		It allows you to create a machine and add states to it, then transition between them.
 */
-class PARABOLA_API StateStack{
+class NEPHILIM_API StateStack{
 public:
 	/// Creates an empty state machine
 	StateStack();
@@ -91,5 +91,5 @@ private:
 class ASEngine;
 bool registerStateStack(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

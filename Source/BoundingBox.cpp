@@ -1,6 +1,6 @@
 #include "Nephilim/BoundingBox.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 BoundingBox::BoundingBox(){
 		Position.x = Position.y = Size.x = Size.y = 0.f;
@@ -47,4 +47,4 @@ bool BoundingBox::intersects(BoundingBox &box){
 			box.contains(Position.x + Size.x, Position.y + Size.y) );
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

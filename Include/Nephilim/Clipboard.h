@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
 	\class Clipboard
 	\brief Copy & Paste functionality 
 */
-class PARABOLA_API Clipboard{
+class NEPHILIM_API Clipboard{
 public:
 	
 	/// Returns the current contents of the clipboard
@@ -19,6 +19,6 @@ public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif // Clipboard_h__

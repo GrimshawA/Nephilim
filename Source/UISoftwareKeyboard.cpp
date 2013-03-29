@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Constructs the button
 UISoftwareKeyboard::UISoftwareKeyboard() : UIControl(), m_color(0,0,0) , hover(false){
@@ -64,4 +64,4 @@ void UISoftwareKeyboard::draw(Renderer* renderer){
 	renderer->draw(t);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

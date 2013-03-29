@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Constructs the tree view
 UITreeView::UITreeView() : UIControl(), m_lineHeight(20.f)
@@ -214,4 +214,4 @@ void UITreeView::Item::draw(Renderer* renderer)
 		
 	}
 }
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

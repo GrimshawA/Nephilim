@@ -4,12 +4,12 @@
 #include "Platform.h"
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	
 /**
 
 */
-class PARABOLA_API Factory{
+class NEPHILIM_API Factory{
 public:
 
 
@@ -47,5 +47,5 @@ protected:
 		vector<SoundManager> soundManagers;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

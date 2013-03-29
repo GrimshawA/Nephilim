@@ -6,7 +6,7 @@
 #include <windows.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Returns the current contents of the clipboard
 String Clipboard::getClipboardText(){
@@ -19,4 +19,4 @@ String Clipboard::getClipboardText(){
 	return "";
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

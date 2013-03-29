@@ -5,14 +5,14 @@
 #include "UIControl.h"
 #include "Color.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIColorDisplay
 	\brief .
 */
-class PARABOLA_API UIColorDisplay : public UIControl{
+class NEPHILIM_API UIColorDisplay : public UIControl{
 public:
 
 
@@ -24,5 +24,5 @@ private:
 	Color m_color;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIColorDisplay_h__

@@ -1,7 +1,7 @@
 #include <Nephilim/AnimationStall.h>
 #include <Nephilim/Logger.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 AnimationStall::AnimationStall(){
 	m_duration = 0.f;
@@ -34,4 +34,4 @@ float AnimationStall::onUpdate(float elapsedTime){
 	else return 0.f; // did not need any time
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Virtual destructor, for detaching running animations.
 Animable::~Animable(){
@@ -122,4 +122,4 @@ void AnimationInterface::addTime(float elapsedTime){
 	m_totalElapsedTime += elapsedTime;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

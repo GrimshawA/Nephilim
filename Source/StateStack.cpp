@@ -6,7 +6,7 @@
 #include <algorithm>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Register the state stack into engine
 bool registerStateStack(ASEngine* engine)
@@ -255,4 +255,4 @@ void StateStack::updateStates(Time &time){
 		applyChanges();
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -4,17 +4,17 @@
 #include "Platform.h"
 #include "UIControl.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIScrollArea
 	\brief 
 */
-class PARABOLA_API UIScrollArea : public UIControl{
+class NEPHILIM_API UIScrollArea : public UIControl{
 public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIScrollArea_h__

@@ -4,7 +4,7 @@
 #include "Nephilim/AndroidInterface.h"
 #include "Nephilim/ScopedFile.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 String AndroidInterface::m_AssetSuffix = ".png";
@@ -319,6 +319,6 @@ void AndroidInterface::vibrate(int miliseconds)
 
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif // NO COMPILATION FOR NON-ANDROID PLATFORMS

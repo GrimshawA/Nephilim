@@ -13,7 +13,7 @@
 #include "Storyline.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace PlayModes{
 	enum PlayType{
@@ -29,7 +29,7 @@ namespace PlayModes{
 		\class StoryPlayer
 		\brief Is capable of loading, executing and manipulating stories.
 	*/
-	class PARABOLA_API StoryPlayer{
+	class NEPHILIM_API StoryPlayer{
 	public:
 		/// Creates a new story player. It works but is limited until you bind some resources to it.
 		StoryPlayer();
@@ -87,5 +87,5 @@ namespace PlayModes{
 
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

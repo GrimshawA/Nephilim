@@ -8,7 +8,7 @@
 
 //#include <SFML/System/Thread.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ContentBank;
 class ContentList;
@@ -25,7 +25,7 @@ class ContentList;
 	A signal is fired when the loading is finished. progress() will return how much progress until finished loading, in %.
 
 */
-class PARABOLA_API ContentLoader{
+class NEPHILIM_API ContentLoader{
 public:
 	/// Checks if a loading is happening in a parallel thread.
 	bool loading();
@@ -71,5 +71,5 @@ private:
 	std::vector<ContentList*> requestedTasks;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

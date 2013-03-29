@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class Engine;
 /**
@@ -11,7 +11,7 @@ class Engine;
 	\class EngineProfile
 	\brief Represents the complete configuration of the engine environment
 */	
-class PARABOLA_API EngineProfile{
+class NEPHILIM_API EngineProfile{
 public:
 	/// Creates a default profile
 	EngineProfile();
@@ -28,5 +28,5 @@ private:
 	friend class Engine;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

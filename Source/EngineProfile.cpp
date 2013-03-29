@@ -1,6 +1,6 @@
 #include "Nephilim/EngineProfile.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a default profile
 EngineProfile::EngineProfile(){
@@ -14,4 +14,4 @@ EngineProfile EngineProfile::DefaultProfile(){
 	return profile;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

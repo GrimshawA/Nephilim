@@ -3,14 +3,14 @@
 //#include "Nephilim/SceneRenderer.h"
 //#include "Nephilim/Sprite.h"
 #include "Nephilim/SpriteExt.h"
-//#include "Nephilim/Textures.h"
+//#include "Nephilim/Texture.h"
 #include "Nephilim/Color.h"
 #include "Nephilim/Rect.h"
 #include "Nephilim/Renderer.h"
 
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	/*
 void SprConstructor(void *memory)
 {
@@ -268,4 +268,4 @@ bool ASEngine::exportGraphics(){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

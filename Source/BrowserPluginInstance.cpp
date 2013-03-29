@@ -6,7 +6,7 @@
 
 #include <SFML/System.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Prepares the needed resources to run
 BrowserPluginInstance::BrowserPluginInstance() : m_finished(false), m_engine(NULL){
@@ -152,6 +152,6 @@ void BrowserPluginInstance::setURL(const String& url){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

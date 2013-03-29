@@ -8,7 +8,7 @@
 #include "View.h"
 #include "RenderTarget.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 typedef void* WindowHandle;
 /**
@@ -18,7 +18,7 @@ typedef void* WindowHandle;
 	\brief Represents a screen or window where the engine is able to draw graphics
 
 */
-class PARABOLA_API Window : public RenderTarget{
+class NEPHILIM_API Window : public RenderTarget{
 public:
 	/// Default constructor
 	Window();
@@ -82,5 +82,5 @@ public:
 	int m_handle;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

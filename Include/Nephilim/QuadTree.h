@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 /**
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 	All nodes are a QuadTreeNode, being them a root, 
 	intermediate or a leaf node.
 */
-class PARABOLA_API QuadTreeNode{
+class NEPHILIM_API QuadTreeNode{
 public:
 	/// Creates an empty node
 	QuadTreeNode();
@@ -59,7 +59,7 @@ private:
 	Just like if you wish to know all objects within a box.
 
 */
-class PARABOLA_API QuadTree{
+class NEPHILIM_API QuadTree{
 public:
 	/// Create a yet empty quad tree
 	QuadTree();
@@ -80,5 +80,5 @@ private:
 	QuadTreeNode root;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

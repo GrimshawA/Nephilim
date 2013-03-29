@@ -9,11 +9,11 @@
 #include "Transformable.h"
 #include "ReferenceCountable.h"
 #include "VertexArray.h"
-#include "Textures.h"
+#include "Texture.h"
 #include <vector>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace Blend
 {
@@ -31,7 +31,7 @@ class ContentBank;
 		\class Sprite
 		\brief Extends sf::Sprite and implements more functionality.
 */
-class PARABOLA_API Sprite: public Drawable, public Animable, public Transformable, public RefCountable{
+class NEPHILIM_API Sprite: public Drawable, public Animable, public Transformable, public RefCountable{
 public:
 	/// Default sprite
 	Sprite();
@@ -132,5 +132,5 @@ protected:
 class ASEngine;
 bool registerSprite(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

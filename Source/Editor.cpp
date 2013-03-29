@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	
 /// Creates the editor
 Editor::Editor() : myEditorInterface(NULL),network(new NetworkThread()){
@@ -139,6 +139,6 @@ void Editor::runSimulation(){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

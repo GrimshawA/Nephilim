@@ -7,9 +7,9 @@
 
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UITreeView : public UIControl
+class NEPHILIM_API UITreeView : public UIControl
 {
 public:
 	/// Constructs the tree view
@@ -76,5 +76,5 @@ public:
 /// Typedefs
 typedef UITreeView::Item UITreeViewItem;
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UITreeView_h__

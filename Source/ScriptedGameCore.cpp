@@ -25,7 +25,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void MusicPlayer::play(const String& name)
 {
@@ -422,4 +422,4 @@ GameCore* ScriptGameInstancer::Instance(){
 	return game;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Foundation
 		\class Tree
 		\brief A tree structure utility
 	*/
-	class PARABOLA_API Tree{
+	class NEPHILIM_API Tree{
 	public:
 		
 		/// Get the name of the node
@@ -27,10 +27,10 @@ PARABOLA_NAMESPACE_BEGIN
 		\brief Custom node to hold an object of type T
 	*/
 	template<class T>
-	class PARABOLA_API TreeContainerNode : Tree{
+	class NEPHILIM_API TreeContainerNode : Tree{
 	public:
 		T value;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,9 +5,9 @@
 #include "Strings.h"
 #include "Animation.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API AnimationTextWriter : public AnimationInterface{
+class NEPHILIM_API AnimationTextWriter : public AnimationInterface{
 public:
 	/// Default construction
 	AnimationTextWriter();
@@ -32,5 +32,5 @@ private:
 	AnimationEasingFunction *myFunction;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "AnimationGroup.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
 	\class AnimationGroupParallel
 	\brief Can hold and play multiple animations simultaneously, including other groups.
 */
-class PARABOLA_API AnimationGroupParallel: public AnimationGroup{
+class NEPHILIM_API AnimationGroupParallel: public AnimationGroup{
 public:
 	/// Update the group all at once
 	void update(float elapsedTime);
@@ -20,5 +20,5 @@ private:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

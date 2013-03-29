@@ -4,13 +4,13 @@
 #include "Platform.h"
 #include "Strings.h"
 #include "Sprite.h"
-#include "Textures.h"
+#include "Texture.h"
 #include "State.h"
 #include "AnimationGroupSequential.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API NStateImage : public State
+class NEPHILIM_API NStateImage : public State
 {
 public:
 	/// Construct the state
@@ -42,5 +42,5 @@ private:
 class ASEngine;
 bool registerNStateImage(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // NStateImage_h__

@@ -4,9 +4,9 @@
 #include "Platform.h"
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API View3D{
+class NEPHILIM_API View3D{
 public:
 	/// Apply the camera to openGL
 	void apply();
@@ -22,5 +22,5 @@ public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

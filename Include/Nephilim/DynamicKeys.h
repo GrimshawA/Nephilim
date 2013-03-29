@@ -7,7 +7,7 @@
 #include <map>
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class TextStream;
 
@@ -27,7 +27,7 @@ typedef map<StringID, KeyList> BindList;
 
 
 */
-class PARABOLA_API DynamicKeyBind{
+class NEPHILIM_API DynamicKeyBind{
 public:
 		DynamicKeyBind();
 
@@ -64,5 +64,5 @@ public:
 		map<StringID, String> ActionNames;
 	
 	};*/
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,7 +5,7 @@ using namespace std;
 #include <stdio.h>
 #include <stdlib.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	bool IsAlphaNumeric(char c){
 		if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') && c == '.')return true;
@@ -251,4 +251,4 @@ TextStream& TextStream::operator<<(const String &value){
 		return *this;
 	};
 	*/
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

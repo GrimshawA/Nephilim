@@ -32,12 +32,12 @@
 #include "Rect.h"
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////
 /// \brief Define a 3x3 transform matrix
 ///
 ////////////////////////////////////////////////////////////
-class PARABOLA_API Transform
+class NEPHILIM_API Transform
 {
 public :
 
@@ -371,7 +371,7 @@ private:
 /// \return New combined transform
 ///
 ////////////////////////////////////////////////////////////
-PARABOLA_API Transform operator *(const Transform& left, const Transform& right);
+NEPHILIM_API Transform operator *(const Transform& left, const Transform& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates sf::Transform
@@ -385,7 +385,7 @@ PARABOLA_API Transform operator *(const Transform& left, const Transform& right)
 /// \return The combined transform
 ///
 ////////////////////////////////////////////////////////////
-PARABOLA_API Transform& operator *=(Transform& left, const Transform& right);
+NEPHILIM_API Transform& operator *=(Transform& left, const Transform& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates sf::Transform
@@ -399,9 +399,9 @@ PARABOLA_API Transform& operator *=(Transform& left, const Transform& right);
 /// \return New transformed point
 ///
 ////////////////////////////////////////////////////////////
-PARABOLA_API Vec2f operator *(const Transform& left, const Vec2f& right);
+NEPHILIM_API Vec2f operator *(const Transform& left, const Vec2f& right);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 
 #endif // SFML_TRANSFORM_HPP

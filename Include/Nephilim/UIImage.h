@@ -4,9 +4,9 @@
 #include "Platform.h"
 #include "UIControl.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UIImage : public UIControl
+class NEPHILIM_API UIImage : public UIControl
 {
 public:
 	UIImage();
@@ -27,5 +27,5 @@ public:
 class ASEngine;
 bool registerUIImage(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIImage_h__

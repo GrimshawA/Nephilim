@@ -8,7 +8,7 @@
 #include "Sprite.h"
 #include "Renderer.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Scripting
@@ -21,7 +21,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	\todo under development. when done i remove this.
 */
-class PARABOLA_API ScriptGame : public GameCore{
+class NEPHILIM_API ScriptGame : public GameCore{
 public:
 	/// Initializes the scripted game from a specific script
 	ScriptGame(const String& startupScript = "GameMain.as");
@@ -67,7 +67,7 @@ private:
 	\class ScriptGameInstancer
 	\brief 
 */
-class PARABOLA_API ScriptGameInstancer : public GameInstancerInterface{
+class NEPHILIM_API ScriptGameInstancer : public GameInstancerInterface{
 public:	
 	/// Prepares this instancer to create ScriptGame named as desired, and with entry point wherever wanted
 	ScriptGameInstancer(String name, String entryPoint);
@@ -79,5 +79,5 @@ private:
 	String myName, myEntryPoint;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

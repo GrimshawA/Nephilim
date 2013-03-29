@@ -3,12 +3,12 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API RenderStates{
+class NEPHILIM_API RenderStates{
 public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

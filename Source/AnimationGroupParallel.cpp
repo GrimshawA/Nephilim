@@ -2,7 +2,7 @@
 
 #include "Nephilim/AnimationGroupParallel.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Update the group all at once
 void AnimationGroupParallel::update(float elapsedTime){
@@ -13,6 +13,6 @@ void AnimationGroupParallel::update(float elapsedTime){
 	}	
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

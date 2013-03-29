@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Creates an empty network thread, but it is sleeping until sockets are added
 NetworkThread::NetworkThread(){
 	mySleeping = true;
@@ -42,6 +42,6 @@ void NetworkThread::threadFunc(){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

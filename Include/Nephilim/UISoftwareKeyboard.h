@@ -5,14 +5,14 @@
 #include "UIControl.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UISoftwareKeyboard
 	\brief A simple software keyboard
 */
-class PARABOLA_API UISoftwareKeyboard : public UIControl{
+class NEPHILIM_API UISoftwareKeyboard : public UIControl{
 public:
 	/// Constructs the button
 	UISoftwareKeyboard();
@@ -58,5 +58,5 @@ void UISoftwareKeyboard::setProperty(const String& propertyName, const T& proper
 }
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UISoftwareKeyboard_h__

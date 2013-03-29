@@ -9,7 +9,7 @@
 
 #include <enet/enet.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Network
@@ -88,5 +88,5 @@ private:
 	ENetPeer *myPeer;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

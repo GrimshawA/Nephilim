@@ -8,7 +8,7 @@
 #include "AnimationEasing.h"
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace PlayModes{
 	enum State{
@@ -23,7 +23,7 @@ namespace PlayModes{
 	\class Animable
 	\brief Base class for all objects that can be animated.
 */
-class PARABOLA_API Animable{
+class NEPHILIM_API Animable{
 public:
 
 	/// Virtual destructor, for detaching running animations.
@@ -62,7 +62,7 @@ namespace AnimationStates{
 
 	Any animation class inherits
 */
-class PARABOLA_API AnimationInterface : public sigc::trackable{
+class NEPHILIM_API AnimationInterface : public sigc::trackable{
 public:
 	/// Creates the animation default states
 	AnimationInterface();
@@ -151,5 +151,5 @@ private:
 	float m_duration; ///< Duration of the animation, used in most.
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace ApplicationSettings{
 	enum PlatformType{
@@ -20,7 +20,7 @@ namespace ApplicationSettings{
 
 class ScopedFile;
 
-class PARABOLA_API Application{
+class NEPHILIM_API Application{
 public:
 	Application();
 
@@ -66,6 +66,6 @@ public:
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

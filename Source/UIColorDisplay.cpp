@@ -1,6 +1,6 @@
 #include <Nephilim/UIColorDisplay.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Set the color displayed in the control
 void UIColorDisplay::setColor(Color color){
@@ -8,4 +8,4 @@ void UIColorDisplay::setColor(Color color){
 }
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

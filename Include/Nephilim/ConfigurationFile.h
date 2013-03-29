@@ -17,7 +17,7 @@ namespace pE{
 
 		Not meant to be used individualy.
 	*/
-	class PARABOLA_API ConfigurationFileCategory{
+	class NEPHILIM_API ConfigurationFileCategory{
 	public:
 
 		/**
@@ -94,7 +94,7 @@ namespace pE{
 
 		See the functions documentation for more information.
 	*/
-	class PARABOLA_API ConfigurationFile{
+	class NEPHILIM_API ConfigurationFile{
 	public:
 		/**
 			\brief Constructs the default ConfigurationFile.

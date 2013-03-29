@@ -7,14 +7,14 @@
 #include <SFML/System/Mutex.hpp>
 #include <SFML/System/Lock.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Core
 	\class BackgroundWorkerThread
 	\brief Launches a separate thread to perform an arbitrary task
 */
-class PARABOLA_API BackgroundWorkerThread{
+class NEPHILIM_API BackgroundWorkerThread{
 public:
 	/// Startup
 	BackgroundWorkerThread();
@@ -40,5 +40,5 @@ private:
 	void* m_returnValue;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

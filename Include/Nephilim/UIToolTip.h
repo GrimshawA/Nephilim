@@ -3,19 +3,19 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIToolTip
 	\brief Utility control for showing help over other controls
 */
-class PARABOLA_API UIToolTip{
+class NEPHILIM_API UIToolTip{
 public:
 
 private:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIToolTip_h__

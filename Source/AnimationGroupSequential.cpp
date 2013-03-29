@@ -1,7 +1,7 @@
 #include "Nephilim/AnimationGroupSequential.h"
 #include "Nephilim/Logger.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Default construction
 AnimationGroupSequential::AnimationGroupSequential(){
@@ -54,4 +54,4 @@ float AnimationGroupSequential::onUpdate(float elapsedTime){
 	return std::max<float>(elapsedTime, 0.f);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

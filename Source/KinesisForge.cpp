@@ -10,7 +10,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Builds the forge over a world, it must stay alive while the forge is doing any operations on it
 KinesisForge::KinesisForge(KinesisWorld* workWorld) : m_world(workWorld){
@@ -373,4 +373,4 @@ std::vector<KinesisBodyActor*> KinesisForge::createRope(const Vec2f &position, f
 		
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

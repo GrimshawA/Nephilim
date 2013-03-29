@@ -10,7 +10,7 @@
 #include <map>
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class SceneRenderer;
 class EntityManager;
@@ -22,7 +22,7 @@ class EntityManager;
 	...
 
 */
-class PARABOLA_API Entity : public SceneItem{
+class NEPHILIM_API Entity : public SceneItem{
 public:
 	/// Entity constructor, should not be instanced manually.
 	Entity(EntityManager *parent);
@@ -63,5 +63,5 @@ private:
 
 	Vec2f myPosition;
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

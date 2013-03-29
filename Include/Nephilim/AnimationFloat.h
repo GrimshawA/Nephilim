@@ -5,14 +5,14 @@
 #include "Animation.h"
 #include "AnimationEasing.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
 	\class AnimationFloat
 	\brief Animates a float variable with optional easing functions
 */
-class PARABOLA_API AnimationFloat : public AnimationInterface{
+class NEPHILIM_API AnimationFloat : public AnimationInterface{
 public:
 	AnimationFloat() : AnimationInterface(){
 		m_animatedFloat = NULL;
@@ -54,5 +54,5 @@ private:
 	float m_target;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

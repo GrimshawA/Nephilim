@@ -5,9 +5,9 @@
 #include "AnimationInterface.h"
 #include "AnimationEasing.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API AnimationFade : public AnimationInterface{
+class NEPHILIM_API AnimationFade : public AnimationInterface{
 public:
 	/// Unitialized animation
 	AnimationFade();
@@ -40,5 +40,5 @@ private:
 	int end;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // PARABOLA_ANIMATIONFADE_H

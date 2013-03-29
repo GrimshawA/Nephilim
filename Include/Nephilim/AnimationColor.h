@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "Animation.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
 	\class AnimationColor
 	\brief Can animate colors in Animable objects
 */
-class PARABOLA_API AnimationColor : public AnimationInterface{
+class NEPHILIM_API AnimationColor : public AnimationInterface{
 public:
 	/// Create the color animation
 	AnimationColor();
@@ -24,5 +24,5 @@ private:
 	float m_duration;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

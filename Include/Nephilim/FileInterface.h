@@ -6,11 +6,11 @@
 #include "Signals.h"
 #include "IODevice.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ScopedFile;
 
-class PARABOLA_API FileInterface{
+class NEPHILIM_API FileInterface{
 public:
 	
 	/// Get an open handle to an asset in the underlying filesystem
@@ -32,5 +32,5 @@ public:
 	static String m_root;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

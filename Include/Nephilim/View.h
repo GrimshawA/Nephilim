@@ -7,7 +7,7 @@
 #include "Transform.h"
 #include "ReferenceCountable.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 enum ViewportPreset{
 	TopLeftQuarter = 0,
@@ -28,7 +28,7 @@ enum ViewportPreset{
 
 		In practice, it is a 2D projection of your scene, orthogonal, which you can configure to taste.
 */
-class PARABOLA_API View : public RefCountable{
+class NEPHILIM_API View : public RefCountable{
 public:
 		View();
 
@@ -94,6 +94,6 @@ typedef View Camera2D;
 class ASEngine;
 bool registerView(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

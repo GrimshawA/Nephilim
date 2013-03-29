@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include "Signals.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ScriptEngine;
 
@@ -14,7 +14,7 @@ class ScriptEngine;
 	\class ScriptEngineTask
 	\brief Represents a command that can be executed by the ScriptEngine
 */
-class PARABOLA_API ScriptEngineTask{
+class NEPHILIM_API ScriptEngineTask{
 public:
 	/// Creates a new task instance with reference count 0, meaning not inserted yet
 	ScriptEngineTask();
@@ -58,7 +58,7 @@ private:
 
 	And you can immediately call your new task, and the function you specified is called.
 */
-class PARABOLA_API ScriptEngineTaskGeneric : public ScriptEngineTask{
+class NEPHILIM_API ScriptEngineTaskGeneric : public ScriptEngineTask{
 public:
 	/// The signal to be fired when the command is called
 	sigc::signal<void, String, String> onCall;
@@ -67,5 +67,5 @@ public:
 	void run(const String &calledAs, String arguments);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

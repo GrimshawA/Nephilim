@@ -6,7 +6,7 @@
 
 //#include "SceneGraph.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Forge
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	A forge cell is a big container of a region of the world. It is meant to be loaded and unloaded at demand, for a map without loadings.
 */
-class PARABOLA_API ForgeCell{
+class NEPHILIM_API ForgeCell{
 public:
 	ForgeCell();
 	
@@ -30,5 +30,5 @@ private:
 	ForgeCell* m_down; ///< The cell at the bottom
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // ForgeWorldRegion_h__

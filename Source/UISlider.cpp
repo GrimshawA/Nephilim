@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Constructs the slider with default values
 UISlider::UISlider(){
@@ -70,4 +70,4 @@ bool UISlider::onEventNotification(Event& event){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

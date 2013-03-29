@@ -16,7 +16,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace Forge{
 namespace SizeLimit{
@@ -108,5 +108,5 @@ private:
 	std::map<String, Vec2f> m_pointMarkers;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,7 +5,7 @@
 #include "Strings.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	/**
 		\ingroup Foundation
 		\class DateTime
@@ -17,7 +17,7 @@ PARABOLA_NAMESPACE_BEGIN
 		\endcode
 		Easy as it looks. Prints '2003-06-22T20:57:29' as an example.
 	*/
-	class PARABOLA_API DateTime{
+	class NEPHILIM_API DateTime{
 	public:
 		/// Creates a DateTime object
 		DateTime();
@@ -42,5 +42,5 @@ PARABOLA_NAMESPACE_BEGIN
 	};
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

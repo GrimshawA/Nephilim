@@ -3,12 +3,12 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API AbstractView{
+class NEPHILIM_API AbstractView{
 public:
 	
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,7 +5,7 @@
 //#include "FileStream.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	/**
 		\ingroup Foundation
 		\class StringStream
@@ -52,5 +52,5 @@ PARABOLA_NAMESPACE_BEGIN
 		String *str;
 	};*/
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

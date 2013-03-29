@@ -1,7 +1,7 @@
 #include "Nephilim/KinesisContactListener.h"
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	/************************************************************************/
 	/* CONTACT LISTENER                                                                     */
 	/************************************************************************/
@@ -23,4 +23,4 @@ PARABOLA_NAMESPACE_BEGIN
 	void KinesisContactListener::PostSolve(b2Contact *contact, const b2ContactImpulse *impulse){
 
 	};
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

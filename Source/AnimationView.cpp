@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Creates an animation for the view 
 AnimationView::AnimationView(View &view) : AnimationInterface(), myTimeLeft(0.f){
 	myView = &view;
@@ -116,6 +116,6 @@ void AnimationView::createEarthquake(float duration, float intensity){
 	play();
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

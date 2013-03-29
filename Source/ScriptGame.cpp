@@ -11,7 +11,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Initializes the scripted game from a specific script
 ScriptGame::ScriptGame(const String& startupScript) : GameCore(){
@@ -163,4 +163,4 @@ GameCore* ScriptGameInstancer::Instance(){
 	return game;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

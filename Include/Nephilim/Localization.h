@@ -8,7 +8,7 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Core
@@ -112,7 +112,7 @@ private:
 	String myDefaultLanguage;
 };
 */
-class PARABOLA_API LocalizationUnit
+class NEPHILIM_API LocalizationUnit
 {
 public:
 	LocalizationUnit();
@@ -124,5 +124,5 @@ public:
 	String m_currentLanguage;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,7 +5,7 @@
 #include "UIControl.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ASSlot;
 /**
@@ -13,7 +13,7 @@ class ASSlot;
 	\class UIButton
 	\brief A simple button control
 */
-class PARABOLA_API UIButton : public UIControl{
+class NEPHILIM_API UIButton : public UIControl{
 public:
 	/// Constructs the button
 	UIButton();
@@ -70,5 +70,5 @@ void UIButton::setProperty(const String& propertyName, const T& propertyValue)
 class ASEngine;
 bool registerUIButton(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIButton_h__

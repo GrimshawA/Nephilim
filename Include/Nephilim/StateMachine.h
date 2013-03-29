@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	class Renderer;
 	class Event;
@@ -19,7 +19,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		It allows you to create a machine and add states to it, then transition between them.
 	*/
-	class PARABOLA_API StateMachine{
+	class NEPHILIM_API StateMachine{
 	public:
 		/// Creates an empty state machine
 		StateMachine();
@@ -73,5 +73,5 @@ PARABOLA_NAMESPACE_BEGIN
 		std::map<int, StateMachineNode*> nodes;
 		std::vector<StateMachineNode*> nodeStack;		
 	};
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -11,7 +11,7 @@ void cglPrepareExtensions();
 #include <GL/glew.h>
 #include <GL/gl.h>
 
-void cglPrepareExtensions()
+static void cglPrepareExtensions()
 {
 	glewInit();
 }

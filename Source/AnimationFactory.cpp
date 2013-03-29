@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void AnimationFactory::addAnimation(AnimationInterface* animation){
 		myAnimations.push_back(animation);
@@ -21,4 +21,4 @@ void AnimationFactory::update(float elapsedTime){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

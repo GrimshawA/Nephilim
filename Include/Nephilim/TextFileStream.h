@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "FileStream.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Foundation
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 		This class provides methods to make it easy to load/write text files. 
 		It is naturally able to parse files, even under different "virtual languages" you can create.
 	*/
-	class PARABOLA_API TextFileStream: public FileStream{
+	class NEPHILIM_API TextFileStream: public FileStream{
 	public:
 		/// Creates a stream that points to nowhere
 		TextFileStream();
@@ -113,5 +113,5 @@ PARABOLA_NAMESPACE_BEGIN
 		String delimiter;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

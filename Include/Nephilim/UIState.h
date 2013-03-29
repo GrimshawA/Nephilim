@@ -6,7 +6,7 @@
 #include "Font.h"
 #include "Localization.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class UIWindow;
 class UIControl;
@@ -69,5 +69,5 @@ public:
 	String m_activeLanguage;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIStateContext_h__

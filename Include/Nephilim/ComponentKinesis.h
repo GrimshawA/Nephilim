@@ -5,7 +5,7 @@
 #include "EntityComponent.h"
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup SceneGraph
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 
 */
-class PARABOLA_API ComponentPhysicsCompound : public EntityComponent{
+class NEPHILIM_API ComponentPhysicsCompound : public EntityComponent{
 public:
 	/// Creates the compound instance
 	ComponentPhysicsCompound(const String &name);
@@ -29,5 +29,5 @@ public:
 	void createRope(Vec2f ropeStart, float fraglen, int fragments);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

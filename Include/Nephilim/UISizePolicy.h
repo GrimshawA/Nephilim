@@ -3,9 +3,9 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UISizePolicy
+class NEPHILIM_API UISizePolicy
 {
 public:
 
@@ -21,5 +21,5 @@ public:
 	float width, height;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UISizePolicy_h__

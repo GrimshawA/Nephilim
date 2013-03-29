@@ -4,9 +4,9 @@
 #include "Platform.h"
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API Mouse
+class NEPHILIM_API Mouse
 {
 public :
 
@@ -84,7 +84,7 @@ public :
 };
 
 
-class PARABOLA_API Keyboard
+class NEPHILIM_API Keyboard
 {
 public :
 
@@ -211,7 +211,7 @@ public :
 	//static bool isKeyPressed(Key key);
 };
 
-class PARABOLA_API Joystick
+class NEPHILIM_API Joystick
 {
 public :
 
@@ -315,7 +315,7 @@ public :
 	//static void update();
 };
 
-class PARABOLA_API Event{
+class NEPHILIM_API Event{
 public:
 	float x,y;
 
@@ -512,5 +512,5 @@ public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

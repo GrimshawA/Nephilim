@@ -8,7 +8,7 @@
 #include "AndroidInterface.h"
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 #ifdef PARABOLA_ANDROID
 #define TESTLOG(x) __android_log_print(ANDROID_LOG_INFO, "ParabolaLogger", (x));
@@ -42,7 +42,7 @@ namespace LoggerSettings{
 	\class Logger
 	\brief Ability to log information into multiple destinations
 */
-class PARABOLA_API Logger{
+class NEPHILIM_API Logger{
 public:
 
 	/// Simply outputs the string into the stdout
@@ -59,5 +59,5 @@ private:
 #define DEBUG_MESSAGE(x) 
 #endif
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

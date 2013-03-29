@@ -18,7 +18,7 @@
 	High-level module to manage game logic and rendering.
 */
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class SceneRenderer;
 class KinesisWorld;
 /*
@@ -37,7 +37,7 @@ public:
 
 	...
 */
-class PARABOLA_API SceneGraph : public Node{
+class NEPHILIM_API SceneGraph : public Node{
 public:
 	/// Creates a named scene graph
 	SceneGraph(const String &name);

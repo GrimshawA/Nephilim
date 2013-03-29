@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Sets the reference count to 1
 RefCountable::RefCountable(){
 	refCount = 1;
@@ -35,4 +35,4 @@ void RefCountable::removeReference(){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

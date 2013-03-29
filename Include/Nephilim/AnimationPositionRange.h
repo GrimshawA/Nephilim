@@ -10,7 +10,7 @@ namespace pE{
 		\class AnimationPositionRange
 		\brief Provides a way to animate an object's position from point A to point B
 	*/
-	class PARABOLA_API AnimationPositionRange : public AnimationRange {
+	class NEPHILIM_API AnimationPositionRange : public AnimationRange {
 	public:
 		AnimationPositionRange();
 		AnimationPositionRange(Animated &Object);

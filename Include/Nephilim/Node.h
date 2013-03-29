@@ -6,7 +6,7 @@
 
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace SceneGraphNodeType{
 	enum NodeTypes{
@@ -21,7 +21,7 @@ namespace SceneGraphNodeType{
 /**
 
 */
-class PARABOLA_API Node{
+class NEPHILIM_API Node{
 public:
 	/// Basic Node initialization from with a name
 	Node(const String &name);
@@ -76,5 +76,5 @@ private:
 	
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

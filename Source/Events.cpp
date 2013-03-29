@@ -6,7 +6,7 @@
 #include "Nephilim/Engine.h"
 #include <Rocket/Core/Input.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Catches one event from the window event queue.
 /// Similar to Window->GetEvent() but if send_to_handlers is true
@@ -331,6 +331,6 @@ void Event::dispatch(EventHandler *handler){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

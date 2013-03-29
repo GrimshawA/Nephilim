@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Exports events as a reference type
 bool ASEngine::exportEvents(){
@@ -225,4 +225,4 @@ bool ASEngine::exportEvents(){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

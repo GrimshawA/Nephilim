@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include <Box2D/Box2D.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Kinesis
@@ -13,7 +13,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 
 */
-class PARABOLA_API KinesisContactListener : public b2ContactListener{
+class NEPHILIM_API KinesisContactListener : public b2ContactListener{
 public:
 	/// Called when a 
 	virtual void BeginContact (b2Contact *contact);	
@@ -24,5 +24,5 @@ public:
 	/// Called when a 
 	virtual void PostSolve(b2Contact *contact, const b2ContactImpulse *impulse);
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

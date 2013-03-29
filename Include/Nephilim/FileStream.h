@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 		/**
 			\ingroup Foundation
 			\class FileStream
@@ -192,5 +192,5 @@ PARABOLA_NAMESPACE_BEGIN
 			unsigned long open_mode;
 		};*/
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

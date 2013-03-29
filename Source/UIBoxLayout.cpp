@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Default construction
 /// By default the orientation is set as Vertical and no animation
@@ -93,4 +93,4 @@ void UIBoxLayout::doLayout(UIControl* parent)
 	cout<<"Layouting: "<<parent->getChildCount()<<endl;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -1,6 +1,6 @@
 #include <Nephilim/UISurface.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Construct the surface
 UISurface::UISurface() :
@@ -45,4 +45,4 @@ String UISurface::getName(){
 	return m_name;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -3,7 +3,7 @@
 #include <Nephilim/ScopedFile.h>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Shuts down the environment for program closure
 void Application::close(){
@@ -175,4 +175,4 @@ void Application::MobileServices::sendTextMessage(String number, String content)
 #endif
 };
 */
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

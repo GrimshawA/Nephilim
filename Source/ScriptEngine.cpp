@@ -6,7 +6,7 @@
 #include "Nephilim/StringList.h"
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 
@@ -96,5 +96,5 @@ void ScriptEngine::showTask(const String &task_name){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

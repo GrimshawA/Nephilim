@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "Animation.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
 	\class AnimationStall
 	\brief Animation meant to stall only, if you need to skip some time until the next animation.
 */
-class PARABOLA_API AnimationStall : public AnimationInterface{
+class NEPHILIM_API AnimationStall : public AnimationInterface{
 public:
 	AnimationStall();
 
@@ -29,5 +29,5 @@ public:
 	float elapsedSinceStart;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

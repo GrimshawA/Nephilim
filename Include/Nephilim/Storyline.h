@@ -7,7 +7,7 @@
 #include <list>
 #include "SceneGraph.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	enum PlayType{
 		PLAYING = 0,
@@ -20,7 +20,7 @@ PARABOLA_NAMESPACE_BEGIN
 		\class Storyline
 		\brief Represents one sequence of actions to form a movie clip.
 	*/
-	class PARABOLA_API Storyline{
+	class NEPHILIM_API Storyline{
 	public:
 		Storyline();
 
@@ -128,5 +128,5 @@ PARABOLA_NAMESPACE_BEGIN
 		bool is_at_end;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

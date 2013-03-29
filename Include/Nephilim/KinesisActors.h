@@ -6,7 +6,7 @@
 #include <Box2D/Box2D.h>
 #include "Vectors.h"
 class b2Body;
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Kinesis
@@ -16,7 +16,7 @@ PARABOLA_NAMESPACE_BEGIN
 	Every body in the kinesis world has a 1:1 relationship with a KinesisBodyActor
 
 */
-class PARABOLA_API KinesisBodyActor{
+class NEPHILIM_API KinesisBodyActor{
 public:
 	/// Creates a body actor from a body
 	KinesisBodyActor(b2Body *body);
@@ -56,5 +56,5 @@ public:
 	KinesisBodyShape(b2Fixture* fix);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

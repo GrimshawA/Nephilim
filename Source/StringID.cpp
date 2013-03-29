@@ -2,7 +2,7 @@
 #include "Nephilim/CRC32.h"
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	
 		std::map<StringID, String> StringIDMap;
@@ -32,4 +32,4 @@ PARABOLA_NAMESPACE_BEGIN
 			return it->second;
 		};
 	
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -24,7 +24,7 @@
 #include <Box2D/Box2D.h>
 
 struct b2AABB;
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class KinesisWorld;
 class Renderer;
@@ -34,7 +34,7 @@ class Renderer;
 	\class KinesisDebugDraw
 	\brief A debug renderer to draw a Kinesis simulation.
 */
-class PARABOLA_API KinesisDebugDraw : public b2Draw
+class NEPHILIM_API KinesisDebugDraw : public b2Draw
 {
 public:
 	KinesisDebugDraw();
@@ -67,6 +67,6 @@ private:
 //	sf::RenderTarget *myTarget;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif
 

@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN	
+NEPHILIM_NS_BEGIN	
 
 class GameCore;
 /**
@@ -18,7 +18,7 @@ class GameCore;
 
 	Its perfectly possible to register custom commands to it, so it even becomes an in-game console language.
 */	
-class PARABOLA_API ScriptEngine{
+class NEPHILIM_API ScriptEngine{
 public:
 	/// Creates an empty script engine and registers the default ones immediately
 	ScriptEngine();
@@ -59,5 +59,5 @@ private:
 	GameCore *myParent;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

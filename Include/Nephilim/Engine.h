@@ -26,7 +26,7 @@ freely, subject to the following restrictions:
 #include "Strings.h"
 #include "Surface.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class GameCore;
 class Renderer;
 /**
@@ -47,7 +47,7 @@ class Renderer;
 
 	@author Artur Moreira
 */
-class PARABOLA_API Engine
+class NEPHILIM_API Engine
 {
 public:
 	/// Constructs the engine and leaves it in a uninitialized state
@@ -81,5 +81,5 @@ private:
 	static String m_versionString; ///< The version of string(at compile time)
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

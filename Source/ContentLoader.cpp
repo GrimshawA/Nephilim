@@ -2,7 +2,7 @@
 #include "Nephilim/ContentBank.h"
 #include "Nephilim/ContentList.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a new content loader
 ContentLoader::ContentLoader(ContentBank *parent) : myWorking(false), myParent(parent)/*, myThread(NULL)*/{
@@ -98,4 +98,4 @@ void ContentLoader::threadFunction(){
 	}*/
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

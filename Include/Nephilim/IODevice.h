@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
@@ -12,7 +12,7 @@ PARABOLA_NAMESPACE_BEGIN
 	\brief Base class for input/output devices, such as files and network sockets.
 
 */
-class PARABOLA_API IODevice{
+class NEPHILIM_API IODevice{
 public:
 	/// Virtual function for all devices to check for the end of read
 	virtual bool atEnd() = 0;
@@ -38,5 +38,5 @@ public:
 	};
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

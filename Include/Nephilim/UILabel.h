@@ -5,14 +5,14 @@
 #include "UIControl.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UILabel
 	\brief A simple label control
 */
-class PARABOLA_API UILabel : public UIControl{
+class NEPHILIM_API UILabel : public UIControl{
 public:
 	/// Constructs the button
 	UILabel();
@@ -53,5 +53,5 @@ void UILabel::setProperty(const String& propertyName, const T& propertyValue)
 }
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UILabel_h__

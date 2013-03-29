@@ -7,7 +7,7 @@
 #include <cmath>
 #include <stdlib.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 bool registerScopedFile(ASEngine* engine)
 {
@@ -210,4 +210,4 @@ Int64 getFileSize(String path){
 	return 0; // TODO
 };
  
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

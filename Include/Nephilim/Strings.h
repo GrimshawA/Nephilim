@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include <string>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class StringList;
 
@@ -23,7 +23,7 @@ class StringList;
 		- Converting case
 		- Converting to other types
 */
-class PARABOLA_API String: public std::string{
+class NEPHILIM_API String: public std::string{
 public:
 	/// Content is initialized to an empty string.
 	String();
@@ -137,5 +137,5 @@ private:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

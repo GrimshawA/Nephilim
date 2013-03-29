@@ -2,7 +2,7 @@
 #include "Nephilim/EntityManager.h"
 #include "Nephilim/ComponentKinesis.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates the empty entity manager
 EntityManager::EntityManager() : entityNameGenerator("entity"){
@@ -35,5 +35,5 @@ Entity* EntityManager::createEntity(const String &name){
 	myEntities.back()->setName(name);
 	return myEntities.back();
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

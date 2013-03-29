@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "UIControl.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UISlider
 	\brief A common horizontal slider control.
 */
-class PARABOLA_API UISlider : public UIControl{
+class NEPHILIM_API UISlider : public UIControl{
 public:
 	/// Constructs the slider with default values
 	UISlider();
@@ -41,5 +41,5 @@ private:
 	bool dragging;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UISlider_h__

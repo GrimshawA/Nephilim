@@ -1,7 +1,7 @@
 #ifndef MINIMAL_BUILD
 #include "Nephilim/ScriptEngineTask.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Creates a new task instance with reference count 0, meaning not inserted yet
 ScriptEngineTask::ScriptEngineTask(){
 	refCount = 0;
@@ -25,5 +25,5 @@ void ScriptEngineTaskGeneric::run(const String &calledAs, String arguments){
 	onCall.emit(calledAs, arguments);
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

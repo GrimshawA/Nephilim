@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Privately constructs Entity()
 Entity::Entity(EntityManager *parent) : SceneItem(){
@@ -76,6 +76,6 @@ void Entity::resetPosition(){
 	if(getParentSceneNode())
 		myPosition = getParentSceneNode()->getGlobalPosition();
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

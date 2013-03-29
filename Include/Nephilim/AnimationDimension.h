@@ -5,7 +5,7 @@
 #include "Vectors.h"
 #include "Animation.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
@@ -13,7 +13,7 @@ PARABOLA_NAMESPACE_BEGIN
 	\brief Animates a transformable object from dimension A to B
 
 */
-class PARABOLA_API AnimationDimension : public AnimationInterface{
+class NEPHILIM_API AnimationDimension : public AnimationInterface{
 public:
 	/// Construct the position animation
 	AnimationDimension();
@@ -43,5 +43,5 @@ private:
 	AnimationEasingFunction *m_function;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

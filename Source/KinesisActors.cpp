@@ -3,7 +3,7 @@
 #include <Box2D/Box2D.h>
 #include <Nephilim/MMath.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a body actor from a body
 KinesisBodyActor::KinesisBodyActor(b2Body *body) : m_userdata(NULL){
@@ -55,4 +55,4 @@ KinesisBodyShape::KinesisBodyShape(b2Fixture* fix){
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

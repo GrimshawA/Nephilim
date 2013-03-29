@@ -1,6 +1,6 @@
 #include "Nephilim/StringList.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	StringList::StringList(){
 
@@ -48,4 +48,4 @@ PARABOLA_NAMESPACE_BEGIN
 		return out;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

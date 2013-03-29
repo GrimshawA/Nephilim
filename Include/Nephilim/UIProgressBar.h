@@ -5,7 +5,7 @@
 #include "UIControl.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
@@ -34,5 +34,5 @@ private:
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIProgressBar_h__

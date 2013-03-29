@@ -4,12 +4,12 @@
 #include "Platform.h"
 #include "SPARK.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API ParticlePointRenderer : public SPK::Renderer, public SPK::PointRenderBehavior{
+class NEPHILIM_API ParticlePointRenderer : public SPK::Renderer, public SPK::PointRenderBehavior{
 public:
 	static  SPK::Ref<ParticlePointRenderer> create(float screenSize = 1.0f);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

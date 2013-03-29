@@ -7,7 +7,7 @@
 #include "ReferenceCountable.h"
 #include <stdio.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
@@ -17,7 +17,7 @@ PARABOLA_NAMESPACE_BEGIN
 	The main feature of ScopedFile is to support seamlessly reading from entire files and specified regions, like an APK asset, or a file within a package.
 
 */
-class PARABOLA_API ScopedFile : public IODevice, public RefCountable{
+class NEPHILIM_API ScopedFile : public IODevice, public RefCountable{
 public:
 	/// Constructs an uninitialized stream
 	ScopedFile();
@@ -85,5 +85,5 @@ private:
 class ASEngine;
 bool registerScopedFile(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

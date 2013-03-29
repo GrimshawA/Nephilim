@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class IODevice; //forward decl
 
@@ -16,7 +16,7 @@ class IODevice; //forward decl
 	This class provides methods to make it easy to load/write text files. 
 	It is naturally able to parse files, even under different "virtual languages" you can create.
 */
-class PARABOLA_API TextStream{
+class NEPHILIM_API TextStream{
 public:
 	/// An yet empty stream, needs future association with a IODevice
 	TextStream();
@@ -114,5 +114,5 @@ private:
 	IODevice *m_device;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

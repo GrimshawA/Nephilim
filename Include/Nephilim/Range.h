@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
@@ -11,11 +11,11 @@ PARABOLA_NAMESPACE_BEGIN
 	\brief An interval of values
 */
 template<typename T>
-class PARABOLA_API Range{
+class NEPHILIM_API Range{
 public:
 	T begin;
 	T end;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // Range_h__

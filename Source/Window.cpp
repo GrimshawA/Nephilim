@@ -13,7 +13,7 @@
 using namespace std;
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 #ifdef NEPHILIM_DESKTOP
 class Window::WindowImplementation : public sf::RenderWindow{
@@ -245,4 +245,4 @@ EventDispatcher& Window::eventDispatcher(){
 };
 */
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

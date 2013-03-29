@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	
 class ASSlot : public sigc::trackable
 {
@@ -28,5 +28,5 @@ public:
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // ASSlot_h__

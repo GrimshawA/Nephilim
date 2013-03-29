@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Foundation
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		
 	*/
-	class PARABOLA_API BoundingBox{
+	class NEPHILIM_API BoundingBox{
 	public:
 		/// Creates a default (0,0)(0,0) rectangle
 		BoundingBox();
@@ -45,5 +45,5 @@ PARABOLA_NAMESPACE_BEGIN
 
 	typedef BoundingBox AABB;
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

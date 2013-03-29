@@ -11,14 +11,14 @@
 #include "UIToolTip.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIWindow
 	\brief A Surface to draw user interface controls.
 */
-class PARABOLA_API UIWindow{
+class NEPHILIM_API UIWindow{
 public:
 	/// Construct the window
 	UIWindow();
@@ -114,5 +114,5 @@ private:
 	bool m_surfaceContainerLock;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

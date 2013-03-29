@@ -14,7 +14,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class GameCore;
 class ParticleSystem;
@@ -97,7 +97,7 @@ B* refCast(A* a)
 	Also, some export functions may need to receive data to function right, such as the one that provides you
 	access to your game.
 */
-class PARABOLA_API ASEngine{
+class NEPHILIM_API ASEngine{
 public:
 	/// Creates an empty but ready angel script engine
 	ASEngine();
@@ -271,5 +271,5 @@ private:
 	/// Profile
 	ScriptProfiles::Profiles myScriptingProfile;
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

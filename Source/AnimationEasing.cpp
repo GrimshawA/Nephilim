@@ -1,6 +1,6 @@
 #include "Nephilim/AnimationEasing.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////////////// Linear easing function
 /// Implementation of compute for lerp
@@ -42,4 +42,4 @@ float AnimationEasingQuartic::compute(float t,float b,float c,float d){
 	t -= 2;
 	return -c/2 * (t*t*t*t - 2) + b;
 }
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

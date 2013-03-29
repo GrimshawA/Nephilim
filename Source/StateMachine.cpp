@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	StateMachine::StateMachine(){
 
 	};
@@ -138,4 +138,4 @@ void StateMachine::drawStates(Renderer *renderer){
 		}
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

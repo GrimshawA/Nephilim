@@ -8,8 +8,8 @@
 #include <map>
 #include "EntityComponent.h"
 
-PARABOLA_NAMESPACE_BEGIN
-class PARABOLA_API ComponentInstancer{
+NEPHILIM_NS_BEGIN
+class NEPHILIM_API ComponentInstancer{
 public:
 	virtual void* instance(){return NULL;}
 	virtual void* instance(const StringList &params){return NULL;}
@@ -21,7 +21,7 @@ protected:
 };
 
 template<class T>
-class PARABOLA_API ComponentInstancerGeneric : public ComponentInstancer {
+class NEPHILIM_API ComponentInstancerGeneric : public ComponentInstancer {
 public:
 	virtual void* instance(){
 		EntityComponent* comp = new T(myComponentName);
@@ -40,7 +40,7 @@ public:
 
 	Works as a factory of components, so they can be easily found and added to an entity
 */
-class PARABOLA_API EntityComponentFactory{
+class NEPHILIM_API EntityComponentFactory{
 public:
 
 	/// Spawns a registered component without parameters
@@ -63,5 +63,5 @@ template<class T>
 void EntityComponentFactory::registerComponent(const String &name){
 	myComponentInstancers[makeStringID(name, false)] = new ComponentInstancerGeneric<T>();
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

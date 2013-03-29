@@ -5,7 +5,7 @@
 #include "Animation.h"
 #include "Views.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
@@ -17,7 +17,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	All effects are always made relative to the view center, so you can move it around and the effect will prevail.
 */
-class PARABOLA_API AnimationView : public AnimationInterface{
+class NEPHILIM_API AnimationView : public AnimationInterface{
 public:
 	/// Creates an animation for the view 
 	AnimationView(View &view);
@@ -62,5 +62,5 @@ private:
 	float saved_x, saved_y;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

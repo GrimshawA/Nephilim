@@ -2,7 +2,7 @@
 #include "Nephilim/NetworkThread.h"
 #include <enet/enet.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a network socket and registers it in the global thread for auto updating, if you so desire.
 NetworkSocket::NetworkSocket(){
@@ -112,4 +112,4 @@ void NetworkSocket::setOutgoingBandwidthLimit(int bandwidth_limit){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////
 const Transform Transform::Identity;
 
@@ -268,4 +268,4 @@ Vec2f operator *(const Transform& left, const Vec2f& right)
     return left.transformPoint(right);
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -6,13 +6,13 @@
 #include <map>
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\class StoryActionStyle
 		\brief Represents the set of parameters an action is configured with.
 	*/
-	class PARABOLA_API StoryActionStyle{
+	class NEPHILIM_API StoryActionStyle{
 	public:
 		StoryActionStyle(){
 
@@ -62,5 +62,5 @@ PARABOLA_NAMESPACE_BEGIN
 		std::map<String, StringList> stylesheet;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

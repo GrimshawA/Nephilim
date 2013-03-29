@@ -1,6 +1,6 @@
 #include <Nephilim/BackgroundWorkerThread.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Startup
 BackgroundWorkerThread::BackgroundWorkerThread() : m_thread(&BackgroundWorkerThread::threadFunc, this){
@@ -23,4 +23,4 @@ void BackgroundWorkerThread::threadFunc(){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

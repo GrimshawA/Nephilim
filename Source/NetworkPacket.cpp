@@ -4,7 +4,7 @@
 #include <string.h>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Start the empty packet
 Packet::Packet(){
@@ -191,4 +191,4 @@ Packet NetworkPacket::getData(){
 	return p;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

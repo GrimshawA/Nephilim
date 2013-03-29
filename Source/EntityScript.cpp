@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates the entity script
 EntityScript::EntityScript(EntityManager *parent) : Entity(parent){
@@ -26,6 +26,6 @@ void EntityScript::onAttach(){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

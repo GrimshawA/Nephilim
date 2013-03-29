@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////
 Transformable::Transformable() :
 m_origin                    (0, 0),
@@ -212,4 +212,4 @@ const Transform& Transformable::getInverseTransform() const
     return m_inverseTransform;
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

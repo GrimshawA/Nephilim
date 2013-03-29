@@ -6,7 +6,7 @@
 #include "ReferenceCountable.h"
 #include "Clock.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class StateStack;
 class Renderer;
@@ -24,7 +24,7 @@ class Event;
 
 		If you wish to delete the node yourself, use AddReference() as soon as you create it.
 */
-class PARABOLA_API State : public RefCountable{
+class NEPHILIM_API State : public RefCountable{
 public:
 		/// Creates a default state
 		State();
@@ -83,5 +83,5 @@ public:
 		bool m_scheduledRemoval;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

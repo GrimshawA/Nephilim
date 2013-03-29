@@ -5,10 +5,10 @@
 #include "StringID.h"
 #include "ContentList.h"
 #include "ContentLoader.h"
-#include "Textures.h"
+#include "Texture.h"
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 namespace Content
 {
@@ -48,7 +48,7 @@ class GameCore;
 		- ...
 
 */
-class PARABOLA_API ContentBank{
+class NEPHILIM_API ContentBank{
 public:
 	/// Creates a loose content bank, destroys its resources on destruction
 	ContentBank();
@@ -112,5 +112,5 @@ private:
 class ASEngine;
 bool registerContentBank(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -17,12 +17,12 @@
 #include "UILayout.h"
 #include "UIState.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 class ASSlot;
 
-class PARABOLA_API UIControl : public sigc::trackable, public Animable, public RefCountable{
+class NEPHILIM_API UIControl : public sigc::trackable, public Animable, public RefCountable{
 public:
 	friend class UILayout;
 
@@ -269,5 +269,5 @@ void UIControl::setProperty(const String& propertyName, const T& propertyValue)
 class ASEngine;
 bool registerUIControlSubtype(const String& name, ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

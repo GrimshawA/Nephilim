@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "AnimationGroup.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
 	\class AnimationGroupSequential
 	\brief Can hold and play animations in a sequential order, including other groups of animations
 */
-class PARABOLA_API AnimationGroupSequential : public AnimationGroup {
+class NEPHILIM_API AnimationGroupSequential : public AnimationGroup {
 public:
 	/// Default construction
 	AnimationGroupSequential();
@@ -28,5 +28,5 @@ private:
 	unsigned int m_index;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

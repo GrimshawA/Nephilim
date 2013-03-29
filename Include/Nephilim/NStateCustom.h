@@ -4,12 +4,12 @@
 #include "Platform.h"
 #include "Strings.h"
 #include "Sprite.h"
-#include "Textures.h"
+#include "Texture.h"
 #include "State.h"
 #include "ASSlot.h"
 #include "UIManager.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class ASEngine;
 class ASScript;
 
@@ -18,7 +18,7 @@ class ASScript;
 	\class NStateCustom
 	\brief Exclusive use by ScriptedGameCore apps.
 */
-class PARABOLA_API NStateCustom : public State
+class NEPHILIM_API NStateCustom : public State
 {
 public:
 	/// Construct the state
@@ -74,5 +74,5 @@ private:
 class ASEngine;
 bool registerNStateCustom(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // NStateCustom_h__

@@ -8,7 +8,7 @@
 #include "Drawable.h"
 #include "Views.h"
 #include "Window.h"
-#include "Textures.h"
+#include "Texture.h"
 #include "Text.h"
 #include "ParticleSystem.h"
 #include "Lighting.h"

@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	
 /// Construct
 ForgeWorld::ForgeWorld() : m_streamPolicy(ForgeWorld::OnDemand){
@@ -74,4 +74,4 @@ bool ForgeWorld::saveToFile(const String& fileName){
 	return false;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

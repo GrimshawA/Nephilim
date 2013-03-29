@@ -1,6 +1,6 @@
 #include "Nephilim/KinesisQueryCallback.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 KinesisQueryCallback::KinesisQueryCallback(){
 		myEnableMultiFixture = true;
 };
@@ -28,4 +28,4 @@ bool KinesisQueryCallback::ReportFixture(b2Fixture *fixture){
 		return myEnableMultiFixture;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

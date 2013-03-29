@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Default construction
 AnimationTextWriter::AnimationTextWriter(){
@@ -55,4 +55,4 @@ void AnimationTextWriter::play(){
 	AnimationInterface::play();
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

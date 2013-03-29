@@ -11,7 +11,7 @@ namespace pE{
 		\brief Represents a color animation, going from color A to color B over a determined time.
 
 	*/
-	class PARABOLA_API AnimationColorRange: public AnimationRange{
+	class NEPHILIM_API AnimationColorRange: public AnimationRange{
 	public:
 		AnimationColorRange();
 		AnimationColorRange(Animated &Object);

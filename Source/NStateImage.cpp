@@ -10,7 +10,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 State* NStateImageRefCast(NStateImage* a)
 {
@@ -103,4 +103,4 @@ bool NStateImage::onDraw(Renderer *renderer)
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

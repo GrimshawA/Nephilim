@@ -9,9 +9,9 @@
 #include <GLUES/glu.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API RendererGLES : public Renderer{
+class NEPHILIM_API RendererGLES : public Renderer{
 public:
 	RendererGLES();
 
@@ -31,6 +31,6 @@ public:
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

@@ -8,14 +8,14 @@
 
 #include <list>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Forge
 	\class ForgeWorldLayer
 	\brief Subdividision of the world by layers
 */
-class PARABOLA_API ForgeWorldLayer{
+class NEPHILIM_API ForgeWorldLayer{
 public:
 	/// Constructs the layer
 	ForgeWorldLayer();
@@ -44,5 +44,5 @@ private:
 	std::list<ForgeWorldNode*> m_nodes;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // ForgeLayer_h__

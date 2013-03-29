@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	KinesisWorld::KinesisWorld() : b2World(b2Vec2(0.f, /*0.98f*/1.4f)){
 		VelocityIterations = 8;
 		PositionIterations = 3;
@@ -287,4 +287,4 @@ PARABOLA_NAMESPACE_BEGIN
 		return amount*getPixelRatio();
 	};
 
-PARABOLA_NAMESPACE_END	
+NEPHILIM_NS_END	

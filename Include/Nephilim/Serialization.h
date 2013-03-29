@@ -18,7 +18,7 @@ namespace pE{
 		Just overload its methods with the custom read/write code, and you get a serializable class.
 
 	*/
-	class PARABOLA_API Serializable{
+	class NEPHILIM_API Serializable{
 	public:
 		virtual unsigned long WriteObject(FileStream &Stream);
 		virtual unsigned long ReadObject(FileStream &Stream);
@@ -29,7 +29,7 @@ namespace pE{
 	};
 
 	namespace Serialization{
-		PARABOLA_API unsigned long SizeOf(string &Str);
+		NEPHILIM_API unsigned long SizeOf(string &Str);
 	};
 };
 

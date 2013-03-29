@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
@@ -60,5 +60,5 @@ public:
 	/// Implementation of compute with a Eased in/out quad function
 	float compute(float t,float b,float c,float d);
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

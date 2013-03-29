@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 			\ingroup Foundation
@@ -14,7 +14,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 			It directly inherits a list<String> and adds functionality, for convenience.
 	*/
-	class PARABOLA_API StringList : public std::vector<String>{
+	class NEPHILIM_API StringList : public std::vector<String>{
 		public:
 			/// Constructs an empty StringList
 			StringList();
@@ -33,5 +33,5 @@ PARABOLA_NAMESPACE_BEGIN
 
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

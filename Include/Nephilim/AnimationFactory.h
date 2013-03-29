@@ -10,7 +10,7 @@
 
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class RocketElement;
 
@@ -19,7 +19,7 @@ class RocketElement;
 	\class AnimationFactory
 	\brief Acts as a manager for a set of animations
 */
-class PARABOLA_API AnimationFactory : public RefCountable, public sigc::trackable {
+class NEPHILIM_API AnimationFactory : public RefCountable, public sigc::trackable {
 public:
 	
 	/// Add a new animation to the factory
@@ -39,5 +39,5 @@ private:
 	std::vector<AnimationInterface*> myAnimations;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

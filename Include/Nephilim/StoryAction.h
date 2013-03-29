@@ -6,7 +6,7 @@
 #include "StoryActionStyle.h"
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 enum ActionReturn{
 	TERMINATE = 0,
@@ -21,7 +21,7 @@ enum ActionReturn{
 		\class StoryAction
 		\brief Represents one action that can be performed by a storyline
 	*/
-	class PARABOLA_API StoryAction{
+	class NEPHILIM_API StoryAction{
 	public:
 		StoryAction(){
 			parent = NULL;
@@ -147,5 +147,5 @@ enum ActionReturn{
 		bool played;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

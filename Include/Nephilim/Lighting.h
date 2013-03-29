@@ -6,9 +6,9 @@
 #include "SceneRenderer.h"
 #include "Window.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API LightingEffects{
+class NEPHILIM_API LightingEffects{
 public:	
 	LightingEffects();
 
@@ -27,10 +27,10 @@ private:
 	FloatRect myBounds;
 };
 
-class PARABOLA_API ShadowCaster{
+class NEPHILIM_API ShadowCaster{
 public:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

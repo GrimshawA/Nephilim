@@ -6,7 +6,7 @@
 
 #include <string.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 AnimationFactory& AnimationFactoryFactory(){
 	return *new AnimationFactory();
@@ -74,4 +74,4 @@ bool ASEngine::exportAnimations(){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

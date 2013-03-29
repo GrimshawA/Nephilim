@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup SceneGraph
@@ -23,7 +23,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 	Easy enough! 
 */
-class PARABOLA_API NameGenerator{
+class NEPHILIM_API NameGenerator{
 public:
 	/// Creates a name generator from a keyword
 	NameGenerator(const String &keyword);
@@ -46,5 +46,5 @@ private:
 	int myNextValid;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

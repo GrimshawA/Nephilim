@@ -1,6 +1,6 @@
 #include "Nephilim/AnimationColor.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Create the color animation
 AnimationColor::AnimationColor(){
@@ -26,4 +26,4 @@ void AnimationColor::update(float elapsedTime){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -10,7 +10,7 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 typedef void* WindowHandle;
 
 /**
@@ -18,7 +18,7 @@ typedef void* WindowHandle;
 	\class BrowserPluginInstance
 	\brief This class manages an instance of the engine living under a html object element in a browser
 */
-class PARABOLA_API BrowserPluginInstance{
+class NEPHILIM_API BrowserPluginInstance{
 public:
 	/// Prepares an uninitialized engine for a browser frame
 	BrowserPluginInstance();
@@ -76,5 +76,5 @@ public:
 	String m_workingDirectory;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

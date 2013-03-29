@@ -7,7 +7,7 @@
 
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 bool registerUIControlSubtype(const String& name, ASEngine* engine)
 {
@@ -583,4 +583,4 @@ String UIControl::getName(){
 	return m_name;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

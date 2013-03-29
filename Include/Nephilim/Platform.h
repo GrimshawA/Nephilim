@@ -1,6 +1,9 @@
 #ifndef PARABOLAPLATFORM_H
 #define PARABOLAPLATFORM_H
 
+/// NEPHILIM_SFML - Does this platform use SFML for windowing?
+
+
 	// Engine Version
 	#define PARABOLA_VERSION_MAJOR 0
 	#define PARABOLA_VERSION_MINOR 8
@@ -11,8 +14,8 @@
 		\namespace pE
 		\brief Contains everything from Parabola Engine SDK
 	*/
-	#define PARABOLA_NAMESPACE_BEGIN namespace pE{
-	#define PARABOLA_NAMESPACE_END }
+	#define NEPHILIM_NS_BEGIN namespace pE{
+	#define NEPHILIM_NS_END }
 
 	// Platform & Compiler
 	#ifdef _WIN32
@@ -29,6 +32,7 @@
             #define PARABOLA_COMPILER "gcc"
             #define PARABOLA_COMPILER_GCC
         #endif
+		#define NEPHILIM_SFML
 		#define PARABOLA_WINDOWS
 		#define PARABOLA_OS "win"
 		#define PARABOLA_DESKTOP
@@ -44,6 +48,7 @@
 		#define NEPHILIM_LINUX
 		#define NEPHILIM_UNIX
 		#define NEPHILIM_DESKTOP
+		#define NEPHILIM_SFML
 
 
     #elif defined __APPLE_CC__ || defined __APPLE__
@@ -95,9 +100,9 @@
 
 	// Shared Libraries
 	#if defined PARABOLA_DYNAMIC
-		#define PARABOLA_API __declspec(dllexport)
+		#define NEPHILIM_API __declspec(dllexport)
 	#else
-		#define PARABOLA_API
+		#define NEPHILIM_API
 		#define SFML_STATIC
 	#endif
 
@@ -108,23 +113,23 @@
 		#define PARABOLA_BUILD_RELEASE
 	#endif
 
-PARABOLA_NAMESPACE_BEGIN
-	typedef signed   char Int8;
-	typedef unsigned char Uint8;
-	typedef signed   short Int16;
-	typedef unsigned short Uint16;
-	typedef signed   int Int32;
-	typedef unsigned int Uint32;
+/// Fixed size type definitions
+NEPHILIM_NS_BEGIN
+typedef signed   char Int8;
+typedef unsigned char Uint8;
+typedef signed   short Int16;
+typedef unsigned short Uint16;
+typedef signed   int Int32;
+typedef unsigned int Uint32;
 
-	#if defined(_MSC_VER)
-		typedef signed   __int64 Int64;
-		typedef unsigned __int64 Uint64;
-	#else
-		typedef signed   long long Int64;
-		typedef unsigned long long Uint64;
-	#endif
-
-PARABOLA_NAMESPACE_END
+#if defined(_MSC_VER)
+	typedef signed   __int64 Int64;
+	typedef unsigned __int64 Uint64;
+#else
+	typedef signed   long long Int64;
+	typedef unsigned long long Uint64;
+#endif
+NEPHILIM_NS_END
 
 /// What modules to compile?
 #define PARABOLA_COMPILE_SPARKPARTICLES

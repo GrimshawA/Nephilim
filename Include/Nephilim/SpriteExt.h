@@ -8,13 +8,13 @@
 #include <map>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /**
 	\ingroup Graphics
 	\class SpriteExt
 	\brief Represents a special kind of sprite, that has animation support by default
 */
-class PARABOLA_API SpriteExt : public Drawable{
+class NEPHILIM_API SpriteExt : public Drawable{
 public:
 	/// Creates a ready sprite, that is only a colored square
 	SpriteExt();
@@ -105,5 +105,5 @@ private:
 
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

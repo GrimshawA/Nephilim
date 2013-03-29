@@ -8,7 +8,7 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class ASEngine;
 
 namespace ScriptArgumentTypes{
@@ -35,7 +35,7 @@ namespace ScriptArgumentTypes{
 	You can even have a rendering function, calling every frame, fast enough to work well in a game.
 	
 */
-class PARABOLA_API ASScript{
+class NEPHILIM_API ASScript{
 public:
 	/// Creates a yet empty script, not meant to be instantiated by other than the AS Engine
 	ASScript();
@@ -156,5 +156,5 @@ private:
 	FileStream stream;
 };
 */
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -11,11 +11,11 @@
 #include <vector>
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	class KinesisWorld;
 
 
-class PARABOLA_API KinesisForge{
+class NEPHILIM_API KinesisForge{
 public:
 	/// Builds the forge over a world, it must stay alive while the forge is doing any operations on it
 	KinesisForge(KinesisWorld* workWorld);
@@ -98,5 +98,5 @@ private:
 
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

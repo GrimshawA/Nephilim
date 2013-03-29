@@ -1,7 +1,7 @@
 #include "Nephilim/NetworkServerPeer.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a server peer
 NetworkServerPeer::NetworkServerPeer() {
@@ -106,4 +106,4 @@ bool NetworkServerPeer::send(ENetPacket &packet){
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

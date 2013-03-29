@@ -3,16 +3,16 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\class ResourceTable
 		\brief Contains resource information, more specifically for localized resources.
 	*/
-	class PARABOLA_API ResourceTable{
+	class NEPHILIM_API ResourceTable{
 	public:
 
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,14 +5,14 @@
 #include "AnimationFloat.h"
 #include "Drawable.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Graphics
 	\class ProgressBar
 	\brief 
 */
-class PARABOLA_API ProgressBar : public Drawable{
+class NEPHILIM_API ProgressBar : public Drawable{
 public:
 	ProgressBar(){
 		m_filledWidth = 0.f;
@@ -42,5 +42,5 @@ private:
 	AnimationFloat m_animation;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

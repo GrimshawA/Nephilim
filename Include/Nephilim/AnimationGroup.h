@@ -5,13 +5,13 @@
 #include "Animation.h"
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /**
 	\ingroup Animation
 	\class AnimationGroup
 	\brief Base grouping class for animations
 */
-class PARABOLA_API AnimationGroup : public AnimationInterface{
+class NEPHILIM_API AnimationGroup : public AnimationInterface{
 public:
 	AnimationGroup() : AnimationInterface(){}
 
@@ -26,5 +26,5 @@ protected:
 	std::vector<AnimationInterface*> m_animations;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

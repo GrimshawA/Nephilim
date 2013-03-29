@@ -1,4 +1,5 @@
 #include <Nephilim/Font.h>
+#include <Nephilim/Image.h>
 #include <Nephilim/FileInterface.h>
 #include <Nephilim/Logger.h>
 
@@ -37,7 +38,7 @@ namespace
 }
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////
 Font::Font() :
@@ -621,4 +622,4 @@ nextRow(2)
     texture.setSmooth(true);
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

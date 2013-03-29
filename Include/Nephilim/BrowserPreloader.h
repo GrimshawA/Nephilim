@@ -6,13 +6,13 @@
 #include "Strings.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Core
 	\class BrowserPreloader
 */
-class PARABOLA_API BrowserPreloader
+class NEPHILIM_API BrowserPreloader
 {
 public:
 	/// Launch and wait for the end
@@ -29,5 +29,5 @@ class ASEngine;
 /// Registers the class for scripting
 bool registerBrowserPreloader(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // BrowserPreloader_h__

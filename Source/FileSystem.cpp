@@ -11,7 +11,7 @@
 #include "Nephilim/Logger.h"
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	String FileSystem::myCurrentDirectory;
 
 #ifdef PARABOLA_WINDOWS
@@ -397,4 +397,4 @@ String FileSystem::getExecutableDirectory(){
 	}
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

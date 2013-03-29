@@ -9,7 +9,7 @@
 
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ContentBank;
 class GameCore;
@@ -34,7 +34,7 @@ class SoundSharedDevice;
 	It is well working under the RAII paradigm.
 
 */
-class PARABOLA_API SoundPlayer{
+class NEPHILIM_API SoundPlayer{
 public:
 	/// Can only be instanced by passing a game.
 	SoundPlayer(GameCore *parent, const String &name);
@@ -76,5 +76,5 @@ private:
 	void dummy(){}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

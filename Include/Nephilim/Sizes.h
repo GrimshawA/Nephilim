@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API Sizes{
+class NEPHILIM_API Sizes{
 public:
 	static unsigned long getSize(const String &val){
 		return sizeof(unsigned int) + val.size() * sizeof(char);
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

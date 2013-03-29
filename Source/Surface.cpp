@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void Surface::create()
 {
@@ -12,4 +12,4 @@ void Surface::create()
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

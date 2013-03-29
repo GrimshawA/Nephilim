@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ContentBank;
 class ContentLoader;
@@ -42,7 +42,7 @@ namespace ContentType{
 
 	ContentList resource entries support internationalization by default.
 */
-class PARABOLA_API ContentList{
+class NEPHILIM_API ContentList{
 public:
 	/// Creates an yet empty list of content
 	/// Please note that only a named ContentList will be recorded by ContentBank.
@@ -70,5 +70,5 @@ private:
 	String myPrefix;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

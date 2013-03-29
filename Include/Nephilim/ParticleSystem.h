@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Drawable.h"
 #include "Strings.h"
-#include "Textures.h"
+#include "Texture.h"
 #include "Animation.h"
 #include "ReferenceCountable.h"
 
@@ -12,7 +12,7 @@
 
 #include "SPARK.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class ParticleSystem;
 
@@ -22,7 +22,7 @@ class ParticleSystem;
 	\class ParticleRenderer
 	\brief Wrapper for a SPARK renderer. Scripting convenience.
 */
-class PARABOLA_API ParticleRenderer{
+class NEPHILIM_API ParticleRenderer{
 public:	
 	//SPK::Ref<SPK::GL::GLRenderer> myRenderer;
 };
@@ -32,7 +32,7 @@ public:
 	\class ParticleTexture
 	\brief Wrapper for a SPARK textures. Scripting convenience.
 */
-class PARABOLA_API ParticleTexture{
+class NEPHILIM_API ParticleTexture{
 public:
 	//bool loadTexture(const String &path);
 	//GLuint myTextureID;
@@ -43,7 +43,7 @@ public:
 	\class ParticleModifier
 	\brief Wrapper for a SPARK modifiers. Scripting convenience.
 */
-class PARABOLA_API ParticleModifier{
+class NEPHILIM_API ParticleModifier{
 public:
 	SPK::Ref<SPK::Modifier> myModifier;
 };
@@ -53,7 +53,7 @@ public:
 	\class ParticleZone
 	\brief Wrapper for a SPARK zones. Scripting convenience.
 */
-class PARABOLA_API ParticleZone : public Animable{
+class NEPHILIM_API ParticleZone : public Animable{
 public:
 
 	void animable_set_position(float x, float y){
@@ -72,7 +72,7 @@ public:
 	\class ParticleEmitter
 	\brief Wrapper for a SPARK emitters. Scripting convenience.
 */
-class PARABOLA_API ParticleEmitter{
+class NEPHILIM_API ParticleEmitter{
 public:
 	SPK::Ref<SPK::Emitter> myEmitter;
 };
@@ -82,7 +82,7 @@ public:
 	\class ParticleGroup
 	\brief Wrapper for a SPARK groups. Scripting convenience.
 */
-class PARABOLA_API ParticleGroup{
+class NEPHILIM_API ParticleGroup{
 public:
 	ParticleGroup(ParticleSystem* parent){
 		myParent = parent;
@@ -128,7 +128,7 @@ public:
 	\todo Remove the clamp step from constructor
 	...
 */
-class PARABOLA_API ParticleSystem: public RefCountable, public Drawable{
+class NEPHILIM_API ParticleSystem: public RefCountable, public Drawable{
 public:
 	/// Creates an empty Particle System
 	ParticleSystem();
@@ -210,5 +210,5 @@ private:
 	std::map<String, ParticleModifier*> myModifiers;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

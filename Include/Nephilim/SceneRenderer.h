@@ -10,7 +10,7 @@
 #include "Vectors.h"
 #include "Views.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	class SceneGraph;
 	class RocketContext;
 	
@@ -45,7 +45,7 @@ PARABOLA_NAMESPACE_BEGIN
 		using SceneGraph structures.
 
 */
-class PARABOLA_API SceneRenderer{
+class NEPHILIM_API SceneRenderer{
 public:
 		/// Creates a renderer with no render target
 		SceneRenderer();
@@ -118,5 +118,5 @@ private:
 	
 	
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

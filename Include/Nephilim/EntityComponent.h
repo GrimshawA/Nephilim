@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class Entity;
 /**
@@ -25,7 +25,7 @@ class Entity;
 	appropriate efficient tools will be made to optimize this. \todo AI
 
 */
-class PARABOLA_API EntityComponent{
+class NEPHILIM_API EntityComponent{
 public:
 	/// Creates an empty component - abstract
 	EntityComponent(const String &name);
@@ -55,5 +55,5 @@ private:
 	friend class Entity;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

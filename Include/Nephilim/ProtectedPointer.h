@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include <list>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 template<typename T>
 class ref_ptr;
@@ -46,7 +46,7 @@ private:
 	\brief Smart pointer. Used to create read-only smart pointers of raw objects.
 */
 template<typename T>
-class PARABOLA_API ref_ptr{
+class NEPHILIM_API ref_ptr{
 public:
 	/// Creates a read only pointer from a raw pointer
 	ref_ptr(T* raw);
@@ -108,5 +108,5 @@ bool ref_ptr<T>::operator !(){
 	return (object == NULL);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

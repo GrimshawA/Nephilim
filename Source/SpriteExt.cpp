@@ -1,4 +1,5 @@
 #include "Nephilim/SpriteExt.h"
+#include "Nephilim/Image.h"
 #include "Nephilim/TextStream.h"
 #include "Nephilim/StringStream.h"
 #include <Nephilim/StringList.h>
@@ -10,7 +11,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void skiptonextword(TextStream &in){	
 	/*bool found = false;
@@ -464,4 +465,4 @@ void SpriteExt::onDraw(Renderer* renderer){
 	renderer->draw(mySprite);
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

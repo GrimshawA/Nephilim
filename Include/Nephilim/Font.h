@@ -30,20 +30,20 @@
 ////////////////////////////////////////////////////////////
 #include "Platform.h"
 #include "Glyph.h"
-#include "Textures.h"
+#include "Texture.h"
 #include <map>
 #include <string>
 #include <vector>
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 ////////////////////////////////////////////////////////////
 /// \brief Class for loading and manipulating character fonts
 ///
 ////////////////////////////////////////////////////////////
-class PARABOLA_API Font
+class NEPHILIM_API Font
 {
 public :
 
@@ -297,7 +297,7 @@ private :
     mutable std::vector<Uint8> m_pixelBuffer; ///< Pixel buffer holding a glyph's pixels before being written to the texture
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif // SFML_FONT_HPP
 

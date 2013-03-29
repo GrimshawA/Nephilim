@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Construct the game, its mandatory to call this base constructor when implementing GameCore
 GameCore::GameCore() : m_stackedTime(0.f), m_updateStep(1.f / 60.f), m_windowTitle("No name window"), mCloseRequested(false){
@@ -308,4 +308,4 @@ void GameCore::removeContentBank(const String &name){
 	}
 };*/
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

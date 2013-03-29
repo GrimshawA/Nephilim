@@ -1,7 +1,7 @@
 #include <Nephilim/UIConsole.h>
 #include <Nephilim/Text.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Callback to render itself
 void UIConsole::draw(Renderer* renderer){
@@ -26,4 +26,4 @@ bool UIConsole::onEventNotification(Event& event){
 	return false;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

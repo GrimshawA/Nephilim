@@ -7,7 +7,7 @@
 #include <map>
 #include <SFML/System.hpp> // For input stream
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/// Holds the engine's types of files.
 	namespace SupportedFileTypes{
@@ -29,7 +29,7 @@ PARABOLA_NAMESPACE_BEGIN
 		\class PackageFileInformation
 		\brief Holds data about one file contained within a package
 	*/
-	class PARABOLA_API PackageFileInformation{
+	class NEPHILIM_API PackageFileInformation{
 	public:
 
 		/// Saves the file data into the stream
@@ -67,7 +67,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		A PackageHeader always has at least one node, the root directory, which has no name.		
 	*/
-	class PARABOLA_API PackageNode{
+	class NEPHILIM_API PackageNode{
 	public:
 
 		/// Fills in the passed vector with all file's original paths.
@@ -111,7 +111,7 @@ PARABOLA_NAMESPACE_BEGIN
 		Most importantly, it also holds data on the file hierarchy, so that you can have a reduced file system within the package.
 
 	*/
-	class PARABOLA_API PackageHeader{
+	class NEPHILIM_API PackageHeader{
 	public:
 		/// Creates the empty header structure
 		PackageHeader();
@@ -174,7 +174,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		\note Every time you try to add a file that already exists in the package, renaming will be attempted and a warning is logged.
 	*/
-	class PARABOLA_API PackageBuilder{
+	class NEPHILIM_API PackageBuilder{
 	public:
 		/// Creates an empty PackageBuilder. Setting a name will be needed later.
 		PackageBuilder();
@@ -224,7 +224,7 @@ PARABOLA_NAMESPACE_BEGIN
 		To finalise, it is to be noted that this class inherits sf::InputStream.
 		That means you can load SFML resources directly from packages.
 	*/
-	class PARABOLA_API PackageStream : public DataStream, public sf::InputStream{
+	class NEPHILIM_API PackageStream : public DataStream, public sf::InputStream{
 	public:
 		/// Creates a stream to read from files contained within packages
 		PackageStream();
@@ -267,5 +267,5 @@ PARABOLA_NAMESPACE_BEGIN
 	};
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

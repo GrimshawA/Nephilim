@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a network server
 NetworkServer::NetworkServer() : NetworkSocket(){
@@ -204,4 +204,4 @@ void NetworkServer::handleEvent(ENetEvent *event){
 	};
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

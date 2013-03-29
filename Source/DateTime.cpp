@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	DateTime::DateTime(){
 
@@ -60,4 +60,4 @@ PARABOLA_NAMESPACE_BEGIN
 	#endif
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

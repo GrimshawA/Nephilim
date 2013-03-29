@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class UIControl;
 /**
@@ -11,7 +11,7 @@ class UIControl;
 	\class UILayout
 	\brief 
 */
-class PARABOLA_API UILayout{
+class NEPHILIM_API UILayout{
 public:
 
 	enum Orientation
@@ -23,5 +23,5 @@ public:
 	virtual void doLayout(UIControl* parent) = 0;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UILayout_h__

@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include <SFML/Graphics/Transform.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class SceneRenderer;
 class SceneNode;
 /**
@@ -13,7 +13,7 @@ class SceneNode;
 	\class SceneItem
 	\brief Represents objects that can attach to nodes for rendering, etc
 */
-class PARABOLA_API SceneItem{
+class NEPHILIM_API SceneItem{
 public:
 	/// Creates the scene item
 	SceneItem();
@@ -42,5 +42,5 @@ private:
 	SceneNode* mySceneNodeParent;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -5,9 +5,9 @@
 #include "Rect.h"
 #include <vector>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UIView{
+class NEPHILIM_API UIView{
 public:
 
 private:
@@ -15,5 +15,5 @@ private:
 	Rect<float> m_bounds;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

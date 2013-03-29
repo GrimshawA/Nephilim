@@ -1,7 +1,7 @@
 #include "Nephilim/Node.h"
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Basic Node initialization from with a name
 Node::Node(const String &name) : myParent(NULL){
@@ -91,4 +91,4 @@ int Node::getNodeType(){
 	return myNodeType;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

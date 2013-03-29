@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Constructs the layer
 ForgeWorldLayer::ForgeWorldLayer() : m_hidden(false), m_name("null"){
@@ -47,4 +47,4 @@ void ForgeWorldLayer::draw(Renderer* renderer){
 	}
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

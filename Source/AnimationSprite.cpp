@@ -4,7 +4,7 @@
 
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	AnimationSprite::AnimationSprite(){
 		currentTime = 0.f;
 		totalDuration = 0.f;
@@ -188,4 +188,4 @@ void AnimationSprite::AnimationFrame::setTexture(Texture* texture){
 	}*/
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

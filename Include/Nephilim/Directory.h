@@ -4,13 +4,13 @@
 #include "Platform.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\class Path
 	\brief A directory or path with utility functions
 */
-class PARABOLA_API Path
+class NEPHILIM_API Path
 {
 public:
 
@@ -26,6 +26,6 @@ public:
 	String m_path;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif // DirectoryPath_h__

@@ -3,7 +3,7 @@
 #include <Nephilim/ASEngine.h>
 #include "AS/aswrappedcall.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Registers the class for scripting
 bool registerBrowserPreloader(ASEngine* engine)
@@ -38,4 +38,4 @@ void BrowserPreloader::download(String source, String destination)
 	onRequestDownload(source, destination);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

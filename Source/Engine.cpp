@@ -4,7 +4,7 @@
 
 #include <Nephilim/View.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 #ifdef ENGINE_VERSION_STRING
@@ -92,5 +92,5 @@ String Engine::getVersionString()
 	return m_versionString;
 }
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 

@@ -12,7 +12,7 @@ using namespace std;
 #include <Nephilim/ASEngine.h>
 #include "AS/aswrappedcall.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 Drawable* SpriteRefCast(Sprite* a)
 {
@@ -263,4 +263,4 @@ void Sprite::flipVertical(){
 };
 */
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

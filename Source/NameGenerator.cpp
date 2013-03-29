@@ -1,7 +1,7 @@
 #include "Nephilim/NameGenerator.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates a name generator from a keyword
 NameGenerator::NameGenerator(const String &keyword){
@@ -31,4 +31,4 @@ String NameGenerator::generate(){
 	return myKeyword + String::number(myNextValid++);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 		\ingroup Foundation
@@ -13,7 +13,7 @@ PARABOLA_NAMESPACE_BEGIN
 		IntRect and FloatRect are specializations of Rect<T> for int and float, respectively.
 */
 template<typename T>
-class PARABOLA_API Rect{
+class NEPHILIM_API Rect{
 public:
 	/// Default rectangle - position (0,0) and size (0,0)
 	Rect();
@@ -51,5 +51,5 @@ typedef Rect<float> FloatRect;
 /// Template definitions
 #include "Rect.inl"
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

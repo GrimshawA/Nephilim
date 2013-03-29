@@ -1,6 +1,6 @@
 #include <Nephilim/AnimationFade.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Unitialized animation
 AnimationFade::AnimationFade() : m_totalTime(0.f){
@@ -48,4 +48,4 @@ float AnimationFade::onUpdate(float elapsedTime){
 	else return 0.f;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

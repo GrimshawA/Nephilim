@@ -6,7 +6,7 @@
 #include "Rect.h"
 #include "Transform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 enum ViewportPreset{
 	TopLeftQuarter = 0,
@@ -27,7 +27,7 @@ enum ViewportPreset{
 
 		In practice, it is a 2D projection of your scene, orthogonal, which you can configure to taste.
 */
-class PARABOLA_API View{
+class NEPHILIM_API View{
 public:
 		View();
 
@@ -87,6 +87,6 @@ private:
 	
 	/// Typedef of View to Camera2D to suit tastes
 	typedef View Camera2D;
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

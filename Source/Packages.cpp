@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void PackageFileInformation::save(FileStream *fileStream){
 	*fileStream << path;
@@ -361,6 +361,6 @@ Int64 PackageStream::GetSize(){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

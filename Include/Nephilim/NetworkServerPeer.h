@@ -9,7 +9,7 @@
 
 //#include <SFML/Network/Packet.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class NetworkServer;
 class NetworkPacket;
@@ -76,5 +76,5 @@ private:
 	ENetPeer *myPeer;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

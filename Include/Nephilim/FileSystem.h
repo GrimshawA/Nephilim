@@ -9,7 +9,7 @@
 #endif
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	/**
 		\ingroup Foundation
 		\class FileSystem
@@ -19,7 +19,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		\todo Extend functionality.
 	*/
-	class PARABOLA_API FileSystem{
+	class NEPHILIM_API FileSystem{
 	public:
 		/// Testing \todo make
 		static String loadFileDialog();
@@ -83,6 +83,6 @@ PARABOLA_NAMESPACE_BEGIN
 		static String myCurrentDirectory;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

@@ -4,9 +4,9 @@
 #include "Platform.h"
 #include "Renderer.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API RendererOpenGL : public Renderer{
+class NEPHILIM_API RendererOpenGL : public Renderer{
 public:
 	RendererOpenGL();
 
@@ -32,6 +32,6 @@ virtual void enableClipping(FloatRect rect);
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

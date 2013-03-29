@@ -10,7 +10,7 @@ using namespace std;
 #include "Nephilim/AndroidInterface.h"
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// The root for file access, empty by default, so the executable directory is used
 String FileInterface::m_root = "";
 
@@ -80,4 +80,4 @@ bool FileInterface::copy(const String &sourceFile, const String &destinationFile
 	return true;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

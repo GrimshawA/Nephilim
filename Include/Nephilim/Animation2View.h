@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 #include "Animation.h"
-#include "Textures.h"
+#include "Texture.h"
 #include "BoundingBox.h"
 #include <vector>
 using namespace std;
@@ -15,7 +15,7 @@ namespace pE{
 		Relative
 	};
 
-	class PARABOLA_API KeyFrame{
+	class NEPHILIM_API KeyFrame{
 	public:
 		KeyFrame(float TimeKey);
 
@@ -39,7 +39,7 @@ namespace pE{
 		bool PositionFlag, ColorFlag, ImageFlag;
 	};
 
-	class PARABOLA_API KeyFrameAnimation: public AbstractAnimation{
+	class NEPHILIM_API KeyFrameAnimation: public AbstractAnimation{
 	public:
 		KeyFrameAnimation();
 		KeyFrameAnimation(string Name);

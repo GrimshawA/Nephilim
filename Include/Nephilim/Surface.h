@@ -8,14 +8,14 @@
 
 #include "Window.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Core
 	\class Surface
 	\brief Represents a renderable frame where the engine is bound to draw on
 */
-class PARABOLA_API Surface
+class NEPHILIM_API Surface
 {
 public:
 
@@ -25,6 +25,6 @@ public:
 	Window* window;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif // Surface_h__

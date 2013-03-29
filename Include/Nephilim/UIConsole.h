@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "UIControl.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIConsole
 	\brief A Console window to input commands
 */
-class PARABOLA_API UIConsole : public UIControl{
+class NEPHILIM_API UIConsole : public UIControl{
 public:
 	bool onEventNotification(Event& event);
 	void draw(Renderer* renderer);
@@ -21,5 +21,5 @@ public:
 	sigc::signal<void, String> onCommandSubmitted;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIConsole_h__

@@ -6,7 +6,7 @@
 #include "AS/aswrappedcall.h"
 #include <cmath>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 bool registerView(ASEngine* engine)
 {
@@ -232,4 +232,4 @@ const Transform& View::getInverseTransform() const
 }
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -1,6 +1,6 @@
 #include "Nephilim/Tree.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /************************************************************************/
 /* Tree                                                                 */
@@ -11,4 +11,4 @@ String Tree::name(){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

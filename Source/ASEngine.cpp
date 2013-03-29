@@ -23,7 +23,7 @@ using namespace std;
 #include <algorithm>
 #include <string.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 void dummy(void*){
 
@@ -568,4 +568,4 @@ bool ASEngine::exportMath(){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

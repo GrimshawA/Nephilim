@@ -6,7 +6,7 @@
 
 #include <Box2D/Box2D.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Kinesis
@@ -18,7 +18,7 @@ PARABOLA_NAMESPACE_BEGIN
 	Inherit and reimplement bool onGetFixture(b2Fixture *fixture) for custom functionality.
 
 */
-class PARABOLA_API KinesisQueryCallback : public b2QueryCallback{
+class NEPHILIM_API KinesisQueryCallback : public b2QueryCallback{
 public:
 	/// Creates the query callback
 	KinesisQueryCallback();
@@ -41,5 +41,5 @@ private:
 	std::vector<b2Fixture*> myFixtures;
 	bool myEnableMultiFixture;
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

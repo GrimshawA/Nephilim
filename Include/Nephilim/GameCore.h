@@ -10,7 +10,7 @@
 #include "StringList.h"
 #include "Application.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class GameCoreManager;
 class Engine;
 /**
@@ -19,7 +19,7 @@ class Engine;
 	\brief Base class for all games and applications.
 	
 */
-class PARABOLA_API GameCore{
+class NEPHILIM_API GameCore{
 public:
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();
@@ -234,5 +234,5 @@ private:
 	void dummy();*/
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

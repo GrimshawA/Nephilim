@@ -7,11 +7,11 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class Renderer;
 class UIWindow;
 
-class PARABOLA_API UIManager
+class NEPHILIM_API UIManager
 {
 public:
 	UIWindow* create(const String &name);
@@ -24,5 +24,5 @@ public:
 	FloatRect area;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIManager_h__

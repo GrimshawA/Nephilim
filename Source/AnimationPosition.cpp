@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Construct the position animation
 AnimationPosition::AnimationPosition() : AnimationInterface(){
 	m_totalTime = 0.f;
@@ -69,4 +69,4 @@ float AnimationPosition::onUpdate(float elapsedTime){
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

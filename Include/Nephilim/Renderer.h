@@ -13,12 +13,12 @@
 #include "Text.h"
 #include "Strings.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class RocketContext;
 
 
-class PARABOLA_API Renderer{
+class NEPHILIM_API Renderer{
 public:
 	Renderer();
 
@@ -85,5 +85,5 @@ private:
 	std::stack<View> m_viewStack;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

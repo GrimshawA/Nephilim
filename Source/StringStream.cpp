@@ -1,7 +1,7 @@
 #include "Nephilim/StringStream.h"
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/*
 	StringStream::StringStream(){
@@ -107,4 +107,4 @@ String StringStream::readWord(){
 		return "";
 	};	*/
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 	/**
 		\ingroup Foundation
@@ -13,7 +13,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 		Using this you can easily generate a unique hash for your data array.
 	*/
-	class PARABOLA_API CRC32
+	class NEPHILIM_API CRC32
 	{
 	private:
 		unsigned long LookupTable[256];
@@ -33,5 +33,5 @@ PARABOLA_NAMESPACE_BEGIN
 		unsigned long CRC(const unsigned char *Data, unsigned long DataLength);
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

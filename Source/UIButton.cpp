@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 UIControl* UIButtonRefCast(UIButton* a) 
 {
@@ -222,4 +222,4 @@ void UIButton::draw(Renderer* renderer){
 	renderer->draw(t);
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

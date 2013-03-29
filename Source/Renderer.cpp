@@ -7,7 +7,7 @@
 #include <Nephilim/RendererGLES.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 /// Auto detects an appropriate renderer
 Renderer* Renderer::createAutomaticRenderer(RenderTarget* target){
 
@@ -73,4 +73,4 @@ void Renderer::drawRocketContext(RocketContext* context){
 void Renderer::drawVertexArray(VertexArray &vertexArray){
 
 }
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

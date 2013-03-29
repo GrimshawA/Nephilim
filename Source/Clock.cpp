@@ -8,7 +8,7 @@
 #include <mach/mach_time.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////////////// Time class
 Time::Time(){
@@ -133,4 +133,4 @@ Time Clock::getElapsedTime(){
 #endif
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

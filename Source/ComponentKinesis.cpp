@@ -4,7 +4,7 @@
 #include "Nephilim/KinesisWorld.h"
 #include "Nephilim/Math.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates the compound instance
 ComponentPhysicsCompound::ComponentPhysicsCompound(const String &name) : EntityComponent(name){

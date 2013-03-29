@@ -1,7 +1,7 @@
 #ifndef MINIMAL_BUILD
 #include "Nephilim/EntityComponent.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Creates an empty component - abstract
 EntityComponent::EntityComponent(const String &name){
@@ -24,6 +24,6 @@ Entity* EntityComponent::getParentEntity(){
 	return myParent;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class Clock;
 /**
 	\ingroup Foundation
@@ -19,7 +19,7 @@ class Clock;
 	Disclaimer: This class is heavily under the influence of the equivalent sf::Time, in the SFML2 library.
 	Credits to Laurent Gomila, the original author.
 */
-class PARABOLA_API Time{
+class NEPHILIM_API Time{
 public:
 	/// Creates a null time span
 	Time();
@@ -62,7 +62,7 @@ private:
 	Disclaimer: This class is heavily under the influence of the equivalent sf::Time, in the SFML2 library.
 	Credits to Laurent Gomila, the original author.
 */
-class PARABOLA_API Clock{
+class NEPHILIM_API Clock{
 public:
 	Clock();
 
@@ -83,5 +83,5 @@ private:
 	ClockImplementation *myClockImpl;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

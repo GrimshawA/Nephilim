@@ -4,14 +4,14 @@
 #include "Platform.h"
 #include "UILayout.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup UserInterface
 	\class UIBoxLayout
 	\brief A layout controller that organizes controls in a vertical or horizontal line
 */
-class PARABOLA_API UIBoxLayout : public UILayout{
+class NEPHILIM_API UIBoxLayout : public UILayout{
 public:
 	/// Default construction
 	/// By default the orientation is set as Vertical and no animation
@@ -25,5 +25,5 @@ public:
 	UILayout::Orientation m_orientation;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UIBoxLayout_h__

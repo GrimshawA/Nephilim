@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <cmath>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 namespace Math{
 		double pi = 3.1415926;/* = atan(1.0)*4*/;
 
@@ -49,4 +49,4 @@ namespace Math{
 			return computeAngle(x.x, x.y, y.x,y.y);
 		};
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

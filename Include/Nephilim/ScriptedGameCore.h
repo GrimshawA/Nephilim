@@ -16,7 +16,7 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 class MusicPlayer
@@ -35,7 +35,7 @@ public:
 
 	\todo under development. when done i remove this.
 */
-class PARABOLA_API ScriptedGameCore : public GameCore{
+class NEPHILIM_API ScriptedGameCore : public GameCore{
 public:
 	ScriptedGameCore();
 
@@ -137,7 +137,7 @@ private:
 	\class ScriptGameInstancer
 	\brief 
 */
-class PARABOLA_API ScriptGameInstancer : public GameInstancerInterface{
+class NEPHILIM_API ScriptGameInstancer : public GameInstancerInterface{
 public:	
 	/// Prepares this instancer to create ScriptGame named as desired, and with entry point wherever wanted
 	ScriptGameInstancer(String name, String entryPoint);
@@ -151,5 +151,5 @@ private:
 
 void registerScriptedGameCore(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

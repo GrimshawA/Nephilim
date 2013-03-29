@@ -5,9 +5,9 @@
 #include "Animation.h"
 #include "Sprite.h"
 #include "Rect.h"
-#include "Textures.h"
+#include "Texture.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Animation
@@ -17,7 +17,7 @@ PARABOLA_NAMESPACE_BEGIN
 	Can animate a set of sprites at the same time and will set them with the
 	right texture sub rect along time, to simulate movement.
 */
-class PARABOLA_API AnimationSprite : public AnimationInterface{
+class NEPHILIM_API AnimationSprite : public AnimationInterface{
 public:
 	class AnimationFrame;
 	/// Creates a default sprite animation
@@ -54,7 +54,7 @@ public:
 
 	sigc::signal<void, Texture*, FloatRect> onFrameChange;
 
-	class PARABOLA_API AnimationFrame{
+	class NEPHILIM_API AnimationFrame{
 	public:
 		AnimationFrame();
 		AnimationFrame(FloatRect &box, Texture *texture, double time);
@@ -80,5 +80,5 @@ private:
 	int frameIndex;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/Transform.hpp>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class SceneGraph;
 class SceneItem;
@@ -20,7 +20,7 @@ class SceneRenderer;
 
 	...
 */
-class PARABOLA_API SceneNode : public Node{
+class NEPHILIM_API SceneNode : public Node{
 public:
 	/// Creates a scene node
 	SceneNode();
@@ -70,5 +70,5 @@ private:
 	bool myUpdateState;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

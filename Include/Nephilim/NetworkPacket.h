@@ -8,7 +8,7 @@
 #include <vector>
 #include "Vectors.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Network
@@ -84,7 +84,7 @@ private:
 
 	\warning This class' objects are only valid during the callback
 */
-class PARABOLA_API NetworkPacket{
+class NEPHILIM_API NetworkPacket{
 public:
 	/// Creates a packet
 	NetworkPacket(ENetEvent *event);
@@ -107,5 +107,5 @@ public:
 private:
 	ENetPacket *myPacket;
 };
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

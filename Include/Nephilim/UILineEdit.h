@@ -5,9 +5,9 @@
 #include "UIControl.h"
 #include "Text.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
-class PARABOLA_API UILineEdit : public UIControl{
+class NEPHILIM_API UILineEdit : public UIControl{
 public:
 	UILineEdit();
 
@@ -33,5 +33,5 @@ public:
 class ASEngine;
 bool registerUILineEdit(ASEngine* engine);
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif // UILineEdit_h__

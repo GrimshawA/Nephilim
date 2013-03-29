@@ -4,7 +4,7 @@
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
 #endif
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 /// Get the extension of the file
 /// The '.' is not included; ex: "png", "jpg", "html"
@@ -32,4 +32,4 @@ bool Path::isRelativePath()
 	return false;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

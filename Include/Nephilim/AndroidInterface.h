@@ -10,7 +10,7 @@
 #include <android/log.h>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 ///\ingroup Core
@@ -20,7 +20,7 @@ PARABOLA_NAMESPACE_BEGIN
 /// It is even omitted to the user completely for true cross platform usability.
 /// For optimization it is not compiled in other platforms, as it wont be used.
 ////////////////////////////////////////////////////////////////////////////////
-class PARABOLA_API AndroidInterface{
+class NEPHILIM_API AndroidInterface{
 public:
 	/// Fetch an asset file in the android file system
 	/// Returns true or false wether it could find the file and access it
@@ -100,5 +100,5 @@ private:
 	static JavaVM* m_javaVM;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

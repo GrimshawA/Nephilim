@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 
 LocalizationUnit::LocalizationUnit() :
@@ -152,4 +152,4 @@ String Localization::getUserLanguage(){
 	return result;
 };
 */
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

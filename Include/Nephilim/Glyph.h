@@ -10,13 +10,13 @@
 #include "Rect.h"
 
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////
 /// \brief Structure describing a glyph
 ///
 ////////////////////////////////////////////////////////////
-class PARABOLA_API Glyph
+class NEPHILIM_API Glyph
 {
 public :
 
@@ -34,7 +34,7 @@ public :
     IntRect textureRect; ///< Texture coordinates of the glyph inside the font's texture
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 
 
 #endif // SFML_GLYPH_HPP

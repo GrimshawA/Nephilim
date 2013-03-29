@@ -5,7 +5,7 @@
 #include "Node.h"
 #include "EntityManager.h"
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 class SceneGraph;
 class SceneNode;
 class SceneRenderer;
@@ -24,7 +24,7 @@ class SceneGraphSharedResource;
 
 	The layer which creates the resource, becomes its owner, and therefore reserves priority on using it.
 */
-class PARABOLA_API SceneLayer : public Node{
+class NEPHILIM_API SceneLayer : public Node{
 public:
 
 	/// Updates the entire graph state by elapsedTime seconds
@@ -63,5 +63,5 @@ private:
 	SceneGraphSharedResource<KinesisWorld>* mySimulation;
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 	State::State() : RefCountable(), m_scheduledRemoval(false) {
 		m_parent = NULL;
 	};
@@ -103,4 +103,4 @@ bool State::launchBindedState(const String& stateName)
 		return true;
 	};
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

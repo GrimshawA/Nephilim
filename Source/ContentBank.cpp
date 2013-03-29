@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 bool registerContentBank(ASEngine* engine)
 {
@@ -116,4 +116,4 @@ Texture* ContentBank::getTexture(const String &texture_name){
 	return myTextureResources[texture_name];
 };
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END

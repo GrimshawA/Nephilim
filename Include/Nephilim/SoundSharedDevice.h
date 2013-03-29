@@ -7,7 +7,7 @@
 
 #include <map>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 class SoundPlayer;
 
@@ -22,7 +22,7 @@ class SoundPlayer;
 
 	May be useful in some cases, but mostly just ignore it.
 */
-class PARABOLA_API SoundSharedDevice{
+class NEPHILIM_API SoundSharedDevice{
 public:
 	
 
@@ -40,5 +40,5 @@ private:
 	static unsigned long nextID;
 };	
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
 #endif

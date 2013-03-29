@@ -3,7 +3,7 @@
 #include <Nephilim/Sprite.h>
 #include <AS/aswrappedcall.h>
 
-PARABOLA_NAMESPACE_BEGIN
+NEPHILIM_NS_BEGIN
 
 UIControl* UIImageRefCast(UIImage* a) 
 {
@@ -86,4 +86,4 @@ void UIImage::draw(Renderer* renderer)
 };
 
 
-PARABOLA_NAMESPACE_END
+NEPHILIM_NS_END
