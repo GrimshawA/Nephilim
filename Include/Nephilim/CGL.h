@@ -7,11 +7,11 @@
 void cglPrepareExtensions();
 
 /// All desktop platforms
-#if defined PARABOLA_DESKTOP
+#if defined PARABOLA_DESKTOP || defined NEPHILIM_DESKTOP
 #include <GL/glew.h>
-#include <GL/GL.h>
+#include <GL/gl.h>
 
-static void cglPrepareExtensions()
+void cglPrepareExtensions()
 {
 	glewInit();
 }

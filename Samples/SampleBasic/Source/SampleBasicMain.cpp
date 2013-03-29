@@ -22,5 +22,5 @@ void applicationUpdate()
 
 void applicationCleanup()
 {
-	
+
 }

@@ -49,7 +49,7 @@ class Renderer;
 */
 class PARABOLA_API Engine
 {
-public:	
+public:
 	/// Constructs the engine and leaves it in a uninitialized state
 	Engine();
 
@@ -68,12 +68,17 @@ public:
 	/// Get the current renderer
 	Renderer* getRenderer();
 
+	/// Returns a string with the version of the engine build. Usually like x.y.z
+    String getVersionString();
+
 private:
 	GameCore*	m_currentApp;		///< The currently executing game/application
 	Clock		m_clock;			///< Clock that counts the elapsed time since the engine was instanced
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
 	Renderer*	m_renderer;			///< The unified graphics renderer system
 	Surface		m_surface;			///< The surface this engine is bound to
+
+	static String m_versionString; ///< The version of string(at compile time)
 };
 
 PARABOLA_NAMESPACE_END

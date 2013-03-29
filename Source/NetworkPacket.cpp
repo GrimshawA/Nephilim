@@ -1,6 +1,7 @@
 #include "Nephilim/NetworkPacket.h"
 
 #include <iostream>
+#include <string.h>
 using namespace std;
 
 PARABOLA_NAMESPACE_BEGIN
@@ -148,7 +149,7 @@ Packet& Packet::operator>>(String& data){
 		// Update reading position
 		m_readPos += length;
 
-		
+
 	}
 
 	return *this;

@@ -8,6 +8,7 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Sprite.h>
+#include <Nephilim/CGL.h>
 #include <cassert>
 
 #include <iostream>
@@ -319,7 +320,7 @@ void Text::updateGeometry()
     /*// No text: nothing to draw
     if (m_string.isEmpty())
         return;*/
-		
+
     // Compute values related to the text style
     bool  bold               = (m_style & Bold) != 0;
     bool  underlined         = (m_style & Underlined) != 0;
@@ -386,15 +387,15 @@ void Text::updateGeometry()
         m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
         m_vertices.append(Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));*/
 		//GLfloat vertices[] = {width/2,-height/2,0, -width/2,height/2,0, -width/2,-height/2,0,  width/2,-height/2,0,  width/2,height/2,0, -width/2, height/2,0 };
-		
+
 		//cout<<"adding uvs: " << u1 << " " << v1 << " " << u2 << " " << v2 <<endl;
 		m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1))); 
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2))); 
+		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
+		m_vertices.append(Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));
 
 		m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
 		m_vertices.append(Vertex(Vec2f(x + right - italic * top,    y + top),    m_color, Vec2f(u2, v1)));
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1))); 
+		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
 
 
         // Advance to the next character

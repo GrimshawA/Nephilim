@@ -2,7 +2,7 @@
 #include "Nephilim/Kinesis.h"
 #include "AS/aswrappedcall.h"
 
-
+#include <stdio.h>
 #include <iostream>
 using namespace std;
 
@@ -17,7 +17,7 @@ KinesisWorld* KWFactory()
 
 void KWAddRef(void *memory)
 {
-	
+
 }
 
 void KWRelease(void* memory){
@@ -42,8 +42,8 @@ bool ASEngine::exportKinesis(){
 
 
 
-	
-	
+
+
 
 	// Registering the factory behaviour
 	if(getPortableMode()){
@@ -55,7 +55,7 @@ bool ASEngine::exportKinesis(){
 		r = asEngine->RegisterObjectMethod("KinesisWorld", "void createStaticBox(float, float, float, float)", WRAP_MFN(KinesisWorld,CreateStaticBox), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("KinesisWorld", "KinesisBodyActor@ createDynamicBox(float, float, float, float)", WRAP_MFN(KinesisWorld,CreateQuickBox), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectMethod("KinesisWorld", "void destroyBody(KinesisBodyActor@)", asMETHOD(KinesisWorld,destroyBodyActor), asCALL_GENERIC); if(r < 0)printf("r %d", r);
-		
+
 		if(exportedRenderer)
 			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", WRAP_MFN(KinesisWorld, drawDebugShapes), asCALL_GENERIC);
 

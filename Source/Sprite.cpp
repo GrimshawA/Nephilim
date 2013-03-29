@@ -5,9 +5,7 @@
 #include <iostream>
 using namespace std;
 
-#ifdef PARABOLA_IPHONE
-#include <OpenGLES/ES1/gl.h>
-#endif
+#include <Nephilim/CGL.h>
 
 #include <Nephilim/ASEngine.h>
 #include "AS/aswrappedcall.h"
@@ -117,7 +115,7 @@ bool Sprite::contains(float x, float y)
 }
 
 /// Set the texture of the sprite
-void Sprite::setTexture(const Texture &texture){	
+void Sprite::setTexture(const Texture &texture){
 	m_texture = &texture;
 
 	setTextureRect(FloatRect(0.f,0.f, texture.getSize().x, texture.getSize().y));
@@ -139,7 +137,7 @@ const Texture& Sprite::getTexture(){
 };
 
 void Sprite::resize(float x, float y){
-	setScale((x / m_texture->getSize().x ),(y / m_texture->getSize().y)); 
+	setScale((x / m_texture->getSize().x ),(y / m_texture->getSize().y));
 };
 
 /// Set the color of the sprite
@@ -178,10 +176,10 @@ void Sprite::onDraw(Renderer* renderer){
 	if(m_blendMode ==  Blend::Alpha)
 		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	else if(m_blendMode == Blend::Add) {
-		glBlendFunc (GL_SRC_ALPHA, GL_ONE);	
+		glBlendFunc (GL_SRC_ALPHA, GL_ONE);
 	}
 	else if(m_blendMode == Blend::Multiply) {
-		glBlendFunc (GL_DST_COLOR, GL_ZERO);	
+		glBlendFunc (GL_DST_COLOR, GL_ZERO);
 	}
 
 	glMatrixMode(GL_TEXTURE_MATRIX);
@@ -190,7 +188,7 @@ void Sprite::onDraw(Renderer* renderer){
 	glPushMatrix();
 
 	glMultMatrixf(getTransform().getMatrix());
-	
+
 	m_texture->bind(Texture::Pixels);
 	renderer->drawVertexArray(m_vertices);
 	glMatrixMode(GL_TEXTURE_MATRIX);

@@ -32,11 +32,18 @@
 		#define PARABOLA_WINDOWS
 		#define PARABOLA_OS "win"
 		#define PARABOLA_DESKTOP
+		#define NEPHILIM_DESKTOP
 		//#define MINIMAL_BUILD // until its not refactored.
 
 		#ifndef WIN32_LEAN_AND_MEAN
 		#define WIN32_LEAN_AND_MEAN
 		#endif
+
+    // Desktop Linux
+	#elif defined __linux__ || defined LINUX && !defined ANDROID
+		#define NEPHILIM_LINUX
+		#define NEPHILIM_UNIX
+		#define NEPHILIM_DESKTOP
 
 
     #elif defined __APPLE_CC__ || defined __APPLE__
@@ -60,7 +67,7 @@
 #define PARABOLA_GLES
 #define PARABOLA_NOSFML
         #define PARABOLA_UNIX
-		#define PARABOLA_COMPILER "ndk"	
+		#define PARABOLA_COMPILER "ndk"
 		//#define MINIMAL_BUILD // for now build minimally for android
 	#else
         #define PARABOLA_UNIX
@@ -116,7 +123,7 @@ PARABOLA_NAMESPACE_BEGIN
 		typedef signed   long long Int64;
 		typedef unsigned long long Uint64;
 	#endif
-	
+
 PARABOLA_NAMESPACE_END
 
 /// What modules to compile?

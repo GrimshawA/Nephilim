@@ -2,7 +2,8 @@
 #include "Nephilim/Logger.h"
 #include "Nephilim/FileInterface.h"
 
- 
+#include <string.h>
+
 #if defined PARABOLA_ANDROID || defined PARABOLA_IPHONE
 
 namespace privNS{
@@ -66,6 +67,7 @@ namespace
 #include <iostream>
 #include <map>
 
+#include <Nephilim/CGL.h>
 
 
 PARABOLA_NAMESPACE_BEGIN
@@ -122,10 +124,10 @@ void Image::setPixel(unsigned int x, unsigned int y, const Color& color)
 
 bool Image::loadFromFile(const String &path){
 #ifdef PARABOLA_NOSFML
-	
+
 	//in android load through a stream
 #ifdef PARABOLA_ANDROID
-	ScopedFile* fp = new ScopedFile();	
+	ScopedFile* fp = new ScopedFile();
 	if(FileInterface::getAssetFile(fp, path, true)){
 		loadFromStream(fp);
 		delete fp;
@@ -134,7 +136,7 @@ bool Image::loadFromFile(const String &path){
 	delete fp;
 #endif
 
-	
+
 
 
 	// Clear the array (just in case)
@@ -269,7 +271,7 @@ void Image::createMaskFromColor(const Color &color, Uint8 alpha){
 			ptr += 4;
 		}
 	}
-#else 
+#else
 	TESTLOG("attempting to change transparency\n")
 	TESTLOG(String::number(color.g).c_str())
 	myImage.createMaskFromColor(sf::Color(color.r,color.g,color.b), alpha);
@@ -280,7 +282,7 @@ void Image::createMaskFromColor(const Color &color, Uint8 alpha){
 /// Create an uninitialised texture
 Texture::Texture() : m_size(0,0), m_actualSize(0,0), m_texture(0), m_pixelsFlipped(false),m_isSmooth(false){
 
-	
+
 
 };
 
@@ -338,7 +340,7 @@ bool Texture::create(unsigned int width, unsigned int height)
 		//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);
 
 	}
-	 
+
 	// Make sure that the current texture binding will be preserved
 	//priv::TextureSaver save;
 
@@ -412,16 +414,16 @@ void Texture::loadFromImage(Image &image){
 
 	m_aliveTextures[this] = image;
 }
- 
+
 bool Texture::loadFromFile(const String &path){
 	TESTLOG(path.c_str())
 	bool result = false;
-	Image image;   
+	Image image;
 #ifdef PARABOLA_ANDROID
 	//in android load through a stream
 	/*ScopedFile* fp = new ScopedFile();
 	if(FileInterface::getAssetFile(fp, path, true)){
-		
+
 		image.loadFromStream(fp);
 		//image.loadFromFile(path);
 	}
@@ -435,7 +437,7 @@ bool Texture::loadFromFile(const String &path){
 #endif
 	// STUPID DEBUG THING
 	//image.createMaskFromColor(Color(0,128,0, 255), 0);
-    
+
 		loadFromImage(image);
 	return result;
 }
@@ -456,7 +458,7 @@ Image Texture::copyToImage(){
 	Image image;
 	std::vector<Uint8> pixels(m_size.x * m_size.y * 4);
 
-	if ((m_size == m_actualSize) && !m_pixelsFlipped)	
+	if ((m_size == m_actualSize) && !m_pixelsFlipped)
 	{
 		// Texture is not padded nor flipped, we can use a direct copy
 #ifdef PARABOLA_DESKTOP
@@ -472,7 +474,7 @@ Image Texture::copyToImage(){
 		// unbind frame buffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
 #endif
-	} 
+	}
 	else
 	{
 		// Texture is either padded or flipped, we have to use a slower algorithm
@@ -487,7 +489,7 @@ Image Texture::copyToImage(){
 		Uint8* dst = &pixels[0];
 		int srcPitch = m_actualSize.x * 4;
 		int dstPitch = m_size.x * 4;
-		
+
 		// Handle the case where source pixels are flipped vertically
 		if (m_pixelsFlipped)
 		{
@@ -501,15 +503,15 @@ Image Texture::copyToImage(){
 			src += srcPitch;
 			dst += dstPitch;
 		}
-	} 
-	
+	}
+
 	// Create the image
 
 	image.create(m_size.x, m_size.y, &pixels[0]);
 
 	return image;
 
-	 
+
 };
 
 
@@ -543,7 +545,7 @@ void Texture::setSmooth(bool smooth)
 void Texture::createMaskFromColor(const Color &color, Uint8 alpha){
 	Image img = this->copyToImage();
 	img.createMaskFromColor(color, alpha);
-	loadFromImage(img); 
+	loadFromImage(img);
 };
 
 ////////////////////////////////////////////////////////////

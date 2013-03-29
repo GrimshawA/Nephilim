@@ -29,12 +29,12 @@ void android_init(){
 	//pE::Application::myInstance->jniEnv = jEnv;
 	static bool alreadyStarted = false;
 
-	if(!alreadyStarted){ 
+	if(!alreadyStarted){
 		applicationStartup(&gEngine);
 		alreadyStarted = true;
 	}
 	else{
-		
+
 	}
 }
 
@@ -49,12 +49,12 @@ void android_render(){
 	applicationUpdate();
 }
 
-void android_resize(int w, int h){ 
-	myApp.myWindowWidth = w; 
+void android_resize(int w, int h){
+	myApp.myWindowWidth = w;
 	myApp.myWindowHeight = h;
 
 	pE::Event ev;
-	ev.type = pE::Event::Resized; 
+	ev.type = pE::Event::Resized;
 	ev.size.width = w;
 	ev.size.height = h;
 	myApp.pendingEvents.push_back(ev);
@@ -66,7 +66,7 @@ void android_keydown(int key){
 	pE::Event ev;
 	ev.type = pE::Event::KeyPressed;
 
-	switch(key){ 
+	switch(key){
 		case AKEYCODE_A: ev.key.code = pE::Keyboard::A;break;
 		case AKEYCODE_S: ev.key.code = pE::Keyboard::S;break;
 		case AKEYCODE_D: ev.key.code = pE::Keyboard::D;break;
@@ -74,7 +74,7 @@ void android_keydown(int key){
 		case AKEYCODE_BACK: ev.key.code = pE::Keyboard::AndroidBack;break;
 	}
 
-	
+
 	myApp.pendingEvents.push_back(ev);
 }
 
@@ -83,7 +83,7 @@ void android_touchdown(float x, float y){
 	ev.type = pE::Event::TouchPressed;
 	ev.x = x;
 	ev.y = y;
-	myApp.pendingEvents.push_back(ev); 
+	myApp.pendingEvents.push_back(ev);
 }
 
 void android_touchup(float x, float y){
@@ -91,7 +91,7 @@ void android_touchup(float x, float y){
 	ev.type = pE::Event::TouchReleased;
 	ev.x = x;
 	ev.y = y;
-	myApp.pendingEvents.push_back(ev); 
+	myApp.pendingEvents.push_back(ev);
 }
 
 void android_touchmove(float x, float y){
@@ -99,10 +99,10 @@ void android_touchmove(float x, float y){
 	ev.type = pE::Event::TouchMoved;
 	ev.x = x;
 	ev.y = y;
-	myApp.pendingEvents.push_back(ev); 
+	myApp.pendingEvents.push_back(ev);
 }
 
-#elif defined PARABOLA_WINDOWS
+#elif defined NEPHILIM_DESKTOP
 
 	int main(int argc, char** argv){
 		applicationStartup(&gEngine);

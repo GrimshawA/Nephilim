@@ -21,7 +21,7 @@
 using namespace std;
 #include <iostream>
 #include <algorithm>
-
+#include <string.h>
 
 PARABOLA_NAMESPACE_BEGIN
 
@@ -36,14 +36,14 @@ void scriptstdprint(std::string in){
 void ASMessageCallback(const asSMessageInfo *msg, void *param){
 		if(!msg)return;
 		const char *type = "ERR ";
-		if( msg->type == asMSGTYPE_WARNING ) 
+		if( msg->type == asMSGTYPE_WARNING )
 			type = "WARN";
-		else if( msg->type == asMSGTYPE_INFORMATION ) 
+		else if( msg->type == asMSGTYPE_INFORMATION )
 			type = "INFO";
 
 		//printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
 		PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
-			 
+
 };
 
 ASEngine::ASEngine(){
@@ -103,7 +103,7 @@ void ASEngine::unloadScript(const String &name){
 
 /// Loads a script from a null terminated char buffer
 ASScript* ASEngine::loadScriptFromMemory(const char* buffer, const String &scriptName){
-	ASScript* asScript = NULL;	
+	ASScript* asScript = NULL;
 
 	CScriptBuilder Builder;
 	int r;
@@ -140,12 +140,12 @@ ASScript* ASEngine::loadScriptFromMemory(const char* buffer, const String &scrip
 /// Any functionality the script requires must be exported before loading it
 /// \param name The name of the script to load, relative to the executable directory, or the added directories
 /// \param alias An override for the name, as the search keyword of this script. Ignored if empty.
-/// \param isByteCode When true, the script is assumed to be already compiled, and is loaded as bytecode. 
+/// \param isByteCode When true, the script is assumed to be already compiled, and is loaded as bytecode.
 /// \return ASScript structure to interact with the loaded script, NULL if failed to load.
 /// \note The name specified or the alias may be already in use. In that case, a new name is generated and can be queried later.
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isByteCode){
-	ASScript* asScript = NULL;	
+	ASScript* asScript = NULL;
 
 	CScriptBuilder Builder;
 	int r;
@@ -156,7 +156,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 	}
 
 	if(isByteCode){
-		
+
 	}
 	else{
 #ifdef PARABOLA_ANDROID
@@ -166,7 +166,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 		if(fp && fp->canRead()){
 			fp->seek(0, SEEK_END);
 			Int64 size = fp->tell();
-			fp->seek(0); 
+			fp->seek(0);
 			char *buffer = new char[size+1];
 			String ss = "Angelscript loading script with " + String::number((unsigned long)size) + " bytes";
 			//TESTLOG(ss.c_str())
@@ -179,11 +179,11 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 		else r = -1;
 
 		delete fp;
-#else 
+#else
 		FileInterface::onFileRequest.emit(name);
 		r = Builder.AddSectionFromFile(String(FileInterface::m_root + name).c_str());
 #endif
-		
+
 		if(r<0){
 			TESTLOG("Could not stream file data into the Script Module.")
 			return false;
@@ -203,7 +203,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 
 			TESTLOG("Module was not created properly.\n")
 			return NULL;
-		} 
+		}
 	}
 
 	return asScript;
@@ -263,7 +263,7 @@ ASScript* ASEngine::findScript(const String &name){
 /// Wrapper for exporting reference only data types, that means they cannot be instantiated in scripts.
 /// name will be the name to be known from scripts
 /// typeSize is just sizeof(MyClassType)
-/// dummyMethod must contain the name of a useless method from your class, because of an internal detail. 
+/// dummyMethod must contain the name of a useless method from your class, because of an internal detail.
 /// Such as "dummy", if you have a function void dummy() that does nothing .
 int ASEngine::exportReferenceDataType(const String &name){
 	asEngine->RegisterObjectType(name.c_str(), 0, asOBJ_REF);
@@ -412,7 +412,7 @@ bool ASEngine::exportBasicScriptInformation(){
 	asEngine->RegisterEnumValue("PlatformType", "Desktop", ApplicationSettings::Desktop);
 
 	if (strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY")){
-		asEngine->RegisterGlobalFunction("int getPlatformType()", WRAP_FN(Application::getPlatformType), asCALL_GENERIC);		
+		asEngine->RegisterGlobalFunction("int getPlatformType()", WRAP_FN(Application::getPlatformType), asCALL_GENERIC);
 	}
 	else{
 		asEngine->RegisterGlobalFunction("int getPlatformType()", asFUNCTION(Application::getPlatformType), asCALL_CDECL);
@@ -461,8 +461,8 @@ bool ASEngine::exportBasicEngine(const String &varName){
 		asEngine->RegisterObjectBehaviour("Vec2f", asBEHAVE_CONSTRUCT, "void f(const Vec2f &in)", WRAP_OBJ_LAST(Vec2fCCTOR), asCALL_GENERIC);
 		asEngine->RegisterObjectMethod("Vec2f", "Vec2f &opAssign(const Vec2f &in)", WRAP_MFN_PR(Vec2f, operator=, (const Vec2f &), Vec2f&), asCALL_GENERIC);
 
-	} 
-	else{ 
+	}
+	else{
 		asEngine->RegisterObjectBehaviour("Vec2f", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Vec2fCTOR), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("Vec2f", asBEHAVE_CONSTRUCT, "void f(float x, float y)", asFUNCTION(Vec2fCTOR2), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("Vec2f", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Vec2fDTOR), asCALL_CDECL_OBJLAST);
@@ -470,7 +470,7 @@ bool ASEngine::exportBasicEngine(const String &varName){
 		asEngine->RegisterObjectMethod("Vec2f", "Vec2f &opAssign(const Vec2f &in)", asMETHODPR(Vec2f, operator=, (const Vec2f &), Vec2f&), asCALL_THISCALL);
 
 	}
-	
+
 	asEngine->RegisterObjectProperty("Vec2f", "float x", asOFFSET(Vec2f, x));
 	asEngine->RegisterObjectProperty("Vec2f", "float y", asOFFSET(Vec2f, y));
 
@@ -492,7 +492,7 @@ bool ASEngine::exportBasicEngine(const String &varName){
 		asEngine->RegisterObjectMethod("Vec2i", "Vec2i &opAssign(const Vec2i &in)", asMETHODPR(Vec2i, operator=, (const Vec2i &), Vec2i&), asCALL_THISCALL);
 
 	}
-	
+
 	asEngine->RegisterObjectProperty("Vec2i", "int x", asOFFSET(Vec2i, x));
 	asEngine->RegisterObjectProperty("Vec2i", "int y", asOFFSET(Vec2i, y));
 
@@ -512,7 +512,7 @@ bool ASEngine::exportBasicEngine(const String &varName){
 	r = asEngine->RegisterObjectMethod("EngineSDK", "int gameCount()", asMETHOD(Engine, as_gameCount) , asCALL_THISCALL);if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectMethod("EngineSDK", "void loadGame(const string &in, const string &in)", asMETHOD(Engine, as_createScriptGame) , asCALL_THISCALL);if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectMethod("EngineSDK", "Window@ getWindow()", asMETHOD(Engine, getWindow) , asCALL_THISCALL);if(r < 0)printf("r %d", r);
-	
+
 	asEngine->RegisterGlobalProperty(String(String("EngineSDK ") + varName).c_str(), Engine::instance());
 
 
@@ -524,20 +524,20 @@ bool ASEngine::exportBasicEngine(const String &varName){
 
 void testP()
 {
-	
+
 }
 
 /// Exports string functionality
-bool ASEngine::exportStrings(){ 
+bool ASEngine::exportStrings(){
 	if(!asEngine)return false;
 
 	RegisterStdString(asEngine);
-	RegisterScriptArray(asEngine, false); 
+	RegisterScriptArray(asEngine, false);
 	RegisterStdStringUtils(asEngine);
 
-	int r; 
-	 
-	if (strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY")){ 
+	int r;
+
+	if (strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY")){
 		r = asEngine->RegisterGlobalFunction("void print(string)", WRAP_FN(scriptstdprint), asCALL_GENERIC);
 		if(r < 0){
 			TESTLOG("FAILED TO REGISTER print(string)\n")

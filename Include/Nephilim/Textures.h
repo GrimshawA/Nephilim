@@ -21,12 +21,12 @@
 #endif
 
 
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #endif
 
-PARABOLA_NAMESPACE_BEGIN	
+PARABOLA_NAMESPACE_BEGIN
 
 void reloadTextures();
 
@@ -47,7 +47,7 @@ public:
 
 	/// Sets the desired transparency on all pixels with the selected color
 	void createMaskFromColor(const Color &color, Uint8 alpha = 0);
-	
+
 	void create(unsigned int width, unsigned int height, const Color& color);
 
 	void create(unsigned int width, unsigned int height,const Uint8* pixels);
@@ -57,7 +57,7 @@ public:
 #ifdef PARABOLA_NOSFML
 	std::vector<Uint8> m_pixels;
 	Vec2i m_size;
-#elif defined PARABOLA_DESKTOP
+#elif defined PARABOLA_DESKTOP || defined NEPHILIM_DESKTOP
 	sf::Image myImage;
 #endif
 };
@@ -119,7 +119,7 @@ public:
 	*/
 	/*class RenderImage: public sf::RenderTexture{
 	public:
-		
+
 	};*/
 
 PARABOLA_NAMESPACE_END

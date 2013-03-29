@@ -10,8 +10,6 @@
 #include "VertexArray.h"
 #include "View.h"
 #include "RenderTarget.h"
-
-
 #include "Text.h"
 #include "Strings.h"
 

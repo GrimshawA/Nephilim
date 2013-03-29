@@ -4,6 +4,8 @@
 
 #include <AS/aswrappedcall.h>
 
+#include <string.h>
+
 PARABOLA_NAMESPACE_BEGIN
 
 AnimationFactory& AnimationFactoryFactory(){
@@ -48,7 +50,7 @@ bool ASEngine::exportAnimations(){
 
 
 
-		
+
 
 		asEngine->RegisterObjectBehaviour("AnimationFactory", asBEHAVE_FACTORY, "AnimationFactory@ f()", asFUNCTION(AnimationFactoryFactory), asCALL_CDECL);
 		asEngine->RegisterObjectBehaviour("AnimationFactory", asBEHAVE_ADDREF, "void f()", asMETHOD(RefCountable, addReference), asCALL_THISCALL);

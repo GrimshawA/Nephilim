@@ -76,7 +76,7 @@ solution (enginename)
 			links("sfml-window-s")
 			links("sfml-graphics-s")
 			links("angelscript")
-			links("libsigcpp")
+			links("libsigc")
 		end
 		
 	configuration "Debug"
@@ -148,7 +148,16 @@ solution (enginename)
 			if os.get() == "windows" and not table.contains(_ARGS, "--android") then
 				links("opengl32")
 			end
-			
+
+
+			if os.get() == "linux" then
+				links("sfml-system")
+				links("sfml-window")
+				links("sfml-graphics")
+				--links("angelscript")
+				--links("libsigcpp")
+			end
+
 			configuration "Debug"
 				flags { "Symbols" }
 				

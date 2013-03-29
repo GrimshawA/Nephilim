@@ -1,20 +1,20 @@
 #include "Nephilim/Window.h"
 #include "Nephilim/Application.h"
 
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #elif defined PARABOLA_ANDROID
 //android specifics
 #endif
- 
+
 #include <iostream>
 using namespace std;
 
 
 PARABOLA_NAMESPACE_BEGIN
 
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 class Window::WindowImplementation : public sf::RenderWindow{
 public:
 	WindowImplementation() : sf::RenderWindow(){
@@ -27,7 +27,7 @@ public:
 
 };
 #endif
-	
+
 /// Default constructor
 Window::Window(){
 	myWindowImpl = new WindowImplementation();
@@ -37,7 +37,7 @@ Window::Window(){
 /// Destroy the window
 Window::~Window(){
 	delete myWindowImpl;
-} 
+}
 
 /// Attempts to launch a window if applicable
 void Window::create(int screenWidth, int screenHeight){
@@ -55,7 +55,7 @@ void Window::create(void* handle){
 	myWindowImpl->create((sf::WindowHandle)handle);
 	m_fullscreen = false;
 	m_handle = (int)handle;
-	
+
 #endif
 };
 
@@ -65,7 +65,7 @@ bool Window::setActive(bool flag) const{
 	return myWindowImpl->setActive(flag);
 #endif
 	return false;
-}; 
+};
 
 void Window::setFramerateLimit(int limit){
 #ifdef PARABOLA_DESKTOP
@@ -83,7 +83,7 @@ int Window::getWidth() const{
 #elif defined PARABOLA_IPHONE
     return 480;
 #endif
-    
+
 };
 
 /// Get the height of the screen/window
@@ -163,7 +163,7 @@ bool Window::pollEvent(Event &event){
 	sf::Event tevent;
 	if(myWindowImpl->pollEvent(tevent)){
 		event.type = (Event::EventType)(int)tevent.type;
-		event.mouseButton = *static_cast<Event::MouseButtonEvent*>((void*)&tevent.mouseButton);	
+		event.mouseButton = *static_cast<Event::MouseButtonEvent*>((void*)&tevent.mouseButton);
 
 		//event = static_cast<InputEvent>((void*)&tevent);
 		//memcpy(&event, &tevent, sizeof(event.type)/* + sizeof(InputEvent::KeyEvent)*/);
@@ -197,7 +197,7 @@ void Window::swapBuffers(){
 #ifdef PARABOLA_DESKTOP
 	myWindowImpl->display();
 #elif defined PARABOLA_ANDROID
-	
+
 #endif
 };
 
@@ -209,8 +209,8 @@ void Window::setTitle(const String &title){
 
 #endif
 };
-	
-	
+
+
 	/*
 /// Creates a uninitialized window
 Window::Window() : sf::RenderWindow(){
@@ -222,7 +222,7 @@ Window::Window() : sf::RenderWindow(){
 /// \param style is the configurable style of the window
 /// \param settings is the configuration of the OpenGL version and parameters such as antialiasing
 Window::Window(VideoMode mode, const String &title, Uint32 style, const sf::ContextSettings &settings)
-: sf::RenderWindow(mode, title, style, settings) 
+: sf::RenderWindow(mode, title, style, settings)
 {
 
 };

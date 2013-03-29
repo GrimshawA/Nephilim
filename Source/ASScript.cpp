@@ -2,6 +2,7 @@
 #include "Nephilim/ASEngine.h"
 #include "Nephilim/Logger.h"
 
+#include <stdio.h>
 #include <iostream>
 using namespace std;
 
@@ -31,7 +32,7 @@ bool ASScript::prepareMethod(int funcid){
 			requestContext();
 			//myExecutionContext->PushState();
 			myExecutionContext->Prepare(myModule->GetFunctionByIndex(myPreparedMethod));
-	
+
 			myCallPending = true;
 			return true;
 		}
@@ -42,7 +43,7 @@ bool ASScript::prepareMethod(int funcid){
 	return false;
 };
 
-/// Prepare the context to call 
+/// Prepare the context to call
 bool ASScript::prepareMethod(const String &funcName){
 	if(myModule != NULL){
 		asIScriptFunction* function = myModule->GetFunctionByDecl(funcName.c_str());
@@ -51,7 +52,7 @@ bool ASScript::prepareMethod(const String &funcName){
 			requestContext();
 			myExecutionContext->PushState();
 			myExecutionContext->Prepare(function);
-			
+
 			myCallPending = true;
 			//cout<<"ASScript: prepared module"<<endl;
 			return true;
@@ -59,14 +60,14 @@ bool ASScript::prepareMethod(const String &funcName){
 		else{
 			TESTLOG("ASScript: could not prepare method")
 			return false;
-			
+
 		}
 	}
 	else{
 		TESTLOG("ASScript: Could not prepare module")
 		return false;
 	}
-	
+
 };
 
 /// Pass an argument to the function
@@ -196,7 +197,7 @@ void ASScript::requestContext(){
 				//TESTLOG("BEFORE CLEANUP\n")
 				myModule->ResetGlobalVars(myExecutionContext);
 				//TESTLOG("AFTER CLEANUP\n")
-					 
+
 
 			}
 		}
@@ -228,7 +229,7 @@ void ASScript::compileCode(const char* code, const String &sectionName){
 		asIScriptFunction *func = 0;
 		myModule->CompileFunction(sectionName.c_str(), code, 0, asCOMP_ADD_TO_MODULE, &func);
 		if(func){
-			//cout<<"will now call new function"<<endl;			
+			//cout<<"will now call new function"<<endl;
 		}
 
 		if(!myModule){

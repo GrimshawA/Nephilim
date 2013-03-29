@@ -3,6 +3,8 @@
 
 #include "AS/aswrappedcall.h"
 
+#include <stdio.h>
+
 PARABOLA_NAMESPACE_BEGIN
 
 /// Exports events as a reference type
@@ -10,7 +12,7 @@ bool ASEngine::exportEvents(){
 	// Event type
 	/*asEngine->RegisterObjectType("Event", sizeof(InputEvent), asOBJ_REF);
 
-	
+
 	r = asEngine->RegisterObjectBehaviour("Event", asBEHAVE_ADDREF, "void f()", asFUNCTION(dummy2), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectBehaviour("Event", asBEHAVE_RELEASE, "void f()", asFUNCTION(dummy2), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
 	*/

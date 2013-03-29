@@ -15,7 +15,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 /// Apply the camera to openGL
 void View3D::apply(){
-	glEnable(GL_DEPTH_TEST);
+	/*glEnable(GL_DEPTH_TEST);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
@@ -23,7 +23,7 @@ void View3D::apply(){
 	//gluPerspective(45, 480/320, 0.3f, 100000.f);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glLoadIdentity();*/
 	//gluLookAt(m_eye.x,m_eye.y,m_eye.z, m_center.x, m_center.y, m_center.z, m_up.x, m_up.y, m_up.z);
 };
 

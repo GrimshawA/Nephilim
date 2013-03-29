@@ -2,6 +2,7 @@
 #include "Nephilim/IODevice.h"
 #include <iostream>
 using namespace std;
+#include <stdio.h>
 #include <stdlib.h>
 
 PARABOLA_NAMESPACE_BEGIN
@@ -10,9 +11,9 @@ PARABOLA_NAMESPACE_BEGIN
 		if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') && c == '.')return true;
 		else return false;
 	}
-	
+
 TextStream::TextStream() : m_device(NULL){
-	
+
 };
 
 /// Creates a text stream associated with an IODevice
@@ -61,7 +62,7 @@ String TextStream::getLine(){
 		if(c == '\n') break; // finish cycle earlier
 
 		if(c != '\r')
-			out.append(1,c); 
+			out.append(1,c);
 	}
 	//char c = readChar();
 // 	while(c != '\n' ){
@@ -70,12 +71,12 @@ String TextStream::getLine(){
 // 		c = readChar();
 // 	}
 	return out;
-}; 
+};
 
 TextStream& TextStream::operator<<(const String &value){
 	m_device->write(value.c_str(), value.size()*sizeof(char));
 	return *this;
-}; 
+};
 
 
 /*
@@ -83,7 +84,7 @@ TextStream& TextStream::operator<<(const String &value){
 		delimiter.clear();
 		delimiter += c;
 	};
-	
+
 	void TextStream::setDelimiter(const String &s){
 		delimiter = s;
 	};
@@ -115,7 +116,7 @@ TextStream& TextStream::operator<<(const String &value){
 			if(c == '\n')stop = true;
 			else{
 				output += c; //keep reading until a end line is found or the delimiter
-				
+
 				// check if the delimiter was already found.
 				if(output.compare(output.size() - 1 - delimiter.size(),delimiter.size(), delimiter) == 0 && delimiter.size() != output.size()){
 					//the delimiter is the last characters, crop it out and stop and go back to the right place.
@@ -123,7 +124,7 @@ TextStream& TextStream::operator<<(const String &value){
 					stop = true;
 					seekOffset(0 - delimiter.size());
 				}
-					
+
 			}
 		}
 
@@ -139,7 +140,7 @@ TextStream& TextStream::operator<<(const String &value){
 		seek(pos); //go back
 		return result;
 	};
-	
+
 	int TextStream::nextInt(){
 		return nextString().toInt();
 	};
@@ -197,7 +198,7 @@ TextStream& TextStream::operator<<(const String &value){
 		else return true;
 	};
 
-	
+
 	String TextStream::readWord(bool acceptNumbers, bool acceptUnderscore){
 		String out;
 
@@ -211,7 +212,7 @@ TextStream& TextStream::operator<<(const String &value){
 		int BeginStack = 0;
 		char c;
 		while((c=readChar()) != EOF){
-			if(c == beginChar){				
+			if(c == beginChar){
 				BeginStack++;
 				if(BeginStack > 1){
 					output += c;

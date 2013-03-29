@@ -4,6 +4,8 @@
 #include <windows.h>
 #endif
 
+#include <stdio.h>
+
 PARABOLA_NAMESPACE_BEGIN
 
 	DateTime::DateTime(){
@@ -19,10 +21,10 @@ PARABOLA_NAMESPACE_BEGIN
 
 		char buffer[20];
 		if(Tm){
-			sprintf(buffer, "%.4d-%.2d-%.2dT%.2d:%.2d:%.2d\0",	
+			sprintf(buffer, "%.4d-%.2d-%.2dT%.2d:%.2d:%.2d\0",
 				Tm->tm_year+1900,
 				Tm->tm_mon+1,
-				Tm->tm_mday,			
+				Tm->tm_mday,
 				Tm->tm_hour,
 				Tm->tm_min,
 				Tm->tm_sec);
