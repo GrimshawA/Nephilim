@@ -15,6 +15,7 @@ void cglPrepareExtensions()
 {
 	glewInit();
 }
+
 // FBO
 #define glGenFramebuffersCGL glGenFramebuffersEXT
 #define glFramebufferTexture2DCGL glFramebufferTexture2DEXT

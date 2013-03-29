@@ -186,13 +186,13 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 
 		if(r<0){
 			TESTLOG("Could not stream file data into the Script Module.")
-			return false;
+			return 0;
 		}
 
 		r = Builder.BuildModule();
 		if(r<0){
 			TESTLOG("Could not compile the script file.")
-			return false;
+			return 0;
 		}
 
 		asScript = new ASScript();

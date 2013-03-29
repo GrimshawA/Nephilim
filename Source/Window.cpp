@@ -9,6 +9,7 @@
 #endif
 
 #include <iostream>
+#include <stdint.h>
 using namespace std;
 
 
@@ -54,10 +55,9 @@ printf("d\n");
 
 void Window::create(void* handle){
 #ifdef NEPHILIM_DESKTOP
-	myWindowImpl->create((sf::WindowHandle)handle);
+	myWindowImpl->create(reinterpret_cast<sf::WindowHandle>(handle));
 	m_fullscreen = false;
-	m_handle = (int)handle;
-
+	m_handle = reinterpret_cast<intptr_t>(handle);
 #endif
 };
 

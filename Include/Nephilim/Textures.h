@@ -8,18 +8,6 @@
 #include "ScopedFile.h"
 #include <vector>
 
-#ifdef PARABOLA_WINDOWS
-#include <windows.h>
-#include <GL/GL.h>
-#include <GL/GLU.h>
-#endif
-
-#ifdef PARABOLA_ANDROID
-
-#include <GLES/gl.h>
-#include <GLUES/glu.h>
-#endif
-
 
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/Image.hpp>

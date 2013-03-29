@@ -1,11 +1,13 @@
-#include "Nephilim/Sprite.h"
+#include <Nephilim/Sprite.h>
+#include <Nephilim/CGL.h>
+
 #include "Nephilim/ContentBank.h"
 #include "Nephilim/Renderer.h"
 
 #include <iostream>
 using namespace std;
 
-#include <Nephilim/CGL.h>
+
 
 #include <Nephilim/ASEngine.h>
 #include "AS/aswrappedcall.h"
