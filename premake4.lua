@@ -76,7 +76,7 @@ solution (enginename)
 			links("sfml-window-s")
 			links("sfml-graphics-s")
 			links("angelscript")
-			links("libsigc")
+			links("sigc++")
 		end
 		
 	configuration "Debug"
@@ -154,8 +154,9 @@ solution (enginename)
 				links("sfml-system")
 				links("sfml-window")
 				links("sfml-graphics")
-				--links("angelscript")
-				--links("libsigcpp")
+				links("angelscript")
+				links("sigc++")
+				links("GLEW")
 			end
 
 			configuration "Debug"

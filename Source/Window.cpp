@@ -41,17 +41,19 @@ Window::~Window(){
 
 /// Attempts to launch a window if applicable
 void Window::create(int screenWidth, int screenHeight){
-#ifdef PARABOLA_DESKTOP
-	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight,32), "Parabola Engine SDK", sf::Style::Default);
+#ifdef NEPHILIM_DESKTOP
+	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Parabola Engine SDK");
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	myWindowImpl->setFramerateLimit(60);
 	m_handle = (int)myWindowImpl->getSystemHandle();
+	printf("Creating window\n");
 #endif
+printf("d\n");
 };
 
 void Window::create(void* handle){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	myWindowImpl->create((sf::WindowHandle)handle);
 	m_fullscreen = false;
 	m_handle = (int)handle;
@@ -61,14 +63,14 @@ void Window::create(void* handle){
 
 /// Sets the window as active for drawing
 bool Window::setActive(bool flag) const{
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	return myWindowImpl->setActive(flag);
 #endif
 	return false;
 };
 
 void Window::setFramerateLimit(int limit){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	myWindowImpl->setFramerateLimit(limit);
 #endif
 };
@@ -76,7 +78,7 @@ void Window::setFramerateLimit(int limit){
 
 /// Get the width of the screen/window
 int Window::getWidth() const{
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	return myWindowImpl->getSize().x;
 #elif defined PARABOLA_ANDROID
 	return Application::myInstance->myWindowWidth;
@@ -88,7 +90,7 @@ int Window::getWidth() const{
 
 /// Get the height of the screen/window
 int Window::getHeight() const{
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	return myWindowImpl->getSize().y;
 #elif defined PARABOLA_ANDROID
 	return Application::myInstance->myWindowHeight;
@@ -104,7 +106,7 @@ Vec2i Window::getSize() const{
 
 void Window::setMousePosition(Vec2i point)
 {
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	myWindowImpl->setMouseCursorVisible(false);
 	sf::Mouse::setPosition(sf::Vector2i(point.x,point.y), *myWindowImpl);
 #endif
@@ -113,7 +115,7 @@ void Window::setMousePosition(Vec2i point)
 
 /// Enable/Disable fullscreen mode
 void Window::setFullscreen(bool enable){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	if(enable){
 		//activate fullscreen
 		myWindowImpl->create(sf::VideoMode::getDesktopMode(), "Hawkeye", sf::Style::Fullscreen);
@@ -159,7 +161,7 @@ bool Window::getFullscreen(){
 
 /// Check if there is a pending event
 bool Window::pollEvent(Event &event){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	sf::Event tevent;
 	if(myWindowImpl->pollEvent(tevent)){
 		event.type = (Event::EventType)(int)tevent.type;
@@ -178,7 +180,7 @@ bool Window::pollEvent(Event &event){
 
 /// Discard all pending events
 void Window::discardEvents(){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	sf::Event event;
 	while(myWindowImpl->pollEvent(event));
 #endif
@@ -186,7 +188,7 @@ void Window::discardEvents(){
 
 WindowHandle Window::getHandle()
 {
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	return (void*)myWindowImpl->getSystemHandle();
 #endif
 };
@@ -194,16 +196,14 @@ WindowHandle Window::getHandle()
 
 /// Swaps buffers
 void Window::swapBuffers(){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	myWindowImpl->display();
-#elif defined PARABOLA_ANDROID
-
 #endif
 };
 
 /// Sets a new title to the window
 void Window::setTitle(const String &title){
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 	myWindowImpl->setTitle(title);
 #elif defined PARABOLA_ANDROID
 

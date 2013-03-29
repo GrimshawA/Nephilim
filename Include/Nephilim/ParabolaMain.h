@@ -105,9 +105,10 @@ void android_touchmove(float x, float y){
 #elif defined NEPHILIM_DESKTOP
 
 	int main(int argc, char** argv){
+
 		applicationStartup(&gEngine);
 
-		while(myApp.running()){
+		while(1){
 			applicationUpdate();
 		}
 		applicationCleanup();

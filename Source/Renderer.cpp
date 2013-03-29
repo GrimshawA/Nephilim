@@ -1,7 +1,7 @@
 #include "Nephilim/Renderer.h"
 #include "Nephilim/View.h"
 
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 #include <Nephilim/RendererOpenGL.h>
 #elif defined PARABOLA_ANDROID || defined PARABOLA_IPHONE
 #include <Nephilim/RendererGLES.h>
@@ -10,8 +10,8 @@
 PARABOLA_NAMESPACE_BEGIN
 /// Auto detects an appropriate renderer
 Renderer* Renderer::createAutomaticRenderer(RenderTarget* target){
-	
-#ifdef PARABOLA_DESKTOP
+
+#ifdef NEPHILIM_DESKTOP
 	RendererOpenGL* renderer = new RendererOpenGL();
 	renderer->m_renderTarget = target;
 	return renderer;

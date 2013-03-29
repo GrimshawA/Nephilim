@@ -13,6 +13,7 @@ void applicationStartup(pE::Engine** engine)
 	sdk.init();
 	sdk.execute(&test);
 	*engine = &sdk;
+    printf("App::Start\n");
 }
 
 void applicationUpdate()

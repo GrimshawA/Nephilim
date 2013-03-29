@@ -12,9 +12,6 @@ public:
 	void onRender();
 	void onEvent(Event &event);
 	void onUpdate(Time time);
-	
-	Renderer* m_render;
-	Vec2f m_pos;
 };
 
 #endif // PortabilityTest_h__

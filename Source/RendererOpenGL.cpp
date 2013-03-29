@@ -1,5 +1,5 @@
 #include <Nephilim/Platform.h>
-#ifdef PARABOLA_DESKTOP
+#ifdef NEPHILIM_DESKTOP
 #include <Nephilim/RendererOpenGL.h>
 #include "Nephilim/View.h"
 #include "Nephilim/Math.h"
@@ -10,7 +10,7 @@
 #ifdef PARABOLA_WINDOWS
 #include <windows.h>
 #endif
-#include <GL/GL.h>
+#include <GL/gl.h>
 
 PARABOLA_NAMESPACE_BEGIN
 
@@ -76,13 +76,13 @@ void RendererOpenGL::enableClipping(FloatRect rect)
 	}
 
 	m_clipRegionStack.push(rect);
-	
+
 	activateClipRegion(m_clipRegionStack.top());
 }
 
 void RendererOpenGL::activateClipRegion(FloatRect rect)
 {
-	glScissor(rect.left, m_renderTarget->getSize().y - (rect.top + rect.height), rect.width, rect.height);	
+	glScissor(rect.left, m_renderTarget->getSize().y - (rect.top + rect.height), rect.width, rect.height);
 }
 
 void RendererOpenGL::disableClipping()
@@ -106,7 +106,7 @@ void RendererOpenGL::clear(){
 void RendererOpenGL::prepare(int w, int h){
 	glViewport(0, 0, w, h);
 
-	
+
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glClearColor(0.1f,0.f,0.3f,0.3f);
 
@@ -224,7 +224,7 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 	glColor4ub(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, color.a);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int i = 0; i < k_segments; ++i)
-	{		
+	{
 		Vec2f v = center + Vec2f(cosf(theta), sinf(theta)) * radius;
 		glVertex2f(v.x, v.y);
 		theta += k_increment;
@@ -286,7 +286,7 @@ void RendererOpenGL::draw(Drawable &drawable){
 void RendererOpenGL::drawDebugLine(Vec2f begin, Vec2f end, Color color){
 	glLoadIdentity();
 	glPushMatrix();
-	glPushAttrib(GL_ENABLE_BIT); 
+	glPushAttrib(GL_ENABLE_BIT);
 	/*glLineStipple(1, 0xAAAA);
 	glEnable(GL_LINE_STIPPLE);*/
 
