@@ -48,7 +48,6 @@ public:
 	/// Minus operator overload to subtract time spans
 	Time operator -(Time right);
 
-private:
 	/// The time span representation
 	Int64 m_microSeconds;
 	friend class Clock;

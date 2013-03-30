@@ -182,6 +182,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 #else
 		FileInterface::onFileRequest.emit(name);
 		r = Builder.AddSectionFromFile(String(FileInterface::m_root + name).c_str());
+		printf("Adding section from file: %s\n",String(FileInterface::m_root + name).c_str() );
 #endif
 
 		if(r<0){

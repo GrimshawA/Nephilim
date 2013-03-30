@@ -12,7 +12,6 @@
 #include "Nephilim/NStateImage.h"
 #include "Nephilim/NStateCustom.h"
 
-#include <Nephilim/CGL.h>
 
 
 #include <Nephilim/ASEngine.h>
@@ -128,20 +127,11 @@ void ScriptedGameCore::enablePreloadStep(bool enable)
 };
 
 
-/// Only called when the preload is finished so the game can start
-
-#ifdef PARABOLA_ANDROID
-#define GL_GLEXT_PROTOTYPES
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#include <GLES/glplatform.h>
-#else
-
-#endif
-
-
 /// Called when the game is instanced, calls int main() on the starter script
 void ScriptedGameCore::onCreate(){
+
+    cout<<"Just started"<<endl;
+
 	setUpdateStep(1.f / 100.f);
 
 	m_window = &getWindow();
@@ -171,6 +161,9 @@ void ScriptedGameCore::onCreate(){
 
 	m_ui.area = FloatRect(0,0,getWindow().getWidth(), getWindow().getHeight());
 
+
+    if(m_preloadScriptPath.empty()) m_preloadScriptPath = "preload.as";
+
 	// PreLoad the game
 	ASScript* preloadScript = m_scripting.loadScript(m_fileSystemRoot + m_preloadScriptPath);
 	if(preloadScript)
@@ -184,6 +177,7 @@ void ScriptedGameCore::onCreate(){
 		m_mainScriptPath = preloadScript->fastCall<String>("string getMainScript()");
 		setName(preloadScript->fastCall<String>("string getName()"));
 
+        m_requiresPreload = false;
 		if(m_requiresPreload)
 		{
 			// Im on the browser, need to cache resources first
@@ -212,27 +206,10 @@ void ScriptedGameCore::onCreate(){
 
 
 
-	getWindow().setFramerateLimit(30);
-	m_renderer = Renderer::createAutomaticRenderer(&getWindow());
+	//getWindow().setFramerateLimit(30);
 
 
 
-
-
-
-
-
-	/*TESTLOG("CREATING buffer")
-	GLuint fbo;
-	glGenFramebuffersOES(1, &fbo);
-	if(!fbo)
-	{
-		TESTLOG("FAILED")
-	}
-	TESTLOG("CREATED")*/
-
-	const unsigned char* str = glGetString(GL_EXTENSIONS);
-	PRINTLOG("DD", "EXTENSIONS: %s\n", str);
 
 };
 
@@ -263,57 +240,20 @@ void ScriptedGameCore::startupGame()
 /// Draws the configured scene graph
 /// If the direct render script is enabled, it is rendered after the other objects.
 void ScriptedGameCore::onRender(){
-	//m_renderer->m_clearColor.r = 255;
-	m_renderer->clear();
-	View v;
-	v.setRect(0,0,1024,768);
 
-	/// Render the frame
-	/*if(m_script){
-		m_script->call(String("void onRender()"));
-	}*/
-
-	m_renderer->setView(v);
-//	m_renderer->draw(m_sprite);
-	//m_renderer->display();
-	//m_renderer->drawDebugCircle(Vec2f(circleX,200), 30, Vec2f(), Color::Red);
-
-
-	m_states.drawStates(m_renderer);
+    getRenderer()->drawDebugCircle(Vec2f(200,200), 30, Vec2f(), Color::Red);
+	//m_states.drawStates(getRenderer());
 
 	// dirty rendering
 	if(m_mainScript)
 	{
 		m_mainScript->prepareMethod(String("void onRender(Renderer@)"));
-		m_mainScript->prepareMethodArgument(0, m_renderer, ScriptArgumentTypes::Object);
+		m_mainScript->prepareMethodArgument(0, getRenderer(), ScriptArgumentTypes::Object);
 		m_mainScript->call();
 	}
 
+	getRenderer()->drawDebugQuad(100,100,0,100,100,Color(255,30,30));
 
-
-	Text t;
-	t.setString(String("[") + getName() + String("]") + String("Preload Script: ")  + m_preloadScriptPath);
-
-	Text t2;
-	t2.setCharacterSize(15);
-	t2.setPosition(0, 50);
-	String finalS = "Log: " + m_info;
-	t2.setString(finalS);
-//
-// 	Font brut;
-// 	brut.loadFromFile("Brutality.ttf");
-// 	Text txt;
-// 	txt.setFont(brut);
-// 	txt.setString("Hello Brutality test!");
-// 	txt.setCharacterSize(40);
-// 	txt.setPosition(100,500);
-// 	txt.setColor(Color::Red);
-// 	m_renderer->draw(txt);
-
-	//m_renderer->draw(t);
-	//m_renderer->draw(t2);
-
-	getWindow().swapBuffers(); //tempo
 };
 
 bool ScriptedGameCore::doDownload(String s, String d)

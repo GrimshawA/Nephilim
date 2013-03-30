@@ -11,7 +11,15 @@ GameCore::GameCore() : m_stackedTime(0.f), m_updateStep(1.f / 60.f), m_windowTit
 #ifdef PARABOLA_ANDROID
 	m_updateStep = 1.f / 30.f;
 #endif
+
+
 };
+
+/// Get the window/screen handler
+	Window& GameCore::getWindow()
+	{
+	    return *m_creator->m_surface.window;
+	}
 
 /// Sets the base directory to load resources from
 void GameCore::setFileRoot(const String & path)
@@ -277,7 +285,7 @@ void GameCore::setWindowTitle(const String &title){
 SoundPlayer& GameCore::getSoundPlayer(const String &name){
 	if(mySoundPlayers.find(name) == mySoundPlayers.end()){
 		mySoundPlayers[name] = new SoundPlayer(this, name);
-	}	
+	}
 	return *mySoundPlayers[name];
 };
 
@@ -290,12 +298,12 @@ void GameCore::removeSoundPlayer(const String &name){
 	}
 };
 
-/// Get a content bank 
+/// Get a content bank
 /// If the selected content bank doesn't exist, it is created.
 ContentBank& GameCore::getContentBank(const String &name){
 	if(myContentBanks.find(name) == myContentBanks.end()){
 		myContentBanks[name] = new ContentBank(this, name);
-	}	
+	}
 	return *myContentBanks[name];
 };
 

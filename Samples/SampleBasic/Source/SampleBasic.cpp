@@ -13,12 +13,12 @@ Image img;
 
 void PortabilityTest::onCreate()
 {
-	/*if(img.loadFromFile("Buttons.png"))
+	if(img.loadFromFile("/home/grimshaw/Desktop/a.png"))
 	{
 		cout<<"Image loaded sucessfully."<<endl;
 	}
 
-	img.saveToFile("supnigga.png");*/
+	img.saveToFile("/home/grimshaw/Desktop/b.png");
 }
 
 void PortabilityTest::onEvent(Event &event)
@@ -34,17 +34,17 @@ float elapsed = 0.f;
 void PortabilityTest::onUpdate(Time time)
 {
 	elapsed += time.asSeconds();
-	/*printf("Elapsed: %f\n", elapsed);*/
+	//printf("Elapsed: %f\n", elapsed);
 }
 
 void PortabilityTest::onRender()
 {
 	getRenderer()->drawDebugCircle(Vec2f(m_pos.x,200), 30, Vec2f(), Color::Red);
-/*
+
 	Texture t;
 	t.loadFromImage(img);
 
 	Sprite spr;
 	spr.setTexture(t);
-	getRenderer()->draw(spr);*/
+	getRenderer()->draw(spr);
 }

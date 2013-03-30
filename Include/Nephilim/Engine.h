@@ -71,7 +71,7 @@ public:
 	/// Returns a string with the version of the engine build. Usually like x.y.z
     String getVersionString();
 
-private:
+public:
 	GameCore*	m_currentApp;		///< The currently executing game/application
 	Clock		m_clock;			///< Clock that counts the elapsed time since the engine was instanced
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
