@@ -56,6 +56,10 @@ void ColorCTOR(void* memory){
 	new(memory) Color();
 }
 
+void ColorKTOR(const Color& in, void* memory){
+	new(memory) Color(in);
+}
+
 void ColorCTOR2(int r, int g, int b, void* memory){
 	new(memory) Color(r,g,b);
 }
@@ -79,7 +83,7 @@ void BBDTOR(void* memory){
 /// Exports the renderer and a few more things
 bool ASEngine::exportGraphics(){
 	int r;
-	
+
 	exportReferenceDataType("Texture");
 	exportReferenceDataType("Drawable");
 	exportReferenceDataType("SpriteExt");
@@ -89,7 +93,8 @@ bool ASEngine::exportGraphics(){
 	//exportReferenceDataType("View");
 
 	// Class: Color
-	asEngine->RegisterObjectType("Color", sizeof(Color), asOBJ_VALUE | asOBJ_APP_CLASS_CDAK);
+	asEngine->RegisterObjectType("Color", sizeof(Color), asOBJ_VALUE | asOBJ_APP_CLASS_C | asOBJ_APP_CLASS_ALLINTS);
+	//asEngine->RegisterObjectType("Color", sizeof(Color), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_A);
 	//asEngine->RegisterObjectType("View", sizeof(View), asOBJ_VALUE | asOBJ_APP_CLASS_CDAK);
 	asEngine->RegisterObjectType("BoundingBox", sizeof(FloatRect), asOBJ_VALUE | asOBJ_APP_CLASS_CDAK);
 
@@ -101,7 +106,7 @@ bool ASEngine::exportGraphics(){
 	if(getPortableMode()){
 		// Android generics
 
-		// Class: Color		
+		// Class: Color
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f()", WRAP_OBJ_LAST(constructObject<Color>), asCALL_GENERIC);
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f(int, int, int)", WRAP_OBJ_LAST(ColorCTOR2), asCALL_GENERIC);
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_DESTRUCT, "void f()", WRAP_OBJ_LAST(ColorDTOR), asCALL_GENERIC);
@@ -112,9 +117,9 @@ bool ASEngine::exportGraphics(){
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_DESTRUCT, "void f()", WRAP_OBJ_LAST(BBDTOR), asCALL_GENERIC);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f(const BoundingBox& in)", WRAP_OBJ_LAST(ObjectCopyConstructor<FloatRect>), asCALL_GENERIC);
 
-		r = asEngine->RegisterObjectMethod("SpriteExt", "Texture@ addTexture(const string &in, const string &in, Color)", WRAP_MFN(SpriteExt, addTexture), asCALL_GENERIC);
+		/*r = asEngine->RegisterObjectMethod("SpriteExt", "Texture@ addTexture(const string &in, const string &in, Color)", WRAP_MFN(SpriteExt, addTexture), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("SpriteExt", "void triggerAnimation(const string &in)", WRAP_MFN(SpriteExt, triggerAnimation), asCALL_GENERIC);
-		r = asEngine->RegisterObjectMethod("SpriteExt", "AnimationSprite@ addAnimation(const string &in)", WRAP_MFN(SpriteExt, addAnimation), asCALL_GENERIC);
+		r = asEngine->RegisterObjectMethod("SpriteExt", "AnimationSprite@ addAnimation(const string &in)", WRAP_MFN(SpriteExt, addAnimation), asCALL_GENERIC);*/
 
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void setLoop(bool)", WRAP_MFN(AnimationSprite, setLoop), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void addFrame(Texture@, BoundingBox, float)", WRAP_MFN(AnimationSprite, addFrame), asCALL_GENERIC);
@@ -124,31 +129,30 @@ bool ASEngine::exportGraphics(){
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugText(float,float, const string& in)", WRAP_MFN(Renderer, drawDebugText), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", WRAP_MFN(Renderer, draw), asCALL_GENERIC);
 
-	
+
 
 	}
 	else{
 		// PC native calls
 
-		// Class: Color	
+		// Class: Color
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ColorCTOR), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f(int, int, int)", asFUNCTION(ColorCTOR2), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ColorDTOR), asCALL_CDECL_OBJLAST);
-		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f(const Color& in)", asFUNCTION(ObjectCopyConstructor<Color>), asCALL_CDECL_OBJLAST);
+		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f(const Color& in)", asFUNCTION(ColorKTOR), asCALL_CDECL_OBJLAST);
 
 
+        printf("Native calling\n");
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(BBCTOR), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f(float,float,float,float)", asFUNCTION(BBCTOR2), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(BBDTOR), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f(const BoundingBox& in)", asFUNCTION(ObjectCopyConstructor<FloatRect>), asCALL_CDECL_OBJLAST);
 
-		r = asEngine->RegisterObjectMethod("SpriteExt", "Texture@ addTexture(const string &in, const string &in, Color)", asMETHOD(SpriteExt, addTexture), asCALL_THISCALL);
-		r = asEngine->RegisterObjectMethod("SpriteExt", "AnimationSprite@ addAnimation(const string &in)", asMETHOD(SpriteExt, addAnimation), asCALL_THISCALL);
-		r = asEngine->RegisterObjectMethod("SpriteExt", "void triggerAnimation(const string &in)", asMETHOD(SpriteExt, triggerAnimation), asCALL_THISCALL);
+
 
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void setLoop(bool)", asMETHOD(AnimationSprite, setLoop), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void addFrame(Texture@, BoundingBox, float)", asMETHOD(AnimationSprite, addFrame), asCALL_THISCALL);
-		
+
 		//r = asEngine->RegisterObjectMethod("Renderer", "void setView(View)", asMETHOD(Renderer, setView), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugQuad(float,float,float,float,float,Color)", asMETHOD(Renderer, drawDebugQuad), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugCircle(Vec2f,float,Vec2f,Color)", asMETHOD(Renderer, drawDebugCircle), asCALL_THISCALL);
@@ -156,7 +160,7 @@ bool ASEngine::exportGraphics(){
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugText(float,float, const string& in)", asMETHOD(Renderer, drawDebugText), asCALL_THISCALL);
 
 		r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", asMETHOD(Renderer, draw), asCALL_THISCALL);
-	
+
 		//
 		//r = asEngine->RegisterObjectBehaviour("View", asBEHAVE_FACTORY, "View@ f()", asFUNCTION(ViewFactory), asCALL_CDECL); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectBehaviour("View", asBEHAVE_ADDREF, "void f()", asFUNCTION(ViewFactoryAdd), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
@@ -174,8 +178,8 @@ bool ASEngine::exportGraphics(){
 		//r = asEngine->RegisterObjectMethod("View", "void setViewportPreset(int)", asMETHOD(View, setViewportPreset) , asCALL_THISCALL); if(r < 0)printf("r %d", r);
 
 	}
-	
-	
+
+
 	/*/// Export drawable
 	exportReferenceDataType("Drawable");
 
@@ -188,7 +192,7 @@ bool ASEngine::exportGraphics(){
 	// Register the behaviours
 	//r = asEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(SprConstructor), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
 //	r = asEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(SprDestructor), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
-	
+
 	// Registering the factory behaviour
 	r = asEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(dummyfac), asCALL_CDECL); if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", asFUNCTION(dummyref), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
@@ -209,7 +213,7 @@ bool ASEngine::exportGraphics(){
 	//r = asEngine->RegisterObjectMethod("Sprite", "void setOrigin(Vec2f)", asMETHOD(Sprite, isFlippedVertically) , asCALL_THISCALL); if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectMethod("Sprite", "void setRotation(float)", asMETHODPR(Sprite, setRotation, (float), void) , asCALL_THISCALL); if(r < 0)printf("r %d", r);
 
-	asEngine->RegisterObjectType("SpriteExt", sizeof(SpriteExt), asOBJ_REF);	
+	asEngine->RegisterObjectType("SpriteExt", sizeof(SpriteExt), asOBJ_REF);
 	// Registering the factory behaviour
 	r = asEngine->RegisterObjectBehaviour("SpriteExt", asBEHAVE_FACTORY, "SpriteExt@ f()", asFUNCTION(SpriteExtFactory), asCALL_CDECL); if(r < 0)printf("r %d", r);
 	r = asEngine->RegisterObjectBehaviour("SpriteExt", asBEHAVE_ADDREF, "void f()", asFUNCTION(dummyref), asCALL_CDECL_OBJLAST); if(r < 0)printf("r %d", r);
@@ -244,7 +248,7 @@ bool ASEngine::exportGraphics(){
 	asEngine->RegisterObjectType("View", sizeof(View), asOBJ_REF);
 
 	// Registering the factory behaviour
-	
+
 
 	/// Export renderer
 	exportReferenceDataType("SceneRenderer");

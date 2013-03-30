@@ -252,7 +252,7 @@ void ScriptedGameCore::onRender(){
 		m_mainScript->call();
 	}
 
-	getRenderer()->drawDebugQuad(100,100,0,100,100,Color(255,30,30));
+	getRenderer()->drawDebugQuad(100,100,0,100,100,Color(255,255,100));
 
 };
 

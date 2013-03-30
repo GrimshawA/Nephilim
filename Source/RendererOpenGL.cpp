@@ -173,6 +173,10 @@ void RendererOpenGL::drawCube(float x, float y, float z, float len, Color color)
 
 
 void RendererOpenGL::drawDebugQuad(float x, float y, float angle, float width, float height, Color color){
+  /*  if(color.a < 255)
+        printf("Debugging quad: %f %f     %f      %f %f,    %u %u %u %u\n", x,y,angle,width,height,color.r,color.g,color.b,color.a);*/
+
+//color.a = 255;
 	glLoadIdentity();
 	glPushMatrix();
 	glTranslatef(x, y, 0.f);
