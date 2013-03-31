@@ -8,8 +8,8 @@
 
 NEPHILIM_NS_BEGIN
 
-
-static bool registerView(ASEngine* engine)
+	/*
+bool registerView(ASEngine* engine)
 {
 	engine->getASEngine()->RegisterObjectType("View", sizeof(View), asOBJ_REF);
 
@@ -48,8 +48,7 @@ static bool registerView(ASEngine* engine)
 	return true;
 
 };
-
-
+*/
 
 View::View() : m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f) , RefCountable(){
 

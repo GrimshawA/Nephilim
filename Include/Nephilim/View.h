@@ -20,7 +20,7 @@ enum ViewportPreset{
 	BottomHalf,
 	WideScreen
 };
-
+class ASEngine;
 /**
 		\ingroup Graphics
 		\class View
@@ -72,7 +72,7 @@ public:
 		const Transform& getInverseTransform() const;
 		const Transform& getTransform() const;
 
-    
+
     float m_rotation;
 private:
 	FloatRect m_rect;
@@ -89,9 +89,10 @@ private:
 /// Typedef of View to Camera2D to suit tastes
 typedef View Camera2D;
 
+/*
 class ASEngine;
-bool registerView(ASEngine* engine);
-
+static bool registerView(ASEngine* engine);
+*/
 
 NEPHILIM_NS_END
 
