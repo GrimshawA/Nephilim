@@ -68,8 +68,8 @@ public:
 
 private:
 	unsigned int m_id; ///< Internal shader identifier
-	std::vector<std::pair<ShaderTypes, unsigned int>> m_shaders; ///< List of compiled shaders
-	std::vector<std::pair<unsigned int, String>> m_attribs; ///< List of pre-binded attribute locations
+	std::vector<std::pair<ShaderTypes, unsigned int> > m_shaders; ///< List of compiled shaders
+	std::vector<std::pair<unsigned int, String> > m_attribs; ///< List of pre-binded attribute locations
 };
 
 NEPHILIM_NS_END

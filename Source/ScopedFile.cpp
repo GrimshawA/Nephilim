@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 NEPHILIM_NS_BEGIN
-
+/*
 static bool registerScopedFile(ASEngine* engine)
 {
 	engine->getASEngine()->RegisterObjectType("File", sizeof(ScopedFile), asOBJ_REF);
@@ -18,7 +18,7 @@ static bool registerScopedFile(ASEngine* engine)
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_FACTORY, "File@ f()", WRAP_FN(genericFactory<ScopedFile>), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_ADDREF, "void f()", WRAP_MFN(ScopedFile, addReference), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_RELEASE, "void f()", WRAP_MFN(ScopedFile, removeReference), asCALL_GENERIC);
-		
+
 		engine->getASEngine()->RegisterObjectMethod("File", "bool good()", WRAP_MFN(ScopedFile, isReady), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod("File", "bool atEnd()", WRAP_MFN(ScopedFile, atEnd), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod("File", "string getLine()", WRAP_MFN(ScopedFile, getLine), asCALL_GENERIC);
@@ -28,14 +28,14 @@ static bool registerScopedFile(ASEngine* engine)
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_FACTORY, "File@ f()", asFUNCTION(genericFactory<ScopedFile>), asCALL_CDECL);
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_ADDREF, "void f()", asMETHOD(ScopedFile, addReference), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectBehaviour("File", asBEHAVE_RELEASE, "void f()", asMETHOD(ScopedFile, removeReference), asCALL_THISCALL);
-	
+
 		engine->getASEngine()->RegisterObjectMethod("File", "bool good()", asMETHOD(ScopedFile, isReady), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectMethod("File", "bool atEnd()", asMETHOD(ScopedFile, atEnd), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectMethod("File", "string getLine()", asMETHOD(ScopedFile, getLine), asCALL_THISCALL);
 
 	}
 	return true;
-};
+};*/
 
 /// Constructs an uninitialized stream
 ScopedFile::ScopedFile() : RefCountable(){
@@ -61,12 +61,12 @@ ScopedFile::ScopedFile(const String &path, IODevice::OpenModes accessMode) : Ref
 		fseek(m_handle, 0, SEEK_END);
 		m_length = m_fileSize = ftell(m_handle);
 		fseek(m_handle, 0, SEEK_SET);
-	}	
+	}
 };
 
 /// Constructs a stream from already open file handle, restricted to a portion of it
 ScopedFile::ScopedFile(FILE* fileHandle, Int64 startOffset, Int64 length) : RefCountable(){
-	m_handle = fileHandle; 
+	m_handle = fileHandle;
 	m_offset = startOffset;
 	m_length = length;
 
@@ -98,7 +98,7 @@ ScopedFile::~ScopedFile(){
 
 /// Write data into the file
 Int64 ScopedFile::write(const char* buffer, Int64 length) const{
-	return fwrite(buffer, sizeof(char), length, m_handle);	
+	return fwrite(buffer, sizeof(char), length, m_handle);
 };
 
 /// Opens this file from an already open handle
@@ -106,7 +106,7 @@ Int64 ScopedFile::write(const char* buffer, Int64 length) const{
 /// length is the size of the region to read, it will be equal to the fileSize for reading without boundaries.
 /// If you don't know the length when calling this function, pass -1 if you want the whole file.
 bool ScopedFile::open(FILE* fileHandle, Int64 startOffset, Int64 length){
-	m_handle = fileHandle; 
+	m_handle = fileHandle;
 	m_offset = startOffset;
 	m_length = length;
 	m_fileSize = m_length;
@@ -179,7 +179,7 @@ bool ScopedFile::seek(Int64 offset, int origin){
 		if(offset > 0)return false; //cant accept positive values
 
 		else return (fseek(m_handle, m_offset + m_length + offset, SEEK_SET) == 0);
-	} 
+	}
 	else return false;
 };
 
@@ -202,8 +202,8 @@ Int64 ScopedFile::read(char* buffer, Int64 len) const{
 /// Tells the current position, relative to the allowed offset
 Int64 ScopedFile::tell() const{
 	Int64 curr = ftell(m_handle);
-	return curr - m_offset; 
-};   
+	return curr - m_offset;
+};
 
 /// Allows to check for a file size
 Int64 getFileSize(String path){
@@ -225,7 +225,7 @@ namespace File
 		Int64 t = 0;
 		char* buffer = new char[100];
 		Int64 readBytes = 0;
-		do 
+		do
 		{
 			readBytes = src.read(buffer, 100);
 			t+= readBytes;
@@ -235,5 +235,5 @@ namespace File
 		delete [] buffer;
 	}
 }
- 
+
 NEPHILIM_NS_END

@@ -46,11 +46,11 @@ bool Shader::loadShader(ShaderTypes type, const char* source)
 			GLint infoLen = 0;
 			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
 			if (infoLen) {
-				char* buf = (char*) malloc(infoLen);
+				char* buf = new char[infoLen];
 				if (buf) {
 					glGetShaderInfoLog(shader, infoLen, NULL, buf);
-					PRINTLOG("GLES 2.0", "Failed to load shader: %s\n", buf);						
-					free(buf);
+//					PRINTLOG("GLES 2.0", "Failed to load shader: %s\n", buf);
+					delete [] buf;
 				}
 				glDeleteShader(shader);
 				shader = 0;
@@ -62,7 +62,7 @@ bool Shader::loadShader(ShaderTypes type, const char* source)
 			success = true;
 		}
 	}
-	
+
 	return success;
 }
 
@@ -84,13 +84,13 @@ bool Shader::create()
 	if(id)
 	{
 		// Bind attribute locations
-		for(std::vector<std::pair<unsigned int, String>>::iterator it = m_attribs.begin(); it != m_attribs.end(); ++it)
+		for(std::vector<std::pair<unsigned int, String> >::iterator it = m_attribs.begin(); it != m_attribs.end(); ++it)
 		{
 			glBindAttribLocation(id, static_cast<GLuint>(it->first), static_cast<const GLchar*>(it->second.c_str()));
 		}
 
 		// Attach compiled shaders
-		for(std::vector<std::pair<ShaderTypes, unsigned int>>::iterator it = m_shaders.begin(); it != m_shaders.end(); ++it)
+		for(std::vector<std::pair<ShaderTypes, unsigned int> >::iterator it = m_shaders.begin(); it != m_shaders.end(); ++it)
 		{
 			glAttachShader(id, static_cast<GLuint>(it->second));
 		}
@@ -106,11 +106,11 @@ bool Shader::create()
 			GLint bufLength = 0;
 			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &bufLength);
 			if (bufLength) {
-				char* buf = (char*) malloc(bufLength);
+				char* buf = new char[bufLength];
 				if (buf) {
 					glGetProgramInfoLog(id, bufLength, NULL, buf);
-					PRINTLOG("GLES 2.0", "Failed to link shader program: %s\n", buf);
-					free(buf);
+//					PRINTLOG("GLES 2.0", "Failed to link shader program: %s\n", buf);
+					delete [] buf;
 				}
 			}
 			// --

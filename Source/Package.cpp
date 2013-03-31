@@ -17,7 +17,7 @@ Package::Package()
 Package::Package(const String& source)
 : m_file(source)
 {
-	
+
 }
 
 /// Attempts to extract the package contents to a directory
@@ -37,7 +37,7 @@ bool Package::extract(const String& directory)
 
 		for(size_t i = 0; i < m_header.m_files.size(); i++)
 		{
-			ScopedFile srcFile(file.getHandle(), m_header.m_files[i].m_offset, m_header.m_files[i].m_length);			
+			ScopedFile srcFile(file.getHandle(), m_header.m_files[i].m_offset, m_header.m_files[i].m_length);
 			ScopedFile dstFile(directory + "/" + m_header.m_files[i].m_name, IODevice::BinaryWrite);
 			cout << "Extracting("<< m_header.m_files[i].m_length  << "): " << directory + "/" + m_header.m_files[i].m_name << endl;
 			if(srcFile.isReady() && dstFile.isReady())
@@ -45,7 +45,7 @@ bool Package::extract(const String& directory)
 		}
 	}
 
-	
+
 
 	return true;
 }
@@ -91,7 +91,7 @@ bool PackageBuilder::build()
 			out << m_header.m_files[i].m_name << m_header.m_files[i].m_offset << m_header.m_files[i].m_length;
 		}
 
-		for(std::vector<std::pair<String,String>>::iterator it = m_files.begin(); it != m_files.end(); ++it)
+		for(std::vector<std::pair<String,String> >::iterator it = m_files.begin(); it != m_files.end(); ++it)
 		{
 			String source = it->first;
 			String dest   = it->second;

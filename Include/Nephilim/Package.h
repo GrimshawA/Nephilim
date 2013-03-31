@@ -62,7 +62,7 @@ public:
 	bool build();
 
 private:
-	std::vector<std::pair<String,String>> m_files; ///< The files queued for adding
+	std::vector<std::pair<String,String> > m_files; ///< The files queued for adding
 	Package::pHeader m_header; ///< Header struct to fill
 };
 

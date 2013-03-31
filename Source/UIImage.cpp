@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-UIControl* UIImageRefCast(UIImage* a) 
+UIControl* UIImageRefCast(UIImage* a)
 {
 	return refCast<UIImage, UIControl>(a);
 }
@@ -40,13 +40,13 @@ bool registerUIImage(ASEngine* engine)
 
 		engine->getASEngine()->RegisterObjectMethod("UIImage", "void setImage(const string &in)", WRAP_MFN(UIImage, setImage), asCALL_GENERIC);
 	}
-	else 
+	else
 	{
 		engine->getASEngine()->RegisterObjectBehaviour("UIImage", asBEHAVE_FACTORY, "UIImage@ f()", asFUNCTION(genericFactory<UIImage>), asCALL_CDECL);
 		engine->getASEngine()->RegisterObjectBehaviour("UIImage", asBEHAVE_ADDREF, "void f()", asMETHOD(UIImage, addReference), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectBehaviour("UIImage", asBEHAVE_RELEASE, "void f()", asMETHOD(UIImage, removeReference), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectBehaviour("UIImage", asBEHAVE_IMPLICIT_REF_CAST, "UIControl@ f()", asFUNCTION((refCast<UIImage,UIControl>)), asCALL_CDECL_OBJLAST);
-		
+
 		engine->getASEngine()->RegisterObjectMethod("UIImage", "void setImage(const string &in)", asMETHOD(UIImage, setImage), asCALL_THISCALL);
 	}
 
@@ -65,9 +65,9 @@ UIImage::UIImage()
 void UIImage::reloadGraphicalAssets()
 {
 	t.loadFromFile(m_path);
-	TESTLOG("LOADED UIIMAGE AGAIN!")
+//	TESTLOG("LOADED UIIMAGE AGAIN!")
 
-	
+
 }
 
 /// Set the image of the control

@@ -18,6 +18,7 @@ Drawable* SpriteRefCast(Sprite* a)
 {
 	return refCast<Sprite, Drawable>(a);
 }
+/*
 
 static bool registerSprite(ASEngine* engine)
 {
@@ -53,7 +54,7 @@ static bool registerSprite(ASEngine* engine)
 
 	}
 	return true;
-}
+}*/
 
 /// Default sprite
 Sprite::Sprite() : m_vertices(TriangleFan,4) , m_texture(NULL), RefCountable(), m_blendMode(Blend::Alpha){

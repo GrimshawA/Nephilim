@@ -147,7 +147,7 @@ void Texture::loadFromImage(Image &image){
 }
 
 bool Texture::loadFromFile(const String &path){
-	TESTLOG(path.c_str())
+//	TESTLOG(path.c_str())
 	bool result = false;
 	Image image;
 #ifdef PARABOLA_ANDROID

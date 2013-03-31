@@ -142,7 +142,7 @@ bool ASEngine::exportGraphics(){
 		asEngine->RegisterObjectBehaviour("Color", asBEHAVE_CONSTRUCT, "void f(const Color& in)", asFUNCTION(ColorKTOR), asCALL_CDECL_OBJLAST);
 
 
-        printf("Native calling\n");
+//        printf("Native calling\n");
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(BBCTOR), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f(float,float,float,float)", asFUNCTION(BBCTOR2), asCALL_CDECL_OBJLAST);
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(BBDTOR), asCALL_CDECL_OBJLAST);

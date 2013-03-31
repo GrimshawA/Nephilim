@@ -4,6 +4,8 @@
 #include "Platform.h"
 #include "Strings.h"
 
+#include <stdio.h>
+
 #ifdef PARABOLA_ANDROID
 #include "AndroidInterface.h"
 #endif
@@ -30,8 +32,8 @@ namespace LoggerSettings{
 	/// It is shown in that verbose mode, and all the lower ones.
 	enum Modes{
 		NONE = 0, /// Nothing is output
-		DETAIL, 
-		NORMAL, /// 
+		DETAIL,
+		NORMAL, ///
 		CRITICAL,
 		FATAL, /// Only fatal errors are output
 	};
@@ -56,7 +58,7 @@ private:
 #ifdef PARABOLA_BUILD_DEBUG
 #define DEBUG_MESSAGE(x) Logger::fastLog(x);
 #elif defined PARABOLA_BUILD_RELEASE
-#define DEBUG_MESSAGE(x) 
+#define DEBUG_MESSAGE(x)
 #endif
 
 NEPHILIM_NS_END

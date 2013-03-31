@@ -13,19 +13,19 @@ NEPHILIM_NS_BEGIN
 bool registerUIControlSubtype(const String& name, ASEngine* engine)
 {
 	if(engine->getPortableMode())
-	{		
+	{
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void bindSignal(const string &in, Slot@)", WRAP_MFN(UIControl, bindSignal), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPosition(float,float)", WRAP_MFN(UIControl, setPosition), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setProportion(float,float)", WRAP_MFN(UIControl, setProportion), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPlacement(float,float)", WRAP_MFN(UIControl, setPlacement), asCALL_GENERIC);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setSize(float,float)", WRAP_MFN(UIControl, setSize), asCALL_GENERIC);
 	}
-	else 
+	else
 	{
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void bindSignal(const string &in, Slot@)", asMETHOD(UIControl, bindSignal), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPosition(float,float)", asMETHOD(UIControl, setPosition), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setSize(float,float)", asMETHOD(UIControl, setSize), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setProportion(float,float)", asMETHOD(UIControl, setProportion), asCALL_THISCALL);	
+		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setProportion(float,float)", asMETHOD(UIControl, setProportion), asCALL_THISCALL);
 		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPlacement(float,float)", asMETHOD(UIControl, setPlacement), asCALL_THISCALL);
 
 	}
@@ -35,9 +35,9 @@ bool registerUIControlSubtype(const String& name, ASEngine* engine)
 
 
 /// Base constructor of controls
-UIControl::UIControl() 
+UIControl::UIControl()
 	:	RefCountable(),
-		m_parent(NULL), 
+		m_parent(NULL),
 		m_stateContext(NULL),
 		m_hasFocus(false),
 		m_layoutController(NULL),
@@ -53,7 +53,7 @@ UIControl::UIControl()
 		m_stretchForContents(false),
 		m_hovered(false)
 {
-	
+
 	m_resizeAnimation.addAnimable(this);
 	m_positionAnimation.addAnimable(this);
 
@@ -128,7 +128,7 @@ bool UIControl::isFocusable()
 bool UIControl::focus()
 {
 	// Fails to get focus if it is not focusable
-	if(!isFocusable()) return false; 
+	if(!isFocusable()) return false;
 
 	if(getContext())
 	{
@@ -145,7 +145,7 @@ bool UIControl::focus()
 
 /// Check if the control currently has focus
 bool UIControl::hasFocus()
-{	
+{
 	return m_hasFocus;
 };
 
@@ -181,7 +181,7 @@ bool UIControl::onTextEvent(Uint32 code)
 /// Reload all graphics because they were destroyed and are unavailable now
 void UIControl::reloadGraphicalAssets()
 {
-	TESTLOG("GL REQUIRES") 
+//	TESTLOG("GL REQUIRES")
 
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 		// lets see!
@@ -207,13 +207,13 @@ void UIControl::processSizeChange()
 	if(m_sizePolicy.widthPolicy == UISizePolicy::ParentProportional && m_parent)
 	{
 		setSize(m_parent->getSize().x * m_sizePolicy.width, m_parent->getSize().y * m_sizePolicy.height);
-		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_sizePolicy.width);
+//		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_sizePolicy.width);
 	}
 	// size changed, update.
 	if(m_positionPolicy.widthPolicy == UISizePolicy::ParentProportional && m_parent)
 	{
 		setPosition(m_parent->getSize().x * m_positionPolicy.width, m_parent->getSize().y * m_positionPolicy.height);
-		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_positionPolicy.width);
+//		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_positionPolicy.width);
 	}
 
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
@@ -293,7 +293,7 @@ bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 		if((*it)->getBounds().contains(x,y))
 		{
 			(*it)->processMouseButtonPressed(x,y, button);
-		}		
+		}
 	}
 
 	return false;
@@ -374,7 +374,7 @@ void UIControl::addControl(UIControl* control){
 	m_children.push_back(control);
 	control->addReference();
 	// Assign
-	control->m_parent = this; 
+	control->m_parent = this;
 	control->setContext(m_stateContext);
 
 	control->processSizeChange();
@@ -384,7 +384,7 @@ void UIControl::addControl(UIControl* control){
 
 /// Callback when the control is resized
 void UIControl::onResize(){
-	
+
 }
 
 /// Resizes the control over a defined time
@@ -426,7 +426,7 @@ void UIControl::reposition(float x, float y, float duration)
 /// Making this class able to animate sizes
 void UIControl::animable_set_size(float x, float y){
 	setSize(x,y);
-	onResize();	
+	onResize();
 };
 
 Vec2f UIControl::animable_get_size(){
@@ -509,7 +509,7 @@ void UIControl::setSize(float width, float height){
 
 	onSizeChanged();
 
-	if(m_parent && m_parent->m_stretchForContents) // Goes up the tree 
+	if(m_parent && m_parent->m_stretchForContents) // Goes up the tree
 	{
 		float bottom = m_parent->getBounds().top + m_parent->getBounds().height;
 		// warn parent to stretch
@@ -538,7 +538,7 @@ void UIControl::innerDraw(Renderer* renderer)
 
 	/// Draw the background color and borders - TODO: no debug draw
 	renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
-	
+
 	if(m_drawBorder)
 	{
 		renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
@@ -547,9 +547,9 @@ void UIControl::innerDraw(Renderer* renderer)
 		renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
 
 	}
-	
-	
-	draw(renderer);	
+
+
+	draw(renderer);
 
 	// clip?
 	if(m_clipChildren)renderer->enableClipping(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));

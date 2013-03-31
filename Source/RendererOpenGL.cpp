@@ -125,7 +125,7 @@ void RendererOpenGL::drawCube(float x, float y, float z, float len, Color color)
 	glPushMatrix();
 	glTranslatef(x, y, z);
 
-	srand(2);
+//	srand(2);
 
 	static GLfloat colors[4 * 36];
 	static bool colorsAssigned = false;
