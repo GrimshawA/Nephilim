@@ -39,10 +39,10 @@ void Engine::execute(GameCore* app)
 void Engine::init()
 {
 
-    cglPrepareExtensions();
-
 	// stub code
 	m_surface.create();
+
+	cglPrepareExtensions();
 
 	// Attempt to initialize the renderer
 	m_renderer = Renderer::createAutomaticRenderer(m_surface.window);

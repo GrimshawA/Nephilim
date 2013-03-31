@@ -125,6 +125,12 @@ unsigned int Texture::getValidSize(unsigned int size)
 }
 
 void Texture::loadFromImage(Image &image){
+	if(image.m_size.x == 0 && image.m_size.y == 0)
+	{
+		// Invalid image.
+		return;
+	}
+
 	m_size = image.getSize();
 	m_actualSize = m_size;
 	glGenTextures(1, &m_texture);
