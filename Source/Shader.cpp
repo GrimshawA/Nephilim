@@ -15,6 +15,15 @@ Shader::Shader()
 
 }
 
+
+/// Binds variables in the program to predefined location index
+/// Just pass the location you want to be assigned to the variable name
+/// Calling this function only makes sense BEFORE calling create().
+void Shader::addAttributeLocation(unsigned int location, const String& name)
+{
+	m_attribs.push_back(make_pair(location,name));
+}
+
 /// Compiles a shader to be linked when create() is called
 bool Shader::loadShader(ShaderTypes type, const char* source)
 {
@@ -74,6 +83,12 @@ bool Shader::create()
 	GLuint id = glCreateProgram();
 	if(id)
 	{
+		// Bind attribute locations
+		for(std::vector<std::pair<unsigned int, String>>::iterator it = m_attribs.begin(); it != m_attribs.end(); ++it)
+		{
+			glBindAttribLocation(id, static_cast<GLuint>(it->first), static_cast<const GLchar*>(it->second.c_str()));
+		}
+
 		// Attach compiled shaders
 		for(std::vector<std::pair<ShaderTypes, unsigned int>>::iterator it = m_shaders.begin(); it != m_shaders.end(); ++it)
 		{

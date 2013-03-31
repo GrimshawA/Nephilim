@@ -34,6 +34,11 @@ public:
 	/// This means an invalid shader, which causes, not guaranteed, that the fixed-pipeline is activated
 	Shader();
 
+	/// Binds variables in the program to predefined location index
+	/// Just pass the location you want to be assigned to the variable name
+	/// Calling this function only makes sense BEFORE calling create().
+	void addAttributeLocation(unsigned int location, const String& name);
+
 	/// Creates and links the program from previously compiled unit processors
 	bool create();
 
@@ -64,6 +69,7 @@ public:
 private:
 	unsigned int m_id; ///< Internal shader identifier
 	std::vector<std::pair<ShaderTypes, unsigned int>> m_shaders; ///< List of compiled shaders
+	std::vector<std::pair<unsigned int, String>> m_attribs; ///< List of pre-binded attribute locations
 };
 
 NEPHILIM_NS_END
