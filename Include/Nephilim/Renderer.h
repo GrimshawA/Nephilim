@@ -1,28 +1,29 @@
-#ifndef PARABOLA_GRAPHICSRENDERER_H
-#define PARABOLA_GRAPHICSRENDERER_H
+#ifndef Renderer_h__
+#define Renderer_h__
 
 #include <stack>
 
 #include "Platform.h"
 #include "Vectors.h"
+#include "Strings.h"
 #include "Color.h"
 #include "Drawable.h"
 #include "VertexArray.h"
-#include "View.h"
-#include "RenderTarget.h"
-#include "Text.h"
-#include "Strings.h"
+
 
 NEPHILIM_NS_BEGIN
-
-class RocketContext;
-
-
+class View;
+class RenderTarget;
+/**
+	\ingroup Graphics
+	\class Renderer
+	\brief A raw graphics renderer providing a portable way to render primitives
+*/
 class NEPHILIM_API Renderer{
 public:
 	Renderer();
 
-	View m_currentView;
+	View* m_currentView;
 
 	Color m_clearColor;
 
@@ -45,16 +46,7 @@ public:
 
 	virtual void drawCube(float x, float y, float z, float len, Color color);
 
-
 	void setDefaultViewRect(float x, float y);
-
-	void drawDebugText(float x, float y, const String& text)
-	{
-		Text t;
-		t.setString(text);
-		t.setPosition(x,y);
-		draw(t);
-	}
 
 	/// Anything that inherits Drawable can be drawn using a renderer
 	virtual void draw(Drawable &drawable) = 0;
@@ -70,7 +62,6 @@ public:
 	virtual void drawDebugLine(Vec2f begin, Vec2f end, Color color) = 0;
 
 	virtual void drawVertexArray(VertexArray &vertexArray);
-	virtual void drawRocketContext(RocketContext* context);
 
 	/// Auto detects an appropriate renderer
 	static Renderer* createAutomaticRenderer(RenderTarget* target);
@@ -81,9 +72,8 @@ public:
 
 	std::stack<FloatRect> m_clipRegionStack;
 
-private:
-	std::stack<View> m_viewStack;
+	std::stack<View*> m_viewStack;
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // Renderer_h__

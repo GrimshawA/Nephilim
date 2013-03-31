@@ -118,7 +118,7 @@ void NStateCustom::onAttach()
 	//m_scriptEngine->exportFiles();	
 	registerScopedFile(m_scriptEngine);
 	registerContentBank(m_scriptEngine);
-	registerView(m_scriptEngine);
+//	registerView(m_scriptEngine);
 	m_scriptEngine->exportMath();
 	registerStateStack(m_scriptEngine);
 	registerScriptedGameCore(m_scriptEngine);
@@ -229,7 +229,7 @@ bool NStateCustom::onDraw(Renderer *renderer)
 	}
 	else
 	{
-		renderer->drawDebugText(500, 100, "Script failed to compile.");
+		//renderer->drawDebugText(500, 100, "Script failed to compile.");
 	}
 
 	//renderer->drawDebugQuad(0,0,0,600,300, Color(250,200,200));

@@ -5,36 +5,32 @@
 #include "Vectors.h"
 #include "Strings.h"
 #include "Color.h"
-#include "ScopedFile.h"
-#include <vector>
-
-
-#ifdef NEPHILIM_DESKTOP
-#include <SFML/Graphics/Image.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#endif
 
 NEPHILIM_NS_BEGIN
 
-class ScopedFile;
 class Image;
 /**
 	\ingroup Graphics
 	\class Texture
-	\brief Extends sf::Texture
+	\brief A 2D OpenGL Texture
 */
-class Texture{
+class NEPHILIM_API Texture{
 public:
-	/// Create an uninitialised texture
+	/// Creates a uninitialized texture
 	Texture();
+
+	/// Releases the texture resource
+	~Texture();
+
+
+
 
 	enum CoordinateType{
 		Pixels,
 		Normalized
 	};
 
-	/// RAII release of the texture
-	~Texture();
+
 	void update(const Uint8* pixels);
 	void update(const Image& image);
 	void setSmooth(bool smooth);
@@ -57,6 +53,9 @@ public:
 	void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
 
 	static unsigned int getMaximumSize();
+
+	/// Get the id of the currently bound texture for the currently set texture unit
+	static unsigned int getCurrentBoundTexture();
 
 public:
 

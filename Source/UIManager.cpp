@@ -1,6 +1,8 @@
 #include <Nephilim/UIManager.h>
 #include <Nephilim/UIWindow.h>
 #include <Nephilim/Renderer.h>
+#include <Nephilim/RenderTarget.h>
+#include <Nephilim/View.h>
 
 #include <iostream>
 using namespace std;
@@ -23,7 +25,7 @@ void UIManager::draw(const String& name, Renderer* renderer)
 		cout<<"INVALID WINDOW FOR DRAWING."<<endl;
 		return;
 	}
-
+	
 	View windowView;
 	windowView.setRect(0,0,renderer->m_renderTarget->getSize().x, renderer->m_renderTarget->getSize().y);
 	renderer->pushView(windowView);

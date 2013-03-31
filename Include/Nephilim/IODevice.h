@@ -27,7 +27,11 @@ public:
 	virtual bool isReady() = 0;
 
 	/// Virtual function for all devices to write a byte buffer
-	virtual Int64 write(const char* buffer, Int64 length) = 0;
+	virtual Int64 write(const char* buffer, Int64 length) const = 0;
+
+	/// Reads raw data from the stream with size len, stored in the buffer, it protects the reading of protected sections
+	/// Returns the amount of bytes read
+	virtual Int64 read(char* buffer, Int64 len) const = 0;
 
 	/// Possible modes for opening a device
 	enum OpenModes{

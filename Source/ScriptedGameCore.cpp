@@ -152,7 +152,7 @@ void ScriptedGameCore::onCreate(){
 	registerNStateImage(&m_scripting);
 	registerNStateCustom(&m_scripting);
 	registerSprite(&m_scripting);
-	registerView(&m_scripting);
+//	registerView(&m_scripting);
 	registerUIButton(&m_scripting);
 
 	m_scripting.exportGlobalProperty("ScriptedGameCore game", this);

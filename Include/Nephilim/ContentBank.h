@@ -6,6 +6,7 @@
 #include "ContentList.h"
 #include "ContentLoader.h"
 #include "Texture.h"
+#include "ScopedFile.h"
 #include <map>
 
 NEPHILIM_NS_BEGIN

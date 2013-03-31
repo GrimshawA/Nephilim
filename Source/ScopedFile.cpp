@@ -9,7 +9,7 @@
 
 NEPHILIM_NS_BEGIN
 
-bool registerScopedFile(ASEngine* engine)
+static bool registerScopedFile(ASEngine* engine)
 {
 	engine->getASEngine()->RegisterObjectType("File", sizeof(ScopedFile), asOBJ_REF);
 
@@ -92,12 +92,12 @@ String ScopedFile::getLine()
 
 /// Cleanup
 ScopedFile::~ScopedFile(){
-	if(m_handle)
-		fclose(m_handle);
+	/*if(m_handle)
+		fclose(m_handle);*/
 }
 
 /// Write data into the file
-Int64 ScopedFile::write(const char* buffer, Int64 length) {
+Int64 ScopedFile::write(const char* buffer, Int64 length) const{
 	return fwrite(buffer, sizeof(char), length, m_handle);	
 };
 
@@ -190,7 +190,7 @@ Int64 ScopedFile::getSize(){
 
 /// Reads raw data from the stream with size len, stored in the buffer, it protects the reading of protected sections
 /// Returns the amount of bytes read
-Int64 ScopedFile::read(char* buffer, Int64 len){
+Int64 ScopedFile::read(char* buffer, Int64 len) const{
 	Int64 curPos = tell();
 	if(curPos >= m_length) return 0;
 
@@ -200,7 +200,7 @@ Int64 ScopedFile::read(char* buffer, Int64 len){
 };
 
 /// Tells the current position, relative to the allowed offset
-Int64 ScopedFile::tell(){
+Int64 ScopedFile::tell() const{
 	Int64 curr = ftell(m_handle);
 	return curr - m_offset; 
 };   
@@ -209,5 +209,31 @@ Int64 ScopedFile::tell(){
 Int64 getFileSize(String path){
 	return 0; // TODO
 };
+
+namespace File
+{
+	Int64 size(const String& src)
+	{
+		Int64 fileSize = 0;
+		ScopedFile in(src, IODevice::BinaryRead);
+		if(in.isReady()) fileSize = in.getSize();
+		return fileSize;
+	}
+
+	void copy(const ScopedFile& src, const ScopedFile& dst)
+	{
+		Int64 t = 0;
+		char* buffer = new char[100];
+		Int64 readBytes = 0;
+		do 
+		{
+			readBytes = src.read(buffer, 100);
+			t+= readBytes;
+			dst.write(buffer, readBytes);
+		} while (readBytes > 0);
+		cout<<"FILE OPERATION COPY: " << t << endl;
+		delete [] buffer;
+	}
+}
  
 NEPHILIM_NS_END

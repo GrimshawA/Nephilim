@@ -1,6 +1,7 @@
 #include <Nephilim/UIImage.h>
 #include <Nephilim/ASEngine.h>
 #include <Nephilim/Sprite.h>
+#include <Nephilim/Logger.h>
 #include <AS/aswrappedcall.h>
 
 NEPHILIM_NS_BEGIN

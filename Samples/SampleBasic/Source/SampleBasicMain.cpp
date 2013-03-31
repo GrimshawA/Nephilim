@@ -5,16 +5,16 @@
 #include "SampleBasic.h"
 using namespace pE;
 
-#include <Nephilim/ScriptedGameCore.h>
+//#include <Nephilim/ScriptedGameCore.h>
 
 Engine sdk;
 PortabilityTest test;
-ScriptedGameCore a;
+//ScriptedGameCore a;
 
 void applicationStartup(pE::Engine** engine)
 {
 	sdk.init();
-	sdk.execute(&a);
+	sdk.execute(&test);
 	*engine = &sdk;
     printf("App::Start\n");
 }
@@ -29,3 +29,4 @@ void applicationCleanup()
 {
 
 }
+

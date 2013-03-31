@@ -346,18 +346,12 @@ void Texture::bind(CoordinateType coordinateType) const{
 	}
 };
 
-/************************************************************************/
-/* Texture                                                              */
-/************************************************************************/
-/*void Texture::maskColor(const Color &color, unsigned char alpha){
-	sf::Image img = this->copyToImage();
-	img.createMaskFromColor(color, alpha);
-	loadFromImage(img);
-};
-
-/// Get the size of the texture
-Vec2f Texture::getSize(){
-	return Vec2f(sf::Texture::getSize().x,sf::Texture::getSize().y);
-};*/
+/// Get the id of the currently bound texture for the currently set texture unit
+unsigned int Texture::getCurrentBoundTexture()
+{
+	GLint id;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &id);
+	return id;
+}
 
 NEPHILIM_NS_END

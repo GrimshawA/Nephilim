@@ -89,10 +89,9 @@ private:
 /// Typedef of View to Camera2D to suit tastes
 typedef View Camera2D;
 
-
-// AngelScript registration
 class ASEngine;
 bool registerView(ASEngine* engine);
+
 
 NEPHILIM_NS_END
 

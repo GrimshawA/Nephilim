@@ -61,16 +61,16 @@ public:
 
 	/// Reads raw data from the stream with size len, stored in the buffer, it protects the reading of protected sections
 	/// Returns the amount of bytes read
-	Int64 read(char* buffer, Int64 len);
+	Int64 read(char* buffer, Int64 len) const;
 
 	/// Tells the current position, relative to the allowed offset
-	Int64 tell();
+	Int64 tell() const;
 
 	/// Get the total size of the file (or region)
 	Int64 getSize();
 
 	/// Write data into the file
-	Int64 write(const char* buffer, Int64 length);
+	Int64 write(const char* buffer, Int64 length) const;
 
 	/// Allows to check for a file size
 	static Int64 getFileSize(String path);
@@ -81,6 +81,13 @@ private:
 	Int64 m_fileSize;
 	FILE* m_handle;
 };
+
+namespace File
+{
+	Int64 size(const String& src);
+	void copy(const ScopedFile& src, const ScopedFile& dst);
+}
+
 
 class ASEngine;
 bool registerScopedFile(ASEngine* engine);

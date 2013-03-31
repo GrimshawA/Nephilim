@@ -1,6 +1,7 @@
 #include <Nephilim/UIControl.h>
 #include <Nephilim/ASSlot.h>
 #include <Nephilim/ASEngine.h>
+#include <Nephilim/Logger.h>
 #include <AS/aswrappedcall.h>
 
 #include <iostream>

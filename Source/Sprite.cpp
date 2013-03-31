@@ -19,7 +19,7 @@ Drawable* SpriteRefCast(Sprite* a)
 	return refCast<Sprite, Drawable>(a);
 }
 
-bool registerSprite(ASEngine* engine)
+static bool registerSprite(ASEngine* engine)
 {
 	engine->getASEngine()->RegisterObjectType("Sprite", sizeof(Sprite), asOBJ_REF);
 

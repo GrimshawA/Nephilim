@@ -33,7 +33,7 @@ void scriptstdprint(std::string in){
 	TESTLOG(in.c_str())
 }
 
-void ASMessageCallback(const asSMessageInfo *msg, void *param){
+static void ASMessageCallback(const asSMessageInfo *msg, void *param){
 		if(!msg)return;
 		const char *type = "ERR ";
 		if( msg->type == asMSGTYPE_WARNING )
