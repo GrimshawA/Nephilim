@@ -15,7 +15,9 @@ extern void applicationStartup(pE::Engine** engine);
 extern void applicationUpdate();
 extern void applicationCleanup();
 
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
+
+#include <Nephilim/AndroidInterface.h>
 
 #if !defined ANDROID_PACKAGE_NAME || !defined ANDROID_ACTIVITY_NAME
 #error Cannot build for Android platform without specifying the ANDROID_PACKAGE_NAME and ANDROID_ACTIVITY_CLASS

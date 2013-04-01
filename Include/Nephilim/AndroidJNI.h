@@ -10,8 +10,8 @@ extern void android_touchup(float x, float y);
 extern void android_touchmove(float x, float y);
 extern void android_keydown(int key);
  
-#include "ParabolaCore/Strings.h"
-#include "ParabolaCore/AndroidInterface.h"
+#include <Nephilim/Strings.h>
+#include <Nephilim/AndroidInterface.h>
  
 // JNI Header
 #include <jni.h>

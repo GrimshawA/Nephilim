@@ -4,7 +4,7 @@
 #include "Platform.h"
 
 /// All desktop platforms
-#if defined PARABOLA_DESKTOP || defined NEPHILIM_DESKTOP
+#if defined NEPHILIM_DESKTOP
 #include <GL/glew.h>
 #include <GL/gl.h>
 
@@ -25,7 +25,7 @@ static void cglPrepareExtensions()
 #endif
 
 /// Android GLES 1.1
-#if defined PARABOLA_ANDROID
+#if defined NEPHILIM_ANDROID
 #define GL_GLEXT_PROTOTYPES
 #include <GLES/gl.h>
 #include <GLES/glext.h>
@@ -44,7 +44,7 @@ void cglPrepareExtensions(){}
 #endif
 
 /// Include iPhone GLES Headers
-#if defined PARABOLA_IPHONE
+#if defined NEPHILIM_IOS
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES2/gl.h>
 #endif
