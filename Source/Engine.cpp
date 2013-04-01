@@ -2,7 +2,7 @@
 #include <Nephilim/GameCore.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/CGL.h>
-//#include <Nephilim/View.h>
+#include <Nephilim/View.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -73,9 +73,9 @@ void Engine::update()
 		// Draw a frame
 		if(m_renderer)
 		{
-			/*View mView;
+			View mView;
 			mView.setRect(0,0, m_surface.window->getWidth(), m_surface.window->getHeight());
-			m_renderer->pushView(mView);*/
+			m_renderer->pushView(mView);
 			m_renderer->clear();
 			m_currentApp->innerRender();
 			m_renderer->display();

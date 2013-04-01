@@ -1,5 +1,5 @@
 #include "Nephilim/Renderer.h"
-#include "Nephilim/View.h"
+
 
 #ifdef NEPHILIM_DESKTOP
 #include <Nephilim/RendererOpenGL.h>
@@ -34,22 +34,22 @@ Renderer::Renderer(){
 
 /// Set the currently active view
 void Renderer::setView(const View &view){
-/*	m_currentView = view;
-	applyView(m_currentView);*/
+	m_currentView = view;
+	applyView(m_currentView);
 };
 
 /// Activate view and push it to the stack
 void Renderer::pushView(const View& view){
-	/*m_viewStack.push(view);
-	applyView(view);*/
+	m_viewStack.push(view);
+	applyView(view);
 };
 
 /// Pop the current active view
 void Renderer::popView(){
-	/*m_viewStack.pop();
+	m_viewStack.pop();
 	if(!m_viewStack.empty()){
 		applyView(m_viewStack.top());
-	}*/
+	}
 };
 
 void Renderer::drawCube(float x, float y, float z, float len, Color color){

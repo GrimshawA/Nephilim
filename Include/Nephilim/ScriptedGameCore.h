@@ -4,7 +4,6 @@
 #include "Platform.h"
 #include "GameCore.h"
 #include "ASEngine.h"
-#include "GameCoreInstancer.h"
 #include "Sprite.h"
 #include "Renderer.h"
 #include "BrowserPreloader.h"
@@ -132,22 +131,7 @@ private:
 	ASScript* m_preloadScript;
 };
 
-/**
-	\ingroup Scripting
-	\class ScriptGameInstancer
-	\brief 
-*/
-class NEPHILIM_API ScriptGameInstancer : public GameInstancerInterface{
-public:	
-	/// Prepares this instancer to create ScriptGame named as desired, and with entry point wherever wanted
-	ScriptGameInstancer(String name, String entryPoint);
 
-	/// Instances the ScriptGame
-	GameCore* Instance();
-
-private:
-	String myName, myEntryPoint;
-};
 
 void registerScriptedGameCore(ASEngine* engine);
 

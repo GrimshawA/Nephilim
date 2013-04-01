@@ -9,6 +9,7 @@
 #include "Color.h"
 #include "Drawable.h"
 #include "VertexArray.h"
+#include "View.h"
 
 
 NEPHILIM_NS_BEGIN
@@ -23,7 +24,7 @@ class NEPHILIM_API Renderer{
 public:
 	Renderer();
 
-	View* m_currentView;
+	View m_currentView;
 
 	Color m_clearColor;
 
@@ -72,7 +73,7 @@ public:
 
 	std::stack<FloatRect> m_clipRegionStack;
 
-	std::stack<View*> m_viewStack;
+	std::stack<View> m_viewStack;
 };
 
 NEPHILIM_NS_END

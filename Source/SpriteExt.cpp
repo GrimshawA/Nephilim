@@ -1,7 +1,6 @@
 #include "Nephilim/SpriteExt.h"
 #include "Nephilim/Image.h"
 #include "Nephilim/TextStream.h"
-#include "Nephilim/StringStream.h"
 #include <Nephilim/StringList.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/FileInterface.h>

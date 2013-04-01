@@ -346,20 +346,4 @@ void ScriptedGameCore::exportScripts(){
 
 };
 
-/************************************************************************/
-/* Instancer                                                            */
-/************************************************************************/
-/// Prepares this instancer to create ScriptGame named as desired, and with entry point wherever wanted
-ScriptGameInstancer::ScriptGameInstancer(String name, String entryPoint){
-	myName = name;
-	myEntryPoint = entryPoint;
-};
-
-/// Instances the ScriptGame
-GameCore* ScriptGameInstancer::Instance(){
-	ScriptedGameCore* game = new ScriptedGameCore();
-	game->entryPointScript = myEntryPoint;
-	return game;
-};
-
 NEPHILIM_NS_END
