@@ -74,8 +74,8 @@ JNIEXPORT void
 		pE::AndroidInterface::setActivityName(s4);
 		pE::AndroidInterface::setExternalStorageDirectory(s2);
 
-		myApp.myDataDirectory = s1;
-		myApp.myExternalStorageDirectory = s2; 
+	/*myApp.myDataDirectory = s1;
+		myApp.myExternalStorageDirectory = s2; */
 
 		__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "Paths: %s\n%s", s1.c_str(), s2.c_str());
 		__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "Package: %s\n", s3.c_str());

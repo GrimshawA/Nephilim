@@ -8,8 +8,17 @@ NEPHILIM_NS_BEGIN
 
 class NEPHILIM_API RendererOpenGL : public Renderer{
 public:
-	RendererOpenGL();
 
+	String getName()
+	{
+		return "OpenGL";
+	}
+
+protected:
+	RendererOpenGL();
+	
+	friend class Surface;
+public:
 	/// Clear the bound buffer
 	virtual void clear();
 

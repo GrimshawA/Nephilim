@@ -22,7 +22,7 @@ public:
 
 	}
 };
-#elif defined PARABOLA_NOSFML
+#else
 class Window::WindowImplementation{
 public:
 

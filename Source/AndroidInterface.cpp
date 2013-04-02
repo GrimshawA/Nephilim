@@ -1,6 +1,6 @@
 #include "Nephilim/Platform.h"
 #include "Nephilim/Logger.h"
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
 #include "Nephilim/AndroidInterface.h"
 #include "Nephilim/ScopedFile.h"
 

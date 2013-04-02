@@ -68,13 +68,13 @@ void PortabilityTest::onCreate()
 	if(s.create())
 	{
 		cout << "Shader program is done." << endl;
-		s.bind();
+		//s.bind();
 		cout << Shader::getCurrentActiveProgram() << endl;
 	}
 
 	cout<<"Framebuffer is now: "<<Framebuffer::getCurrentActiveFramebuffer()<<endl;
 	fbo.create();
-	fbo.bind();
+	//fbo.bind();
 	cout<<"Framebuffer is now: "<<Framebuffer::getCurrentActiveFramebuffer()<<endl;
 
 

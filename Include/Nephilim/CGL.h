@@ -3,15 +3,12 @@
 
 #include "Platform.h"
 
+void cglPrepareExtensions();
+
 /// All desktop platforms
 #if defined NEPHILIM_DESKTOP
 #include <GL/glew.h>
 #include <GL/gl.h>
-
-static void cglPrepareExtensions()
-{
-	glewInit();
-}
 
 // FBO
 #define glGenFramebuffersCGL glGenFramebuffersEXT
@@ -31,7 +28,6 @@ static void cglPrepareExtensions()
 #include <GLES/glext.h>
 #include <GLES2/gl2.h>
 
-void cglPrepareExtensions(){}
 // FBO
 #define glGenFramebuffersCGL glGenFramebuffersOES
 #define glFramebufferTexture2DCGL glFramebufferTexture2DOES

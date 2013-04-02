@@ -1,32 +1,25 @@
 #define ANDROID_PACKAGE_NAME com_parabolaengine_scriptedgamecore
 #define ANDROID_ACTIVITY_NAME ScriptedGameCore
-#include <Nephilim/ParabolaMain.h>
-#include <Nephilim/Engine.h>
+#include <Nephilim/GenericMain.h>
 #include "SampleBasic.h"
-using namespace pE;
-
 //#include <Nephilim/ScriptedGameCore.h>
 
-Engine sdk;
 PortabilityTest test;
 //ScriptedGameCore a;
 
-void applicationStartup(pE::Engine** engine)
+void init()
 {
-	sdk.init();
-	sdk.execute(&test);
-	*engine = &sdk;
-    printf("App::Start\n");
+	_engine->init();
+	_engine->execute(&test);
 }
 
-void applicationUpdate()
+void update()
 {
-
-	sdk.update();
+	_engine->update();
 }
 
-void applicationCleanup()
+void shutdown()
 {
-
+	_engine->shutdown();
 }
 

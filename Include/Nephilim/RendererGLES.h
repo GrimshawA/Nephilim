@@ -14,6 +14,10 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API RendererGLES : public Renderer{
 public:
 	RendererGLES();
+	String getName()
+	{
+		return "OpenGL ES 1.1";
+	}
 
 	/// Clear the bound buffer
 	virtual void clear();

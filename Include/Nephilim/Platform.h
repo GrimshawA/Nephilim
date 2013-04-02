@@ -9,6 +9,7 @@
 	\namespace pE
 	\brief Contains every part of Nephilim
 */
+#define NEPHILIM_NS pE
 #define NEPHILIM_NS_BEGIN namespace pE{
 #define NEPHILIM_NS_END }
 
@@ -51,6 +52,7 @@
 	#ifdef TARGET_OS_IPHONE
 		#define NEPHILIM_IOS
 		#define NEPHILIM_OS "ios"
+		#define NEPHILIM_GLES
 	#else
 		#define NEPHILIM_OSX
 		#define NEPHILIM_DESKTOP
@@ -63,6 +65,7 @@
 	#define NEPHILIM_UNIX
 	#define NEPHILIM_ANDROID
 	#define NEPHILIM_OS "android"
+	#define NEPHILIM_GLES
 #endif
 
 

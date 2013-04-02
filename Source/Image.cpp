@@ -15,7 +15,7 @@ using namespace std;
 #define STBI_HEADER_FILE_ONLY
 #endif
 
-#if defined NEPHILIM_SFML && !defined SFML_STATIC
+#if (defined NEPHILIM_SFML && !defined SFML_STATIC) || !defined NEPHILIM_SFML
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
 

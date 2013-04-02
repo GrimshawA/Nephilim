@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <cmath>
 
-#ifdef PARABOLA_GLES
+#ifdef NEPHILIM_GLES
 
 #include <Nephilim/RendererGLES.h>
 
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
 #include <GLES/gl.h>
 #else
 #include <OpenGLES/ES1/gl.h>

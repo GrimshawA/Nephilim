@@ -13,8 +13,21 @@
 
 
 NEPHILIM_NS_BEGIN
-class View;
+
 class RenderTarget;
+class Surface;
+/*
+namespace Blend
+{
+	enum BlendModes
+	{
+		None,
+		Alpha,
+		Add,
+		Multiply
+	};
+};*/
+
 /**
 	\ingroup Graphics
 	\class Renderer
@@ -22,7 +35,34 @@ class RenderTarget;
 */
 class NEPHILIM_API Renderer{
 public:
+
+	/// Every renderer type must declare its name
+	virtual String getName() = 0;
+
+	// -- Interface
+
+
+
+protected:
+	/// Protected constructor, only the surface can allocate renderers
 	Renderer();
+
+	friend class Surface;
+
+private:
+//	Blend::BlendModes m_blendMode;
+
+
+
+
+
+
+
+
+
+public:
+
+
 
 	View m_currentView;
 
@@ -67,13 +107,11 @@ public:
 	/// Auto detects an appropriate renderer
 	static Renderer* createAutomaticRenderer(RenderTarget* target);
 
-//protected:
-	/// The bound render target, where geometry is drawn
-	RenderTarget* m_renderTarget;
-
 	std::stack<FloatRect> m_clipRegionStack;
 
 	std::stack<View> m_viewStack;
+
+	RenderTarget* m_renderTarget;
 };
 
 NEPHILIM_NS_END

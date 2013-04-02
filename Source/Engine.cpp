@@ -6,9 +6,8 @@
 
 NEPHILIM_NS_BEGIN
 
-
 #ifdef ENGINE_VERSION_STRING
-	String Engine::m_versionString = ENGINE_VERSION_STRING;
+	String Engine::m_versionString = /*ENGINE_VERSION_STRING*/ "fixme";
 #else
 	String Engine::m_versionString = "unknown";
 #endif
@@ -16,6 +15,7 @@ NEPHILIM_NS_BEGIN
 Engine::Engine()
 : m_currentApp(NULL)
 , m_renderer(NULL)
+, m_running(false)
 {
 
 };
@@ -45,11 +45,15 @@ void Engine::init()
 	cglPrepareExtensions();
 
 	// Attempt to initialize the renderer
-	m_renderer = Renderer::createAutomaticRenderer(m_surface.window);
+	m_renderer = m_surface.createRenderer();
+
+	m_running = m_renderer ? true : false;
 }
 
 void Engine::update()
 {
+	if(!m_running) return;
+
 	// Check for removal first
 	if(m_currentApp && m_currentApp->mCloseRequested)
 	{
@@ -84,10 +88,28 @@ void Engine::update()
 	}
 };
 
+/// Terminate the engine completely
+void Engine::shutdown()
+{
+
+}
+
+/// Returns true if the engine was initialized and has a valid surface and renderer
+bool Engine::isRunning()
+{
+	return m_running;
+}
+
 /// Get the current renderer
 Renderer* Engine::getRenderer()
 {
 	return m_renderer;
+}
+
+/// Sets the command line arguments
+void Engine::setArgs(int count, char** args)
+{
+
 }
 
 /// Returns a string with the version of the engine build. Usually like x.y.z

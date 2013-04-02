@@ -65,6 +65,15 @@ public:
 	/// Fetch input, update state and draw frame if appropriate
 	void update();
 
+	/// Terminate the engine completely
+	void shutdown();
+
+	/// Returns true if the engine was initialized and has a valid surface and renderer
+	bool isRunning();
+
+	/// Sets the command line arguments
+	void setArgs(int count, char** args);
+
 	/// Get the current renderer
 	Renderer* getRenderer();
 
@@ -77,7 +86,7 @@ public:
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
 	Renderer*	m_renderer;			///< The unified graphics renderer system
 	Surface		m_surface;			///< The surface this engine is bound to
-
+	bool		m_running;			///< Qualified as running if some conditions are met
 	static String m_versionString; ///< The version of string(at compile time)
 };
 

@@ -39,7 +39,7 @@ bool Framebuffer::create()
 {
 	bool success = false;
 
-	glGenFramebuffersCGL(1, &static_cast<GLuint>(m_id));
+	glGenFramebuffersCGL(1, static_cast<GLuint*>(&m_id));
 
 	if(m_id)
 	{
@@ -55,7 +55,7 @@ bool Framebuffer::create()
 unsigned int Framebuffer::getCurrentActiveFramebuffer()
 {
 	GLint id;
-	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_EXT, &id);
+//	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_EXT, &id);
 	return static_cast<unsigned int>(id);
 }
 
