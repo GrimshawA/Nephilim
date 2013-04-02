@@ -4,11 +4,23 @@
 #include "Platform.h"
 
 NEPHILIM_NS_BEGIN
-
+class Texture;
 /**
 	\ingroup Graphics
 	\class Framebuffer
 	\brief Manages an OpenGL Framebuffer Object (FBO)
+
+	When you draw primitives with OpenGL, they go through a pipeline until a pixel is output in the end to a framebuffer.
+	By default, OpenGL is drawing to buffers that are displayed to the screen. However, this provides a way to draw somewhere else.
+	So, when you draw something with a custom framebuffer active, it is drawn in the framebuffer and not in the screen buffer.
+	People also refer to this as offscreen rendering or render to texture.
+
+	A framebuffer is not by itself drawable, it needs somewhere to draw to, what we call the attachments.
+
+	The common use for rendering 2D graphics into a texture is to simply attach one texture to the framebuffer and drawing to it.
+
+	Please notice that mobile implementations of OpenGL do not allow to output to more than one attachment, so please make
+	sure you know what you're doing if you attempt to go around that for other ends.
 */
 class NEPHILIM_API Framebuffer
 {
@@ -21,6 +33,9 @@ public:
 
 	/// Bind the framebuffer as the current one
 	void bind();
+
+	/// Attaches a texture to the color attachment 0
+	void attachTexture(const Texture& texture);
 
 	/// Attempts to create the framebuffer
 	bool create();
