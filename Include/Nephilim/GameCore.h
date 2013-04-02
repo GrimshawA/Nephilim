@@ -55,6 +55,18 @@ public:
 
 	Engine* m_creator;
 
+	/// Get the opengl version of this surface's context
+	String getGLVersionString();
+
+	/// Get the opengl renderer device name
+	String getGLRendererString();
+
+	/// Get the opengl vendor string
+	String getGLVendorString();
+
+	/// Get the flags of the gl context
+	String getGLContextFlags();
+
 protected:
 
 	/// Callback for updating the game

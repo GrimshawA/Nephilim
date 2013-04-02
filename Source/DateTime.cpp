@@ -1,6 +1,6 @@
 #include "Nephilim/DateTime.h"
 #include <ctime>
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #endif
 
@@ -47,7 +47,7 @@ NEPHILIM_NS_BEGIN
 	};
 
 	void DateTime::setFromLocalTime(){
-	#ifdef PARABOLA_WINDOWS
+	#ifdef NEPHILIM_WINDOWS
 		SYSTEMTIME systemtime;
 
 		GetSystemTime(&systemtime);

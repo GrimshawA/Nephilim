@@ -5,7 +5,7 @@
 
 #ifdef PARABOLA_ANDROID
 #include <Nephilim/RendererGLES.h>
-#elif defined PARABOLA_WINDOWS
+#elif defined NEPHILIM_WINDOWS
 #include <Windows.h>
 #include <GL/GL.h>
 #include <GL/GLU.h>

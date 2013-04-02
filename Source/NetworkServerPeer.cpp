@@ -1,3 +1,5 @@
+#ifndef MINIMAL_BUILD
+
 #include "Nephilim/NetworkServerPeer.h"
 
 
@@ -107,3 +109,4 @@ bool NetworkServerPeer::send(ENetPacket &packet){
 };
 
 NEPHILIM_NS_END
+#endif

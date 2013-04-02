@@ -7,7 +7,7 @@
 #include <Nephilim/Engine.h>
 #include <Nephilim/Window.h>
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #endif
 #include <GL/gl.h>

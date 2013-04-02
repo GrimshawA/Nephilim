@@ -1,7 +1,7 @@
 #include "Nephilim/FileSystem.h"
 #include "Nephilim/Application.h"
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #include <Shlobj.h>
 #include <CommDlg.h>
@@ -14,7 +14,7 @@
 NEPHILIM_NS_BEGIN
 	String FileSystem::myCurrentDirectory;
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	std::wstring wide_string_from_string(std::string str){
 		return std::wstring(str.begin(), str.end());
 	}
@@ -22,7 +22,7 @@ NEPHILIM_NS_BEGIN
 
 /// Load a dialog
 String FileSystem::loadFileDialog(){
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 		wchar_t Filestring[256];
 		String returnstring;
 
@@ -62,7 +62,7 @@ String FileSystem::loadFileDialog(){
 
 /// Testing \todo make
 String FileSystem::saveFileDialog(){
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	OPENFILENAME ofn;
 	String result;
 
@@ -95,7 +95,7 @@ String FileSystem::saveFileDialog(){
 
 String FileSystem::getDocumentsDirectory(){
 	String ActualStorageDirectory;
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	ActualStorageDirectory.resize(1024);
 
 	if(SHGetFolderPathA(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, &ActualStorageDirectory[0]) < 0)
@@ -117,7 +117,7 @@ String FileSystem::getDocumentsDirectory(){
 /// Get the path of the executable - could be similar to C:/Games/ or /home/games/
 String FileSystem::getExecutableDirectory(){
 	String path;
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	LPSTR lpStr = new char[2048];
 	GetModuleFileNameA(NULL,lpStr,2048 );
 	path = lpStr;
@@ -137,7 +137,7 @@ String FileSystem::getExecutableDirectory(){
 
 		StringList Files;
 		{
-		#ifdef PARABOLA_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
+		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = Directory + String("\\*.") + Extension;
 			WIN32_FIND_DATAA FileData;
 			HANDLE hFindHandle = INVALID_HANDLE_VALUE;
@@ -239,7 +239,7 @@ String FileSystem::getExecutableDirectory(){
 
 	
 	bool FileSystem::isDirectory(String Directory){
-		#ifdef PARABOLA_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
+		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = Directory;
 			WIN32_FIND_DATAA FileData;
 			HANDLE hFindHandle = INVALID_HANDLE_VALUE;
@@ -261,7 +261,7 @@ String FileSystem::getExecutableDirectory(){
 
 
 	bool FileSystem::isFile(String fileName){
-		#ifdef PARABOLA_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
+		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = fileName;
 			WIN32_FIND_DATAA FileData;
 			HANDLE hFindHandle = INVALID_HANDLE_VALUE;
@@ -285,7 +285,7 @@ String FileSystem::getExecutableDirectory(){
 	StringList FileSystem::directoryList(String Where, bool KeepRelativePath){
 		StringList Files;
 		{
-		#ifdef PARABOLA_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
+		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = Where + String("\\*");
 			WIN32_FIND_DATAA FileData;
 			HANDLE hFindHandle = INVALID_HANDLE_VALUE;
@@ -378,7 +378,7 @@ String FileSystem::getExecutableDirectory(){
 
 	bool FileSystem::makeDirectory(String Name){
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 		if(!CreateDirectory((LPCWSTR)wide_string_from_string(Name).c_str(), LPSECURITY_ATTRIBUTES()))
 			return false;
 #elif defined PARABOLA_ANDROID

@@ -70,7 +70,19 @@ public:
 	Clock clock;
 };
 
-#define PROFILE_AUTO AutoFnProfiler _profilerAuto(__FUNCTION__, this);
+
+
+
+
+/// -- Fully disable all macros for release and global disable
+#if defined NEPHILIM_NOPROFILER || defined NEPHILIM_RELEASE
+#define PROFILE_FN
+#define PROFILE_MFN
+#else
+#define PROFILE_FN AutoFnProfiler _profilerAuto(__FUNCTION__, NULL);
+#define PROFILE_MFN AutoFnProfiler _profilerAuto(__FUNCTION__, this);
+#endif
+
 
 NEPHILIM_NS_END
 #endif // Profiler_h__

@@ -1,5 +1,6 @@
+#ifndef MINIMAL_BUILD
+
 #include "Nephilim/NetworkSocket.h"
-#include "Nephilim/NetworkThread.h"
 #include <enet/enet.h>
 
 NEPHILIM_NS_BEGIN
@@ -113,3 +114,4 @@ void NetworkSocket::setOutgoingBandwidthLimit(int bandwidth_limit){
 
 
 NEPHILIM_NS_END
+#endif

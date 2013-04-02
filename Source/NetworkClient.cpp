@@ -1,3 +1,6 @@
+
+#ifndef MINIMAL_BUILD
+
 #ifndef PARABOLA_EXCLUDE_NETWORK
 #include "Nephilim/NetworkClient.h"
 #include "Nephilim/NetworkThread.h"
@@ -179,4 +182,5 @@ void NetworkClient::handleEvent(ENetEvent *event){
 };
 
 NEPHILIM_NS_END
+#endif
 #endif

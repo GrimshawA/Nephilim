@@ -8,7 +8,7 @@ NEPHILIM_NS_BEGIN
 
 
 #ifdef ENGINE_VERSION_STRING
-	String Engine::m_versionString = "d";
+	String Engine::m_versionString = ENGINE_VERSION_STRING;
 #else
 	String Engine::m_versionString = "unknown";
 #endif

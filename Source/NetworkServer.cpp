@@ -1,3 +1,5 @@
+#ifndef MINIMAL_BUILD
+
 #include "Nephilim/NetworkServer.h"
 #include "Nephilim/NetworkThread.h"
 
@@ -205,3 +207,5 @@ void NetworkServer::handleEvent(ENetEvent *event){
 };
 
 NEPHILIM_NS_END
+
+#endif

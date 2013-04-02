@@ -69,7 +69,7 @@ public:
 	Renderer* getRenderer();
 
 	/// Returns a string with the version of the engine build. Usually like x.y.z
-    String getVersionString();
+    static String getVersionString();
 
 public:
 	GameCore*	m_currentApp;		///< The currently executing game/application

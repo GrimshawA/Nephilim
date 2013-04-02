@@ -1,6 +1,6 @@
 #include <Nephilim/Clock.h>
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #elif defined NEPHILIM_UNIX
 #include <time.h>
@@ -10,7 +10,7 @@
 
 namespace
 {
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	LARGE_INTEGER getFrequency()
 	{
 		LARGE_INTEGER frequency;
@@ -68,7 +68,7 @@ Time Time::operator -(Time right)
 
 Time getCurrentTime(){
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	// Force the following code to run on first core
 	// (see http://msdn.microsoft.com/en-us/library/windows/desktop/ms644904(v=vs.85).aspx)
 	HANDLE currentThread = GetCurrentThread();

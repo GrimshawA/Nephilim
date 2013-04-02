@@ -5,7 +5,7 @@
 #include "ScopedFile.h"
 #include "StringList.h"
 
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
 #include <jni.h>
 #include <android/log.h>
 #endif

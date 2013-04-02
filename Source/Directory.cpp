@@ -1,6 +1,6 @@
 #include <Nephilim/Directory.h>
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
 #endif
@@ -17,7 +17,7 @@ String Path::getExtension()
 /// Test if the path is relative or absolute
 bool Path::isRelativePath()
 {
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	// on windows, special handling
 	if(PathIsRelativeA(m_path.c_str())){
 		return true;

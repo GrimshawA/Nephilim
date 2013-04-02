@@ -30,3 +30,11 @@
 - iOS
 - Embedded in browser via plugin
 - Extending is possible
+
+## IRC
+
+Feel free to join the IRC chat for Nephilim anytime
+Host: irc.boxbox.org
+Port (plain): 6667
+Port (SSL): 6697
+Channel: #Nephilim

@@ -1,7 +1,9 @@
-#ifndef PARABOLAPLATFORM_H
-#define PARABOLAPLATFORM_H
+#ifndef Platform_h__
+#define Platform_h__
 
-/// NEPHILIM_SFML - Does this platform use SFML for windowing?
+
+/// NEPHILIM_SFML       - Defined for platforms that use SFML to manage a window
+/// NEPHILIM_NOPROFILER - Disables the profiling tools globally if defined
 
 /**
 	\namespace pE
@@ -17,24 +19,20 @@
             #pragma warning(disable : 4275) // annoying dll warning
 			#pragma warning(disable : 4355) // warning this in base member initialiser list
 
-            #define PARABOLA_COMPILER "msvc"
-            #define PARABOLA_COMPILER_MSVC
+            #define NEPHILIM_COMPILER "vs"
+            #define NEPHILIM_COMPILER_VS
             #define _CRT_SECURE_NO_DEPRECATE
 
         #else //GCC
-            #define PARABOLA_COMPILER "gcc"
-            #define PARABOLA_COMPILER_GCC
+            #define NEPHILIM_COMPILER "gcc"
+            #define NEPHILIM_COMPILER_GCC
         #endif
+
 		#define NEPHILIM_SFML
 		#define SFML_STATIC
-		#define PARABOLA_WINDOWS
-		#define PARABOLA_OS "win"
-		#define PARABOLA_DESKTOP
+		#define NEPHILIM_OS "windows"
+		#define NEPHILIM_WINDOWS
 		#define NEPHILIM_DESKTOP
-
-		#ifndef WIN32_LEAN_AND_MEAN
-		#define WIN32_LEAN_AND_MEAN
-		#endif
 
 // -- Linux: Desktop
 #elif (defined __linux__ || defined LINUX) && !defined ANDROID
@@ -42,7 +40,7 @@
 		#define NEPHILIM_UNIX
 		#define NEPHILIM_DESKTOP
 		#define NEPHILIM_SFML
-
+		#define NEPHILIM_OS "linux"
 
 // -- Apple: OS X or iPad/iPod/iPhone
 #elif defined __APPLE_CC__ || defined __APPLE__
@@ -52,20 +50,19 @@
 
 	#ifdef TARGET_OS_IPHONE
 		#define NEPHILIM_IOS
+		#define NEPHILIM_OS "ios"
 	#else
 		#define NEPHILIM_OSX
+		#define NEPHILIM_DESKTOP
+		#define NEPHILIM_OS "osx"
 	#endif
 
 // -- Android platform
 #elif defined ANDROID_NDK || defined ANDROID
-	#define PARABOLA_ANDROID
-	#define PARABOLA_GLES
-	#define PARABOLA_NOSFML
-    #define PARABOLA_UNIX
 	#define NEPHILIM_COMPILER "gcc"
 	#define NEPHILIM_UNIX
 	#define NEPHILIM_ANDROID
-
+	#define NEPHILIM_OS "android"
 #endif
 
 
@@ -113,4 +110,4 @@ NEPHILIM_NS_END
 #define NULL 0
 #endif
 
-#endif
+#endif // Platform_h__

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdlib.h>
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #endif
 
@@ -48,7 +48,7 @@ NEPHILIM_NS_BEGIN
 		erase(ocurr, npos);
 	};
 
-/*#ifdef PARABOLA_WINDOWS
+/*#ifdef NEPHILIM_WINDOWS
 	std::wstring String::toWide(){
 		int len;
 		int slength = (int)(*this).length() + 1;

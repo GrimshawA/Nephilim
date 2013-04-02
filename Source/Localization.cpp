@@ -1,6 +1,6 @@
 #include "Nephilim/Localization.h"
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #endif
 
@@ -129,7 +129,7 @@ bool Localization::loadFromLocalizationScript(const String &fileName, bool byteC
 String Localization::getSystemLanguage(){
 	String result = "not implemented";
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 
 	wchar_t str[LOCALE_NAME_MAX_LENGTH];
 	GetSystemDefaultLocaleName((LPWSTR)&str, LOCALE_NAME_MAX_LENGTH);
@@ -143,7 +143,7 @@ String Localization::getSystemLanguage(){
 String Localization::getUserLanguage(){
 	String result = "not implemented";
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 	wchar_t str[LOCALE_NAME_MAX_LENGTH];
 	GetUserDefaultLocaleName((LPWSTR)&str, LOCALE_NAME_MAX_LENGTH);
 	result.fromWide(static_cast<std::wstring>( str ) );

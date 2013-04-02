@@ -1,5 +1,6 @@
 #include <Nephilim/GameCore.h>
 #include <Nephilim/Engine.h>
+#include <Nephilim/CGL.h>
 
 #include <iostream>
 using namespace std;
@@ -36,6 +37,35 @@ String GameCore::getFileSystemRoot()
 Renderer* GameCore::getRenderer()
 {
 	return m_creator->getRenderer();
+}
+
+/// Get the opengl version of this surface's context
+String GameCore::getGLVersionString()
+{
+	const GLubyte* str = glGetString(GL_VERSION);
+	return reinterpret_cast<const char*>(str);
+}
+
+/// Get the opengl renderer device name
+String GameCore::getGLRendererString()
+{
+	const GLubyte* str = glGetString(GL_RENDERER);
+	return reinterpret_cast<const char*>(str);
+}
+
+/// Get the opengl vendor string
+String GameCore::getGLVendorString()
+{
+	const GLubyte* str = glGetString(GL_VENDOR);
+	return reinterpret_cast<const char*>(str);
+}
+
+/// Get the flags of the gl context
+String GameCore::getGLContextFlags()
+{
+	//const GLubyte* str = glGetString(GL_VENDOR);
+	//return reinterpret_cast<const char*>(str);
+	return "";
 }
 
 /// Shutdown this game immediately

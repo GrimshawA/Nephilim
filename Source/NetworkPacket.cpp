@@ -1,3 +1,6 @@
+#ifndef MINIMAL_BUILD
+
+
 #include "Nephilim/NetworkPacket.h"
 
 #include <iostream>
@@ -192,3 +195,4 @@ Packet NetworkPacket::getData(){
 };
 
 NEPHILIM_NS_END
+#endif

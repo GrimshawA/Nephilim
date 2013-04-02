@@ -1,4 +1,5 @@
 #include "Nephilim/Renderer.h"
+#include <Nephilim/Logger.h>
 
 
 #ifdef NEPHILIM_DESKTOP

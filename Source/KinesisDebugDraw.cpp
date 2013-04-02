@@ -20,7 +20,7 @@
 #include "Nephilim/KinesisWorld.h"
 #include "Nephilim/Renderer.h"
 
-#ifdef PARABOLA_WINDOWS
+#ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #endif
 

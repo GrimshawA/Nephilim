@@ -5,6 +5,7 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Shader.h>
 #include <Nephilim/Package.h>
+#include <Nephilim/Framebuffer.h>
 using namespace pE;
 
 class PortabilityTest : public GameCore
@@ -16,6 +17,7 @@ public:
 	void onUpdate(Time time);
 
 	Shader s;
+	Framebuffer fbo;
 };
 
 #endif // PortabilityTest_h__
