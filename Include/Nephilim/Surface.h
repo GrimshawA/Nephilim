@@ -11,6 +11,7 @@
 NEPHILIM_NS_BEGIN
 
 class Renderer;
+class Engine;
 /**
 	\ingroup Core
 	\class Surface
@@ -33,7 +34,7 @@ class NEPHILIM_API Surface
 {
 public:
 	/// Construct the surface object - not yet valid
-	Surface();
+	Surface(Engine* engine);
 
 	/// Ensure proper destruction
 	~Surface();
@@ -44,12 +45,17 @@ public:
 	/// Creates and returns the renderer if valid
 	Renderer* createRenderer();
 
+	/// Pushes the back buffer to the screen
+	void pushFrame();
 	
 	/// There is one renderer instanced at a time ONLY
 	/// The surface instances it as appropriate in order to have multiple gl versions outputs
 	Renderer* m_renderer;
 
 	Window* window;
+
+private:
+	Engine*	m_engine; ///< The engine that pairs with this surface
 };
 
 NEPHILIM_NS_END

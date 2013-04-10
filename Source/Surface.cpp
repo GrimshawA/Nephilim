@@ -1,15 +1,21 @@
 #include <Nephilim/Surface.h>
+#include <Nephilim/Engine.h>
 #include <Nephilim/RendererOpenGL.h>
 #include <Nephilim/RendererGLES.h>
 #include <Nephilim/RendererGLES2.h>
+
+#if defined NEPHILIM_ANDROID
+#include <Nephilim/AndroidInterface.h>
+#endif
 
 #include <stdio.h>
 
 NEPHILIM_NS_BEGIN
 
 /// Construct the surface object - not yet valid
-Surface::Surface()
+Surface::Surface(Engine* engine)
 : m_renderer(NULL)
+, m_engine(engine)
 {
 
 }
@@ -30,8 +36,10 @@ Renderer* Surface::createRenderer()
 		renderer = new RendererOpenGL();
 
 	#elif defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
-		renderer = new RendererGLES();
-
+		if(m_engine->glesHint == 2)
+			renderer = new RendererGLES2();
+		else
+			renderer = new RendererGLES();
 	#endif
 
 	if(renderer) renderer->m_renderTarget = window;
@@ -45,6 +53,15 @@ void Surface::create()
 	window = new Window();
 	window->create(1024,768);
 };
+
+/// Pushes the back buffer to the screen
+void Surface::pushFrame()
+{
+	window->swapBuffers();
+#if defined NEPHILIM_ANDROID
+	AndroidInterface::requestFrameRender();
+#endif
+}
 
 
 NEPHILIM_NS_END

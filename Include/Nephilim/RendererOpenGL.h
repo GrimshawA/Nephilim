@@ -14,6 +14,9 @@ public:
 		return "OpenGL";
 	}
 
+	/// Draw a vertex array
+	virtual void draw(const VertexArray& varray);
+
 protected:
 	RendererOpenGL();
 	

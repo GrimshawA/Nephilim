@@ -16,18 +16,29 @@
 #include "AndroidJNI.h"
 #include <android/keycodes.h>
 
+Engine sdk;
+
 void android_init(){
-	// first register in the application the interface
-	//pE::Application::myInstance->jniEnv = jEnv;
-	/*static bool alreadyStarted = false;
+
+	static bool alreadyStarted = false;
 
 	if(!alreadyStarted){
-		applicationStartup(&gEngine);
+		_engine = &sdk;
+#if defined NEPHILIM_GLES1
+		_engine->glesHint = 1;
+#else
+		_engine->glesHint = 2;
+#endif
+
+		init();
+
 		alreadyStarted = true;
 	}
 	else{
 
-	}*/
+	}
+
+
 }
 
 void android_gl_reload()
@@ -38,7 +49,7 @@ void android_gl_reload()
 }
 
 void android_render(){
-	//applicationUpdate();
+	update();
 }
 
 void android_resize(int w, int h){

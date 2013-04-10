@@ -54,7 +54,7 @@ bool Framebuffer::create()
 /// Returns the internal id of the currently in-use program by OpenGL
 unsigned int Framebuffer::getCurrentActiveFramebuffer()
 {
-	GLint id;
+	GLint id = 0;
 //	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_EXT, &id);
 	return static_cast<unsigned int>(id);
 }

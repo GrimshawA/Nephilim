@@ -1,19 +1,51 @@
-#include "Nephilim/Renderer.h"
+#include <Nephilim/Renderer.h>
+#include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
-
-
-#ifdef NEPHILIM_DESKTOP
-#include <Nephilim/RendererOpenGL.h>
-#elif defined PARABOLA_ANDROID || defined PARABOLA_IPHONE
-#include <Nephilim/RendererGLES.h>
-#endif
+#include <Nephilim/Drawable.h>
 
 NEPHILIM_NS_BEGIN
 
-Renderer::Renderer(){
+Renderer::Renderer()
+: m_shader(NULL)
+{
 	m_clearColor.r = 100;
 	m_clearColor.g = 10;
+
+	m_primitiveTable[Render::Primitive::Triangles] = static_cast<int>(GL_TRIANGLES);
+	m_primitiveTable[Render::Primitive::TriangleFan] = static_cast<int>(GL_TRIANGLE_FAN);
 };
+
+void Renderer::drawArrays(Render::Primitive::Type primitiveType, int start, int count)
+{
+	glDrawArrays(static_cast<GLenum>(m_primitiveTable[primitiveType]), static_cast<GLint>(start), static_cast<GLsizei>(count));
+}
+
+void Renderer::enableVertexAttribArray(unsigned int index)
+{
+	glEnableVertexAttribArray(static_cast<GLuint>(index));
+}
+
+void Renderer::disableVertexAttribArray(unsigned int index)
+{
+	glDisableVertexAttribArray(static_cast<GLuint>(index));
+}
+
+void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr)
+{
+	glVertexAttribPointer(static_cast<GLuint>(index), static_cast<GLint>(numComponents), static_cast<GLenum>(componentType), static_cast<GLboolean>(normalized), static_cast<GLsizei>(stride), static_cast<const GLvoid*>(ptr));
+}
+
+/// Draw a vertex array
+void Renderer::draw(const VertexArray& varray)
+{
+	TESTLOG("Why are you calling draw on an abstract base class?\n")
+}
+
+/// Allows a drawable to draw itself
+void Renderer::draw(Drawable &drawable)
+{
+	drawable.onDraw(this);
+}
 
 
 /// Set the currently active view
@@ -49,7 +81,7 @@ void Renderer::setDefaultViewRect(float x, float y){
 
 /// Clear the bound buffer
 void Renderer::clear(){
-
+	glClear(GL_COLOR_BUFFER_BIT);
 };
 
 void Renderer::drawVertexArray(VertexArray &vertexArray){

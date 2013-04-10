@@ -91,6 +91,8 @@ JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeInit)( JNIEnv*  env ){
 	jEnv = env;	 
 	//pE::AndroidInterface::setJavaNativeInterfaceEnvironment(env);
 	android_init();  
+	__android_log_print(ANDROID_LOG_INFO, "Engine", "INIT ANDROID\n");
+
 };
 
 /// Used to detect GL context lost
@@ -128,11 +130,14 @@ JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeTouchMove) ( JNIEnv*  en
 JNIEXPORT jint JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeGetGLVersion) ( JNIEnv*  env, jobject thiz )
 {
 	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to create a OpenGL ES 2.0 context.\n");
-#if defined PARABOLA_PREFER_GLES2
-	return 2;
-#else
+#if defined NEPHILIM_GLES1
 	return 1;
+#else
+	return 2;
 #endif
+
+
+
 };
 
 #endif

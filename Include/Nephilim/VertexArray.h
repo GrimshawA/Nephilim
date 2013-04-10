@@ -6,6 +6,7 @@
 #include "Rect.h"
 #include <vector>
 #include "Color.h"
+#include "RenderModes.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -24,7 +25,7 @@ public:
 	}
 
 	Vec2f position;
-	Color color;	
+	Color color;
 	Vec2f texCoords;
 };
 
@@ -33,7 +34,7 @@ public:
 	/// Constructs an empty vertex array with default primitive type - Quads
 	VertexArray();
 
-	VertexArray(PrimitiveType primitiveType, unsigned int vertexCount);
+	VertexArray(Render::Primitive::Type primitiveType, unsigned int vertexCount);
 
 	/// Compute the bounds from the points in the array
 	FloatRect getBounds();
@@ -48,8 +49,9 @@ public:
 	Vertex& operator[](unsigned int index);
 
 	std::vector<Vertex> m_vertices;
+	bool m_textured;
 
-	PrimitiveType geometryType;
+	Render::Primitive::Type geometryType;
 };
 
 NEPHILIM_NS_END

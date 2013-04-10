@@ -26,7 +26,7 @@ NEPHILIM_NS_BEGIN
 	m_characterSize(30),
 	m_style(Regular),
 	m_color(255,255,255),
-	m_vertices(Triangles, 0),
+	m_vertices(Render::Primitive::Triangles, 0),
 	m_bounds(0,0,0,0)
 {
 
@@ -38,7 +38,7 @@ Text::Text(String text, float x, float y) : m_string(text),
 											m_characterSize(30),
 											m_style(Regular),
 											m_color(255,255,255),
-											m_vertices(Triangles, 0),
+											m_vertices(Render::Primitive::Triangles, 0),
 											m_bounds(0,0,0,0)
 {
 		updateGeometry();

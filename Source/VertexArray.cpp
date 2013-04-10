@@ -3,11 +3,13 @@
 NEPHILIM_NS_BEGIN
 
 /// Constructs an empty vertex array with default primitive type - Quads
-VertexArray::VertexArray(){
-	geometryType = TriangleFan;
+VertexArray::VertexArray()
+: m_textured(false){
+	geometryType = Render::Primitive::TriangleFan;
 };
 
-VertexArray::VertexArray(PrimitiveType primitiveType, unsigned int vertexCount){
+VertexArray::VertexArray(Render::Primitive::Type primitiveType, unsigned int vertexCount)
+: m_textured(false){
 	geometryType = primitiveType;
 	m_vertices.resize(vertexCount);
 };

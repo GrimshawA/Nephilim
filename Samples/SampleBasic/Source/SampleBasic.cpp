@@ -17,36 +17,14 @@ Vec2f m_pos(200,200);
 
 Image img;
 
-void function1()
-{
-	PROFILE_FN
-}
-
-static const char gVertexShader2[] =
-	"#version 330\n"
-
-	"in vec4 vPosition;\n"
-	"in vec4 ccc;"
-	"uniform mat4 projectionMatrix;"
-	"uniform mat4 modelViewMatrix;"
-	"out vec4 fcolor;"
-	"void main() {\n"
-	"  gl_Position = projectionMatrix * modelViewMatrix * vPosition;\n"
-	"  fcolor = ccc;"
-	"}\n";
-
-static const char gFragmentShader2[] = 
-	"#version 330\n"
-	"in vec4 fcolor;"
-	"out vec4 output;"
-	"void main() {\n"
-	"  output = fcolor;\n"
-	"}\n";
-
+Texture t;
 void PortabilityTest::onCreate()
 {
-	PROFILE_MFN
-	cout << "Engine information" << endl;
+
+	img.loadFromFile("K:/scary_tree.png");
+	t.loadFromImage(img);
+
+/*	cout << "Engine information" << endl;
 	cout << "Version: " << Engine::getVersionString() << endl;
 	cout << "OpenGL: " << getGLVersionString() << endl;
 	cout << "OpenGL Vendor: " << getGLVendorString() << endl;
@@ -56,84 +34,31 @@ void PortabilityTest::onCreate()
 	cout << Shader::getCurrentActiveProgram() << endl;
 	cout << endl;
 
-
-	if(s.loadShader(Shader::VertexUnit, gVertexShader2))
-	{
-		cout << "Loaded vertex shader!" << endl;
-	}
-	if(s.loadShader(Shader::FragmentUnit, gFragmentShader2))
-	{
-		cout << "Loaded fragment shader!" << endl;
-	}
-	if(s.create())
-	{
-		cout << "Shader program is done." << endl;
-		//s.bind();
-		cout << Shader::getCurrentActiveProgram() << endl;
-	}
-
-	cout<<"Framebuffer is now: "<<Framebuffer::getCurrentActiveFramebuffer()<<endl;
-	fbo.create();
-	//fbo.bind();
-	cout<<"Framebuffer is now: "<<Framebuffer::getCurrentActiveFramebuffer()<<endl;
-
-
-	
-	PackageBuilder package;
-	package.addFile("beauty.jpg", "beauty.jpg");
-	if(package.build())
-	{
-		cout << "Package built." << endl;
-	}
-	else
-	{
-		cout << "Package failed to create" << endl;
-	}
-
-	Package extractor("package.pkg");
-	extractor.extract("extracted_package");
+	ShaderGen::prepareDefault(defaultShader);
+	*/
+	PRINTLOG("Renderer", "Renderer: %s\n", getRenderer()->getName().c_str());
 }
 
 void PortabilityTest::onEvent(Event &event)
 {
-	PROFILE_MFN
-
-        if(event.type == Event::MouseButtonPressed)
-        {
-            m_pos.x = event.mouseButton.x;
-        }
+    if(event.type == Event::MouseButtonPressed)
+    {
+		m_pos.x = event.mouseButton.x;
+	}
 }
 
-float elapsed = 0.f;
 
 void PortabilityTest::onUpdate(Time time)
-{
-	PROFILE_MFN
-
-	function1();
-
-	elapsed += time.asSeconds();
-	//printf("Elapsed: %f\n", elapsed);
-
-	int j = 0;
-	for(int i = 0; i < 219342; i++)
-	{
-		j += i * j + 3 * i - 2;
-	}
+{ 
 }
 
 void PortabilityTest::onRender()
 {
-	PROFILE_MFN
+	View v;
+	v.setRect(0,0,10,10);
 
-	getRenderer()->drawDebugCircle(Vec2f(m_pos.x,200), 30, Vec2f(), Color::Red);
-	
-	Texture t;
-	t.loadFromImage(img);
-
-	Sprite spr;
-	spr.setTexture(t);
-	getRenderer()->draw(spr);
-	
-	//s.bind();
+	Sprite s;
+	s.setTexture(t);
+	s.setColor(Color(255,0,255,255));
+	getRenderer()->draw(s);
 }

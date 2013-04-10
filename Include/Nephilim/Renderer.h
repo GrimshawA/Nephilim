@@ -10,23 +10,15 @@
 #include "Drawable.h"
 #include "VertexArray.h"
 #include "View.h"
+#include "Shader.h"
+#include "RenderModes.h"
 
+#include <map>
 
 NEPHILIM_NS_BEGIN
 
 class RenderTarget;
 class Surface;
-/*
-namespace Blend
-{
-	enum BlendModes
-	{
-		None,
-		Alpha,
-		Add,
-		Multiply
-	};
-};*/
 
 /**
 	\ingroup Graphics
@@ -36,27 +28,40 @@ namespace Blend
 class NEPHILIM_API Renderer{
 public:
 
+
 	/// Every renderer type must declare its name
 	virtual String getName() = 0;
 
 	// -- Interface
 
+	// -- Low level calls
+	void drawArrays(Render::Primitive::Type primitiveType, int start, int count);
+	void enableVertexAttribArray(unsigned int index);
+	void disableVertexAttribArray(unsigned int index);
+	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
 
-protected:
+/*protected:*/
 	/// Protected constructor, only the surface can allocate renderers
 	Renderer();
 
 	friend class Surface;
 
+	Shader* m_shader;
+
+	std::map<Render::Primitive::Type, int> m_primitiveTable; 
+
 private:
 //	Blend::BlendModes m_blendMode;
 
 
+public:
 
+	/// Draw a vertex array
+	virtual void draw(const VertexArray& varray);
 
-
-
+	/// Allows a drawable to draw itself
+	virtual void draw(Drawable &drawable);
 
 
 
@@ -77,7 +82,7 @@ public:
 	void popView();
 
 	/// Apply a view
-	virtual void applyView(const View &view) = 0;
+	virtual void applyView(const View &view){};
 
 	/// Set the currently active view
 	virtual void setView(const View &view);
@@ -89,24 +94,23 @@ public:
 
 	void setDefaultViewRect(float x, float y);
 
-	/// Anything that inherits Drawable can be drawn using a renderer
-	virtual void draw(Drawable &drawable) = 0;
+
 
 	virtual void activateClipRegion(FloatRect rect){}
 	virtual void enableClipping(FloatRect rect){};
 	virtual void disableClipping(){};
-	virtual void prepare(int w, int h) = 0;
-	virtual void drawDebugQuad(float x, float y, float angle, float width, float height, Color color = Color(255,0,1)) = 0;
-	virtual void display() = 0;
-	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color) = 0;
-	virtual void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color) = 0;
-	virtual void drawDebugLine(Vec2f begin, Vec2f end, Color color) = 0;
+	virtual void prepare(int w, int h) {};
+	virtual void drawDebugQuad(float x, float y, float angle, float width, float height, Color color = Color(255,0,1)) {};
+	virtual void display() {}; 
+	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color) {};
+	virtual void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color){};
+	virtual void drawDebugLine(Vec2f begin, Vec2f end, Color color){};
 
 	virtual void drawVertexArray(VertexArray &vertexArray);
 
 	/// Auto detects an appropriate renderer
 	static Renderer* createAutomaticRenderer(RenderTarget* target);
-
+	 
 	std::stack<FloatRect> m_clipRegionStack;
 
 	std::stack<View> m_viewStack;

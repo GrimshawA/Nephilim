@@ -20,9 +20,33 @@ RendererGLES::RendererGLES() : Renderer(){
 	
 };
 
+/// Draw a vertex array
+void RendererGLES::draw(const VertexArray& varray)
+{
+	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	if(varray.m_textured) glEnable(GL_TEXTURE_2D);
+
+	glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
+	glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
+
+	drawArrays(varray.geometryType, 0, varray.m_vertices.size());
+
+	if(varray.m_textured) glDisable(GL_TEXTURE_2D);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	
+}
 
 void RendererGLES::applyView(const View &view){
-	if(!m_renderTarget) return;
+/*	if(!m_renderTarget) return;
     
     
 	IntRect viewport = ((Window*)m_renderTarget)->getViewport(view);
@@ -37,7 +61,7 @@ void RendererGLES::applyView(const View &view){
 	glLoadMatrixf(view.getTransform().getMatrix());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	*/
 	//TESTLOG("Changed camera.")
 
 };
@@ -171,28 +195,7 @@ void RendererGLES::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color
 
 
 void RendererGLES::drawVertexArray(VertexArray &vertexArray){
-		const char* data = reinterpret_cast<const char*>(&vertexArray.m_vertices[0]);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
-	glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
-
-	/*glCheck(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0));
-	glCheck(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), data + 8));
-	glCheck(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12));*/
-
-	if(vertexArray.geometryType == Triangles)
-		glDrawArrays(GL_TRIANGLES, 0, vertexArray.m_vertices.size());
-	else if(vertexArray.geometryType == TriangleFan)
-		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexArray.m_vertices.size());
-
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
 };
 
 /// Anything that inherits Drawable can be drawn using a renderer

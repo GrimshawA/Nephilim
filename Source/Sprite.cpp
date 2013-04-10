@@ -57,13 +57,13 @@ static bool registerSprite(ASEngine* engine)
 }*/
 
 /// Default sprite
-Sprite::Sprite() : m_vertices(TriangleFan,4) , m_texture(NULL), RefCountable(), m_blendMode(Blend::Alpha){
+Sprite::Sprite() : m_vertices(Render::Primitive::TriangleFan,4) , m_texture(NULL), RefCountable(), m_blendMode(Blend::Alpha){
 	m_vertices[0].color = Color(255,255,255,255);
 	m_vertices[1].color = Color(255,255,255,255);
 	m_vertices[2].color = Color(255,255,255,255);
 	m_vertices[3].color = Color(255,255,255,255);
+	m_vertices.m_textured = true;
 	//cout<<"[Sprite] Born!!!!"<<endl;
-
 };
 
 /// Safe destruction
@@ -78,7 +78,9 @@ void Sprite::setTextureRect(const FloatRect &rect){
 	m_vertices[2].position = Vec2f(rect.width,rect.height);
 	m_vertices[3].position = Vec2f(0.f,rect.height);
 
-	float texture_width = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().x);
+	if(m_texture)
+	{
+		float texture_width = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().x);
 	float texture_height = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().y);
 
 	float left   = static_cast<float>(rect.left);
@@ -97,6 +99,11 @@ void Sprite::setTextureRect(const FloatRect &rect){
 	m_vertices[3].texCoords = Vec2f(left, bottom);
 
 	m_textureRect = FloatRect(left, top, right, bottom);
+
+	}
+
+	
+
 };
 
 Vec2f Sprite::getPosition()
@@ -171,7 +178,7 @@ FloatRect Sprite::getGlobalBounds() const
 
 /// Called to order rendering, when the drawing was issued in the traditional way ( m_renderer->draw(m_sprite) )
 void Sprite::onDraw(Renderer* renderer){
-	if(!m_texture) return; //invalid texture
+	/*if(!m_texture) return;
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
@@ -193,13 +200,20 @@ void Sprite::onDraw(Renderer* renderer){
 	glMultMatrixf(getTransform().getMatrix());
 
 	m_texture->bind(Texture::Pixels);
-	renderer->drawVertexArray(m_vertices);
+
+	*/
+	
+	m_texture->bind(Texture::Normalized);
+	renderer->draw(m_vertices);
+
+	/*
+
 	glMatrixMode(GL_TEXTURE_MATRIX);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);*/
 };
 
 /// Animation properties

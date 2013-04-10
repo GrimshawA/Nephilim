@@ -6,13 +6,13 @@
 
 #include <stdio.h>
 
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
 #include "AndroidInterface.h"
 #endif
 
 NEPHILIM_NS_BEGIN
 
-#ifdef PARABOLA_ANDROID
+#ifdef NEPHILIM_ANDROID
 #define TESTLOG(x) __android_log_print(ANDROID_LOG_INFO, "ParabolaLogger", (x));
 #define PRINTLOG(tag, formats, ...) __android_log_print(ANDROID_LOG_INFO, tag, formats, __VA_ARGS__);
 /*#elif defined PARABOLA_BROWSER

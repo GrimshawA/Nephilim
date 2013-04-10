@@ -19,6 +19,9 @@ public:
 		return "OpenGL ES 1.1";
 	}
 
+	/// Draw a vertex array
+	virtual void draw(const VertexArray& varray);
+
 	/// Clear the bound buffer
 	virtual void clear();
 

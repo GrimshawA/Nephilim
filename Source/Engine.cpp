@@ -16,6 +16,7 @@ Engine::Engine()
 : m_currentApp(NULL)
 , m_renderer(NULL)
 , m_running(false)
+, m_surface(this)
 {
 
 };
@@ -82,8 +83,7 @@ void Engine::update()
 			m_renderer->pushView(mView);
 			m_renderer->clear();
 			m_currentApp->innerRender();
-			m_renderer->display();
-			m_surface.window->swapBuffers();
+			m_surface.pushFrame();
 		}
 	}
 };

@@ -49,7 +49,7 @@ bool Shader::loadShader(ShaderTypes type, const char* source)
 				char* buf = new char[infoLen];
 				if (buf) {
 					glGetShaderInfoLog(shader, infoLen, NULL, buf);
-//					PRINTLOG("GLES 2.0", "Failed to load shader: %s\n", buf);
+					PRINTLOG("GLSL", "Failed to load shader: %s\n", buf);
 					delete [] buf;
 				}
 				glDeleteShader(shader);
@@ -106,10 +106,11 @@ bool Shader::create()
 			GLint bufLength = 0;
 			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &bufLength);
 			if (bufLength) {
-				char* buf = new char[bufLength];
+				char* buf = new char[bufLength+1];
 				if (buf) {
 					glGetProgramInfoLog(id, bufLength, NULL, buf);
-//					PRINTLOG("GLES 2.0", "Failed to link shader program: %s\n", buf);
+					buf[bufLength] = '\0';
+					PRINTLOG("GLSL", "Failed to link shader program: %s\n", buf);
 					delete [] buf;
 				}
 			}

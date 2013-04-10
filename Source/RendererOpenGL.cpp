@@ -14,13 +14,82 @@
 
 NEPHILIM_NS_BEGIN
 
-RendererOpenGL::RendererOpenGL() : Renderer(){
+static const char gVertexSource[] =
+	"#version 120\n"
+	"in vec4 vertex;\n"
+	"in vec4 color;\n"
+	"in vec2 texCoord;\n"
+	"varying vec4 outColor;\n"
+	"varying vec2 texUV;\n"
+	"void main() {\n"
+	"  gl_Position = vertex;\n"
+	"  outColor = color;\n"
+	"  texUV = texCoord;\n"
+	"}\n";
 
+static const char gFragmentSource[] = 
+	"#version 120\n"
+	"uniform sampler2D texture;\n"
+	"varying vec4 outColor;\n"
+	"varying vec2 texUV;\n"
+	"void main() {\n"
+	"   gl_FragColor = texture2D(texture, texUV) * outColor;\n"
+	"}\n";
+
+
+RendererOpenGL::RendererOpenGL() : Renderer(){
+	m_shader = new Shader();
+	m_shader->loadShader(Shader::VertexUnit, gVertexSource);
+	m_shader->loadShader(Shader::FragmentUnit, gFragmentSource);
+	m_shader->addAttributeLocation(0, "vertex");
+	m_shader->addAttributeLocation(1, "color");
+	m_shader->addAttributeLocation(2, "texCoord");
+	m_shader->create();
+	m_shader->bind();
 };
 
+/// Draw a vertex array
+void RendererOpenGL::draw(const VertexArray& varray)
+{
+	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
+
+	if(m_shader)
+	{
+		enableVertexAttribArray(0);
+		enableVertexAttribArray(1);
+		enableVertexAttribArray(2);
+		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), data + 0);
+		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
+		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
+		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
+		disableVertexAttribArray(0);
+		disableVertexAttribArray(1);
+		disableVertexAttribArray(2);
+	}
+	else
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+		glEnable(GL_TEXTURE_2D);
+
+		glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
+		glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
+
+		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
+
+		glDisable(GL_TEXTURE_2D);
+
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+}
 
 void RendererOpenGL::applyView(const View &view){
-	if(!m_renderTarget) return;
+/*	if(!m_renderTarget) return;
 
 
 	IntRect viewport = ((Window*)m_renderTarget)->getViewport(view);
@@ -35,7 +104,7 @@ void RendererOpenGL::applyView(const View &view){
 	glLoadMatrixf(view.getTransform().getMatrix());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	*/
 	//TESTLOG("Changed camera.")
 
 };
@@ -104,7 +173,7 @@ void RendererOpenGL::clear(){
 
 
 void RendererOpenGL::prepare(int w, int h){
-	glViewport(0, 0, w, h);
+	/*glViewport(0, 0, w, h);
 
 
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -117,7 +186,7 @@ void RendererOpenGL::prepare(int w, int h){
 
 	glMatrixMode(GL_MODELVIEW);
 
-	glLoadIdentity();
+	glLoadIdentity();*/
 };
 
 void RendererOpenGL::drawCube(float x, float y, float z, float len, Color color){
@@ -270,12 +339,14 @@ void RendererOpenGL::drawVertexArray(VertexArray &vertexArray){
 	glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
 
+	/*
  	if(vertexArray.geometryType == Triangles)
  		glDrawArrays(GL_TRIANGLES, 0, vertexArray.m_vertices.size());
  	else if(vertexArray.geometryType == TriangleFan )
- 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexArray.m_vertices.size());
+ 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexArray.m_vertices.size());*/
 
 	//glDrawArrays(GL_QUADS, 0, vertexArray.m_vertices.size());
+
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);

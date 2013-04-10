@@ -127,7 +127,7 @@ bool ASEngine::exportGraphics(){
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugQuad(float,float,float,float,float,Color)", WRAP_MFN(Renderer, drawDebugQuad), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugCircle(Vec2f,float,Vec2f,Color)", WRAP_MFN(Renderer, drawDebugCircle), asCALL_GENERIC);
 //		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugText(float,float, const string& in)", WRAP_MFN(Renderer, drawDebugText), asCALL_GENERIC);
-		r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", WRAP_MFN(Renderer, draw), asCALL_GENERIC);
+//		r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", WRAP_MFN(Renderer, draw), asCALL_GENERIC);
 
 
 
@@ -159,7 +159,7 @@ bool ASEngine::exportGraphics(){
 		//r = asEngine->RegisterObjectMethod("Renderer", "void setDefaultViewRect(float,float)", asMETHOD(Renderer, setDefaultViewRect), asCALL_THISCALL);
 	//	r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugText(float,float, const string& in)", asMETHOD(Renderer, drawDebugText), asCALL_THISCALL);
 
-		r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", asMETHOD(Renderer, draw), asCALL_THISCALL);
+	//	r = asEngine->RegisterObjectMethod("Renderer", "void draw(Drawable@)", asMETHOD(Renderer, draw), asCALL_THISCALL);
 
 		//
 		//r = asEngine->RegisterObjectBehaviour("View", asBEHAVE_FACTORY, "View@ f()", asFUNCTION(ViewFactory), asCALL_CDECL); if(r < 0)printf("r %d", r);

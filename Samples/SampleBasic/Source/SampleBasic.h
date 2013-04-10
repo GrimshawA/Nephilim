@@ -4,6 +4,7 @@
 #include <Nephilim/GameCore.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Shader.h>
+#include <Nephilim/ShaderGen.h>
 #include <Nephilim/Package.h>
 #include <Nephilim/Framebuffer.h>
 using namespace pE;
@@ -16,7 +17,8 @@ public:
 	void onEvent(Event &event);
 	void onUpdate(Time time);
 
-	Shader s;
+	Shader defaultShader;
+
 	Framebuffer fbo;
 };
 

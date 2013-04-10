@@ -4,6 +4,7 @@
 
 /// NEPHILIM_SFML       - Defined for platforms that use SFML to manage a window
 /// NEPHILIM_NOPROFILER - Disables the profiling tools globally if defined
+/// NEPHILIM_GLES1		- Define this globally so the engine uses a OpenGL ES 1.1 renderer by default
 
 /**
 	\namespace pE
