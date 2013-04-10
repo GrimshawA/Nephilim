@@ -125,6 +125,28 @@ bool Shader::create()
 	return success;
 }
 
+void Shader::setUniformi(const String& uniform, int value)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id)
+	{
+		glUniform1i(uniform_id, value);
+	}
+}
+
+void Shader::setUniformMatrix(const String& uniform, const float* values)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id)
+	{
+		glUniformMatrix4fv(uniform_id, 1, GL_FALSE, values);
+	}
+}
+
+
+
 /// Returns whether or not shaders can be used at the moment
 /// The result of this function depends primarily on the machine you're running the program on
 bool Shader::isAvailable()

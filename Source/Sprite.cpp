@@ -102,7 +102,10 @@ void Sprite::setTextureRect(const FloatRect &rect){
 
 	}
 
-	
+	m_vertices[0].texCoords = Vec2f(0, 0);
+	m_vertices[1].texCoords = Vec2f(1, 0);
+	m_vertices[2].texCoords = Vec2f(1, 1);
+	m_vertices[3].texCoords = Vec2f(0, 1);
 
 };
 

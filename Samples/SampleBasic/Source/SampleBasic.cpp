@@ -59,6 +59,6 @@ void PortabilityTest::onRender()
 
 	Sprite s;
 	s.setTexture(t);
-	s.setColor(Color(255,0,255,255));
+	s.setColor(Color(255,0,0,255));
 	getRenderer()->draw(s);
 }

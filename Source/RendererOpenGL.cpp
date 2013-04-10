@@ -19,21 +19,26 @@ static const char gVertexSource[] =
 	"in vec4 vertex;\n"
 	"in vec4 color;\n"
 	"in vec2 texCoord;\n"
+	"uniform mat4 projection = mat4(1);\n"
+	"uniform mat4 view = mat4(1);\n"
+	"uniform mat4 model = mat4(1);\n"
 	"varying vec4 outColor;\n"
 	"varying vec2 texUV;\n"
 	"void main() {\n"
-	"  gl_Position = vertex;\n"
+	"  gl_Position = projection * view * model * vertex;\n"
 	"  outColor = color;\n"
 	"  texUV = texCoord;\n"
 	"}\n";
 
 static const char gFragmentSource[] = 
 	"#version 120\n"
+	"uniform int textured = 1;\n"
 	"uniform sampler2D texture;\n"
 	"varying vec4 outColor;\n"
 	"varying vec2 texUV;\n"
 	"void main() {\n"
-	"   gl_FragColor = texture2D(texture, texUV) * outColor;\n"
+	"   float ftextured = textured;\n"
+	"   gl_FragColor = (texture2D(texture, texUV) + vec4(abs(1 - ftextured)) ) * outColor;\n"
 	"}\n";
 
 
@@ -61,6 +66,8 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), data + 0);
 		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
 		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
+		if(varray.m_textured) m_shader->setUniformi("textured", 1);
+		else m_shader->setUniformi("textured", 0);
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 		disableVertexAttribArray(0);
 		disableVertexAttribArray(1);
@@ -72,7 +79,7 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-		glEnable(GL_TEXTURE_2D);
+		if(varray.m_textured) glEnable(GL_TEXTURE_2D);
 
 		glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
 		glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
@@ -80,7 +87,7 @@ void RendererOpenGL::draw(const VertexArray& varray)
 
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 
-		glDisable(GL_TEXTURE_2D);
+		if(varray.m_textured) glDisable(GL_TEXTURE_2D);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -89,24 +96,27 @@ void RendererOpenGL::draw(const VertexArray& varray)
 }
 
 void RendererOpenGL::applyView(const View &view){
-/*	if(!m_renderTarget) return;
-
+	if(!m_renderTarget) return;
 
 	IntRect viewport = ((Window*)m_renderTarget)->getViewport(view);
 	int top = m_renderTarget->getSize().y - (viewport.top + viewport.height);
 	glViewport(viewport.left, top, viewport.width, viewport.height);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	//gluPerspective(45, (float)width / height, 0.5f, 150);
-	FloatRect rect = view.getRect();
-	//glOrtho(rect.left, rect.width , rect.height ,rect.top, -0.1f , 0.1f);
-	glLoadMatrixf(view.getTransform().getMatrix());
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	*/
-	//TESTLOG("Changed camera.")
-
+	if(m_shader)
+	{
+		m_shader->setUniformMatrix("view", view.getTransform().getMatrix());
+	}
+	else
+	{
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		//gluPerspective(45, (float)width / height, 0.5f, 150);
+		FloatRect rect = view.getRect();
+		//glOrtho(rect.left, rect.width , rect.height ,rect.top, -0.1f , 0.1f);
+		glLoadMatrixf(view.getTransform().getMatrix());
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+	}
 };
 
 void RendererOpenGL::enableClipping(FloatRect rect)

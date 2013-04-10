@@ -65,6 +65,10 @@ public:
 	/// Returns the string
 	static String getVersion();
 
+	void setUniformi(const String& uniform, int value);
+
+	void setUniformMatrix(const String& uniform, const float* values);
+
 
 private:
 	unsigned int m_id; ///< Internal shader identifier
