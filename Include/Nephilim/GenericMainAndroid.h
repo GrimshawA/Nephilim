@@ -53,9 +53,11 @@ void android_render(){
 }
 
 void android_resize(int w, int h){
-	/*myApp.myWindowWidth = w;
-	myApp.myWindowHeight = h;
+	_engine = &sdk; // ensure
+	_engine->m_surface.m_windowWidth = w;
+	_engine->m_surface.m_windowHeight = h;
 
+	/*
 	pE::Event ev;
 	ev.type = pE::Event::Resized;
 	ev.size.width = w;

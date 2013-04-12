@@ -150,7 +150,10 @@ const Texture& Sprite::getTexture(){
 };
 
 void Sprite::resize(float x, float y){
-	setScale((x / m_texture->getSize().x ),(y / m_texture->getSize().y));
+	if(m_texture)
+	{
+		setScale((x / m_texture->getSize().x ),(y / m_texture->getSize().y));
+	}
 };
 
 /// Set the color of the sprite
@@ -206,6 +209,7 @@ void Sprite::onDraw(Renderer* renderer){
 
 	*/
 	
+	renderer->setModelMatrix(getTransform().getMatrix());
 	m_texture->bind(Texture::Normalized);
 	renderer->draw(m_vertices);
 

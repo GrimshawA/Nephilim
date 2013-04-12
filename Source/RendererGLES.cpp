@@ -1,5 +1,6 @@
 #include "Nephilim/Platform.h"
 #include "Nephilim/Engine.h"
+#include "Nephilim/Logger.h"
 
 #include <stdlib.h>
 #include <cmath>
@@ -25,6 +26,12 @@ void RendererGLES::draw(const VertexArray& varray)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
+	if(modelMatrix)
+	{
+		glLoadIdentity();
+		glLoadMatrixf(modelMatrix);
+	}
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -42,17 +49,15 @@ void RendererGLES::draw(const VertexArray& varray)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	
 }
 
 void RendererGLES::applyView(const View &view){
-/*	if(!m_renderTarget) return;
+	if(!m_renderTarget) return;
     
-    
-	IntRect viewport = ((Window*)m_renderTarget)->getViewport(view);
-	int top = m_renderTarget->getSize().y - (viewport.top + viewport.height);
+	IntRect viewport = m_surface->getViewport(view);
+	int top = m_surface->getHeight() - (viewport.top + viewport.height);
 	glViewport(viewport.left, top, viewport.width, viewport.height);
-    
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluPerspective(45, (float)width / height, 0.5f, 150);
@@ -61,7 +66,7 @@ void RendererGLES::applyView(const View &view){
 	glLoadMatrixf(view.getTransform().getMatrix());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	*/
+	
 	//TESTLOG("Changed camera.")
 
 };

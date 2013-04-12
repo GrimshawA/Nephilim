@@ -9,7 +9,6 @@
 #include <Nephilim/Profiler.h>
 #include <Nephilim/Engine.h>
 
-
 #include <iostream>
 using namespace std;
 
@@ -18,10 +17,10 @@ Vec2f m_pos(200,200);
 Image img;
 
 Texture t;
-void PortabilityTest::onCreate()
-{
 
-	img.loadFromFile("K:/scary_tree.png");
+void PortabilityTest::onCreate()
+{	
+	img.create(100,100, Color(255,10,255));
 	t.loadFromImage(img);
 
 /*	cout << "Engine information" << endl;
@@ -37,6 +36,7 @@ void PortabilityTest::onCreate()
 	ShaderGen::prepareDefault(defaultShader);
 	*/
 	PRINTLOG("Renderer", "Renderer: %s\n", getRenderer()->getName().c_str());
+	
 }
 
 void PortabilityTest::onEvent(Event &event)
@@ -50,6 +50,7 @@ void PortabilityTest::onEvent(Event &event)
 
 void PortabilityTest::onUpdate(Time time)
 { 
+
 }
 
 void PortabilityTest::onRender()
@@ -59,6 +60,12 @@ void PortabilityTest::onRender()
 
 	Sprite s;
 	s.setTexture(t);
-	s.setColor(Color(255,0,0,255));
+	s.resize(100,100);
+	s.setPosition(20,30);
+	s.setColor(Color(100,255,0));
 	getRenderer()->draw(s);
+
+	getRenderer()->drawDebugCircle(Vec2f(150,100), 20, Vec2f(), Color::White);
+	getRenderer()->drawDebugCircle(Vec2f(160,120), 10, Vec2f(), Color::Red);
+	getRenderer()->drawDebugCircle(Vec2f(170,90), 10, Vec2f(), Color(50,100,200));
 }

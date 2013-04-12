@@ -88,11 +88,7 @@ JNIEXPORT void	JNI_ACTIVITY_FUNC(nativeKeyDown) ( JNIEnv*  env , jobject thiz, j
 } 
 
 JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeInit)( JNIEnv*  env ){
-	jEnv = env;	 
-	//pE::AndroidInterface::setJavaNativeInterfaceEnvironment(env);
 	android_init();  
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "INIT ANDROID\n");
-
 };
 
 /// Used to detect GL context lost
@@ -101,7 +97,7 @@ JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeSurfaceCreated)( JNIEnv*  env
 
 	if(!surfaceCreatedAtLeastOnce)
 	{
-		surfaceCreatedAtLeastOnce = true; 
+		surfaceCreatedAtLeastOnce = true;
 	}
 	else
 	{

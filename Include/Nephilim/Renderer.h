@@ -47,6 +47,8 @@ public:
 
 	friend class Surface;
 
+	Surface* m_surface;
+
 	Shader* m_shader;
 
 	std::map<Render::Primitive::Type, int> m_primitiveTable; 
@@ -56,6 +58,9 @@ private:
 
 
 public:
+
+	void setModelMatrix(const float* matrix);
+	float* modelMatrix;
 
 	/// Draw a vertex array
 	virtual void draw(const VertexArray& varray);

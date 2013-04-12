@@ -2,6 +2,8 @@
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 
+#include <iostream>
+using namespace std;
 
 
 NEPHILIM_NS_BEGIN
@@ -13,6 +15,21 @@ Shader::Shader()
 : m_id(0)
 {
 
+}
+
+void Shader::pff()
+{
+	int total = -1;
+	glGetProgramiv( m_id, GL_ACTIVE_UNIFORMS, &total ); 
+	for(int i=0; i<total; ++i)  {
+		int name_len=-1, num=-1;
+		GLenum type = GL_ZERO;
+		char name[100];
+		glGetActiveUniform( m_id, GLuint(i), sizeof(name)-1,
+			&name_len, &num, &type, name );
+		name[name_len] = 0;
+		cout<< "Uniform: "<<name<<endl;
+	}
 }
 
 
@@ -110,7 +127,10 @@ bool Shader::create()
 				if (buf) {
 					glGetProgramInfoLog(id, bufLength, NULL, buf);
 					buf[bufLength] = '\0';
-					PRINTLOG("GLSL", "Failed to link shader program: %s\n", buf);
+					String mstr(buf);
+					mstr.removeCharacter('\r');
+					mstr.removeCharacter('\n');
+					PRINTLOG("GLSL", "Failed to link shader program(%d): %s\n",mstr.length(), mstr.c_str());
 					delete [] buf;
 				}
 			}
@@ -129,20 +149,22 @@ void Shader::setUniformi(const String& uniform, int value)
 {
 	bind();
 	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
-	if(uniform_id)
+	if(uniform_id != -1)
 	{
 		glUniform1i(uniform_id, value);
 	}
 }
 
-void Shader::setUniformMatrix(const String& uniform, const float* values)
+bool Shader::setUniformMatrix(const String& uniform, const float* values)
 {
 	bind();
 	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
-	if(uniform_id)
+	if(uniform_id != -1)
 	{
 		glUniformMatrix4fv(uniform_id, 1, GL_FALSE, values);
+		return true;
 	}
+	return false;
 }
 
 

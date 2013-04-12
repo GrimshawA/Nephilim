@@ -3,6 +3,8 @@
 #include <Nephilim/RendererOpenGL.h>
 #include "Nephilim/View.h"
 #include "Nephilim/MMath.h"
+#include "Nephilim/CGL.h"
+#include <Nephilim/Matrix.h>
 
 #include <Nephilim/Engine.h>
 #include <Nephilim/Window.h>
@@ -12,6 +14,9 @@
 #endif
 #include <GL/gl.h>
 
+#include <iostream>
+using namespace std;
+
 NEPHILIM_NS_BEGIN
 
 static const char gVertexSource[] =
@@ -20,8 +25,8 @@ static const char gVertexSource[] =
 	"in vec4 color;\n"
 	"in vec2 texCoord;\n"
 	"uniform mat4 projection = mat4(1);\n"
-	"uniform mat4 view = mat4(1);\n"
 	"uniform mat4 model = mat4(1);\n"
+	"uniform mat4 view = mat4(1);\n"
 	"varying vec4 outColor;\n"
 	"varying vec2 texUV;\n"
 	"void main() {\n"
@@ -66,15 +71,34 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), data + 0);
 		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
 		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
+
 		if(varray.m_textured) m_shader->setUniformi("textured", 1);
 		else m_shader->setUniformi("textured", 0);
+
+		//model
+		if(modelMatrix)
+		{
+			bool r = m_shader->setUniformMatrix("model", modelMatrix);
+			if(!r) cout<<"Not able to set the matrix"<<endl;
+		}
+
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 		disableVertexAttribArray(0);
 		disableVertexAttribArray(1);
 		disableVertexAttribArray(2);
+
+		//model
+		if(modelMatrix)
+		{
+			bool r = m_shader->setUniformMatrix("model", mat4().get());
+			modelMatrix = NULL;
+		}
 	}
 	else
 	{
+		glLoadIdentity();
+		glLoadMatrixf(modelMatrix);
+
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -104,7 +128,7 @@ void RendererOpenGL::applyView(const View &view){
 
 	if(m_shader)
 	{
-		m_shader->setUniformMatrix("view", view.getTransform().getMatrix());
+		m_shader->setUniformMatrix("projection", view.getTransform().getMatrix());
 	}
 	else
 	{
@@ -299,7 +323,8 @@ void RendererOpenGL::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color)
 }
 
 void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color){
-	const float k_segments = 16.0f;
+	VertexArray varray(Render::Primitive::TriangleFan, 0);
+	const float k_segments = 32.0f;
 	const float k_increment = 2.0f * 3.14159 / k_segments;
 	float theta = 0.0f;
 	glEnable(GL_BLEND);
@@ -311,13 +336,14 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 		Vec2f v = center + Vec2f(cosf(theta), sinf(theta)) * radius;
 		glVertex2f(v.x, v.y);
 		theta += k_increment;
+		varray.append(Vertex(v, color, Vec2f()));
 	}
 	glEnd();
 	glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 	glDisable(GL_BLEND);
 
-	theta = 0.0f;
+	/*theta = 0.0f;
 	glColor4ub(color.r, color.g, color.b, color.a);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < k_segments; ++i)
@@ -326,13 +352,9 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 		glVertex2f(v.x, v.y);
 		theta += k_increment;
 	}
-	glEnd();
-
-	/*Vec2f p = center + radius * axis;
-	glBegin(GL_LINES);
-	glVertex2f(center.x, center.y);
-	glVertex2f(p.x, p.y);
 	glEnd();*/
+
+	draw(varray);
 };
 
 void RendererOpenGL::drawVertexArray(VertexArray &vertexArray){

@@ -7,6 +7,7 @@ NEPHILIM_NS_BEGIN
 
 Renderer::Renderer()
 : m_shader(NULL)
+, modelMatrix(NULL)
 {
 	m_clearColor.r = 100;
 	m_clearColor.g = 10;
@@ -34,6 +35,12 @@ void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int
 {
 	glVertexAttribPointer(static_cast<GLuint>(index), static_cast<GLint>(numComponents), static_cast<GLenum>(componentType), static_cast<GLboolean>(normalized), static_cast<GLsizei>(stride), static_cast<const GLvoid*>(ptr));
 }
+
+void Renderer::setModelMatrix(const float* matrix)
+{
+	modelMatrix = const_cast<float*>(matrix);
+}
+
 
 /// Draw a vertex array
 void Renderer::draw(const VertexArray& varray)

@@ -67,10 +67,11 @@ public:
 
 	void setUniformi(const String& uniform, int value);
 
-	void setUniformMatrix(const String& uniform, const float* values);
+	bool setUniformMatrix(const String& uniform, const float* values);
 
+	void pff();
 
-private:
+public:
 	unsigned int m_id; ///< Internal shader identifier
 	std::vector<std::pair<ShaderTypes, unsigned int> > m_shaders; ///< List of compiled shaders
 	std::vector<std::pair<unsigned int, String> > m_attribs; ///< List of pre-binded attribute locations

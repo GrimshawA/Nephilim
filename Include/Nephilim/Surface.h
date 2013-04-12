@@ -39,6 +39,10 @@ public:
 	/// Ensure proper destruction
 	~Surface();
 
+	int getWidth() const;
+
+	int getHeight() const;
+
 	/// Default creation of a surface
 	void create();
 
@@ -52,7 +56,10 @@ public:
 	/// The surface instances it as appropriate in order to have multiple gl versions outputs
 	Renderer* m_renderer;
 
+	IntRect getViewport(const View& view) const;
+
 	Window* window;
+	int m_windowWidth, m_windowHeight;
 
 private:
 	Engine*	m_engine; ///< The engine that pairs with this surface

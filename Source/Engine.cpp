@@ -79,7 +79,7 @@ void Engine::update()
 		if(m_renderer)
 		{
 			View mView;
-			mView.setRect(0,0, m_surface.window->getWidth(), m_surface.window->getHeight());
+			mView.setRect(0,0, m_surface.getWidth(), m_surface.getHeight());
 			m_renderer->pushView(mView);
 			m_renderer->clear();
 			m_currentApp->innerRender();

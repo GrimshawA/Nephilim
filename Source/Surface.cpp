@@ -42,7 +42,11 @@ Renderer* Surface::createRenderer()
 			renderer = new RendererGLES();
 	#endif
 
-	if(renderer) renderer->m_renderTarget = window;
+	if(renderer)
+	{
+		renderer->m_renderTarget = window;
+		renderer->m_surface = this;
+	}
 
 	return renderer;
 }
@@ -61,6 +65,35 @@ void Surface::pushFrame()
 #if defined NEPHILIM_ANDROID
 	AndroidInterface::requestFrameRender();
 #endif
+}
+
+int Surface::getWidth() const
+{
+#if defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
+	return m_windowWidth;
+#else
+	return window->getWidth();
+#endif
+}
+int Surface::getHeight() const
+{
+#if defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
+	return m_windowHeight;
+#else
+	return window->getHeight();
+#endif
+}
+
+IntRect Surface::getViewport(const View& view) const
+{
+	float width  = static_cast<float>(getWidth());
+	float height = static_cast<float>(getHeight());
+	const FloatRect& viewport = view.getViewport();
+
+	return IntRect(static_cast<int>(0.5f + width  * viewport.left),
+		static_cast<int>(0.5f + height * viewport.top),
+		static_cast<int>(width  * viewport.width),
+		static_cast<int>(height * viewport.height));
 }
 
 
