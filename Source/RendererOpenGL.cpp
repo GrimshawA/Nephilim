@@ -47,7 +47,12 @@ static const char gFragmentSource[] =
 	"}\n";
 
 
-RendererOpenGL::RendererOpenGL() : Renderer(){
+RendererOpenGL::RendererOpenGL()
+: Renderer()
+{
+	m_type = OpenGL;
+	m_name = "OpenGL";
+
 	m_shader = new Shader();
 	m_shader->loadShader(Shader::VertexUnit, gVertexSource);
 	m_shader->loadShader(Shader::FragmentUnit, gFragmentSource);
@@ -63,7 +68,7 @@ void RendererOpenGL::draw(const VertexArray& varray)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
-	if(m_shader)
+	if(m_allowShaders && m_shader)
 	{
 		enableVertexAttribArray(0);
 		enableVertexAttribArray(1);
@@ -274,12 +279,9 @@ void RendererOpenGL::drawCube(float x, float y, float z, float len, Color color)
 	glPopMatrix();
 };
 
-
+/*
 void RendererOpenGL::drawDebugQuad(float x, float y, float angle, float width, float height, Color color){
-  /*  if(color.a < 255)
-        printf("Debugging quad: %f %f     %f      %f %f,    %u %u %u %u\n", x,y,angle,width,height,color.r,color.g,color.b,color.a);*/
 
-//color.a = 255;
 	glLoadIdentity();
 	glPushMatrix();
 	glTranslatef(x, y, 0.f);
@@ -297,7 +299,29 @@ void RendererOpenGL::drawDebugQuad(float x, float y, float angle, float width, f
 	glDisable(GL_BLEND);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();
-}
+
+	Transform vtransform;
+	vtransform.rotate(angle);
+	vtransform.translate(x,y);
+
+	VertexArray varray(Render::Primitive::Triangles, 6);
+	varray[0].position = Vec2f(width/2,-height/2);
+	varray[1].position = Vec2f(-width/2,height/2);
+	varray[2].position = Vec2f(-width/2,-height/2);
+	varray[3].position = Vec2f(width/2,-height/2);
+	varray[4].position = Vec2f(width/2,height/2);
+	varray[5].position = Vec2f(-width/2, height/2);
+
+	varray[0].color = color;
+	varray[1].color = color;
+	varray[2].color = color;
+	varray[3].color = color;
+	varray[4].color = color;
+	varray[5].color = color;
+
+	modelMatrix = const_cast<float*>(vtransform.getMatrix());
+	draw(varray);
+}*/
 
 void RendererOpenGL::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color){
 	glPushMatrix();
@@ -321,7 +345,7 @@ void RendererOpenGL::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color)
 	glEnd();
 	glPopMatrix();
 }
-
+/*
 void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color){
 	VertexArray varray(Render::Primitive::TriangleFan, 0);
 	const float k_segments = 32.0f;
@@ -343,7 +367,7 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 
 	glDisable(GL_BLEND);
 
-	/*theta = 0.0f;
+	theta = 0.0f;
 	glColor4ub(color.r, color.g, color.b, color.a);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < k_segments; ++i)
@@ -352,11 +376,11 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 		glVertex2f(v.x, v.y);
 		theta += k_increment;
 	}
-	glEnd();*/
+	glEnd();
 
 	draw(varray);
 };
-
+*/
 void RendererOpenGL::drawVertexArray(VertexArray &vertexArray){
 
 	if(vertexArray.m_vertices.size() == 0)return;

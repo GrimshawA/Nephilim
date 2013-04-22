@@ -170,7 +170,7 @@ Vec2<T> Vec2<T>::operator/(const T &scalar){
 
 template<class T>
 Vec3<T>::Vec3(){
-
+	x = y = z = static_cast<T>(0);
 };
 
 template<class T>
@@ -346,6 +346,13 @@ Vec3<T> Vec3<T>::operator/(const T &scalar){
 	return v;
 };
 
+/// Compute the dot product
+template<class T>
+float Vec3<T>::dot(const Vec3<T> &vec)
+{
+	return (x*vec.x) + (y*vec.y) + (z*vec.z);
+}
+
 
 /************************************************************************/
 /* Vec4                                                                 */
@@ -353,7 +360,8 @@ Vec3<T> Vec3<T>::operator/(const T &scalar){
 
 template<class T>
 Vec4<T>::Vec4(){
-
+	x = y = z = static_cast<T>(0);
+	w = static_cast<T>(1);
 };
 
 template<class T>
@@ -363,6 +371,15 @@ Vec4<T>::Vec4(T x, T y, T z, T w){
 	this->z = z;
 	this->w = w;
 };
+
+template<class T>
+Vec4<T>::Vec4(Vec3<T> vec3, T w)
+{
+	this->x = vec3.x;
+	this->y = vec3.y;
+	this->z = vec3.z;
+	this->w = w;
+}
 
 template<class T>
 void Vec4<T>::set(T x, T y, T z, T w){
@@ -381,6 +398,13 @@ void Vec4<T>::setAll(T x){
 };
 
 template<class T>
+template<class N>
+Vec4<N> Vec4<T>::cast()
+{
+	return Vec4<N>(static_cast<N>(x), static_cast<N>(y), static_cast<N>(z), static_cast<N>(w));
+}
+
+template<class T>
 bool Vec4<T>::operator==(const Vec4<T> &vec){
 	if(x == vec.x && y == vec.y && z == vec.z && w == vec.w)
 		return true;
@@ -391,6 +415,26 @@ template<class T>
 bool Vec4<T>::operator!=(const Vec4<T> &vec){
 	return !(operator==(vec));
 };
+
+template<class T>
+void Vec4<T>::normalize()
+{
+	x /= length();
+	y /= length();
+	z /= length();
+	w /= length();
+}
+
+template<class T>
+float Vec4<T>::length(){
+	return sqrt(x*x + y*y + z*z + w*w);
+};
+
+template<class T>
+Vec3<T> Vec4<T>::xyz()
+{
+	return Vec3<T>(x,y,z);
+}
 
 template<class T>
 Vec4<T>& Vec4<T>::operator+=(const Vec4<T> &vec){

@@ -74,6 +74,35 @@ Vec2f UIWindow::getMiddlePosition(){
 	return Vec2f(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2);
 };
 
+void UIWindow::clearUnusedSurfaces()
+{
+
+}
+
+/// Get the current surface count
+int UIWindow::getSurfaceCount()
+{
+	return static_cast<int>(m_surfaces.size());
+}
+
+/// Get a surface by its name. It will be created if it does not yet exist
+UISurface* UIWindow::operator[](const String& name)
+{
+	UISurface* surface = getSurfaceByName(name);
+	if(surface) return surface;
+	else
+	{
+		return addSurface(name);
+	}
+}
+
+/// Get a surface directly by its index
+/// You must ensure that index is valid
+UISurface* UIWindow::operator[](unsigned int index)
+{
+	return m_surfaces[index];
+}
+
 /// Get the surface closer to the user
 UISurface* UIWindow::getTopSurface(){
 	if(m_surfaces.empty()) return NULL;
@@ -147,7 +176,7 @@ void UIWindow::draw(Renderer* renderer){
 	/// Draw surfaces bottom to top
 	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 		(*it)->draw(renderer);
-	}	
+	}
 };
 
 /// Update the state of the ui

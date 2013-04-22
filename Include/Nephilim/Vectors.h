@@ -142,6 +142,9 @@ NEPHILIM_NS_BEGIN
 		/// Compute the cross product
 		Vec3<T> cross(const Vec3<T> &vec);
 
+		/// Compute the dot product
+		float dot(const Vec3<T> &vec);
+
 		/// Comparison operator overload
 		bool operator==(const Vec3<T> &vec);
 		/// Comparison operator overload
@@ -195,6 +198,7 @@ NEPHILIM_NS_BEGIN
 	typedef Vec3<float> Vec3f;
 	typedef Vec3<int> Vec3i;
 	typedef Vec3<double> Vec3d;
+	typedef Vec3<float> vec3;
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -218,15 +222,28 @@ NEPHILIM_NS_BEGIN
 	template<class T>
 	class NEPHILIM_API Vec4{
 	public:
-		/// Creates an uninitialized Vec4
+		/// Creates a zero vector. w component is 1 by default, defining a "position"
 		Vec4();
 		/// Creates a Vec4 with initial values
 		Vec4(T x, T y, T z, T w);
+		/// Creates a Vec4 from a Vec3 and a w component
+		Vec4(Vec3<T> vec3, T w);
 
 		/// Sets all values of the 4D vector
 		void set(T x, T y, T z, T w);
 		/// Sets all values of the 4D vector as x
 		void setAll(T x);
+
+		/// Get the first three components of the vector
+		Vec3<T> xyz();
+
+		/// Normalize the vector
+		void normalize();
+
+		float length();
+
+		/// Cast the vec4 to another type
+		template<class N>	Vec4<N> cast();
 
 		/// Comparison operator overload
 		bool operator==(const Vec4<T> &vec);
@@ -283,6 +300,7 @@ NEPHILIM_NS_BEGIN
 	typedef Vec4<float> Vec4f;
 	typedef Vec4<int> Vec4i;
 	typedef Vec4<double> Vec4d;
+	typedef Vec4<float> vec4;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 

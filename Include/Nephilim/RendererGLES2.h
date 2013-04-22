@@ -14,12 +14,9 @@ public:
 	/// Draw a vertex array
 	virtual void draw(const VertexArray& varray);
 
-	void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
+	//void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	void applyView(const View &view);
-	String getName()
-	{
-		return "OpenGL ES 2.0";
-	} 
+
 };
 
 

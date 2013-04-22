@@ -1,4 +1,4 @@
-#include "Nephilim/Strings.h"
+#include <Nephilim/Strings.h>
 #include "Nephilim/StringList.h"
 #include <sstream>
 #include <stdlib.h>
@@ -42,11 +42,21 @@ NEPHILIM_NS_BEGIN
 		erase(0, find_first_of(c));		
 	};
 
-	void String::removeUntilReverse(char c){
-		size_t ocurr = find_last_of(c);
-		if(ocurr == npos)ocurr = 0;
-		erase(ocurr, npos);
-	};
+void String::removeUntilReverse(char c){
+	size_t ocurr = find_last_of(c);
+	if(ocurr == npos)ocurr = 0;
+	erase(ocurr, npos);
+};
+
+bool String::matches(const String& wildcard)
+{
+	bool found = false;
+	
+	unsigned int curr_i = 0;
+	unsigned int curr_wi = 0;
+	
+	return found;
+}
 
 /*#ifdef NEPHILIM_WINDOWS
 	std::wstring String::toWide(){

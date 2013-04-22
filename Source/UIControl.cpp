@@ -532,9 +532,11 @@ void UIControl::setCenter(float x, float y){
 	updateLayout();
 };
 
-void UIControl::innerDraw(Renderer* renderer)
+void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 {
 	if(!m_visible)return; // no drawing or propagation - ghost
+
+	renderer->setModelMatrix(m_transform * transform);
 
 	/// Draw the background color and borders - TODO: no debug draw
 	renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);

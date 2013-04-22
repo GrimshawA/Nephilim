@@ -167,6 +167,56 @@ bool Shader::setUniformMatrix(const String& uniform, const float* values)
 	return false;
 }
 
+bool Shader::setUniformVec4(const String& uniform, const float* values)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id != -1)
+	{
+		glUniform4fv(uniform_id, 1, values);
+		return true;
+	}
+	return false;
+}
+
+bool Shader::setUniformVec3(const String& uniform, const float* values)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id != -1)
+	{
+		glUniform3fv(uniform_id, 1, values);
+		return true;
+	}
+	return false;
+}
+
+bool Shader::setUniformFloat(const String& uniform, float value)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id != -1)
+	{
+		glUniform1f(uniform_id, value);
+		return true;
+	}
+	return false;
+}
+
+bool Shader::setUniformTexture(const String& uniform, int textureUnit)
+{
+	bind();
+	GLint uniform_id = glGetUniformLocation(m_id, uniform.c_str());
+	if(uniform_id != -1)
+	{
+		glUniform1i(uniform_id, textureUnit);
+		return true;
+	}
+	return false;
+}
+
+
+
 
 
 /// Returns whether or not shaders can be used at the moment

@@ -68,6 +68,11 @@ public:
 	void setUniformi(const String& uniform, int value);
 
 	bool setUniformMatrix(const String& uniform, const float* values);
+	bool setUniformTexture(const String& uniform, int textureUnit);
+
+	bool setUniformVec4(const String& uniform, const float* values);
+	bool setUniformVec3(const String& uniform, const float* values);
+	bool setUniformFloat(const String& uniform, float value);
 
 	void pff();
 

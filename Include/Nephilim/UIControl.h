@@ -16,6 +16,7 @@
 #include "UISizePolicy.h"
 #include "UILayout.h"
 #include "UIState.h"
+#include "Matrix.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -76,7 +77,7 @@ public:
 	/// If only a empty string is returned, no tooltip is shown
 	virtual String getToolTipLabel();
 
-	void innerDraw(Renderer* renderer);
+	void innerDraw(Renderer* renderer, const mat4& transform = mat4());
 
 	/// Callback to render itself, renders children
 	virtual void draw(Renderer* renderer);
@@ -196,6 +197,12 @@ public:
 
 	/// Reload all graphics because they were destroyed and are unavailable now
 	virtual void reloadGraphicalAssets();
+
+
+	/// Cascaded transform
+	mat4 m_transform;
+
+
 
 protected: // functions
 

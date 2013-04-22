@@ -8,7 +8,10 @@ namespace Render
 		enum Type
 		{
 			Triangles,
-			TriangleFan
+			TriangleFan,
+			Lines,
+			LineLoop,
+			Points
 		};
 	}
 };

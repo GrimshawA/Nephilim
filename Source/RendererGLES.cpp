@@ -17,8 +17,11 @@
 
 NEPHILIM_NS_BEGIN
 
-RendererGLES::RendererGLES() : Renderer(){
-	
+RendererGLES::RendererGLES()
+: Renderer()
+{
+	m_type = OpenGLES1;
+	m_name = "OpenGL ES 1.1";
 };
 
 /// Draw a vertex array
@@ -26,10 +29,12 @@ void RendererGLES::draw(const VertexArray& varray)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
+	glLoadIdentity();
+
 	if(modelMatrix)
 	{
-		glLoadIdentity();
 		glLoadMatrixf(modelMatrix);
+		modelMatrix = NULL;
 	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -96,7 +101,7 @@ void RendererGLES::prepare(int w, int h){
 
 	glLoadIdentity();
 };
-
+/*
 void RendererGLES::drawDebugQuad(float x, float y, float angle, float width, float height, Color color){
 	glLoadIdentity();
 	glPushMatrix();
@@ -120,7 +125,7 @@ void RendererGLES::drawDebugQuad(float x, float y, float angle, float width, flo
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_BLEND);
 	glPopMatrix();
-}
+}*/
 
 void RendererGLES::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color){
 	glPushMatrix();
@@ -164,7 +169,7 @@ void RendererGLES::drawDebugLine(Vec2f begin, Vec2f end, Color color){
 	//glPopAttrib();
 	glPopMatrix();
 };
-
+/*
 void RendererGLES::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color){
 	const float k_segments = 16.0f;
 	const float k_increment = 2.0f * 3.14159 / k_segments;
@@ -196,7 +201,7 @@ void RendererGLES::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color
 	glVertexPointer(2, GL_FLOAT, 0, &vlist[0]);
 	glDrawArrays(GL_LINE_LOOP, 0, k_segments);
 	glDisableClientState(GL_VERTEX_ARRAY);
-};
+};*/
 
 
 void RendererGLES::drawVertexArray(VertexArray &vertexArray){

@@ -67,6 +67,10 @@ public:
 	/// Convert the string into lower case
 	void toLowerCase();
 
+	/// Checks if the current string matches the given wildcard
+	/// TODO: Implement
+	bool matches(const String& wildcard);
+
 	/// Splits into a StringList, by the string splitBy.
 	StringList split(String splitBy, int limitCount = 0);
 

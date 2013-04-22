@@ -210,7 +210,7 @@ void Sprite::onDraw(Renderer* renderer){
 	*/
 	
 	renderer->setModelMatrix(getTransform().getMatrix());
-	m_texture->bind(Texture::Normalized);
+	if(m_texture) m_texture->bind(Texture::Normalized);
 	renderer->draw(m_vertices);
 
 	/*

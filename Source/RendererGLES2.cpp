@@ -39,6 +39,9 @@ static const char gFragmentSource[] =
 RendererGLES2::RendererGLES2()
 : Renderer()
 {
+	m_type = OpenGLES2;
+	m_name = "OpenGL ES 2.0";
+
 	m_shader = new Shader();
 	m_shader->loadShader(Shader::VertexUnit, gVertexSource);
 	m_shader->loadShader(Shader::FragmentUnit, gFragmentSource);
@@ -60,6 +63,8 @@ void RendererGLES2::draw(const VertexArray& varray)
 	
 	if(varray.m_textured) m_shader->setUniformi("textured", 1);
 	else m_shader->setUniformi("textured", 0);
+
+	m_shader->setUniformi("texture", 0);
 	
 	//model
 	if(modelMatrix)
@@ -99,7 +104,7 @@ void RendererGLES2::applyView(const View &view)
 }
 
 
-
+/*
 void RendererGLES2::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color)
 {
 	VertexArray varray(Render::Primitive::TriangleFan, 0);
@@ -122,6 +127,6 @@ void RendererGLES2::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Colo
 
 	draw(varray);
 }
-
+*/
 
 NEPHILIM_NS_END

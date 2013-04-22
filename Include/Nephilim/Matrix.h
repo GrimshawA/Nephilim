@@ -2,6 +2,7 @@
 #define Matrix_h__
 
 #include "Platform.h"
+#include "Vectors.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -18,11 +19,59 @@ public:
 	/// Construct the matrix with identity
 	mat4();
 
+	mat4(	float a00, float a01, float a02, float a03,
+			float a10, float a11, float a12, float a13,
+			float a20, float a21, float a22, float a23,
+			float a30, float a31, float a32, float a33);
+
+	/// Invert the matrix
+	void invert();
+
+	/// Get the inverse of this matrix
+	mat4 getInverse();
+
 	/// Get the matrix array ptr
 	const float* get();
 
+	
+
+	float& operator[](unsigned int index);
+	float operator[](unsigned int index) const;
+
+	static mat4 perspective(float fov, float aspectRatio, float zNear, float zFar);
+	static mat4 lookAt(Vec3f eye, Vec3f center, Vec3f up);
+
+	static mat4 ortho(float left, float right, float bottom, float top, float zNear, float zFar);
+
+	static mat4 scale(float x, float y, float z);
+	static mat4 translate(float x, float y, float z);
+	static mat4 rotate(float angle_x, float angle_y, float angle_z);
+
+	/// Multiply the matrix by a vector
+	vec4 operator*(const vec4& v);
+
+	/// Multiply two 4x4 matrices
+	mat4 operator*(const mat4& m);
+
+	/// Multiply by a scalar
+	mat4 operator*(float scalar);
+
+	/// Identity matrix
+	static const mat4 identity;
+
 private:
 	float m_matrix[16]; ///< The matrix array
+};
+
+/**
+	\ingroup Foundation
+	\class mat3
+	\brief Defines a 3x3 matrix
+*/
+class NEPHILIM_API mat3
+{
+public:
+
 };
 
 NEPHILIM_NS_END
