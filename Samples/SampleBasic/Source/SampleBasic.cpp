@@ -166,7 +166,7 @@ void PortabilityTest::onCreate()
 
 
 	// create ui
-	UIControl* control1 = new UIControl(), *control2 = new UIControl(), *control3 = new UIControl();
+	/*UIControl* control1 = new UIControl(), *control2 = new UIControl(), *control3 = new UIControl();
 	control1->setRect(FloatRect(100,100,200,200));
 	control1->setProperty<Color>("background-color", Color::Orange);
 	control2->setRect(FloatRect(300,300,400,400));
@@ -175,7 +175,7 @@ void PortabilityTest::onCreate()
 	control3->setProperty<Color>("background-color", Color::Green);
 	ui["central"]->addControl(control1);
 	ui["central"]->addControl(control2);
-	control2->addControl(control3);
+	control2->addControl(control3);*/
 
 	GeometryData cube;
 	cube.addBox(30,30,30);
@@ -209,9 +209,9 @@ void PortabilityTest::onCreate()
 	sp1.diffuse = Vec4f(1,0.1,0.1, 1);
 	//sp1.direction = Vec3f(0.1, -0.2, -0.7);
 	//sp1.position = Vec4f(-4, 7, 8, 1);
-	sp1.position = Vec4f(0, 4, 5, 1);
+	sp1.position = Vec4f(0, 20, 20, 1);
 	sp1.direction = sp1.position.xyz() * -1.f;
-	sp1.cutoff = cos(Math::pi / 60);
+	sp1.cutoff = cos(Math::pi / 8);
 	spotLights.push_back(sp1);
 
 /*	cout << "Engine information" << endl;
@@ -355,6 +355,15 @@ class Mesh
 {
 public:
 
+	void generateTorus(Vec3f position)
+	{
+		GeometryData torus;
+		torus << TorusDef(2,1);
+		torus.generateNormals();
+		m_vertices = torus.m_vertices;
+		m_normals = torus.m_normals;
+		translation = mat4::translate(position.x, position.y, position.z);
+	}
 
 	void generateBox(Vec3f position = Vec3f(0,0,0), Vec3f size = Vec3f(1,1,1))
 	{
@@ -576,7 +585,8 @@ void PortabilityTest::onRender()
 		house.generateBox(Vec3f(0, 1, 0), Vec3f(6, 5, 3));
 		backWall.generateBox(Vec3f(0, -2, -18), Vec3f(15, 10, 2));
 		lamp.generateBox(Vec3f(4, 3, 1), Vec3f(1,6,1));
-		crate.generateBox(Vec3f(0,5,4), Vec3f(1,1,1));
+		//crate.generateBox(Vec3f(0,5,4), Vec3f(1,1,1));
+		crate.generateTorus(Vec3f(0,5,4));
 
 		house.m_color = Vec4f(0.1, 0.1, 0.1, 1);
 		base.m_color = Vec4f(0.3,0.4,0.3, 1);
@@ -631,11 +641,11 @@ void PortabilityTest::onRender()
 	ambientPass.bind();
 	glPointSize(8.f);
 	GeometryData geom;
-	geom << TorusDef(4, 30);
-	getRenderer()->enableVertexAttribArray(0);
+	geom.addCylinder();
+	/*getRenderer()->enableVertexAttribArray(0);
 	getRenderer()->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &geom.m_vertices[0]);
-	getRenderer()->drawArrays(Render::Primitive::Points, 0, geom.m_vertices.size());
-	getRenderer()->disableVertexAttribArray(0);
+	getRenderer()->drawArrays(Render::Primitive::Triangles, 0, geom.m_vertices.size());
+	getRenderer()->disableVertexAttribArray(0);*/
 
 	/*
 	depthRender.bind();

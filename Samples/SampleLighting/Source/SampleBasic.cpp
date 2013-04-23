@@ -13,8 +13,6 @@
 #include <Nephilim/Profiler.h>
 #include <Nephilim/Engine.h>
 
-#include "LightingGLSL.h"
-
 #include <iostream>
 using namespace std;
 
@@ -166,7 +164,7 @@ void PortabilityTest::onCreate()
 
 
 	// create ui
-	UIControl* control1 = new UIControl(), *control2 = new UIControl(), *control3 = new UIControl();
+/*	UIControl* control1 = new UIControl(), *control2 = new UIControl(), *control3 = new UIControl();
 	control1->setRect(FloatRect(100,100,200,200));
 	control1->setProperty<Color>("background-color", Color::Orange);
 	control2->setRect(FloatRect(300,300,400,400));
@@ -175,7 +173,7 @@ void PortabilityTest::onCreate()
 	control3->setProperty<Color>("background-color", Color::Green);
 	ui["central"]->addControl(control1);
 	ui["central"]->addControl(control2);
-	control2->addControl(control3);
+	control2->addControl(control3);*/
 
 	GeometryData cube;
 	cube.addBox(30,30,30);
@@ -207,11 +205,11 @@ void PortabilityTest::onCreate()
 
 	SpotLight sp1;
 	sp1.diffuse = Vec4f(1,0.1,0.1, 1);
-	//sp1.direction = Vec3f(0.1, -0.2, -0.7);
-	//sp1.position = Vec4f(-4, 7, 8, 1);
-	sp1.position = Vec4f(0, 4, 5, 1);
-	sp1.direction = sp1.position.xyz() * -1.f;
-	sp1.cutoff = cos(Math::pi / 60);
+	sp1.direction = Vec3f(0.1, -0.2, -0.7);
+	sp1.position = Vec4f(-4, 7, 8, 1);
+	//sp1.position = Vec4f(0, 4, 5, 1);
+	//sp1.direction = sp1.position.xyz() * -1.f;
+	sp1.cutoff = cos(Math::pi / 2);
 	spotLights.push_back(sp1);
 
 /*	cout << "Engine information" << endl;
@@ -228,40 +226,6 @@ void PortabilityTest::onCreate()
 	*/
 	PRINTLOG("Renderer", "Renderer: %s\n", getRenderer()->getName().c_str());
 
-	shadowMapPass.loadShader(Shader::VertexUnit, shadowPassV);
-	shadowMapPass.loadShader(Shader::FragmentUnit, shadowPassF);
-	shadowMapPass.addAttributeLocation(0, "vertex");
-	shadowMapPass.create();
-
-	ambientPass.loadShader(Shader::VertexUnit, ambientPassV);
-	ambientPass.loadShader(Shader::FragmentUnit, ambientPassF);
-	ambientPass.addAttributeLocation(0, "vertex");
-	ambientPass.create();
-
-	directionalPass.loadShader(Shader::VertexUnit, directionalPassV);
-	directionalPass.loadShader(Shader::FragmentUnit, directionalPassF);
-	directionalPass.addAttributeLocation(0, "vertex");
-	directionalPass.addAttributeLocation(1, "normal");
-	directionalPass.create();
-
-
-	pointPass.loadShader(Shader::VertexUnit, pointPassV);
-	pointPass.loadShader(Shader::FragmentUnit, pointPassF);
-	pointPass.addAttributeLocation(0, "vertex");
-	pointPass.addAttributeLocation(1, "normal");
-	pointPass.create();
-
-	spotLightPass.loadShader(Shader::VertexUnit, spotlightPassV);
-	spotLightPass.loadShader(Shader::FragmentUnit, spotlightPassF);
-	spotLightPass.addAttributeLocation(0, "vertex");
-	spotLightPass.addAttributeLocation(1, "normal");
-	spotLightPass.create();
-
-	depthRender.loadShader(Shader::VertexUnit, depthPassV);
-	depthRender.loadShader(Shader::FragmentUnit, depthPassF);
-	depthRender.addAttributeLocation(0, "vertex");
-	depthRender.addAttributeLocation(2, "uv");
-	depthRender.create();
 
 
 

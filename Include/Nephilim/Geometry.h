@@ -47,6 +47,7 @@ public:
 	/// Generates the geometry of a torus knot
 	void addTorusKnot(int p, int q);
 	void addTorus(int p, int q);
+	void addCylinder();
 
 	/// Operator overload for adding torus knots
 	GeometryData& operator<<(const TorusKnotDef& torus);

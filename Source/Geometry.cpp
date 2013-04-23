@@ -1,6 +1,9 @@
 #include <Nephilim/Geometry.h>
 #include <Nephilim/MMath.h>
 
+#include <iostream>
+using namespace std;
+
 NEPHILIM_NS_BEGIN
 
 void GeometryData::addBox(float width, float height, float depth)
@@ -47,6 +50,18 @@ void GeometryData::generateNormals()
 	}
 }
 
+
+void GeometryData::addCylinder()
+{
+	float r = 1;
+	float h = 5;
+
+	int hg_segments = 5;
+	int rd_segments = 10;
+
+
+}
+
 /// Generates the geometry of a torus knot
 void GeometryData::addTorusKnot(int p, int q)
 {
@@ -62,31 +77,35 @@ void GeometryData::addTorusKnot(int p, int q)
 /// Generates the geometry of a torus knot
 void GeometryData::addTorus(int p, int q)
 {
-	int segments = 30;
+	
 	float extrusionWidth = 2.f;
-
-	for(float theta = 0.f + Math::pi*2 / segments; theta < Math::pi*2; theta += Math::pi*2 / segments)
+	int i_segments = 40;
+	for(int i = 0; i < i_segments; ++i)
 	{
-		float ptheta = theta - Math::pi*2 / segments;
-		Vec3f point(cos(theta) * p, sin(theta) * p, 0);
-		Vec3f point2(cos(ptheta) * p, sin(ptheta) * p, 0);
-		m_vertices.push_back(point2);
+		float theta = i * Math::pi*2 / i_segments;
+		float ptheta = theta - Math::pi*2 / i_segments;
 
-		// make a face now
-		int segs = 40;
-		for(float theta2 = 0.f + Math::pi*2 / segs; theta2 < Math::pi*2; theta2 += Math::pi*2 / segs)
+		int k_segments = 4;
+		for(int k = 0; k < k_segments; ++k)
 		{
-			float ptheta2 = theta2 - Math::pi*2 / segs;
-			Vec3f v = Vec3f(cos(theta2), sin(theta2), 0);
-			m_vertices.push_back(point2 + v.length());
+			float theta2 = k * Math::pi*2 / k_segments;
+			float ptheta2 = theta2 - Math::pi*2 / k_segments;
 
-			/*m_vertices.push_back(Vec3f(point.x + cos(ptheta2), point.y + sin(ptheta2), 0));
-			m_vertices.push_back(Vec3f(point2.x + cos(theta2), point2.y + sin(theta2), 0));
-			m_vertices.push_back(Vec3f(point.x + cos(theta2), point.y + sin(theta2), 0));*/
+			// The 4 points of the quad
+			Vec3f p1, p2, p3, p4;
+			p1 = Vec3f(cos(theta) * (p + cos(theta2)), sin(theta) * (p + cos(theta2)), sin(theta2));
+			p2 = Vec3f(cos(ptheta) * (p + cos(theta2)), sin(ptheta) * (p + cos(theta2)), sin(theta2));
+			p3 = Vec3f(cos(theta) * (p + cos(ptheta2)), sin(theta) * (p + cos(ptheta2)), sin(ptheta2));
+			p4 = Vec3f(cos(ptheta) * (p + cos(ptheta2)), sin(ptheta) * (p + cos(ptheta2)), sin(ptheta2));
 
-		/*	m_vertices.push_back(Vec3f(point2.x + cos(theta2), point2.y + sin(theta2), 0));
-			m_vertices.push_back(Vec3f(point.x + cos(theta2), point.y + sin(theta2), 0));
-			m_vertices.push_back(Vec3f(point.x + cos(ptheta2), point.y + sin(ptheta2), 0));*/
+			
+			m_vertices.push_back(p1);
+			m_vertices.push_back(p2);
+			m_vertices.push_back(p3);
+
+			m_vertices.push_back(p3);
+			m_vertices.push_back(p2);
+			m_vertices.push_back(p4);
 		}
 	}
 }
