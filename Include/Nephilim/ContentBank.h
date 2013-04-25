@@ -6,7 +6,7 @@
 #include "ContentList.h"
 #include "ContentLoader.h"
 #include "Texture.h"
-#include "ScopedFile.h"
+#include "File.h"
 #include <map>
 
 NEPHILIM_NS_BEGIN
@@ -55,7 +55,7 @@ public:
 	ContentBank();
 
 	/// Attempts to open a raw file
-	ScopedFile* openRawFile(const String& path, const String& openMode);
+	File* openRawFile(const String& path, const String& openMode);
 
 	/// Loads a resource by inferring its extension
 	bool load(const String& path);

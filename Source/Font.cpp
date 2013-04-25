@@ -81,7 +81,7 @@ bool Font::loadFromFile(const std::string& filename)
 
 #ifdef PARABOLA_ANDROID
 	// Ugly android loading hack
-	ScopedFile* file = new ScopedFile();
+	File* file = new File();
 	if(FileInterface::getAssetFile(file, filename))
 	{
 		char* buffer = new char[file->getSize()];

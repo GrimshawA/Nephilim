@@ -12,10 +12,21 @@ public:
 	/// Draw a vertex array
 	virtual void draw(const VertexArray& varray);
 
+	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+	virtual void setDefaultShader();
+
+	/// Activates the shader for the next drawing calls
+	virtual void setShader(Shader& shader);
+
 protected:
+	/// Construct the renderer
 	RendererOpenGL();
-	
 	friend class Surface;
+
+private:
+	Shader m_defaultShader;
+
+
 public:
 	/// Clear the bound buffer
 	virtual void clear();
@@ -36,7 +47,9 @@ virtual void enableClipping(FloatRect rect);
 	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color);
 	//virtual void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	virtual void drawVertexArray(VertexArray &vertexArray);
-	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
+	void drawDebugLine(Vec2f begin, Vec2f end, Color color);	virtual void setProjectionMatrix(const mat4& projection);
+	virtual void setViewMatrix(const mat4& view);
+	virtual void setModelMatrix(const mat4& model);
 };
 
 NEPHILIM_NS_END

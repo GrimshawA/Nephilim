@@ -116,7 +116,7 @@ void NStateCustom::onAttach()
 	m_scriptEngine->exportGraphics();
 	m_scriptEngine->exportEvents();
 	//m_scriptEngine->exportFiles();	
-	registerScopedFile(m_scriptEngine);
+
 	registerContentBank(m_scriptEngine);
 //	registerView(m_scriptEngine);
 	m_scriptEngine->exportMath();

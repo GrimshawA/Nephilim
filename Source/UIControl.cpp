@@ -349,6 +349,7 @@ void UIControl::setRect(FloatRect rect)
 {
 	setPosition(rect.left, rect.top);
 	setSize(rect.width, rect.height);
+	m_transform = mat4::translate(rect.left, rect.top, 0.f);
 };
 
 FloatRect UIControl::getRect()
@@ -536,17 +537,17 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 {
 	if(!m_visible)return; // no drawing or propagation - ghost
 
-	renderer->setModelMatrix(m_transform * transform);
+	renderer->setModelMatrix(transform * m_transform);
 
 	/// Draw the background color and borders - TODO: no debug draw
-	renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
+	renderer->drawDebugQuad(m_bounds.width/2, m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
 
 	if(m_drawBorder)
 	{
-		renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
-		renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);
-		renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), m_leftBorderColor);
-		renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
+		//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
+		//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);
+		//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), m_leftBorderColor);
+		//renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
 
 	}
 
@@ -558,7 +559,7 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 
 	// Let children render as well
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->innerDraw(renderer);
+		(*it)->innerDraw(renderer, transform * m_transform);
 	}
 
 	if(m_clipChildren)renderer->disableClipping();

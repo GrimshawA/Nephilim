@@ -1,5 +1,5 @@
 #include <Nephilim/Image.h>
-#include <Nephilim/ScopedFile.h>
+#include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 
 #include <string.h>
@@ -27,17 +27,17 @@ namespace
 	// stb_image callbacks that operate on a sf::InputStream
 	int read(void* user, char* data, int size)
 	{
-		pE::ScopedFile* stream = static_cast<pE::ScopedFile*>(user);
+		pE::File* stream = static_cast<pE::File*>(user);
 		return static_cast<int>(stream->read(data, size));
 	}
 	void skip(void* user, unsigned int size)
 	{
-		pE::ScopedFile* stream = static_cast<pE::ScopedFile*>(user);
+		pE::File* stream = static_cast<pE::File*>(user);
 		stream->seek(stream->tell() + size);
 	}
 	int eof(void* user)
 	{
-		pE::ScopedFile* stream = static_cast<pE::ScopedFile*>(user);
+		pE::File* stream = static_cast<pE::File*>(user);
 		return stream->tell() >= stream->getSize();
 	}
 }
@@ -141,7 +141,7 @@ bool Image::loadFromFile(const String &path){
 	return true;
 }
 
-bool Image::loadFromStream(ScopedFile* stream){
+bool Image::loadFromStream(File* stream){
 
 	TESTLOG("Now loading a texture...");
 		// Clear the array (just in case)

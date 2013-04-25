@@ -52,7 +52,7 @@ public:
 	bool loadShader(ShaderTypes type, const char* source);
 
 	/// Binds the shader to the GPU
-	void bind();
+	void bind() const;
 
 	/// Returns whether or not shaders can be used at the moment
 	/// The result of this function depends primarily on the machine you're running the program on

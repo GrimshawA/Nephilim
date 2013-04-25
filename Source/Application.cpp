@@ -1,6 +1,6 @@
 #include <Nephilim/Application.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/ScopedFile.h>
+#include <Nephilim/File.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -42,7 +42,7 @@ bool Application::running(){
 };
 
 
-ScopedFile* Application::getAssetFile(String &path){
+File* Application::getAssetFile(String &path){
 	/*
 #ifdef PARABOLA_ANDROID	 
 	 

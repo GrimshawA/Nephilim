@@ -1,5 +1,5 @@
 #include "Nephilim/ASEngine.h"
-#include "Nephilim/ScopedFile.h"
+#include "Nephilim/File.h"
 #include "Nephilim/GameCore.h"
 #include "Nephilim/Engine.h"
 #include "Nephilim/SoundPlayer.h"
@@ -55,8 +55,7 @@ ASEngine::ASEngine(){
 
 	asEngine->SetMessageCallback(asFUNCTION(ASMessageCallback), 0, asCALL_CDECL);
 	asEngine->SetEngineProperty(asEP_INIT_GLOBAL_VARS_AFTER_BUILD, false);
-	asEngine->SetEngineProperty(asEP_ALLOW_UNSAFE_REFERENCES, false);
-	//asEngine->SetEngineProperty(asEP_AUTO_GARBAGE_COLLECT, false);
+
 
 	if(!getPortableMode())
 	{
@@ -161,7 +160,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 	else{
 #ifdef PARABOLA_ANDROID
 
-		ScopedFile* fp = new ScopedFile();
+		File* fp = new File();
 		FileInterface::getAssetFile(fp, String(name), true);
 		if(fp && fp->canRead()){
 			fp->seek(0, SEEK_END);

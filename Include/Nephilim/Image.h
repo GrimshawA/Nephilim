@@ -10,7 +10,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class ScopedFile;
+class File;
 /**
 	\ingroup Graphics
 	\class Image
@@ -39,7 +39,7 @@ public:
 
 	bool loadFromFile(const String &path);
 
-	bool loadFromStream(ScopedFile* stream);
+	bool loadFromStream(File* stream);
 	void setPixel(unsigned int x, unsigned int y, const Color& color);
 	Vec2i getSize() const;
 

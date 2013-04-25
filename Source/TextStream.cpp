@@ -17,7 +17,9 @@ TextStream::TextStream() : m_device(NULL){
 };
 
 /// Creates a text stream associated with an IODevice
-TextStream::TextStream(IODevice *device) : m_device(device){
+TextStream::TextStream(IODevice& device)
+: m_device(&device)
+{
 
 };
 

@@ -4,7 +4,7 @@
 #include "SampleBasic.h"
 //#include <Nephilim/ScriptedGameCore.h>
 
-PortabilityTest test;
+SampleUI test;
 //ScriptedGameCore a;
 
 void init()

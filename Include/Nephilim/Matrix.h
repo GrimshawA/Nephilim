@@ -24,6 +24,8 @@ public:
 			float a20, float a21, float a22, float a23,
 			float a30, float a31, float a32, float a33);
 
+	mat4(const float* elements);
+
 	/// Invert the matrix
 	void invert();
 
@@ -31,7 +33,7 @@ public:
 	mat4 getInverse();
 
 	/// Get the matrix array ptr
-	const float* get();
+	const float* get() const;
 
 	
 
@@ -51,7 +53,7 @@ public:
 	vec4 operator*(const vec4& v);
 
 	/// Multiply two 4x4 matrices
-	mat4 operator*(const mat4& m);
+	mat4 operator*(const mat4& m) const;
 
 	/// Multiply by a scalar
 	mat4 operator*(float scalar);

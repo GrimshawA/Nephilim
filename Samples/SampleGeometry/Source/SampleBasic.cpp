@@ -160,7 +160,7 @@ void drawUi(Renderer* renderer)
 	ui.draw(renderer);
 }
 
-void PortabilityTest::onCreate()
+void SampleUI::onCreate()
 {	
 	tests();
 
@@ -268,7 +268,7 @@ void PortabilityTest::onCreate()
 	// Generate the shadow map
 }
 
-void PortabilityTest::onEvent(Event &event)
+void SampleUI::onEvent(Event &event)
 {
     if(event.type == Event::MouseButtonPressed)
     {
@@ -341,7 +341,7 @@ void PortabilityTest::onEvent(Event &event)
 }
 
 
-void PortabilityTest::onUpdate(Time time)
+void SampleUI::onUpdate(Time time)
 { 
 	// follow
 	Vec3f dir = cameraEye - pointLights[1].position.xyz();
@@ -546,7 +546,7 @@ void regenerateShadowMap(Renderer* renderer)
 }
 
 
-void PortabilityTest::onRender()
+void SampleUI::onRender()
 {
 	//glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);

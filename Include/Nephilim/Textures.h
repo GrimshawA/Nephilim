@@ -5,7 +5,7 @@
 #include "Vectors.h"
 #include "Strings.h"
 #include "Color.h"
-#include "ScopedFile.h"
+#include "File.h"
 #include <vector>
 
 
@@ -18,7 +18,7 @@ PARABOLA_NAMESPACE_BEGIN
 
 void reloadTextures();
 
-class ScopedFile;
+class File;
 
 /**
 	\ingroup Graphics
@@ -29,7 +29,7 @@ class Image{
 public:
 	bool loadFromFile(const String &path);
 
-	bool loadFromStream(ScopedFile* stream);
+	bool loadFromStream(File* stream);
 	void setPixel(unsigned int x, unsigned int y, const Color& color);
 	Vec2i getSize() const;
 

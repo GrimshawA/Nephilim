@@ -143,7 +143,7 @@ void ScriptedGameCore::onCreate(){
 	m_scripting.exportGraphics();
 	m_scripting.exportEvents();
 	//m_scripting.exportFiles();
-	registerScopedFile(&m_scripting);
+
 	m_scripting.exportMath();
 	registerContentBank(&m_scripting);
 	registerStateStack(&m_scripting);

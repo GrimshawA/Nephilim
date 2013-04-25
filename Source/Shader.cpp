@@ -84,7 +84,7 @@ bool Shader::loadShader(ShaderTypes type, const char* source)
 }
 
 /// Binds the shader to the GPU
-void Shader::bind()
+void Shader::bind() const
 {
 	glUseProgram(static_cast<GLuint>(m_id));
 }

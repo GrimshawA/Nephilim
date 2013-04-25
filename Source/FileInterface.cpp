@@ -1,6 +1,6 @@
 #include "Nephilim/FileInterface.h"
 #include "Nephilim/Application.h"
-#include "Nephilim/ScopedFile.h"
+#include "Nephilim/File.h"
 #include "Nephilim/Logger.h"
 
 #include <iostream>
@@ -23,7 +23,7 @@ sigc::signal<void, const String &> FileInterface::onFileRequest;
 /// By default ReadOnly is passed as the open mode but please notice that in some cases only that flag is allowed
 /// For example, when loading an asset packaged in an Android APK
 /// Please ensure you delete the handle when you are done
-bool FileInterface::getAssetFile(ScopedFile* file, const String &path, bool binaryMode){
+bool FileInterface::getAssetFile(File* file, const String &path, bool binaryMode){
 	if(!file)return false;
 
 	TESTLOG("Calling onFileRequest")
@@ -61,8 +61,8 @@ bool FileInterface::getAssetFile(ScopedFile* file, const String &path, bool bina
 bool FileInterface::copy(const String &sourceFile, const String &destinationFile){
 	//cout<<"Copying: " <<sourceFile<<"\nTo: "<<destinationFile<<endl;
 
-	ScopedFile in(sourceFile, IODevice::BinaryRead);
-	ScopedFile out(destinationFile, IODevice::BinaryWrite);
+	File in(sourceFile, IODevice::BinaryRead);
+	File out(destinationFile, IODevice::BinaryWrite);
 	if(!in.isReady() || !out.isReady() )return false;
 	 
 	const unsigned int buffer_size = sizeof(char)*1024*5;

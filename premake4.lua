@@ -1,25 +1,35 @@
--- Hollow Engine Premake Script
-
+-- Nephilim Engine Premake Script
 local libname = "nephilim"
 local enginename = "NephilimEngine"
 local action = _ACTION or ""
-local version = "\"0.8.3\""
-local samplelist = { "SampleBasic" }
+local version = "0.8.3"
+local samplelist = { "SampleBasic" , "SampleAnimation", "SampleCameras", "SampleFileSystem", "SampleGeometry", "SampleKinesisPhysics", "SampleLighting", "SampleRenderTexture", "SampleScripting", "SampleShaders", "SampleSprites", "SampleUI" }
 	
 newoption {
    trigger     = "no-samples",
-   description = "Makes project files for the samples"
+   description = "Don't generate sample projects."
 }
 
 newoption {
 	trigger		= "android",
-	description = "Applicable for visual studio solutions. You need vs-android plugin."
+	description = "Configures for an android compilation under vs-android."
 }
 
 newoption {
 	trigger		= "outdir",
 	value		= "path",
 	description = "Changes the output directory of the project files"
+}
+
+newoption {
+	trigger = "lib",
+	value = "path",
+	description = "Link to libraries in the path"
+}
+
+newoption {
+	trigger	= "gles2",
+	description = "Prefer GLES 2.0 where applicable"
 }
 
 local builddir = action
@@ -102,7 +112,8 @@ solution (enginename)
 				defines { "DEBUG" }
 				flags { "Symbols" }
 				
-				if os.isdir("LibExt") then 
+				if os.isdir("LibExt") then
+					libdirs { "LibExt/" .. builddir }			
 					links("sfml-system-s-d")
 					links("sfml-audio-s-d")
 					links("sfml-window-s-d")
@@ -139,11 +150,7 @@ solution (enginename)
 			includedirs { "Include" , "IncludeExt"}
 			links (enginename)
 			targetdir  "Bin" 
-			
-			if os.isdir("LibExt") then 
-				print("Found LibExt directory. Will attempt automatic linking to pre-compiled libraries")
-				libdirs { "LibExt/" .. builddir }
-			end
+
 		
 			if os.get() == "windows" and not table.contains(_ARGS, "--android") then
 				links("opengl32")
@@ -163,6 +170,7 @@ solution (enginename)
 				flags { "Symbols" }
 				
 				if os.isdir("LibExt") then 
+					libdirs { "LibExt/" .. builddir }
 					links("sfml-system-s-d")
 					links("sfml-window-s-d")
 					links("sfml-graphics-s-d")
@@ -170,7 +178,15 @@ solution (enginename)
 					links("libsigcpp-d")
 				end
 				
-			configuration "Release"			
+				-- Debug Android
+				if table.contains(_ARGS, "--android") then		
+					if table.contains(_ARGS, "--gles2") then linkoptions ( "-lGLESv2" ) else linkoptions ( "-lGLESv1_CM" ) end
+					if _OPTIONS["lib"] then libdirs (_OPTIONS["lib"])
+						linkoptions { "-lsigc++-d" }
+					end	
+				end
+				
+			configuration "Release"
 				flags { "Optimize" }
 				
 				if os.isdir("LibExt") then 

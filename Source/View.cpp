@@ -54,6 +54,13 @@ View::View() : m_transformUpdated(false), m_invTransformUpdated(false), m_rotati
 
 }
 
+View::View(float left, float top, float width, float height)
+: m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f) , RefCountable()
+{
+	setRect(left, top, width, height);
+}
+
+
 /// Get the view center
 Vec2f View::getCenter(){
 	return Vec2f(m_rect.left + m_rect.width/2, m_rect.top + m_rect.height/2);

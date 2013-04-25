@@ -1,5 +1,5 @@
 #include <Nephilim/Package.h>
-#include <Nephilim/ScopedFile.h>
+#include <Nephilim/File.h>
 #include <Nephilim/DataStream.h>
 
 #include <iostream>
@@ -23,7 +23,7 @@ Package::Package(const String& source)
 /// Attempts to extract the package contents to a directory
 bool Package::extract(const String& directory)
 {
-	ScopedFile file(m_file, IODevice::BinaryRead);
+	File file(m_file, IODevice::BinaryRead);
 	if(file.isReady())
 	{
 		DataStream in(file);
@@ -37,11 +37,11 @@ bool Package::extract(const String& directory)
 
 		for(size_t i = 0; i < m_header.m_files.size(); i++)
 		{
-			ScopedFile srcFile(file.getHandle(), m_header.m_files[i].m_offset, m_header.m_files[i].m_length);
-			ScopedFile dstFile(directory + "/" + m_header.m_files[i].m_name, IODevice::BinaryWrite);
+			File srcFile(file.getHandle(), m_header.m_files[i].m_offset, m_header.m_files[i].m_length);
+			File dstFile(directory + "/" + m_header.m_files[i].m_name, IODevice::BinaryWrite);
 			cout << "Extracting("<< m_header.m_files[i].m_length  << "): " << directory + "/" + m_header.m_files[i].m_name << endl;
 			if(srcFile.isReady() && dstFile.isReady())
-				File::copy(srcFile, dstFile);
+				FileOps::copy(srcFile, dstFile);
 		}
 	}
 
@@ -56,7 +56,7 @@ void PackageBuilder::addFile(const String& source, const String& destination)
 	m_files.push_back(std::make_pair(source, destination));
 
 	Package::pFile file;
-	file.m_length = File::size(source);
+	file.m_length = FileOps::size(source);
 	file.m_name = destination;
 	m_header.m_files.push_back(file);
 }
@@ -66,7 +66,7 @@ bool PackageBuilder::build()
 {
 	bool success = false;
 
-	ScopedFile file("package.pkg", IODevice::BinaryWrite);
+	File file("package.pkg", IODevice::BinaryWrite);
 	if(file.isReady())
 	{
 		Int64 headerSize = sizeof(Int64);
@@ -96,11 +96,11 @@ bool PackageBuilder::build()
 			String source = it->first;
 			String dest   = it->second;
 
-			ScopedFile in(source, IODevice::BinaryRead);
+			File in(source, IODevice::BinaryRead);
 			if(in.isReady())
 			{
 				/// Writes in contents to out
-				File::copy(in, file);
+				FileOps::copy(in, file);
 			}
 		}
 

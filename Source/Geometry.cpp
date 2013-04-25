@@ -57,8 +57,45 @@ void GeometryData::addCylinder()
 	float h = 5;
 
 	int hg_segments = 5;
-	int rd_segments = 10;
+	int rd_segments = 100;
+	float rd_increment = Math::pi*2 / rd_segments;
 
+	for(int hg = 0; hg < hg_segments; ++hg)
+	{
+		float height = (-h/2) + (hg+1) * h / hg_segments;
+		float pheight = height - h / hg_segments;
+
+		for(int rd = 0; rd < rd_segments; ++rd)
+		{
+			float theta2 = rd_increment * rd;
+			float ptheta2 = theta2 - rd_increment;
+
+			// The 4 points of the quad
+			Vec3f p1, p2, p3, p4;
+			p1 = Vec3f(cos(theta2) , height, sin(theta2));
+			p2 = Vec3f(cos(theta2) , pheight, sin(theta2));
+			p3 = Vec3f(cos(ptheta2), height, sin(ptheta2));
+			p4 = Vec3f(cos(ptheta2), pheight, sin(ptheta2));
+
+			m_vertices.push_back(p1);
+			m_vertices.push_back(p2);
+			m_vertices.push_back(p3);
+
+			m_vertices.push_back(p3);
+			m_vertices.push_back(p2);
+			m_vertices.push_back(p4);
+		}
+	}
+
+	// top and bottom
+	for(int rd = 0; rd < rd_segments; ++rd)
+	{
+		float theta2 = rd_increment * rd;
+		float ptheta2 = theta2 - rd_increment;
+
+
+		
+	}
 
 }
 

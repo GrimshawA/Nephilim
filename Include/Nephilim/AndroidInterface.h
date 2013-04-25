@@ -2,7 +2,7 @@
 #define PARABOLA_ANDROIDINTERFACE_H
 
 #include "Platform.h"
-#include "ScopedFile.h"
+#include "File.h"
 #include "StringList.h"
 
 #ifdef NEPHILIM_ANDROID
@@ -22,6 +22,14 @@ NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////////////////////////
 class NEPHILIM_API AndroidInterface{
 public:
+	struct AssetFile
+	{
+		int fd;
+		Int64 offset;
+		Int64 length;
+		bool success;
+	};
+
 	/// Fetch an asset file in the android file system
 	/// Returns true or false wether it could find the file and access it
 	/// The ScopedFile must be a pointer to a valid instance, and it will be overriden by the asset found
@@ -30,7 +38,10 @@ public:
 	/// The asset suffix will be applied to the path automatically if needed. Change it using setAssetSuffix()
 	/// An absolute directory is recognized by the first character being a slash (  /  )
 	/// binaryMode is meant to specify if you want to read in binary or text mode ( "rb" and "r" modes )
-	static bool getAssetFile(ScopedFile* file, const String &path, bool binaryMode = true);
+	static bool getAssetFile(File* file, const String &path, bool binaryMode = true);
+
+	/// Searches for an asset and returns information about it
+	static AssetFile getAsset(const String& filename);
 
 	/// Get a listing of files/directories within the APK assets, empty path will mean the root directory of assets
 	static StringList getAssetList(const String &path);

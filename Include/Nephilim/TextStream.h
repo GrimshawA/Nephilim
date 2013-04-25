@@ -22,7 +22,7 @@ public:
 	TextStream();
 
 	/// Creates a text stream associated with an IODevice
-	TextStream(IODevice *device);
+	TextStream(IODevice& device);
 
 	/// Destroys the handle to the file, if exists.
 	/// Guarantees the release of the object when going out of scope.

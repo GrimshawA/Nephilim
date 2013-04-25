@@ -43,9 +43,9 @@ ContentBank::ContentBank() : myLoader(this){
 };
 
 /// Attempts to open a raw file // BAD DESIGN
-ScopedFile* ContentBank::openRawFile(const String& path, const String& openMode)
+File* ContentBank::openRawFile(const String& path, const String& openMode)
 {
-	ScopedFile* file = new ScopedFile(m_rootPath + path, IODevice::TextRead);
+	File* file = new File(m_rootPath + path, IODevice::TextRead);
 	return file;
 };
 

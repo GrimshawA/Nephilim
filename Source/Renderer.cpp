@@ -27,11 +27,6 @@ Renderer::Type Renderer::getType()
 	return m_type;
 }
 
-void Renderer::resetShaders()
-{
-	if(m_shader) m_shader->bind();
-}
-
 /// Effectively regains control of what texture are bound to all texture units, according to the renderer's data
 void Renderer::resetTextures()
 {
@@ -44,10 +39,15 @@ String Renderer::getName()
 	return m_name;
 }
 
-/// Effectively binds the "null" shader, which means no shader. Where applicable, this means a fixed-function pipeline.
-void Renderer::disableShaders()
+void Renderer::setDefaultShader()
 {
-	m_allowShaders = false;
+
+}
+
+/// Activates the shader for the next drawing calls
+void Renderer::setShader(Shader& shader)
+{
+
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
@@ -56,6 +56,8 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 	Transform vtransform;
 	vtransform.rotate(angle);
 	vtransform.translate(x,y);
+
+	mat4 translation = mat4::translate(x,y,0);
 
 	VertexArray varray(Render::Primitive::Triangles, 6);
 	varray[0].position = Vec2f(width/2,-height/2);
@@ -72,7 +74,12 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 	varray[4].color = color;
 	varray[5].color = color;
 
-	modelMatrix = const_cast<float*>(vtransform.getMatrix());
+	for(int i = 0; i < 6; i++)
+	{
+		varray[i].position = vec4(translation * vec4(varray[i].position.x, varray[i].position.y, 0.f, 1.f)).xy();
+	}
+
+	//modelMatrix = const_cast<float*>(vtransform.getMatrix());
 	draw(varray);
 }
 

@@ -1,11 +1,12 @@
-#ifndef PARABOLA_UIVIEW_H
-#define PARABOLA_UIVIEW_H
+#ifndef UIControl_h__
+#define UIControl_h__
 
 #include "Platform.h"
 #include "Rect.h"
 #include "Event.h"
 #include "Signals.h"
 #include "Strings.h"
+#include "RectangleShape.h"
 #include "Renderer.h"
 #include "ReferenceCountable.h"
 #include <vector>
@@ -213,6 +214,9 @@ protected: // functions
 protected:
 	/// The bounds of the control, if scissor tests are enabled, nothing is drawn outside this rect
 	Rect<float> m_bounds;
+	RectangleShape m_background;
+
+
 	Vec2f m_minimumDimensions;
 	Vec2f m_maximumDimensions;
 
@@ -277,4 +281,4 @@ class ASEngine;
 bool registerUIControlSubtype(const String& name, ASEngine* engine);
 
 NEPHILIM_NS_END
-#endif
+#endif // UIControl_h__

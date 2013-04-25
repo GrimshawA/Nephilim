@@ -61,23 +61,24 @@ public:
 	/// Draw a debug circle with the given color and radius - slow
 	void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 
-	/// Effectively binds the "null" shader, which means no shader. Where applicable, this means a fixed-function pipeline.
-	void disableShaders();
+	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+	virtual void setDefaultShader();
 
-	/// This will re-activate the pseudo-active shader of the renderer
-	/// Useful when shaders are binded manually without using the renderer
-	void resetShaders();
+	/// Activates the shader for the next drawing calls
+	virtual void setShader(Shader& shader);
 
 	/// Effectively regains control of what texture are bound to all texture units, according to the renderer's data
 	void resetTextures();
 
-	void setProjectionMatrix(const mat4& projection);
-	void setViewMatrix(const mat4& view);
-	void setModelMatrix(const mat4& model);
+	virtual void setProjectionMatrix(const mat4& projection);
+	virtual void setViewMatrix(const mat4& view);
+	virtual void setModelMatrix(const mat4& model);
 
 	mat4 m_projection;
 	mat4 m_view;
 	mat4 m_model;
+
+	Shader* m_activeShader;
 
 protected:
 	Type   m_type; ///< The type of this renderer

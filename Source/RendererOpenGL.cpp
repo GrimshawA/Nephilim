@@ -53,14 +53,13 @@ RendererOpenGL::RendererOpenGL()
 	m_type = OpenGL;
 	m_name = "OpenGL";
 
-	m_shader = new Shader();
-	m_shader->loadShader(Shader::VertexUnit, gVertexSource);
-	m_shader->loadShader(Shader::FragmentUnit, gFragmentSource);
-	m_shader->addAttributeLocation(0, "vertex");
-	m_shader->addAttributeLocation(1, "color");
-	m_shader->addAttributeLocation(2, "texCoord");
-	m_shader->create();
-	m_shader->bind();
+	m_defaultShader.loadShader(Shader::VertexUnit, gVertexSource);
+	m_defaultShader.loadShader(Shader::FragmentUnit, gFragmentSource);
+	m_defaultShader.addAttributeLocation(0, "vertex");
+	m_defaultShader.addAttributeLocation(1, "color");
+	m_defaultShader.addAttributeLocation(2, "texCoord");
+	m_defaultShader.create();
+	m_defaultShader.bind();
 };
 
 /// Draw a vertex array
@@ -68,7 +67,7 @@ void RendererOpenGL::draw(const VertexArray& varray)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
-	if(m_allowShaders && m_shader)
+	if(m_activeShader)
 	{
 		enableVertexAttribArray(0);
 		enableVertexAttribArray(1);
@@ -77,15 +76,17 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
 		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
 
-		if(varray.m_textured) m_shader->setUniformi("textured", 1);
-		else m_shader->setUniformi("textured", 0);
+		if(varray.m_textured) m_activeShader->setUniformi("textured", 1);
+		else m_activeShader->setUniformi("textured", 0);
 
 		//model
-		if(modelMatrix)
+		/*if(modelMatrix)
 		{
-			bool r = m_shader->setUniformMatrix("model", modelMatrix);
+			bool r = m_activeShader->setUniformMatrix("model", modelMatrix);
 			if(!r) cout<<"Not able to set the matrix"<<endl;
-		}
+		}*/
+
+		//m_activeShader->setUniformMatrix("model", m_model.get());
 
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 		disableVertexAttribArray(0);
@@ -93,11 +94,11 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		disableVertexAttribArray(2);
 
 		//model
-		if(modelMatrix)
+		/*if(modelMatrix)
 		{
-			bool r = m_shader->setUniformMatrix("model", mat4().get());
+			bool r = m_activeShader->setUniformMatrix("model", mat4().get());
 			modelMatrix = NULL;
-		}
+		}*/
 	}
 	else
 	{
@@ -122,6 +123,38 @@ void RendererOpenGL::draw(const VertexArray& varray)
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
+}
+
+/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+void RendererOpenGL::setDefaultShader()
+{
+	m_activeShader = &m_defaultShader;
+	m_defaultShader.bind();
+}
+
+/// Activates the shader for the next drawing calls
+void RendererOpenGL::setShader(Shader& shader)
+{
+	m_activeShader = &shader;
+	shader.bind();
+}
+
+void RendererOpenGL::setProjectionMatrix(const mat4& projection)
+{
+	Renderer::setProjectionMatrix(projection);
+	if(m_activeShader) m_activeShader->setUniformMatrix("projection", projection.get());
+}
+
+void RendererOpenGL::setViewMatrix(const mat4& view)
+{
+	Renderer::setViewMatrix(view);
+	if(m_activeShader) m_activeShader->setUniformMatrix("view", view.get());
+}
+
+void RendererOpenGL::setModelMatrix(const mat4& model)
+{
+	Renderer::setModelMatrix(model);
+	if(m_activeShader) m_activeShader->setUniformMatrix("model", model.get());
 }
 
 void RendererOpenGL::applyView(const View &view){

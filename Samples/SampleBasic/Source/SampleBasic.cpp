@@ -160,7 +160,7 @@ void drawUi(Renderer* renderer)
 	ui.draw(renderer);
 }
 
-void PortabilityTest::onCreate()
+void SampleUI::onCreate()
 {	
 	tests();
 
@@ -268,7 +268,7 @@ void PortabilityTest::onCreate()
 	// Generate the shadow map
 }
 
-void PortabilityTest::onEvent(Event &event)
+void SampleUI::onEvent(Event &event)
 {
     if(event.type == Event::MouseButtonPressed)
     {
@@ -341,7 +341,7 @@ void PortabilityTest::onEvent(Event &event)
 }
 
 
-void PortabilityTest::onUpdate(Time time)
+void SampleUI::onUpdate(Time time)
 { 
 	// follow
 	Vec3f dir = cameraEye - pointLights[1].position.xyz();
@@ -359,6 +359,16 @@ public:
 	{
 		GeometryData torus;
 		torus << TorusDef(2,1);
+		torus.generateNormals();
+		m_vertices = torus.m_vertices;
+		m_normals = torus.m_normals;
+		translation = mat4::translate(position.x, position.y, position.z);
+	}
+
+	void generateCylinder(Vec3f position)
+	{
+		GeometryData torus;
+		torus.addCylinder();
 		torus.generateNormals();
 		m_vertices = torus.m_vertices;
 		m_normals = torus.m_normals;
@@ -555,7 +565,7 @@ void regenerateShadowMap(Renderer* renderer)
 }
 
 
-void PortabilityTest::onRender()
+void SampleUI::onRender()
 {
 	//glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -584,7 +594,8 @@ void PortabilityTest::onRender()
 		base.generateBox(Vec3f(0, -1, 0), Vec3f(50, 2, 50));
 		house.generateBox(Vec3f(0, 1, 0), Vec3f(6, 5, 3));
 		backWall.generateBox(Vec3f(0, -2, -18), Vec3f(15, 10, 2));
-		lamp.generateBox(Vec3f(4, 3, 1), Vec3f(1,6,1));
+		//lamp.generateBox(Vec3f(4, 3, 1), Vec3f(1,6,1));
+		lamp.generateCylinder(Vec3f(1,6,1));
 		//crate.generateBox(Vec3f(0,5,4), Vec3f(1,1,1));
 		crate.generateTorus(Vec3f(0,5,4));
 
@@ -637,12 +648,12 @@ void PortabilityTest::onRender()
 		Mesh pointLightDebug;pointLightDebug.m_color = Vec4f(0.1,0.1,0.1,1);pointLightDebug.generateBox(Vec3f(pointLights[0].position.x,pointLights[0].position.y,pointLights[0].position.z), Vec3f(0.3,0.3, 0.3)); pointLightDebug.draw(getRenderer());
 	}
 
-	glDisable(GL_CULL_FACE);
+	/*glDisable(GL_CULL_FACE);
 	ambientPass.bind();
 	glPointSize(8.f);
 	GeometryData geom;
 	geom.addCylinder();
-	/*getRenderer()->enableVertexAttribArray(0);
+	getRenderer()->enableVertexAttribArray(0);
 	getRenderer()->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &geom.m_vertices[0]);
 	getRenderer()->drawArrays(Render::Primitive::Triangles, 0, geom.m_vertices.size());
 	getRenderer()->disableVertexAttribArray(0);*/

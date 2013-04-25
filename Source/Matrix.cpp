@@ -26,8 +26,13 @@ mat4::mat4(	float a00, float a01, float a02, float a03,
 	m_matrix[3] = a30; m_matrix[7] = a31; m_matrix[11] = a32; m_matrix[15] = a33;
 }
 
+mat4::mat4(const float* elements)
+{
+	for(int i = 0; i < 16; i++) m_matrix[i] = elements[i];
+}
 
-const float* mat4::get()
+
+const float* mat4::get() const
 {
 	return &m_matrix[0];
 }
@@ -61,7 +66,7 @@ vec4 mat4::operator*(const vec4& v)
 }
 
 /// Multiply two 4x4 matrices
-mat4 mat4::operator*(const mat4& m)
+mat4 mat4::operator*(const mat4& m) const
 {
 	return mat4 ( m_matrix[0]*m[0] + m_matrix[4]*m[1] + m_matrix[8]*m[2] + m_matrix[12]*m[3],
 				  m_matrix[0]*m[4] + m_matrix[4]*m[5] + m_matrix[8]*m[6] + m_matrix[12]*m[7],

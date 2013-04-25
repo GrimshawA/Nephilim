@@ -18,7 +18,7 @@ namespace ApplicationSettings{
 	};
 };
 
-class ScopedFile;
+class File;
 
 class NEPHILIM_API Application{
 public:
@@ -45,7 +45,7 @@ public:
 
 	static int getPlatformType();
 
-	ScopedFile* getAssetFile(String &path);
+	File* getAssetFile(String &path);
 
 	StringList getAssetList(String path);
 

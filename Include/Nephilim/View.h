@@ -32,6 +32,8 @@ class NEPHILIM_API View : public RefCountable{
 public:
 		View();
 
+		View(float left, float top, float width, float height);
+
 		/// Set the view center as a position
 		void setCenter(Vec2f position);
 
@@ -85,14 +87,6 @@ private:
 	mutable Vec2f m_center;
 
 };
-	
-/// Typedef of View to Camera2D to suit tastes
-typedef View Camera2D;
-
-/*
-class ASEngine;
-static bool registerView(ASEngine* engine);
-*/
 
 NEPHILIM_NS_END
 

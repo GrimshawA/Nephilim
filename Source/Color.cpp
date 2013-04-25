@@ -24,9 +24,10 @@ Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
 
 
 /// Sums two colors
-Color& Color::operator+(const Color& c)
+Color Color::operator+(const Color& c) const
 {
-	return Color(r + c.r, g + c.g, b + c.b, a + c.a);
+	Color c2(r + c.r, g + c.g, b + c.b, a + c.a);
+	return c2;
 }
 
 /// Return the color in the [0,1] range

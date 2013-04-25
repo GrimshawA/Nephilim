@@ -2,7 +2,9 @@
 #include "Nephilim/Logger.h"
 #ifdef NEPHILIM_ANDROID
 #include "Nephilim/AndroidInterface.h"
-#include "Nephilim/ScopedFile.h"
+#include "Nephilim/File.h"
+
+#include <assert.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -23,11 +25,11 @@ String AndroidInterface::getAssetSuffix(){
 	return m_AssetSuffix;
 };
 
-bool AndroidInterface::getAssetFile(ScopedFile* file, const String &path, bool binaryMode){
+bool AndroidInterface::getAssetFile(File* file, const String &path, bool binaryMode){
 	if(path.empty() || file == NULL)return false; // No path
 
 	JNIEnv* m_JNI;
-	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
+	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
 
 	String realPath = path;
 
@@ -115,6 +117,62 @@ bool AndroidInterface::getAssetFile(ScopedFile* file, const String &path, bool b
 	}	
 
 	return true;
+}
+
+AndroidInterface::AssetFile AndroidInterface::getAsset(const String& filename)
+{
+	AssetFile result;
+	result.success = false;
+
+	assert(m_javaVM != NULL);
+
+	JNIEnv* m_JNI;
+	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
+
+	String realPath = filename + ".png";
+
+	jclass afdclass = m_JNI->FindClass("android/content/res/AssetFileDescriptor");
+	jclass activityclass = m_JNI->FindClass(m_JNIActivityName);
+	if(afdclass != NULL && activityclass != NULL){
+		jmethodID afdgetmethod = m_JNI->GetStaticMethodID(activityclass, "getAssetFileDescriptor", "(Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;");
+		if(afdgetmethod != NULL){
+			jstring pathString = m_JNI->NewStringUTF(realPath.c_str()); //deallocate
+			jobject afd = m_JNI->CallStaticObjectMethod(activityclass, afdgetmethod, pathString);
+			m_JNI->DeleteLocalRef(pathString);
+			if(afd != NULL){   
+				/// Found the asset file descriptor, will be able build the FILE* now
+				jclass fdclass = m_JNI->FindClass("java/io/FileDescriptor");
+				if(fdclass){
+					jmethodID getlenmethod = m_JNI->GetMethodID(afdclass, "getDeclaredLength", "()J");
+					jlong len = m_JNI->CallLongMethod(afd, getlenmethod);
+					long length = len;	
+
+					jmethodID getoffsetmethod = m_JNI->GetMethodID(afdclass, "getStartOffset", "()J");
+					jlong offset_ = m_JNI->CallLongMethod(afd, getoffsetmethod);
+					long offset = offset_;
+
+					jclass afdclass2 = m_JNI->GetObjectClass(afd);
+					jmethodID getfdmethod = m_JNI->GetMethodID(afdclass, "getFileDescriptor", "()Ljava/io/FileDescriptor;");
+					jobject fd = m_JNI->CallObjectMethod(afd, getfdmethod);
+					if(fd){
+						/// I have a file descriptor
+						jclass refc = (jclass)m_JNI->NewGlobalRef(fdclass);
+						jfieldID field = m_JNI->GetFieldID(refc, "descriptor", "I"); 
+						jint fdnn = m_JNI->GetIntField(fd,field);
+
+						int realFd = dup(fdnn);
+
+						result.success = true;
+						result.fd = realFd;
+						result.offset = offset;
+						result.length = length;
+					}
+				}
+			} 	
+		}
+	}
+
+	return result;
 }
 
 /// Get a listing of files/directories within the APK assets, empty path will mean the root directory of assets

@@ -23,7 +23,7 @@ public:
 	vec4 normalized();
 
 	/// Sums two colors
-	Color& operator+(const Color& c);
+	Color operator+(const Color& c) const;
 
 	/// Converts a normalized color to a Color
 	static Color fromNormalized(const vec4& v);

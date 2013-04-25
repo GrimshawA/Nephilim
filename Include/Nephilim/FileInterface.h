@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class ScopedFile;
+class File;
 
 class NEPHILIM_API FileInterface{
 public:
@@ -18,7 +18,7 @@ public:
 	/// By default ReadOnly is passed as the open mode but please notice that in some cases only that flag is allowed
 	/// For example, when loading an asset packaged in an Android APK
 	/// Please ensure you delete the handle when you are done
-	static bool getAssetFile(ScopedFile* file, const String &path, bool binaryMode = true);
+	static bool getAssetFile(File* file, const String &path, bool binaryMode = true);
 
 	/// Copies the contents of sourceFile to destinationFile
 	/// \return true or false whether the operation was successfully made

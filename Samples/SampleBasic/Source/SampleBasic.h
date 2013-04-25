@@ -9,7 +9,7 @@
 #include <Nephilim/Framebuffer.h>
 using namespace pE;
 
-class PortabilityTest : public GameCore
+class SampleUI : public GameCore
 {
 public:
 	void onCreate();

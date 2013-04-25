@@ -437,6 +437,12 @@ Vec3<T> Vec4<T>::xyz()
 }
 
 template<class T>
+Vec2<T> Vec4<T>::xy()
+{
+	return vec2(x,y);
+}
+
+template<class T>
 Vec4<T>& Vec4<T>::operator+=(const Vec4<T> &vec){
 	x += vec.x;
 	y += vec.y;

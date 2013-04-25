@@ -93,7 +93,7 @@ NEPHILIM_NS_BEGIN
 		T y;
 	};
 
-
+	typedef Vec2<float> vec2;
 	typedef Vec2<float> Vec2f;
 	typedef Vec2<int> Vec2i;
 	typedef Vec2<double> Vec2d;
@@ -236,6 +236,9 @@ NEPHILIM_NS_BEGIN
 
 		/// Get the first three components of the vector
 		Vec3<T> xyz();
+
+		/// Get the first two components
+		Vec2<T> xy();
 
 		/// Normalize the vector
 		void normalize();
