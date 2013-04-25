@@ -4,9 +4,6 @@
 
 #include <string.h>
 
-#include "Nephilim/FileInterface.h"
-
-
 #include <iostream>
 using namespace std;
 
@@ -90,27 +87,12 @@ void Image::setPixel(unsigned int x, unsigned int y, const Color& color)
 
 
 bool Image::loadFromFile(const String &path){
-
-	//in android load through a stream
-/*#ifdef PARABOLA_ANDROID
-	ScopedFile* fp = new ScopedFile();
-	if(FileInterface::getAssetFile(fp, path, true)){
-		loadFromStream(fp);
-		delete fp;
-		return true;
-	}
-	delete fp;
-#endif*/
-
-
-
-
 	// Clear the array (just in case)
 	m_pixels.clear();
 
 	// Load the image and get a pointer to the pixels in memory
 	int width, height, channels;
-	unsigned char* ptr = stbi_load(String(FileInterface::m_root + path).c_str(), &width, &height, &channels,STBI_rgb_alpha);
+	unsigned char* ptr = stbi_load(String(path).c_str(), &width, &height, &channels,STBI_rgb_alpha);
 
 	if (ptr && width && height)
 	{

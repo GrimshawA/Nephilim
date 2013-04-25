@@ -1,6 +1,5 @@
 #include <Nephilim/Font.h>
 #include <Nephilim/Image.h>
-#include <Nephilim/FileInterface.h>
 #include <Nephilim/Logger.h>
 
 #include <ft2build.h>

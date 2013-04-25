@@ -4,7 +4,6 @@
 #include "Nephilim/Engine.h"
 #include "Nephilim/SoundPlayer.h"
 #include "Nephilim/Vectors.h"
-#include "Nephilim/FileInterface.h"
 #include "Nephilim/Logger.h"
 
 
@@ -179,8 +178,8 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 
 		delete fp;
 #else
-		FileInterface::onFileRequest.emit(name);
-		r = Builder.AddSectionFromFile(String(FileInterface::m_root + name).c_str());
+//		FileInterface::onFileRequest.emit(name);
+//		r = Builder.AddSectionFromFile(String(FileInterface::m_root + name).c_str());
 		//printf("Adding section from file: %s\n",String(FileInterface::m_root + name).c_str() );
 #endif
 
