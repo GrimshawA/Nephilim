@@ -66,6 +66,7 @@ Renderer* Surface::createRenderer()
 		renderer->setDefaultBlending();
 		renderer->setDefaultTransforms();
 		renderer->setDefaultViewport();
+		renderer->setDefaultDepthTesting();
 	}
 
 	return renderer;

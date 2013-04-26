@@ -113,6 +113,12 @@ public:
 	/// Set the viewport as in glViewport(), but specify coordinates from top-left of the window instead
 	virtual void setViewportInPixels(int left, int top, int width, int height);
 
+	/// Set the default depth test mode: false
+	virtual void setDefaultDepthTesting();
+
+	/// Sets the z-buffer depth testing to enabled or not
+	virtual void setDepthTestEnabled(bool enable);
+
 	/// Activates blending with the default mode: Alpha
 	virtual void setDefaultBlending();
 

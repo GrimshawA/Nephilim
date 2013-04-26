@@ -56,18 +56,21 @@ NEPHILIM_NS_BEGIN
 
 	void KinesisDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{		
-		Vec2f* vlist = new Vec2f[vertexCount];
-		for(int i = 0; i < vertexCount; i++){
-			vlist[i].x = myParent->ToPixels(vertices[i].x);
-			vlist[i].y = myParent->ToPixels(vertices[i].y);
-		}
+		VertexArray vlist(Render::Primitive::TriangleFan, vertexCount);
+
 		Color finalColor;
 		finalColor.r = (color.r * 255) / 1;
 		finalColor.g = (color.g * 255) / 1;
 		finalColor.b = (color.b * 255) / 1;
 		finalColor.a = 150;
-//		renderer->drawDebugTriangleFan(vlist, vertexCount, finalColor);
-		delete[] vlist;
+
+		for(int i = 0; i < vertexCount; i++){
+			vlist[i].position.x = myParent->ToPixels(vertices[i].x);
+			vlist[i].position.y = myParent->ToPixels(vertices[i].y);
+			vlist[i].color = finalColor;
+		}
+
+		renderer->draw(vlist);
 	}
 
 	void KinesisDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)

@@ -35,6 +35,7 @@ void SampleScripting::onRender()
 	getRenderer()->setDefaultBlending();
 	getRenderer()->setDefaultTransforms();
 	getRenderer()->setDefaultViewport();
+	getRenderer()->setDefaultDepthTesting();
 	
 	getRenderer()->setProjectionMatrix(View(0,0,1000,768).getMatrix());
 	getRenderer()->drawDebugCircle(Vec2f(500,250), 40, Vec2f(), Color::Green);

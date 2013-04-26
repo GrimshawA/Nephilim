@@ -150,6 +150,12 @@ void Renderer::setClippingRect(FloatRect rect)
 
 }
 
+void Renderer::setDepthTestEnabled(bool enable)
+{
+	if(enable) glEnable(GL_DEPTH_TEST);
+	else       glDisable(GL_DEPTH_TEST);
+}
+
 void Renderer::clearDepthBuffer()
 {
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -168,6 +174,12 @@ void Renderer::clearColorBuffer()
 void Renderer::clearAllBuffers()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+/// Set the default depth test mode: false
+void Renderer::setDefaultDepthTesting()
+{
+	setDepthTestEnabled(false);
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
