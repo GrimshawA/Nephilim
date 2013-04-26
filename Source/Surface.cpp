@@ -58,9 +58,14 @@ Renderer* Surface::createRenderer()
 
 	if(renderer)
 	{
-		renderer->m_renderTarget = window;
 		renderer->m_target = this;
 		renderer->m_surface = this;
+
+		renderer->setDefaultTarget();
+		renderer->setDefaultShader();
+		renderer->setDefaultBlending();
+		renderer->setDefaultTransforms();
+		renderer->setDefaultViewport();
 	}
 
 	return renderer;

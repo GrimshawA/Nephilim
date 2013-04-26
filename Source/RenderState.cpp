@@ -6,4 +6,5 @@ RenderState::RenderState()
 {
 
 }
+
 NEPHILIM_NS_END

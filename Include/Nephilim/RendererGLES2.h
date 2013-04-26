@@ -6,6 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
+class Shader;
 class NEPHILIM_API RendererGLES2 : public Renderer
 {
 public:
@@ -17,6 +18,7 @@ public:
 	//void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	void applyView(const View &view);
 
+	Shader* m_shader;
 };
 
 

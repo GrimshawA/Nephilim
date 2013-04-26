@@ -107,7 +107,7 @@ void Text::onDraw(Renderer* renderer){
 
 	//cout<<"Drawing "<<m_vertices.m_vertices.size() / 6<<endl;
 
-	renderer->drawVertexArray(m_vertices);
+	//renderer->drawVertexArray(m_vertices);
 	glPopMatrix();
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);

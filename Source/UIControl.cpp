@@ -553,7 +553,7 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 
 
 	draw(renderer);
-
+	/*
 	// clip?
 	if(m_clipChildren)renderer->enableClipping(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
 
@@ -562,7 +562,7 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 		(*it)->innerDraw(renderer, transform * m_transform);
 	}
 
-	if(m_clipChildren)renderer->disableClipping();
+	if(m_clipChildren)renderer->disableClipping();*/
 }
 
 

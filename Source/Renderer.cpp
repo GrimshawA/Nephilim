@@ -11,7 +11,6 @@ NEPHILIM_NS_BEGIN
 
 Renderer::Renderer()
 : m_type(Other)
-, m_shader(NULL)
 {
 	m_primitiveTable[Render::Primitive::Triangles] = static_cast<int>(GL_TRIANGLES);
 	m_primitiveTable[Render::Primitive::TriangleFan] = static_cast<int>(GL_TRIANGLE_FAN);
@@ -25,17 +24,10 @@ Renderer::Renderer()
 // -- Unimplemented API at Renderer level
 void Renderer::setDefaultShader(){}
 void Renderer::setShader(Shader& shader){}
-void Renderer::drawVertexArray(VertexArray &vertexArray){}
 
 Renderer::Type Renderer::getType()
 {
 	return m_type;
-}
-
-/// Effectively regains control of what texture are bound to all texture units, according to the renderer's data
-void Renderer::resetTextures()
-{
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 /// Get the full name of this renderer
@@ -77,14 +69,16 @@ void Renderer::setDefaultViewport()
 
 /// Set the viewport in target-relative coordinates
 /// If you want to set the viewport in pixels, use setViewportInPixels()
-void Renderer::setViewport(float left, float bottom, float width, float height)
+void Renderer::setViewport(float left, float top, float width, float height)
 {
-	glViewport(left * m_target->getSize().x, bottom * m_target->getSize().y, width * m_target->getSize().x, height * m_target->getSize().y);
+	int bottom = m_target->getSize().y - (top*m_target->getSize().y + height*m_target->getSize().y);
+	glViewport(left * m_target->getSize().x, bottom, width * m_target->getSize().x, height * m_target->getSize().y);
 }
 
 /// Set the viewport as in glViewport()
-void Renderer::setViewportInPixels(float left, float bottom, float width, float height)
+void Renderer::setViewportInPixels(int left, int top, int width, int height)
 {
+	int bottom = m_target->getSize().y - (top + height);
 	glViewport(left, bottom, width, height);
 }
 
@@ -132,7 +126,6 @@ void Renderer::setBlendingEnabled(bool enable)
 	else		glDisable(GL_BLEND);
 }
 
-/// Activates the default render target, usually the Surface window
 void Renderer::setDefaultTarget()
 {
 	m_surface->activate();
@@ -144,7 +137,38 @@ void Renderer::setClippingEnabled(bool enable)
 	else       glDisable(GL_SCISSOR_TEST);
 }
 
+/// Resets the scissor clipping rectangle to the full target
+void Renderer::resetClippingRect()
+{
 
+}
+
+/// Set the scissor clipping rectangle, it cannot exceed the current rectangle
+/// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
+void Renderer::setClippingRect(FloatRect rect)
+{
+
+}
+
+void Renderer::clearDepthBuffer()
+{
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::clearStencilBuffer()
+{
+	glClear(GL_STENCIL_BUFFER_BIT);
+}
+
+void Renderer::clearColorBuffer()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::clearAllBuffers()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
 void Renderer::drawDebugQuad(float x, float y, float angle, float width, float height, Color color)
@@ -175,7 +199,19 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 		varray[i].position = vec4(translation * vec4(varray[i].position.x, varray[i].position.y, 0.f, 1.f)).xy();
 	}
 
-	//modelMatrix = const_cast<float*>(vtransform.getMatrix());
+	draw(varray);
+}
+
+/// Draw a debug line with the given color - slow
+void Renderer::drawDebugLine(Vec2f begin, Vec2f end, Color color)
+{
+	VertexArray varray(Render::Primitive::Lines, 2);
+	varray[0].position = begin;
+	varray[1].position = end;
+
+	varray[0].color = color;
+	varray[1].color = color;
+
 	draw(varray);
 }
 
@@ -247,27 +283,6 @@ void Renderer::draw(Drawable &drawable)
 	drawable.onDraw(this);
 }
 
-
-/// Set the currently active view
-void Renderer::setView(const View &view){
-	m_currentView = view;
-	applyView(m_currentView);
-};
-
-/// Activate view and push it to the stack
-void Renderer::pushView(const View& view){
-	m_viewStack.push(view);
-	applyView(view);
-};
-
-/// Pop the current active view
-void Renderer::popView(){
-	m_viewStack.pop();
-	if(!m_viewStack.empty()){
-		applyView(m_viewStack.top());
-	}
-};
-
 void Renderer::setProjectionMatrix(const mat4& projection)
 {
 	m_projection = projection;
@@ -280,23 +295,5 @@ void Renderer::setModelMatrix(const mat4& model)
 {
 	m_model = model;
 }
-
-
-void Renderer::drawCube(float x, float y, float z, float len, Color color){
-
-};
-
-void Renderer::setDefaultViewRect(float x, float y){
-	View v;
-	v.setRect(0,0,x,y);
-	setView(v);
-};
-
-
-/// Clear the bound buffer
-void Renderer::clear(){
-	glClear(GL_COLOR_BUFFER_BIT);
-};
-
 
 NEPHILIM_NS_END

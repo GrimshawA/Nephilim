@@ -94,13 +94,13 @@ void RendererGLES2::draw(const VertexArray& varray)
 
 void RendererGLES2::applyView(const View &view)
 {
-	if(!m_renderTarget) return;
+/*	if(!m_renderTarget) return;
 
 	IntRect viewport = m_surface->getViewport(view);
 	int top = m_surface->getHeight() - (viewport.top + viewport.height);
 	glViewport(viewport.left, top, viewport.width, viewport.height);
 
-	m_shader->setUniformMatrix("projection", view.getTransform().getMatrix());
+	m_shader->setUniformMatrix("projection", view.getTransform().getMatrix());*/
 }
 
 

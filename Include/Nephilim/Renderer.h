@@ -39,9 +39,8 @@ class Framebuffer;
 class NEPHILIM_API Renderer
 {
 public:
-	/// Base constructor - virtual class 
-	Renderer();
-
+	friend class Surface;
+	
 	/// Enumerates all types of native renderers
 	enum Type
 	{
@@ -50,6 +49,9 @@ public:
 		OpenGLES2,  ///< Mobile OpenGL ES 2.0
 		Other		///< Any other user-defined renderer
 	};
+
+	/// Base constructor - virtual class 
+	Renderer();
 
 	/// Get the type of this renderer
 	Type getType();
@@ -63,11 +65,26 @@ public:
 	/// Draw a debug circle with the given color and radius - slow
 	void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 
+	/// Draw a debug line with the given color - slow
+	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
+
 	/// Draw a vertex array
 	virtual void draw(const VertexArray& varray, const RenderState& state = RenderState());
 
 	/// Allows a drawable to draw itself
 	virtual void draw(Drawable &drawable);
+
+	/// Clears the depth buffer
+	virtual void clearDepthBuffer();
+
+	/// Clears the stencil buffer
+	virtual void clearStencilBuffer();
+
+	/// Clears the color buffer
+	virtual void clearColorBuffer();
+
+	/// Combines all clearXBuffer() calls
+	virtual void clearAllBuffers();
 
 	/// Set the clear color of the render target
 	virtual void setClearColor(const Color& color);
@@ -91,10 +108,10 @@ public:
 
 	/// Set the viewport in target-relative coordinates
 	/// If you want to set the viewport in pixels, use setViewportInPixels()
-	virtual void setViewport(float left, float bottom, float width, float height);
+	virtual void setViewport(float left, float top, float width, float height);
 
-	/// Set the viewport as in glViewport()
-	virtual void setViewportInPixels(float left, float bottom, float width, float height);
+	/// Set the viewport as in glViewport(), but specify coordinates from top-left of the window instead
+	virtual void setViewportInPixels(int left, int top, int width, int height);
 
 	/// Activates blending with the default mode: Alpha
 	virtual void setDefaultBlending();
@@ -114,105 +131,50 @@ public:
 	/// Activates or deactivates rectangular clipping - scissor test
 	virtual void setClippingEnabled(bool enable);
 
-	/// Effectively regains control of what texture are bound to all texture units, according to the renderer's data
-	void resetTextures();
+	/// Resets the scissor clipping rectangle to the full target
+	virtual void resetClippingRect();
 
+	/// Set the scissor clipping rectangle, it cannot exceed the current rectangle
+	/// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
+	virtual void setClippingRect(FloatRect rect);
+
+	/// Set the current projection matrix
 	virtual void setProjectionMatrix(const mat4& projection);
+
+	/// Set the current view matrix
 	virtual void setViewMatrix(const mat4& view);
+
+	/// Set the current model matrix
 	virtual void setModelMatrix(const mat4& model);
 
-	mat4 m_projection;
-	mat4 m_view;
-	mat4 m_model;
-
-	Shader* m_activeShader;
-
-protected:
-	Type   m_type; ///< The type of this renderer
-	String m_name; ///< The string with the name of this renderer
-	Surface* m_surface; ///< Guaranteed to be a valid surface while the renderer lives
-	RenderTarget* m_target; ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
-	Color m_clearColor; ///< The color of the background when clearing buffer
-
-	friend class Surface;
-
-
-
-
-
-
-
-
-
-
-public:
-
-
-
-	// -- Interface
-
 	// -- Low level calls
+
+	/// Mimics glDrawArrays()
 	void drawArrays(Render::Primitive::Type primitiveType, int start, int count);
+
+	/// Mimics glEnableVertexAttribArray()
 	void enableVertexAttribArray(unsigned int index);
+
+	/// Mimics glDisableVertexAttribArray()
 	void disableVertexAttribArray(unsigned int index);
+
+	/// Mimics glVertexAttribPointer()
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
-	Shader* m_shader;
+protected:
+	Type           m_type;        ///< The type of this renderer
+	String         m_name;        ///< The string with the name of this renderer
+	Surface*       m_surface;     ///< Guaranteed to be a valid surface while the renderer lives
+	RenderTarget*  m_target;      ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
+	Color          m_clearColor;  ///< The color of the background when clearing buffer
+	FloatRect      m_scissorRect; ///< If scissor clipping is enabled, this is the rect being used
+	mat4           m_projection;  ///< Current projection matrix
+	mat4           m_view;        ///< Current view matrix
+	mat4           m_model;       ///< Current model matrix
+	Shader*        m_activeShader;///< Current active shader
 
-	std::map<Render::Primitive::Type, int> m_primitiveTable;
-
-
-
-public:
-
-
-
-	View m_currentView;
-
-	
-
-
-
-	/// Activate view and push it to the stack
-	void pushView(const View& view);
-
-	/// Pop the current active view
-	void popView();
-
-	/// Apply a view
-	virtual void applyView(const View &view){};
-
-	/// Set the currently active view
-	virtual void setView(const View &view);
-
-	/// Clear the bound buffer
-	virtual void clear();
-
-	virtual void drawCube(float x, float y, float z, float len, Color color);
-
-	void setDefaultViewRect(float x, float y);
-
-
-
-	virtual void activateClipRegion(FloatRect rect){}
-	virtual void enableClipping(FloatRect rect){};
-	virtual void disableClipping(){};
-	virtual void prepare(int w, int h) {};
-	virtual void display() {}; 
-	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color) {};
-	
-	virtual void drawDebugLine(Vec2f begin, Vec2f end, Color color){};
-
-	virtual void drawVertexArray(VertexArray &vertexArray);
-
-	/// Auto detects an appropriate renderer
-	static Renderer* createAutomaticRenderer(RenderTarget* target);
-	 
-	std::stack<FloatRect> m_clipRegionStack;
-
-	std::stack<View> m_viewStack;
-
-	RenderTarget* m_renderTarget;
+	/// Conversion table of Render::Primitive::Type to GLenum
+	std::map<Render::Primitive::Type, int> m_primitiveTable;	
 };
 
 NEPHILIM_NS_END

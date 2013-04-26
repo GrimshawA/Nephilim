@@ -78,10 +78,7 @@ void Engine::update()
 		// Draw a frame
 		if(m_renderer)
 		{
-			View mView;
-			mView.setRect(0,0, m_surface.getWidth(), m_surface.getHeight());
-			m_renderer->pushView(mView);
-			m_renderer->clear();
+			m_renderer->clearColorBuffer();
 			m_currentApp->innerRender();
 			m_surface.pushFrame();
 		}

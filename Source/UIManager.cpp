@@ -26,11 +26,11 @@ void UIManager::draw(const String& name, Renderer* renderer)
 		return;
 	}
 	
-	View windowView;
+	/*View windowView;
 	windowView.setRect(0,0,renderer->m_renderTarget->getSize().x, renderer->m_renderTarget->getSize().y);
 	renderer->pushView(windowView);
 	m_windows[name]->draw(renderer);
-	renderer->popView();
+	renderer->popView();*/
 }
 
 void UIManager::setArea(float x, float y, float w, float h)

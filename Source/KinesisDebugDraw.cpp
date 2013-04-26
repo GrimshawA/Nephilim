@@ -66,7 +66,7 @@ NEPHILIM_NS_BEGIN
 		finalColor.g = (color.g * 255) / 1;
 		finalColor.b = (color.b * 255) / 1;
 		finalColor.a = 150;
-		renderer->drawDebugTriangleFan(vlist, vertexCount, finalColor);
+//		renderer->drawDebugTriangleFan(vlist, vertexCount, finalColor);
 		delete[] vlist;
 	}
 

@@ -156,7 +156,7 @@ void RendererOpenGL::setModelMatrix(const mat4& model)
 	Renderer::setModelMatrix(model);
 	if(m_activeShader) m_activeShader->setUniformMatrix("model", model.get());
 }
-
+/*
 void RendererOpenGL::applyView(const View &view){
 	if(!m_renderTarget) return;
 
@@ -179,11 +179,11 @@ void RendererOpenGL::applyView(const View &view){
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	}
-};
+};*/
 
 void RendererOpenGL::enableClipping(FloatRect rect)
 {
-	FloatRect current;
+	/*FloatRect current;
 	if(m_clipRegionStack.empty())
 	{
 		glEnable(GL_SCISSOR_TEST);
@@ -218,23 +218,23 @@ void RendererOpenGL::enableClipping(FloatRect rect)
 
 	m_clipRegionStack.push(rect);
 
-	activateClipRegion(m_clipRegionStack.top());
+	activateClipRegion(m_clipRegionStack.top());*/
 }
 
 void RendererOpenGL::activateClipRegion(FloatRect rect)
 {
-	glScissor(rect.left, m_renderTarget->getSize().y - (rect.top + rect.height), rect.width, rect.height);
+//	glScissor(rect.left, m_renderTarget->getSize().y - (rect.top + rect.height), rect.width, rect.height);
 }
 
 void RendererOpenGL::disableClipping()
 {
-	m_clipRegionStack.pop();
+	/*m_clipRegionStack.pop();
 	if(m_clipRegionStack.empty())glDisable(GL_SCISSOR_TEST);
 	else
 	{
 		//activate next
 		activateClipRegion(m_clipRegionStack.top());
-	}
+	}*/
 };
 
 /// Clear the bound buffer

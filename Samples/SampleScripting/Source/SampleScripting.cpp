@@ -29,12 +29,13 @@ void SampleScripting::onUpdate(Time time)
 
 void SampleScripting::onRender()
 {
+	// Redundant, this is already activated implicitly
 	getRenderer()->setDefaultTarget();
 	getRenderer()->setDefaultShader();
 	getRenderer()->setDefaultBlending();
 	getRenderer()->setDefaultTransforms();
 	getRenderer()->setDefaultViewport();
 	
-	getRenderer()->setProjectionMatrix(View(0,0,1000,1000).getMatrix());
-	getRenderer()->drawDebugCircle(Vec2f(30,30), 40, Vec2f(), Color::Orange);
+	getRenderer()->setProjectionMatrix(View(0,0,1000,768).getMatrix());
+	getRenderer()->drawDebugCircle(Vec2f(500,250), 40, Vec2f(), Color::Green);
 }
