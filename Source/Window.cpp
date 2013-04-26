@@ -43,7 +43,7 @@ Window::~Window(){
 /// Attempts to launch a window if applicable
 void Window::create(int screenWidth, int screenHeight){
 #ifdef NEPHILIM_DESKTOP
-	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight,32), "Parabola Engine SDK", sf::Style::Default, sf::ContextSettings(24, 8 , 8));
+	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight,32), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(24, 8 , 8));
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	myWindowImpl->setFramerateLimit(60);

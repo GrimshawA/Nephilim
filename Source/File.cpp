@@ -183,7 +183,7 @@ bool File::seek(Int64 offset, int origin){
 
 /// Get the total size of the file (or region)
 Int64 File::getSize(){
-	return m_fileSize;
+	return m_length;
 };
 
 /// Reads raw data from the stream with size len, stored in the buffer, it protects the reading of protected sections

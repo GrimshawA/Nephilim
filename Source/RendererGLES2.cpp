@@ -67,11 +67,11 @@ void RendererGLES2::draw(const VertexArray& varray)
 	m_shader->setUniformi("texture", 0);
 	
 	//model
-	if(modelMatrix)
+/*	if(modelMatrix)
 	{
 		m_shader->setUniformMatrix("model", modelMatrix);
 	}
-	
+	*/
 
 	enableVertexAttribArray(0);
 	enableVertexAttribArray(1);
@@ -85,11 +85,11 @@ void RendererGLES2::draw(const VertexArray& varray)
 	disableVertexAttribArray(2);
 
 	//model
-	if(modelMatrix)
+/*	if(modelMatrix)
 	{
 		bool r = m_shader->setUniformMatrix("model", mat4().get());
 		modelMatrix = NULL;
-	}
+	}*/
 }
 
 void RendererGLES2::applyView(const View &view)

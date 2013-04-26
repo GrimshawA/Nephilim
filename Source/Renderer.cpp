@@ -1,27 +1,32 @@
 #include <Nephilim/Renderer.h>
+#include <Nephilim/Surface.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Drawable.h>
+
+#include <iostream>
+using namespace std;
 
 NEPHILIM_NS_BEGIN
 
 Renderer::Renderer()
 : m_type(Other)
 , m_shader(NULL)
-, modelMatrix(NULL)
-, m_allowShaders(true)
 {
-	m_clearColor.r = 100;
-	m_clearColor.g = 10;
-
 	m_primitiveTable[Render::Primitive::Triangles] = static_cast<int>(GL_TRIANGLES);
 	m_primitiveTable[Render::Primitive::TriangleFan] = static_cast<int>(GL_TRIANGLE_FAN);
 	m_primitiveTable[Render::Primitive::Lines] = static_cast<int>(GL_LINES);
 	m_primitiveTable[Render::Primitive::LineLoop] = static_cast<int>(GL_LINE_LOOP);
 	m_primitiveTable[Render::Primitive::Points] = static_cast<int>(GL_POINTS);
+
+	setClearColor(Color::Orange);
 };
 
-/// Get the type of this renderer
+// -- Unimplemented API at Renderer level
+void Renderer::setDefaultShader(){}
+void Renderer::setShader(Shader& shader){}
+void Renderer::drawVertexArray(VertexArray &vertexArray){}
+
 Renderer::Type Renderer::getType()
 {
 	return m_type;
@@ -39,16 +44,107 @@ String Renderer::getName()
 	return m_name;
 }
 
-void Renderer::setDefaultShader()
+/// Set the clear color of the render target
+void Renderer::setClearColor(const Color& color)
 {
-
+	m_clearColor = color;
+	vec4 c = m_clearColor.normalized();
+	glClearColor(c.x, c.y, c.z, c.w);
 }
 
-/// Activates the shader for the next drawing calls
-void Renderer::setShader(Shader& shader)
+/// Get the current clear color
+Color Renderer::getClearColor()
 {
-
+	return m_clearColor;
 }
+
+void Renderer::setFramebuffer(Framebuffer& target)
+{
+	
+}
+
+void Renderer::setDefaultTransforms()
+{
+	setProjectionMatrix(mat4::identity);
+	setViewMatrix(mat4::identity);
+	setModelMatrix(mat4::identity);
+}
+
+void Renderer::setDefaultViewport()
+{
+	setViewport(0.f, 0.f, 1.f, 1.f);
+}
+
+/// Set the viewport in target-relative coordinates
+/// If you want to set the viewport in pixels, use setViewportInPixels()
+void Renderer::setViewport(float left, float bottom, float width, float height)
+{
+	glViewport(left * m_target->getSize().x, bottom * m_target->getSize().y, width * m_target->getSize().x, height * m_target->getSize().y);
+}
+
+/// Set the viewport as in glViewport()
+void Renderer::setViewportInPixels(float left, float bottom, float width, float height)
+{
+	glViewport(left, bottom, width, height);
+}
+
+/// Activates blending with the default mode: Alpha
+void Renderer::setDefaultBlending()
+{
+	setBlendMode(Render::Blend::Alpha);
+}
+
+void Renderer::setBlendMode(Render::Blend::Mode mode)
+{
+	setBlendingEnabled(true);
+
+	switch(mode)
+	{
+		case Render::Blend::Add:
+		{
+			glBlendFunc(GL_ONE, GL_ONE);
+		}
+		break;
+
+		case Render::Blend::Multiply:
+		{
+			glBlendFunc(GL_DST_COLOR, GL_ZERO);
+		}
+		break;
+
+		case Render::Blend::Alpha:
+		{
+			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+		break;
+
+		case Render::Blend::None:
+		{
+			glBlendFunc (GL_ONE, GL_ZERO);
+		}
+		break;
+	}
+}
+
+void Renderer::setBlendingEnabled(bool enable)
+{
+	if(enable) glEnable(GL_BLEND);
+	else		glDisable(GL_BLEND);
+}
+
+/// Activates the default render target, usually the Surface window
+void Renderer::setDefaultTarget()
+{
+	m_surface->activate();
+}
+
+void Renderer::setClippingEnabled(bool enable)
+{
+	if(enable) glEnable (GL_SCISSOR_TEST);
+	else       glDisable(GL_SCISSOR_TEST);
+}
+
+
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
 void Renderer::drawDebugQuad(float x, float y, float angle, float width, float height, Color color)
@@ -138,14 +234,9 @@ void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int
 	glVertexAttribPointer(static_cast<GLuint>(index), static_cast<GLint>(numComponents), static_cast<GLenum>(componentType), static_cast<GLboolean>(normalized), static_cast<GLsizei>(stride), static_cast<const GLvoid*>(ptr));
 }
 
-void Renderer::setModelMatrix(const float* matrix)
-{
-	modelMatrix = const_cast<float*>(matrix);
-}
-
 
 /// Draw a vertex array
-void Renderer::draw(const VertexArray& varray)
+void Renderer::draw(const VertexArray& varray, const RenderState& state)
 {
 	TESTLOG("Why are you calling draw on an abstract base class?\n")
 }
@@ -207,7 +298,5 @@ void Renderer::clear(){
 	glClear(GL_COLOR_BUFFER_BIT);
 };
 
-void Renderer::drawVertexArray(VertexArray &vertexArray){
 
-}
 NEPHILIM_NS_END

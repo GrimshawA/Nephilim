@@ -2,11 +2,8 @@
 #define Surface_h__
 
 #include "Platform.h"
-
-
-
-
 #include "Window.h"
+#include "RenderTarget.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -30,7 +27,7 @@ class Engine;
 	browser, in which case the surface has to become a child window of that frame,
 	put simply.
 */
-class NEPHILIM_API Surface
+class NEPHILIM_API Surface : public RenderTarget
 {
 public:
 	/// Construct the surface object - not yet valid
@@ -39,9 +36,15 @@ public:
 	/// Ensure proper destruction
 	~Surface();
 
+	/// Activate the surface as the active framebuffer
+	void activate();
+
 	int getWidth() const;
 
 	int getHeight() const;
+
+	/// Implements RenderTarget::getSize()
+	Vec2i getSize() const;
 
 	/// Default creation of a surface
 	void create();

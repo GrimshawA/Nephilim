@@ -60,6 +60,11 @@ View::View(float left, float top, float width, float height)
 	setRect(left, top, width, height);
 }
 
+/// Get the projection matrix of this view
+mat4 View::getMatrix()
+{
+	return mat4(getTransform().getMatrix());
+}
 
 /// Get the view center
 Vec2f View::getCenter(){

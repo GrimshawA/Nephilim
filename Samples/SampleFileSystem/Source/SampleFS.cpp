@@ -2,10 +2,7 @@
 
 #include <Nephilim/File.h>
 #include <Nephilim/TextStream.h>
-
-#include <iostream>
-#include <cassert>
-using namespace std;
+#include <Nephilim/Logger.h>
 
 void SampleFS::onCreate()
 {	
@@ -34,5 +31,14 @@ void SampleFS::onCreate()
 
 		PRINTLOG("f", "Read line: %c\n", file1.getChar());
 	}
-	else cout << "Too bad. The file doesn't exist or is inoperable." << endl;
+	else
+	{
+		PRINTLOG("d", "Too bad. The file doesn't exist or is inoperable.", 0);
+	}
+
+	// -- Reading some file sizes
+	File file_a("a.txt"); PRINTLOG("Nephilim", "File A: %lld\n", file_a.getSize());
+	File file_b("b.txt"); PRINTLOG("Nephilim", "File B: %lld\n", file_b.getSize());
+	File file_c("c.txt"); PRINTLOG("Nephilim", "File C: %lld\n", file_c.getSize());
+
 }

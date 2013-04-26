@@ -5,6 +5,7 @@
 #include "Vectors.h"
 #include "Rect.h"
 #include "Transform.h"
+#include "Matrix.h"
 #include "ReferenceCountable.h"
 
 NEPHILIM_NS_BEGIN
@@ -33,6 +34,9 @@ public:
 		View();
 
 		View(float left, float top, float width, float height);
+
+		/// Get the projection matrix of this view
+		mat4 getMatrix();
 
 		/// Set the view center as a position
 		void setCenter(Vec2f position);

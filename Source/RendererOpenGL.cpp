@@ -63,7 +63,7 @@ RendererOpenGL::RendererOpenGL()
 };
 
 /// Draw a vertex array
-void RendererOpenGL::draw(const VertexArray& varray)
+void RendererOpenGL::draw(const VertexArray& varray, const RenderState& state)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
@@ -103,7 +103,7 @@ void RendererOpenGL::draw(const VertexArray& varray)
 	else
 	{
 		glLoadIdentity();
-		glLoadMatrixf(modelMatrix);
+		//glLoadMatrixf(modelMatrix);
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -240,7 +240,6 @@ void RendererOpenGL::disableClipping()
 /// Clear the bound buffer
 void RendererOpenGL::clear(){
 	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(m_clearColor.r/255,m_clearColor.g/255,m_clearColor.b/255,1.f);
 };
 
 

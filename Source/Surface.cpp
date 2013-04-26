@@ -1,5 +1,6 @@
 #include <Nephilim/Surface.h>
 #include <Nephilim/Engine.h>
+#include <Nephilim/CGL.h>
 #include <Nephilim/RendererOpenGL.h>
 #include <Nephilim/RendererGLES.h>
 #include <Nephilim/RendererGLES2.h>
@@ -26,6 +27,19 @@ Surface::~Surface()
 	delete m_renderer;
 }
 
+/// Activate the surface as the active frame buffer
+void Surface::activate()
+{
+	// this doesnt account ios yet
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0);
+}
+
+/// Implements RenderTarget::getSize()
+Vec2i Surface::getSize() const
+{
+	return Vec2i(static_cast<int>(getWidth()), static_cast<int>(getHeight()));
+}
+
 /// Creates and returns the renderer if valid
 Renderer* Surface::createRenderer()
 {
@@ -45,6 +59,7 @@ Renderer* Surface::createRenderer()
 	if(renderer)
 	{
 		renderer->m_renderTarget = window;
+		renderer->m_target = this;
 		renderer->m_surface = this;
 	}
 
@@ -53,7 +68,7 @@ Renderer* Surface::createRenderer()
 
 void Surface::create()
 {
-    printf("Surface::create\n");
+   // printf("Surface::create\n");
 	window = new Window();
 	window->create(1024,768);
 };

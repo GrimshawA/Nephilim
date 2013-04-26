@@ -14,6 +14,17 @@ namespace Render
 			Points
 		};
 	}
+
+	namespace Blend
+	{
+		enum Mode
+		{
+			Alpha,
+			Add,       ///< Simply sums the incoming color to the destination color.
+			Multiply,
+			None
+		};
+	}
 };
 
 #endif // RenderModes_h__

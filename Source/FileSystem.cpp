@@ -6,7 +6,7 @@
 #include <Shlobj.h>
 #include <CommDlg.h>
 #undef SetCurrentDirectory
-#elif defined PARABOLA_ANDROID
+#elif defined NEPHILIM_ANDROID
 #include "Nephilim/AndroidInterface.h"
 #include "Nephilim/Logger.h"
 #endif
@@ -25,7 +25,7 @@ String FileSystem::loadFileDialog(){
 #ifdef NEPHILIM_WINDOWS
 		wchar_t Filestring[256];
 		String returnstring;
-
+		/*
 		OPENFILENAME opf;
 		opf.hwndOwner = NULL;
 		opf.lpstrFilter = L"";
@@ -52,7 +52,7 @@ String FileSystem::loadFileDialog(){
 			std::wstring s = static_cast<std::wstring>(opf.lpstrFile);
 			returnstring.assign(s.begin(), s.end());
 		}
-
+		*/
 		return returnstring;
 #else
 	return "";
@@ -65,7 +65,7 @@ String FileSystem::saveFileDialog(){
 #ifdef NEPHILIM_WINDOWS
 	OPENFILENAME ofn;
 	String result;
-
+	/*
 	wchar_t saveFileName[MAX_PATH] = L"";
 
 	ZeroMemory( &ofn, sizeof( ofn ) );
@@ -84,7 +84,7 @@ String FileSystem::saveFileDialog(){
 		std::wstring s = static_cast<std::wstring>(ofn.lpstrFile);
 		result.assign(s.begin(), s.end());
 	}
-
+	*/
 	return result;
 	//	wcscpy(file,saveFileName);
 #else
@@ -118,7 +118,7 @@ String FileSystem::getDocumentsDirectory(){
 String FileSystem::getExecutableDirectory(){
 	String path;
 #ifdef NEPHILIM_WINDOWS
-	LPSTR lpStr = new char[2048];
+	/*LPSTR lpStr = new char[2048];
 	GetModuleFileNameA(NULL,lpStr,2048 );
 	path = lpStr;
 	delete lpStr;
@@ -126,7 +126,7 @@ String FileSystem::getExecutableDirectory(){
 	path.removeUntilReverse('\\');
 	path.replaceCharacter('\\', '/');
 
-	path += "/";
+	path += "/";*/
 #endif
 
 	return path;
@@ -379,8 +379,8 @@ String FileSystem::getExecutableDirectory(){
 	bool FileSystem::makeDirectory(String Name){
 
 #ifdef NEPHILIM_WINDOWS
-		if(!CreateDirectory((LPCWSTR)wide_string_from_string(Name).c_str(), LPSECURITY_ATTRIBUTES()))
-			return false;
+		/*if(!CreateDirectory((LPCWSTR)wide_string_from_string(Name).c_str(), LPSECURITY_ATTRIBUTES()))
+			return false;*/
 #elif defined PARABOLA_ANDROID
 		TESTLOG("makeDirectory\n");
 		return AndroidInterface::createDirectory(Name);

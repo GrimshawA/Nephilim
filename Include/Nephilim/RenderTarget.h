@@ -1,7 +1,8 @@
-#ifndef PARABOLA_RENDERTARGET_H
-#define PARABOLA_RENDERTARGET_H
+#ifndef RenderTarget_h__
+#define RenderTarget_h__
 
 #include "Platform.h"
+#include "Vectors.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -13,4 +14,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // RenderTarget_h__

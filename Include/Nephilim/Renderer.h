@@ -13,6 +13,7 @@
 #include "View.h"
 #include "Shader.h"
 #include "RenderModes.h"
+#include "RenderState.h"
 #include "Matrix.h"
 
 #include <map>
@@ -21,6 +22,7 @@ NEPHILIM_NS_BEGIN
 
 class RenderTarget;
 class Surface;
+class Framebuffer;
 
 /**
 	\ingroup Graphics
@@ -61,11 +63,56 @@ public:
 	/// Draw a debug circle with the given color and radius - slow
 	void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 
+	/// Draw a vertex array
+	virtual void draw(const VertexArray& varray, const RenderState& state = RenderState());
+
+	/// Allows a drawable to draw itself
+	virtual void draw(Drawable &drawable);
+
+	/// Set the clear color of the render target
+	virtual void setClearColor(const Color& color);
+
+	/// Get the current clear color
+	virtual Color getClearColor();
+
+	/// Activates the default render target
+	/// This means that rendering will now happen in the visible window
+	virtual void setDefaultTarget();
+
+	/// Activates a different render target for rendering
+	virtual void setFramebuffer(Framebuffer& target);
+
+	/// Set the current transform matrices to identity (projection, view and model)
+	/// This is the default OpenGL state, an orthogonal projection on a [-1, -1, 1, 1] rectangle
+	virtual void setDefaultTransforms();
+
+	/// Set the default view port, matches exactly the size of the current target
+	virtual void setDefaultViewport();
+
+	/// Set the viewport in target-relative coordinates
+	/// If you want to set the viewport in pixels, use setViewportInPixels()
+	virtual void setViewport(float left, float bottom, float width, float height);
+
+	/// Set the viewport as in glViewport()
+	virtual void setViewportInPixels(float left, float bottom, float width, float height);
+
+	/// Activates blending with the default mode: Alpha
+	virtual void setDefaultBlending();
+
+	/// Activates blending and a blend mode
+	virtual void setBlendMode(Render::Blend::Mode mode);
+
+	/// Activates or deactivates blending entirely
+	virtual void setBlendingEnabled(bool enable);
+
 	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
 	virtual void setDefaultShader();
 
 	/// Activates the shader for the next drawing calls
 	virtual void setShader(Shader& shader);
+
+	/// Activates or deactivates rectangular clipping - scissor test
+	virtual void setClippingEnabled(bool enable);
 
 	/// Effectively regains control of what texture are bound to all texture units, according to the renderer's data
 	void resetTextures();
@@ -84,8 +131,8 @@ protected:
 	Type   m_type; ///< The type of this renderer
 	String m_name; ///< The string with the name of this renderer
 	Surface* m_surface; ///< Guaranteed to be a valid surface while the renderer lives
-	bool m_allowShaders; ///< Are shaders enabled at all or fallback to fixed-function/nothing?
-
+	RenderTarget* m_target; ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
+	Color m_clearColor; ///< The color of the background when clearing buffer
 
 	friend class Surface;
 
@@ -110,30 +157,9 @@ public:
 	void disableVertexAttribArray(unsigned int index);
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
-
-/*protected:*/
-	/// Protected constructor, only the surface can allocate renderers
-	
-
-
 	Shader* m_shader;
 
-	std::map<Render::Primitive::Type, int> m_primitiveTable; 
-
-private:
-//	Blend::BlendModes m_blendMode;
-
-
-public:
-
-	void setModelMatrix(const float* matrix);
-	float* modelMatrix;
-
-	/// Draw a vertex array
-	virtual void draw(const VertexArray& varray);
-
-	/// Allows a drawable to draw itself
-	virtual void draw(Drawable &drawable);
+	std::map<Render::Primitive::Type, int> m_primitiveTable;
 
 
 
@@ -143,7 +169,7 @@ public:
 
 	View m_currentView;
 
-	Color m_clearColor;
+	
 
 
 

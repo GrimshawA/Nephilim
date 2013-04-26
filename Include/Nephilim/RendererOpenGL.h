@@ -10,7 +10,7 @@ class NEPHILIM_API RendererOpenGL : public Renderer{
 public:
 
 	/// Draw a vertex array
-	virtual void draw(const VertexArray& varray);
+	virtual void draw(const VertexArray& varray, const RenderState& state);
 
 	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
 	virtual void setDefaultShader();

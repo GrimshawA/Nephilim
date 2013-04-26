@@ -64,6 +64,12 @@ public:
 	{
 		
 	}
+
+	typedef void (*fnptr)(T1);
+	void connect(fnptr ptr)
+	{
+		ptr(4);
+	}
 };
 
 NEPHILIM_NS_END
