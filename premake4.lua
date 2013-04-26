@@ -69,72 +69,8 @@ solution (enginename)
 			targetname(libname)
 			flags { "Optimize" }
 			
-	project "NephilimConsole"
-		language "C++"
-		kind "ConsoleApp"
-		files { "Tools/NephilimConsole/Source/*" }
-		location("Build/" .. builddir)
-		vpaths { ["Headers"] = "**.h" }
-		vpaths { ["Source"] = "**.cpp" }
-		includedirs { "Include" , "IncludeExt"}
-		links (enginename)
-		targetdir  "Bin" 
-		
-		if os.isdir("LibExt") then 
-			libdirs { "LibExt/" .. builddir }
-			links("sfml-system-s")
-			links("sfml-window-s")
-			links("sfml-graphics-s")
-			links("angelscript")
-			links("sigc++")
-		end
-		
-	configuration "Debug"
-		defines { "DEBUG" }
-		
-	-- The pre-built ScriptedGameCore
-	project "NephilimScripts"
-		language "C++"
-		kind "ConsoleApp"
-		files { "Tools/NephilimScripts/Source/*" }
-		location("Build/" .. builddir)
-		vpaths { ["Headers"] = "**.h" }
-		vpaths { ["Source"] = "**.cpp" }
-		includedirs { "Include" , "IncludeExt"}
-		links (enginename)
-		targetdir  "Bin" 
-		
-		if os.isdir("LibExt") then 				
-			libdirs { "LibExt/" .. builddir }
-		end
-		
-			configuration "Debug"
-				defines { "DEBUG" }
-				flags { "Symbols" }
-				
-				if os.isdir("LibExt") then
-					libdirs { "LibExt/" .. builddir }			
-					links("sfml-system-s-d")
-					links("sfml-audio-s-d")
-					links("sfml-window-s-d")
-					links("sfml-graphics-s-d")
-					links("angelscript-d")
-					links("libsigcpp-d")
-				end
-				
-			configuration "Release"		
-				flags { "Optimize" }
-				
-				if os.isdir("LibExt") then 
-					links("sfml-system-s")
-					links("sfml-window-s")
-					links("sfml-graphics-s")
-					links("sfml-audio-s")
-					links("angelscript")
-					links("libsigcpp")
-				end
-	-- End of pre-built ScriptedGameCore
-		
+
+			
 			
 	-- Prepare the sample projects	
 	if not table.contains(_ARGS, "--no-samples")  then
