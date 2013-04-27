@@ -1,18 +1,15 @@
-#ifndef PARABOLA_KINESISWORLD_H
-#define PARABOLA_KINESISWORLD_H
+#ifndef KinesisWorld_h__
+#define KinesisWorld_h__
 
 #include "Platform.h"
-#include "Strings.h"
-#include <Box2D/Box2D.h>
 #include "Vectors.h"
-#include "KinesisDebugDraw.h"
+
 #include "KinesisActors.h"
 
-//#include "KinesisForge.h"
-//#include "KinesisContactListener.h"
-//#include "KinesisQueryCallback.h"
+class b2World;
 
 NEPHILIM_NS_BEGIN
+
 class Renderer;
 	
 /**
@@ -23,26 +20,22 @@ class Renderer;
 	You may use this class to create rich physics simulations.
 
 */
-class KinesisWorld : public b2World{
+class KinesisWorld{
 public:		
-	/// Constructs the world with normal gravity (0, 0,98), scaled for optimal performance.
+	/// Constructs the world with default settings. Gravity pulls towards Y+
 	KinesisWorld();
 
-	/// Constructs the world with the given settings		
-	KinesisWorld(Vec2f gravityForce);
+	/// Constructs the world with initial settings
+	KinesisWorld(Vec2f gravity, int velocityIterations = 6, int positionIterations = 6);
 		
 	/// Get the number of pixels in a meter.		
 	float getPixelRatio();
-
-	/// Draw the simulation in test mode through a renderer
-	void drawDebugShapes(Renderer* renderer);
 			
 	/// Update the simulation
 	void update(float elapsedTime);
 
-	/// Destroy a body by its actor
-//	void destroyBodyActor(KinesisBodyActor *actor);
-
+	/// Get the raw b2World object
+	b2World* get();
 
 		/**
 			\brief Set the Velocity iteration count
@@ -83,40 +76,19 @@ public:
 		b2Body* CreateStaticBox(float x, float y, float width, float height);
 
 
-	
-
-		/**
-			\brief Loads objects from FileName and adds them to this simulation
-
-			Creates a World Definition object and loads the custom text file with it, making changes in this KinesisWorld
-		*/
-		bool LoadFromFile(String FileName);
-
-
-
-		/**
-			\brief d
-		*/
-		//KinesisDebugDraw* GetDebugRenderer();
-		
-
 	private:
-		int VelocityIterations, PositionIterations;
+		int m_velocityIterations, m_positionIterations;
 
 		/// Amount of pixels in a meter
-		float myPixelRatio;
-		
-		KinesisDebugDraw myDebugDraw;
-
-		//KinesisContactListener contactListener;
-//		mutable sf::Mutex mutex;
+		float m_pixelsPerMeter;
 
 		b2MouseJoint* pickerMouseJoint;
 		b2Body* defaultGroundBody;
 		
 		//friend class SceneRenderer;
-		
+
+		b2World* m_world;	///< Box2D World
 	};
 
 NEPHILIM_NS_END
-#endif
+#endif // KinesisWorld_h__

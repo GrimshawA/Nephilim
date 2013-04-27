@@ -147,29 +147,10 @@ void Texture::loadFromImage(Image &image){
 }
 
 bool Texture::loadFromFile(const String &path){
-//	TESTLOG(path.c_str())
 	bool result = false;
 	Image image;
-#ifdef PARABOLA_ANDROID
-	//in android load through a stream
-	/*ScopedFile* fp = new ScopedFile();
-	if(FileInterface::getAssetFile(fp, path, true)){
-
-		image.loadFromStream(fp);
-		//image.loadFromFile(path);
-	}
-	delete fp;*/
-	TESTLOG("GOING TO LOAD IMAGE")
-	image.loadFromFile(path);
-	TESTLOG("GOING TO FINISH LOAD IMAGE")
-
-#elif defined PARABOLA_DESKTOP || defined PARABOLA_IPHONE
 	result = image.loadFromFile(path);
-#endif
-	// STUPID DEBUG THING
-	//image.createMaskFromColor(Color(0,128,0, 255), 0);
-
-		loadFromImage(image);
+	loadFromImage(image);
 	return result;
 }
 

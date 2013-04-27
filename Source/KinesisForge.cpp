@@ -19,7 +19,7 @@ KinesisForge::KinesisForge(KinesisWorld* workWorld) : m_world(workWorld){
 /// Creates a rope in the simulation, not attached to anything unless specified
 std::vector<KinesisBodyActor*> KinesisForge::createRope(const Vec2f &position, float angle, float ropeLength, int segmentCount, float segmentWidth){
 	std::vector<KinesisBodyActor*> actorList;
-
+	/*
 	Vec2f pos(position); //store the new positions
 
 	// need to build n segments
@@ -56,7 +56,7 @@ std::vector<KinesisBodyActor*> KinesisForge::createRope(const Vec2f &position, f
 	def.collideConnected = false;
 	m_world->CreateJoint(&def);
 	
-
+	*/
 	return actorList;
 }
 
@@ -269,7 +269,7 @@ std::vector<KinesisBodyActor*> KinesisForge::createRope(const Vec2f &position, f
 		//bdef.fixedRotation = false; //to set
 		//bdef.gravityScale = 1.f; //to set		
 
-		b2Body *body = world->CreateBody(&bdef);
+		b2Body *body /*= world->CreateBody(&bdef)*/;
 
 
 		//go through the shapes and add them to the body

@@ -87,6 +87,7 @@ void Image::setPixel(unsigned int x, unsigned int y, const Color& color)
 
 
 bool Image::loadFromFile(const String &path){
+
 	// Clear the array (just in case)
 	m_pixels.clear();
 
@@ -106,18 +107,15 @@ bool Image::loadFromFile(const String &path){
 
 		// Free the loaded pixels (they are now in our own pixel buffer)
 		stbi_image_free(ptr);
-		// Error, failed to load the image
-		String errorResult = "Loaded \"" + path + "\". Reason : " + stbi_failure_reason();
-		TESTLOG(errorResult.c_str())
-			return true;
+
+		return true;
 	}
 	else
 	{
 		// Error, failed to load the image
-		std::cout << "Failed to load image \"" << path << "\". Reason : " << stbi_failure_reason() << std::endl;
 		String errorResult = "Failed to load image. \"" + path + "\". Reason : " + stbi_failure_reason();
-		TESTLOG(errorResult.c_str())
-			return false;
+		PRINTLOG("Nephilim", "%s\n", errorResult.c_str());
+		return false;
 	}
 
 	return true;
@@ -125,8 +123,7 @@ bool Image::loadFromFile(const String &path){
 
 bool Image::loadFromStream(File* stream){
 
-	TESTLOG("Now loading a texture...");
-		// Clear the array (just in case)
+	// Clear the array (just in case)
 	m_pixels.clear();
 
 	// Setup the stb_image callbacks
@@ -137,14 +134,11 @@ bool Image::loadFromStream(File* stream){
 
 	// Load the image and get a pointer to the pixels in memory
 	int width, height, channels;
-	TESTLOG("NOTE DONE")
 
-		unsigned char* ptr = stbi_load_from_callbacks(&callbacks, stream, &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* ptr = stbi_load_from_callbacks(&callbacks, stream, &width, &height, &channels, STBI_rgb_alpha);
 
-	TESTLOG("ITS DONE")
-
-		if (ptr && width && height)
-		{
+	if (ptr && width && height)
+	{
 			// Assign the image properties
 			m_size.x = width;
 			m_size.y = height;
@@ -157,16 +151,16 @@ bool Image::loadFromStream(File* stream){
 			stbi_image_free(ptr);
 
 			return true;
-		}
-		else
-		{
-			// Error, failed to load the image
-			TESTLOG("Failed to load image from stream. Reason : "/* + privNS::stbi_failure_reason())).c_str()*/);
+	}
+	else
+	{
+		// Error, failed to load the image
+		TESTLOG("Failed to load image from stream. Reason : "/* + privNS::stbi_failure_reason())).c_str()*/);
 
-			return false;
-		}
+		return false;
+	}
 
-		return true;
+	return true;
 };
 
 
@@ -176,21 +170,18 @@ void Image::create(unsigned int width, unsigned int height,const Uint8* pixels){
 	memcpy(&m_pixels[0], pixels, m_pixels.size());
 	m_size.x = width;
 	m_size.y = height;
-
 }
 
 
-Vec2i Image::getSize() const{
-
+Vec2i Image::getSize() const
+{
 	return m_size;
+}
 
-};
-
-const Uint8* Image::getPixelsPtr() const{
-
+const Uint8* Image::getPixelsPtr() const
+{
 	return &m_pixels[0];
-
-};
+}
 
 /// Sets the desired transparency on all pixels with the selected color
 void Image::createMaskFromColor(const Color &color, Uint8 alpha){

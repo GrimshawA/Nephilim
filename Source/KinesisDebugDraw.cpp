@@ -42,6 +42,32 @@ NEPHILIM_NS_BEGIN
 		renderer = 0;
 	};
 
+KinesisDebugDraw::KinesisDebugDraw(KinesisWorld& world)
+: b2Draw()
+, myParent(&world)
+, PixelsPerMeter(world.getPixelRatio())
+{
+	uint32 flags = 0;
+	flags += 1			* b2Draw::e_shapeBit;
+	//flags += 1			* b2Draw::e_jointBit;
+	//flags += 1			* b2Draw::e_aabbBit;
+	//flags += 1			* b2Draw::e_pairBit;
+	//	flags += 1			* b2Draw::e_centerOfMassBit;
+	SetFlags(flags);
+}
+
+void KinesisDebugDraw::onDraw(Renderer* renderer)
+{
+	if(myParent)
+	{
+		myParent->get()->SetDebugDraw(this);
+		this->renderer = renderer;
+		myParent->get()->DrawDebugData();
+	}
+}
+
+
+
 	void KinesisDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
 	/*	glColor3f(color.r, color.g, color.b);

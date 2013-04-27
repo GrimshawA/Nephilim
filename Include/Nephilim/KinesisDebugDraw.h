@@ -20,7 +20,7 @@
 #define PARABOLA_KINESISDEBUGDRAW_H
 
 #include "Platform.h"
-//#include "Drawable.h"
+#include "Drawable.h"
 #include <Box2D/Box2D.h>
 
 struct b2AABB;
@@ -34,10 +34,14 @@ class Renderer;
 	\class KinesisDebugDraw
 	\brief A debug renderer to draw a Kinesis simulation.
 */
-class NEPHILIM_API KinesisDebugDraw : public b2Draw
+class NEPHILIM_API KinesisDebugDraw : public b2Draw, public Drawable
 {
 public:
 	KinesisDebugDraw();
+
+	KinesisDebugDraw(KinesisWorld& world);
+
+	void onDraw(Renderer* renderer);
 
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 

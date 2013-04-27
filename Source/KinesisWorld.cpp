@@ -6,114 +6,86 @@
 using namespace std;
 
 NEPHILIM_NS_BEGIN
-	KinesisWorld::KinesisWorld() : b2World(b2Vec2(0.f, /*0.98f*/1.4f)){
-		VelocityIterations = 8;
-		PositionIterations = 3;
-		SetDebugDraw(&myDebugDraw);
-		myPixelRatio = 100;
-		myDebugDraw.myParent = this;
-		pickerMouseJoint = NULL;
-		defaultGroundBody = NULL;
 
-		//SetContactListener(&contactListener);
-	};
+KinesisWorld::KinesisWorld()
+: m_world(new b2World(b2Vec2(0.f, 1.4f)))
+, m_velocityIterations(6)
+, m_positionIterations(6)
+, m_pixelsPerMeter(100)
+{
+	pickerMouseJoint = NULL;
+	defaultGroundBody = NULL;
+}
 
-	KinesisWorld::KinesisWorld(Vec2f gravityForce) : b2World(b2Vec2(gravityForce.x, gravityForce.y)){
-		VelocityIterations = 8;
-		PositionIterations = 3;
-		SetDebugDraw(&myDebugDraw);
-		myPixelRatio = 100;
-		myDebugDraw.myParent = this;
-		pickerMouseJoint = NULL;
-		defaultGroundBody = NULL;
+KinesisWorld::KinesisWorld(Vec2f gravity, int velocityIterations, int positionIterations)
+: m_world(new b2World(b2Vec2(gravity.x, gravity.y)))
+, m_positionIterations(positionIterations)
+, m_velocityIterations(velocityIterations)
+, m_pixelsPerMeter(100)
+{
+	pickerMouseJoint = NULL;
+	defaultGroundBody = NULL;
+}
 
-		//SetContactListener(&contactListener);
-	};
+/// Get the raw b2World object
+b2World* KinesisWorld::get()
+{
+	return m_world;
+}
 
-
-	/// Draw the simulation in test mode through a renderer
-	void KinesisWorld::drawDebugShapes(Renderer* renderer){
-		myDebugDraw.renderer = renderer;
-		myDebugDraw.PixelsPerMeter = myPixelRatio;
-		DrawDebugData();
-	};
-	
-
-	/// Destroy a body by its actor
-	//void KinesisWorld::destroyBodyActor(KinesisBodyActor *actor){
-	//	if(actor && actor->myBody){
-	//		DestroyBody(actor->myBody);
-	//	}
-	//};
-
-
-
-
-
-
-
-	void KinesisWorld::SetVelocityIterationCount(int velocityIterations){
-		VelocityIterations = velocityIterations;
-	};
+void KinesisWorld::SetVelocityIterationCount(int velocityIterations){
+	m_velocityIterations = velocityIterations;
+}
 		
-	int KinesisWorld::GetVelocityIterationCount(){
-		return VelocityIterations;
-	};
+int KinesisWorld::GetVelocityIterationCount(){
+	return m_velocityIterations;
+};
 		
-	void KinesisWorld::SetPositionIterationCount(int positionIterations){
-		PositionIterations = positionIterations;
-	};
+void KinesisWorld::SetPositionIterationCount(int positionIterations){
+	m_positionIterations = positionIterations;
+};
 		
-	int KinesisWorld::GetPositionIterationCount(){
-		return PositionIterations;
-	};
+int KinesisWorld::GetPositionIterationCount(){
+	return m_positionIterations;
+};
 
-	b2Body* KinesisWorld::GetGroundBody(){
-		if(!defaultGroundBody)
-			return CreateDefaultGroundBody();
-		else
-			return defaultGroundBody;
-	};
+b2Body* KinesisWorld::GetGroundBody(){
+	if(!defaultGroundBody)
+		return CreateDefaultGroundBody();
+	else
+		return defaultGroundBody;
+};
 
-	b2Body* KinesisWorld::CreateDefaultGroundBody(){
-		b2BodyDef def;
-		def.position = b2Vec2(ToMeters(1), ToMeters(1));
-		def.type = b2_staticBody;
+b2Body* KinesisWorld::CreateDefaultGroundBody()
+{
+	b2BodyDef def;
+	def.position = b2Vec2(ToMeters(1), ToMeters(1));
+	def.type = b2_staticBody;
 
-		b2PolygonShape box;
-		box.SetAsBox(ToMeters(2/2), ToMeters(2/2));
+	b2PolygonShape box;
+	box.SetAsBox(ToMeters(2/2), ToMeters(2/2));
 
-		b2Body *body = CreateBody(&def);
+	b2Body *body = m_world->CreateBody(&def);
 
-		b2FixtureDef fixDef;
-		fixDef.shape = &box;
-		fixDef.density = 0.0f;
-		fixDef.friction = 0.5f;
-		fixDef.restitution = 0.5f;
+	b2FixtureDef fixDef;
+	fixDef.shape = &box;
+	fixDef.density = 0.0f;
+	fixDef.friction = 0.5f;
+	fixDef.restitution = 0.5f;
 
-		body->CreateFixture(&fixDef);
+	body->CreateFixture(&fixDef);
 
-		return body;
-	};
-
-	bool KinesisWorld::LoadFromFile(String FileName){
-		
-		/*KinesisWorldDefinition WorldDef;
-
-		if(!WorldDef.LoadFromFile(FileName, this))
-			return false;
-
-		return true;*/
-		return false;
-	};
+	return body;
+}
 
 
-	void KinesisWorld::update(float elapsedTime){
-		//sf::Lock lock(mutex);
-		Step(elapsedTime, VelocityIterations, PositionIterations);		
-	};
+void KinesisWorld::update(float elapsedTime)
+{
+	m_world->Step(elapsedTime, m_velocityIterations, m_positionIterations);		
+};
 
-	bool KinesisWorld::StartPicking(float x, float y){
+bool KinesisWorld::StartPicking(float x, float y)
+{
 		
 		if(pickerMouseJoint)
 			StopPicking();
@@ -127,7 +99,7 @@ NEPHILIM_NS_BEGIN
 		aabb.upperBound.Set(real_x_mouse + 0.002f, real_y_mouse + 0.002f);
 		
 		
-		this->QueryAABB(&query, aabb);
+		m_world->QueryAABB(&query, aabb);
 
 		for(unsigned int i = 0; i < query.getFixtureCount(); i++){
 			
@@ -144,7 +116,7 @@ NEPHILIM_NS_BEGIN
 					//jointDef.frequencyHz = 1/60;
 					query.getFixture(i)->GetBody()->SetAwake(true);
 
-					pickerMouseJoint = (b2MouseJoint*)CreateJoint(&jointDef);
+					pickerMouseJoint = (b2MouseJoint*)m_world->CreateJoint(&jointDef);
 					return true;
 				}
 				else return false;
@@ -154,27 +126,27 @@ NEPHILIM_NS_BEGIN
 
 		return false;
 		return false;
-	};
+}
 
-	void KinesisWorld::StopPicking(){
-		if(IsPickingEnabled()){
-			DestroyJoint(pickerMouseJoint);
-			pickerMouseJoint = NULL;
-		}
-	};
+void KinesisWorld::StopPicking()
+{
+	if(IsPickingEnabled()){
+		m_world->DestroyJoint(pickerMouseJoint);
+		pickerMouseJoint = NULL;
+	}
+}
 
-	bool KinesisWorld::IsPickingEnabled(){
-		return pickerMouseJoint ? true : false;
-	};
+bool KinesisWorld::IsPickingEnabled(){
+	return pickerMouseJoint ? true : false;
+}
 
-	void KinesisWorld::UpdatePicking(float x, float y){
-		if(pickerMouseJoint){
-			pickerMouseJoint->SetTarget(b2Vec2(ToMeters(x), ToMeters(y)));
-		
-		}
-	};
+void KinesisWorld::UpdatePicking(float x, float y){
+	if(pickerMouseJoint){
+		pickerMouseJoint->SetTarget(b2Vec2(ToMeters(x), ToMeters(y)));		
+	}
+}
 
-	b2Body* KinesisWorld::CreateQuickCircle(float x, float y, float r){
+b2Body* KinesisWorld::CreateQuickCircle(float x, float y, float r){
 		b2BodyDef def;
 		def.position = b2Vec2(ToMeters(x),ToMeters(y));
 		def.type = b2_dynamicBody;
@@ -183,7 +155,7 @@ NEPHILIM_NS_BEGIN
 		circle.m_radius = ToMeters(r);
 		circle.m_p = b2Vec2(0, 0);		
 
-		b2Body *body = CreateBody(&def);
+		b2Body *body = m_world->CreateBody(&def);
 
 		b2FixtureDef fixDef;
 		fixDef.shape = &circle;
@@ -194,9 +166,10 @@ NEPHILIM_NS_BEGIN
 		body->CreateFixture(&fixDef);
 
 		return body;
-	};
+}
 
-	KinesisBodyActor* KinesisWorld::CreateQuickBox(float x, float y, float width, float height){
+KinesisBodyActor* KinesisWorld::CreateQuickBox(float x, float y, float width, float height)
+{
 		b2BodyDef def;
 		def.position = b2Vec2(ToMeters(x), ToMeters(y));
 		def.type = b2_dynamicBody;
@@ -206,7 +179,7 @@ NEPHILIM_NS_BEGIN
 		box.SetAsBox(ToMeters(width/2), ToMeters(height/2));
 	
 
-		b2Body *body = CreateBody(&def);
+		b2Body *body = m_world->CreateBody(&def);
 
 		b2FixtureDef fixDef;
 		fixDef.shape = &box;
@@ -221,9 +194,9 @@ NEPHILIM_NS_BEGIN
 		body -> SetUserData(bodyActor);
 		bodyActor->m_body = body;
 		return bodyActor;
-	};
+}
 
-	b2Body* KinesisWorld::CreateStaticBox(float x, float y, float width, float height){
+b2Body* KinesisWorld::CreateStaticBox(float x, float y, float width, float height){
 		b2BodyDef def;
 		def.position = b2Vec2(ToMeters(x), ToMeters(y));
 		def.type = b2_staticBody;
@@ -231,7 +204,7 @@ NEPHILIM_NS_BEGIN
 		b2PolygonShape box;
 		box.SetAsBox(ToMeters(width/2), ToMeters(height/2));
 
-		b2Body *body = CreateBody(&def);
+		b2Body *body = m_world->CreateBody(&def);
 
 		b2FixtureDef fixDef;
 		fixDef.shape = &box;
@@ -245,9 +218,10 @@ NEPHILIM_NS_BEGIN
 		body->SetUserData(Actor);
 
 		return body;
-	};
+}
 
-	void KinesisWorld::CreateQuickLine(float x, float y, float xx, float yy){
+void KinesisWorld::CreateQuickLine(float x, float y, float xx, float yy)
+{
 		/*b2BodyDef def;
 		def.position = b2Vec2(ToMeters(xx)/ToMeters(x), ToMeters(yy)/ToMeters(y));
 		def.type = b2_dynamicBody;
@@ -267,7 +241,7 @@ NEPHILIM_NS_BEGIN
 		fixDef.restitution = 0.5f;
 
 		body->CreateFixture(&fixDef);*/
-	};
+}
 
 
 	/*KinesisDebugDraw* KinesisWorld::GetDebugRenderer(){
@@ -275,7 +249,7 @@ NEPHILIM_NS_BEGIN
 	};*/
 
 	float KinesisWorld::getPixelRatio(){
-		return myPixelRatio;
+		return m_pixelsPerMeter;
 	};
 
 

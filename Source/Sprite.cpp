@@ -81,7 +81,7 @@ void Sprite::setTextureRect(const FloatRect &rect){
 	if(m_texture)
 	{
 		float texture_width = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().x);
-	float texture_height = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().y);
+		float texture_height = static_cast<float>(const_cast<Texture*>(m_texture)->getSize().y);
 
 	float left   = static_cast<float>(rect.left);
 	float right  = left + rect.width;
@@ -209,9 +209,11 @@ void Sprite::onDraw(Renderer* renderer){
 
 	*/
 	
-	renderer->setModelMatrix(getTransform().getMatrix());
+	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	if(m_texture) m_texture->bind(Texture::Normalized);
 	renderer->draw(m_vertices);
+	renderer->setModelMatrix(mat4());
+
 
 	/*
 

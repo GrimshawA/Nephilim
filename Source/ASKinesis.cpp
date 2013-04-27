@@ -56,8 +56,8 @@ bool ASEngine::exportKinesis(){
 		r = asEngine->RegisterObjectMethod("KinesisWorld", "KinesisBodyActor@ createDynamicBox(float, float, float, float)", WRAP_MFN(KinesisWorld,CreateQuickBox), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectMethod("KinesisWorld", "void destroyBody(KinesisBodyActor@)", asMETHOD(KinesisWorld,destroyBodyActor), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 
-		if(exportedRenderer)
-			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", WRAP_MFN(KinesisWorld, drawDebugShapes), asCALL_GENERIC);
+		/*if(exportedRenderer)
+			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", WRAP_MFN(KinesisWorld, drawDebugShapes), asCALL_GENERIC);*/
 
 	}
 	else{
@@ -71,8 +71,8 @@ bool ASEngine::exportKinesis(){
 		//r = asEngine->RegisterObjectMethod("KinesisWorld", "void destroyBody(KinesisBodyActor@)", asMETHOD(KinesisWorld,destroyBodyActor), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 
 
-		if(exportedRenderer)
-			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", asMETHOD(KinesisWorld, drawDebugShapes), asCALL_THISCALL);
+		/*if(exportedRenderer)
+			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", asMETHOD(KinesisWorld, drawDebugShapes), asCALL_THISCALL);*/
 	}
 
 

@@ -1,7 +1,7 @@
 #define ANDROID_PACKAGE_NAME com_nephilim_samplekinesis
 #define ANDROID_ACTIVITY_NAME Kinectic
 #include <Nephilim/GenericMain.h>
-#include "SampleKinesis.h"
+#include "Kinectic.h"
 
 Kinectic sample;
 
