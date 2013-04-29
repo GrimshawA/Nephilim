@@ -342,7 +342,7 @@ const Font& Font::getDefaultFont()
         };
 
         if(font.loadFromMemory(data, sizeof(data))){
-			TESTLOG("READ DEFAULT FONT")
+//			TESTLOG("READ DEFAULT FONT")
 		}
         loaded = true;
     }

@@ -310,7 +310,7 @@ void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int
 /// Draw a vertex array
 void Renderer::draw(const VertexArray2D& varray, const RenderState& state)
 {
-	TESTLOG("Why are you calling draw on an abstract base class?\n")
+	//TESTLOG("Why are you calling draw on an abstract base class?\n")
 }
 
 /// Allows a drawable to draw itself

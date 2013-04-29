@@ -66,7 +66,7 @@ bool Shader::loadShader(ShaderTypes type, const char* source)
 				char* buf = new char[infoLen];
 				if (buf) {
 					glGetShaderInfoLog(shader, infoLen, NULL, buf);
-					PRINTLOG("GLSL", "Failed to load shader: %s\n", buf);
+					//PRINTLOG("GLSL", "Failed to load shader: %s\n", buf);
 					delete [] buf;
 				}
 				glDeleteShader(shader);
@@ -130,7 +130,7 @@ bool Shader::create()
 					String mstr(buf);
 					mstr.removeCharacter('\r');
 					mstr.removeCharacter('\n');
-					PRINTLOG("GLSL", "Failed to link shader program(%d): %s\n",mstr.length(), mstr.c_str());
+					//PRINTLOG("GLSL", "Failed to link shader program(%d): %s\n",mstr.length(), mstr.c_str());
 					delete [] buf;
 				}
 			}

@@ -1,65 +1,26 @@
-#ifndef PARABOLA_LOGGER_H
-#define PARABOLA_LOGGER_H
+#ifndef Logger_h__
+#define Logger_h__
 
 #include "Platform.h"
 #include "Strings.h"
 
-#include <stdio.h>
-
-#ifdef NEPHILIM_ANDROID
-#include "AndroidInterface.h"
-#endif
-
 NEPHILIM_NS_BEGIN
 
-#ifdef NEPHILIM_ANDROID
-#define TESTLOG(x) __android_log_print(ANDROID_LOG_INFO, "ParabolaLogger", (x));
-#define PRINTLOG(tag, formats, ...) __android_log_print(ANDROID_LOG_INFO, tag, formats, __VA_ARGS__);
-/*#elif defined PARABOLA_BROWSER
-static FILE* logFilePtr = fopen("K:/Users/Hellhound/Desktop/plugin_test/log.txt", "a");
-#define TESTLOG(x) fprintf(logFilePtr, x);
-#define PRINTLOG(tag, formats, ...) fprintf(logFilePtr, "[%s] ", tag);fprintf(logFilePtr, formats, __VA_ARGS__);*/
-#else
-#define TESTLOG(x) printf(x);
-#define PRINTLOG(tag, formats, ...) printf("[%s] ", tag);printf(formats, __VA_ARGS__);
-#endif
-
-#define LOG(x) TESTLOG(x)
-
-namespace LoggerSettings{
-	/// Verbose modes of the logger
-	/// A log is always output with a verbose mode
-	/// It is shown in that verbose mode, and all the lower ones.
-	enum Modes{
-		NONE = 0, /// Nothing is output
-		DETAIL,
-		NORMAL, ///
-		CRITICAL,
-		FATAL, /// Only fatal errors are output
-	};
-};
+/// Logs a simple formatted string
+void Log(const char * format, ...);
 
 /**
 	\ingroup Core
 	\class Logger
-	\brief Ability to log information into multiple destinations
+	\brief Process-wide logger
+
+	If you are looking for more focused and configurable logging, use X instead. (TODO)
 */
 class NEPHILIM_API Logger{
 public:
-
-	/// Simply outputs the string into the stdout
-	static void fastLog(const String &output);
-
-private:
-	bool myEnabled;
-	LoggerSettings::Modes myVerboseMode;
+	/// The tag prefix for Log()
+	static String m_tag;
 };
 
-#ifdef PARABOLA_BUILD_DEBUG
-#define DEBUG_MESSAGE(x) Logger::fastLog(x);
-#elif defined PARABOLA_BUILD_RELEASE
-#define DEBUG_MESSAGE(x)
-#endif
-
 NEPHILIM_NS_END
-#endif
+#endif // Logger_h__

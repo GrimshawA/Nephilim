@@ -29,7 +29,7 @@ void dummy(void*){
 }
 
 void scriptstdprint(std::string in){
-	TESTLOG(in.c_str())
+	//TESTLOG(in.c_str())
 }
 
 static void ASMessageCallback(const asSMessageInfo *msg, void *param){
@@ -40,8 +40,7 @@ static void ASMessageCallback(const asSMessageInfo *msg, void *param){
 		else if( msg->type == asMSGTYPE_INFORMATION )
 			type = "INFO";
 
-		//printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
-		PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
+		Log("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
 
 };
 
@@ -149,7 +148,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 	int r;
 	r = Builder.StartNewModule(asEngine, name.c_str());
 	if(r<0){
-		TESTLOG("Could not create a new Script Module.")
+		//TESTLOG("Could not create a new Script Module.")
 		return NULL;
 	}
 
@@ -184,13 +183,13 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 #endif
 
 		if(r<0){
-			TESTLOG("Could not stream file data into the Script Module.")
+		//	TESTLOG("Could not stream file data into the Script Module.")
 			return 0;
 		}
 
 		r = Builder.BuildModule();
 		if(r<0){
-			TESTLOG("Could not compile the script file.")
+			//TESTLOG("Could not compile the script file.")
 			return 0;
 		}
 
@@ -200,7 +199,7 @@ ASScript* ASEngine::loadScript(const String &name, const String &alias, bool isB
 
 		if(asScript->myModule == NULL){
 
-			TESTLOG("Module was not created properly.\n")
+			//TESTLOG("Module was not created properly.\n")
 			return NULL;
 		}
 	}
@@ -539,7 +538,7 @@ bool ASEngine::exportStrings(){
 	if (strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY")){
 		r = asEngine->RegisterGlobalFunction("void print(string)", WRAP_FN(scriptstdprint), asCALL_GENERIC);
 		if(r < 0){
-			TESTLOG("FAILED TO REGISTER print(string)\n")
+//			TESTLOG("FAILED TO REGISTER print(string)\n")
 		}
 	}
 	else

@@ -265,7 +265,7 @@ void ScriptedGameCore::onEvent(Event &event){
 
 	if(event.type == Event::Resized)
 	{
-		PRINTLOG("Resize", "Resize: %d    %d\n", event.size.width, event.size.height);
+//		PRINTLOG("Resize", "Resize: %d    %d\n", event.size.width, event.size.height);
 
 		for(std::map<String,UIWindow*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 		{
@@ -275,7 +275,7 @@ void ScriptedGameCore::onEvent(Event &event){
 
 	if(event.type == Event::Resume)
 	{
-		TESTLOG("RESUME CONTEXT LOST!!!\n");
+		//TESTLOG("RESUME CONTEXT LOST!!!\n");
 	}
 
 

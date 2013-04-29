@@ -6,6 +6,8 @@
 #include <Nephilim/KxScene.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/KxMousePicker.h>
+
+
 #include <Nephilim/DateTime.h>
 
 #include <Nephilim/ParticleSystem.h>
@@ -43,6 +45,10 @@ KxMousePicker picker;
 
 void Kinectic::onCreate()
 {	
+	Log("hello %d %d %d", 20, 30, 40);
+
+	Image i; i.loadFromFile("f");
+
 	world.CreateQuickCircle(200,200,20);
 	world.CreateStaticBox(0,600,2500, 10);
 
@@ -130,7 +136,7 @@ void Kinectic::onUpdate(Time time)
 	// override
 	static float traveled = 0;
 
-	vec2 direction = pointB - pointA; direction.normalize();
+	vec2 direction = pointB - curr_linear_position; direction.normalize();
 	float sin_deviation = sin(frequency * angle) - 0.5;
 	vec2 deviation = vec2(-direction.y, direction.x); 
 	deviation *= sin_deviation * 30;

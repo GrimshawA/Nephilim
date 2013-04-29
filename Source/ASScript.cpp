@@ -58,13 +58,13 @@ bool ASScript::prepareMethod(const String &funcName){
 			return true;
 		}
 		else{
-			TESTLOG("ASScript: could not prepare method")
+			//TESTLOG("ASScript: could not prepare method")
 			return false;
 
 		}
 	}
 	else{
-		TESTLOG("ASScript: Could not prepare module")
+		//TESTLOG("ASScript: Could not prepare module")
 		return false;
 	}
 
@@ -128,17 +128,17 @@ bool ASScript::call(void *data, ScriptArgumentTypes::ArgTypes returnType){
 		}
 		else if(r == asEXECUTION_SUSPENDED)
 		{
-			TESTLOG("SUSPENDED")
+			//TESTLOG("SUSPENDED")
 		}
 		else{
-			TESTLOG("Failed to run function")
-				PRINTLOG(" ", "%d", r);
+			//TESTLOG("Failed to run function")
+			//	PRINTLOG(" ", "%d", r);
 		}
 		releaseContext();
 		return true;
 	}
 	else{
-		TESTLOG("Module not found")
+		//TESTLOG("Module not found")
 		return false;
 	}
 };

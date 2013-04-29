@@ -115,7 +115,7 @@ bool Image::loadFromFile(const String &path){
 	{
 		// Error, failed to load the image
 		String errorResult = "Failed to load image. \"" + path + "\". Reason : " + stbi_failure_reason();
-		PRINTLOG("Nephilim", "%s\n", errorResult.c_str());
+		Log("%s", errorResult.c_str());
 		return false;
 	}
 
@@ -156,7 +156,7 @@ bool Image::loadFromStream(File* stream){
 	else
 	{
 		// Error, failed to load the image
-		TESTLOG("Failed to load image from stream. Reason : "/* + privNS::stbi_failure_reason())).c_str()*/);
+		//TESTLOG("Failed to load image from stream. Reason : "/* + privNS::stbi_failure_reason())).c_str()*/);
 
 		return false;
 	}

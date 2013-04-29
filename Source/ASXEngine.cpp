@@ -18,7 +18,7 @@ NEPHILIM_NS_BEGIN
 			type = "INFO";
 
 		//printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
-		PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
+		//PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
 
 };
 ASXEngine::ASXEngine()
@@ -65,7 +65,7 @@ void ASXEngine::messageLogger(const asSMessageInfo *msg, void *param)
 		type = "INFO";
 
 	//printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
-	PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
+//	PRINTLOG("AngelScript", "%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message)
 }
 
 NEPHILIM_NS_END

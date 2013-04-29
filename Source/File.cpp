@@ -71,7 +71,7 @@ File::File(FILE* fileHandle, Int64 startOffset, Int64 length)
 	fseek(m_handle, m_offset, SEEK_SET);
 
 	String found = "Found the asset on offset " + String::number((long int)m_offset) + " with len " + String::number((long int)m_length);
-	TESTLOG(found.c_str())
+	//TESTLOG(found.c_str())
 };
 
 File::operator bool()

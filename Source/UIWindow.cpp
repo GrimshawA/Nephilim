@@ -213,7 +213,7 @@ bool UIWindow::pushEvent(Event& event){
 
 		for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 			(*it)->reloadGraphicalAssets();
-			TESTLOG("RELOADING SURFACE")
+			
 
 		}
 	}

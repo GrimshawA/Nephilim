@@ -1,61 +1,21 @@
-#include "Nephilim/View.h"
-#include "Nephilim/MMath.h"
-#include "Nephilim/Renderer.h" //t remove
-#include "Nephilim/Window.h" //t remove
-#include <Nephilim/ASEngine.h>
-#include "AS/aswrappedcall.h"
+#include <Nephilim/View.h>
+#include <Nephilim/MMath.h>
+
 #include <cmath>
 
 NEPHILIM_NS_BEGIN
 
-	/*
-bool registerView(ASEngine* engine)
+View::View()
+: m_transformUpdated(false)
+, m_invTransformUpdated(false)
+, m_rotation(0.f)
+, m_viewport(0.f,0.f,1.f,1.f)
 {
-	engine->getASEngine()->RegisterObjectType("View", sizeof(View), asOBJ_REF);
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_FACTORY, "View@ f()", WRAP_FN(genericFactory<View>), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_ADDREF, "void f()", WRAP_MFN(View, addReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_RELEASE, "void f()", WRAP_MFN(View, removeReference), asCALL_GENERIC);
-
-		engine->getASEngine()->RegisterObjectMethod("View", "void setRect(float,float,float,float)", WRAP_MFN(View, setRect), asCALL_GENERIC);
-
-		engine->getASEngine()->RegisterObjectMethod("Renderer", "void pushView(View@)", WRAP_MFN(Renderer, pushView), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Renderer", "void popView()", WRAP_MFN(Renderer, popView), asCALL_GENERIC);
-
-		engine->getASEngine()->RegisterObjectMethod("Window", "Vec2f convertCoords(const Vec2i& in, const View@)", WRAP_MFN(Window, convertCoords), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Window", "Vec2i getSize()", WRAP_MFN(Window, getSize), asCALL_GENERIC);
-
-
-
-	}
-	else
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_FACTORY, "View@ f()", asFUNCTION(genericFactory<View>), asCALL_CDECL);
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_ADDREF, "void f()", asMETHOD(View, addReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("View", asBEHAVE_RELEASE, "void f()", asMETHOD(View, removeReference), asCALL_THISCALL);
-
-		engine->getASEngine()->RegisterObjectMethod("View", "void setRect(float,float,float,float)", asMETHOD(View, setRect), asCALL_THISCALL);
-
-		engine->getASEngine()->RegisterObjectMethod("Renderer", "void pushView(View@)", asMETHOD(Renderer, pushView), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Renderer", "void popView()", asMETHOD(Renderer, popView), asCALL_THISCALL);
-
-		engine->getASEngine()->RegisterObjectMethod("Window", "Vec2f convertCoords(const Vec2i& in, const View@)", asMETHOD(Window, convertCoords), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Window", "Vec2i getSize()", asMETHOD(Window, getSize), asCALL_THISCALL);
-
-	}
-	return true;
-
-};
-*/
-
-View::View() : m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f) , RefCountable(){
 
 }
 
 View::View(float left, float top, float width, float height)
-: m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f) , RefCountable()
+: m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f)
 {
 	setRect(left, top, width, height);
 }
