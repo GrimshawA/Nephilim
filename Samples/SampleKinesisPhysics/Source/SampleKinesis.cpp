@@ -2,7 +2,7 @@
 
 #include <Nephilim/KinesisWorld.h>
 
-KinesisWorld world;
+KxScene world;
 
 void Kinectic::onCreate()
 {	

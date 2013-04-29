@@ -6,35 +6,58 @@
 NEPHILIM_NS_BEGIN
 
 ParticleSystem::ParticleSystem()
+: counter(0)
 {
 	
 }
 
 void ParticleSystem::create()
 {
-	Image im;
-	im.loadFromFile("part.png");
-	im.createMaskFromColor(Color::Black, 0);
-	tex.loadFromImage(im);
+	tex = new Texture();
+	tex->loadFromFile("part.png");
+
+	position = vec3(400,400,0);
 }
 
 
 void ParticleSystem::update(float deltaTime)
 {
-	Sprite sprite;
-	sprite.setPosition(Math::random(30,500),Math::random(40,500));
-	sprite.setTexture(tex);
-	sprite.setColor(Color(Math::randomInt(1,255), Math::randomInt(1,200), Math::randomInt(1,170)));
-	m_particles.push_back(sprite);
+	for(int i =0; i < m_particles.size(); i++)
+	{
+		m_particles[i].position += m_particles[i].velocity * deltaTime;
+		m_particles[i].s.setPosition(m_particles[i].position.x, m_particles[i].position.y);
+	}
+
+
+	if(++counter % 2 == 0)
+	{
+		Sprite sprite;
+		sprite.setPosition(position.x,position.y);
+		sprite.setTexture(*tex);
+		sprite.setOrigin(32,32);
+		sprite.setColor(Color(Math::randomInt(1,50), Math::randomInt(100,200), Math::randomInt(1,40)));
+		sprite.resize(32,32);
+		Particle pp;
+		pp.position  = vec3(position.x,position.y,0);
+		float angle = Math::random(0, Math::pi*2); pp.velocity = vec3(cos(angle) * 80, sin(angle)*80,0);
+		pp.s = sprite;
+		m_particles.push_back(pp);
+	}
+	
+
+	if(m_particles.size() > tank)
+		m_particles.erase(m_particles.begin());
 }
 
 void ParticleSystem::onDraw(Renderer* renderer)
 {
-	renderer->setDefaultBlending();
+	renderer->setBlendMode(Render::Blend::Alpha);
 	for(int i =0; i < m_particles.size(); i++)
 	{
-		renderer->draw(m_particles[i]);
+		renderer->draw(m_particles[i].s);
 	}
+	renderer->setDefaultBlending();
+
 }
 
 

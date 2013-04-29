@@ -5,8 +5,7 @@
 /* Parabola Engine Kinesis Libraries - Artur Moreira                    */
 /************************************************************************/
 
-#include "KinesisWorld.h"
-#include "KinesisForge.h"
+#include "KxScene.h"
 
 /**
 	\defgroup Kinesis

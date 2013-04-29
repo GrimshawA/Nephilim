@@ -181,11 +181,25 @@ Vec3<T>::Vec3(T x, T y, T z){
 };
 
 template<class T>
+Vec3<T>::Vec3(Vec2<T> val, T z)
+{
+	this->x = val.x;
+	this->y = val.y;
+	this->z = z;
+}
+
+template<class T>
 void Vec3<T>::set(T x, T y, T z){
 	this->x = x;
 	this->y = y;
 	this->z = z;
 };
+
+template<class T>
+Vec2<T> Vec3<T>::xy()
+{
+	return Vec2<T>(x, y);
+}
 
 template<class T>
 void Vec3<T>::setAll(T x){

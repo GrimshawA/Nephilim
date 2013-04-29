@@ -20,7 +20,7 @@
 
 NEPHILIM_NS_BEGIN
 class SceneRenderer;
-class KinesisWorld;
+class KxScene;
 /*
 template<class T>
 class PARABOLA_API SceneGraphSharedResource{

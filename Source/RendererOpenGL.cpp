@@ -20,7 +20,7 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 static const char gVertexSource[] =
-	"#version 120\n"
+	"#version 130\n"
 	"in vec4 vertex;\n"
 	"in vec4 color;\n"
 	"in vec2 texCoord;\n"
@@ -36,7 +36,7 @@ static const char gVertexSource[] =
 	"}\n";
 
 static const char gFragmentSource[] = 
-	"#version 120\n"
+	"#version 130\n"
 	"uniform int textured = 1;\n"
 	"uniform sampler2D texture;\n"
 	"varying vec4 outColor;\n"

@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 class SceneGraph;
 class SceneNode;
 class SceneRenderer;
-class KinesisWorld;
+class KxScene;
 template<class T>
 class SceneGraphSharedResource;
 /**
@@ -40,7 +40,7 @@ public:
 	bool useKinesisWorld(const String &name, bool requestOwnership);
 
 	/// Returns the associated physics world, or NULL if none exists
-	KinesisWorld* getKinesisWorld();
+	KxScene* getKinesisWorld();
 	
 
 protected:
@@ -60,7 +60,7 @@ private:
 	SceneLayer(const String &name);
 
 	// Resources
-	SceneGraphSharedResource<KinesisWorld>* mySimulation;
+	SceneGraphSharedResource<KxScene>* mySimulation;
 };
 
 NEPHILIM_NS_END

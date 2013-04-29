@@ -8,19 +8,23 @@
 NEPHILIM_NS_BEGIN
 
 /// Create an uninitialised texture
-Texture::Texture() : m_size(0,0), m_actualSize(0,0), m_texture(0), m_pixelsFlipped(false),m_isSmooth(false){
+Texture::Texture()
+: m_size(0,0)
+, m_actualSize(0,0)
+, m_texture(0)
+, m_pixelsFlipped(false)
+, m_isSmooth(false)
+{
 
-};
+}
 
 /// RAII release of the texture
-Texture::~Texture(){
-	//delete the texture if exists
-	if(m_texture){
-		//glDeleteTextures(1, &m_texture);
-		//PRINTLOG("ParabolaEngine", "Released texture with id: %d\n", m_texture);
-		//m_aliveTextures.erase(m_aliveTextures.find(this));
+Texture::~Texture()
+{
+	if(m_texture > 0){
+		glDeleteTextures(1, &m_texture);
 	}
-};
+}
 
 
 

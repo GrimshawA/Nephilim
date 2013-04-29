@@ -128,6 +128,12 @@ NEPHILIM_NS_BEGIN
 		/// Creates a Vec3 with initial values
 		Vec3(T x, T y, T z);
 
+		/// Creates a vec3 from a vec2 and a z value
+		Vec3(Vec2<T> val, T z);
+
+		/// Return the first two components as (x,y)
+		Vec2<T> xy();
+
 		/// Sets all values of the 3D vector
 		void set(T x, T y, T z);
 		/// Sets all values of the 3D vector as x

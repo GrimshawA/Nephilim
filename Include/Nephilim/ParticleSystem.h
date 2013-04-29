@@ -7,6 +7,23 @@
 #include "Texture.h"
 
 NEPHILIM_NS_BEGIN
+class ParticleEmitter
+{
+public:
+
+
+	vec3 m_position;
+};
+
+class Particle
+{
+public:
+
+	vec3 position;
+	vec3 velocity;
+
+	Sprite s;
+};
 
 /**
 	\ingroup Graphics
@@ -28,9 +45,15 @@ public:
 	/// Draw the particle system
 	virtual void onDraw(Renderer* renderer);
 
-	Texture tex;
-	std::vector<Sprite> m_particles;
+	Texture *tex;
+	std::vector<Particle> m_particles;
+	int counter;
+
+	vec3 position;
+	int tank;
 };
+
+
 
 NEPHILIM_NS_END
 #endif // ParticleSystem_h__
