@@ -6,7 +6,8 @@ NEPHILIM_NS_BEGIN
 
 /// Constructs a uninitialized framebuffer
 Framebuffer::Framebuffer()
-: m_id(0)
+: RenderTarget() 
+, m_id(0)
 {
 
 }
@@ -18,7 +19,7 @@ Framebuffer::~Framebuffer()
 }
 
 /// Bind the framebuffer as the current one
-void Framebuffer::bind()
+void Framebuffer::activate()
 {
 	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
 }

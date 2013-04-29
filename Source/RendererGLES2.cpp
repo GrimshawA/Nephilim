@@ -57,7 +57,7 @@ RendererGLES2::RendererGLES2()
 }
 
 /// Draw a vertex array
-void RendererGLES2::draw(const VertexArray& varray)
+void RendererGLES2::draw(const VertexArray2D& varray)
 { 
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 	
@@ -76,9 +76,9 @@ void RendererGLES2::draw(const VertexArray& varray)
 	enableVertexAttribArray(0);
 	enableVertexAttribArray(1);
 	enableVertexAttribArray(2);
-	setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), data + 0);
-	setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
-	setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
+	setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 0);
+	setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(VertexArray2D::Vertex), data + 8);
+	setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 12);
 	drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 	disableVertexAttribArray(0);
 	disableVertexAttribArray(1);

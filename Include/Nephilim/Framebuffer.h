@@ -2,6 +2,7 @@
 #define Framebuffer_h__
 
 #include "Platform.h"
+#include "RenderTarget.h"
 
 NEPHILIM_NS_BEGIN
 class Texture;
@@ -22,7 +23,7 @@ class Texture;
 	Please notice that mobile implementations of OpenGL do not allow to output to more than one attachment, so please make
 	sure you know what you're doing if you attempt to go around that for other ends.
 */
-class NEPHILIM_API Framebuffer
+class NEPHILIM_API Framebuffer : public RenderTarget
 {
 public:
 	/// Constructs a uninitialized framebuffer
@@ -32,7 +33,7 @@ public:
 	~Framebuffer();
 
 	/// Bind the framebuffer as the current one
-	void bind();
+	void activate();
 
 	/// Attaches a texture to the color attachment 0
 	void attachTexture(const Texture& texture);

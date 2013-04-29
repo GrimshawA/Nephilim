@@ -25,7 +25,7 @@ RendererGLES::RendererGLES()
 };
 
 /// Draw a vertex array
-void RendererGLES::draw(const VertexArray& varray)
+void RendererGLES::draw(const VertexArray2D& varray)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
@@ -204,7 +204,7 @@ void RendererGLES::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color
 };*/
 
 
-void RendererGLES::drawVertexArray(VertexArray &vertexArray){
+void RendererGLES::drawVertexArray(VertexArray2D &vertexArray){
 
 };
 

@@ -1,7 +1,5 @@
 #include <Nephilim/KxScene.h>
-
-
-#include "Nephilim/KinesisQueryCallback.h"
+#include <Nephilim/KxQuery.h>
 
 #include <iostream>
 using namespace std;

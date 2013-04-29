@@ -15,9 +15,11 @@ Renderer::Renderer()
 {
 	m_primitiveTable[Render::Primitive::Triangles] = static_cast<int>(GL_TRIANGLES);
 	m_primitiveTable[Render::Primitive::TriangleFan] = static_cast<int>(GL_TRIANGLE_FAN);
+	m_primitiveTable[Render::Primitive::TriangleStrip] = static_cast<int>(GL_TRIANGLE_STRIP);
 	m_primitiveTable[Render::Primitive::Lines] = static_cast<int>(GL_LINES);
 	m_primitiveTable[Render::Primitive::LineLoop] = static_cast<int>(GL_LINE_LOOP);
 	m_primitiveTable[Render::Primitive::Points] = static_cast<int>(GL_POINTS);
+	m_primitiveTable[Render::Primitive::LineStrip] = static_cast<int>(GL_LINE_STRIP);
 
 	setClearColor(Color::Orange);
 };
@@ -51,9 +53,10 @@ Color Renderer::getClearColor()
 	return m_clearColor;
 }
 
-void Renderer::setFramebuffer(Framebuffer& target)
+void Renderer::setTarget(RenderTarget& target)
 {
-	
+	m_target = &target;
+	m_target->activate();
 }
 
 void Renderer::setDefaultTransforms()
@@ -87,6 +90,7 @@ void Renderer::setViewportInPixels(int left, int top, int width, int height)
 void Renderer::setDefaultBlending()
 {
 	setBlendMode(Render::Blend::Alpha);
+	glBlendEquation(GL_FUNC_ADD);
 }
 
 void Renderer::setBlendMode(Render::Blend::Mode mode)
@@ -192,7 +196,7 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 
 	mat4 translation = mat4::translate(x,y,0);
 
-	VertexArray varray(Render::Primitive::Triangles, 6);
+	VertexArray2D varray(Render::Primitive::Triangles, 6);
 	varray[0].position = Vec2f(width/2,-height/2);
 	varray[1].position = Vec2f(-width/2,height/2);
 	varray[2].position = Vec2f(-width/2,-height/2);
@@ -218,7 +222,7 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 /// Draw a debug line with the given color - slow
 void Renderer::drawDebugLine(Vec2f begin, Vec2f end, Color color)
 {
-	VertexArray varray(Render::Primitive::Lines, 2);
+	VertexArray2D varray(Render::Primitive::Lines, 2);
 	varray[0].position = begin;
 	varray[1].position = end;
 
@@ -250,7 +254,7 @@ bool Renderer::readPixels(Image& image)
 /// Draw a debug circle with the given color and radius - slow
 void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color)
 {
-	VertexArray varray(Render::Primitive::TriangleFan, 0);
+	VertexArray2D varray(Render::Primitive::TriangleFan, 0);
 	const float k_segments = 32.0f;
 	const float k_increment = 2.0f * 3.14159 / k_segments;
 	float theta = 0.0f;
@@ -262,7 +266,7 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 	{
 		Vec2f v = center + Vec2f(cosf(theta), sinf(theta)) * radius;
 		theta += k_increment;
-		varray.append(Vertex(v, color, Vec2f()));
+		varray.append(VertexArray2D::Vertex(v, color, Vec2f()));
 	}
 	glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -304,7 +308,7 @@ void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int
 
 
 /// Draw a vertex array
-void Renderer::draw(const VertexArray& varray, const RenderState& state)
+void Renderer::draw(const VertexArray2D& varray, const RenderState& state)
 {
 	TESTLOG("Why are you calling draw on an abstract base class?\n")
 }

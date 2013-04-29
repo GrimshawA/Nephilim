@@ -10,7 +10,7 @@ class NEPHILIM_API RendererOpenGL : public Renderer{
 public:
 
 	/// Draw a vertex array
-	virtual void draw(const VertexArray& varray, const RenderState& state);
+	virtual void draw(const VertexArray2D& varray, const RenderState& state);
 
 	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
 	virtual void setDefaultShader();
@@ -46,7 +46,7 @@ virtual void enableClipping(FloatRect rect);
 	virtual void display();
 	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color);
 	//virtual void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
-	virtual void drawVertexArray(VertexArray &vertexArray);
+	virtual void drawVertexArray(VertexArray2D &vertexArray);
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);	virtual void setProjectionMatrix(const mat4& projection);
 	virtual void setViewMatrix(const mat4& view);
 	virtual void setModelMatrix(const mat4& model);

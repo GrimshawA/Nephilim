@@ -6,7 +6,6 @@
 #include "Nephilim/Window.h"
 #include "Nephilim/Sprite.h"
 #include "Nephilim/Sound.h"
-#include "Nephilim/Kinesis.h"
 #include "Nephilim/TextStream.h"
 #include "Nephilim/NStateImage.h"
 #include "Nephilim/NStateCustom.h"

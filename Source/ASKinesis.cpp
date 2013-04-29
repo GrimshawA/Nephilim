@@ -1,5 +1,4 @@
 #include "Nephilim/ASEngine.h"
-#include "Nephilim/Kinesis.h"
 #include "AS/aswrappedcall.h"
 
 #include <stdio.h>
@@ -7,7 +6,7 @@
 using namespace std;
 
 NEPHILIM_NS_BEGIN
-
+	/*
 KxScene* KWFactory()
 {
 	// Initialize the pre-allocated memory by calling the
@@ -38,7 +37,7 @@ bool ASEngine::exportKinesis(){
 
 
 
-	exportReferenceDataType("b2PrismaticJointDef");
+/*	exportReferenceDataType("b2PrismaticJointDef");
 
 
 
@@ -56,8 +55,6 @@ bool ASEngine::exportKinesis(){
 		r = asEngine->RegisterObjectMethod("KinesisWorld", "KinesisBodyActor@ createDynamicBox(float, float, float, float)", WRAP_MFN(KxScene,CreateQuickBox), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectMethod("KinesisWorld", "void destroyBody(KinesisBodyActor@)", asMETHOD(KinesisWorld,destroyBodyActor), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 
-		/*if(exportedRenderer)
-			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", WRAP_MFN(KinesisWorld, drawDebugShapes), asCALL_GENERIC);*/
 
 	}
 	else{
@@ -71,16 +68,12 @@ bool ASEngine::exportKinesis(){
 		//r = asEngine->RegisterObjectMethod("KinesisWorld", "void destroyBody(KinesisBodyActor@)", asMETHOD(KinesisWorld,destroyBodyActor), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 
 
-		/*if(exportedRenderer)
-			r = asEngine->RegisterObjectMethod("KinesisWorld", "void draw(Renderer@)", asMETHOD(KinesisWorld, drawDebugShapes), asCALL_THISCALL);*/
-	}
+	
+	}*/
+	/*
 
-
-	/*if(exportedRenderer)
-		r = asEngine->RegisterObjectMethod("KinesisWorld", "void drawDebug(SceneRenderer& inout)", asMETHOD(KinesisWorld,drawDebug), asCALL_THISCALL); if(r < 0)printf("r %d", r);;
-*/
 	exportedKinesis = true;
 	return true;
-}
+}*/
 
 NEPHILIM_NS_END

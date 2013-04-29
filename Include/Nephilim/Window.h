@@ -18,7 +18,7 @@ typedef void* WindowHandle;
 	\brief Represents a screen or window where the engine is able to draw graphics
 
 */
-class NEPHILIM_API Window : public RenderTarget{
+class NEPHILIM_API Window{
 public:
 	/// Default constructor
 	Window();

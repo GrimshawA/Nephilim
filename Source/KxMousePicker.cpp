@@ -1,5 +1,5 @@
 #include <Nephilim/KxMousePicker.h>
-#include <Nephilim/KinesisQueryCallback.h>
+#include <Nephilim/KxQuery.h>
 #include <Nephilim/KxScene.h>
 
 NEPHILIM_NS_BEGIN

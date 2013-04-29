@@ -9,8 +9,10 @@ namespace Render
 		{
 			Triangles,
 			TriangleFan,
+			TriangleStrip,
 			Lines,
 			LineLoop,
+			LineStrip,
 			Points
 		};
 	}

@@ -350,10 +350,10 @@ void Text::updateGeometry()
             float top = y + underlineOffset;
             float bottom = top + underlineThickness;
 
-            m_vertices.append(Vertex(Vec2f(0, top),    m_color, Vec2f(1, 1)));
-            m_vertices.append(Vertex(Vec2f(x, top),    m_color, Vec2f(1, 1)));
-            m_vertices.append(Vertex(Vec2f(x, bottom), m_color, Vec2f(1, 1)));
-            m_vertices.append(Vertex(Vec2f(0, bottom), m_color, Vec2f(1, 1)));
+            m_vertices.append(VertexArray2D::Vertex(Vec2f(0, top),    m_color, Vec2f(1, 1)));
+            m_vertices.append(VertexArray2D::Vertex(Vec2f(x, top),    m_color, Vec2f(1, 1)));
+            m_vertices.append(VertexArray2D::Vertex(Vec2f(x, bottom), m_color, Vec2f(1, 1)));
+            m_vertices.append(VertexArray2D::Vertex(Vec2f(0, bottom), m_color, Vec2f(1, 1)));
 
 			cout<<"No."<<endl;
         }
@@ -389,13 +389,13 @@ void Text::updateGeometry()
 		//GLfloat vertices[] = {width/2,-height/2,0, -width/2,height/2,0, -width/2,-height/2,0,  width/2,-height/2,0,  width/2,height/2,0, -width/2, height/2,0 };
 
 		//cout<<"adding uvs: " << u1 << " " << v1 << " " << u2 << " " << v2 <<endl;
-		m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));
 
-		m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
-		m_vertices.append(Vertex(Vec2f(x + right - italic * top,    y + top),    m_color, Vec2f(u2, v1)));
-		m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * top,    y + top),    m_color, Vec2f(u2, v1)));
+		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
 
 
         // Advance to the next character
@@ -408,10 +408,10 @@ void Text::updateGeometry()
         float top = y + underlineOffset;
         float bottom = top + underlineThickness;
 
-        m_vertices.append(Vertex(Vec2f(0, top),    m_color, Vec2f(1, 1)));
-        m_vertices.append(Vertex(Vec2f(x, top),    m_color, Vec2f(1, 1)));
-        m_vertices.append(Vertex(Vec2f(x, bottom), m_color, Vec2f(1, 1)));
-        m_vertices.append(Vertex(Vec2f(0, bottom), m_color, Vec2f(1, 1)));
+        m_vertices.append(VertexArray2D::Vertex(Vec2f(0, top),    m_color, Vec2f(1, 1)));
+        m_vertices.append(VertexArray2D::Vertex(Vec2f(x, top),    m_color, Vec2f(1, 1)));
+        m_vertices.append(VertexArray2D::Vertex(Vec2f(x, bottom), m_color, Vec2f(1, 1)));
+        m_vertices.append(VertexArray2D::Vertex(Vec2f(0, bottom), m_color, Vec2f(1, 1)));
 
 		cout<<"No."<<endl;
     }

@@ -8,7 +8,7 @@
 #include "Drawable.h"
 #include "Transformable.h"
 #include "ReferenceCountable.h"
-#include "VertexArray.h"
+#include "VertexArray2D.h"
 #include "Texture.h"
 #include <vector>
 
@@ -71,7 +71,7 @@ public:
 	FloatRect getLocalBounds() const;
 
 	const Texture* m_texture;
-	VertexArray m_vertices;
+	VertexArray2D m_vertices;
 	FloatRect m_textureRect;
 
 	Blend::BlendModes m_blendMode;

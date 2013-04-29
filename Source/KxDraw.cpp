@@ -103,7 +103,7 @@ void KxDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b
 
 void KxDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {		
-		VertexArray vlist(Render::Primitive::TriangleFan, vertexCount);
+		VertexArray2D vlist(Render::Primitive::TriangleFan, vertexCount);
 
 		Color finalColor;
 		finalColor.r = (color.r * 255) / 1;

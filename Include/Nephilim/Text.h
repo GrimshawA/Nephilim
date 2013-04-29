@@ -7,7 +7,7 @@
 #include "Transformable.h"
 #include "Font.h"
 #include "Color.h"
-#include "VertexArray.h"
+#include "VertexArray2D.h"
 #include "Rect.h"
 #include "Logger.h"
 
@@ -134,7 +134,7 @@ private:
 	/// Color of the text
 	Color m_color;
 	/// Text geometry
-	VertexArray m_vertices;
+	VertexArray2D m_vertices;
 	/// Bounds of the text
 	FloatRect m_bounds;
 };

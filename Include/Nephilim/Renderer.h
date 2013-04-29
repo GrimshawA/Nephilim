@@ -9,7 +9,7 @@
 #include "Strings.h"
 #include "Color.h"
 #include "Drawable.h"
-#include "VertexArray.h"
+#include "VertexArray2D.h"
 #include "View.h"
 #include "Shader.h"
 #include "RenderModes.h"
@@ -22,7 +22,6 @@ NEPHILIM_NS_BEGIN
 
 class RenderTarget;
 class Surface;
-class Framebuffer;
 class Image;
 
 /**
@@ -70,7 +69,7 @@ public:
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
 
 	/// Draw a vertex array
-	virtual void draw(const VertexArray& varray, const RenderState& state = RenderState());
+	virtual void draw(const VertexArray2D& varray, const RenderState& state = RenderState());
 
 	/// Allows a drawable to draw itself
 	virtual void draw(Drawable &drawable);
@@ -98,7 +97,7 @@ public:
 	virtual void setDefaultTarget();
 
 	/// Activates a different render target for rendering
-	virtual void setFramebuffer(Framebuffer& target);
+	virtual void setTarget(RenderTarget& target);
 
 	/// Set the current transform matrices to identity (projection, view and model)
 	/// This is the default OpenGL state, an orthogonal projection on a [-1, -1, 1, 1] rectangle

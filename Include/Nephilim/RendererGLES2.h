@@ -13,7 +13,7 @@ public:
 	RendererGLES2();
 
 	/// Draw a vertex array
-	virtual void draw(const VertexArray& varray);
+	virtual void draw(const VertexArray2D& varray);
 
 	//void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	void applyView(const View &view);

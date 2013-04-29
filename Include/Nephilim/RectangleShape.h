@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 #include "Drawable.h"
-#include "VertexArray.h"
+#include "VertexArray2D.h"
 
 NEPHILIM_NS_BEGIN
 

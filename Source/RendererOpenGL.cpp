@@ -63,7 +63,7 @@ RendererOpenGL::RendererOpenGL()
 };
 
 /// Draw a vertex array
-void RendererOpenGL::draw(const VertexArray& varray, const RenderState& state)
+void RendererOpenGL::draw(const VertexArray2D& varray, const RenderState& state)
 {
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
@@ -72,9 +72,9 @@ void RendererOpenGL::draw(const VertexArray& varray, const RenderState& state)
 		enableVertexAttribArray(0);
 		enableVertexAttribArray(1);
 		enableVertexAttribArray(2);
-		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), data + 0);
-		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), data + 8);
-		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), data + 12);
+		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 0);
+		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(VertexArray2D::Vertex), data + 8);
+		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 12);
 
 		if(varray.m_textured) m_activeShader->setUniformi("textured", 1);
 		else m_activeShader->setUniformi("textured", 0);
@@ -111,9 +111,9 @@ void RendererOpenGL::draw(const VertexArray& varray, const RenderState& state)
 	
 		if(varray.m_textured) glEnable(GL_TEXTURE_2D);
 
-		glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
-		glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
-		glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
+		glVertexPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 0);
+		glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(VertexArray2D::Vertex), data + 8);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 12);
 
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
 
@@ -413,7 +413,7 @@ void RendererOpenGL::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Col
 	draw(varray);
 };
 */
-void RendererOpenGL::drawVertexArray(VertexArray &vertexArray){
+void RendererOpenGL::drawVertexArray(VertexArray2D &vertexArray){
 
 	if(vertexArray.m_vertices.size() == 0)return;
 
@@ -423,9 +423,9 @@ void RendererOpenGL::drawVertexArray(VertexArray &vertexArray){
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glVertexPointer(2, GL_FLOAT, sizeof(Vertex), data + 0);
-	glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(Vertex), data + 8);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), data + 12);
+	glVertexPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 0);
+	glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(VertexArray2D::Vertex), data + 8);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 12);
 
 	/*
  	if(vertexArray.geometryType == Triangles)
