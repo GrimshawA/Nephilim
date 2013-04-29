@@ -3,7 +3,10 @@
 /************************************************************************/
 
 template<class T>
-Vec2<T>::Vec2(){
+Vec2<T>::Vec2()
+: x(static_cast<T>(0))
+, y(static_cast<T>(0))
+{
 
 };
 
@@ -25,7 +28,13 @@ void Vec2<T>::setAll(T x){
 	this->y = x;
 };
 
-
+template<class T>
+Vec2<T> Vec2<T>::normalized()
+{
+	vec2 v2 = *this;
+	v2.normalize();
+	return v2;
+}
 
 /// Makes the vector unit-length
 template<class T>

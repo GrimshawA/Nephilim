@@ -19,28 +19,29 @@ using namespace std;
 #include "stb_image/stb_image.h"
 #include "stb_image/stb_image_write.h"
 
+
+
+NEPHILIM_NS_BEGIN
+
 namespace
 {
 	// stb_image callbacks that operate on a sf::InputStream
 	int read(void* user, char* data, int size)
 	{
-		pE::File* stream = static_cast<pE::File*>(user);
+		File* stream = static_cast<File*>(user);
 		return static_cast<int>(stream->read(data, size));
 	}
 	void skip(void* user, unsigned int size)
 	{
-		pE::File* stream = static_cast<pE::File*>(user);
+		File* stream = static_cast<File*>(user);
 		stream->seek(stream->tell() + size);
 	}
 	int eof(void* user)
 	{
-		pE::File* stream = static_cast<pE::File*>(user);
+		File* stream = static_cast<File*>(user);
 		return stream->tell() >= stream->getSize();
 	}
 }
-
-NEPHILIM_NS_BEGIN
-
 Image::Image()
 : m_size(0,0)
 {

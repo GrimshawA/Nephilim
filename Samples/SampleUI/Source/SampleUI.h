@@ -8,7 +8,7 @@
 #include <Nephilim/Package.h>
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/UIWindow.h>
-using namespace pE;
+using namespace nx;
 
 class SampleUI : public GameCore
 {

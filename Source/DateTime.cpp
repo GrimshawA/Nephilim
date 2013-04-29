@@ -21,7 +21,7 @@ NEPHILIM_NS_BEGIN
 
 		char buffer[20];
 		if(Tm){
-			sprintf(buffer, "%.4d-%.2d-%.2dT%.2d:%.2d:%.2d\0",
+			sprintf(buffer, "%.4d-%.2d-%.2dT%.2d_%.2d_%.2d\0",
 				Tm->tm_year+1900,
 				Tm->tm_mon+1,
 				Tm->tm_mday,

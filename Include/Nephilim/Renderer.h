@@ -23,6 +23,7 @@ NEPHILIM_NS_BEGIN
 class RenderTarget;
 class Surface;
 class Framebuffer;
+class Image;
 
 /**
 	\ingroup Graphics
@@ -152,6 +153,9 @@ public:
 
 	/// Set the current model matrix
 	virtual void setModelMatrix(const mat4& model);
+
+	/// Capture the currently bound frame buffer pixles to an image
+	bool readPixels(Image& image);
 
 	// -- Low level calls
 

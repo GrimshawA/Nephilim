@@ -177,19 +177,8 @@ Image Texture::copyToImage(){
 	if ((m_size == m_actualSize) && !m_pixelsFlipped)
 	{
 		// Texture is not padded nor flipped, we can use a direct copy
-#ifdef PARABOLA_DESKTOP
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
-#else
-		/*GLuint fboTexture;
-		glGenFramebuffers(1, &fboTexture);
-		glBindFramebuffer(GL_FRAMEBUFFER, fboTexture);
-		// attach renderbuffer
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture, 0);
-		glReadPixels(0,0,getSize().x, getSize().y, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
-		// unbind frame buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
-#endif
 	}
 	else
 	{
@@ -197,8 +186,8 @@ Image Texture::copyToImage(){
 
 		// All the pixels will first be copied to a temporary array
 		std::vector<Uint8> allPixels(m_actualSize.x * m_actualSize.y * 4);
-		//glBindTexture(GL_TEXTURE_2D, m_texture);
-		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
 
 		// Then we copy the useful pixels from the temporary array to the final one
 		const Uint8* src = &allPixels[0];
@@ -226,8 +215,6 @@ Image Texture::copyToImage(){
 	image.create(m_size.x, m_size.y, &pixels[0]);
 
 	return image;
-
-
 };
 
 

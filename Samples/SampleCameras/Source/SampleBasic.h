@@ -7,7 +7,7 @@
 #include <Nephilim/ShaderGen.h>
 #include <Nephilim/Package.h>
 #include <Nephilim/Framebuffer.h>
-using namespace pE;
+using namespace nx;
 
 class SampleUI : public GameCore
 {

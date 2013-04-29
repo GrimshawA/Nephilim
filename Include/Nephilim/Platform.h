@@ -10,8 +10,8 @@
 	\namespace pE
 	\brief Contains every part of Nephilim
 */
-#define NEPHILIM_NS pE
-#define NEPHILIM_NS_BEGIN namespace pE{
+#define NEPHILIM_NS nx
+#define NEPHILIM_NS_BEGIN namespace nx{
 #define NEPHILIM_NS_END }
 
 // -- Windows

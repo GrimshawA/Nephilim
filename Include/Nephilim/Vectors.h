@@ -1,43 +1,48 @@
-#ifndef PARABOLA_VECTORS_H
-#define PARABOLA_VECTORS_H
+#ifndef Vectors_h__
+#define Vectors_h__
 
 #include "Platform.h"
 #include <math.h>
 
 NEPHILIM_NS_BEGIN
 
-	/**
-		\ingroup Foundation
-		\class Vec2 
-		\brief 2D Vector template class
+/**
+	\ingroup Foundation
+	\class Vec2 
+	\brief 2D Vector template class
 
-		Provides a 2D vector from any type and defines some operations on it. 
-		Logically, if the type passed in is incompatible with the basic operations such as:
-			- Comparison
-			- Assignment
-			- Addition/Subtraction
-			- Multiplication/Division
+	Provides a 2D vector from any type and defines some operations on it. 
+	Logically, if the type passed in is incompatible with the basic operations such as:
+		- Comparison
+		- Assignment
+		- Addition/Subtraction
+		- Multiplication/Division
 
-		you will probably get compiler errors.
+	you will probably get compiler errors.
 
-		For convenience, Vec2i, Vec2f and Vec2d are specializations of Vec2<T>,
-		for types int, float and double, respectively.
+	For convenience, Vec2i, Vec2f and Vec2d are specializations of Vec2<T>,
+	for types int, float and double, respectively.
 
-	*/
-	template <class T>
-	class NEPHILIM_API Vec2{
-	public:
-		/// Creates an uninitialized Vec2
-		Vec2();
-		/// Creates a Vec2 with initial values
-		Vec2(T x, T y);
+*/
+template <class T>
+class NEPHILIM_API Vec2
+{
+public:
+	/// Creates an uninitialized Vec2
+	Vec2();
+
+	/// Creates a Vec2 with initial values
+	Vec2(T x, T y);
 
 
-		/// Get the length of the vector
-		float length();
+	/// Get the length of the vector
+	float length();
 
-		/// Makes the vector unit-length
-		void normalize();
+	/// Makes the vector unit-length
+	void normalize();
+
+	/// Returns a normalized copy of this vector
+	Vec2<T> normalized();
 
 
 		/// Sets all values of the 2D vector
@@ -311,9 +316,8 @@ NEPHILIM_NS_BEGIN
 	typedef Vec4<double> Vec4d;
 	typedef Vec4<float> vec4;
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-
-	#include "Vectors.inl"
+//////////////////////////////////////////////////////////////////////////////////////////////
+#include "Vectors.inl"
 
 NEPHILIM_NS_END
-#endif
+#endif // Vectors_h__

@@ -3,7 +3,7 @@
 
 #include <Nephilim/GameCore.h>
 #include <Nephilim/Renderer.h>
-using namespace pE;
+using namespace nx;
 
 class SampleFS : public GameCore
 {

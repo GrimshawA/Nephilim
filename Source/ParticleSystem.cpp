@@ -39,7 +39,7 @@ void ParticleSystem::update(float deltaTime)
 		sprite.resize(32,32);
 		Particle pp;
 		pp.position  = vec3(position.x,position.y,0);
-		float angle = Math::random(0, Math::pi*2); pp.velocity = vec3(cos(angle) * 80, sin(angle)*80,0);
+		//float angle = Math::random(0, Math::pi*2); pp.velocity = vec3(cos(angle) * 80, sin(angle)*80,0);
 		pp.s = sprite;
 		m_particles.push_back(pp);
 	}

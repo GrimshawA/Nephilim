@@ -3,6 +3,7 @@
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Drawable.h>
+#include <Nephilim/Image.h>
 
 #include <iostream>
 using namespace std;
@@ -225,6 +226,25 @@ void Renderer::drawDebugLine(Vec2f begin, Vec2f end, Color color)
 	varray[1].color = color;
 
 	draw(varray);
+}
+
+/// Capture the currently bound frame buffer pixles to an image
+bool Renderer::readPixels(Image& image)
+{
+	int width = static_cast<int>(m_target->getSize().x);
+	int height = static_cast<int>(m_target->getSize().y);
+
+	// copy rows one by one and flip them (OpenGL's origin is bottom while SFML's origin is top)
+	std::vector<Uint8> pixels(width * height * 4);
+	for (int i = 0; i < height; ++i)
+	{
+		Uint8* ptr = &pixels[i * width * 4];
+		glReadPixels(0, height - i - 1, width, 1, GL_RGBA, GL_UNSIGNED_BYTE, ptr);
+	}
+
+	image.create(width, height, &pixels[0]);
+
+	return false;
 }
 
 /// Draw a debug circle with the given color and radius - slow
