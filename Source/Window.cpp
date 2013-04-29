@@ -1,5 +1,4 @@
 #include "Nephilim/Window.h"
-#include "Nephilim/Application.h"
 
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>

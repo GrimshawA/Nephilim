@@ -8,7 +8,6 @@
 #include "Window.h"
 #include "Event.h"
 #include "StringList.h"
-#include "Application.h"
 
 NEPHILIM_NS_BEGIN
 class GameCoreManager;

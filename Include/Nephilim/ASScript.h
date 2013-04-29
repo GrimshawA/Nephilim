@@ -3,7 +3,6 @@
 
 #include "Platform.h"
 #include "AS/angelscript.h"
-#include "FileStream.h"
 #include "StringID.h"
 
 #include <map>

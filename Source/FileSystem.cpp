@@ -1,5 +1,4 @@
 #include "Nephilim/FileSystem.h"
-#include "Nephilim/Application.h"
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>

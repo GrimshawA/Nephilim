@@ -407,7 +407,7 @@ bool ASEngine::exportSoundGameCore(){
 /// Exports common script utilities
 bool ASEngine::exportBasicScriptInformation(){
 	asEngine->RegisterEnum("PlatformType");
-	asEngine->RegisterEnumValue("PlatformType", "Mobile", ApplicationSettings::Mobile);
+/*	asEngine->RegisterEnumValue("PlatformType", "Mobile", ApplicationSettings::Mobile);
 	asEngine->RegisterEnumValue("PlatformType", "Desktop", ApplicationSettings::Desktop);
 
 	if (strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY")){
@@ -415,7 +415,7 @@ bool ASEngine::exportBasicScriptInformation(){
 	}
 	else{
 		asEngine->RegisterGlobalFunction("int getPlatformType()", asFUNCTION(Application::getPlatformType), asCALL_CDECL);
-	}
+	}*/
 
 	return false;
 };

@@ -2,7 +2,6 @@
 #include "Nephilim/ASEngine.h"
 //#include "Nephilim/SceneRenderer.h"
 //#include "Nephilim/Sprite.h"
-#include "Nephilim/SpriteExt.h"
 //#include "Nephilim/Texture.h"
 #include "Nephilim/Color.h"
 #include "Nephilim/Rect.h"
@@ -121,9 +120,9 @@ bool ASEngine::exportGraphics(){
 		r = asEngine->RegisterObjectMethod("SpriteExt", "void triggerAnimation(const string &in)", WRAP_MFN(SpriteExt, triggerAnimation), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("SpriteExt", "AnimationSprite@ addAnimation(const string &in)", WRAP_MFN(SpriteExt, addAnimation), asCALL_GENERIC);*/
 
-		r = asEngine->RegisterObjectMethod("AnimationSprite", "void setLoop(bool)", WRAP_MFN(AnimationSprite, setLoop), asCALL_GENERIC);
+/*		r = asEngine->RegisterObjectMethod("AnimationSprite", "void setLoop(bool)", WRAP_MFN(AnimationSprite, setLoop), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void addFrame(Texture@, BoundingBox, float)", WRAP_MFN(AnimationSprite, addFrame), asCALL_GENERIC);
-
+		*/
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugQuad(float,float,float,float,float,Color)", WRAP_MFN(Renderer, drawDebugQuad), asCALL_GENERIC);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugCircle(Vec2f,float,Vec2f,Color)", WRAP_MFN(Renderer, drawDebugCircle), asCALL_GENERIC);
 //		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugText(float,float, const string& in)", WRAP_MFN(Renderer, drawDebugText), asCALL_GENERIC);
@@ -149,10 +148,10 @@ bool ASEngine::exportGraphics(){
 		asEngine->RegisterObjectBehaviour("BoundingBox", asBEHAVE_CONSTRUCT, "void f(const BoundingBox& in)", asFUNCTION(ObjectCopyConstructor<FloatRect>), asCALL_CDECL_OBJLAST);
 
 
-
+/*
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void setLoop(bool)", asMETHOD(AnimationSprite, setLoop), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("AnimationSprite", "void addFrame(Texture@, BoundingBox, float)", asMETHOD(AnimationSprite, addFrame), asCALL_THISCALL);
-
+		*/
 		//r = asEngine->RegisterObjectMethod("Renderer", "void setView(View)", asMETHOD(Renderer, setView), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugQuad(float,float,float,float,float,Color)", asMETHOD(Renderer, drawDebugQuad), asCALL_THISCALL);
 		r = asEngine->RegisterObjectMethod("Renderer", "void drawDebugCircle(Vec2f,float,Vec2f,Color)", asMETHOD(Renderer, drawDebugCircle), asCALL_THISCALL);
