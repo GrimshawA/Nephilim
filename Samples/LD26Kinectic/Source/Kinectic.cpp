@@ -47,8 +47,6 @@ void Kinectic::onCreate()
 {	
 	Log("hello %d %d %d", 20, 30, 40);
 
-	Image i; i.loadFromFile("f");
-
 	world.CreateQuickCircle(200,200,20);
 	world.CreateStaticBox(0,600,2500, 10);
 

@@ -70,10 +70,6 @@ public:
 	Clock clock;
 };
 
-
-
-
-
 /// -- Fully disable all macros for release and global disable
 #if defined NEPHILIM_NOPROFILER || defined NEPHILIM_RELEASE
 #define PROFILE_FN
