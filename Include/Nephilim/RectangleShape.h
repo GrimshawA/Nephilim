@@ -7,6 +7,8 @@
 
 NEPHILIM_NS_BEGIN
 
+class Texture;
+
 /**
 	\ingroup Graphics
 	\class RectangleShape
@@ -15,13 +17,28 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API RectangleShape : public Drawable
 {
 public:
+	RectangleShape();
+
+	void setSize(float width, float height);
+
+	void setColor(const Color& color);
+
+	void setColors(const Color& topleft, const Color& topright, const Color& bottomright, const Color& bottomleft);
+
+	void setTexture(Texture* texture);
+
+	/// Set the sub region of the texture to display. These coordinates are in pixels and are normalized internally
+	void setTextureRect(float left, float top, float width, float height);
 
 protected:
 
 	/// Draw with the renderer.draw(object) syntax
 	virtual void onDraw(Renderer* renderer);
 
-	//VertexArray m_
+	VertexArray2D m_geometry;
+	VertexArray2D m_outline;
+
+	Texture* m_texture;
 };
 
 NEPHILIM_NS_END

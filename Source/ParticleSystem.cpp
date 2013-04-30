@@ -35,11 +35,11 @@ void ParticleSystem::update(float deltaTime)
 		sprite.setPosition(position.x,position.y);
 		sprite.setTexture(*tex);
 		sprite.setOrigin(32,32);
-		sprite.setColor(Color(Math::randomInt(1,50), Math::randomInt(100,200), Math::randomInt(1,40)));
+		sprite.setColor(Color(Math::randomInt(1,250), Math::randomInt(100,200), Math::randomInt(1,140)));
 		sprite.resize(32,32);
 		Particle pp;
 		pp.position  = vec3(position.x,position.y,0);
-		float angle = Math::random(0, Math::pi*2); pp.velocity = vec3(cos(angle) * 80, sin(angle)*80,0);
+		//float angle = Math::random(0, Math::pi*2); pp.velocity = vec3(cos(angle) * 80, sin(angle)*80,0);
 		pp.s = sprite;
 		m_particles.push_back(pp);
 	}

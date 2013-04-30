@@ -14,6 +14,7 @@
 #include <Nephilim/ParticleSystem.h>
 #include <Nephilim/Texture.h>
 #include <Nephilim/Sprite.h>
+#include <Nephilim/RectangleShape.h>
 #include <Nephilim/MMath.h>
 
 #include <iostream>
@@ -35,8 +36,8 @@ float torusRadius = 30;
 float p = 2;
 float q = 3;
 
-vec2 pointA = vec2(10,10);
-vec2 pointB = vec2(500,500);
+vec2 pointA = vec2(700,10);
+vec2 pointB = vec2(100,200);
 vec2 curr_position = pointA;
 vec2 curr_linear_position = pointA;
 float speed = 50;
@@ -58,18 +59,17 @@ void Kinectic::onCreate()
 	rope.sim = &world;
 	rope.createRope(vec2(100,100), 30, 4);
 	rope.createRope(vec2(200,100), 6, 15);
-	rope.createRope(vec2(300,100), 6, 20);
-	rope.createRope(vec2(400,100), 6, 25);
+
 	rope.createRope(vec2(500,100), 2, 30);
-	rope.createRope(vec2(600,100), 6, 35);
-	rope.createBridge(vec2(100,400), vec2(600,400), 30);
+	rope.createRope(vec2(600,100), 30, 10);
+	rope.createBridge(vec2(100,400), vec2(900,400), 10);
 
 	tex.loadFromFile("as2.png");
 
 	picker.scene = &world;
 
 	p1.create();
-	p1.tank = 2;
+	p1.tank = 40;
 	p1.position = vec3(200,200,0);
 }
 
@@ -144,7 +144,12 @@ void Kinectic::onUpdate(Time time)
 	angle += angleInc * time.asSeconds();
 
 	float r = cos(q * angle) + 2;
+
+
 	p1.position = vec3(300 + r * cos(p * angle) * torusRadius, 300 + r * sin(p * angle) * torusRadius, 0);
+
+
+
 	// override
 	static float traveled = 0;
 
@@ -164,11 +169,17 @@ void Kinectic::onRender()
 	getRenderer()->setClearColor(Color::Blue);
 	getRenderer()->setProjectionMatrix(View(0,0,1024,768).getMatrix());
 
-
 	Sprite s;
 	s.setTexture(tex);
 	s.resize(1024,768);
 	getRenderer()->draw(s);
+
+	RectangleShape rshape;
+	rshape.setColors(Color::Orange, Color::Blue, Color::Green, Color::Red);
+	rshape.setSize(1024,768);
+	rshape.setTexture(&tex);
+	rshape.setTextureRect(200,200,300,300);
+	getRenderer()->draw(rshape);
 
 	getRenderer()->draw(KxDraw(world));
 
