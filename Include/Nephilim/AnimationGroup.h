@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATIONGROUP_H
 
 #include "Platform.h"
-#include "Animation.h"
+#include "AnimationInterface.h"
 #include <vector>
 
 NEPHILIM_NS_BEGIN

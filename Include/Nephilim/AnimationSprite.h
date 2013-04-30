@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATIONSPRITE_H
 
 #include "Platform.h"
-#include "Animation.h"
+#include "AnimationInterface.h"
 #include "Sprite.h"
 #include "Rect.h"
 #include "Texture.h"

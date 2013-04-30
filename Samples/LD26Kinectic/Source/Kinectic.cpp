@@ -6,6 +6,7 @@
 #include <Nephilim/KxScene.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/KxMousePicker.h>
+#include <Nephilim/KxRope.h>
 
 
 #include <Nephilim/DateTime.h>
@@ -49,6 +50,19 @@ void Kinectic::onCreate()
 
 	world.CreateQuickCircle(200,200,20);
 	world.CreateStaticBox(0,600,2500, 10);
+
+	world.setPositionIterations(20);
+	world.setVelocityIterations(20);
+
+	KxRopeBuilder rope;
+	rope.sim = &world;
+	rope.createRope(vec2(100,100), 30, 4);
+	rope.createRope(vec2(200,100), 6, 15);
+	rope.createRope(vec2(300,100), 6, 20);
+	rope.createRope(vec2(400,100), 6, 25);
+	rope.createRope(vec2(500,100), 2, 30);
+	rope.createRope(vec2(600,100), 6, 35);
+	rope.createBridge(vec2(100,400), vec2(600,400), 30);
 
 	tex.loadFromFile("as2.png");
 

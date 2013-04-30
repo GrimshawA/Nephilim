@@ -1,4 +1,4 @@
-#include "Nephilim/Animation.h"
+#include "Nephilim/AnimationInterface.h"
 #include <algorithm>
 
 #include <iostream>

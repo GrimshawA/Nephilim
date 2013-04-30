@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 #include "Vectors.h"
-#include "Animation.h"
+#include "AnimationInterface.h"
 
 NEPHILIM_NS_BEGIN
 

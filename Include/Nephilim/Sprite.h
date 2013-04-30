@@ -3,7 +3,7 @@
 
 #include "Platform.h"
 #include "Strings.h"
-#include "Animation.h"
+#include "AnimationInterface.h"
 #include "Vectors.h"
 #include "Drawable.h"
 #include "Transformable.h"
