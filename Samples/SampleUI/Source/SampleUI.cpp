@@ -8,7 +8,7 @@
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Profiler.h>
 #include <Nephilim/Engine.h>
-#include <Nephilim/ASXEngine.h>
+//#include <Nephilim/ASXEngine.h>
 #include <Nephilim/File.h>
 
 #include <iostream>
@@ -35,7 +35,7 @@ void SampleUI::onCreate()
 		cout << "Text: "<<a.getLine()<<endl;
 	}
 
-	ASXEngine scripts;
+	/*ASXEngine scripts;
 
 	ASXModuleBuilder scriptbuilder(scripts, "myModule");
 	scriptbuilder.addSourceFile("script.fuse");
@@ -48,10 +48,10 @@ void SampleUI::onCreate()
 
 	ASXRuntime context(scripts);
 
-	ASXFunction<void, float, int, float> tst(script, context, "float twice(float,int,float)");
-	printf("Script returned: %f\n", tst(20.f, 20*5, 5.f));
+	ASXFunction<float, float, int, float> tst(script, context, "float twice(float,int,float)");
+	printf("Script returned: %f\n", tst(20.f, 20*5, 5.f));*/
 
-	context.reset(script);
+	//context.reset(script);
 }
 
 void SampleUI::onEvent(Event &event)

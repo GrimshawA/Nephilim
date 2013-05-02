@@ -72,6 +72,8 @@ void RectangleShape::onDraw(Renderer* renderer)
 {
 	if(m_texture) m_texture->bind(Texture::Normalized);
 	renderer->draw(m_geometry);
+	renderer->setDefaultTexture();
+
 }
 
 NEPHILIM_NS_END

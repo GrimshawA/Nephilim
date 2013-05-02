@@ -213,6 +213,7 @@ void Sprite::onDraw(Renderer* renderer){
 	if(m_texture) m_texture->bind(Texture::Normalized);
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
+	renderer->setDefaultTexture();
 
 
 	/*

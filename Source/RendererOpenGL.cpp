@@ -26,13 +26,11 @@ static const char gVertexSource[] =
 
 static const char gFragmentSource[] = 
 	"#version 130\n"
-	"uniform int textured = 1;\n"
 	"uniform sampler2D texture;\n"
 	"varying vec4 outColor;\n"
 	"varying vec2 texUV;\n"
 	"void main() {\n"
-	"   float ftextured = textured;\n"
-	"   gl_FragColor = (texture2D(texture, texUV) + vec4(abs(1 - ftextured)) ) * outColor;\n"
+	"   gl_FragColor = texture2D(texture, texUV) * outColor;\n"
 	"}\n";
 
 
@@ -62,36 +60,28 @@ void RendererOpenGL::draw(const VertexArray2D& varray, const RenderState& state)
 		enableVertexAttribArray(0);
 		enableVertexAttribArray(1);
 		enableVertexAttribArray(2);
+
 		setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 0);
 		setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(VertexArray2D::Vertex), data + 8);
 		setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 12);
 
-		if(varray.m_textured) m_activeShader->setUniformi("textured", 1);
-		else m_activeShader->setUniformi("textured", 0);	
-
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
+
 		disableVertexAttribArray(0);
 		disableVertexAttribArray(1);
 		disableVertexAttribArray(2);
 	}
 	else
 	{
-		glLoadIdentity();
-		//glLoadMatrixf(modelMatrix);
-
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-		if(varray.m_textured) glEnable(GL_TEXTURE_2D);
 
 		glVertexPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 0);
 		glColorPointer(4, GL_UNSIGNED_BYTE,sizeof(VertexArray2D::Vertex), data + 8);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(VertexArray2D::Vertex), data + 12);
 
 		drawArrays(varray.geometryType, 0, varray.m_vertices.size());
-
-		if(varray.m_textured) glDisable(GL_TEXTURE_2D);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);

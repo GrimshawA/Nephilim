@@ -23,6 +23,10 @@ Renderer::Renderer()
 	m_primitiveTable[Render::Primitive::LineStrip] = static_cast<int>(GL_LINE_STRIP);
 
 	setClearColor(Color::Orange);
+
+	Image whiteTexture;
+	whiteTexture.create(1,1,Color::White);
+	m_defaultTexture.loadFromImage(whiteTexture);
 };
 
 // -- Unimplemented API at Renderer level
@@ -193,6 +197,13 @@ void Renderer::clearAllBuffers()
 void Renderer::setDefaultDepthTesting()
 {
 	setDepthTestEnabled(false);
+}
+
+/// Binds the default 1x1 full white texture at texture unit 0
+void Renderer::setDefaultTexture()
+{
+	glActiveTexture(GL_TEXTURE0);
+	m_defaultTexture.bind();
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow

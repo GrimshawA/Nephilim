@@ -32,8 +32,7 @@ static const char gFragmentSource[] =
 	"uniform int textured;\n"
 	"uniform sampler2D texture;\n"
 	"void main() {\n"
-	"	if(textured == 1) gl_FragColor = texture2D(texture, texUV) * fragColor;\n"
-	"   else gl_FragColor = fragColor;\n"
+	"	gl_FragColor = texture2D(texture, texUV) * fragColor;\n"
 	"}\n";
 
 RendererGLES2::RendererGLES2()
@@ -71,24 +70,22 @@ void RendererGLES2::draw(const VertexArray2D& varray, const RenderState& state)
 	}
 
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
-	
-	if(varray.m_textured) m_activeShader->setUniformi("textured", 1);
-	else m_activeShader->setUniformi("textured", 0);
 
 	m_activeShader->setUniformi("texture", 0);
 
 	enableVertexAttribArray(0);
 	enableVertexAttribArray(1);
 	enableVertexAttribArray(2);
+
 	setVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 0);
 	setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, sizeof(VertexArray2D::Vertex), data + 8);
 	setVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(VertexArray2D::Vertex), data + 12);
+
 	drawArrays(varray.geometryType, 0, varray.m_vertices.size());
+
 	disableVertexAttribArray(0);
 	disableVertexAttribArray(1);
 	disableVertexAttribArray(2);
-
-//	Log("Drawing...");
 }
 
 /// Set the current projection matrix

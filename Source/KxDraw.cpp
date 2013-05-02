@@ -139,10 +139,10 @@ void KxDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, co
 	void KxDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 	{
 		Color finalColor;
-		finalColor.r = (color.r * 255) / 1;
-		finalColor.g = (color.g * 255) / 1;
-		finalColor.b = (color.b * 255) / 1;
-		finalColor.a = 150;
+		finalColor.r = (color.r * 255) / 2;
+		finalColor.g = (color.g * 255) * 2;
+		finalColor.b = (color.b * 255);
+		finalColor.a = 255;
 		renderer->drawDebugCircle(Vec2f(myParent->toPixels(center.x), myParent->toPixels(center.y)), myParent->toPixels(radius), Vec2f(axis.x, axis.y), finalColor);
 	}
 

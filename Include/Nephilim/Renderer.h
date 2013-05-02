@@ -15,6 +15,7 @@
 #include "RenderModes.h"
 #include "RenderState.h"
 #include "Matrix.h"
+#include "Texture.h"
 
 #include <map>
 
@@ -95,6 +96,9 @@ public:
 
 	/// Get the current clear color
 	virtual Color getClearColor();
+
+	/// Binds the default 1x1 full white texture at texture unit 0
+	virtual void setDefaultTexture();
 
 	/// Activates the default render target
 	/// This means that rendering will now happen in the visible window
@@ -186,6 +190,7 @@ protected:
 	mat4           m_model;           ///< Current model matrix
 	Shader*        m_activeShader;    ///< Current active shader
 	bool		   m_shaderUsageHint; ///< Hint for the default shader usage
+	Texture		   m_defaultTexture;  ///< Full white 1x1 default texture
 
 	/// Conversion table of Render::Primitive::Type to GLenum
 	std::map<Render::Primitive::Type, int> m_primitiveTable;	
