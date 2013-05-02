@@ -92,7 +92,11 @@ bool Image::loadFromFile(const String &path){
 	File stream(path, IODevice::BinaryRead);
 
 	if(!stream)
-		return false;
+	{
+	    Log("Image: Invalid path, could not fopen.");
+	    return false;
+	}
+
 
 	// Setup the stb_image callbacks
 	stbi_io_callbacks callbacks;

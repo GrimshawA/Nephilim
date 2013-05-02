@@ -7,7 +7,7 @@
 #include <cmath>
 #include <stdlib.h>
 
-#ifdef NEPHILIM_ANDROID 
+#ifdef NEPHILIM_ANDROID
 #include <Nephilim/AndroidInterface.h>
 #endif
 
@@ -45,7 +45,7 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 			m_handle = fdopen(asset.fd, mode.c_str());
 			m_offset = asset.offset;
 			m_length = asset.length;
-			if(m_handle) 
+			if(m_handle)
 				fseek(m_handle, m_offset, SEEK_SET);
 		}
 	}
@@ -54,7 +54,7 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 	// Standard opening
 	m_handle = fopen(path.c_str(), mode.c_str());
 #endif
-	
+
 	if(m_handle && m_length == 0){
 		fseek(m_handle, 0, SEEK_END);
 		m_length = m_fileSize = ftell(m_handle);
@@ -97,7 +97,8 @@ String File::getLine()
 
 /// Cleanup
 File::~File(){
-	fclose(m_handle);
+    if(m_handle)
+        fclose(m_handle);
 }
 
 /// Write data into the file
@@ -143,7 +144,7 @@ bool File::atEnd(){
 };
 
 /// Read the next character available - uses fgetc and assumes an open mode for text
-char File::getChar(){	
+char File::getChar(){
 	return fgetc(m_handle);
 };
 
