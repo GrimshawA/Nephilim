@@ -3,7 +3,7 @@ local libname = "nephilim"
 local enginename = "NephilimEngine"
 local action = _ACTION or ""
 local version = "0.8.3"
-local samplelist = { "SampleBasic" , "SampleAnimation", "SampleCameras", "SampleFileSystem", "SampleGeometry", "SampleKinesisPhysics", "SampleLighting", "SampleRenderTexture", "SampleScripting", "SampleShaders", "SampleSprites", "SampleUI" }
+local samplelist = { "LD26Kinectic", "SampleBasic" , "SampleAnimation", "SampleCameras", "SampleFileSystem", "SampleGeometry", "SampleKinesisPhysics", "SampleLighting", "SampleRenderTexture", "SampleScripting", "SampleShaders", "SampleSprites", "SampleUI" }
 	
 newoption {
    trigger     = "no-samples",
