@@ -57,22 +57,22 @@ extern "C"{
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved){
 	__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "ONLOAD CALLED\n");
-	pE::AndroidInterface::setJavaNativeInterfaceEnvironment(jvm);
+	nx::AndroidInterface::setJavaNativeInterfaceEnvironment(jvm);
 	return JNI_VERSION_1_2;
 };
 
 JNIEXPORT void
 	JNI_ACTIVITY_FUNC(nativeStorageInfo) ( JNIEnv*  env , jobject thiz, jstring internalDataPath, jstring externalDataPath, jboolean externalDataWriteable, jboolean externalDataAvailable, jstring packageName, jstring activityName){
-		pE::String s1, s2, s3, s4; 
+		nx::String s1, s2, s3, s4; 
 		s1 = env->GetStringUTFChars(internalDataPath, 0);
 		s2 = env->GetStringUTFChars(externalDataPath, 0);
 		s3 = env->GetStringUTFChars(packageName, 0);
 		s4 = env->GetStringUTFChars(activityName, 0);
 
 		
-		pE::AndroidInterface::setPackageName(s3);
-		pE::AndroidInterface::setActivityName(s4);
-		pE::AndroidInterface::setExternalStorageDirectory(s2);
+		nx::AndroidInterface::setPackageName(s3);
+		nx::AndroidInterface::setActivityName(s4);
+		nx::AndroidInterface::setExternalStorageDirectory(s2);
 
 	/*myApp.myDataDirectory = s1;
 		myApp.myExternalStorageDirectory = s2; */

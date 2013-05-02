@@ -70,6 +70,12 @@ void Engine::update()
 			m_currentApp->onEvent(event);
 		}
 
+		while(!m_events.empty())
+		{
+			m_currentApp->onEvent(m_events[0]);
+			m_events.erase(m_events.begin());
+		}
+
 
 		// Perform the update
 		m_currentApp->innerUpdate(m_stepClock.getElapsedTime());
@@ -84,6 +90,13 @@ void Engine::update()
 		}
 	}
 };
+
+
+/// Inject an event into the engine "pipeline"
+void Engine::injectEvent(Event& event)
+{
+	m_events.push_back(event);
+}
 
 /// Terminate the engine completely
 void Engine::shutdown()

@@ -42,36 +42,40 @@ RendererGLES2::RendererGLES2()
 	m_type = OpenGLES2;
 	m_name = "OpenGL ES 2.0";
 
-	m_shader = new Shader();
-	m_shader->loadShader(Shader::VertexUnit, gVertexSource);
-	m_shader->loadShader(Shader::FragmentUnit, gFragmentSource);
-	m_shader->addAttributeLocation(0, "vertex");
-	m_shader->addAttributeLocation(1, "color");
-	m_shader->addAttributeLocation(2, "texCoord");
-	m_shader->create();
-	m_shader->bind();
+	m_defaultShader.loadShader(Shader::VertexUnit, gVertexSource);
+	m_defaultShader.loadShader(Shader::FragmentUnit, gFragmentSource);
+	m_defaultShader.addAttributeLocation(0, "vertex");
+	m_defaultShader.addAttributeLocation(1, "color");
+	m_defaultShader.addAttributeLocation(2, "texCoord");
+	m_defaultShader.create();
+	m_defaultShader.bind();
 
-	m_shader->setUniformMatrix("projection", mat4().get());
-	m_shader->setUniformMatrix("view", mat4().get());
-	m_shader->setUniformMatrix("model", mat4().get());
+	m_defaultShader.setUniformMatrix("projection", mat4().get());
+	m_defaultShader.setUniformMatrix("view", mat4().get());
+	m_defaultShader.setUniformMatrix("model", mat4().get());
+}
+
+/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+void RendererGLES2::setDefaultShader()
+{
+	m_defaultShader.bind();
+	m_activeShader = &m_defaultShader;
 }
 
 /// Draw a vertex array
-void RendererGLES2::draw(const VertexArray2D& varray)
+void RendererGLES2::draw(const VertexArray2D& varray, const RenderState& state)
 { 
+	if(!m_activeShader)
+	{
+		return;
+	}
+
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 	
-	if(varray.m_textured) m_shader->setUniformi("textured", 1);
-	else m_shader->setUniformi("textured", 0);
+	if(varray.m_textured) m_activeShader->setUniformi("textured", 1);
+	else m_activeShader->setUniformi("textured", 0);
 
-	m_shader->setUniformi("texture", 0);
-	
-	//model
-/*	if(modelMatrix)
-	{
-		m_shader->setUniformMatrix("model", modelMatrix);
-	}
-	*/
+	m_activeShader->setUniformi("texture", 0);
 
 	enableVertexAttribArray(0);
 	enableVertexAttribArray(1);
@@ -84,12 +88,28 @@ void RendererGLES2::draw(const VertexArray2D& varray)
 	disableVertexAttribArray(1);
 	disableVertexAttribArray(2);
 
-	//model
-/*	if(modelMatrix)
-	{
-		bool r = m_shader->setUniformMatrix("model", mat4().get());
-		modelMatrix = NULL;
-	}*/
+//	Log("Drawing...");
+}
+
+/// Set the current projection matrix
+void RendererGLES2::setProjectionMatrix(const mat4& projection)
+{
+	Renderer::setProjectionMatrix(projection);
+	if(m_activeShader) m_activeShader->setUniformMatrix("projection", projection.get());
+}
+
+/// Set the current view matrix
+void RendererGLES2::setViewMatrix(const mat4& view)
+{
+	Renderer::setViewMatrix(view);
+	if(m_activeShader) m_activeShader->setUniformMatrix("view", view.get());
+}
+
+/// Set the current model matrix
+void RendererGLES2::setModelMatrix(const mat4& model)
+{
+	Renderer::setModelMatrix(model);
+	if(m_activeShader) m_activeShader->setUniformMatrix("model", model.get());
 }
 
 void RendererGLES2::applyView(const View &view)

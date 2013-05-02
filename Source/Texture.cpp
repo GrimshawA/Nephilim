@@ -178,7 +178,8 @@ Image Texture::copyToImage(){
 	{
 		// Texture is not padded nor flipped, we can use a direct copy
 		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
+		
+		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
 	}
 	else
 	{
@@ -187,7 +188,9 @@ Image Texture::copyToImage(){
 		// All the pixels will first be copied to a temporary array
 		std::vector<Uint8> allPixels(m_actualSize.x * m_actualSize.y * 4);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
+		
+		
+		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
 
 		// Then we copy the useful pixels from the temporary array to the final one
 		const Uint8* src = &allPixels[0];

@@ -24,11 +24,15 @@ freely, subject to the following restrictions:
 #include "Platform.h"
 #include "Clock.h"
 #include "Strings.h"
+#include "Event.h"
 #include "Surface.h"
+
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 class GameCore;
 class Renderer;
+
 /**
 	\ingroup Core
 	\class Engine
@@ -74,6 +78,9 @@ public:
 	/// Sets the command line arguments
 	void setArgs(int count, char** args);
 
+	/// Inject an event into the engine "pipeline"
+	void injectEvent(Event& event);
+
 	/// Get the current renderer
 	Renderer* getRenderer();
 
@@ -89,7 +96,8 @@ public:
 	Renderer*	m_renderer;			///< The unified graphics renderer system
 	Surface		m_surface;			///< The surface this engine is bound to
 	bool		m_running;			///< Qualified as running if some conditions are met
-	static String m_versionString; ///< The version of string(at compile time)
+	static String m_versionString;  ///< The version of string(at compile time)
+	std::vector<Event> m_events;    ///< The list of unprocessed events
 };
 
 NEPHILIM_NS_END

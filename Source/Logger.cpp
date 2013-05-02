@@ -1,11 +1,11 @@
 #include <Nephilim/Logger.h>
 
-
 #include <stdarg.h>
 #include <stdio.h>
 
 #ifdef NEPHILIM_ANDROID
-#include "AndroidInterface.h"
+#include <Nephilim/AndroidInterface.h>
+#include <android/log.h>
 #endif
 
 NEPHILIM_NS_BEGIN

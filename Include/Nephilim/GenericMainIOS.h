@@ -21,8 +21,8 @@ void ios_bridge_touch_pressed(int x, int y, int id)
 {
 	if(gEngine)
 	{
-		pE::Event ev;
-		ev.type = pE::Event::TouchPressed;
+		NEPHILIM_NS::Event ev;
+		ev.type = NEPHILIM_NS::Event::TouchPressed;
 		ev.x = x;
 		ev.y = y;
 		gEngine->inject(ev);

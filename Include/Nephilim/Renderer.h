@@ -59,6 +59,10 @@ public:
 	/// Get the full name of this renderer
 	String getName();
 
+	/// Set an hint to the renderer which tells it to prefer shaders by default(true), or to use the fixed pipeline instead
+	/// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
+	void setShaderUsageHint(bool allow);
+
 	/// Draw a debug quad with the given color,angle and dimensions - slow
 	void drawDebugQuad(float x, float y, float angle, float width, float height, Color color = Color(255,0,1));
 
@@ -171,16 +175,17 @@ public:
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
 protected:
-	Type           m_type;        ///< The type of this renderer
-	String         m_name;        ///< The string with the name of this renderer
-	Surface*       m_surface;     ///< Guaranteed to be a valid surface while the renderer lives
-	RenderTarget*  m_target;      ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
-	Color          m_clearColor;  ///< The color of the background when clearing buffer
-	FloatRect      m_scissorRect; ///< If scissor clipping is enabled, this is the rect being used
-	mat4           m_projection;  ///< Current projection matrix
-	mat4           m_view;        ///< Current view matrix
-	mat4           m_model;       ///< Current model matrix
-	Shader*        m_activeShader;///< Current active shader
+	Type           m_type;            ///< The type of this renderer
+	String         m_name;            ///< The string with the name of this renderer
+	Surface*       m_surface;         ///< Guaranteed to be a valid surface while the renderer lives
+	RenderTarget*  m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
+	Color          m_clearColor;      ///< The color of the background when clearing buffer
+	FloatRect      m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used
+	mat4           m_projection;      ///< Current projection matrix
+	mat4           m_view;            ///< Current view matrix
+	mat4           m_model;           ///< Current model matrix
+	Shader*        m_activeShader;    ///< Current active shader
+	bool		   m_shaderUsageHint; ///< Hint for the default shader usage
 
 	/// Conversion table of Render::Primitive::Type to GLenum
 	std::map<Render::Primitive::Type, int> m_primitiveTable;	

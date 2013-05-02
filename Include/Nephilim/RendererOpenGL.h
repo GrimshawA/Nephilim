@@ -1,13 +1,21 @@
-#ifndef PARABOLA_RENDEREROPENGL_H
-#define PARABOLA_RENDEREROPENGL_H
+#ifndef RendererOpenGL_h__
+#define RendererOpenGL_h__
 
 #include "Platform.h"
 #include "Renderer.h"
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API RendererOpenGL : public Renderer{
+/**
+	\ingroup Graphics
+	\class RendererOpenGL
+	\brief Renderer specialization for desktop platform's OpenGL
+*/
+class NEPHILIM_API RendererOpenGL : public Renderer
+{
 public:
+	/// Initialize OpenGL renderer
+	RendererOpenGL();
 
 	/// Draw a vertex array
 	virtual void draw(const VertexArray2D& varray, const RenderState& state);
@@ -18,40 +26,18 @@ public:
 	/// Activates the shader for the next drawing calls
 	virtual void setShader(Shader& shader);
 
-protected:
-	/// Construct the renderer
-	RendererOpenGL();
-	friend class Surface;
+	/// Activate a projection matrix
+	virtual void setProjectionMatrix(const mat4& projection);
+
+	/// Activate a view matrix
+	virtual void setViewMatrix(const mat4& view);
+
+	/// Activate a model matrix
+	virtual void setModelMatrix(const mat4& model);
 
 private:
 	Shader m_defaultShader;
-
-
-public:
-	/// Clear the bound buffer
-	virtual void clear();
-
-	void applyView(const View &view);
-
-	/// Anything that inherits Drawable can be drawn using a renderer
-	virtual void draw(Drawable &drawable);
-
-	virtual void drawCube(float x, float y, float z, float len, Color color);
-
-void activateClipRegion(FloatRect rect);
-virtual void enableClipping(FloatRect rect);
-	virtual void disableClipping();
-	virtual void prepare(int w, int h);
-	//virtual void drawDebugQuad(float x, float y, float angle, float width, float height, Color color);
-	virtual void display();
-	virtual void drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color);
-	//virtual void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
-	virtual void drawVertexArray(VertexArray2D &vertexArray);
-	void drawDebugLine(Vec2f begin, Vec2f end, Color color);	virtual void setProjectionMatrix(const mat4& projection);
-	virtual void setViewMatrix(const mat4& view);
-	virtual void setModelMatrix(const mat4& model);
 };
 
 NEPHILIM_NS_END
-
-#endif
+#endif // RendererOpenGL_h__

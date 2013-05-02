@@ -57,20 +57,25 @@ void Kinectic::onCreate()
 
 	KxRopeBuilder rope;
 	rope.sim = &world;
-	rope.createRope(vec2(100,100), 30, 4);
-	rope.createRope(vec2(200,100), 6, 15);
+	//rope.createRope(vec2(100,100), 30, 4);
+	//rope.createRope(vec2(200,100), 6, 15);
 
-	rope.createRope(vec2(500,100), 2, 30);
+	//rope.createRope(vec2(500,100), 2, 30);
 	rope.createRope(vec2(600,100), 30, 10);
 	rope.createBridge(vec2(100,400), vec2(900,400), 10);
 
-	tex.loadFromFile("as2.png");
+	if(tex.loadFromFile("as2.png"))
+	{
+		Log("Tree image loaded.");
+	}
 
 	picker.scene = &world;
 
 	p1.create();
 	p1.tank = 40;
 	p1.position = vec3(200,200,0);
+
+	Log("Renderer: %s", getRenderer()->getName().c_str());
 }
 
 void Kinectic::onEvent(Event &event)
@@ -93,8 +98,14 @@ void Kinectic::onEvent(Event &event)
 	   world.CreateQuickCircle(event.mouseButton.x,event.mouseButton.y,20);
    }
 
-   if(event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Right)
+   if((event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Right) || (event.type == Event::TouchPressed))
    {
+	   if(event.type == Event::TouchPressed)
+	   {
+		   event.mouseButton.x = event.x;
+		   event.mouseButton.y = event.y;
+			Log("Adding box to %d %d", event.x, event.y);
+	   }
 	   KxBody* actor = world.CreateQuickBox(event.mouseButton.x,event.mouseButton.y, 20, 20);
 	   actors.push_back(actor);
 	   ParticleSystem pp;
@@ -166,6 +177,7 @@ void Kinectic::onUpdate(Time time)
 
 void Kinectic::onRender()
 {
+	getRenderer()->setDefaultShader();
 	getRenderer()->setClearColor(Color::Blue);
 	getRenderer()->setProjectionMatrix(View(0,0,1024,768).getMatrix());
 
@@ -181,7 +193,8 @@ void Kinectic::onRender()
 	rshape.setTextureRect(200,200,300,300);
 	getRenderer()->draw(rshape);
 
-	getRenderer()->draw(KxDraw(world));
+	KxDraw wd(world);
+	getRenderer()->draw(wd);
 
 	for(int i =0; i < actors.size(); i++)
 	{

@@ -89,12 +89,24 @@ void Image::setPixel(unsigned int x, unsigned int y, const Color& color)
 
 bool Image::loadFromFile(const String &path){
 
+	File stream(path, IODevice::BinaryRead);
+
+	if(!stream)
+		return false;
+
+	// Setup the stb_image callbacks
+	stbi_io_callbacks callbacks;
+	callbacks.read = &read;
+	callbacks.skip = &skip;
+	callbacks.eof  = &eof;
+
 	// Clear the array (just in case)
 	m_pixels.clear();
 
 	// Load the image and get a pointer to the pixels in memory
 	int width, height, channels;
-	unsigned char* ptr = stbi_load(String(path).c_str(), &width, &height, &channels,STBI_rgb_alpha);
+	//unsigned char* ptr = stbi_load(String(path).c_str(), &width, &height, &channels,STBI_rgb_alpha);
+	unsigned char* ptr = stbi_load_from_callbacks(&callbacks, &stream, &width, &height, &channels, STBI_rgb_alpha);
 
 	if (ptr && width && height)
 	{

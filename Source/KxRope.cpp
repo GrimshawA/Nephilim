@@ -81,9 +81,9 @@ void KxRopeBuilder::createRope(Vec2f ropeStart,float fraglen, int fragments){
 			else if(!oldbody){
 				// First one
 				b2RevoluteJointDef def;
-				def.enableMotor = true;
-				def.motorSpeed = 1.0f;
-				def.maxMotorTorque = 100000.0f;
+				//def.enableMotor = true;
+				//def.motorSpeed = 1.0f;
+				//def.maxMotorTorque = 100000.0f;
 				def.Initialize(left_support, body, b2Vec2(sim->toMeters(ropeStart.x),sim->toMeters(ropeStart.y)));
 				sim->get()->CreateJoint(&def);
 			}

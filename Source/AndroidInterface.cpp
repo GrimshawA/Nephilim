@@ -38,11 +38,7 @@ bool AndroidInterface::getAssetFile(File* file, const String &path, bool binaryM
 		realPath += m_AssetSuffix;
 		//String realPathh = realPath + "" + ".png";
 
-		TESTLOG("ASKED PATH USED TO LOOKUP")
-		TESTLOG(path.c_str())
 
-		TESTLOG("REAL PATH USED TO LOOKUP")
-		TESTLOG(realPath.c_str())
 
 		jclass afdclass = m_JNI->FindClass("android/content/res/AssetFileDescriptor");
 		jclass activityclass = m_JNI->FindClass(m_JNIActivityName);
@@ -112,8 +108,8 @@ bool AndroidInterface::getAssetFile(File* file, const String &path, bool binaryM
 		// assign
 		file->open(fpointer, 0, -1); // Open the file as a whole
 
-		TESTLOG("Opened file regularly.")
-		TESTLOG(realPath.c_str())
+//		TESTLOG("Opened file regularly.")
+		//TESTLOG(realPath.c_str())
 	}	
 
 	return true;

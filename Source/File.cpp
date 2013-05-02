@@ -7,6 +7,10 @@
 #include <cmath>
 #include <stdlib.h>
 
+#ifdef NEPHILIM_ANDROID 
+#include <Nephilim/AndroidInterface.h>
+#endif
+
 NEPHILIM_NS_BEGIN
 
 File::File()

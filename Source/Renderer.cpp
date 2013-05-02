@@ -12,6 +12,7 @@ NEPHILIM_NS_BEGIN
 
 Renderer::Renderer()
 : m_type(Other)
+, m_shaderUsageHint(true)
 {
 	m_primitiveTable[Render::Primitive::Triangles] = static_cast<int>(GL_TRIANGLES);
 	m_primitiveTable[Render::Primitive::TriangleFan] = static_cast<int>(GL_TRIANGLE_FAN);
@@ -45,6 +46,13 @@ void Renderer::setClearColor(const Color& color)
 	m_clearColor = color;
 	vec4 c = m_clearColor.normalized();
 	glClearColor(c.x, c.y, c.z, c.w);
+}
+
+/// Set an hint to the renderer which tells it to prefer shaders by default(true), or to use the fixed pipeline instead
+/// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
+void Renderer::setShaderUsageHint(bool allow)
+{
+	m_shaderUsageHint = allow;
 }
 
 /// Get the current clear color
@@ -258,9 +266,9 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 	const float k_segments = 32.0f;
 	const float k_increment = 2.0f * 3.14159 / k_segments;
 	float theta = 0.0f;
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor4ub(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, color.a);
+//	glEnable(GL_BLEND);
+//	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glColor4ub(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, color.a);
 
 	for (int i = 0; i < k_segments; ++i)
 	{
@@ -268,9 +276,9 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 		theta += k_increment;
 		varray.append(VertexArray2D::Vertex(v, color, Vec2f()));
 	}
-	glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//	glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-	glDisable(GL_BLEND);
+	//glDisable(GL_BLEND);
 
 	/*theta = 0.0f;
 	glColor4ub(color.r, color.g, color.b, color.a);
@@ -310,7 +318,7 @@ void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int
 /// Draw a vertex array
 void Renderer::draw(const VertexArray2D& varray, const RenderState& state)
 {
-	//TESTLOG("Why are you calling draw on an abstract base class?\n")
+	Log("Why are you calling draw on an abstract base class?");
 }
 
 /// Allows a drawable to draw itself

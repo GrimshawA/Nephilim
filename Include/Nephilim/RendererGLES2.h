@@ -13,12 +13,25 @@ public:
 	RendererGLES2();
 
 	/// Draw a vertex array
-	virtual void draw(const VertexArray2D& varray);
+	virtual void draw(const VertexArray2D& varray, const RenderState& state);
+
+	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+	virtual void setDefaultShader();
+
+	/// Set the current projection matrix
+	virtual void setProjectionMatrix(const mat4& projection);
+
+	/// Set the current view matrix
+	virtual void setViewMatrix(const mat4& view);
+
+	/// Set the current model matrix
+	virtual void setModelMatrix(const mat4& model);
 
 	//void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	void applyView(const View &view);
 
-	Shader* m_shader;
+	Shader m_defaultShader;
+
 };
 
 
