@@ -13,11 +13,18 @@ Texture::Texture()
 , m_texture(0)
 , m_pixelsFlipped(false)
 , m_isSmooth(false)
+, m_isRepeated(false)
 {
 
 }
 
 Texture::Texture(const Texture& other)
+: m_size(0,0)
+, m_actualSize(0,0)
+, m_texture(0)
+, m_pixelsFlipped(false)
+, m_isSmooth(false)
+, m_isRepeated(false)
 {
 	if (other.m_texture)
 	{
@@ -26,16 +33,18 @@ Texture::Texture(const Texture& other)
 	}
 }
 
-/// RAII release of the texture
 Texture::~Texture()
 {
 	if(m_texture > 0){
-		Log("Texture %d, deallocated. Object: %x", m_texture, this);
 		glDeleteTextures(1, &m_texture);
 	}
 }
 
-////////////////////////////////////////////////////////////
+unsigned int Texture::getIdentifier() const
+{
+	return m_texture;
+}
+
 bool Texture::create(unsigned int width, unsigned int height)
 {
 	// Check if texture parameters are valid before creating it
@@ -73,7 +82,7 @@ bool Texture::create(unsigned int width, unsigned int height)
 		GLuint texture;
 		glGenTextures(1, &texture);
 		m_texture = static_cast<unsigned int>(texture);
-		Log("Just allocated texture at create() %d", texture);
+		//Log("Just allocated texture at create() %d", texture);
 	}
 
 	// Make sure that the current texture binding will be preserved
@@ -83,8 +92,8 @@ bool Texture::create(unsigned int width, unsigned int height)
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_actualSize.x, m_actualSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
 	
@@ -133,7 +142,7 @@ unsigned int Texture::getValidSize(unsigned int size)
 }
 
 void Texture::loadFromImage(Image &image){
-	if(image.m_size.x == 0 && image.m_size.y == 0)
+	if(image.getSize().x == 0 && image.getSize().y == 0)
 	{
 		// Invalid image.
 		return;
@@ -147,14 +156,24 @@ void Texture::loadFromImage(Image &image){
 	//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, image.getSize().x, image.getSize().y, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE,  image.getPixelsPtr());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 }
+
+void Texture::setRepeated(bool repeated)
+{
+	m_isRepeated = repeated;
+
+	bind();
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+}
+
 
 bool Texture::loadFromFile(const String &path){
 	bool result = false;
@@ -260,13 +279,6 @@ void Texture::setSmooth(bool smooth)
 	}
 }
 
-/// Sets the desired transparency on all pixels with the selected color
-void Texture::createMaskFromColor(const Color &color, Uint8 alpha){
-	Image img = this->copyToImage();
-	img.createMaskFromColor(color, alpha);
-	loadFromImage(img);
-};
-
 ////////////////////////////////////////////////////////////
 void Texture::update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y)
 {
@@ -299,40 +311,9 @@ unsigned int Texture::getMaximumSize()
 	return static_cast<unsigned int>(size);
 }
 
-void Texture::bind(CoordinateType coordinateType) const
+void Texture::bind() const
 {
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-
-	// Check if we need to define a special texture matrix
-	if ((coordinateType == Pixels) || m_pixelsFlipped)
-	{
-		GLfloat matrix[16] = {1.f, 0.f, 0.f, 0.f,
-			0.f, 1.f, 0.f, 0.f,
-			0.f, 0.f, 1.f, 0.f,
-			0.f, 0.f, 0.f, 1.f};
-
-		// If non-normalized coordinates (= pixels) are requested, we need to
-		// setup scale factors that convert the range [0 .. size] to [0 .. 1]
-		if (coordinateType == Pixels)
-		{
-			matrix[0] = 1.f / m_actualSize.x;
-			matrix[5] = 1.f / m_actualSize.y;
-		}
-
-		// If pixels are flipped we must invert the Y axis
-		if (m_pixelsFlipped)
-		{
-			matrix[5] = -matrix[5];
-			matrix[13] = static_cast<float>(m_size.y / m_actualSize.y);
-		}
-
-		// Load the matrix
-		glMatrixMode(GL_TEXTURE);
-		glLoadMatrixf(matrix);
-
-		// Go back to model-view mode (sf::RenderTarget relies on it)
-		glMatrixMode(GL_MODELVIEW);
-	}
 };
 
 /// Get the id of the currently bound texture for the currently set texture unit

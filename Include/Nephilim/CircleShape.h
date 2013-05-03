@@ -27,13 +27,19 @@ public:
 
 	void setRadius(float radius);
 
+	void setOutlineThickness(float thickness);
+	void setOutlineColor(Color color);
+
 	void update();
 
 
 	VertexArray2D m_vertices;
+	VertexArray2D m_outlineGeometry;
 	float m_radius;
+	float m_outlineThickness;
 	float m_pointCount;
 	Color m_fillColor;
+	Color m_outlineColor;
 };
 
 NEPHILIM_NS_END

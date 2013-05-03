@@ -210,7 +210,7 @@ void Sprite::onDraw(Renderer* renderer){
 	*/
 	
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
-	if(m_texture) m_texture->bind(Texture::Normalized);
+	if(m_texture) m_texture->bind();
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 	renderer->setDefaultTexture();

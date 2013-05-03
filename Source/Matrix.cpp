@@ -147,6 +147,26 @@ mat4 mat4::rotate(float angle_x, float angle_y, float angle_z)
 	return mat;
 }
 
+/// Creates a texture matrix to transform texture coordinates
+/// Multiplying texture coordinates by this matrix will allow effects such as showing the texture upside-down
+/// Also, it allows to convert pixel coordinates to unit coordinates
+/// textureTransform(false, 1.f, 1.f) is the default and leaves the texture coordinates unchanged
+mat4 mat4::textureTransform(bool flipVertically, float scaleX, float scaleY)
+{
+	mat4 matrix;
+
+	matrix[0] = 1.f / scaleX;
+	matrix[5] = 1.f / scaleY;	
+
+	// If pixels are flipped we must invert the Y axis
+	if (flipVertically)
+	{
+		matrix[5] = -matrix[5];
+		//matrix[13] = static_cast<float>(m_size.y / m_actualSize.y);
+		matrix[13] = static_cast<float>(scaleY);
+	}
+	return matrix;
+}
 
 /// Get the inverse of this matrix
 mat4 mat4::getInverse()

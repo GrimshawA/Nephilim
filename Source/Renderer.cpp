@@ -203,7 +203,7 @@ void Renderer::setDefaultDepthTesting()
 void Renderer::setDefaultTexture()
 {
 	glActiveTexture(GL_TEXTURE0);
-	m_defaultTexture.bind(Texture::Normalized);
+	m_defaultTexture.bind();
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow

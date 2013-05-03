@@ -1,6 +1,7 @@
 #include "Kinectic.h"
 
 #include <Nephilim/CGL.h>
+#include <Nephilim/RenderStateBackup.h>
 #include <Nephilim/Image.h>
 
 #include <Nephilim/KxScene.h>
@@ -15,6 +16,7 @@
 #include <Nephilim/Texture.h>
 #include <Nephilim/Sprite.h>
 #include <Nephilim/RectangleShape.h>
+#include <Nephilim/CircleShape.h>
 #include <Nephilim/MMath.h>
 
 #include <iostream>
@@ -49,7 +51,7 @@ void Kinectic::onCreate()
 {	
 	Log("hello %d %d %d", 20, 30, 40);
 
-	world.CreateQuickCircle(200,200,20);
+	world.CreateQuickCircle(200,200,20)->SetBullet(true);
 	world.CreateStaticBox(0,600,2500, 10);
 
 	world.setPositionIterations(20);
@@ -190,8 +192,24 @@ void Kinectic::onRender()
 	rshape.setColors(Color::Orange, Color::Blue, Color::Green, Color::Red);
 	rshape.setSize(1024,768);
 	rshape.setTexture(&tex);
-	rshape.setTextureRect(200,200,300,300);
+	rshape.setTextureRect(0,0,500,500);
 	getRenderer()->draw(rshape);
+
+	CircleShape cshape;
+	cshape.setRadius(30);
+	cshape.setPosition(50,50);
+	cshape.setPointCount(100);
+	cshape.setFillColor(Color::Green);
+	cshape.setOutlineColor(Color::Blue);
+	cshape.setOutlineThickness(10);
+	getRenderer()->draw(cshape);
+
+	/*Log("Current texture id: %d", Texture::getCurrentBoundTexture());
+	{
+		TextureBackup tb;
+		tex.setRepeated(true);
+	}
+	Log("Current texture id: %d", Texture::getCurrentBoundTexture());*/
 
 	KxDraw wd(world);
 	getRenderer()->draw(wd);

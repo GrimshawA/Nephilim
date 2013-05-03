@@ -27,7 +27,7 @@ void Framebuffer::activate()
 /// Attaches a texture to the color attachment 0
 void Framebuffer::attachTexture(const Texture& texture)
 {
-	glFramebufferTexture2DCGL(GL_FRAMEBUFFER_CGL, GL_COLOR_ATTACHMENT0_CGL, GL_TEXTURE_2D, texture.m_texture, 0);
+	glFramebufferTexture2DCGL(GL_FRAMEBUFFER_CGL, GL_COLOR_ATTACHMENT0_CGL, GL_TEXTURE_2D, texture.getIdentifier(), 0);
 
 	if(glCheckFramebufferStatusCGL(GL_FRAMEBUFFER_CGL) == GL_FRAMEBUFFER_COMPLETE_CGL)
 	{

@@ -1,5 +1,5 @@
-#ifndef PARABOLA_IMAGETEXTURE_H
-#define PARABOLA_IMAGETEXTURE_H
+#ifndef Texture_h__
+#define Texture_h__
 
 #include "Platform.h"
 #include "Vectors.h"
@@ -12,7 +12,7 @@ class Image;
 /**
 	\ingroup Graphics
 	\class Texture
-	\brief A 2D OpenGL Texture
+	\brief OpenGL Texture. RGBA format - 8 bits per component
 */
 class NEPHILIM_API Texture{
 public:
@@ -25,63 +25,65 @@ public:
 	/// Releases the texture resource
 	~Texture();
 
+	/// Get the internal OpenGL identifier of this texture
+	unsigned int getIdentifier() const;
 
-
-
-	enum CoordinateType{
-		Pixels,
-		Normalized
-	};
-
-
+	/// Update the texture on the GPU with an array of pixels
 	void update(const Uint8* pixels);
+
+	/// Update the texture on the GPU from an image
 	void update(const Image& image);
+
+	/// Enables smoothing in the texture
+	/// When smoothing is enabled, the pixels will be linearly interpolated when the image is scaled
+	/// When smoothing is disabled, texturing will always pick the nearest color, with no calculations.
 	void setSmooth(bool smooth);
+
+	/// Enables repeating in the texture
+	/// When repeating is enabled, texture coordinates bigger than the texture will still be valid, and the end result is a pattern with the texture
+	void setRepeated(bool repeated);
+
+	/// Create or recreate the texture with a given size
 	bool create(unsigned int width, unsigned int height);
+
+	/// Get a valid power-of-two size - do not use
 	unsigned int getValidSize(unsigned int size);
-	/// Copy the texture buffer to an image
+
+	/// Retrieve the texture from the GPU and into an image
+	/// Does not work in OpenGL ES platforms. An warning is logged in such platforms.
 	Image copyToImage() const;
 
+	/// Loads directly from an image
 	void loadFromImage(Image &image);
 
-	/// Sets the desired transparency on all pixels with the selected color
-	void createMaskFromColor(const Color &color, Uint8 alpha = 0);
-
+	/// Load a texture from a file
+	/// This is a proxy for Image::loadFromFile() and then Texture::loadFromImage()
 	bool loadFromFile(const String &path);
 
+	/// Get the size of the texture
 	Vec2i getSize() const;
 
-	void bind(CoordinateType coordinateType = Pixels) const;
+	/// Bind this texture to the currently active texture unit
+	void bind() const;
 
+	/// Updates a given region inside the texture with an array of pixels
 	void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
 
+	/// Get the maximum allowed size of textures
+	/// The result will be hardward-dependent
 	static unsigned int getMaximumSize();
 
 	/// Get the id of the currently bound texture for the currently set texture unit
 	static unsigned int getCurrentBoundTexture();
 
-public:
-
-	unsigned int m_texture;
-	Vec2i m_size;
-	Vec2i m_actualSize;
-	bool m_pixelsFlipped;
-	bool m_isSmooth;
-
 private:
-	
+	unsigned int m_texture; ///< OpenGL texture
+	Vec2i m_size;           ///< Requested size of the texture
+	Vec2i m_actualSize;     ///< Actual size of the texture in the GPU
+	bool m_pixelsFlipped;   ///< Is this texture upside-down?
+	bool m_isSmooth;        ///< Is this texture smoothed?
+	bool m_isRepeated;      ///< Is this texture repeating?
 };
 
-
-	/**
-		\ingroup Graphics
-		\class RenderImage
-		\brief Extends sf::RenderImage
-	*/
-	/*class RenderImage: public sf::RenderTexture{
-	public:
-
-	};*/
-
 NEPHILIM_NS_END
-#endif
+#endif // Texture_h__

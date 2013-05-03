@@ -3,6 +3,8 @@
 
 #include "Platform.h"
 #include "Drawable.h"
+#include "Color.h"
+#include "Transformable.h"
 #include "VertexArray2D.h"
 
 NEPHILIM_NS_BEGIN
@@ -14,7 +16,7 @@ class Texture;
 	\class RectangleShape
 	\brief A drawable rectangle
 */
-class NEPHILIM_API RectangleShape : public Drawable
+class NEPHILIM_API RectangleShape : public Drawable, public Transformable
 {
 public:
 	RectangleShape();

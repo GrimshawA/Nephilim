@@ -49,6 +49,15 @@ public:
 	static mat4 translate(float x, float y, float z);
 	static mat4 rotate(float angle_x, float angle_y, float angle_z);
 
+	/// Creates a texture matrix to transform texture coordinates
+	/// Multiplying texture coordinates by this matrix will allow effects such as showing the texture upside-down
+	/// Also, it allows to convert pixel coordinates to unit coordinates
+	/// textureTransform(false, 1.f, 1.f) is the default and leaves the texture coordinates unchanged
+	/// flipVertically states whether to flip the texture coordinates vertically
+	/// scaleX, scaleY state the maximum value for the texture coordinates
+	/// For pixel coordinate transformation, it would be (textureSize.x,textureSize.y)
+	static mat4 textureTransform(bool flipVertically, float scaleX, float scaleY);
+
 	/// Multiply the matrix by a vector
 	vec4 operator*(const vec4& v);
 
