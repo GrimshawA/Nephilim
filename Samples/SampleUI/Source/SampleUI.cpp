@@ -7,6 +7,7 @@
 #include <Nephilim/Matrix.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Profiler.h>
+#include <Nephilim/Text.h>
 #include <Nephilim/Engine.h>
 //#include <Nephilim/ASXEngine.h>
 #include <Nephilim/File.h>
@@ -14,8 +15,29 @@
 #include <iostream>
 using namespace std;
 
+Text text;
+Font *font;
+
 void SampleUI::onCreate()
 {	
+
+	font = new Font();
+	if(font->loadFromFile("arial.ttf"))
+	{
+		Log("Arial loaded from file.");
+	}
+
+	text.setFont(*font);
+	text.setString("Hello world\nWe are backkkkkkkkkkkkkkkkkkkkkkkkk!\nThis is great I believe!! :)");
+	text.setColor(Color::Orange);
+
+	Image readyFont = font->getTexture(text.getCharacterSize()).copyToImage();
+	readyFont.saveToFile("readyFont.png"); 
+	//Log("Saving to disk texture page %d", font->getTexture(text.getCharacterSize()).m_texture);
+	
+	
+	
+	/*
 	// create ui
 	UIControl* control1 = new UIControl(), *control2 = new UIControl(), *control3 = new UIControl();
 	control1->setRect(FloatRect(0,0,500,1000));
@@ -34,7 +56,7 @@ void SampleUI::onCreate()
 	{
 		cout << "Text: "<<a.getLine()<<endl;
 	}
-
+	*/
 	/*ASXEngine scripts;
 
 	ASXModuleBuilder scriptbuilder(scripts, "myModule");
@@ -71,12 +93,17 @@ void SampleUI::onRender()
 {
 	// Ensure default shader
 	getRenderer()->setDefaultShader();
-	
+	getRenderer()->setClearColor(Color::Black);	
 	getRenderer()->setProjectionMatrix(mat4(View(0,0,1000,1000).getTransform().getMatrix()));
 	getRenderer()->setViewMatrix(mat4());
 	getRenderer()->setModelMatrix(mat4());
 
 	// Draw to arbitrary frame buffer
 	// UI only uses VertexArray geometry --automatically works
-	ui.draw(getRenderer());
+	//ui.draw(getRenderer());
+
+	getRenderer()->setDefaultTexture();
+	getRenderer()->setDefaultBlending();
+	
+	getRenderer()->draw(text);
 }

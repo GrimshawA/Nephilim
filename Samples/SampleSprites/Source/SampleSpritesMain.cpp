@@ -1,5 +1,5 @@
-#define ANDROID_PACKAGE_NAME com_nephilim_samplesprites
-#define ANDROID_ACTIVITY_NAME SampleSprites
+#define ANDROID_PACKAGE_NAME com_nephilim_ts
+#define ANDROID_ACTIVITY_NAME TriangleSuper
 #include <Nephilim/GenericMain.h>
 #include "SampleSprites.h"
 

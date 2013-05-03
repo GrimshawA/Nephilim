@@ -1,33 +1,24 @@
-
-////////////////////////////////////////////////////////////
-//#ifndef MINIMAL_BUILD
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include <Nephilim/Text.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/Sprite.h>
+#include <Nephilim/RectangleShape.h>
 #include <Nephilim/CGL.h>
+#include <Nephilim/Image.h>
 #include <cassert>
 
 #include <iostream>
 using namespace std;
 
-#ifdef PARABOLA_IPHONE
-#include <OpenGLES/ES1/gl.h>
-#endif
-
-
 NEPHILIM_NS_BEGIN
 
-	Text::Text(): m_string(),
-	m_font(&Font::getDefaultFont()),
-	m_characterSize(30),
-	m_style(Regular),
-	m_color(255,255,255),
-	m_vertices(Render::Primitive::Triangles, 0),
-	m_bounds(0,0,0,0)
+Text::Text()
+: m_string()
+, m_font(&Font::getDefaultFont()),
+m_characterSize(30),
+m_style(Regular),
+m_color(255,255,255),
+m_vertices(Render::Primitive::Triangles, 0),
+m_bounds(0,0,0,0)
 {
 
 }
@@ -44,74 +35,14 @@ Text::Text(String text, float x, float y) : m_string(text),
 		updateGeometry();
 };
 
-	/*
-////////////////////////////////////////////////////////////
-Text::Text() :
-m_string       (),
-m_font         (&Font::getDefaultFont()),
-m_characterSize(30),
-m_style        (Regular),
-m_color        (255, 255, 255),
-m_vertices     (Quads),
-m_bounds       ()
+void Text::onDraw(Renderer* renderer)
 {
+	if(!m_font || m_string.empty()) return;
 
-}
-
-
-////////////////////////////////////////////////////////////
-Text::Text(const String& string, const Font& font, unsigned int characterSize) :
-m_string       (string),
-m_font         (&font),
-m_characterSize(characterSize),
-m_style        (Regular),
-m_color        (255, 255, 255),
-m_vertices     (Quads),
-m_bounds       ()
-{
-    updateGeometry();
-}
-*/
-
-/// Draws the text
-void Text::onDraw(Renderer* renderer){
-	/*assert(m_font != NULL);
-
-	states.transform *= getTransform();
-	states.blendMode = BlendAlpha; // alpha blending is mandatory for proper text rendering
-	states.texture = &m_font->getTexture(m_characterSize);
-
-
-	target.draw(m_vertices, states);*/
-
-	//glEnable(GL_TEXTURE_2D);
-	//m_bounds.top = 0;
-	//m_bounds.height = 30;
-	//renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, Color(100,100,0,30));
-
-	//cout<<"Pos: "<<m_bounds.top<<endl;
-
-	/*Sprite spr;
-	spr.setTexture(m_font->getTexture(m_characterSize));
-	spr.move(0,50);*/
-	//renderer->draw(spr);
-
-	//setPosition(400,400);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glPushMatrix();
-	glMultMatrixf(getTransform().getMatrix());
-	m_font->getTexture(m_characterSize).bind(Texture::Pixels);
-	//PRINTLOG("ParabolaEngine", "Using texture with id: %d\n", m_font->getTexture(m_characterSize).m_texture);
-
-	//cout<<"Drawing "<<m_vertices.m_vertices.size() / 6<<endl;
-
-	//renderer->drawVertexArray(m_vertices);
-	glPopMatrix();
-	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
-
+	m_font->getTexture(m_characterSize).bind(Texture::Normalized);
+	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	renderer->draw(m_vertices);
+	renderer->setModelMatrix(mat4());
 };
 
 
@@ -296,20 +227,6 @@ FloatRect Text::getGlobalBounds() const
     return getTransform().transformRect(getLocalBounds());
 }
 
-
-////////////////////////////////////////////////////////////
-/*void Text::draw(RenderTarget& target, RenderStates states) const
-{*/
-   /* assert(m_font != NULL);
-
-    states.transform *= getTransform();
-    states.blendMode = BlendAlpha; // alpha blending is mandatory for proper text rendering
-    states.texture = &m_font->getTexture(m_characterSize);
-    target.draw(m_vertices, states);*/
-//}
-
-
-////////////////////////////////////////////////////////////
 void Text::updateGeometry()
 {
     assert(m_font != NULL);
@@ -317,9 +234,8 @@ void Text::updateGeometry()
     // Clear the previous geometry
     m_vertices.clear();
 
-    /*// No text: nothing to draw
-    if (m_string.isEmpty())
-        return;*/
+    if (m_string.empty())
+        return;
 
     // Compute values related to the text style
     bool  bold               = (m_style & Bold) != 0;
@@ -380,22 +296,22 @@ void Text::updateGeometry()
         float u2 = static_cast<float>(glyph.textureRect.left + glyph.textureRect.width);
         float v2 = static_cast<float>(glyph.textureRect.top  + glyph.textureRect.height);
 
-        // Add a quad for the current character
-		/*cout<<"adding uvs: " << u1 << " " << v1 << " " << u2 << " " << v2 <<endl;
-        m_vertices.append(Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
-        m_vertices.append(Vertex(Vec2f(x + right - italic * top,    y + top),    m_color, Vec2f(u2, v1)));
-        m_vertices.append(Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
-        m_vertices.append(Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));*/
-		//GLfloat vertices[] = {width/2,-height/2,0, -width/2,height/2,0, -width/2,-height/2,0,  width/2,-height/2,0,  width/2,height/2,0, -width/2, height/2,0 };
+		Vec2i fontTextureSize = m_font->getTexture(m_characterSize).getSize();
 
-		//cout<<"adding uvs: " << u1 << " " << v1 << " " << u2 << " " << v2 <<endl;
-		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
+		u1 /= fontTextureSize.x;
+		u2 /= fontTextureSize.x;
+		v1 /= fontTextureSize.y;
+		v2 /= fontTextureSize.y;
+
+     	m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
 		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
 		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * bottom, y + bottom), m_color, Vec2f(u1, v2)));
 
 		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * bottom, y + bottom), m_color, Vec2f(u2, v2)));
 		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + right - italic * top,    y + top),    m_color, Vec2f(u2, v1)));
 		m_vertices.append(VertexArray2D::Vertex(Vec2f(x + left  - italic * top,    y + top),    m_color, Vec2f(u1, v1)));
+
+	//	cout<< "U ("<<u1<<" "<<u2<<")" << endl;
 
 
         // Advance to the next character
@@ -427,5 +343,3 @@ void Text::updateGeometry()
 }
 
 NEPHILIM_NS_END
-
-//#endif

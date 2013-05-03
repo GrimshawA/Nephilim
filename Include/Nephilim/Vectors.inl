@@ -50,14 +50,16 @@ float Vec2<T>::length(){
 };
 
 template<class T>
-bool Vec2<T>::operator==(const Vec2<T> &vec){
+bool Vec2<T>::operator==(const Vec2<T> &vec) const
+{
 	if(x == vec.x && y == vec.y)
 		return true;
 	else return false;
 };
 
 template<class T>
-bool Vec2<T>::operator!=(const Vec2<T> &vec){
+bool Vec2<T>::operator!=(const Vec2<T> &vec) const
+{
 	return !(operator==(vec));
 };
 

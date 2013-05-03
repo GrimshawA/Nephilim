@@ -203,7 +203,7 @@ void Renderer::setDefaultDepthTesting()
 void Renderer::setDefaultTexture()
 {
 	glActiveTexture(GL_TEXTURE0);
-	m_defaultTexture.bind();
+	m_defaultTexture.bind(Texture::Normalized);
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
@@ -277,9 +277,6 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 	const float k_segments = 32.0f;
 	const float k_increment = 2.0f * 3.14159 / k_segments;
 	float theta = 0.0f;
-//	glEnable(GL_BLEND);
-//	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glColor4ub(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, color.a);
 
 	for (int i = 0; i < k_segments; ++i)
 	{
@@ -287,9 +284,6 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 		theta += k_increment;
 		varray.append(VertexArray2D::Vertex(v, color, Vec2f()));
 	}
-//	glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
-	//glDisable(GL_BLEND);
 
 	/*theta = 0.0f;
 	glColor4ub(color.r, color.g, color.b, color.a);

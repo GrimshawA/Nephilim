@@ -7,7 +7,6 @@
 
 NEPHILIM_NS_BEGIN
 
-/// Create an uninitialised texture
 Texture::Texture()
 : m_size(0,0)
 , m_actualSize(0,0)
@@ -18,16 +17,23 @@ Texture::Texture()
 
 }
 
+Texture::Texture(const Texture& other)
+{
+	if (other.m_texture)
+	{
+		Image img = other.copyToImage();
+		loadFromImage(img);
+	}
+}
+
 /// RAII release of the texture
 Texture::~Texture()
 {
 	if(m_texture > 0){
+		Log("Texture %d, deallocated. Object: %x", m_texture, this);
 		glDeleteTextures(1, &m_texture);
 	}
 }
-
-
-
 
 ////////////////////////////////////////////////////////////
 bool Texture::create(unsigned int width, unsigned int height)
@@ -67,8 +73,7 @@ bool Texture::create(unsigned int width, unsigned int height)
 		GLuint texture;
 		glGenTextures(1, &texture);
 		m_texture = static_cast<unsigned int>(texture);
-		//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);
-
+		Log("Just allocated texture at create() %d", texture);
 	}
 
 	// Make sure that the current texture binding will be preserved
@@ -76,14 +81,13 @@ bool Texture::create(unsigned int width, unsigned int height)
 
 	// Initialize the texture
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_actualSize.x, m_actualSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_actualSize.x, m_actualSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
-	//m_cacheId = getUniqueId();
-
+	
 	return true;
 }
 
@@ -138,6 +142,8 @@ void Texture::loadFromImage(Image &image){
 	m_size = image.getSize();
 	m_actualSize = m_size;
 	glGenTextures(1, &m_texture);
+	Log("Just allocated texture at loadFromImage() %d", m_texture);
+
 	//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -159,7 +165,8 @@ bool Texture::loadFromFile(const String &path){
 }
 
 /// Copy the texture buffer to an image
-Image Texture::copyToImage(){
+Image Texture::copyToImage() const
+{
 
 	// Easy case: empty texture
 	if (!m_texture)
@@ -178,8 +185,11 @@ Image Texture::copyToImage(){
 	{
 		// Texture is not padded nor flipped, we can use a direct copy
 		glBindTexture(GL_TEXTURE_2D, m_texture);
-		
-		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
+#ifndef NEPHILIM_ANDROID
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &pixels[0]);
+#else
+		Log("Texture::copyToImage() is not allowed in Android.");
+#endif
 	}
 	else
 	{
@@ -189,8 +199,11 @@ Image Texture::copyToImage(){
 		std::vector<Uint8> allPixels(m_actualSize.x * m_actualSize.y * 4);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		
-		
-		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
+#ifndef NEPHILIM_ANDROID
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &allPixels[0]);
+#else
+		Log("Texture::copyToImage() is not allowed in Android.");
+#endif	
 
 		// Then we copy the useful pixels from the temporary array to the final one
 		const Uint8* src = &allPixels[0];
@@ -286,7 +299,8 @@ unsigned int Texture::getMaximumSize()
 	return static_cast<unsigned int>(size);
 }
 
-void Texture::bind(CoordinateType coordinateType) const{
+void Texture::bind(CoordinateType coordinateType) const
+{
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
 	// Check if we need to define a special texture matrix

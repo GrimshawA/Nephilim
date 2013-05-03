@@ -12,6 +12,7 @@
 NEPHILIM_NS_BEGIN
 class GameCoreManager;
 class Engine;
+class Surface;
 /**
 	\ingroup Core
 	\class GameCore
@@ -51,6 +52,8 @@ public:
 	String getFileSystemRoot();
 
 	Renderer* getRenderer();
+
+	Surface& getSurface();
 
 	Engine* m_creator;
 

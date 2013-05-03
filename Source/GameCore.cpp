@@ -9,18 +9,19 @@ NEPHILIM_NS_BEGIN
 
 /// Construct the game, its mandatory to call this base constructor when implementing GameCore
 GameCore::GameCore() : m_stackedTime(0.f), m_updateStep(1.f / 60.f), m_windowTitle("No name window"), mCloseRequested(false){
-#ifdef PARABOLA_ANDROID
-	m_updateStep = 1.f / 30.f;
-#endif
-
 
 };
 
 /// Get the window/screen handler
-	Window& GameCore::getWindow()
-	{
-	    return *m_creator->m_surface.window;
-	}
+Window& GameCore::getWindow()
+{
+    return *m_creator->m_surface.window;
+}
+
+Surface& GameCore::getSurface()
+{
+	return m_creator->m_surface;
+}
 
 /// Sets the base directory to load resources from
 void GameCore::setFileRoot(const String & path)

@@ -1,5 +1,6 @@
 #include <Nephilim/Font.h>
 #include <Nephilim/Image.h>
+#include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 
 #include <ft2build.h>
@@ -14,30 +15,31 @@
 using namespace std;
 
 
-namespace
-{
-    // FreeType callbacks that operate on a sf::InputStream
-    unsigned long read(FT_Stream rec, unsigned long offset, unsigned char* buffer, unsigned long count)
-    {
-       /* sf::InputStream* stream = static_cast<sf::InputStream*>(rec->descriptor.pointer);
-        if (static_cast<unsigned long>(stream->seek(offset)) == offset)
-        {
-            if (count > 0)
-                return static_cast<unsigned long>(stream->read(reinterpret_cast<char*>(buffer), count));
-            else
-                return 0;
-        }
-        else
-            return count > 0 ? 0 : 1; // error code is 0 if we're reading, or nonzero if we're seeking*/
-		return 0;
-    }
-    void close(FT_Stream)
-    {
-    }
-}
 
 
 NEPHILIM_NS_BEGIN
+
+namespace
+{
+	// FreeType callbacks that operate on a sf::InputStream
+	unsigned long read(FT_Stream rec, unsigned long offset, unsigned char* buffer, unsigned long count)
+	{
+		File* stream = static_cast< File*>(rec->descriptor.pointer);
+		if (static_cast<unsigned long>(stream->seek(offset)) == offset)
+		{
+			if (count > 0)
+				return static_cast<unsigned long>(stream->read(reinterpret_cast<char*>(buffer), count));
+			else
+				return 0;
+		}
+		else
+			return count > 0 ? 0 : 1; // error code is 0 if we're reading, or nonzero if we're seeking*/
+		return 0;
+	}
+	void close(FT_Stream)
+	{
+	}
+}
 
 ////////////////////////////////////////////////////////////
 Font::Font() :
@@ -73,34 +75,22 @@ Font::~Font()
     cleanup();
 }
 
-
-////////////////////////////////////////////////////////////
 bool Font::loadFromFile(const std::string& filename)
 {
+	File stream(filename, IODevice::BinaryRead);
 
-#ifdef PARABOLA_ANDROID
-	// Ugly android loading hack
-	File* file = new File();
-	if(FileInterface::getAssetFile(file, filename))
+	if(!stream)
 	{
-		char* buffer = new char[file->getSize()];
-		file->read(buffer, file->getSize());
-		bool res = loadFromMemory(buffer, sizeof(char) * file->getSize());
-		if(res){ 
-			PRINTLOG("pp", "->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Loaded a font from memory!! %lld\n", file->getSize()); 
-		}
-		else
-		{
-			TESTLOG("FAILEEEEEEEEEEEEEEEEEEEEEED TO LOAD FONT")
-		}
-		//delete[] buffer;
-		delete file;
-		return res;
+		return false;
 	}
-	else return false;
-#endif
 
-    // Cleanup the previous resources
+	// DEBUG - loadFromMemory
+	char *data = new char[stream.getSize()];
+	stream.read(data, stream.getSize());
+	return loadFromMemory(data, stream.getSize());
+	return loadFromStream(stream);
+
+	// Cleanup the previous resources
     cleanup();
     m_refCount = new int(1);
 
@@ -110,7 +100,7 @@ bool Font::loadFromFile(const std::string& filename)
     FT_Library library;
     if (FT_Init_FreeType(&library) != 0)
     {
-//        err() << "Failed to load font \"" << filename << "\" (failed to initialize FreeType)" << std::endl;
+		Log("Failed to load font \"%s\" (failed to initialize FreeType)" , filename.c_str());
         return false;
     }
     m_library = library;
@@ -119,14 +109,14 @@ bool Font::loadFromFile(const std::string& filename)
     FT_Face face;
     if (FT_New_Face(static_cast<FT_Library>(m_library), filename.c_str(), 0, &face) != 0)
     {
-       // err() << "Failed to load font \"" << filename << "\" (failed to create the font face)" << std::endl;
+		Log("Failed to load font \"%s\" (failed to create the font face)" , filename.c_str());
         return false;
     }
 
     // Select the unicode character map
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE) != 0)
     {
-       // err() << "Failed to load font \"" << filename << "\" (failed to set the Unicode character set)" << std::endl;
+		Log("Failed to load font \"%s\" (failed to set the Unicode character set)" , filename.c_str());
         return false;
     }
 
@@ -150,7 +140,7 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
     FT_Library library;
     if (FT_Init_FreeType(&library) != 0)
     {
-//        err() << "Failed to load font from memory (failed to initialize FreeType)" << std::endl;
+		Log("Failed to load font from memory (failed to initialize FreeType)");
         return false;
     }
     m_library = library;
@@ -159,14 +149,14 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
     FT_Face face;
     if (FT_New_Memory_Face(static_cast<FT_Library>(m_library), reinterpret_cast<const FT_Byte*>(data), static_cast<FT_Long>(sizeInBytes), 0, &face) != 0)
     {
-//        err() << "Failed to load font from memory (failed to create the font face)" << std::endl;
+		Log("Failed to load font from memory (failed to create the font face)");
         return false;
     }
 
     // Select the unicode character map
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE) != 0)
     {
-       // err() << "Failed to load font from memory (failed to set the Unicode character set)" << std::endl;
+        Log("Failed to load font from memory (failed to set the Unicode character set)");
         return false;
     }
 
@@ -178,7 +168,7 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
 
 
 ////////////////////////////////////////////////////////////
-/*bool Font::loadFromStream(InputStream& stream)
+bool Font::loadFromStream(File& stream)
 {
     // Cleanup the previous resources
     cleanup();
@@ -190,7 +180,7 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
     FT_Library library;
     if (FT_Init_FreeType(&library) != 0)
     {
-        err() << "Failed to load font from stream (failed to initialize FreeType)" << std::endl;
+        //err() << "Failed to load font from stream (failed to initialize FreeType)" << std::endl;
         return false;
     }
     m_library = library;
@@ -215,14 +205,14 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
     FT_Face face;
     if (FT_Open_Face(static_cast<FT_Library>(m_library), &args, 0, &face) != 0)
     {
-        err() << "Failed to load font from stream (failed to create the font face)" << std::endl;
+        //err() << "Failed to load font from stream (failed to create the font face)" << std::endl;
         return false;
     }
 
     // Select the unicode character map
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE) != 0)
     {
-        err() << "Failed to load font from stream (failed to set the Unicode character set)" << std::endl;
+        //err() << "Failed to load font from stream (failed to set the Unicode character set)" << std::endl;
         return false;
     }
 
@@ -232,13 +222,20 @@ bool Font::loadFromMemory(const void* data, std::size_t sizeInBytes)
 
     return true;
 }
-*/
+
 
 ////////////////////////////////////////////////////////////
 const Glyph& Font::getGlyph(Uint32 codePoint, unsigned int characterSize, bool bold) const
 {
+	// Ensure page existence
+	if(m_pages.find(characterSize) == m_pages.end())
+	{
+		m_pages[characterSize] = new Page();
+	}
+
+
     // Get the page corresponding to the character size
-    GlyphTable& glyphs = m_pages[characterSize].glyphs;
+    GlyphTable& glyphs = m_pages[characterSize]->glyphs;
 
     // Build the key by combining the code point and the bold flag
     Uint32 key = ((bold ? 1 : 0) << 31) | codePoint;
@@ -308,7 +305,13 @@ int Font::getLineSpacing(unsigned int characterSize) const
 ////////////////////////////////////////////////////////////
 const Texture& Font::getTexture(unsigned int characterSize) const
 {
-    return m_pages[characterSize].texture;
+	if(m_pages.find(characterSize) == m_pages.end())
+	{
+		m_pages[characterSize] = new Page();
+	}
+	const Texture& page = m_pages[characterSize]->texture;
+	
+    return page;
 }
 
 
@@ -341,10 +344,10 @@ const Font& Font::getDefaultFont()
             #include "Arial.hpp"
         };
 
-        if(font.loadFromMemory(data, sizeof(data))){
-//			TESTLOG("READ DEFAULT FONT")
-		}
-        loaded = true;
+       /* if(font.loadFromMemory(data, sizeof(data))){
+			Log("Arial default font loaded.");
+		}*/
+        //loaded = true;
     }
 
     return font;
@@ -354,6 +357,12 @@ const Font& Font::getDefaultFont()
 ////////////////////////////////////////////////////////////
 void Font::cleanup()
 {
+	// Time to delete the pages
+	for(PageTable::iterator it = m_pages.begin(); it != m_pages.end(); ++it)
+	{
+		delete it->second;
+	}
+
     // Check if we must destroy the FreeType pointers
     if (m_refCount)
     {
@@ -448,7 +457,7 @@ Glyph Font::loadGlyph(Uint32 codePoint, unsigned int characterSize, bool bold) c
         const unsigned int padding = 1;
 
         // Get the glyphs page corresponding to the character size
-        Page& page = m_pages[characterSize];
+        Page& page = *m_pages[characterSize];
 
         // Find a good position for the new glyph into the texture
         glyph.textureRect = findGlyphRect(page, width + 2 * padding, height + 2 * padding);
@@ -619,6 +628,12 @@ nextRow(2)
     // Create the texture
     texture.loadFromImage(image);
     texture.setSmooth(true);
+
+	//Log("The font page is %d. Object: %x", texture.m_texture, &texture );
+}
+
+Font::Page::~Page()
+{
 }
 
 NEPHILIM_NS_END

@@ -59,6 +59,7 @@ void Engine::update()
 	if(m_currentApp && m_currentApp->mCloseRequested)
 	{
 		m_currentApp = NULL;
+		m_running = false;
 	}
 
 	if(m_currentApp)

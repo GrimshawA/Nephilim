@@ -41,10 +41,10 @@ public:
 	void setAll(T x);
 
 	/// Comparison operator overload
-	bool operator==(const Vec2<T> &vec);
+	bool operator==(const Vec2<T> &vec) const;
 
 	/// Comparison operator overload
-	bool operator!=(const Vec2<T> &vec);
+	bool operator!=(const Vec2<T> &vec) const;
 
 	/// Assignment operator overload
 	Vec2<T>& operator+=(const Vec2<T> &vec);

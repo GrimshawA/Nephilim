@@ -38,6 +38,7 @@
 
 NEPHILIM_NS_BEGIN
 
+class File;
 
 ////////////////////////////////////////////////////////////
 /// \brief Class for loading and manipulating character fonts
@@ -124,7 +125,7 @@ public :
     /// \see loadFromFile, loadFromMemory
     ///
     ////////////////////////////////////////////////////////////
-   // bool loadFromStream(InputStream& stream);
+    bool loadFromStream(File& stream);
 
     ////////////////////////////////////////////////////////////
     /// \brief Retrieve a glyph of the font
@@ -234,6 +235,7 @@ private :
     struct Page
     {
         Page();
+		~Page();
 
         GlyphTable       glyphs;  ///< Table mapping code points to their corresponding glyph
         Texture      texture; ///< Texture containing the pixels of the glyphs
@@ -284,7 +286,7 @@ private :
     ////////////////////////////////////////////////////////////
     // Types
     ////////////////////////////////////////////////////////////
-    typedef std::map<unsigned int, Page> PageTable; ///< Table mapping a character size to its page (texture)
+    typedef std::map<unsigned int, Page*> PageTable; ///< Table mapping a character size to its page (texture)
 
     ////////////////////////////////////////////////////////////
     // Member data

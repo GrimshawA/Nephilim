@@ -19,6 +19,9 @@ public:
 	/// Creates a uninitialized texture
 	Texture();
 
+	/// Copy to a new texture
+	Texture(const Texture& other);
+
 	/// Releases the texture resource
 	~Texture();
 
@@ -37,7 +40,7 @@ public:
 	bool create(unsigned int width, unsigned int height);
 	unsigned int getValidSize(unsigned int size);
 	/// Copy the texture buffer to an image
-	Image copyToImage();
+	Image copyToImage() const;
 
 	void loadFromImage(Image &image);
 
@@ -64,6 +67,9 @@ public:
 	Vec2i m_actualSize;
 	bool m_pixelsFlipped;
 	bool m_isSmooth;
+
+private:
+	
 };
 
 
