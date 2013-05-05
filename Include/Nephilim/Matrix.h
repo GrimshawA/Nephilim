@@ -35,7 +35,11 @@ public:
 	/// Get the matrix array ptr
 	const float* get() const;
 
-	
+	/// Transpose the matrix
+	void transpose();
+
+	/// Get a transposed copy of this matrix
+	mat4 transposed();
 
 	float& operator[](unsigned int index);
 	float operator[](unsigned int index) const;
@@ -48,6 +52,11 @@ public:
 	static mat4 scale(float x, float y, float z);
 	static mat4 translate(float x, float y, float z);
 	static mat4 rotate(float angle_x, float angle_y, float angle_z);
+	static mat4 quaternion(float qx, float qy, float qz, float qw);
+
+	static mat4 rotatey(float angle);
+	static mat4 rotatex(float angle);
+	static mat4 rotatez(float angle);
 
 	/// Creates a texture matrix to transform texture coordinates
 	/// Multiplying texture coordinates by this matrix will allow effects such as showing the texture upside-down

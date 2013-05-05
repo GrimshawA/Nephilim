@@ -18,6 +18,12 @@ Framebuffer::~Framebuffer()
 
 }
 
+/// Get the size of the target
+Vec2i Framebuffer::getSize() const
+{
+	return m_size;
+}
+
 /// Bind the framebuffer as the current one
 void Framebuffer::activate()
 {

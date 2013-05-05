@@ -47,6 +47,25 @@ float mat4::operator[](unsigned int index) const
 	return m_matrix[index];
 }
 
+/// Transpose the matrix
+void mat4::transpose()
+{
+	mat4 m = *this;
+
+	m_matrix[0] = m[0]; m_matrix[4] = m[1]; m_matrix[8]  = m[2]; m_matrix[12] = m[3];
+	m_matrix[1] = m[4]; m_matrix[5] = m[5]; m_matrix[9]  = m[6]; m_matrix[13] = m[7];
+	m_matrix[2] = m[8]; m_matrix[6] = m[9]; m_matrix[10] = m[10]; m_matrix[14] = m[11];
+	m_matrix[3] = m[12]; m_matrix[7] = m[13]; m_matrix[11] = m[14]; m_matrix[15] = m[15];
+}
+
+/// Get a transposed copy of this matrix
+mat4 mat4::transposed()
+{
+	mat4 m = *this;
+	m.transpose();
+	return m;
+}
+
 /// Multiply by a scalar
 mat4 mat4::operator*(float scalar)
 {
@@ -120,6 +139,30 @@ mat4 mat4::scale(float x, float y, float z)
 	return m;
 }
 
+mat4 mat4::rotatey(float angle)
+{
+	return mat4(cos(angle),  0.f, sin(angle), 0.f,
+				0.f,         1.f, 0.f,        0.f,
+				-sin(angle), 0.f, cos(angle), 0.f,
+				0.f,         0.f, 0.f,        1.f);
+}
+
+mat4 mat4::rotatex(float angle)
+{
+	return mat4(1.f, 0.f,        0.f,         0.f,
+		        0.f, cos(angle), -sin(angle), 0.f,
+		        0.f, sin(angle), cos(angle),  0.f,
+		        0.f, 0.f,        0.f,         1.f);
+}
+
+mat4 mat4::rotatez(float angle)
+{
+	return mat4(cos(angle),-sin(angle), 0.f,   0.f,
+		        sin(angle), cos(angle), 0.f,   0.f,
+		        0.f,        0.f,        1.f,   0.f,
+		        0.f,        0.f,        0.f,   1.f);
+}
+
 mat4 mat4::rotate(float angle_x, float angle_y, float angle_z)
 {
 	float A       = cos(angle_x);
@@ -146,6 +189,24 @@ mat4 mat4::rotate(float angle_x, float angle_y, float angle_z)
 
 	return mat;
 }
+
+mat4 mat4::quaternion(float qx, float qy, float qz, float qw)
+{
+	const float n = 1.0f/sqrt(qx*qx+qy*qy+qz*qz+qw*qw);
+	qx *= n;
+	qy *= n;
+	qz *= n;
+	qw *= n;
+
+	mat4 m(
+		1.0f - 2.0f*qy*qy - 2.0f*qz*qz, 2.0f*qx*qy - 2.0f*qz*qw, 2.0f*qx*qz + 2.0f*qy*qw, 0.0f,
+		2.0f*qx*qy + 2.0f*qz*qw, 1.0f - 2.0f*qx*qx - 2.0f*qz*qz, 2.0f*qy*qz - 2.0f*qx*qw, 0.0f,
+		2.0f*qx*qz - 2.0f*qy*qw, 2.0f*qy*qz + 2.0f*qx*qw, 1.0f - 2.0f*qx*qx - 2.0f*qy*qy, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+
+	return m;
+}
+
 
 /// Creates a texture matrix to transform texture coordinates
 /// Multiplying texture coordinates by this matrix will allow effects such as showing the texture upside-down

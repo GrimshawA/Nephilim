@@ -46,6 +46,9 @@ public:
 	/// Implements RenderTarget::getSize()
 	Vec2i getSize() const;
 
+	/// Change the size of the window if possible
+	void setSize(int width, int height);
+
 	/// Default creation of a surface
 	void create();
 

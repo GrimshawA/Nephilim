@@ -32,6 +32,9 @@ public:
 	/// Releases the framebuffer
 	~Framebuffer();
 
+	/// Get the size of the target
+	Vec2i getSize() const;
+
 	/// Bind the framebuffer as the current one
 	void activate();
 
@@ -46,6 +49,7 @@ public:
 
 private:
 	unsigned int m_id; ///< Internal identifier of the framebuffer
+	Vec2i m_size;
 };
 
 NEPHILIM_NS_END

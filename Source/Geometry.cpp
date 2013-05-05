@@ -26,9 +26,84 @@ void GeometryData::addBox(float width, float height, float depth)
 		-hx,hy,-hz ,  -hx,hy,hz , hx, hy, hz   ,  hx,hy,-hz  ,-hx, hy, -hz  , hx,hy,hz //top
 	};
 
+	float texcoords[] = {
+		0.f,0.f,          1.f,0.f,        1.f,1.f,  0.f,0.f,      1.f, 1.f,          0.f, 1.f, //back face
+
+		1.f,0.f, 0.f,1.f, 0.f,0.f,  1.f,0.f, 1.f,1.f, 0.f, 1.f, //front face
+
+		0.f,0.f,    1.f,0.f    , 1.f,1.f,  1.f,1.f,  0.f,1.f    , 0.f,0.f, //right face
+
+		0.f,0.f, 0.f,1.f ,1.f,0.f,  1.f,1.f , 1.f,0.f, 0.f,1.f, // new left face
+
+		1.f,0.f,   1.f,1.f   , 0.f, 1.f , 0.f,1.f,  0.f,0.f,   1.f,0.f, //bottom
+
+		0.f,0.f ,  0.f,1.f , 1.f,1.f  , 1.f,0.f , 0.f, 0.f  , 1.f,1.f //top
+	};
+
 	m_vertices.resize(6 * 6);
 	memcpy(&m_vertices[0], vertices, sizeof(float) * 6 * 6 * 3);
+
+	m_texCoords.resize(6*6);
+	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 6 * 2);
+	
 }
+
+/// Silly plane adding, to be refactored
+void GeometryData::addPlane(float width, float depth, float height)
+{
+	float hx = width / 2.f;
+	float hz = depth / 2.f;
+
+	float vertices[] = {
+		-hx,height,-hz ,  -hx,height,hz , hx, height, hz   ,  hx,height,-hz  ,-hx, height, -hz  , hx,height,hz //top
+	};
+
+	float texcoords[] = 
+	{
+		0.f,0.f ,  0.f,1.f , 1.f,1.f  , 1.f,0.f , 0.f, 0.f  , 1.f,1.f //top
+	};
+
+	m_vertices.resize(6);
+	memcpy(&m_vertices[0], vertices, sizeof(float) * 6 * 3);
+
+	m_texCoords.resize(6);
+	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 2);
+}
+
+void GeometryData::randomFaceColors()
+{
+	m_colors.resize(m_vertices.size());
+	for(size_t i = 0; i < m_vertices.size(); i += 6)
+	{
+		Color c(Math::randomInt(0,255), Math::randomInt(0,255), Math::randomInt(0,255));
+		m_colors[i] = c;
+		m_colors[i+1] = c;
+		m_colors[i+2] = c;
+		m_colors[i+3] = c;
+		m_colors[i+4] = c;
+		m_colors[i+5] = c;
+	}
+}
+
+void GeometryData::setAllColors(Color color)
+{
+	m_colors.resize(m_vertices.size());
+	for(size_t i = 0; i < m_colors.size(); ++i)
+	{
+		m_colors[i] = color;
+	}
+}
+
+void GeometryData::scaleUV(float factor)
+{
+	for(size_t i = 0; i < m_texCoords.size(); ++i)
+	{
+		m_texCoords[i].x *= factor;
+		m_texCoords[i].y *= factor;
+	}
+}
+
+
 
 /// Generates normals for the geometry
 void GeometryData::generateNormals()

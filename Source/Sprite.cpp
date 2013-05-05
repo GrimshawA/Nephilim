@@ -109,7 +109,7 @@ void Sprite::setTextureRect(const FloatRect &rect){
 
 };
 
-Vec2f Sprite::getPosition()
+Vec2f Sprite::getPosition() const
 {
 	return Transformable::getPosition();
 }
@@ -128,7 +128,7 @@ bool Sprite::contains(float x, float y)
 }
 
 /// Set the texture of the sprite
-void Sprite::setTexture(const Texture &texture){
+void Sprite::setTexture(const Texture &texture, bool resetRect){
 	m_texture = &texture;
 
 	setTextureRect(FloatRect(0.f,0.f, texture.getSize().x, texture.getSize().y));

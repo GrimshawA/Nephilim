@@ -52,6 +52,16 @@ void Window::create(int screenWidth, int screenHeight){
 
 };
 
+/// Change the size of the window if possible
+void Window::setSize(int width, int height)
+{
+#ifdef NEPHILIM_DESKTOP
+	myWindowImpl->setSize(sf::Vector2u(width, height));
+
+#endif
+}
+
+
 void Window::create(void* handle){
 #ifdef NEPHILIM_DESKTOP
 	myWindowImpl->create(reinterpret_cast<sf::WindowHandle>(handle));

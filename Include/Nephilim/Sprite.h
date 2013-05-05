@@ -43,7 +43,7 @@ public:
 	virtual void onDraw(Renderer* renderer);
 
 	/// Set the texture of the sprite
-	void setTexture(const Texture &texture);
+	void setTexture(const Texture &texture, bool resetRect = false);
 
 	void setTexture2(Texture* texture);
 
@@ -53,7 +53,7 @@ public:
 	/// Set the color of the sprite
 	void setColor(const Color& color);
 
-	Vec2f getPosition();
+	Vec2f getPosition() const;
 
 	void setPosition(float x, float y);
 

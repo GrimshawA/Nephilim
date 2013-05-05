@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "Vectors.h"
 #include "Matrix.h"
+#include "Color.h"
 #include "RenderModes.h"
 
 #include <vector>
@@ -49,6 +50,13 @@ public:
 	void addTorus(int p, int q);
 	void addCylinder();
 
+	void randomFaceColors();
+
+	/// Silly plane adding, to be refactored
+	void addPlane(float width, float depth, float height);
+
+	void scaleUV(float factor);
+
 	/// Operator overload for adding torus knots
 	GeometryData& operator<<(const TorusKnotDef& torus);
 	GeometryData& operator<<(const TorusDef& torus);
@@ -56,8 +64,12 @@ public:
 	/// Generates normals for the geometry
 	void generateNormals();
 
+	void setAllColors(Color color);
+
 	std::vector<Vec3f> m_vertices;
+	std::vector<Color> m_colors;
 	std::vector<Vec3f> m_normals;
+	std::vector<Vec2f> m_texCoords;
 };
 
 

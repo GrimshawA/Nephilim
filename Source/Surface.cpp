@@ -40,6 +40,12 @@ Vec2i Surface::getSize() const
 	return Vec2i(static_cast<int>(getWidth()), static_cast<int>(getHeight()));
 }
 
+/// Change the size of the window if possible
+void Surface::setSize(int width, int height)
+{
+	window->setSize(width, height);
+}
+
 /// Creates and returns the renderer if valid
 Renderer* Surface::createRenderer()
 {

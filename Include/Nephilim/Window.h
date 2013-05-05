@@ -25,7 +25,8 @@ public:
 		
 	/// Destroy the window
 	~Window();
-
+	/// Change the size of the window if possible
+	void setSize(int width, int height);
 	/// Attempts to launch a window if applicable
 	void create(int screenWidth, int screenHeight);
 
