@@ -80,10 +80,11 @@ JNIEXPORT void
 		__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "Paths: %s\n%s", s1.c_str(), s2.c_str());
 		__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "Package: %s\n", s3.c_str());
 		__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "Activity: %s\n", s4.c_str());
-}
+} 
 
  
 JNIEXPORT void	JNI_ACTIVITY_FUNC(nativeKeyDown) ( JNIEnv*  env , jobject thiz, jint keyCode){
+	//__android_log_print(ANDROID_LOG_INFO, "Nephilim", "KEYDOWN");
 	android_keydown(keyCode);
 } 
 

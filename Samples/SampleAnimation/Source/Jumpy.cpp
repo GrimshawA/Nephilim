@@ -4,6 +4,10 @@
 
 #include <Nephilim/Surface.h>
 
+#ifdef NEPHILIM_ANDROID
+#include <Nephilim/AndroidInterface.h>
+#endif
+
 void Jumpy::onCreate()
 {
 	getSurface().setSize(350, 570);
@@ -57,9 +61,20 @@ void Jumpy::onEvent(Event &event)
 	switch( event.type )
 	{
 	case Event::Closed:
-		close();
+		close();   
+		break;
+
+	case Event::KeyPressed:
+		if(event.key.code == Keyboard::AndroidBack)
+		{
+			#ifdef NEPHILIM_ANDROID
+				AndroidInterface::closeActivity();
+			#endif
+		}
 		break;
 	}
+	
+
 
 	// let the state handle events
 	states.top()->HandleEvents( event, *this );

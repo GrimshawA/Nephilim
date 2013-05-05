@@ -3,6 +3,10 @@
 #include <sstream>
 
 #include <Nephilim/Sprite.h>
+#include <Nephilim/Surface.h>
+#include <SFML/Graphics.hpp>
+
+#include "Jumpy.h"
 
 #ifdef NEPHILIM_ANDROID
 #include <Nephilim/AndroidInterface.h>
@@ -83,15 +87,20 @@ void PlayState::HandleEvents( Event& event , Jumpy& game)
 		{
 		
 		case Event::TouchPressed:
-			if(event.x < 150){ touchLeft = true;touchRight = false;}
+			if(event.x < game.getSurface().getWidth()  / 2){ touchLeft = true;touchRight = false;}
 			else{ touchLeft = false; touchRight = true;}
 			break;
 		case Event::TouchMoved: 
-			if(event.x < 150){ touchLeft = true;touchRight = false;}
+			if(event.x < game.getSurface().getWidth()  / 2){ touchLeft = true;touchRight = false;}
 			else{ touchLeft = false; touchRight = true;}
 			break;
 		case Event::TouchReleased:
-			touchRight = touchLeft = false;
+			{
+				touchRight = touchLeft = false;
+				if( mGameOver ) // Restart game
+					next = new PlayState(false);
+			}
+			
 			break;
 
 			case Event::LostFocus:
@@ -105,6 +114,7 @@ void PlayState::HandleEvents( Event& event , Jumpy& game)
 				if( mGameOver ) // Restart game
 					next = new PlayState(false);
 				break;
+	
 		}
 	
 }

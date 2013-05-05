@@ -66,21 +66,20 @@ void android_resize(int w, int h){
 }
 
 void android_keydown(int key){
-	/*pE::String sd = "Keypressed: " + pE::String::number(key);
+//	NEPHILIM_NS::String sd = "Keypressed: " + pE::String::number(key);
 
-	pE::Event ev;
-	ev.type = pE::Event::KeyPressed;
+	NEPHILIM_NS::Event ev;
+	ev.type = NEPHILIM_NS::Event::KeyPressed;
 
 	switch(key){
-	case AKEYCODE_A: ev.key.code = pE::Keyboard::A;break;
-	case AKEYCODE_S: ev.key.code = pE::Keyboard::S;break;
-	case AKEYCODE_D: ev.key.code = pE::Keyboard::D;break;
-	case AKEYCODE_W: ev.key.code = pE::Keyboard::W;break;
-	case AKEYCODE_BACK: ev.key.code = pE::Keyboard::AndroidBack;break;
+	case AKEYCODE_A: ev.key.code = NEPHILIM_NS::Keyboard::A;break;
+	case AKEYCODE_S: ev.key.code = NEPHILIM_NS::Keyboard::S;break;
+	case AKEYCODE_D: ev.key.code = NEPHILIM_NS::Keyboard::D;break;
+	case AKEYCODE_W: ev.key.code = NEPHILIM_NS::Keyboard::W;break;
+	case AKEYCODE_BACK: ev.key.code = NEPHILIM_NS::Keyboard::AndroidBack;break;
 	}
 
-
-	myApp.pendingEvents.push_back(ev);*/
+	_engine->injectEvent(ev);
 }
 
 void android_touchdown(float x, float y){

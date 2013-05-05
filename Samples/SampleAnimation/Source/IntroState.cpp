@@ -16,7 +16,7 @@ IntroState::IntroState( bool replace ) : GameState( replace ), mHover( false )
 	mSpHover.setTexture( mTexHover );
 	mSpHover.setPosition( 0.0f, 461.0f );
 
-	mHoverRect = FloatRect( 0, 400, 350, 160 );
+	mHoverRect = FloatRect( 0, 200, 550, 360 );
 
 	std::cout << "IntroState Init" << std::endl;
 }
