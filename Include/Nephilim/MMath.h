@@ -83,6 +83,33 @@ namespace Math{
 	// He
 
 };
+
+template<class T>
+class NEPHILIM_API ThresholdRange
+{
+public:
+	ThresholdRange(T value, T threshold)
+	{
+		m_value = value;
+		m_threshold = threshold;
+	}
+
+	bool operator == (const T& value)
+	{
+		return ((value >= m_value - m_threshold) && (value <= m_value + m_threshold));
+	}
+
+	T m_value;
+	T m_threshold;
+
+};
+
+template<class T>
+ThresholdRange<T> threshold(T value, T threshold2)
+{
+	return ThresholdRange<T>(value, threshold2);
+}
+
 NEPHILIM_NS_END
 
 #endif

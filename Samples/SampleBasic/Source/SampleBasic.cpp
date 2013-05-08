@@ -155,9 +155,9 @@ void regenerateShadowMap();
 
 void drawUi(Renderer* renderer)
 {
-	renderer->resetShaders();
-	renderer->resetTextures();
-	ui.draw(renderer);
+	//renderer->resetShaders();
+	//renderer->resetTextures();
+	//ui.draw(renderer);
 }
 
 void SampleUI::onCreate()
@@ -226,7 +226,7 @@ void SampleUI::onCreate()
 
 	ShaderGen::prepareDefault(defaultShader);
 	*/
-	PRINTLOG("Renderer", "Renderer: %s\n", getRenderer()->getName().c_str());
+//	PRINTLOG("Renderer", "Renderer: %s\n", getRenderer()->getName().c_str());
 
 	shadowMapPass.loadShader(Shader::VertexUnit, shadowPassV);
 	shadowMapPass.loadShader(Shader::FragmentUnit, shadowPassF);
@@ -375,6 +375,16 @@ public:
 		translation = mat4::translate(position.x, position.y, position.z);
 	}
 
+	void fromRaw(String file, vec3 position)
+	{
+		GeometryData mesh;
+		mesh.loadFromFile(file);
+		//mesh.generateNormals();
+		m_vertices = mesh.m_vertices;
+		m_normals = mesh.m_normals;
+		translation = mat4::translate(position.x, position.y, position.z);
+	}
+
 	void generateBox(Vec3f position = Vec3f(0,0,0), Vec3f size = Vec3f(1,1,1))
 	{
 		float len = 1;
@@ -421,9 +431,11 @@ public:
 		}
 	}
 
+	Texture* texture;
 	Mesh()
 	{
 		m_color = Vec4f(0.5, 0.4, 0.1, 1);
+		texture = NULL;
 	}
 
 	void drawShadow(Renderer* renderer)
@@ -442,6 +454,9 @@ public:
 		ambientPass.bind();
 		ambientPass.setUniformMatrix("model", translation.get());
 		ambientPass.setUniformVec4("incomingColor", reinterpret_cast<float*>(&m_color));
+
+		if(texture) texture->bind();
+		else renderer->setDefaultTexture();
 
 		renderer->enableVertexAttribArray(0);
 		renderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &m_vertices[0]);
@@ -597,10 +612,11 @@ void SampleUI::onRender()
 		//lamp.generateBox(Vec3f(4, 3, 1), Vec3f(1,6,1));
 		lamp.generateCylinder(Vec3f(1,6,1));
 		//crate.generateBox(Vec3f(0,5,4), Vec3f(1,1,1));
-		crate.generateTorus(Vec3f(0,5,4));
+		crate.fromRaw("ironman.ngx", vec3(0, 6, 5));
 
 		house.m_color = Vec4f(0.1, 0.1, 0.1, 1);
 		base.m_color = Vec4f(0.3,0.4,0.3, 1);
+		crate.m_color = vec4(1,0,0,1);
 
 		meshes.push_back(base);
 		meshes.push_back(house);

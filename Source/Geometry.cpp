@@ -1,10 +1,82 @@
 #include <Nephilim/Geometry.h>
 #include <Nephilim/MMath.h>
+#include <Nephilim/File.h>
+#include <Nephilim/Logger.h>
+#include <Nephilim/DataStream.h>
 
 #include <iostream>
 using namespace std;
 
 NEPHILIM_NS_BEGIN
+
+/// Save the geometry to a file in a raw format
+bool GeometryData::saveToFile(const String& filename)
+{
+	File fp(filename, IODevice::BinaryWrite);
+	if(fp)
+	{
+		DataStream writer(fp);
+
+		// write vertices
+		writer << m_vertices.size();
+		if(m_vertices.size() > 0) fp.write(reinterpret_cast<char*>(&m_vertices[0]), m_vertices.size() * sizeof(vec3));
+
+		// write normals
+		writer << m_normals.size();
+		if(m_normals.size() > 0) fp.write(reinterpret_cast<char*>(&m_normals[0]), m_normals.size() * sizeof(vec3));
+
+		// write texcoords
+		writer << m_texCoords.size();
+		if(m_texCoords.size() > 0) fp.write(reinterpret_cast<char*>(&m_texCoords[0]), m_texCoords.size() * sizeof(vec2));
+
+		// write colors
+		writer << m_colors.size();
+		if(m_colors.size() > 0) fp.write(reinterpret_cast<char*>(&m_colors[0]), m_colors.size() * sizeof(Color));
+	}
+
+	return true;
+}
+
+/// Load the geometry from a raw format file
+bool GeometryData::loadFromFile(const String& filename)
+{
+	File fp(filename, IODevice::BinaryRead);
+	if(fp)
+	{
+		DataStream reader(fp);
+
+		// read vertices
+		Int64 vertexCount;
+		reader >> vertexCount;
+		m_vertices.resize(vertexCount);
+		if(vertexCount > 0) fp.read(reinterpret_cast<char*>(&m_vertices[0]), sizeof(vec3) * vertexCount);
+
+		// read normals
+		Int64 normalCount;
+		reader >> normalCount;
+		m_normals.resize(normalCount);
+		if(normalCount> 0) fp.read(reinterpret_cast<char*>(&m_normals[0]), sizeof(vec3) * normalCount);
+
+		// read texcoords
+		Int64 texCoordCount;
+		reader >> texCoordCount;
+		m_texCoords.resize(texCoordCount);
+		if(texCoordCount> 0) fp.read(reinterpret_cast<char*>(&m_texCoords[0]), sizeof(vec2) * texCoordCount);
+
+		// read colors
+		Int64 colorCount;
+		reader >> colorCount;
+		m_colors.resize(colorCount);
+		if(colorCount> 0) fp.read(reinterpret_cast<char*>(&m_colors[0]), sizeof(Color) * colorCount);
+
+		Log("GeometryData::loadFromFile(%s): Loaded %d vertices", filename.c_str(), vertexCount);
+	
+	}
+	else 
+		return false;
+
+	return true;
+}
 
 void GeometryData::addBox(float width, float height, float depth)
 {
@@ -79,9 +151,13 @@ void GeometryData::randomFaceColors()
 		m_colors[i] = c;
 		m_colors[i+1] = c;
 		m_colors[i+2] = c;
-		m_colors[i+3] = c;
-		m_colors[i+4] = c;
-		m_colors[i+5] = c;
+		if(i+3 < m_vertices.size())
+		{
+			m_colors[i+3] = c;
+			m_colors[i+4] = c;
+			m_colors[i+5] = c;
+		}
+		
 	}
 }
 

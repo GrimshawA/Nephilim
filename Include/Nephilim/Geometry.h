@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "Color.h"
 #include "RenderModes.h"
+#include "Strings.h"
 
 #include <vector>
 
@@ -33,7 +34,6 @@ struct TorusDef
 	int p, q;
 };
 
-
 /**
 	\ingroup Graphics
 	\class GeometryData
@@ -51,6 +51,12 @@ public:
 	void addCylinder();
 
 	void randomFaceColors();
+
+	/// Save the geometry to a file in a raw format
+	bool saveToFile(const String& filename);
+
+	/// Load the geometry from a raw format file
+	bool loadFromFile(const String& filename);
 
 	/// Silly plane adding, to be refactored
 	void addPlane(float width, float depth, float height);
