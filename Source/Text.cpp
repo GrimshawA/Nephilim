@@ -40,7 +40,7 @@ void Text::onDraw(Renderer* renderer)
 	if(!m_font || m_string.empty()) return;
 
 	m_font->getTexture(m_characterSize).bind();
-	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	renderer->setModelMatrix(renderer->getModelMatrix() * mat4(getTransform().getMatrix()));
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 };

@@ -54,3 +54,9 @@ bool Rect<T>::intersects(Rect<T> &box){
 			box.contains(left + width, top) ||
 			box.contains(left + width, top + height) );
 };
+
+template<typename T>
+Rect<T> Rect<T>::inset(T value)
+{
+	return Rect<T>(left + value, top + value, width - value*2, height - value*2);
+}

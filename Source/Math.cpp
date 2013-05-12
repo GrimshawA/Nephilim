@@ -49,4 +49,12 @@ namespace Math{
 			return computeAngle(x.x, x.y, y.x,y.y);
 		};
 };
+
+vec3 directionFromAngles(float x_angle, float y_angle)
+{
+	vec3 direction = vec3(-sin(x_angle),sin(y_angle), cos(x_angle));
+	direction.normalize();
+	return direction * -1;
+}
+
 NEPHILIM_NS_END

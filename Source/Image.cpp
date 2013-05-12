@@ -128,6 +128,38 @@ bool Image::loadFromFile(const String &path){
 	return true;
 }
 
+/// Get the color of an individual pixel
+Color Image::getPixel(unsigned int x, unsigned int y)
+{
+	Uint8* pixel = &m_pixels[(x + y * m_size.x) * 4];
+	Color color;
+	color.r = *pixel++;
+	color.g = *pixel++;
+	color.b = *pixel++;
+	color.a = *pixel++;
+	return color;
+}
+
+/// Scales the image to a new size
+Image Image::scale(int width, int height)
+{
+	Image image;
+	image.create(width, height, Color::Black);
+
+	for(int i = 0; i < width; ++i)
+	{
+		for(int j = 0; j < height; ++j)
+		{
+			vec2 norm(static_cast<float>(i) / width, static_cast<float>(j) / height);
+			norm.x *= m_size.x;
+			norm.y *= m_size.y;
+			//Log("Norm: %f, %f", norm.x, norm.y);
+			image.setPixel(i,j, getPixel(static_cast<unsigned int>(norm.x), static_cast<unsigned int>(norm.y)));
+		}
+	}
+	return image;
+}
+
 bool Image::loadFromStream(File* stream){
 
 	// Clear the array (just in case)

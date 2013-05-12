@@ -1,16 +1,16 @@
-#ifndef PARABOLA_RECT_H
-#define PARABOLA_RECT_H
+#ifndef NxRect_h__
+#define NxRect_h__
 
 #include "Platform.h"
 
 NEPHILIM_NS_BEGIN
 
 /**
-		\ingroup Foundation
-		\class Rect<T>
-		\brief Axis-aligned rectangle, specially useful for object boundaries and calculations with them
+	\ingroup Foundation
+	\class Rect<T>
+	\brief Axis-aligned rectangle, specially useful for object boundaries and calculations with them
 
-		IntRect and FloatRect are specializations of Rect<T> for int and float, respectively.
+	IntRect and FloatRect are specializations of Rect<T> for int and float, respectively.
 */
 template<typename T>
 class NEPHILIM_API Rect{
@@ -39,6 +39,9 @@ public:
 	/// Check if there is intersection between two rects
 	bool intersects(Rect<T> &box);
 
+	/// Returns a rect that is shortened in every side by value
+	Rect<T> inset(T value);
+
 	T left; ///< The x coordinate of the boundary to the left
 	T top; ///< The y coordinate of the boundary to the top of the screen
 	T width; ///< Width of the rectangle
@@ -52,4 +55,4 @@ typedef Rect<float> FloatRect;
 #include "Rect.inl"
 
 NEPHILIM_NS_END
-#endif
+#endif // Rect_h__

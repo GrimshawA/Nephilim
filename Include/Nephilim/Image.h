@@ -44,6 +44,12 @@ public:
 	/// Set the color of an individual pixel
 	void setPixel(unsigned int x, unsigned int y, const Color& color);
 
+	/// Get the color of an individual pixel
+	Color getPixel(unsigned int x, unsigned int y);
+
+	/// Scales the image to a new size
+	Image scale(int width, int height);
+
 	/// Get the size of the image
 	Vec2i getSize() const;
 

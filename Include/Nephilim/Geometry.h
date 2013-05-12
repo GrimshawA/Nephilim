@@ -3,6 +3,7 @@
 
 #include "Platform.h"
 #include "Vectors.h"
+#include "Drawable.h"
 #include "Matrix.h"
 #include "Color.h"
 #include "RenderModes.h"
@@ -11,6 +12,8 @@
 #include <vector>
 
 NEPHILIM_NS_BEGIN
+
+class Renderer;
 
 struct TorusKnotDef
 {
@@ -38,10 +41,16 @@ struct TorusDef
 	\ingroup Graphics
 	\class GeometryData
 	\brief Holds raw geometry data for processing
+
+	Right now only draws with shaders.
 */
-class NEPHILIM_API GeometryData
+class NEPHILIM_API GeometryData : public Drawable
 {
 public:
+	GeometryData();
+
+	Render::Primitive::Type m_primitive;
+
 	/// Generates the geometry of a origin-centered box
 	void addBox(float width, float height, float depth);
 
@@ -72,10 +81,16 @@ public:
 
 	void setAllColors(Color color);
 
+	virtual void onDraw(Renderer* renderer);
+
 	std::vector<Vec3f> m_vertices;
 	std::vector<Color> m_colors;
 	std::vector<Vec3f> m_normals;
 	std::vector<Vec2f> m_texCoords;
+
+	bool m_useColors;
+	bool m_useNormals;
+	bool m_useTexCoords;
 };
 
 

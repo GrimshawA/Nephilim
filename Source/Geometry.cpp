@@ -3,11 +3,42 @@
 #include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/DataStream.h>
+#include <Nephilim/Renderer.h>
+#include <Nephilim/CGL.h>
 
 #include <iostream>
 using namespace std;
 
 NEPHILIM_NS_BEGIN
+
+GeometryData::GeometryData()
+: m_useColors(true)
+, m_useNormals(true)
+, m_useTexCoords(true)
+{
+	m_primitive = Render::Primitive::Triangles;
+}
+
+void GeometryData::onDraw(Renderer* renderer)
+{
+	renderer->enableVertexAttribArray(0);
+	if(m_useColors && m_colors.size() > 0) renderer->enableVertexAttribArray(1);
+	if(m_useTexCoords && m_texCoords.size() > 0) renderer->enableVertexAttribArray(2);
+	if(m_useNormals && m_normals.size() > 0) renderer->enableVertexAttribArray(3);
+
+	renderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &m_vertices[0]);
+	if(m_useColors && m_colors.size() > 0)       renderer->setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, 0, &m_colors[0]);
+	if(m_useTexCoords && m_texCoords.size() > 0) renderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, 0, &m_texCoords[0]);
+	if(m_useNormals && m_normals.size() > 0)     renderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, 0, &m_normals[0]);
+
+	renderer->drawArrays(m_primitive, 0, m_vertices.size());
+
+	renderer->disableVertexAttribArray(0);
+	if(m_useColors && m_colors.size() > 0) renderer->disableVertexAttribArray(1);
+	if(m_useTexCoords && m_texCoords.size() > 0) renderer->disableVertexAttribArray(2);
+	if(m_useNormals && m_normals.size() > 0) renderer->disableVertexAttribArray(3);
+}
+
 
 /// Save the geometry to a file in a raw format
 bool GeometryData::saveToFile(const String& filename)

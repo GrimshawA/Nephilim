@@ -141,7 +141,7 @@ unsigned int Texture::getValidSize(unsigned int size)
 	return size;
 }
 
-void Texture::loadFromImage(Image &image){
+void Texture::loadFromImage(Image &image, bool generateMipMaps){
 	if(image.getSize().x == 0 && image.getSize().y == 0)
 	{
 		// Invalid image.
@@ -157,11 +157,50 @@ void Texture::loadFromImage(Image &image){
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	if(!generateMipMaps)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
+#ifdef NEPHILIM_DESKTOP
+		glGenerateMipmapEXT(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+#else
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+#endif
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	}
+	else
+	{
+
+		Vec2i currentSize = image.getSize();
+		Image scaledDown = image;
+		int i = 0;
+		bool done = false;
+		while(!done)
+		{
+			glTexImage2D(GL_TEXTURE_2D, i, GL_RGBA, scaledDown.getSize().x, scaledDown.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaledDown.getPixelsPtr());
+			if(scaledDown.getSize() == Vec2i(1,1))
+			{
+				// done
+				done = true;
+			}
+			else
+			{
+				scaledDown = scaledDown.scale(scaledDown.getSize().x  / 2, scaledDown.getSize().y / 2);
+				//scaledDown.saveToFile("wood" + String::number(i) + ".png");
+				currentSize = scaledDown.getSize();
+				i++;
+			}
+			Log("Uploaded mipmap level %d. Size(%d,%d)", i, scaledDown.getSize().x, scaledDown.getSize().y);			
+		}
+		Log("%d Mipmaps until reached %dx%d", i, currentSize.x, currentSize.y);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+	}
 }
 
 void Texture::setRepeated(bool repeated)

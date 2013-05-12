@@ -95,7 +95,6 @@ void SampleUI::onCreate()
 		{
 			Log("Position key: %f %f %f", nodeanim->mPositionKeys[i].mValue.x, nodeanim->mPositionKeys[i].mValue.y, nodeanim->mPositionKeys[i].mValue.z);
 		}
-
 	}
 	else Log("No animations found.");
 	

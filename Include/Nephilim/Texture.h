@@ -54,7 +54,7 @@ public:
 	Image copyToImage() const;
 
 	/// Loads directly from an image
-	void loadFromImage(Image &image);
+	void loadFromImage(Image &image, bool generateMipMaps = false);
 
 	/// Load a texture from a file
 	/// This is a proxy for Image::loadFromFile() and then Texture::loadFromImage()

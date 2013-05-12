@@ -1,5 +1,5 @@
-#ifndef PARABOLA_ANIMATION_EASING_H
-#define PARABOLA_ANIMATION_EASING_H
+#ifndef AnimationEasing_h__
+#define AnimationEasing_h__
 
 #include "Platform.h"
 
@@ -61,4 +61,4 @@ public:
 	float compute(float t,float b,float c,float d);
 };
 NEPHILIM_NS_END
-#endif
+#endif // AnimationEasing_h__

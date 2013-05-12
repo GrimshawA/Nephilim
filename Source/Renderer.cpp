@@ -59,6 +59,12 @@ void Renderer::setShaderUsageHint(bool allow)
 	m_shaderUsageHint = allow;
 }
 
+/// Get the model matrix
+mat4 Renderer::getModelMatrix()
+{
+	return m_model;
+}
+
 /// Get the current clear color
 Color Renderer::getClearColor()
 {

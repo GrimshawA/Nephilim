@@ -110,6 +110,15 @@ ThresholdRange<T> threshold(T value, T threshold2)
 	return ThresholdRange<T>(value, threshold2);
 }
 
-NEPHILIM_NS_END
+/// Linear interpolation - Returns a value between A and B depending on the time value, which is in the range [0..1]
+template<class T>
+T lerp(T A, T B, float time)
+{
+	return A + (B - A)*time;
+}
 
+
+vec3 directionFromAngles(float x_angle, float y_angle);
+
+NEPHILIM_NS_END
 #endif
