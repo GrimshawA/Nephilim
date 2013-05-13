@@ -24,9 +24,13 @@ public:
 	int getDebugMode() const;
 	Renderer* renderer;
 
+	void finalize();
+	int index;
+
 	 int debugMode;
 
 	 GeometryData line;
+	 GeometryData cachedLines;
 };
 
 NEPHILIM_NS_END

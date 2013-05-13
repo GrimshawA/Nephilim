@@ -210,6 +210,16 @@ void GeometryData::scaleUV(float factor)
 	}
 }
 
+void GeometryData::offsetUV(float u, float v)
+{
+	for(size_t i = 0; i < m_texCoords.size(); ++i)
+	{
+		m_texCoords[i].x += u;
+		m_texCoords[i].y += v;
+	}
+}
+
+
 
 
 /// Generates normals for the geometry

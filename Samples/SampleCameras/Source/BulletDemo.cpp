@@ -13,6 +13,7 @@
 #include <Nephilim/BxScene.h>
 #include <Nephilim/BxDraw.h>
 #include <Nephilim/Font.h>
+#include <Nephilim/BxVehicle.h>
 #include <Nephilim/Text.h>
 
 #include <bullet/btBulletDynamicsCommon.h>
@@ -25,6 +26,8 @@ btGhostObject *m_ghostObject = NULL;
 BxScene bulletWorld;
 
 Image heightmap;
+
+BxDraw* bulletDrawer;
 
 class BoxSim : public SceneGraph3D::Node
 {
@@ -39,6 +42,7 @@ public:
 SceneGraph3D scene;
 std::vector<BoxSim> boxes;
 Texture mGrassTexture;
+Texture mWaterTexture;
 GeometryData ground;
 std::map<String, Texture*> textures;
 bool focus = true;
@@ -54,13 +58,26 @@ Text txt;
 GeometryData terrain;
 
 static const float GRID_SIZE = 1.0f;
-static const float HEIGHT_FACTOR = 0.05f;
+static const float HEIGHT_FACTOR = 0.1f;
 static const float TEXTURE_INCREMENT = 0.2f;
 #include <bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h>
 #include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
-float current_height = 0.f;
+float current_height = -2.f;
+float current_z = 0.f;
+
+BxVehicle* vehicle;
+
+GeometryData vehicleChassis;
+GeometryData vehicleWheel;
+
+SimpleMusic nature;
+
 void SampleUI::onCreate()
 {	
+
+	nature.openFromFile("naturesounds.ogg");
+	nature.setLoop(true);
+	nature.play();
 	
 	fnt.loadFromFile("DejaVuSans.ttf");
 	txt.setFont(fnt);
@@ -72,43 +89,50 @@ void SampleUI::onCreate()
 	Uint8* heightmapRaw = new Uint8[heightmap.getSize().x * heightmap.getSize().y];
 
 	int k = 0;
-	for( Uint16 x = 0; x < heightmap.getSize().x-1; ++x )
+	for( Uint16 x = 0; x < heightmap.getSize().x; ++x )
 	{		
-		for( Uint16 y = 0; y < heightmap.getSize().y-1; ++y )
+		for( Uint16 y = 0; y < heightmap.getSize().y; ++y )
 		{
 		
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
+			if(x < heightmap.getSize().x-1 && y < heightmap.getSize().y - 1)
+			{
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
 
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y+1 ) / static_cast<float>( heightmap.getSize().y)));
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y+1 ) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
 
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
-			terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x+1,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y+1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
+				terrain.m_vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x,y).r * HEIGHT_FACTOR, y * GRID_SIZE));
 
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x +1) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y +1) / static_cast<float>( heightmap.getSize().y)));
-			terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x +1) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y +1) / static_cast<float>( heightmap.getSize().y)));
+				terrain.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+			}
+			
 
 			heightmapRaw[k++] = heightmap.getPixel(x,y).r;
 		}
 	}
 
 	// Rotate the terrain
-	mat4 trf = mat4::rotatey(Math::pi/2 + Math::pi/2);
+
+	mat4 trf = mat4::rotatey(Math::pi/2);
 	for(int i = 0; i < terrain.m_vertices.size(); ++i)
 	{
-		terrain.m_vertices[i].x -= heightmap.getSize().x * GRID_SIZE / 2;
-		terrain.m_vertices[i].z -= heightmap.getSize().y * GRID_SIZE / 2;
+		terrain.m_vertices[i].x -= heightmap.getSize().x * GRID_SIZE / 2 - GRID_SIZE/2;
+		terrain.m_vertices[i].z -= heightmap.getSize().y * GRID_SIZE / 2 - GRID_SIZE/2;
 		terrain.m_vertices[i].y -= 255 * HEIGHT_FACTOR  / 2;
+		terrain.m_vertices[i] = (trf * vec4(terrain.m_vertices[i], 1.f)).xyz();
 
-		//terrain.m_vertices[i] = (trf * vec4(terrain.m_vertices[i], 1.f)).xyz();
+		terrain.m_vertices[i].z *= -1;
 	}
 
-	terrain.setAllColors(Color::Orange);
+	terrain.setAllColors(Color::White);
+	terrain.scaleUV(100);
 
 	music.openFromFile("engine.WAV");
 	music.setLoop(true);
@@ -130,6 +154,9 @@ void SampleUI::onCreate()
 	mGrassTexture.loadFromImage(grassimg, false);
 	mGrassTexture.setRepeated(true);
 
+	mWaterTexture.loadFromFile("water.png");
+	mWaterTexture.setRepeated(true);
+
 	ground.addPlane(1000,1000,0);
 	ground.setAllColors(Color::White);
 	ground.scaleUV(160);
@@ -148,12 +175,13 @@ void SampleUI::onCreate()
 
 	bulletWorld.m_scene->addRigidBody(groundRigidBody);
 
+	terrainShape->setUseDiamondSubdivision(true);
 
 	/// Add character capsule
 	btTransform startTransform;
 	startTransform.setIdentity ();
 	//startTransform.setOrigin (btVector3(0.0, 4.0, 0.0));
-	startTransform.setOrigin (btVector3(20,15,0));
+	startTransform.setOrigin (btVector3(0,35,0));
 	
 	m_ghostObject = new btPairCachingGhostObject();
 	m_ghostObject->setWorldTransform(startTransform);
@@ -174,12 +202,21 @@ void SampleUI::onCreate()
 	bulletWorld.m_scene->getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs(m_ghostObject->getBroadphaseHandle(),bulletWorld.m_scene->getDispatcher());
 	bulletWorld.m_scene->getDispatchInfo().m_allowedCcdPenetration=0.00001f;
 
-	m_character->setGravity(0);
+	//m_character->setGravity(0);
 
-	BxDraw* bulletDrawer = new BxDraw();
+	bulletDrawer = new BxDraw();
 	bulletDrawer->setDebugMode(BxDraw::DBG_DrawWireframe);
 	bulletDrawer->renderer = getRenderer();
 	bulletWorld.m_scene->setDebugDrawer(bulletDrawer);
+
+	// Finally the vehicle
+	vehicle = new BxVehicle(bulletWorld);
+
+	vehicleChassis.addBox(2,1,4);
+	vehicleChassis.setAllColors(Color::White);
+
+	vehicleWheel.addBox(1,1,1);
+	vehicleWheel.setAllColors(Color::White);
 }
 
 void SampleUI::makeBox(vec3 position, vec3 size, const String& texture, float mass)
@@ -224,6 +261,16 @@ void SampleUI::onEvent(Event &event)
 	{
 		current_height--;
 		Log("Current height: %f", current_height);
+	}
+	if(event.type == Event::KeyPressed && event.key.code == Keyboard::Right)
+	{
+		current_z += 0.5;
+		//Log("Current height: %f", current_height);
+	}
+	if(event.type == Event::KeyPressed && event.key.code == Keyboard::Left)
+	{
+		current_z -= 0.5;
+		//Log("Current height: %f", current_height);
 	}
 	if(event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
 	{
@@ -274,7 +321,7 @@ void SampleUI::onEvent(Event &event)
 	/// Add a brick in front of the camera
 	if(event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
 	{	
-		makeBox(fpsCamera.getPosition() + fpsCamera.getDirection() * 4, vec3(1,4,1), "wood", 200);
+		makeBox(fpsCamera.getPosition() + fpsCamera.getDirection() * 4, vec3(0.3,0.3,0.3), "wood", 100);
 	}
 	
 	/// Add a little box at origin
@@ -326,6 +373,7 @@ void SampleUI::onUpdate(Time time)
 	
 	bool sprinting = input.getKey(Keyboard::LShift);
 
+
 	if(input.getKey(Keyboard::W))
 	{
 		vec3 cameraDirection = fpsCamera.getDirection();
@@ -338,6 +386,16 @@ void SampleUI::onUpdate(Time time)
 	{
 		vec3 cameraDirection = fpsCamera.getDirection();
 		m_character->setWalkDirection(-btVector3(cameraDirection.x, cameraDirection.y, cameraDirection.z) * 0.2);
+	}
+	else if(input.getKey(Keyboard::A))
+	{
+		vec3 cameraDirection = fpsCamera.getDirection();
+		m_character->setWalkDirection(btVector3(cameraDirection.z, cameraDirection.y, -cameraDirection.x) * 0.2);
+	}
+	else if(input.getKey(Keyboard::D))
+	{
+		vec3 cameraDirection = fpsCamera.getDirection();
+		m_character->setWalkDirection(-btVector3(cameraDirection.z, cameraDirection.y, -cameraDirection.x) * 0.2);
 	}
 	else
 	{
@@ -357,6 +415,57 @@ void SampleUI::onUpdate(Time time)
 			}
 		}
 	}
+
+	ground.offsetUV(time.asSeconds() * 0.1, time.asSeconds() * 0.1);
+
+	vehicle->update();
+
+	float enginePower = 2000;
+	float steeringAngle = 0.4;
+	if(input.getKey(Keyboard::X))
+	{
+		Log("Applying force!!");
+		vehicle->vehicle->applyEngineForce(enginePower,2);
+		vehicle->vehicle->applyEngineForce(enginePower,3);
+		//vehicle->vehicle->applyEngineForce(200,2);
+		//vehicle->vehicle->applyEngineForce(200,3);
+	}
+	else
+	{
+		vehicle->vehicle->applyEngineForce(0,2);
+		vehicle->vehicle->applyEngineForce(0,3);
+	}
+	if(input.getKey(Keyboard::C))
+	{
+		Log("Braking!!!");
+		//vehicle->vehicle->setBrake(50,0);
+		//vehicle->vehicle->setBrake(50,1);
+		vehicle->vehicle->setBrake(50,2);
+		vehicle->vehicle->setBrake(50,3);
+	}
+	else
+	{
+		//vehicle->vehicle->setBrake(0,0);
+		//vehicle->vehicle->setBrake(0,1);
+		vehicle->vehicle->setBrake(0,2);
+		vehicle->vehicle->setBrake(0,3);
+	}
+
+	if(input.getKey(Keyboard::N))
+	{
+		vehicle->vehicle->setSteeringValue(steeringAngle, 2);
+		vehicle->vehicle->setSteeringValue(steeringAngle, 3);
+	}
+	else if(input.getKey(Keyboard::M))
+	{
+		vehicle->vehicle->setSteeringValue(-steeringAngle, 2);
+		vehicle->vehicle->setSteeringValue(-steeringAngle, 3);
+	}
+	else
+	{
+		vehicle->vehicle->setSteeringValue(0, 2);
+		vehicle->vehicle->setSteeringValue(0, 3);
+	}
 }
 
 void SampleUI::onRender()
@@ -370,13 +479,18 @@ void SampleUI::onRender()
 	getRenderer()->setViewMatrix(fpsCamera.getMatrix());
 
 	/// Draw the floor
-	getRenderer()->setModelMatrix(mat4::translate(0,current_height,0));
+	getRenderer()->setModelMatrix(mat4::identity);
 	mGrassTexture.bind();
 	getRenderer()->draw(terrain);
-	//getRenderer()->draw(ground);
+	
+
+	getRenderer()->setModelMatrix(mat4::translate(0,current_height,current_z));
+	mWaterTexture.bind();
+	getRenderer()->draw(ground);
 
 	getRenderer()->setModelMatrix(mat4::identity);
-	bulletWorld.m_scene->debugDrawWorld();
+	//bulletWorld.m_scene->debugDrawWorld();
+	//bulletDrawer->finalize();
 
 	/// Draw the boxes
 	for(int i = 0;  i < boxes.size(); i++)
@@ -392,15 +506,38 @@ void SampleUI::onRender()
 		getRenderer()->draw(boxes[i].cube);
 	}
 
+	// Draw the car body
+	textures["wood"]->bind();
+	btTransform trans;
+	static_cast<btRigidBody*>(vehicle->m_carChassis)->getMotionState()->getWorldTransform(trans);
+	btScalar mt[16];
+	trans.getOpenGLMatrix(mt);
+	getRenderer()->setModelMatrix(mat4(mt));
+	getRenderer()->draw(vehicleChassis);
+
+	// Draw wheels
+	vehicle->vehicle->getWheelInfo(0).m_worldTransform.getOpenGLMatrix(mt);
+	getRenderer()->setModelMatrix(mat4(mt));
+	getRenderer()->draw(vehicleWheel);
+	vehicle->vehicle->getWheelInfo(1).m_worldTransform.getOpenGLMatrix(mt);
+	getRenderer()->setModelMatrix(mat4(mt));
+	getRenderer()->draw(vehicleWheel);
+	vehicle->vehicle->getWheelInfo(2).m_worldTransform.getOpenGLMatrix(mt);
+	getRenderer()->setModelMatrix(mat4(mt));
+	getRenderer()->draw(vehicleWheel);
+	vehicle->vehicle->getWheelInfo(3).m_worldTransform.getOpenGLMatrix(mt);
+	getRenderer()->setModelMatrix(mat4(mt));
+	getRenderer()->draw(vehicleWheel);
+
 	/// Draw 3D text
 	getRenderer()->setModelMatrix(mat4::translate(-3,8,0) * mat4::scale(0.01,-0.01,0.01));
-	getRenderer()->draw(txt);
+	//getRenderer()->draw(txt);
 
 	/// Draw Iron Man
 	static float angle = 0; angle+=0.005;
 	getRenderer()->setModelMatrix(mat4::rotatey(angle) * mat4::translate(0,1,0) * mat4::scale(3,3,3));
 	IronManTexture.bind();
-	getRenderer()->draw(IronMan);
+	//getRenderer()->draw(IronMan);
 
 	/// Draw cross-hair
 	getRenderer()->setDefaultTexture();

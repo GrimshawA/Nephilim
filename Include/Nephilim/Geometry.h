@@ -72,6 +72,8 @@ public:
 
 	void scaleUV(float factor);
 
+	void offsetUV(float u, float v);
+
 	/// Operator overload for adding torus knots
 	GeometryData& operator<<(const TorusKnotDef& torus);
 	GeometryData& operator<<(const TorusDef& torus);
