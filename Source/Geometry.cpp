@@ -6,6 +6,8 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/CGL.h>
 
+#include <cstring>
+
 #include <iostream>
 using namespace std;
 
