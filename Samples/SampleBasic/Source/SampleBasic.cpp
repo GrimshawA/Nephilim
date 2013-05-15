@@ -8,6 +8,8 @@
 #include <Nephilim/UIWindow.h>
 #include <Nephilim/Geometry.h>
 
+#include <cstring>
+
 //#define PROFILER_DISABLE // completely removes all overhead of profiling
 #define PROFILER_DEBUG_ONLY
 #include <Nephilim/Profiler.h>
