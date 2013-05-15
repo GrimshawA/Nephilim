@@ -136,7 +136,7 @@ public:
 
 	void operator()()
 	{
-		printf("calling a void returner\n");
+		//printf("calling a void returner\n");
 	}
 };
 
