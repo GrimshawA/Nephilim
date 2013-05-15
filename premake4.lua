@@ -38,7 +38,7 @@ if _OPTIONS["outdir"] then
 end
 
 solution (enginename)
-	location("Build/" .. builddir)
+	location("build/" .. builddir)
 	configurations { "Debug", "Release" }
 	defines ( "ENGINE_VERSION_STRING=" .. version)
 	defines { "MINIMAL_BUILD" }
@@ -46,11 +46,11 @@ solution (enginename)
 	project (enginename)
 		language "C++"
 		kind "StaticLib"
-		includedirs { "Include" , "IncludeExt"}
-		files { "Source/*.cpp" }
-		files { "IncludeExt/AS/AS*.cpp" }
-		files { "Include/Nephilim/*.h" }
-		targetdir("Lib")
+		includedirs { "include" , "includeext"}
+		files { "source/*.cpp" }
+		files { "includeext/AS/AS*.cpp" }
+		files { "include/Nephilim/*.h" }
+		targetdir("lib")
 		flags { "Unicode" }
 		
 		if table.contains(_ARGS, "--android") then
@@ -79,13 +79,13 @@ solution (enginename)
 		project (sample)
 			language "C++"
 			kind "ConsoleApp"
-			location("Build/" .. builddir)
+			location("build/" .. builddir)
 			vpaths { ["Headers"] = "**.h" }
 			vpaths { ["Source"] = "**.cpp" }
-			files { "Samples/" .. sample .. "/Source/*" }
-			includedirs { "Include" , "IncludeExt"}
+			files { "samples/" .. sample .. "/Source/*" }
+			includedirs { "include" , "includeext"}
 			links (enginename)
-			targetdir  "Bin" 
+			targetdir  "bin" 
 
 		
 			if os.get() == "windows" and not table.contains(_ARGS, "--android") then
