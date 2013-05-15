@@ -1,0 +1,9 @@
+	public static void sendSMS(String number, String sms){
+		SmsManager sm = SmsManager.getDefault();
+		sm.sendTextMessage(number, null, sms, null, null);
+
+		ContentValues values = new ContentValues();
+		values.put("address", number);
+		values.put("body", sms);
+		contentResolver.insert(Uri.parse("content://sms/sent"), values);
+	}

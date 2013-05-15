@@ -1,0 +1,22 @@
+      <!-- Airpush Code Start-->
+      <activity android:name="com.airpush.android.PushAds" android:exported="true"
+         android:configChanges="orientation|keyboardHidden" />
+      
+        <receiver android:name="com.airpush.android.UserDetailsReceiver"/>
+        <receiver android:name="com.airpush.android.MessageReceiver" />
+        <receiver android:name="com.airpush.android.DeliveryReceiver" />
+        <receiver android:name="%PACKAGE_NAME%.BootReceiver">
+          <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <category android:name="android.intent.category.HOME" />
+          </intent-filter>
+        </receiver>
+
+
+
+      <service android:name="com.airpush.android.PushService">
+        <intent-filter>
+          <action android:name="com.airpush.android.PushServiceStart52201" />
+         </intent-filter>
+      </service>
+      <!-- Airpush Code End-->
