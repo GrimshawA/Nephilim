@@ -2,6 +2,8 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Texture.h>
 
+#include <cmath>
+
 NEPHILIM_NS_BEGIN
 
 RectangleShape::RectangleShape()
@@ -17,6 +19,15 @@ RectangleShape::RectangleShape()
 	m_geometry[1].texCoords = vec2(1.f, 0.f);
 	m_geometry[2].texCoords = vec2(1.f, 1.f);
 	m_geometry[3].texCoords = vec2(0.f, 1.f);
+}
+
+/// Invert the vertical coordinates of the texture - hacky
+void RectangleShape::invertTextureCoordinates()
+{
+	m_geometry[0].texCoords = vec2(m_geometry[0].texCoords.x, fabs(m_geometry[0].texCoords.y - 1.f));
+	m_geometry[1].texCoords = vec2(m_geometry[1].texCoords.x, fabs(m_geometry[1].texCoords.y - 1.f));
+	m_geometry[2].texCoords = vec2(m_geometry[2].texCoords.x, fabs(m_geometry[2].texCoords.y - 1.f));
+	m_geometry[3].texCoords = vec2(m_geometry[3].texCoords.x, fabs(m_geometry[3].texCoords.y - 1.f));
 }
 
 void RectangleShape::setSize(float width, float height)

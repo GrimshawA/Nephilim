@@ -1,9 +1,10 @@
-#ifndef PARABOLA_UIWINDOW_H
-#define PARABOLA_UIWINDOW_H
+#ifndef NephilimUIWindow_h__
+#define NephilimUIWindow_h__
 
 #include "Platform.h"
 #include "Event.h"
 #include "Renderer.h"
+#include "Drawable.h"
 
 #include "UIControl.h"
 #include "UIState.h"
@@ -17,14 +18,23 @@ NEPHILIM_NS_BEGIN
 	\ingroup UserInterface
 	\class UIWindow
 	\brief A Surface to draw user interface controls.
+
+	This class is a drawable and therefore can be rendered directly with Renderer::draw()
+	It works as a graphical object that contains user interface controls (widgets).
+
+	Its dimensions start at the origin (0,0) and end at (width,height)
 */
-class NEPHILIM_API UIWindow{
+class NEPHILIM_API UIWindow : public Drawable
+{
 public:
 	/// Construct the window
 	UIWindow();
 
 	/// Returns a control in the hierarchy with the name, or NULL if not found
 	UIControl* getControlByName(const String& name);
+
+	/// Drawable rendering
+	void onDraw(Renderer* renderer);
 
 	/// Sets new boundaries to this UIWindow
 	void setRect(Rect<float> rect);
@@ -128,4 +138,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimUIWindow_h__

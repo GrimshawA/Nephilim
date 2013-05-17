@@ -8,15 +8,26 @@
 using namespace std;
 
 #include <Nephilim/FileSystem.h>
-#include <Nephilim/FileInterface.h>
 using namespace NEPHILIM_NS;
 
-class CommandCreateProject : public Command
+class CommandCreateProject : public NativeCommand
 {
+	void execute(String command)
+	{
+		StringList list = command.split(' ');
+		if(list.size() > 1)
+		{
+			if(FileSystem::makeDirectory(list[1]))
+				cout << "Directory created: " << list[1] << endl;
+			else
+				cout << "Failed to create directory" << endl;
+		}	
+	}
+
 	void run(int argc, char** argv, ProgramContext& context)
 	{
 		cout<<"Creating Project: "<<argv[2]<<endl;
-
+/*
 		// Directory structure
 		FileSystem::makeDirectory(argv[2]);
 		FileSystem::makeDirectory(String(argv[2]) + "/AndroidAPK");
@@ -37,7 +48,7 @@ class CommandCreateProject : public Command
 		// Arrange files
 		fileReplaceToken(String(argv[2]) + "/CMakeLists.txt", "PSPROJECTTEMPLATE", String(argv[2]));
 		cout<<"=> Template specialization done."<<endl;
-
+		*/
 	}
 };
 

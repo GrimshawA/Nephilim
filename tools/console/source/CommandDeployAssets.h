@@ -7,7 +7,7 @@ using namespace NEPHILIM_NS;
 
 #include "Command.h"
 
-class CommandDeployAssets : public Command
+class CommandDeployAssets : public NativeCommand
 {
 	void run(int argc, char** argv, ProgramContext& context)
 	{

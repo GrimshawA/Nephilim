@@ -20,7 +20,7 @@ bool usingAirPush = true;
 
 String m_ProgramDir;
 
-class CommandAPKGenerator : public Command
+class CommandAPKGenerator : public NativeCommand
 {
 	void run(int argc, char** argv, ProgramContext& context)
 	{

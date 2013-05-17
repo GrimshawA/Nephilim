@@ -8,6 +8,14 @@ using namespace std;
 #include "APKGenerator.h"
 #include "APKAssets.h"
 
+#include "CommandCreateProject.h"
+#include "CommandModelConverter.h"
+#include "CommandPackager.h"
+
+
+std::map<String, NativeCommand*> nativeActions; 
+
+
 struct scriptAction
 {
 	String description;
@@ -15,6 +23,8 @@ struct scriptAction
 };
 ASEngine					scriptEngine;
 std::map<String, scriptAction> scriptActions;
+
+
 
 void initScriptActions()
 {
@@ -70,16 +80,76 @@ void showHelp(){
 	}
 }
 
-int main(int argc, char** argv){
+void runNativeAction(String command)
+{
+	nativeActions[command.split(' ').front()]->execute(command);
+}
 
-	m_ProgramDir = FileSystem::getExecutableDirectory();
-	//cout<<m_ProgramDir<<endl;
-//	system("pause");
+bool isScriptAction(String command)
+{
+	return false;
+}
 
+bool isNativeAction(String command)
+{
+	return nativeActions.find(command) != nativeActions.end();
+}
+
+void processCommand(String command)
+{
+	if(command ==  "help")
+	{
+		showHelp();
+	}
+	else if(isScriptAction(command.split(' ').front()))
+	{
+		runScriptAction(command);
+	}
+	else if(isNativeAction(command.split(' ').front()))
+	{
+		runNativeAction(command);
+	}
+	else
+	{
+		cout << "Sorry, I don't know what you mean." << endl;
+	}
+}
+
+int main(int argc, char** argv)
+{
+	// Init native commands
+	nativeActions["dir"]  = new CommandCreateProject();
+	nativeActions["mesh"] = new CommandModelConverter();
+	nativeActions["pack"] = new CommandPackager();
+	
+	// Init script commands
 	initScriptActions();
 
-	
+	// Interactive mode
+	if(argc == 1)
+	{
+		cout << "Welcome to the interactive mode. Type 'q' to exit." << endl;
+		String command;
+		while(command != "q")
+		{
+			cout << "> "; getline(cin, command);
 
+			if(command != "q")
+			{
+				processCommand(command);
+			}
+			else
+			{
+				cout << "Bye!" << endl;
+			}
+		}
+	}
+	// Single command
+	else
+	{
+		processCommand("parse TODO");
+	}
+	/*
 	if(argc < 2){
 		//there are no parameters
 		showHelp();
@@ -155,7 +225,7 @@ int main(int argc, char** argv){
 		}
 
 	}
-
+	*/
 	//system("pause");
 
 	return 0;

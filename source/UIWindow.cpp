@@ -15,6 +15,21 @@ UIWindow::UIWindow() : m_surfaceContainerLock(false), m_timeSinceLastMouseMoveme
 	m_backgroundColor =  Color(0,0,0,0);
 };
 
+void UIWindow::onDraw(Renderer* renderer)
+{
+	m_backgroundColor = Color::White;
+	renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, m_backgroundColor);
+	renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
+	renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);
+	renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), m_leftBorderColor);
+	renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
+
+	/// Draw surfaces bottom to top
+	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+		(*it)->draw(renderer);
+	}
+}
+
 /// Creates a new surface, which is underneath the relativeSurface specified
 UISurface* UIWindow::createSurfaceBelow(UISurface* relativeSurface, const String& name){
 	if(!relativeSurface) return NULL;

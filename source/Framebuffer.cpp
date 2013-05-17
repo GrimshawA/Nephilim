@@ -1,5 +1,6 @@
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/CGL.h>
+#include <Nephilim/Logger.h>
 #include <Nephilim/Texture.h>
 
 NEPHILIM_NS_BEGIN
@@ -33,11 +34,12 @@ void Framebuffer::activate()
 /// Attaches a texture to the color attachment 0
 void Framebuffer::attachTexture(const Texture& texture)
 {
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
 	glFramebufferTexture2DCGL(GL_FRAMEBUFFER_CGL, GL_COLOR_ATTACHMENT0_CGL, GL_TEXTURE_2D, texture.getIdentifier(), 0);
 
 	if(glCheckFramebufferStatusCGL(GL_FRAMEBUFFER_CGL) == GL_FRAMEBUFFER_COMPLETE_CGL)
 	{
-		//TESTLOG("Framebuffer is OK!\n");
+		Log("Created a complete framebuffer");
 	}
 }
 
@@ -47,6 +49,7 @@ bool Framebuffer::create()
 	bool success = false;
 
 	glGenFramebuffersCGL(1, static_cast<GLuint*>(&m_id));
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
 
 	if(m_id)
 	{

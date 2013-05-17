@@ -3,10 +3,12 @@
 
 #include "ProgramContext.h"
 
-class Command
+class NativeCommand
 {
 public:
-	virtual void run(int argc, char** argv, ProgramContext& context) = 0;
+	virtual void run(int argc, char** argv, ProgramContext& context) {};
+	
+	virtual void execute(String command){}
 };
 
 #endif // Command_h__

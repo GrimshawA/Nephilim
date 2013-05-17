@@ -374,12 +374,12 @@ String FileSystem::getExecutableDirectory(){
 		return Files;
 	};
 
-
-	bool FileSystem::makeDirectory(String Name){
-
+bool FileSystem::makeDirectory(String Name)
+{
 #ifdef NEPHILIM_WINDOWS
-		/*if(!CreateDirectory((LPCWSTR)wide_string_from_string(Name).c_str(), LPSECURITY_ATTRIBUTES()))
-			return false;*/
+		//if(!CreateDirectoryA((LPCWSTR)wide_string_from_string(Name).c_str(), LPSECURITY_ATTRIBUTES()))
+		if(!CreateDirectoryA((LPCSTR)Name.c_str(), LPSECURITY_ATTRIBUTES()))
+			return false;
 #elif defined PARABOLA_ANDROID
 		TESTLOG("makeDirectory\n");
 		return AndroidInterface::createDirectory(Name);
@@ -388,8 +388,8 @@ String FileSystem::getExecutableDirectory(){
 		//_mkdir(Name.c_str());
 	//	mkdir(Name.c_str(), 0770);
 #endif
-		return true;
-	}
+	return true;
+}
 
 	String FileSystem::currentDirectory(){
 		return myCurrentDirectory;

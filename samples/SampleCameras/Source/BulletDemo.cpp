@@ -2,6 +2,7 @@
 
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Image.h>
+#include <Nephilim/Surface.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/MMath.h>
 #include <Nephilim/Texture.h>
@@ -28,6 +29,24 @@ BxScene bulletWorld;
 Image heightmap;
 
 BxDraw* bulletDrawer;
+
+#ifdef NEPHILIM_WINDOWS
+#include <windows.h>
+bool winappInFocus(GameCore* game)
+{
+	HWND handle = static_cast<HWND>(game->getWindow().getHandle());
+	bool one = handle == GetFocus();
+	bool two = handle == GetForegroundWindow();
+
+	if(one != two) //strange 'half-focus': window is in front but you can't click anything - so we fix it
+	{
+		SetFocus(handle);
+		SetForegroundWindow(handle);
+	}
+
+	return one && two;
+}
+#endif
 
 class BoxSim : public SceneGraph3D::Node
 {
@@ -74,6 +93,8 @@ SimpleMusic nature;
 
 void SampleUI::onCreate()
 {	
+	getWindow().setSize(1920, 1080);
+	getWindow().setFullscreen(true);
 
 	nature.openFromFile("naturesounds.ogg");
 	nature.setLoop(true);
@@ -366,8 +387,9 @@ void SampleUI::onUpdate(Time time)
 	{
 		bulletWorld.step(time.asSeconds() / 4);
 	}
-
-	getWindow().setMousePosition(Vec2i(500,500));
+	
+	if(focus)
+		getWindow().setMousePosition(Vec2i(500,500));
 
 	fpsCamera.setPosition(vec3(m_ghostObject->getWorldTransform().getOrigin().getX(), m_ghostObject->getWorldTransform().getOrigin().getY(), m_ghostObject->getWorldTransform().getOrigin().getZ()));
 	
@@ -475,7 +497,7 @@ void SampleUI::onRender()
 	getRenderer()->setDepthTestEnabled(true);
 	getRenderer()->clearAllBuffers();
 	getRenderer()->setClearColor(Color::Blue);
-	getRenderer()->setProjectionMatrix(mat4::perspective(80, 1024.f / 768.f, 1.f, 1000.f));
+	getRenderer()->setProjectionMatrix(mat4::perspective(80, static_cast<float>(getSurface().getWidth()) / static_cast<float>(getSurface().getHeight()), 1.f, 1000.f));
 	getRenderer()->setViewMatrix(fpsCamera.getMatrix());
 
 	/// Draw the floor

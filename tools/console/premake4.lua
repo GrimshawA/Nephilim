@@ -24,7 +24,7 @@ solution "NephilimConsole"
 		configuration "Debug"
 			defines { "_DEBUG" , "DEBUG" }
 			flags { "Symbols" }
-			targetname("nc_debug")
+			targetname("nc")
 		
 			links { "nephilim-d" }
 			links("sfml-system-s-d")
@@ -33,6 +33,7 @@ solution "NephilimConsole"
 			links("angelscript-d")
 			links("libsigcpp-d")
 			links("glew")
+			links("assimp-d")
 			
 		configuration "Release"
 			targetname("nc")
@@ -44,3 +45,4 @@ solution "NephilimConsole"
 			links("angelscript")
 			links("libsigcpp")
 			links("glew")
+			links("assimp")
