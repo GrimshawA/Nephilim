@@ -82,11 +82,11 @@ void RectangleShape::setTextureRect(float left, float top, float width, float he
 void RectangleShape::onDraw(Renderer* renderer)
 {
 	if(m_texture) m_texture->bind();
+	else renderer->setDefaultTexture();
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_geometry);
-	renderer->setModelMatrix(mat4());
+	renderer->setModelMatrix(mat4::identity);
 	renderer->setDefaultTexture();
-
 }
 
 NEPHILIM_NS_END

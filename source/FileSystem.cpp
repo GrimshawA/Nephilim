@@ -22,36 +22,36 @@ NEPHILIM_NS_BEGIN
 /// Load a dialog
 String FileSystem::loadFileDialog(){
 #ifdef NEPHILIM_WINDOWS
-		wchar_t Filestring[256];
+		char Filestring[256];
 		String returnstring;
-		/*
-		OPENFILENAME opf;
+		
+		OPENFILENAMEA opf;
 		opf.hwndOwner = NULL;
-		opf.lpstrFilter = L"";
+		opf.lpstrFilter = "";
 		opf.lpstrCustomFilter = 0;
 		opf.nMaxCustFilter = 0L;
 		opf.nFilterIndex = 1L;
-		opf.lpstrFile = (LPWSTR)&Filestring;
+		opf.lpstrFile = Filestring;
 		opf.lpstrFile[0] = '\0';
 		opf.nMaxFile = 256;
 		opf.lpstrFileTitle = 0;
 		opf.nMaxFileTitle=50;
-		opf.lpstrInitialDir = L"C:\\";
-		opf.lpstrTitle = L"Rocks Papers";
+		opf.lpstrInitialDir = "K:\\";
+		opf.lpstrTitle = "Nephilim";
 		opf.nFileOffset = 0;
 		opf.nFileExtension = 0;
-		opf.lpstrDefExt = L"*.*";
+		opf.lpstrDefExt = "*.*";
 		opf.lpfnHook = NULL;
 		opf.lCustData = 0;
 		opf.Flags = (OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR) & ~OFN_ALLOWMULTISELECT ;
 		opf.lStructSize = sizeof(OPENFILENAME);
 
-		if(GetOpenFileName(&opf))
+		if(GetOpenFileNameA(&opf))
 		{
-			std::wstring s = static_cast<std::wstring>(opf.lpstrFile);
+			std::string s = static_cast<std::string>(opf.lpstrFile);
 			returnstring.assign(s.begin(), s.end());
 		}
-		*/
+		
 		return returnstring;
 #else
 	return "";

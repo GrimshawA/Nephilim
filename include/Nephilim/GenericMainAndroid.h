@@ -85,24 +85,24 @@ void android_keydown(int key){
 void android_touchdown(float x, float y){
 	NEPHILIM_NS::Event ev;
 	ev.type = NEPHILIM_NS::Event::TouchPressed;
-	ev.x = x;
-	ev.y = y;
+	ev.touch.x = x;
+	ev.touch.y = y;
 	_engine->injectEvent(ev);
 }
 
 void android_touchup(float x, float y){
 	NEPHILIM_NS::Event ev;
 	ev.type = NEPHILIM_NS::Event::TouchReleased;
-	ev.x = x;
-	ev.y = y;
+	ev.touch.x = x;
+	ev.touch.y = y;
 	_engine->injectEvent(ev);
 }
 
 void android_touchmove(float x, float y){
 	NEPHILIM_NS::Event ev;
 	ev.type = NEPHILIM_NS::Event::TouchMoved;
-	ev.x = x;
-	ev.y = y;
+	ev.touch.x = x;
+	ev.touch.y = y;
 	_engine->injectEvent(ev);
 }
 

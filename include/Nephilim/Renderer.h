@@ -60,6 +60,9 @@ public:
 	/// Get the full name of this renderer
 	String getName();
 
+	/// Get the current surface
+	Surface& getSurface();
+
 	/// Set an hint to the renderer which tells it to prefer shaders by default(true), or to use the fixed pipeline instead
 	/// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
 	void setShaderUsageHint(bool allow);

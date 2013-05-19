@@ -46,6 +46,16 @@ DataStream& DataStream::operator<<(const String& value)
 	return *this;
 }
 
+/// Write a float
+DataStream& DataStream::operator<<(float value)
+{
+	if(m_device)
+	{
+		m_device->write(reinterpret_cast<const char*>(&value), sizeof(value));
+	}
+	return *this;
+}
+
 /// Read a 64-bit integer
 DataStream& DataStream::operator>>(Int64& value)
 {
@@ -67,6 +77,16 @@ DataStream& DataStream::operator>>(String& value)
 		m_device->read(buffer, length);
 		buffer[length] = '\0';
 		value = buffer;
+	}
+	return *this;
+}
+
+/// Read a float
+DataStream& DataStream::operator>>(float& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(float));
 	}
 	return *this;
 }

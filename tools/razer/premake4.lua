@@ -1,0 +1,48 @@
+-- Premake script for Nephilim Razer
+newoption {
+	trigger		= "libs",
+	value		= "path",
+	description = "Tell where to look for the linking libraries"
+}
+
+solution "Razer"
+
+	location "build"
+	
+	project "Razer"
+		
+		kind "ConsoleApp"
+		configurations { "Debug" , "Release" }
+		language "C++"
+		targetdir  "bin" 
+		
+		files { "source/*" }
+		includedirs { "../../include" , "../../includeext"}
+		libdirs { "../../lib/" }
+		libdirs { _OPTIONS["libs"] }
+		
+		configuration "Debug"
+			defines { "_DEBUG" , "DEBUG" }
+			flags { "Symbols" }
+			targetname("nc")
+		
+			links { "nephilim-d" }
+			links("sfml-system-s-d")
+			links("sfml-window-s-d")
+			links("sfml-graphics-s-d")
+			links("angelscript-d")
+			links("libsigcpp-d")
+			links("glew")
+			links("assimp-d")
+			
+		configuration "Release"
+			targetname("nc")
+			flags { "Optimize" }
+			links { "nephilim" }
+			links("sfml-system-s")
+			links("sfml-window-s")
+			links("sfml-graphics-s")
+			links("angelscript")
+			links("libsigcpp")
+			links("glew")
+			links("assimp")

@@ -44,6 +44,11 @@ String Renderer::getName()
 	return m_name;
 }
 
+Surface& Renderer::getSurface()
+{
+	return *m_surface;
+}
+
 /// Set the clear color of the render target
 void Renderer::setClearColor(const Color& color)
 {

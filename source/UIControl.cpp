@@ -540,7 +540,16 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 	renderer->setModelMatrix(transform * m_transform);
 
 	/// Draw the background color and borders - TODO: no debug draw
-	renderer->drawDebugQuad(m_bounds.width/2, m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
+	vec4 middlePoint = transform * m_transform * vec4(0,0,0,1);
+	//renderer->drawDebugQuad(middlePoint.x + m_bounds.width/2, middlePoint.y + m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
+	
+	renderer->setModelMatrix(transform * m_transform);
+	RectangleShape rect;
+	rect.setPosition(m_bounds.left, m_bounds.top);
+	rect.setSize(m_bounds.width, m_bounds.height);
+	rect.setColor(m_backgroundColor);
+	renderer->draw(rect);
+	renderer->setModelMatrix(transform * m_transform);
 
 	if(m_drawBorder)
 	{

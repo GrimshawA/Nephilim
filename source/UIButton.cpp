@@ -108,12 +108,12 @@ bool UIButton::onEventNotification(Event& event){
 		
 	}
 	if(event.type == Event::TouchPressed){
-		if(m_bounds.contains(event.x, event.y)){
+		if(m_bounds.contains(event.touch.x, event.touch.y)){
 			// drag test
 			if(getContext())
 			{
 				getContext()->m_dragControl = this->clone();
-				getContext()->m_dragOffset = Vec2f(event.x - m_bounds.left, event.y - m_bounds.top);
+				getContext()->m_dragOffset = Vec2f(event.touch.x - m_bounds.left, event.touch.y - m_bounds.top);
 			}
 		}
 	}
@@ -131,7 +131,7 @@ bool UIButton::onEventNotification(Event& event){
 	}
 
 	if(event.type == Event::TouchReleased){
-		if(m_bounds.contains(event.x, event.y)){
+		if(m_bounds.contains(event.touch.x, event.touch.y)){
 			onClick();
 		}
 
@@ -155,7 +155,7 @@ bool UIButton::onEventNotification(Event& event){
 
 	if(event.type == Event::TouchMoved)
 	{
-		if(m_bounds.contains(event.x, event.y)){	
+		if(m_bounds.contains(event.touch.x, event.touch.y)){	
 			setProperty<Color>("background-color", Color::White);
 		}
 		else

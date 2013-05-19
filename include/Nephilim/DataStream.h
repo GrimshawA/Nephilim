@@ -6,6 +6,7 @@
 NEPHILIM_NS_BEGIN
 class IODevice;
 class String;
+
 /**
 	\ingroup Foundation
 	\class DataStream
@@ -29,11 +30,17 @@ public:
 	/// Write a String
 	DataStream& operator<<(const String& value);
 
+	/// Write a float
+	DataStream& operator<<(float value);
+
 	/// Read a 64-bit integer
 	DataStream& operator>>(Int64& value);
 
 	/// Read a String
 	DataStream& operator>>(String& value);
+
+	/// Read a float
+	DataStream& operator>>(float& value);
 
 private:
 	IODevice* m_device; ///< The device of the stream

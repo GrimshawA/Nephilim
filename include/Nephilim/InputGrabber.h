@@ -23,13 +23,27 @@ public:
 
 	void update(const Event& event)
 	{
-		if(event.type == Event::KeyPressed)
+		switch(event.type)
 		{
-			m_keys[event.key.code] = true;
-		}
-		else if(event.type == Event::KeyReleased)
-		{
-			m_keys[event.key.code] = false;
+			case Event::KeyPressed:
+			{
+				m_keys[event.key.code] = true;
+			}break;
+
+			case Event::KeyReleased:
+			{
+				m_keys[event.key.code] = false;
+			}break;
+
+			case Event::MouseButtonPressed:
+			{
+				m_mouseButtons[event.mouseButton.button] = true;
+			}break;
+
+			case Event::MouseButtonReleased:
+			{
+				m_mouseButtons[event.mouseButton.button] = false;
+			}break;
 		}
 	}
 
@@ -41,8 +55,17 @@ public:
 		}
 		return m_keys[key];
 	}
+	bool getMouseButton(Mouse::Button button)
+	{
+		if(m_mouseButtons.find(button) == m_mouseButtons.end())
+		{
+			m_mouseButtons[button] = false;
+		}
+		return m_mouseButtons[button];
+	}
 
 	std::map<Keyboard::Key, bool> m_keys;
+	std::map<Mouse::Button, bool> m_mouseButtons;
 };
 
 NEPHILIM_NS_END

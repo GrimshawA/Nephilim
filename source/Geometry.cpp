@@ -51,19 +51,19 @@ bool GeometryData::saveToFile(const String& filename)
 		DataStream writer(fp);
 
 		// write vertices
-		writer << m_vertices.size();
+		writer << static_cast<Int64>(m_vertices.size());
 		if(m_vertices.size() > 0) fp.write(reinterpret_cast<char*>(&m_vertices[0]), m_vertices.size() * sizeof(vec3));
 
 		// write normals
-		writer << m_normals.size();
+		writer << static_cast<Int64>(m_normals.size());
 		if(m_normals.size() > 0) fp.write(reinterpret_cast<char*>(&m_normals[0]), m_normals.size() * sizeof(vec3));
 
 		// write texcoords
-		writer << m_texCoords.size();
+		writer << static_cast<Int64>(m_texCoords.size());
 		if(m_texCoords.size() > 0) fp.write(reinterpret_cast<char*>(&m_texCoords[0]), m_texCoords.size() * sizeof(vec2));
 
 		// write colors
-		writer << m_colors.size();
+		writer << static_cast<Int64>(m_colors.size());
 		if(m_colors.size() > 0) fp.write(reinterpret_cast<char*>(&m_colors[0]), m_colors.size() * sizeof(Color));
 	}
 

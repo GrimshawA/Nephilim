@@ -11,6 +11,7 @@
 #include <Nephilim/Text.h>
 #include <Nephilim/AssimpConverter.h>
 #include <Nephilim/UIWindow.h>
+#include <Nephilim/UIButton.h>
 #include <Nephilim/Engine.h>
 //#include <Nephilim/ASXEngine.h>
 #include <Nephilim/File.h>
@@ -80,7 +81,14 @@ void SampleUI::onCreate()
 	//ironmantexture.setRepeated(true);
 
 	userInterfaceTexture.create(1024,768);
-	userInterface.setRect(FloatRect(0,0,1000,700));
+	userInterface.setRect(FloatRect(0,0,1024,768));
+	userInterface.getContext().m_defaultFont.loadFromFile("DejaVuSans.ttf");
+
+	UIButton* button = new UIButton("Hello world");
+	button->setPosition(100,100);
+	button->setSize(300,60);
+	userInterface["top"]->addControl(button);
+
 	/*
 	import.load("blender.DAE"); /// Load
 
@@ -113,6 +121,8 @@ void SampleUI::onCreate()
 
 void SampleUI::onEvent(Event &event)
 {
+	userInterface.pushEvent(event);
+
     if(event.type == Event::KeyPressed)
 	{
 		if(event.key.code == Keyboard::H)
@@ -124,15 +134,12 @@ void SampleUI::onEvent(Event &event)
 	}
 }
 
-
 void SampleUI::onUpdate(Time time)
 { 
 	elapsedTime += time.asSeconds(); // update slowly
 	localElapsedTime += time.asSeconds() ; // update slowly
 //	Log("time: %f", elapsedTime);
 }
-
-
 
 void SampleUI::onRender()
 {
@@ -192,7 +199,7 @@ void SampleUI::onRender()
 	getRenderer()->setProjectionMatrix(View(0,0,1024,768).getMatrix());
 	getRenderer()->setViewMatrix(mat4::identity);
 	getRenderer()->setModelMatrix(mat4::identity);
-	getRenderer()->setClearColor(Color(20,0,0,20));
+	getRenderer()->setClearColor(Color::Blue);
 	getRenderer()->clearAllBuffers();
 	getRenderer()->draw(userInterface);
 

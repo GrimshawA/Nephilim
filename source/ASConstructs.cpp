@@ -21,8 +21,8 @@ bool ASEngine::exportEvents(){
 	int r;
 	// Type property
 	asEngine->RegisterObjectProperty("Event", "int type", asOFFSET(Event, type));
-	asEngine->RegisterObjectProperty("Event", "float x", asOFFSET(Event, x));
-	asEngine->RegisterObjectProperty("Event", "float y", asOFFSET(Event, y));
+	asEngine->RegisterObjectProperty("Event", "float x", asOFFSET(Event, touch.x));
+	asEngine->RegisterObjectProperty("Event", "float y", asOFFSET(Event, touch.y));
 
 	if(getPortableMode())
 	{

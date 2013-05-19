@@ -5,7 +5,7 @@
 
 Jumpy jumpy;
 
-void init()   
+void init()
 {    
 	_engine->init();
 	_engine->execute(&jumpy);

@@ -17,7 +17,7 @@ UIWindow::UIWindow() : m_surfaceContainerLock(false), m_timeSinceLastMouseMoveme
 
 void UIWindow::onDraw(Renderer* renderer)
 {
-	m_backgroundColor = Color::White;
+	//m_backgroundColor = Color::White;
 	renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, m_backgroundColor);
 	renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
 	renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);

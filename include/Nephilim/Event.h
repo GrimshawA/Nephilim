@@ -317,8 +317,6 @@ public :
 
 class NEPHILIM_API Event{
 public:
-	float x,y;
-
 	Keyboard::Key getKeyCode()
 	{
 		return key.code;
@@ -355,10 +353,17 @@ public:
 		}
 		else if(type == TouchPressed || type == TouchReleased || type == TouchMoved)
 		{
-			return Vec2i((int)x, (int)y);
+			return Vec2i((int)touch.x, (int)touch.y);
 		}
 		else return Vec2i(0,0);
 	}
+
+	struct TouchEvent
+	{
+		float x;  ///< The x coordinate of the touch, in device coordinates
+		float y;  ///< The y coordinate of the touch, in devices coordinates
+		int   id; ///< unused: reserved for multitouch implementation
+	};
 
 	////////////////////////////////////////////////////////////
 	/// \brief Size events parameters (Resized)
@@ -507,6 +512,7 @@ public:
 		JoystickMoveEvent    joystickMove;    ///< Joystick move event parameters
 		JoystickButtonEvent  joystickButton;  ///< Joystick button event parameters
 		JoystickConnectEvent joystickConnect; ///< Joystick (dis)connect event parameters
+		TouchEvent           touch;           ///< Touch event parameters
 	};
 
 
