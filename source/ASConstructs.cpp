@@ -28,8 +28,8 @@ bool ASEngine::exportEvents(){
 	{
 		//r = asEngine->RegisterObjectMethod("Event", "int mouseX()", WRAP_MFN(Event, mouseX), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectMethod("Event", "int mouseY()", WRAP_MFN(Event, mouseY), asCALL_GENERIC); if(r < 0)printf("r %d", r);
-		r = asEngine->RegisterObjectMethod("Event", "int key()", WRAP_MFN(Event, getKeyCode), asCALL_GENERIC); if(r < 0)printf("r %d", r);
-		r = asEngine->RegisterObjectMethod("Event", "bool isPointerPressed()", WRAP_MFN(Event, isPointerDown), asCALL_GENERIC); if(r < 0)printf("r %d", r);
+//		r = asEngine->RegisterObjectMethod("Event", "int key()", WRAP_MFN(Event, getKeyCode), asCALL_GENERIC); if(r < 0)printf("r %d", r);
+//		r = asEngine->RegisterObjectMethod("Event", "bool isPointerPressed()", WRAP_MFN(Event, isPointerDown), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "bool isPointerReleased()", WRAP_MFN(Event, isPointerReleased), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "bool isPointerMoved()", WRAP_MFN(Event, isPointerMoved), asCALL_GENERIC); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "Vec2i getPointerPosition()", WRAP_MFN(Event, getPointerPosition), asCALL_GENERIC); if(r < 0)printf("r %d", r);
@@ -48,8 +48,8 @@ bool ASEngine::exportEvents(){
 	{
 		//r = asEngine->RegisterObjectMethod("Event", "int mouseX()", asMETHOD(Event, mouseX), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 		//r = asEngine->RegisterObjectMethod("Event", "int mouseY()", asMETHOD(Event, mouseY), asCALL_THISCALL); if(r < 0)printf("r %d", r);
-		r = asEngine->RegisterObjectMethod("Event", "int key()", asMETHOD(Event, getKeyCode), asCALL_THISCALL); if(r < 0)printf("r %d", r);
-		r = asEngine->RegisterObjectMethod("Event", "bool isPointerPressed()", asMETHOD(Event, isPointerDown), asCALL_THISCALL); if(r < 0)printf("r %d", r);
+////		r = asEngine->RegisterObjectMethod("Event", "int key()", asMETHOD(Event, getKeyCode), asCALL_THISCALL); if(r < 0)printf("r %d", r);
+//		r = asEngine->RegisterObjectMethod("Event", "bool isPointerPressed()", asMETHOD(Event, isPointerDown), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "bool isPointerReleased()", asMETHOD(Event, isPointerReleased), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "bool isPointerMoved()", asMETHOD(Event, isPointerMoved), asCALL_THISCALL); if(r < 0)printf("r %d", r);
 		r = asEngine->RegisterObjectMethod("Event", "Vec2i getPointerPosition()", asMETHOD(Event, getPointerPosition), asCALL_THISCALL); if(r < 0)printf("r %d", r);

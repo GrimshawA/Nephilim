@@ -1,5 +1,5 @@
 #include <Nephilim/FileSystem.h>
-#include <Nephilim/Directory.h>
+#include <Nephilim/Path.h>
 #include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 

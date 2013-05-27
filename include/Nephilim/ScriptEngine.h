@@ -1,5 +1,5 @@
-#ifndef PARABOLA_SCRIPTENGINE_H
-#define PARABOLA_SCRIPTENGINE_H
+#ifndef NephilimScriptEngine_h__
+#define NephilimScriptEngine_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -60,4 +60,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimScriptEngine_h__

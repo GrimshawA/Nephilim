@@ -1,4 +1,4 @@
-#include <Nephilim/Directory.h>
+#include <Nephilim/Path.h>
 #include <Nephilim/Logger.h>
 
 #ifdef NEPHILIM_WINDOWS
