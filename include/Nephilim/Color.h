@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-/*
+/**
 	\ingroup Graphics
 	\class Color
 	\brief Describes a color in the RGB8888 format
@@ -35,6 +35,7 @@ public:
 	static Color Green;
 	static Color Orange;
 	static Color Blue;
+	static Color Transparent;
 
 	Uint8 r,g,b,a;
 };

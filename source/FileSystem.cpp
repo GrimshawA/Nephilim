@@ -1,16 +1,113 @@
-#include "Nephilim/FileSystem.h"
+#include <Nephilim/FileSystem.h>
+#include <Nephilim/Directory.h>
+#include <Nephilim/File.h>
+#include <Nephilim/Logger.h>
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>
 #include <Shlobj.h>
 #include <CommDlg.h>
+#ifdef SetCurrentDirectory
 #undef SetCurrentDirectory
+#endif
 #elif defined NEPHILIM_ANDROID
 #include "Nephilim/AndroidInterface.h"
 #include "Nephilim/Logger.h"
 #endif
 
 NEPHILIM_NS_BEGIN
+
+namespace fs
+{
+	
+	bool copyFile(const String& source, const String& destination)
+	{
+		File src(source, IODevice::BinaryRead);
+		File dst(destination, IODevice::BinaryWrite);
+
+		if(src && dst)
+		{
+			FileOps::copy(src, dst);
+			return true;
+		}
+		else
+		{
+			Log("Failed to copy '%s' to '%s'", source.c_str(), destination.c_str());
+			return false;
+		}
+	}
+
+	/// Copy the contents of a directory to another
+	bool copyDirectoryContents(const String& source, const String& destination)
+	{
+		bool copiedAll = true;
+		StringList fileList = FileSystem::scanDirectory(source, "*", false);
+		for(size_t i = 0; i < fileList.size(); ++i)
+		{
+			Path shortName(fileList[i]);
+			if(!copyFile(fileList[i], destination + shortName.getFileName()))
+			{
+				copiedAll = false;
+			}
+		}
+		return copiedAll;
+	}
+
+	/// Copy the contents of a directory to another
+	bool copyDirectoryContentsRecursively(const String& source, const String& destination)
+	{
+		bool copiedAll = true;
+		StringList fileList = FileSystem::scanDirectory(source, "*", true);
+		for(size_t i = 0; i < fileList.size(); ++i)
+		{
+			Path shortName(fileList[i]);
+			//Log("Read file: %s", fileList[i].c_str());
+
+			//Log("Proper relative path: %s", shortName.getRelativePathTo(source).c_str());
+
+			
+			ensureDirectory(destination + shortName.getRelativePathTo(source));
+			
+			if(!copyFile(fileList[i], destination + shortName.getRelativePathTo(source)))
+			{
+				copiedAll = false;
+			}
+		}
+		return copiedAll;
+	}
+
+
+	/// Creates all needed directories to make the path valid
+	bool ensureDirectory(const String& directory)
+	{
+		//Log("Need to ensure: %s", directory.c_str());
+
+		Path path(directory);
+		
+		StringList pathElements = path.m_path.split('/');
+
+		/*if(path.isFile())
+			pathElements.pop_back();*/
+
+		String currentDir = pathElements[0];
+		for(size_t i = 1; i < pathElements.size(); ++i)
+		{			
+			FileSystem::makeDirectory(currentDir);
+			//Log("Creating %s", currentDir.c_str());
+			currentDir += "/" + pathElements[i];
+		}
+
+		return true;
+	}
+}
+
+
+
+
+
+
+
+
 	String FileSystem::myCurrentDirectory;
 
 #ifdef NEPHILIM_WINDOWS
@@ -117,7 +214,7 @@ String FileSystem::getDocumentsDirectory(){
 String FileSystem::getExecutableDirectory(){
 	String path;
 #ifdef NEPHILIM_WINDOWS
-	/*LPSTR lpStr = new char[2048];
+	LPSTR lpStr = new char[2048];
 	GetModuleFileNameA(NULL,lpStr,2048 );
 	path = lpStr;
 	delete lpStr;
@@ -125,7 +222,7 @@ String FileSystem::getExecutableDirectory(){
 	path.removeUntilReverse('\\');
 	path.replaceCharacter('\\', '/');
 
-	path += "/";*/
+	path += "/";
 #endif
 
 	return path;
@@ -172,21 +269,21 @@ String FileSystem::getExecutableDirectory(){
 
 				if(FileName[0] != '.')
 				{
-					if(Recursive)
+					if(FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 					{
-						StringList t(scanDirectory(Directory + String("/") +
-							String(FileData.cFileName), Extension, Recursive));
+						if(Recursive)
+						{
+							StringList t(scanDirectory(Directory + String("/") +
+								String(FileData.cFileName), Extension, Recursive));
 
-						Files.insert(Files.end(), t.begin(), t.end());
+							Files.insert(Files.end(), t.begin(), t.end());
+						}
 					}
-
-					Files.insert(Files.end(), Directory + String("/") + FileName);
-
+					else
+					{
+						Files.insert(Files.end(), Directory + String("/") + FileName);
+					}					
 				}
-				else
-				{
-					//Files.insert(Files.end(), Directory + String("/") + FileName);
-				};
 			};
 
 			FindClose(hFindHandle);

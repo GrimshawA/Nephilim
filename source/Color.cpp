@@ -9,6 +9,7 @@ Color Color::Black = Color(0,0,0,255);
 Color Color::Green = Color(30,210,60,255);
 Color Color::Orange = Color(255,165,0,255);
 Color Color::Blue = Color(30, 144, 255, 255);
+Color Color::Transparent = Color(0, 0, 0, 0);
 
 Color::Color(){
 	r = g = b = 0;

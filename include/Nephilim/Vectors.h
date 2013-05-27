@@ -1,5 +1,5 @@
-#ifndef Vectors_h__
-#define Vectors_h__
+#ifndef NephilimVectors_h__
+#define NephilimVectors_h__
 
 #include "Platform.h"
 #include <math.h>
@@ -289,4 +289,4 @@ typedef Vec4<double> Vec4d;
 #include "Vectors.inl"
 
 NEPHILIM_NS_END
-#endif // Vectors_h__
+#endif // NephilimVectors_h__

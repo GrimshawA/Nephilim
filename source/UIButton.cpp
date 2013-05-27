@@ -1,5 +1,6 @@
 #include <Nephilim/UIButton.h>
 #include <Nephilim/Text.h>
+#include <Nephilim/RectangleShape.h>
 
 #include <Nephilim/ASEngine.h>
 #include <Nephilim/ASSlot.h>
@@ -10,81 +11,18 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-UIControl* UIButtonRefCast(UIButton* a) 
+UIButton::UIButton()
+: UIControl()
+, m_color(0,0,0)
+, hover(false)
 {
-	return refCast<UIButton, UIControl>(a);
-}
-
-static UIButton* customInstancer()
-{
-	return new UIButton();
-}
-
-void Wrap_UIButton_factory(asIScriptGeneric *gen)
-{
-	*reinterpret_cast<UIButton**>(gen->GetAddressOfReturnLocation()) = new UIButton();
-}
-
-void Wrap_UIButton_addReference(asIScriptGeneric *gen)
-{
-	reinterpret_cast<UIButton*>(gen->GetObject())->addReference();
-}
-
-
-void Wrap_UIButton_removeReference(asIScriptGeneric *gen)
-{
-	reinterpret_cast<UIButton*>(gen->GetObject())->removeReference();
-}
-
-/// Register the buttons
-bool registerUIButton(ASEngine* engine)
-{
-	engine->getASEngine()->RegisterObjectType("UIButton", sizeof(UIButton), asOBJ_REF);
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_FACTORY, "UIButton@ f()", asFUNCTION(Wrap_UIButton_factory), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_ADDREF, "void f()",  asFUNCTION(Wrap_UIButton_addReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_RELEASE, "void f()",  asFUNCTION(Wrap_UIButton_removeReference), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_FACTORY, "UIButton@ f()", WRAP_FN(customInstancer), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_ADDREF, "void f()", WRAP_MFN(UIButton, addReference), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_RELEASE, "void f()", WRAP_MFN(UIButton, removeReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_IMPLICIT_REF_CAST, "UIControl@ f()", WRAP_OBJ_LAST(UIButtonRefCast), asCALL_GENERIC);
-
- 		engine->getASEngine()->RegisterObjectMethod("UIButton", "void setLabel(const string &in)", WRAP_MFN(UIButton, setLabel), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("UIButton", "void setProperty(const string &in, const string &in)", WRAP_MFN(UIButton, setRawProperty), asCALL_GENERIC);
-	
-	}
-	else 
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_FACTORY, "UIButton@ f()", asFUNCTION(genericFactory<UIButton>), asCALL_CDECL);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_ADDREF, "void f()", asMETHOD(UIButton, addReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_RELEASE, "void f()", asMETHOD(UIButton, removeReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_IMPLICIT_REF_CAST, "UIControl@ f()", asFUNCTION((refCast<UIButton,UIControl>)), asCALL_CDECL_OBJLAST);
-		
-		engine->getASEngine()->RegisterObjectMethod("UIButton", "void setLabel(const string &in)", asMETHOD(UIButton, setLabel), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("UIButton", "void setProperty(const string &in, const string &in)", asMETHOD(UIButton, setRawProperty), asCALL_THISCALL);
-
-	}
-
-	registerUIControlSubtype("UIButton", engine);
-
-	return true;
-}
-
-/// Constructs the button
-UIButton::UIButton() :  m_color(0,0,0) , hover(false){
 	setSize(200,40);
 	m_label = "unassigned";
-	//TESTLOG("UIBUTTON BORN\n")
-		UIControl();
-		//PRINTLOG("f", "REF COUNT: %d\n", refCount);
-	//cout<<"me: "<<this<<endl;
 };
 
 UIButton::~UIButton()
 {
-	//TESTLOG("UIBUTTON KILLED\n")
+
 }
 
 
@@ -93,9 +31,18 @@ UIButton::UIButton(const String& title) : UIControl(), m_color(0,0,0), m_label(t
 
 };
 
-/// Callback to handle an event
+void UIButton::setNormalTexture(const String& filename)
+{
+	m_normal.loadFromFile(filename);
+}
+
+void UIButton::setHoverTexture(const String& filename)
+{
+	m_hovert.loadFromFile(filename);
+}
+
 bool UIButton::onEventNotification(Event& event){
-	if(event.type == Event::MouseButtonPressed){
+	/*if(event.type == Event::MouseButtonPressed){
 		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
 			// drag test
 			if(getContext())
@@ -162,7 +109,7 @@ bool UIButton::onEventNotification(Event& event){
 		{
 			setProperty<Color>("background-color", Color(91,91,91));
 		}
-	}
+	}*/
 	return true;
 }
 
@@ -209,9 +156,28 @@ void UIButton::setLabel(const String& text)
 	m_baseLabel = m_label;
 };
 
+void UIButton::draw(Renderer* renderer)
+{
+	if(!m_stateContext->m_defaultFont.isLoaded())
+	{
+		Log("UI: There is no default font for showing text.");
+	}
 
-/// Callback to render itself, renders children
-void UIButton::draw(Renderer* renderer){
+	
+
+	RectangleShape background;
+	if(!m_hovered)
+		background.setTexture(&m_normal);
+	else
+	{
+		background.setTexture(&m_hovert);
+	}
+
+	background.setPosition(m_bounds.left, m_bounds.top);
+	background.setSize(m_bounds.width, m_bounds.height);
+	background.setColor(Color::White);
+	renderer->draw(background);
+
 	Text t;
 	t.setFont(m_stateContext->m_defaultFont);
 	t.setString(m_label);

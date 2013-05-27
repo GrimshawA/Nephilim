@@ -1,5 +1,5 @@
-#ifndef PARABOLA_STRINGS_H
-#define PARABOLA_STRINGS_H
+#ifndef NephilimStrings_h__
+#define NephilimStrings_h__
 
 #include "Platform.h"
 #include <string>
@@ -75,7 +75,7 @@ public:
 	StringList split(String splitBy, int limitCount = 0);
 
 	/// Splits into a StringList by the character c.
-	StringList split(char c, int limitCount = 0);
+	StringList split(char c, int limitCount = 0) const;
 
 	/// Checks if the string starts with str
 	bool startsWith(const String &str);
@@ -137,9 +137,9 @@ public:
 
 private:
 	/// Splits
-	void split(String s, char delim, StringList &elems);
+	void split(String s, char delim, StringList &elems) const;
 
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimStrings_h__

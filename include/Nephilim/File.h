@@ -1,5 +1,5 @@
-#ifndef PARABOLA_SCOPEDFILESTREAM_H
-#define PARABOLA_SCOPEDFILESTREAM_H
+#ifndef NephilimFile_h__
+#define NephilimFile_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -11,11 +11,8 @@ NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
-	\class ScopedFile
-	\brief File interaction class. Use this instead of FILE* for true cross-platform support
-
-	The main feature of ScopedFile is to support seamlessly reading from entire files and specified regions, like an APK asset, or a file within a package.
-
+	\class File
+	\brief Provides file access functionality even for android packaged assets
 */
 class NEPHILIM_API File : public IODevice{
 public:
@@ -94,4 +91,4 @@ namespace FileOps
 }
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimFile_h__

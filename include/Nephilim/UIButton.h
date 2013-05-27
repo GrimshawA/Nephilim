@@ -1,5 +1,5 @@
-#ifndef UIButton_h__
-#define UIButton_h__
+#ifndef NephilimUIButton_h__
+#define NephilimUIButton_h__
 
 #include "Platform.h"
 #include "UIControl.h"
@@ -13,7 +13,8 @@ class ASSlot;
 	\class UIButton
 	\brief A simple button control
 */
-class NEPHILIM_API UIButton : public UIControl{
+class NEPHILIM_API UIButton : public UIControl
+{
 public:
 	/// Constructs the button
 	UIButton();
@@ -31,6 +32,12 @@ public:
 
 	/// Callback to handle an event
 	bool onEventNotification(Event& event);
+
+	void setNormalTexture(const String& filename);
+	void setHoverTexture(const String& filename);
+
+	Texture m_normal;
+	Texture m_hovert;
 
 	void innerLanguageSwitch();
 
@@ -71,4 +78,4 @@ class ASEngine;
 bool registerUIButton(ASEngine* engine);
 
 NEPHILIM_NS_END
-#endif // UIButton_h__
+#endif // NephilimUIButton_h__

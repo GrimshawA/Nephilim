@@ -60,6 +60,11 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 		m_length = m_fileSize = ftell(m_handle);
 		fseek(m_handle, 0, SEEK_SET);
 	}
+
+	if(!m_handle)
+	{
+		Log("File::Error -> Couldn't open file: '%s'", path.c_str());
+	}
 };
 
 /// Constructs a stream from already open file handle, restricted to a portion of it
@@ -234,7 +239,7 @@ namespace FileOps
 			t+= readBytes;
 			dst.write(buffer, readBytes);
 		} while (readBytes > 0);
-		cout<<"FILE OPERATION COPY: " << t << endl;
+		//cout<<"FILE OPERATION COPY: " << t << endl;
 		delete [] buffer;
 	}
 }

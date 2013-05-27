@@ -1,49 +1,23 @@
-////////////////////////////////////////////////////////////
-//
-// SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
-//
-// This software is provided 'as-is', without any express or implied warranty.
-// In no event will the authors be held liable for any damages arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it freely,
-// subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented;
-//    you must not claim that you wrote the original software.
-//    If you use this software in a product, an acknowledgment
-//    in the product documentation would be appreciated but is not required.
-//
-// 2. Altered source versions must be plainly marked as such,
-//    and must not be misrepresented as being the original software.
-//
-// 3. This notice may not be removed or altered from any source distribution.
-//
-////////////////////////////////////////////////////////////
+#ifndef NephilimFont_h__
+#define NephilimFont_h__
 
-#ifndef NEPHILIM_FONT_H
-#define NEPHILIM_FONT_H
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include "Platform.h"
 #include "Glyph.h"
 #include "Texture.h"
+
 #include <map>
 #include <string>
 #include <vector>
-
 
 NEPHILIM_NS_BEGIN
 
 class File;
 
-////////////////////////////////////////////////////////////
-/// \brief Class for loading and manipulating character fonts
-///
-////////////////////////////////////////////////////////////
+/**
+	\ingroup Graphics
+	\class Font
+	\brief Loads and stores information about a freetype font
+*/
 class NEPHILIM_API Font
 {
 public :
@@ -71,6 +45,9 @@ public :
     ///
     ////////////////////////////////////////////////////////////
     ~Font();
+
+	/// Is this font already loaded and valid?
+	bool isLoaded();
 
     ////////////////////////////////////////////////////////////
     /// \brief Load the font from a file
@@ -300,73 +277,4 @@ private :
 };
 
 NEPHILIM_NS_END
-
-#endif // SFML_FONT_HPP
-
-
-////////////////////////////////////////////////////////////
-/// \class sf::Font
-/// \ingroup graphics
-///
-/// Fonts can be loaded from a file, from memory or from a custom
-/// stream, and supports the most common types of fonts. See
-/// the loadFromFile function for the complete list of supported formats.
-///
-/// Once it is loaded, a sf::Font instance provides three
-/// types of informations about the font:
-/// \li Global metrics, such as the line spacing
-/// \li Per-glyph metrics, such as bounding box or kerning
-/// \li Pixel representation of glyphs
-///
-/// Fonts alone are not very useful: they hold the font data
-/// but cannot make anything useful of it. To do so you need to
-/// use the sf::Text class, which is able to properly output text
-/// with several options such as character size, style, color,
-/// position, rotation, etc.
-/// This separation allows more flexibility and better performances:
-/// indeed a sf::Font is a heavy resource, and any operation on it
-/// is slow (often too slow for real-time applications). On the other
-/// side, a sf::Text is a lightweight object which can combine the
-/// glyphs data and metrics of a sf::Font to display any text on a
-/// render target.
-/// Note that it is also possible to bind several sf::Text instances
-/// to the same sf::Font.
-///
-/// It is important to note that the sf::Text instance doesn't
-/// copy the font that it uses, it only keeps a reference to it.
-/// Thus, a sf::Font must not be destructed while it is
-/// used by a sf::Text (i.e. never write a function that
-/// uses a local sf::Font instance for creating a text).
-///
-/// Usage example:
-/// \code
-/// // Declare a new font
-/// sf::Font font;
-/// 
-/// // Load it from a file
-/// if (!font.loadFromFile("arial.ttf"))
-/// {
-///     // error...
-/// }
-/// 
-/// // Create a text which uses our font
-/// sf::Text text1;
-/// text1.setFont(font);
-/// text1.setCharacterSize(30);
-/// text1.setStyle(sf::Text::Regular);
-/// 
-/// // Create another text using the same font, but with different parameters
-/// sf::Text text2;
-/// text2.setFont(font);
-/// text2.setCharacterSize(50);
-/// text1.setStyle(sf::Text::Italic);
-/// \endcode
-///
-/// Apart from loading font files, and passing them to instances
-/// of sf::Text, you should normally not have to deal directly
-/// with this class. However, it may be useful to access the
-/// font metrics or rasterized glyphs for advanced usage.
-///
-/// \see sf::Text
-///
-////////////////////////////////////////////////////////////
+#endif // NephilimFont_h__

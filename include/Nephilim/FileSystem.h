@@ -1,15 +1,32 @@
-#ifndef PARABOLA_FILESYSTEM_H
-#define PARABOLA_FILESYSTEM_H
+#ifndef NephilimFileSystem_h__
+#define NephilimFileSystem_h__
 
 #include "Platform.h"
 #include "StringList.h"
 
-#ifdef SetCurrentDirectory
-#undef SetCurrentDirectory
-#endif
-
-
 NEPHILIM_NS_BEGIN
+
+/// \namespace fs
+/// \brief Includes functionality to work with the underlying file system
+namespace fs
+{
+	/// Performs a copy of the files
+	bool copyFile(const String& source, const String& destination);
+
+	/// Copy the contents of a directory to another
+	bool copyDirectoryContents(const String& source, const String& destination);
+
+	/// Copy the contents of a directory to another
+	bool copyDirectoryContentsRecursively(const String& source, const String& destination);
+
+	/// Creates all needed directories to make the path valid
+	/// It takes a path to a FILE and creates all directories needed to get to it
+	bool ensureDirectory(const String& directory);
+	
+}
+
+
+
 	/**
 		\ingroup Foundation
 		\class FileSystem
@@ -84,5 +101,4 @@ NEPHILIM_NS_BEGIN
 	};
 
 NEPHILIM_NS_END
-
-#endif
+#endif // NephilimFileSystem_h__

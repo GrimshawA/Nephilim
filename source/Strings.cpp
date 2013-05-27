@@ -147,22 +147,24 @@ bool String::matches(const String& wildcard)
 
 	};
 
-	/// Splits
-	void String::split(String s, char delim, StringList &elems){
-		std::stringstream ss(s);
-		String item;
-		while(std::getline(ss, item, delim)) {
-			if(!item.empty())
-				elems.push_back(item);
-		}
-	};
 
-	StringList String::split(char c, int limitCount){
-		StringList elems;
-		String mm = *this;
-		split(mm, c, elems);
-		return elems;
-	};
+void String::split(String s, char delim, StringList &elems) const
+{
+	std::stringstream ss(s);
+	String item;
+	while(std::getline(ss, item, delim)) {
+		if(!item.empty())
+			elems.push_back(item);
+	}
+}
+
+StringList String::split(char c, int limitCount) const
+{
+	StringList elems;
+	String mm = *this;
+	split(mm, c, elems);
+	return elems;
+}
 
 	bool String::startsWith(const String &str){
 		size_t result = find(str);

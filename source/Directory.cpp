@@ -1,10 +1,36 @@
 #include <Nephilim/Directory.h>
+#include <Nephilim/Logger.h>
 
 #ifdef NEPHILIM_WINDOWS
 #include <Shlwapi.h>
-#pragma comment(lib, "Shlwapi.lib")
+#pragma comment(lib, "Shlwapi.lib") //hack
 #endif
+
 NEPHILIM_NS_BEGIN
+
+Path::Path()
+{
+
+}
+
+Path::Path(const String& path)
+: m_path(path)
+{
+
+}
+
+/// Returns the file name only without the directory
+String Path::getFileName()
+{
+	String filename = m_path;
+	if(m_path.find_last_of('/') != m_path.npos)
+	{
+		filename.erase(filename.begin(), filename.begin() + m_path.find_last_of('/') + 1);
+	}
+
+	//Log("Result filename from path: %s", filename.c_str());
+	return filename;
+}
 
 /// Get the extension of the file
 /// The '.' is not included; ex: "png", "jpg", "html"
@@ -31,5 +57,13 @@ bool Path::isRelativePath()
 #endif
 	return false;
 };
+
+String Path::getRelativePathTo(const String& relativeTo)
+{
+	String finalPath = m_path;
+	finalPath.erase(finalPath.begin(), finalPath.begin() + relativeTo.size() + 1);
+	return finalPath;
+}
+
 
 NEPHILIM_NS_END

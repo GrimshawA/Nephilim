@@ -48,7 +48,7 @@ void UITreeView::addItemUnder(const String& parent, const String& name)
 		m_items.back()->m_visible = true;
 		m_items.back()->m_stretchForContents = true;
 		m_items.back()->m_parent = this;
-		addControl(m_items.back());
+		attach(m_items.back());
 	}
 	else
 	{
@@ -123,7 +123,7 @@ void UITreeView::Item::addItem(const String& name)
 	item->m_clipChildren = true;
 	item->m_parent = this->m_parent;
 	item->setSize(getSize().x, 20);
-	addControl(item);
+	attach(item);
 };
 
 float UITreeView::Item::getItemHeight()

@@ -11,6 +11,11 @@
 
 NEPHILIM_NS_BEGIN
 
+/**
+	\ingroup Graphics
+	\class RendererGLES
+	\brief Renderer specialization for OpenGL ES 1.1
+*/
 class NEPHILIM_API RendererGLES : public Renderer{
 public:
 	RendererGLES();

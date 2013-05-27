@@ -1,5 +1,5 @@
-#ifndef RendererGLES2_h__
-#define RendererGLES2_h__
+#ifndef NephilimRendererGLES2_h__
+#define NephilimRendererGLES2_h__
 
 #include "Platform.h"
 #include "Renderer.h"
@@ -7,6 +7,12 @@
 NEPHILIM_NS_BEGIN
 
 class Shader;
+
+/**
+	\ingroup Graphics
+	\class RendererGLES2
+	\brief Renderer specialization for OpenGL ES 2.0
+*/
 class NEPHILIM_API RendererGLES2 : public Renderer
 {
 public:
@@ -37,4 +43,4 @@ public:
 
 NEPHILIM_NS_END
 
-#endif // RendererGLES2_h__
+#endif // NephilimRendererGLES2_h__

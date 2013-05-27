@@ -150,7 +150,7 @@ bool UIControl::hasFocus()
 };
 
 /// Hierarchicly sets the context to all children
-void UIControl::setContext(UIStateContext* states)
+void UIControl::setContext(UICore* states)
 {
 	m_stateContext = states;
 
@@ -364,14 +364,14 @@ Vec2f UIControl::getMiddlePosition(){
 
 
 /// Returns the UIWindow context or NULL if not attached
-UIStateContext* UIControl::getContext()
+UICore* UIControl::getContext()
 {
 	return m_stateContext;
 };
 
 
 /// Adds a new control ... wrong API todo
-void UIControl::addControl(UIControl* control){
+void UIControl::attach(UIControl* control){
 	m_children.push_back(control);
 	control->addReference();
 	// Assign

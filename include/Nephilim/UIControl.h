@@ -16,7 +16,7 @@
 
 #include "UISizePolicy.h"
 #include "UILayout.h"
-#include "UIState.h"
+#include "UICore.h"
 #include "Matrix.h"
 
 NEPHILIM_NS_BEGIN
@@ -34,7 +34,7 @@ public:
 	virtual ~UIControl(){ }
 
 	/// Adds a child control
-	void addControl(UIControl* control);
+	void attach(UIControl* control);
 
 	/// Set a new layout to the control
 	void setLayout(UILayout* layout);
@@ -68,7 +68,7 @@ public:
 	FloatRect getContentBounds();
 
 	/// Returns the UIWindow context or NULL if not attached
-	UIStateContext* getContext();
+	UICore* getContext();
 
 	/// Returns true when the control is subject of being layout in a grid or other organization form
 	/// Most controls don't implement this function, as their default behavior is to respond to layouts always
@@ -181,10 +181,10 @@ public:
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
 
-	UIStateContext* m_stateContext;
+	UICore* m_stateContext;
 
 	/// Hierarchicly sets the context to all children
-	void setContext(UIStateContext* states);
+	void setContext(UICore* states);
 
 	bool m_clipContents; ///< Whether the contents of the control itself are clipped at the border
 	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle

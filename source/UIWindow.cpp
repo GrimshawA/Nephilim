@@ -58,7 +58,7 @@ UISurface* UIWindow::getSurfaceByName(const String& name){
 	return NULL;
 };
 
-UIStateContext& UIWindow::getContext(){
+UICore& UIWindow::getContext(){
 	return m_state;
 }
 
@@ -134,7 +134,7 @@ void UIWindow::showMessageBox(const String& message)
 	modalBackground->setProperty<Color>("background-color", Color(0,0,0, 80));
 	
 	UISurface* surface = addSurface("modal");
-	surface->addControl(modalBackground);
+	surface->attach(modalBackground);
 	modalBackground->setRect(surface->getRect());
 
 	UILabel* label = new UILabel(message);
@@ -142,7 +142,7 @@ void UIWindow::showMessageBox(const String& message)
 	label->setCenter(modalBackground->getMiddlePosition());
 	label->setProperty<Color>("background-color", Color(0,0,0));
 	label->setProperty<Color>("color", Color::White);
-	modalBackground->addControl(label);
+	modalBackground->attach(label);
 };
 
 

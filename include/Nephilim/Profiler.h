@@ -12,7 +12,12 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-class ProfileStatistics
+/**
+	\ingroup Foundation
+	\class ProfileStatistics
+	\brief Profiler statistic tracker
+*/
+class NEPHILIM_API ProfileStatistics
 {
 public:
 	
@@ -51,6 +56,11 @@ public:
 	} 
 };
 
+/**
+	\ingroup Foundation
+	\class AutoFnProfiler
+	\brief Profiling unit to track a function
+*/
 class AutoFnProfiler
 {
 public:

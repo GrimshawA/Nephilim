@@ -47,7 +47,7 @@ void vibrate(int ms)
 
 void registerScriptedGameCore(ASEngine* engine)
 {
-	engine->exportReferenceDataType("ScriptedGameCore");
+	/*engine->exportReferenceDataType("ScriptedGameCore");
 	engine->exportReferenceDataType("ScriptEngine");
 	engine->exportReferenceDataType("UIManager");
 	engine->exportReferenceDataType("UIWindow");
@@ -101,7 +101,7 @@ void registerScriptedGameCore(ASEngine* engine)
 	engine->getASEngine()->RegisterObjectProperty("ScriptedGameCore", "ContentBank content", asOFFSET(ScriptedGameCore, m_content));
 	engine->getASEngine()->RegisterObjectProperty("ScriptedGameCore", "Window@ window", asOFFSET(ScriptedGameCore, m_window));
 	//engine->getASEngine()->RegisterObjectProperty("ScriptedGameCore", "UIManager ui", asOFFSET(ScriptedGameCore, m_ui));
-	engine->getASEngine()->RegisterObjectProperty("ScriptedGameCore", "Music music", asOFFSET(ScriptedGameCore, m_music));
+	engine->getASEngine()->RegisterObjectProperty("ScriptedGameCore", "Music music", asOFFSET(ScriptedGameCore, m_music));*/
 };
 
 ScriptedGameCore::ScriptedGameCore()

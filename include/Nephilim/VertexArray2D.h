@@ -23,9 +23,15 @@ NEPHILIM_NS_BEGIN
 */
 class NEPHILIM_API VertexArray2D{
 public:
+
+	/// \ingroup Graphics
+	/// \class Vertex
+	/// \brief Represents one unique vertex
+	/// Vertices are composed by a 2D position, a Color and a UV coordinate. This representation is exclusive to VertexArray2D usage.
 	class NEPHILIM_API Vertex{
 	public:
 		Vertex(){}
+
 		Vertex(Vec2f pos, Color col, Vec2f tex){
 			position = pos;
 			color = col;

@@ -1,5 +1,5 @@
-#ifndef PARABOLA_STATEMACHINENODE_H
-#define PARABOLA_STATEMACHINENODE_H
+#ifndef NephilimState_h__
+#define NephilimState_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -13,16 +13,9 @@ class Renderer;
 class Event;
 
 /**
-		\ingroup Core
-		\class StateMachineNode
-		\brief Represents a game state such as a pause screen or the game itself.
-
-		This class is reference counted. 
-		When the state is created, it has 0 references.
-		As soon as the state enters the machine, it goes up to 1 reference.
-		When the machine is destroyed, it will destroy all nodes that didn't have the same number of GetState and RemoveReference()
-
-		If you wish to delete the node yourself, use AddReference() as soon as you create it.
+	\ingroup Core
+	\class State
+	\brief Holds one state within an application. For example, the pause screen or the menu.
 */
 class NEPHILIM_API State : public RefCountable{
 public:
@@ -84,4 +77,4 @@ public:
 	};
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimState_h__

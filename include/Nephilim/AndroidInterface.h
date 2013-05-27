@@ -22,6 +22,8 @@ NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////////////////////////
 class NEPHILIM_API AndroidInterface{
 public:
+	/// \class AssetFile
+	/// \brief Points to a file within the android packaged assets
 	struct AssetFile
 	{
 		int fd;

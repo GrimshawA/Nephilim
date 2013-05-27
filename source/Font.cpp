@@ -75,6 +75,11 @@ Font::~Font()
     cleanup();
 }
 
+bool Font::isLoaded()
+{
+	return m_library != NULL;
+}
+
 bool Font::loadFromFile(const std::string& filename)
 {
 	File stream(filename, IODevice::BinaryRead);

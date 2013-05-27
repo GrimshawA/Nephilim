@@ -7,7 +7,7 @@
 #include "Drawable.h"
 
 #include "UIControl.h"
-#include "UIState.h"
+#include "UICore.h"
 #include "UISurface.h"
 #include "UIToolTip.h"
 
@@ -67,7 +67,7 @@ public:
 
 	void showMessageBox(const String& message);
 
-	UIStateContext& getContext();
+	UICore& getContext();
 
 	/// Draw the UI
 	void draw(Renderer* renderer);
@@ -112,7 +112,7 @@ private:
 	std::vector<UISurface*> m_surfaces;
 
 	/// The shared state of this ui system
-	UIStateContext m_state;
+	UICore m_state;
 
 	/// Tooltips
 	UIToolTip* m_toolTip;
