@@ -256,6 +256,8 @@ bool UIControl::processMouseMove(int x, int y)
 		setPseudoClass("hover", true);
 		onMouseEnter();
 		m_hovered = true;
+
+		
 	}
 
 	onMouseMove();
@@ -265,7 +267,9 @@ bool UIControl::processMouseMove(int x, int y)
 		FloatRect testRect(controlRect.left, controlRect.top, controlRect.width - 1, controlRect.height - 1);
 
 		if(testRect.contains(x,y))
+		{
 			(*it)->processMouseMove(x,y);
+		}
 		else
 		{
 			// mouse is not in it, is it just leaving now?

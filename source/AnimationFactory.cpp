@@ -1,6 +1,5 @@
 #include "Nephilim/AnimationFactory.h"
 #include "Nephilim/AnimationPosition.h"
-#include "Nephilim/AnimationTextWriter.h"
 #include "Nephilim/AnimationDimension.h"
 
 #include <iostream>

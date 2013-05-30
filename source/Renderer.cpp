@@ -64,7 +64,19 @@ void Renderer::setShaderUsageHint(bool allow)
 	m_shaderUsageHint = allow;
 }
 
-/// Get the model matrix
+/// Get a current renderer-global matrix
+mat4 Renderer::getProjectionMatrix()
+{
+	return m_projection;
+}
+
+/// Get a current renderer-global matrix
+mat4 Renderer::getViewMatrix()
+{
+	return m_view;
+}
+
+/// Get a current renderer-global matrix
 mat4 Renderer::getModelMatrix()
 {
 	return m_model;

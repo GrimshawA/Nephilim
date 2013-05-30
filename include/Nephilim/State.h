@@ -2,13 +2,14 @@
 #define NephilimState_h__
 
 #include "Platform.h"
-#include "Strings.h"
 #include "ReferenceCountable.h"
-#include "Clock.h"
 
 NEPHILIM_NS_BEGIN
 
+class String;
+class Time;
 class StateStack;
+class StateTransition;
 class Renderer;
 class Event;
 
@@ -19,8 +20,11 @@ class Event;
 */
 class NEPHILIM_API State : public RefCountable{
 public:
-		/// Creates a default state
-		State();
+	/// Creates a default state
+	State();
+
+	/// Called when there is an event to handle
+	virtual void onEvent(const Event &event);
 
 		/// Callback when the state enters the bind list or the stack
 		virtual void onAttach();
@@ -40,9 +44,19 @@ public:
 		/// Get the parent machine of this state
 		StateStack* parentMachine();
 
+		/// Tells the parent machine to do a transition animation
+		void useTransition(StateTransition* transition);
+
+		/// Starts a random transition among the built-in ones
+		void useRandomTransition();
+
 		/// Sends a simple message to the binded state
 		void sendMessage(const String& bindName, const String& message);
 
+		bool allowsUnderlyingRendering()
+		{
+			return true;
+		}
 
 		/// Attempts to launch a state from the bind list
 		bool launchBindedState(const String& stateName);
@@ -50,20 +64,18 @@ public:
 		/// Finish will inform the state stack this state is done, and should be removed
 		void finish();
 
-		/// Delivers an event to the state
-		/// If returns true, it will be propagated to the rest of the stack
-		/// Otherwise it will remain under this.
-		virtual bool onEvent(Event &event);
-
 		/// Tells the state how much time it should update itself
 		/// Must return false if updating lesser states is not wanted
 		/// Returning true will update other stack states.
-		virtual bool onUpdate(Time &time);
+		virtual void onUpdate(const Time &time);
 
 		/// Draws the state with the current renderer
 		/// If returns true, other states in the stack will be rendered
 		/// Otherwise this state has exclusivity over drawing
 		virtual bool onDraw(Renderer *renderer);
+
+		/// Draw the state
+		virtual void onRender(Renderer* renderer);
 
 		StateStack *m_parent;
 

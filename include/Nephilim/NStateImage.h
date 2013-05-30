@@ -6,7 +6,7 @@
 #include "Sprite.h"
 #include "Texture.h"
 #include "State.h"
-#include "AnimationGroupSequential.h"
+#include "AxSequence.h"
 
 NEPHILIM_NS_BEGIN
 

@@ -42,7 +42,7 @@ void UIButton::setHoverTexture(const String& filename)
 }
 
 bool UIButton::onEventNotification(Event& event){
-	/*if(event.type == Event::MouseButtonPressed){
+	if(event.type == Event::MouseButtonPressed){
 		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
 			// drag test
 			if(getContext())
@@ -109,7 +109,7 @@ bool UIButton::onEventNotification(Event& event){
 		{
 			setProperty<Color>("background-color", Color(91,91,91));
 		}
-	}*/
+	}
 	return true;
 }
 
@@ -143,10 +143,6 @@ void UIButton::bindSignal(const String &signalName, ASSlot* slot )
 	}
 
 	//cout<<"Binding slot: "<<slot<<endl;
-
-
-
-
 }
 
 /// Sets the label of the button

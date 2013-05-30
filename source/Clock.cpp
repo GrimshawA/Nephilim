@@ -22,50 +22,6 @@ namespace
 
 NEPHILIM_NS_BEGIN
 
-////////////////////////////////////////////////////////////////////////// Time class
-Time::Time(){
-	m_microSeconds = 0;
-}
-
-Time::Time(Int64 microSeconds){
-	m_microSeconds = microSeconds;
-}
-
-float Time::asSeconds(){
-	return static_cast<float>(m_microSeconds / 1000000.f);
-}
-
-Int64 Time::asMiliSeconds(){
-	return m_microSeconds / 10000.f;
-};
-
-Int64 Time::asMicroseconds(){
-	return m_microSeconds;
-}
-
-// Static
-Time Time::fromSeconds(float seconds){
-	return Time((Int64)(seconds * 1000000.f));
-};
-
-// Build a Time object from an amount of miliseconds
-Time Time::fromMiliSeconds(Int64 miliSeconds){
-	return Time((Int64)(miliSeconds * 10000.f));
-};
-
-// Static
-Time Time::fromMicroseconds(Int64 microSeconds){
-	return Time(microSeconds);
-};
-
-
-Time Time::operator -(Time right)
-{
-	Time t;
-	t.m_microSeconds = m_microSeconds - right.asMicroseconds();
-	return t;
-}
-
 Time getCurrentTime(){
 
 #ifdef NEPHILIM_WINDOWS
@@ -96,7 +52,7 @@ Time getCurrentTime(){
 					Time genTime;
 					genTime.m_microSeconds =  static_cast<Uint64>(time.tv_sec) * 1000000 + time.tv_nsec / 1000;
 					return genTime;
-#elif defined PARABOLA_IPHONE
+#elif defined NEPHILIM_IPHONE
 
 					static mach_timebase_info_data_t frequency = {0,0};
 					if(frequency.denom == 0)

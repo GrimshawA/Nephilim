@@ -67,9 +67,6 @@ public:
 	/// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
 	void setShaderUsageHint(bool allow);
 
-	/// Get the model matrix
-	mat4 getModelMatrix();
-
 	/// Draw a debug quad with the given color,angle and dimensions - slow
 	void drawDebugQuad(float x, float y, float angle, float width, float height, Color color = Color(255,0,1));
 
@@ -166,6 +163,15 @@ public:
 
 	/// Set the current model matrix
 	virtual void setModelMatrix(const mat4& model);
+
+	/// Get a current renderer-global matrix
+	mat4 getProjectionMatrix();
+
+	/// Get a current renderer-global matrix
+	mat4 getViewMatrix();
+
+	/// Get a current renderer-global matrix
+	mat4 getModelMatrix();
 
 	/// Capture the currently bound frame buffer pixles to an image
 	bool readPixels(Image& image);

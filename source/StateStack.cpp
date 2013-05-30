@@ -1,47 +1,95 @@
-#include "Nephilim/StateStack.h"
-#include "Nephilim/ASEngine.h"
-#include "AS/aswrappedcall.h"
+#include <Nephilim/StateStack.h>
+#include <Nephilim/StateTransition.h>
+#include <Nephilim/State.h>
+#include <Nephilim/Time.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Logger.h>
 
-#include <iostream>
 #include <algorithm>
-using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-/// Register the state stack into engine
-bool registerStateStack(ASEngine* engine)
-{
-	engine->exportReferenceDataType("StateStack");
-	engine->exportReferenceDataType("State");
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "void add(State@)", WRAP_MFN(StateStack, add), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "void addWaiting(State@)", WRAP_MFN(StateStack, addWaiting), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "bool bind(const string& in, State@)", WRAP_MFN(StateStack, bind), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "int getActiveStateCount()", WRAP_MFN(StateStack, getActiveStateCount), asCALL_GENERIC);
-
-	}
-	else
-	{
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "void add(State@)", asMETHOD(StateStack, add), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "void addWaiting(State@)", asMETHOD(StateStack, addWaiting), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "bool bind(const string& in, State@)", asMETHOD(StateStack, bind), asCALL_THISCALL);	
-		engine->getASEngine()->RegisterObjectMethod("StateStack", "int getActiveStateCount()", asMETHOD(StateStack, getActiveStateCount), asCALL_THISCALL);
-	}
-
-	return true;
-};
-
-
 StateStack::StateStack() 
 : m_stackLock(false)
+, m_transition(NULL)
 {
-};
+}
 
 StateStack::~StateStack()
 {
-};
+}
+
+void StateStack::process()
+{
+	if(m_stackLock)
+	{
+		Log("[StateStack] error: process() called while the stack was working.");
+		return;
+	}
+
+	applyChanges();
+}
+
+void StateStack::drawCurrentList(Renderer* renderer)
+{
+	int index = m_activeList.size() - 1;
+	while(index >= 0 && !m_activeList.empty())
+	{
+		m_activeList[index]->onRender(renderer);
+		index--;
+	}
+}
+
+void StateStack::applyChangesTo(std::vector<State*>& list)
+{
+	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
+	{
+		switch(it->type)
+		{
+		case StateStackOperation::Erase:
+	
+			list.erase(std::find(list.begin(), list.end(), it->obj));
+			Log("Removed state for future list");
+
+			break;
+
+		case StateStackOperation::Add:
+			if(std::find(list.begin(), list.end(), it->obj) == list.end())
+			{
+				list.push_back(it->obj);
+				Log("Added state for future list");
+			}
+			else
+			{
+				//cout<<"Tried to add a state that was already there.."<<endl;
+			}
+
+			break;
+		}
+	}
+}
+
+
+void StateStack::performTransition(StateTransition* transition)
+{
+	// There was already a transition, warning.
+	if(m_transition)
+	{
+		delete m_transition;
+		m_transition = NULL;
+		Log("[StateStack] Warning: A transition was requested when other was in progress.");
+	}
+	
+	m_transition = transition;
+	m_transition->m_stack = this;
+
+	// A new transition kicked in, lets build the future stack for it
+	std::vector<State*> futureList = m_activeList;
+	applyChangesTo(futureList);
+	m_transition->m_futureList.insert(m_transition->m_futureList.end(), futureList.rbegin(), futureList.rend());
+
+	m_transition->activate();
+}
 
 /// Get a state or NULL
 State* StateStack::getBinding(const String& name)
@@ -67,21 +115,23 @@ void StateStack::add(State* state)
 	state->m_parent = this;
 	state->onAttach();
 
-	if(m_stackLock)
+	StateStackOperation sso;
+	sso.type = StateStackOperation::Add;
+	sso.obj = state;
+	m_pendingOperations.push_back(sso);
+};
+
+/// Push a binded state for execution by its name
+void StateStack::add(const String& name)
+{
+	if(m_bindList.find(name) != m_bindList.end())
 	{
-		// schedule
 		StateStackOperation sso;
 		sso.type = StateStackOperation::Add;
-		sso.obj = state;
+		sso.obj = m_bindList[name];
 		m_pendingOperations.push_back(sso);
 	}
-	else
-	{
-		// do
-		state->onActivate();
-		m_activeList.push_back(state);
-	}
-};
+}
 
 /// Checks if the stack is empty and if so adds a state from the wait list
 void StateStack::processWaitList()
@@ -101,7 +151,7 @@ void StateStack::addWaiting(State* state)
 	state->addReference(); // reference just for the waiting list
 	m_waitList.push_back(state);
 
-	cout<<"[StateStack] State added to waiting list"<<endl;
+	//cout<<"[StateStack] State added to waiting list"<<endl;
 };
 
 
@@ -114,7 +164,7 @@ void StateStack::applyChanges()
 		{
 			case StateStackOperation::Erase:
 				//erase(m_pendingOperations.front().obj);
-				cout<<"Trying to erase: "<< m_pendingOperations.front().obj<<endl;
+				//cout<<"Trying to erase: "<< m_pendingOperations.front().obj<<endl;
 				m_pendingOperations.front().obj->m_scheduledRemoval = false;
 				m_activeList.erase(std::find(m_activeList.begin(), m_activeList.end(), m_pendingOperations.front().obj));
 				break;
@@ -124,12 +174,12 @@ void StateStack::applyChanges()
 				{
 					m_pendingOperations.front().obj->onActivate();
 					//m_pendingOperations.front().obj->addReference();
-					cout<<"adding: "<<m_pendingOperations.front().obj<<endl;
+					//cout<<"adding: "<<m_pendingOperations.front().obj<<endl;
 					m_activeList.push_back(m_pendingOperations.front().obj);		
 				}
 				else
 				{
-					cout<<"Tried to add a state that was already there.."<<endl;
+					//cout<<"Tried to add a state that was already there.."<<endl;
 				}
 					
 				break;
@@ -168,7 +218,7 @@ void StateStack::erase(State* state)
 {
 	if(std::find(m_activeList.begin(), m_activeList.end(), state) == m_activeList.end())
 	{
-		cout<<"Trying to erase a state that is not in the stack. No consequences."<<endl;
+		//cout<<"Trying to erase a state that is not in the stack. No consequences."<<endl;
 		return; 
 	}
 
@@ -189,7 +239,7 @@ void StateStack::erase(State* state)
 		{
 			m_activeList.erase(it);
 		}		
-		cout<<"[StateStack] Erased"<<endl;
+		//cout<<"[StateStack] Erased"<<endl;
 
 		processWaitList();
 	} 
@@ -203,7 +253,13 @@ int StateStack::getActiveStateCount()
 }
 
 	
-void StateStack::propagateEvent(Event &event){
+void StateStack::pushEvent(Event &event){
+	if(m_transition)
+	{
+		return;
+	}
+	else
+	{
 		if(m_activeList.size() == 0){
 			return;
 		}
@@ -213,16 +269,30 @@ void StateStack::propagateEvent(Event &event){
 
 		m_stackLock = true;
 		while(index != -1 && stop == false){
-			stop = !m_activeList[index]->onEvent(event);
+			/*stop = !*/m_activeList[index]->onEvent(event);
 			index--;
 		}
 		m_stackLock = false;
+	}
 
-		applyChanges();
+	if(!m_transition)
+		applyChanges();	
 };
 
 
 void StateStack::drawStates(Renderer *renderer){
+
+	if(m_transition)
+	{
+		m_transition->draw(renderer);
+		return;
+	}
+	else
+	{
+		drawCurrentList(renderer);
+		return;
+	}
+
 	if(m_activeList.size() == 0){
 		return;
 	}
@@ -236,8 +306,23 @@ void StateStack::drawStates(Renderer *renderer){
 	}
 };
 
-void StateStack::updateStates(Time &time){
-		
+void StateStack::update(Time &time)
+{		
+	// Did a transition just finish?
+	if(m_transition && m_transition->m_finished)
+	{
+		delete m_transition;
+		m_transition = NULL;
+		applyChanges();
+	}
+
+	if(m_transition)
+	{
+		m_transition->update(time);
+		return;
+	}
+	else
+	{
 		if(m_activeList.size() == 0){
 			return;
 		}
@@ -247,12 +332,16 @@ void StateStack::updateStates(Time &time){
 
 		m_stackLock = true;
 		while(index != -1 && stop == false){
-			stop = !m_activeList[index]->onUpdate(time);
+			/*stop = !*/m_activeList[index]->onUpdate(time);
 			index--;
 		}
 		m_stackLock = false;
 
 		applyChanges();
+		return;
+	}
+
+
 };
 
 NEPHILIM_NS_END

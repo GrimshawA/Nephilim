@@ -1,5 +1,5 @@
 #include <Nephilim/View.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 
 #include <cmath>
 
@@ -18,6 +18,12 @@ View::View(float left, float top, float width, float height)
 : m_transformUpdated(false), m_invTransformUpdated(false), m_rotation(0.f), m_viewport(0.f,0.f,1.f,1.f)
 {
 	setRect(left, top, width, height);
+}
+
+/// Set a rotation for the view
+void View::setRotation(float angle)
+{
+	m_rotation = angle;
 }
 
 /// Get the projection matrix of this view

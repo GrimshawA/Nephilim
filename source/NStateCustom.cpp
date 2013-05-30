@@ -120,7 +120,7 @@ void NStateCustom::onAttach()
 	registerContentBank(m_scriptEngine);
 //	registerView(m_scriptEngine);
 	m_scriptEngine->exportMath();
-	registerStateStack(m_scriptEngine);
+//	registerStateStack(m_scriptEngine);
 	registerScriptedGameCore(m_scriptEngine);
 	//registerBrowserPreloader(&m_scripting);
 	//registerNStateImage(&m_scripting);

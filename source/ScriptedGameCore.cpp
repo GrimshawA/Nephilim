@@ -144,7 +144,7 @@ void ScriptedGameCore::onCreate(){
 
 	m_scripting.exportMath();
 	registerContentBank(&m_scripting);
-	registerStateStack(&m_scripting);
+//	registerStateStack(&m_scripting);
 	registerScriptedGameCore(&m_scripting);
 	registerBrowserPreloader(&m_scripting);
 	registerNStateImage(&m_scripting);
@@ -279,7 +279,7 @@ void ScriptedGameCore::onEvent(Event &event){
 	}
 
 
-	m_states.propagateEvent(event);
+	m_states.pushEvent(event);
 
 
 
@@ -312,7 +312,7 @@ void ScriptedGameCore::onEvent(Event &event){
 
 /// Called when the game is updating
 void ScriptedGameCore::onUpdate(Time time){
-	m_states.updateStates(time);
+	m_states.update(time);
 
 	// dirty rendering
 	if(m_mainScript)

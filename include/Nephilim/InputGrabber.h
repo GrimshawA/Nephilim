@@ -38,11 +38,17 @@ public:
 			case Event::MouseButtonPressed:
 			{
 				m_mouseButtons[event.mouseButton.button] = true;
+				m_mousePosition = Vec2i(event.mouseButton.x, event.mouseButton.y);
 			}break;
 
 			case Event::MouseButtonReleased:
 			{
 				m_mouseButtons[event.mouseButton.button] = false;
+				m_mousePosition = Vec2i(event.mouseButton.x, event.mouseButton.y);
+			}break;
+			case Event::MouseMoved:
+			{
+				m_mousePosition = Vec2i(event.mouseMove.x, event.mouseMove.y);
 			}break;
 		}
 	}
@@ -64,8 +70,15 @@ public:
 		return m_mouseButtons[button];
 	}
 
+	Vec2i getMousePosition()
+	{
+		return m_mousePosition;
+	}
+
 	std::map<Keyboard::Key, bool> m_keys;
 	std::map<Mouse::Button, bool> m_mouseButtons;
+
+	Vec2i m_mousePosition;
 };
 
 NEPHILIM_NS_END

@@ -29,11 +29,17 @@ class ASEngine;
 
 		In practice, it is a 2D projection of your scene, orthogonal, which you can configure to taste.
 */
-class NEPHILIM_API View : public RefCountable{
+class NEPHILIM_API View : public RefCountable
+{
 public:
-		View();
+	//// Default view
+	View();
 
-		View(float left, float top, float width, float height);
+	/// Construct a view from a rectangle
+	View(float left, float top, float width, float height);
+
+	/// Set a rotation for the view
+	void setRotation(float angle);
 
 		/// Get the projection matrix of this view
 		mat4 getMatrix();
@@ -58,6 +64,7 @@ public:
 
 		/// Set the size of the view rect, perserving its center
 		void setSize(float width, float height);
+
 
 		void move(float x, float y);
 

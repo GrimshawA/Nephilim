@@ -2,7 +2,8 @@
 #include <Nephilim/ASEngine.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/AnimationFade.h>
-#include <Nephilim/AnimationStall.h>
+#include <Nephilim/AxList.h>
+#include <Nephilim/Time.h>
 #include <Nephilim/Renderer.h>
 
 #include "AS/aswrappedcall.h"

@@ -1,14 +1,60 @@
-#include "Nephilim/State.h"
+#include <Nephilim/State.h>
+#include <Nephilim/Time.h>
+#include <Nephilim/Strings.h>
 #include "Nephilim/StateStack.h"
 #include "Nephilim/Event.h"
+#include "Nephilim/NxMath.h"
+#include "Nephilim/StateTransitionBlocks.h"
+#include "Nephilim/StateTransitionSlider.h"
+#include "Nephilim/StateTransitionFade.h"
 
 #include <iostream>
 
 NEPHILIM_NS_BEGIN
-	State::State() : RefCountable(), m_scheduledRemoval(false) {
-		m_parent = NULL;
-	};
 
+State::State()
+: RefCountable()
+, m_scheduledRemoval(false)
+{
+		m_parent = NULL;
+}
+
+void State::onEvent(const Event &event)
+{
+
+}
+
+void State::onUpdate(const Time &time)
+{
+	
+}
+
+void State::onRender(Renderer* renderer)
+{
+
+}
+
+/// Starts a random transition among the built-in ones
+void State::useRandomTransition()
+{
+	int id = Math::randomInt(0, 2);
+
+	switch(id)
+	{
+	case 0: useTransition(new StateTransitionBlocks()); break;
+	case 1: useTransition(new StateTransitionSlider()); break;
+	case 2: useTransition(new StateTransitionFade()); break;
+	}
+}
+
+/// Tells the parent machine to do a transition animation
+void State::useTransition(StateTransition* transition)
+{
+	if(m_parent)
+	{
+		m_parent->performTransition(transition);
+	}
+}
 	void State::onActivate(){
 		
 	};
@@ -84,17 +130,6 @@ bool State::launchBindedState(const String& stateName)
 	else return false;
 };
 
-
-	/// Delivers an event to the state
-	/// If returns true, it will be propagated to the rest of the stack
-	/// Otherwise it will remain under this.
-	bool State::onEvent(Event &event){
-		return true;
-	};
-
-	bool State::onUpdate(Time &time){
-		return true;
-	};
 
 	/// Draws the state with the current renderer
 	/// If returns true, other states in the stack will be rendered
