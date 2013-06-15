@@ -17,6 +17,19 @@ StateTransition::~StateTransition()
 
 }
 
+void StateTransition::setDuration(float duration)
+{
+	m_duration = duration;
+}
+
+void StateTransition::update(const Time& time)
+{
+	if(allowUpdatesB && m_stack)
+	{
+		m_stack->updateList(m_futureList, time);
+	}
+}
+
 void StateTransition::drawPreviousFrame(Renderer* renderer)
 {
 	if(m_stack)

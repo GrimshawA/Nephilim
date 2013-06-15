@@ -89,6 +89,7 @@ public:
 	T y;
 };
 typedef Vec2<float> vec2;
+typedef Vec2<int> vec2i;
 
 typedef Vec2<float> Vec2f;
 typedef Vec2<int> Vec2i;

@@ -337,11 +337,27 @@ void StateStack::update(Time &time)
 		}
 		m_stackLock = false;
 
-		applyChanges();
+	
 		return;
 	}
 
-
+	if(!m_transition)
+		applyChanges();
 };
+
+void StateStack::updateList(std::vector<State*>& list, const Time& time)
+{
+	if(list.size() == 0){
+		return;
+	}
+	// older states draw first
+	int index = list.size()-1;
+	bool stop = false;
+
+	while(index != -1 && stop == false){
+		/*stop = !*/list[index]->onUpdate(time);
+		index--;
+	}
+}
 
 NEPHILIM_NS_END

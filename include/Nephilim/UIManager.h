@@ -9,18 +9,18 @@
 
 NEPHILIM_NS_BEGIN
 class Renderer;
-class UIWindow;
+class UIDocument;
 
 class NEPHILIM_API UIManager
 {
 public:
-	UIWindow* create(const String &name);
+	UIDocument* create(const String &name);
 
 	void draw(const String& name, Renderer* renderer);
 
 	void setArea(float x, float y, float w, float h);
 
-	std::map<String, UIWindow*> m_windows;
+	std::map<String, UIDocument*> m_windows;
 	FloatRect area;
 };
 

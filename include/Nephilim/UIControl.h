@@ -21,8 +21,33 @@
 
 NEPHILIM_NS_BEGIN
 
-
 class ASSlot;
+
+namespace UIPositionFlag
+{
+	enum Flags
+	{
+		AttachBottom = 1 << 0,
+		AttachRight = 1 << 1,
+		KeepRelativePositionX = 1 << 2,
+		KeepRelativePositionY = 1 << 3
+	};
+}
+
+namespace UISizeFlag
+{
+	enum Flags
+	{
+		KeepRelativeSizeX = 1 << 0,
+		KeepRelativeSizeY = 1 << 1
+	};
+}
+
+class NEPHILIM_API UIEventUsage
+{
+public:
+	bool hitControls;
+};
 
 class NEPHILIM_API UIControl : public sigc::trackable, public Animable, public RefCountable{
 public:
@@ -33,11 +58,35 @@ public:
 
 	virtual ~UIControl(){ }
 
+	/// Get the coordinates of the top-left corner of the control
+	vec2 getPosition();
+
+	/// Get the parent control
+	UIControl* getParent();
+
 	/// Adds a child control
 	void attach(UIControl* control);
 
 	/// Set a new layout to the control
 	void setLayout(UILayout* layout);
+
+	/// Set positioning flags to the control
+	void setPositionFlags(Uint64 flags);
+
+	/// Get the current positioning flags
+	Uint64 getPositionFlags();
+
+	/// Check the existence of a particular flag for positioning
+	bool hasPositionFlag(Uint64 flag);
+
+	/// Set the flags for sizing
+	void setSizeFlags(Uint64 flags);
+
+	/// Get the sizing flags
+	Uint64 getSizeFlags();
+
+	/// Check if there is a particular sizing flag
+	bool hasSizeFlag(Uint64 flag);
 
 	/// Get the currently assigned layout controller
 	/// \return NULL if there is no layout controller assigned
@@ -87,6 +136,12 @@ public:
 	virtual bool onEventNotification(Event& event);
 
 
+	/// Attempt to process positional flags
+	virtual void processPositionFlags();
+
+	/// Attempt to process size flags
+	virtual void processSizeFlags();
+
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control
 	virtual bool processMouseMove(int x, int y);
@@ -132,7 +187,7 @@ public:
 	virtual UIControl* clone();
 
 	/// Called to re adjust children positions and sizes if needed
-	virtual void processSizeChange();
+	virtual void processSizeChange(float previousWidth, float previousHeight);
 
 	/// Get bounds of the control
 	FloatRect getBounds();
@@ -195,6 +250,9 @@ public:
 
 	UISizePolicy m_sizePolicy;
 	UISizePolicy m_positionPolicy;
+
+	Uint64 m_positionFlags;
+	Uint64 m_sizeFlags;
 
 	/// Reload all graphics because they were destroyed and are unavailable now
 	virtual void reloadGraphicalAssets();

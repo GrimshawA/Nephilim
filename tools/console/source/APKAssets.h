@@ -3,7 +3,7 @@
 
 void deployHandleDirectory(String directory, String dest){
 /*
-	FileSystem::makeDirectory(dest); 
+	FileSystem::makeDirectory(dest);
 
 	StringList flist = FileSystem::scanDirectory(directory, "*", false);
 	for(unsigned int i = 0; i < flist.size(); i++){

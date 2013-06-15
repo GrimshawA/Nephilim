@@ -1,5 +1,5 @@
 #include <Nephilim/UIManager.h>
-#include <Nephilim/UIWindow.h>
+#include <Nephilim/UIDocument.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/RenderTarget.h>
 #include <Nephilim/View.h>
@@ -8,11 +8,11 @@
 using namespace std;
 
 NEPHILIM_NS_BEGIN
-UIWindow* UIManager::create(const String &name)
+UIDocument* UIManager::create(const String &name)
 {
 	if(m_windows.find(name) == m_windows.end())
 	{
-		m_windows[name] = (new UIWindow());
+		m_windows[name] = (new UIDocument());
 	}
 	m_windows[name]->setRect(area);
 	return m_windows[name];
@@ -35,7 +35,7 @@ void UIManager::draw(const String& name, Renderer* renderer)
 
 void UIManager::setArea(float x, float y, float w, float h)
 {
-	for(std::map<String,UIWindow*>::iterator it = m_windows.begin(); it != m_windows.end(); it++)
+	for(std::map<String,UIDocument*>::iterator it = m_windows.begin(); it != m_windows.end(); it++)
 	{
 		(*it).second->setRect(FloatRect(x,y,w,h));
 		

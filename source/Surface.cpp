@@ -78,6 +78,15 @@ Renderer* Surface::createRenderer()
 	return renderer;
 }
 
+/// Convert a point in window-space to a homogeneous coordinate
+vec2 Surface::convertToHomogeneousCoordinate(vec2i point)
+{
+	vec2 coords;
+	coords.x = -1.f + 2.f * (point.x - 0) / getWidth();
+	coords.y = 1.f  - 2.f * (point.y - 0)  / getHeight();
+	return coords;
+}
+
 void Surface::create()
 {
    // printf("Surface::create\n");

@@ -63,18 +63,18 @@ public:
 
 	~AxNumeric()
 	{
-		printf("AxNumeric destroyed.\n");
+//		printf("AxNumeric destroyed.\n");
 	}
 
 	float update(float delta)
 	{
 		//printf("AxNumeric step: %f\n", m_elapsed);
 
-		AnimationEasingLinear* easing = new AnimationEasingLinear;
+/**		AnimationEasingLinear* easing = new AnimationEasingLinear;
 
 		if(m_targets.size() > 0)
 			m_targets[0]->axSetNumber<T>(easing->compute(m_elapsed, m_start, m_end-m_start, m_duration));
-		m_elapsed += delta;
+		m_elapsed += delta;*/
 		return 0.f;
 	}
 

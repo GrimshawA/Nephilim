@@ -16,6 +16,12 @@ UILabel::UILabel(const String& title) : UIControl(), m_color(0,0,0), m_label(tit
 
 };
 
+/// Set the contents of the label
+void UILabel::setText(const String& text)
+{
+	m_label = text;
+}
+
 /// Callback to handle an event
 bool UILabel::onEventNotification(Event& event){
 	if(event.type == Event::MouseButtonReleased){
@@ -37,14 +43,14 @@ bool UILabel::onEventNotification(Event& event){
 	return true;
 }
 
-/// Callback to render itself, renders children
-void UILabel::draw(Renderer* renderer){
-
+void UILabel::draw(Renderer* renderer)
+{
 	Text t;
+	t.setFont(m_stateContext->m_defaultFont);
 	t.setString(m_label);
 	t.setColor(m_color);
 	t.setPosition(m_bounds.left, m_bounds.top);
 	renderer->draw(t);
-};
+}
 
 NEPHILIM_NS_END

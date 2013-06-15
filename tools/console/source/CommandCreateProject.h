@@ -21,13 +21,13 @@ class CommandCreateProject : public NativeCommand
 				cout << "Directory created: " << list[1] << endl;
 			else
 				cout << "Failed to create directory" << endl;
-		}	
+		}
 	}
 
-	void run(int argc, char** argv, ProgramContext& context)
+	/*void run(int argc, char** argv, ProgramContext& context)
 	{
 		cout<<"Creating Project: "<<argv[2]<<endl;
-/*
+
 		// Directory structure
 		FileSystem::makeDirectory(argv[2]);
 		FileSystem::makeDirectory(String(argv[2]) + "/AndroidAPK");
@@ -48,8 +48,8 @@ class CommandCreateProject : public NativeCommand
 		// Arrange files
 		fileReplaceToken(String(argv[2]) + "/CMakeLists.txt", "PSPROJECTTEMPLATE", String(argv[2]));
 		cout<<"=> Template specialization done."<<endl;
-		*/
-	}
+		
+	}*/
 };
 
 #endif // CommandCreateProject_h__

@@ -338,14 +338,14 @@ class NEPHILIM_API Event{
 public:
 
 	/// Returns true if the event refers to a pointer being pressed, like a touch or the mouse button
-	bool isPointerPressed();
+	bool isPointerPressed() const;
 
-	bool isPointerReleased()
+	bool isPointerReleased() const
 	{
 		return (type == MouseButtonReleased || type == TouchReleased);
 	}
 
-	bool isPointerMoved()
+	bool isPointerMoved() const
 	{
 		return (type == MouseMoved || type == TouchMoved);
 	}

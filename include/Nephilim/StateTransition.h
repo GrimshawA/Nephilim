@@ -29,6 +29,9 @@ public:
 	/// Virtual destructor
 	virtual ~StateTransition();
 
+	/// Set the duration of the transition effect
+	void setDuration(float duration);
+
 	void drawPreviousFrame(Renderer* renderer);
 	void drawNextFrame(Renderer* renderer);
 	void finish();
@@ -38,15 +41,16 @@ public:
 
 	}
 
-	virtual void update(const Time& time)
-	{
-
-	}
+	/// Virtual method for updating the transition
+	virtual void update(const Time& time);
 
 	virtual void draw(Renderer* renderer)
 	{
 
 	}
+
+	bool allowUpdatesA;
+	bool allowUpdatesB;
 
 private:
 	friend class StateStack;
@@ -54,6 +58,8 @@ private:
 
 	std::vector<State*> m_futureList;
 	bool m_finished;
+
+	float m_duration; ///< The total duration of the effect
 };
 
 NEPHILIM_NS_END

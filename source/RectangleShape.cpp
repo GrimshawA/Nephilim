@@ -19,6 +19,28 @@ RectangleShape::RectangleShape()
 	m_geometry[1].texCoords = vec2(1.f, 0.f);
 	m_geometry[2].texCoords = vec2(1.f, 1.f);
 	m_geometry[3].texCoords = vec2(0.f, 1.f);
+
+	// Default white color
+	m_geometry[0].color = Color::White;
+	m_geometry[1].color = Color::White;
+	m_geometry[2].color = Color::White;
+	m_geometry[3].color = Color::White;
+}
+
+void RectangleShape::setSize(const vec2& size)
+{
+	float width = size.x;
+	float height = size.y;
+	m_geometry[0].position = Vec2f(0.f,0.f);
+	m_geometry[1].position = Vec2f(width,0.f);
+	m_geometry[2].position = Vec2f(width,height);
+	m_geometry[3].position = Vec2f(0.f,height);
+}
+
+/// Get the size of the rectangle
+vec2 RectangleShape::getSize()
+{
+	return vec2(m_geometry[2].position.x, m_geometry[2].position.y);
 }
 
 /// Invert the vertical coordinates of the texture - hacky

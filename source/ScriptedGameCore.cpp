@@ -267,7 +267,7 @@ void ScriptedGameCore::onEvent(Event &event){
 	{
 //		PRINTLOG("Resize", "Resize: %d    %d\n", event.size.width, event.size.height);
 
-		for(std::map<String,UIWindow*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+		for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 		{
 			(*it).second->setRect(FloatRect(0,0,event.size.width, event.size.height));
 		}
@@ -291,7 +291,7 @@ void ScriptedGameCore::onEvent(Event &event){
 		m_mainScript->call();
 	}
 
-	for(std::map<String,UIWindow*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 	{
 		(*it).second->pushEvent(event);
 	}

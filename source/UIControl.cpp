@@ -1,43 +1,16 @@
 #include <Nephilim/UIControl.h>
 #include <Nephilim/ASSlot.h>
-#include <Nephilim/ASEngine.h>
 #include <Nephilim/Logger.h>
-#include <AS/aswrappedcall.h>
-
-#include <iostream>
-
-using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-bool registerUIControlSubtype(const String& name, ASEngine* engine)
-{
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void bindSignal(const string &in, Slot@)", WRAP_MFN(UIControl, bindSignal), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPosition(float,float)", WRAP_MFN(UIControl, setPosition), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setProportion(float,float)", WRAP_MFN(UIControl, setProportion), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPlacement(float,float)", WRAP_MFN(UIControl, setPlacement), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setSize(float,float)", WRAP_MFN(UIControl, setSize), asCALL_GENERIC);
-	}
-	else
-	{
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void bindSignal(const string &in, Slot@)", asMETHOD(UIControl, bindSignal), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPosition(float,float)", asMETHOD(UIControl, setPosition), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setSize(float,float)", asMETHOD(UIControl, setSize), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setProportion(float,float)", asMETHOD(UIControl, setProportion), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod(name.c_str(), "void setPlacement(float,float)", asMETHOD(UIControl, setPlacement), asCALL_THISCALL);
-
-	}
-
-	return true;
-}
-
-
 /// Base constructor of controls
 UIControl::UIControl()
-	:	RefCountable(),
-		m_parent(NULL),
+: RefCountable()
+, m_parent(NULL)
+, m_positionFlags(0)
+, m_sizeFlags(0)
+,
 		m_stateContext(NULL),
 		m_hasFocus(false),
 		m_layoutController(NULL),
@@ -61,6 +34,79 @@ UIControl::UIControl()
 	m_maximumDimensions = Vec2f(5000,5000);
 };
 
+/// Get the coordinates of the top-left corner of the control
+vec2 UIControl::getPosition()
+{
+	return vec2(m_bounds.left, m_bounds.top);
+}
+
+/// Set the flags for sizing
+void UIControl::setSizeFlags(Uint64 flags)
+{
+	m_sizeFlags = flags;
+
+	processSizeFlags();
+}
+
+/// Get the sizing flags
+Uint64 UIControl::getSizeFlags()
+{
+	return m_sizeFlags;
+}
+
+/// Check if there is a particular sizing flag
+bool UIControl::hasSizeFlag(Uint64 flag)
+{
+	return ( (m_sizeFlags & flag) == flag);
+}
+
+/// Get the current positioning flags
+Uint64 UIControl::getPositionFlags()
+{
+	return m_positionFlags;
+}
+
+/// Check the existence of a particular flag for positioning
+bool UIControl::hasPositionFlag(Uint64 flag)
+{
+	return ( (m_positionFlags & flag) == flag);
+}
+
+
+/// Set positioning flags to the control
+void UIControl::setPositionFlags(Uint64 flags)
+{
+	m_positionFlags = flags;
+
+	//(~(Uint64)0))
+
+	processPositionFlags();
+}
+
+
+/// Attempt to process positional flags
+void UIControl::processPositionFlags()
+{
+	// Lets set the position flags now
+	if(getParent() && getContext())
+	{
+		if( hasPositionFlag(UIPositionFlag::AttachBottom))
+		{
+			setPosition(m_bounds.left, getParent()->getSize().y - getSize().y);
+		}
+	}
+}
+
+/// Attempt to process size flags
+void UIControl::processSizeFlags()
+{
+	// Lets set the position flags now
+	if(getParent() && getContext())
+	{
+		
+	}
+}
+
 /// Requests a tool tip text label from the control
 /// If only a empty string is returned, no tooltip is shown
 String UIControl::getToolTipLabel(){
@@ -83,7 +129,7 @@ UIControl* UIControl::getChild(int index)
 Vec2f UIControl::getSize()
 {
 	return Vec2f(m_bounds.width, m_bounds.height);
-};
+}
 
 /// Set a new layout to the control
 void UIControl::setLayout(UILayout* layout){
@@ -200,8 +246,26 @@ void UIControl::switchLanguage()
 }
 
 /// Called to re adjust children positions and sizes if needed
-void UIControl::processSizeChange()
+void UIControl::processSizeChange(float previousWidth, float previousHeight)
 {
+	// Parent control had its size updated
+
+	if(hasSizeFlag(UISizeFlag::KeepRelativeSizeX))
+	{
+		float p = m_bounds.width / previousWidth;
+		setSize(m_parent->getSize().x * p, getSize().y);
+	}
+
+	if(hasPositionFlag(UIPositionFlag::KeepRelativePositionX))
+	{
+		float p = m_bounds.left / previousWidth;
+		setPosition(m_parent->getSize().x * p, m_bounds.top);
+	}
+
+
+
+	processPositionFlags();
+
 
 	// size changed, update.
 	if(m_sizePolicy.widthPolicy == UISizePolicy::ParentProportional && m_parent)
@@ -219,7 +283,7 @@ void UIControl::processSizeChange()
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 
 		// lets see!
-		(*it)->processSizeChange();
+		(*it)->processSizeChange(previousWidth, previousHeight);
 	}
 }
 
@@ -288,6 +352,7 @@ bool UIControl::processMouseMove(int x, int y)
 /// Process a mouse press event
 bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
+	bool result = false;
 	if(isFocusable())
 	{
 		focus();
@@ -296,11 +361,12 @@ bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 		if((*it)->getBounds().contains(x,y))
 		{
+			result = true;
 			(*it)->processMouseButtonPressed(x,y, button);
 		}
 	}
 
-	return false;
+	return result;
 }
 
 /// Enables or disables a pseudo class
@@ -373,6 +439,11 @@ UICore* UIControl::getContext()
 	return m_stateContext;
 };
 
+UIControl* UIControl::getParent()
+{
+	return m_parent;
+}
+
 
 /// Adds a new control ... wrong API todo
 void UIControl::attach(UIControl* control){
@@ -382,7 +453,7 @@ void UIControl::attach(UIControl* control){
 	control->m_parent = this;
 	control->setContext(m_stateContext);
 
-	control->processSizeChange();
+	control->processSizeChange(getSize().x, getSize().y);
 
 	updateLayout();
 };
@@ -506,10 +577,20 @@ bool UIControl::respondsToLayouts(){
 	return true;
 };
 
-/// Immediately sets the new size of the control
-void UIControl::setSize(float width, float height){
+void UIControl::setSize(float width, float height)
+{
+	float pX = m_bounds.width;
+	float pY = m_bounds.height;
+
 	m_bounds.width = width;
 	m_bounds.height = height;
+
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
+		// tell children that the size of this control has changed
+		(*it)->processSizeChange(pX, pY);
+	}
+
 	onResize();
 
 	onSizeChanged();

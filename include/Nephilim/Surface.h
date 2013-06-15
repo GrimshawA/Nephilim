@@ -39,6 +39,10 @@ public:
 	/// Activate the surface as the active framebuffer
 	void activate();
 
+	/// Convert a point in window-space to a homogeneous coordinate
+	/// \todo Use viewport data from renderer
+	vec2 convertToHomogeneousCoordinate(vec2i point);
+
 	int getWidth() const;
 
 	int getHeight() const;

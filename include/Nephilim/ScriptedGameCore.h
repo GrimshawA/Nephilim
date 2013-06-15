@@ -9,14 +9,13 @@
 #include "BrowserPreloader.h"
 #include "StateStack.h"
 #include "ContentBank.h"
-#include "UIWindow.h"
+#include "UIDocument.h"
 #include "UIButton.h"
 #include "UIManager.h"
 
 #include <map>
 
 NEPHILIM_NS_BEGIN
-
 
 class MusicPlayer
 {

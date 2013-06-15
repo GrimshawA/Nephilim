@@ -3,7 +3,7 @@ local libname = "nephilim"
 local enginename = "NephilimEngine"
 local action = _ACTION or ""
 local version = "0.8.3"
-local samplelist = { "LD26Kinectic", "SampleBasic" , "SampleAnimation", "SampleCameras", "SampleFileSystem", "SampleGeometry", "SampleKinesisPhysics", "SampleLighting", "SampleRenderTexture", "SampleScripting", "SampleShaders", "SampleSprites", "SampleUI" }
+local samplelist = { "samplebox", "LD26Kinectic", "SampleBasic" , "SampleAnimation", "SampleCameras", "SampleFileSystem", "SampleGeometry", "SampleKinesisPhysics", "SampleLighting", "SampleRenderTexture", "SampleScripting", "SampleShaders", "SampleSprites", "SampleUI" }
 	
 newoption {
    trigger     = "no-samples",
@@ -82,7 +82,7 @@ solution (enginename)
 			location("build/" .. builddir)
 			vpaths { ["Headers"] = "**.h" }
 			vpaths { ["Source"] = "**.cpp" }
-			files { "samples/" .. sample .. "/Source/*" }
+			files { "samples/" .. sample .. "/source/*" }
 			includedirs { "include" , "includeext"}
 			links (enginename)
 			targetdir  "bin" 

@@ -1,5 +1,5 @@
-#ifndef UILabel_h__
-#define UILabel_h__
+#ifndef NephilimUILabel_h__
+#define NephilimUILabel_h__
 
 #include "Platform.h"
 #include "UIControl.h"
@@ -19,6 +19,9 @@ public:
 
 	/// Constructs the button from a label text
 	UILabel(const String& title);
+
+	/// Set the contents of the label
+	void setText(const String& text);
 
 	/// Callback to handle an event
 	bool onEventNotification(Event& event);
@@ -54,4 +57,4 @@ void UILabel::setProperty(const String& propertyName, const T& propertyValue)
 
 
 NEPHILIM_NS_END
-#endif // UILabel_h__
+#endif // NephilimUILabel_h__

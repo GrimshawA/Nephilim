@@ -1,20 +1,19 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/Engine.h>
 #include <Nephilim/ASEngine.h>
-#include <iostream>
-using namespace NEPHILIM_NS;
-using namespace std;
 
-#include "APKGenerator.h"
-#include "APKAssets.h"
-
+#include "Info.h"
 #include "CommandCreateProject.h"
 #include "CommandModelConverter.h"
 #include "CommandPackager.h"
+#include "CommandDeployAssets.h"
 
+#include <iostream>
+
+using namespace NEPHILIM_NS;
+using namespace std;
 
 std::map<String, NativeCommand*> nativeActions; 
-
 
 struct scriptAction
 {
@@ -24,13 +23,11 @@ struct scriptAction
 ASEngine					scriptEngine;
 std::map<String, scriptAction> scriptActions;
 
-
-
 void initScriptActions()
 {
 	scriptEngine.exportStrings();
 
-	StringList list = FileSystem::scanDirectory(m_ProgramDir + "NephilimConsoleResources/actions", "*", false);
+	StringList list = FileSystem::scanDirectory(Info::assetPath + "NephilimConsoleResources/actions", "*", false);
 	for(unsigned int i = 0; i < list.size(); i++)
 	{
 		String actionName = list[i];
@@ -97,7 +94,7 @@ bool isNativeAction(String command)
 
 void processCommand(String command)
 {
-	if(command ==  "help")
+	if(command == "help")
 	{
 		showHelp();
 	}
@@ -121,6 +118,7 @@ int main(int argc, char** argv)
 	nativeActions["dir"]  = new CommandCreateProject();
 	nativeActions["mesh"] = new CommandModelConverter();
 	nativeActions["pack"] = new CommandPackager();
+	nativeActions["sync-assets"] = new CommandDeployAssets();
 	
 	// Init script commands
 	initScriptActions();
@@ -147,86 +145,14 @@ int main(int argc, char** argv)
 	// Single command
 	else
 	{
-		processCommand("parse TODO");
-	}
-	/*
-	if(argc < 2){
-		//there are no parameters
-		showHelp();
-		//system("pause");
-	}
-	else{
-		// lets evaluate commands
-		String arg1 = argv[1];
-
-		if(arg1 == "gen-apk"){
-			//a apk generate
-
-			if(argc < 3){
-				cout<<"[Streamline] Too few arguments to generate the APK"<<endl;
-			}
-			else{
-				prepareApkTokens();
-
-
-				String iconPath;
-				String outputDir = "AndroidAPK"; // By default writes to APK directory
-				for(int k = 2; k < argc; k++){
-					String subcmd = argv[k];
-
-					//is it something useful ?
-
-					if(subcmd.startsWith("-o")){
-						//output directory
-						outputDir = subcmd;
-						outputDir.erase(outputDir.begin(), outputDir.begin() + 2);
-						
-					}
-					else if(subcmd.startsWith("-t")){
-						subcmd.erase(subcmd.begin(), subcmd.begin() + 2);
-						String token = subcmd;
-						StringList splited = token.split('=', 0);
-						if(splited.size() == 2){
-							TokenContent[splited[0]] = splited[1]; 
-						}
-						
-					}
-					else if(subcmd.startsWith("-i")){
-						subcmd.erase(subcmd.begin(), subcmd.begin() + 2);
-						//request this icon to be added
-						iconPath = subcmd;
-					}
-
-				}
-				cout<<"[Streamline] Starting creation of Android APK"<<endl;
-				cout<<"[Streamline] Saving output in: "<<outputDir<<endl;
-				if(generateAPK(outputDir, argv[2], 10, iconPath)){
-					cout<<"[Streamline] Created an android APK - "<<argv[2]<<endl;
-				}
-				else{
-					cout<<"[Streamline] Failed to create the android APK. Perhaps you are lacking permissions to write files?"<<endl;
-				}
-			}			
-		} // end of gen-apk module
-		else if(arg1 == "apk-assets"){
-			if(argc < 4){
-				cout<<"[Streamline] Too few arguments for asset assembling."<<endl;
-			}
-			else{
-				
-				deployAPKAssets(argv[2], argv[3]);
-				cout<<"[Streamline] Finished deploying all assets to the target APK."<<endl;
-			}
-		}
-		else
+		String cmd;
+		for(int i = 1; i < argc; ++i)
 		{
-			runScriptAction(arg1);
-
+			cmd += String(argv[i]);
+			if(i+1 < argc) cmd += " ";
 		}
-
+		processCommand(cmd);
 	}
-	*/
-	//system("pause");
-
+	
 	return 0;
 }

@@ -1,5 +1,5 @@
-#ifndef PARABOLA_VIEWS_H
-#define PARABOLA_VIEWS_H
+#ifndef View_h__
+#define View_h__
 
 #include "Platform.h"
 #include "Vectors.h"
@@ -40,6 +40,9 @@ public:
 
 	/// Set a rotation for the view
 	void setRotation(float angle);
+
+	/// Converts a point in a homogenous space to the view space
+	vec2 convertToViewSpace(vec2 localSpacePoint);
 
 		/// Get the projection matrix of this view
 		mat4 getMatrix();
@@ -100,5 +103,4 @@ private:
 };
 
 NEPHILIM_NS_END
-
-#endif
+#endif // View_h__

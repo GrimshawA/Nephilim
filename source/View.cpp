@@ -20,6 +20,12 @@ View::View(float left, float top, float width, float height)
 	setRect(left, top, width, height);
 }
 
+/// Converts a point in a homogenous space to the view space
+vec2 View::convertToViewSpace(vec2 localSpacePoint)
+{
+	return getInverseTransform().transformPoint(localSpacePoint);
+}
+
 /// Set a rotation for the view
 void View::setRotation(float angle)
 {

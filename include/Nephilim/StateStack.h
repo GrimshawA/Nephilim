@@ -63,6 +63,9 @@ public:
 	/// Updates the right states 
 	void update(Time &time);
 
+	/// Perform a update on the list
+	void updateList(std::vector<State*>& list, const Time& time);
+
 	/// Delivers the event to the right events
 	void pushEvent(Event &event);
 

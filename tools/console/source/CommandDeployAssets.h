@@ -1,22 +1,34 @@
-#ifndef APKAssets_h__
-#define APKAssets_h__
+#ifndef CommandDeployAssets_h__
+#define CommandDeployAssets_h__
 
 #include <Nephilim/FileSystem.h>
-#include <Nephilim/FileInterface.h>
+#include <Nephilim/File.h>
 using namespace NEPHILIM_NS;
 
 #include "Command.h"
 
+void deployHandleDirectory(String directory, String dest);
+
 class CommandDeployAssets : public NativeCommand
 {
-	void run(int argc, char** argv, ProgramContext& context)
+	void execute(String command)
 	{
-		cout<<"Deploying assets"<<endl;
+		bool isProjectDirectory = false;
+		{
+			File fp("project.data", IODevice::BinaryRead);
+			isProjectDirectory = fp.isReady();
+		}
+
+		if(isProjectDirectory)
+		{
+			cout << "[Console] Valid project directory. Reassembling assets." << endl;
+			deployHandleDirectory("assets", "apk/assets");
+		}
 	}
 };
 
-void deployHandleDirectory(String directory, String dest){
-
+void deployHandleDirectory(String directory, String dest)
+{
 	FileSystem::makeDirectory(dest); 
 
 	StringList flist = FileSystem::scanDirectory(directory, "*", false);
@@ -25,12 +37,13 @@ void deployHandleDirectory(String directory, String dest){
 		if(flist[i].find_last_of('/') != flist[i].npos)
 			flist[i].erase(flist[i].begin(), flist[i].begin() + flist[i].find_last_of('/')+1);
 
-		cout<<"[Streamline] Installing file: "<<flist[i]<<endl;
+		cout<<"[Console] Installing file: "<<flist[i]<<endl;
 
 
 		if(!FileSystem::isDirectory(relativepath)){
 
-			if(!	FileInterface::copy(directory + "/" + flist[i], dest + "/" + flist[i] + ".png") ) cout<<"Failed to install file."<<endl;
+			if(!	fs::copyFile(directory + "/" + flist[i], dest + "/" + flist[i] + ".png") ) 
+				cout<<"Failed to install file."<<endl;
 		}
 	}
 	
@@ -38,18 +51,9 @@ void deployHandleDirectory(String directory, String dest){
 	/// Check nested directories within this one
 	StringList list = FileSystem::directoryList(directory, false);
 	for(unsigned int i = 0; i < list.size(); i++){
-		cout<<"[Streamline] Deploying directory: "<<directory + "/" + list[i]<<endl;
+		cout<<"[Console] Deploying directory: "<<directory + "/" + list[i]<<endl;
 		deployHandleDirectory(directory + "/" + list[i], dest + "/" + list[i]);
 	}
-
-
 }
 
-void deployAPKAssets(String source, String destinationAPK){
-	cout<<"[Streamline] Assembling assets to target APK."<<endl;
-	cout<<"[Streamline] Deploying directory: "<<source<<endl;
-	deployHandleDirectory(source, destinationAPK + "/assets");
-	cout<<"[Streamline] Finished assembling assets to target APK"<<endl;
-}
-
-#endif // APKAssets_h__
+#endif // CommandDeployAssets_h__

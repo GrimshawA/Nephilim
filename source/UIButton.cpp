@@ -178,7 +178,7 @@ void UIButton::draw(Renderer* renderer)
 	t.setFont(m_stateContext->m_defaultFont);
 	t.setString(m_label);
 	t.setColor(m_color);
-	t.setCharacterSize(19);
+	t.setCharacterSize(m_bounds.height / 2);
 	t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
 	t.setPosition(m_bounds.left + m_bounds.width/2, m_bounds.top +  m_bounds.height/2);
 	renderer->draw(t);

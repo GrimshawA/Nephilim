@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIWindow;
+class UIDocument;
 class UIControl;
 
 /**

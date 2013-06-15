@@ -21,6 +21,12 @@ class NEPHILIM_API RectangleShape : public Drawable, public Transformable
 public:
 	RectangleShape();
 
+	/// Get the size of the rectangle
+	vec2 getSize();
+
+	/// Set the size of the rectangle
+	void setSize(const vec2& size);
+
 	void setSize(float width, float height);
 
 	void setColor(const Color& color);
