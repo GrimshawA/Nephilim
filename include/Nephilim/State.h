@@ -2,7 +2,7 @@
 #define NephilimState_h__
 
 #include "Platform.h"
-#include "ReferenceCountable.h"
+#include "RefCount.h"
 
 NEPHILIM_NS_BEGIN
 

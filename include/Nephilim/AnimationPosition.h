@@ -5,7 +5,7 @@
 #include "Vectors.h"
 #include "AnimationInterface.h"
 #include "AnimationEasing.h"
-#include "ReferenceCountable.h"
+#include "RefCount.h"
 
 NEPHILIM_NS_BEGIN
 

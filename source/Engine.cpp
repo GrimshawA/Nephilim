@@ -26,6 +26,18 @@ Engine::~Engine()
 	delete m_renderer;
 };
 
+/// Get a basic string describing the current OS
+String Engine::getOS()
+{
+#ifdef NEPHILIM_WINDOWS
+	return "Windows";
+#elif defined NEPHILIM_ANDROID
+	return "Android";
+#else
+	return "Other";
+#endif
+}
+
 void Engine::execute(GameCore* app)
 {
 	m_currentApp = app;

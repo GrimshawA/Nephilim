@@ -8,7 +8,7 @@
 #include "Strings.h"
 #include "RectangleShape.h"
 #include "Renderer.h"
-#include "ReferenceCountable.h"
+#include "RefCount.h"
 #include <vector>
 
 #include "AnimationDimension.h"

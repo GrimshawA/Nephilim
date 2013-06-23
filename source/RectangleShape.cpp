@@ -20,6 +20,8 @@ RectangleShape::RectangleShape()
 	m_geometry[2].texCoords = vec2(1.f, 1.f);
 	m_geometry[3].texCoords = vec2(0.f, 1.f);
 
+	m_geometry.m_textured = false;
+
 	// Default white color
 	m_geometry[0].color = Color::White;
 	m_geometry[1].color = Color::White;
@@ -105,6 +107,7 @@ void RectangleShape::onDraw(Renderer* renderer)
 {
 	if(m_texture) m_texture->bind();
 	else renderer->setDefaultTexture();
+
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_geometry);
 	renderer->setModelMatrix(mat4::identity);

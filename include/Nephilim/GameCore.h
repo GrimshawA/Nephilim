@@ -24,6 +24,9 @@ public:
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();
 
+	/// Get a pointer to the engine
+	Engine* getEngine();
+
 	/// Get the window/screen handler
 	Window& getWindow();
 

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2010-2013 Artur Moreira - ParabolaEngine under zlib license
+Copyright (C) 2010-2013 Artur Moreira - Nephilim under zlib license
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -17,9 +17,8 @@ freely, subject to the following restrictions:
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-
-#ifndef PARABOLA_ENGINE_H
-#define PARABOLA_ENGINE_H
+#ifndef NephilimEngine_h__
+#define NephilimEngine_h__
 
 #include "Platform.h"
 #include "Clock.h"
@@ -30,6 +29,7 @@ freely, subject to the following restrictions:
 #include <vector>
 
 NEPHILIM_NS_BEGIN
+
 class GameCore;
 class Renderer;
 
@@ -84,6 +84,9 @@ public:
 	/// Get the current renderer
 	Renderer* getRenderer();
 
+	/// Get a basic string describing the current OS
+	String getOS();
+
 	/// Returns a string with the version of the engine build. Usually like x.y.z
     static String getVersionString();
 
@@ -101,4 +104,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimEngine_h__

@@ -7,7 +7,7 @@
 #include "Vectors.h"
 #include "Drawable.h"
 #include "Transformable.h"
-#include "ReferenceCountable.h"
+#include "RefCount.h"
 #include "VertexArray2D.h"
 #include "Texture.h"
 #include <vector>

@@ -12,6 +12,12 @@ GameCore::GameCore() : m_stackedTime(0.f), m_updateStep(1.f / 60.f), m_windowTit
 
 };
 
+/// Get a pointer to the engine
+Engine* GameCore::getEngine()
+{
+	return m_creator;
+}
+
 /// Get the window/screen handler
 Window& GameCore::getWindow()
 {

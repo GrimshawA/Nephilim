@@ -5,7 +5,7 @@
 #include "AnimationInterface.h"
 #include "Strings.h"
 #include "Signals.h"
-#include "ReferenceCountable.h"
+#include "RefCount.h"
 #include <map>
 
 

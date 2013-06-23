@@ -161,7 +161,7 @@ void UIButton::draw(Renderer* renderer)
 
 	
 
-	RectangleShape background;
+	/*RectangleShape background;
 	if(!m_hovered)
 		background.setTexture(&m_normal);
 	else
@@ -173,7 +173,7 @@ void UIButton::draw(Renderer* renderer)
 	background.setSize(m_bounds.width, m_bounds.height);
 	background.setColor(Color::White);
 	renderer->draw(background);
-
+	*/
 	Text t;
 	t.setFont(m_stateContext->m_defaultFont);
 	t.setString(m_label);
