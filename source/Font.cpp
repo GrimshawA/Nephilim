@@ -344,10 +344,10 @@ const Font& Font::getDefaultFont()
     // Load the default font on first call
     if (!loaded)
     {
-        static const signed char data[] =
-        {
-            #include "Arial.hpp"
-        };
+       // static const signed char data[] =
+      //  {
+//            #include "Arial.hpp"
+       // };
 
        /* if(font.loadFromMemory(data, sizeof(data))){
 			Log("Arial default font loaded.");

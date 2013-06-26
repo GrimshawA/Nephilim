@@ -2,10 +2,6 @@
 #include <Nephilim/Text.h>
 #include <Nephilim/RectangleShape.h>
 
-#include <Nephilim/ASEngine.h>
-#include <Nephilim/ASSlot.h>
-#include "AS/aswrappedcall.h"
-
 #include <iostream>
 using namespace std;
 

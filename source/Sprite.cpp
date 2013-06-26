@@ -8,53 +8,7 @@
 using namespace std;
 
 
-
-#include <Nephilim/ASEngine.h>
-#include "AS/aswrappedcall.h"
-
 NEPHILIM_NS_BEGIN
-
-Drawable* SpriteRefCast(Sprite* a)
-{
-	return refCast<Sprite, Drawable>(a);
-}
-/*
-
-static bool registerSprite(ASEngine* engine)
-{
-	engine->getASEngine()->RegisterObjectType("Sprite", sizeof(Sprite), asOBJ_REF);
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", WRAP_FN(genericFactory<Sprite>), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", WRAP_MFN(Sprite, addReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_RELEASE, "void f()", WRAP_MFN(Sprite, removeReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_IMPLICIT_REF_CAST, "Drawable@ f()", WRAP_OBJ_LAST(SpriteRefCast), asCALL_GENERIC);
-
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void setTexture(Texture@)", WRAP_MFN(Sprite, setTexture2), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void setPosition(float, float)", WRAP_MFN(Sprite, setPosition), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "Vec2f getPosition()", WRAP_MFN(Sprite, getPosition), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void resize(float, float)", WRAP_MFN_PR(Sprite, resize, (float,float), void), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "bool contains(float, float)", WRAP_MFN(Sprite, contains), asCALL_GENERIC);
-
-	}
-	else
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(genericFactory<Sprite>), asCALL_CDECL);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", asMETHOD(Sprite, addReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_RELEASE, "void f()", asMETHOD(Sprite, removeReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("Sprite", asBEHAVE_IMPLICIT_REF_CAST, "Drawable@ f()", asFUNCTION((refCast<Sprite,Drawable>)), asCALL_CDECL_OBJLAST);
-
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void setTexture(Texture@)", asMETHOD(Sprite, setTexture2), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "Vec2f getPosition()", asMETHOD(Sprite, getPosition), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void setPosition(float, float)", asMETHODPR(Sprite, setPosition, (float,float), void), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "void resize(float, float)", asMETHODPR(Sprite, resize, (float,float), void), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("Sprite", "bool contains(float, float)", asMETHOD(Sprite, contains), asCALL_THISCALL);
-
-
-	}
-	return true;
-}*/
 
 /// Default sprite
 Sprite::Sprite() : m_vertices(Render::Primitive::TriangleFan,4) , m_texture(NULL), RefCountable(), m_blendMode(Blend::Alpha){

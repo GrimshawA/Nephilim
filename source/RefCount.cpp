@@ -14,7 +14,7 @@ RefCountable::RefCountable(){
 RefCountable::~RefCountable()
 {
 
-}                             
+}      
 
 /// For AngelScript, the constructor won't do, need another function to set to 1 the refCount
 void RefCountable::factoryConstructor(){

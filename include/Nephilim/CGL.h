@@ -24,19 +24,19 @@ void cglPrepareExtensions();
 
 /// Android GLES 1.1
 #if defined NEPHILIM_ANDROID
-#define GL_GLEXT_PROTOTYPES
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+//#define GL_GLEXT_PROTOTYPES
+///#include <GLES/gl.h>
+//#include <GLES/glext.h>
 #include <GLES2/gl2.h>
 
 // FBO
-#define glGenFramebuffersCGL glGenFramebuffersOES
-#define glFramebufferTexture2DCGL glFramebufferTexture2DOES
-#define glCheckFramebufferStatusCGL glCheckFramebufferStatusOES
-#define glBindFramebufferCGL glBindFramebufferOES
-#define GL_FRAMEBUFFER_CGL GL_FRAMEBUFFER_OES
-#define GL_COLOR_ATTACHMENT0_CGL GL_COLOR_ATTACHMENT0_OES
-#define GL_FRAMEBUFFER_COMPLETE_CGL GL_FRAMEBUFFER_COMPLETE_OES
+#define glGenFramebuffersCGL glGenFramebuffers
+#define glFramebufferTexture2DCGL glFramebufferTexture2D
+#define glCheckFramebufferStatusCGL glCheckFramebufferStatus
+#define glBindFramebufferCGL glBindFramebuffer
+#define GL_FRAMEBUFFER_CGL GL_FRAMEBUFFER
+#define GL_COLOR_ATTACHMENT0_CGL GL_COLOR_ATTACHMENT0
+#define GL_FRAMEBUFFER_COMPLETE_CGL GL_FRAMEBUFFER_COMPLETE
 
 #endif
 

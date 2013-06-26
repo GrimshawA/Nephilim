@@ -1,15 +1,14 @@
-#ifndef APKGenerator_h__
-#define APKGenerator_h__
+#ifndef CommandGenerateAPK_h__
+#define CommandGenerateAPK_h__
 
 #include <Nephilim/StringList.h>
-#include <Nephilim/ScopedFile.h>
 
-#include <Nephilim/FileStream.h>
 #include <Nephilim/TextStream.h>
 #include <Nephilim/FileSystem.h>
-#include <Nephilim/FileInterface.h>
+
 using namespace NEPHILIM_NS;
 
+#include "Info.h"
 #include "Command.h"
 
 #include <map>
@@ -20,14 +19,69 @@ bool usingAirPush = true;
 
 String m_ProgramDir;
 
-class CommandAPKGenerator : public NativeCommand
+class CommandGenerateAPK : public NativeCommand
 {
-	void run(int argc, char** argv, ProgramContext& context)
+	void execute(String command)
 	{
-		cout<<"Generating"<<endl;
+		ProjectConfig config;
+		config.load("project.data");
+
+		FileSystem::makeDirectory("apk");
+		FileSystem::makeDirectory("apk/assets/");
+		FileSystem::makeDirectory("apk/res/");
+		FileSystem::makeDirectory("apk/res/layout/");
+		FileSystem::makeDirectory("apk/res/values/");
+		FileSystem::makeDirectory("apk/res/drawable");
+		FileSystem::makeDirectory("apk/res/drawable-hdpi");
+		FileSystem::makeDirectory("apk/res/drawable-mdpi");
+		FileSystem::makeDirectory("apk/res/drawable-xhdpi");
+		//FileSystem::makeDirectory("apk/res/drawable-xxhdpi");
+		FileSystem::makeDirectory("apk/res/drawable-ldpi");
+
+
+		// Preparing the Java Source
+		FileSystem::makeDirectory("apk/src");
+
+		StringList packageDecompose = config.m_entries["ANDROID_PACKAGE"].split('.', 0);
+		String packageSrcDir = "apk/src/";
+		for(unsigned int j = 0; j < packageDecompose.size(); j++)
+		{
+			FileSystem::makeDirectory(packageSrcDir + packageDecompose[j]);
+			packageSrcDir += packageDecompose[j] + "/";
+		}
+
+		fs::copyFile(Info::assetPath + "template/apk/src/Activity.java", packageSrcDir + "GameActivity.java");
+
+		replaceTokensInFile(packageSrcDir + "GameActivity.java", config.m_entries);
+
+		// Manifest
+		fs::copyFile(Info::assetPath + "template/apk/AndroidManifest.xml", "apk/AndroidManifest.xml");
+		fs::copyFile(Info::assetPath + "template/apk/build.xml", "apk/build.xml");
+		fs::copyFile(Info::assetPath + "template/apk/local.properties", "apk/local.properties");
+		fs::copyFile(Info::assetPath + "template/apk/project.properties", "apk/project.properties");
+
+		replaceTokensInFile("apk/project.properties", config.m_entries);
+		replaceTokensInFile("apk/build.xml", config.m_entries);
+		replaceTokensInFile("apk/AndroidManifest.xml", config.m_entries);
+
+		// Strings
+		fs::copyFile(Info::assetPath + "template/apk/res/values/strings.xml", "apk/res/values/strings.xml");
+		fs::copyFile(Info::assetPath + "template/apk/res/layout/main.xml", "apk/res/layout/main.xml");
+
+		replaceTokensInFile("apk/res/values/strings.xml", config.m_entries);
+
+		// Icon
+		//fs::copyFile(Info::assetPath + "template/apk/res/drawable-xxhdpi/icon_launcher.png", "apk/res/drawable-xxhdpi/icon_launcher.png");
+		fs::copyFile(Info::assetPath + "template/apk/res/drawable-xhdpi/icon_launcher.png", "apk/res/drawable-xhdpi/icon_launcher.png");
+		fs::copyFile(Info::assetPath + "template/apk/res/drawable-hdpi/icon_launcher.png", "apk/res/drawable-hdpi/icon_launcher.png");
+		fs::copyFile(Info::assetPath + "template/apk/res/drawable-ldpi/icon_launcher.png", "apk/res/drawable-ldpi/icon_launcher.png");
+		fs::copyFile(Info::assetPath + "template/apk/res/drawable-mdpi/icon_launcher.png", "apk/res/drawable-mdpi/icon_launcher.png");
+
+		cout << "Created the APK." << endl;
 	}
 };
 
+/*
 void applyTokens(String &line){
 
 	bool inToken = false;
@@ -232,5 +286,5 @@ bool generateAPK(String path, String packageName, int targetAndroidPlatform, Str
 	return true;
 }
 
-
-#endif // APKGenerator_h__
+*/
+#endif // CommandGenerateAPK_h__

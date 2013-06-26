@@ -27,6 +27,7 @@ RendererGLES::RendererGLES()
 /// Draw a vertex array
 void RendererGLES::draw(const VertexArray2D& varray)
 {
+#ifdef NEPHILIM_GLES_V1
 	const char* data  = reinterpret_cast<const char*>(&varray.m_vertices[0]);
 
 	glLoadIdentity();
@@ -48,6 +49,7 @@ void RendererGLES::draw(const VertexArray2D& varray)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+#endif
 }
 
 void RendererGLES::applyView(const View &view){
@@ -79,6 +81,7 @@ void RendererGLES::clear(){
 
 
 void RendererGLES::prepare(int w, int h){
+	#ifdef NEPHILIM_GLES_V1
 	glViewport(0, 0, w, h);
 	
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -94,6 +97,7 @@ void RendererGLES::prepare(int w, int h){
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
+#endif
 };
 /*
 void RendererGLES::drawDebugQuad(float x, float y, float angle, float width, float height, Color color){
@@ -122,6 +126,7 @@ void RendererGLES::drawDebugQuad(float x, float y, float angle, float width, flo
 }*/
 
 void RendererGLES::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color){
+	#ifdef NEPHILIM_GLES_V1
 	glPushMatrix();
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -142,9 +147,11 @@ void RendererGLES::drawDebugTriangleFan(Vec2f* vlist, int vcount, Color color){
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	glPopMatrix();
+#endif
 };
 
 void RendererGLES::drawDebugLine(Vec2f begin, Vec2f end, Color color){
+	#ifdef NEPHILIM_GLES_V1
 	glLoadIdentity();
 	glPushMatrix();
 //	glPushAttrib(GL_ENABLE_BIT); 
@@ -162,6 +169,7 @@ void RendererGLES::drawDebugLine(Vec2f begin, Vec2f end, Color color){
 	glDisableClientState(GL_VERTEX_ARRAY);
 	//glPopAttrib();
 	glPopMatrix();
+#endif
 };
 /*
 void RendererGLES::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color){
@@ -209,9 +217,7 @@ void RendererGLES::draw(Drawable &drawable){
 
 
 void RendererGLES::display(){
-#ifdef PARABOLA_ANDROID
-	AndroidInterface::requestFrameRender();
-#endif
+
 };
 
 NEPHILIM_NS_END

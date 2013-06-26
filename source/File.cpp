@@ -1,9 +1,6 @@
 #include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 
-#include <Nephilim/ASEngine.h>
-#include "AS/aswrappedcall.h"
-
 #include <cmath>
 #include <stdlib.h>
 

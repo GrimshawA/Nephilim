@@ -1,7 +1,5 @@
 #include <Nephilim/UILineEdit.h>
-#include <Nephilim/ASEngine.h>
 
-#include "AS/aswrappedcall.h"
 
 #include <iostream>
 using namespace std;
@@ -9,68 +7,6 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-UIControl* UILineEditRefCast(UILineEdit* a) 
-{
-	return refCast<UILineEdit, UIControl>(a);
-}
-
-static UILineEdit* customInstancer()
-{
-	return new UILineEdit();
-}
-
-void Wrap_UILineEdit_factory(asIScriptGeneric *gen)
-{
-	*reinterpret_cast<UILineEdit**>(gen->GetAddressOfReturnLocation()) = new UILineEdit();
-}
-
-void Wrap_UILineEdit_addReference(asIScriptGeneric *gen)
-{
-	reinterpret_cast<UILineEdit*>(gen->GetObject())->addReference();
-}
-
-
-void Wrap_UILineEdit_removeReference(asIScriptGeneric *gen)
-{
-	reinterpret_cast<UILineEdit*>(gen->GetObject())->removeReference();
-}
-
-/// Register the buttons
-bool registerUILineEdit(ASEngine* engine)
-{
-	engine->getASEngine()->RegisterObjectType("UILineEdit", sizeof(UILineEdit), asOBJ_REF);
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_FACTORY, "UILineEdit@ f()", asFUNCTION(Wrap_UILineEdit_factory), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_ADDREF, "void f()",  asFUNCTION(Wrap_UILineEdit_addReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_RELEASE, "void f()",  asFUNCTION(Wrap_UILineEdit_removeReference), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_FACTORY, "UIButton@ f()", WRAP_FN(customInstancer), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_ADDREF, "void f()", WRAP_MFN(UIButton, addReference), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectBehaviour("UIButton", asBEHAVE_RELEASE, "void f()", WRAP_MFN(UIButton, removeReference), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_IMPLICIT_REF_CAST, "UIControl@ f()", WRAP_OBJ_LAST(UILineEditRefCast), asCALL_GENERIC);
-
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void bindSignal(const string &in, Slot@)", WRAP_MFN(UILineEdit, bindSignal), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setPosition(float,float)", WRAP_MFN(UILineEdit, setPosition), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setSize(float,float)", WRAP_MFN(UILineEdit, setSize), asCALL_GENERIC);
-		//engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setProperty(const string &in, const string &in)", WRAP_MFN(UIButton, setRawProperty), asCALL_GENERIC);
-
-	}
-	else 
-	{
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_FACTORY, "UILineEdit@ f()", asFUNCTION(genericFactory<UILineEdit>), asCALL_CDECL);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_ADDREF, "void f()", asMETHOD(UILineEdit, addReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_RELEASE, "void f()", asMETHOD(UILineEdit, removeReference), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectBehaviour("UILineEdit", asBEHAVE_IMPLICIT_REF_CAST, "UIControl@ f()", asFUNCTION((refCast<UILineEdit,UIControl>)), asCALL_CDECL_OBJLAST);
-
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void bindSignal(const string &in, Slot@)", asMETHOD(UILineEdit, bindSignal), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setPosition(float,float)", asMETHOD(UILineEdit, setPosition), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setSize(float,float)", asMETHOD(UILineEdit, setSize), asCALL_THISCALL);
-		//engine->getASEngine()->RegisterObjectMethod("UILineEdit", "void setProperty(const string &in, const string &in)", asMETHOD(UIButton, setRawProperty), asCALL_THISCALL);
-
-	}
-	return true;
-}
 UILineEdit::UILineEdit() : UIControl(), m_pipeIndex(0)
 {
 

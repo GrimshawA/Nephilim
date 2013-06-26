@@ -31,7 +31,7 @@ Surface::~Surface()
 void Surface::activate()
 {
 	// this doesnt account ios yet
-	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0);
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0); 
 }
 
 /// Implements RenderTarget::getSize()

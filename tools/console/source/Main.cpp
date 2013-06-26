@@ -4,7 +4,9 @@
 
 #include "Info.h"
 #include "CommandCreateProject.h"
+#include "CommandCreateProjectDataSheet.h"
 #include "CommandModelConverter.h"
+#include "CommandGenerateAPK.h"
 #include "CommandPackager.h"
 #include "CommandDeployAssets.h"
 
@@ -13,19 +15,19 @@
 using namespace NEPHILIM_NS;
 using namespace std;
 
-std::map<String, NativeCommand*> nativeActions; 
+std::map<String, NativeCommand*> nativeActions;
 
 struct scriptAction
 {
 	String description;
 	ASScript* script;
 };
-ASEngine					scriptEngine;
+//ASEngine					scriptEngine;
 std::map<String, scriptAction> scriptActions;
 
 void initScriptActions()
 {
-	scriptEngine.exportStrings();
+	/*scriptEngine.exportStrings();
 
 	StringList list = FileSystem::scanDirectory(Info::assetPath + "NephilimConsoleResources/actions", "*", false);
 	for(unsigned int i = 0; i < list.size(); i++)
@@ -38,16 +40,16 @@ void initScriptActions()
 		{
 			scriptActions[actionName].description = scriptActions[actionName].script->fastCall<String>("string description()");
 		}
-	}
+	}*/
 }
 
 void runScriptAction(const String& actionName)
 {
-	ASScript* script = scriptActions[actionName].script;
+	/*ASScript* script = scriptActions[actionName].script;
 	if(script)
 	{
 		script->call(String("void run()"));
-	}
+	}*/
 }
 
 void printcharn(char c, int n)
@@ -69,12 +71,12 @@ void showHelp(){
 	cout<<" "<<"gen-apk"<<endl;
 	cout<<endl;
 
-	for(std::map<String, scriptAction>::iterator it = scriptActions.begin(); it != scriptActions.end(); ++it)
+	/*for(std::map<String, scriptAction>::iterator it = scriptActions.begin(); it != scriptActions.end(); ++it)
 	{
 		cout << " " << it->first;
 		printcharn(' ', 30 - it->first.length() + 1);
 		cout <<  it->second.description << endl;
-	}
+	}*/
 }
 
 void runNativeAction(String command)
@@ -114,11 +116,17 @@ void processCommand(String command)
 
 int main(int argc, char** argv)
 {
+	Info::assetPath = FileSystem::getExecutableDirectory() + "ncassets/";
+
 	// Init native commands
-	nativeActions["dir"]  = new CommandCreateProject();
+	nativeActions["init"]  = new CommandCreateProject();
+	nativeActions["datasheet"]  = new CommandCreateProjectDataSheet();
 	nativeActions["mesh"] = new CommandModelConverter();
 	nativeActions["pack"] = new CommandPackager();
 	nativeActions["sync-assets"] = new CommandDeployAssets();
+	nativeActions["apk"] = new CommandGenerateAPK();
+
+	Info::nativeActions = nativeActions;
 	
 	// Init script commands
 	initScriptActions();

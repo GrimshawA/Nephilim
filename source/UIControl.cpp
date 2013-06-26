@@ -1,6 +1,8 @@
 #include <Nephilim/UIControl.h>
-#include <Nephilim/ASSlot.h>
 #include <Nephilim/Logger.h>
+
+#include <iostream>
+using namespace std;
 
 NEPHILIM_NS_BEGIN
 
@@ -380,7 +382,7 @@ void UIControl::setPseudoClass(const String& name, bool active)
 
 void UIControl::bindSignal(const String& name, ASSlot* slot)
 {
-	if(name == "click")
+	/*if(name == "click")
 	{
 		//cout<<"Attempting to bind click to a slot"<<endl;
 		onClick.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
@@ -405,7 +407,7 @@ void UIControl::bindSignal(const String& name, ASSlot* slot)
 	{
 		//cout<<"[UIControl] Resize Attachment"<<endl;
 		onSizeChanged.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}
+	}*/
 }
 
 
