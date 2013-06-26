@@ -48,9 +48,11 @@ bool Framebuffer::create()
 {
 	bool success = false;
 
-	glGenFramebuffersCGL(1, static_cast<GLuint*>(&m_id));
-	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
+	GLuint tid = 0;
+	glGenFramebuffersCGL(1, static_cast<GLuint*>(&tid));
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, tid);
 
+	m_id = tid;
 	if(m_id)
 	{
 		success = true;

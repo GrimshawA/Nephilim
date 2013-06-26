@@ -19,10 +19,10 @@ Shader::Shader()
 
 void Shader::pff()
 {
-	int total = -1;
+	GLint total = -1;
 	glGetProgramiv( m_id, GL_ACTIVE_UNIFORMS, &total ); 
 	for(int i=0; i<total; ++i)  {
-		int name_len=-1, num=-1;
+		GLint name_len=-1, num=-1;
 		GLenum type = GL_ZERO;
 		char name[100];
 		glGetActiveUniform( m_id, GLuint(i), sizeof(name)-1,

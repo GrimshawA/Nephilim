@@ -36,7 +36,8 @@ Texture::Texture(const Texture& other)
 Texture::~Texture()
 {
 	if(m_texture > 0){
-		glDeleteTextures(1, &m_texture);
+		GLuint tt = m_texture;
+		glDeleteTextures(1, &tt);
 	}
 }
 
@@ -150,7 +151,8 @@ void Texture::loadFromImage(Image &image, bool generateMipMaps){
 
 	m_size = image.getSize();
 	m_actualSize = m_size;
-	glGenTextures(1, &m_texture);
+	GLuint tt = m_texture;
+	glGenTextures(1, &tt);
 	//Log("Just allocated texture at loadFromImage() %d", m_texture);
 
 	//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);

@@ -2,10 +2,11 @@
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>
+#elif defined NEPHILIM_APPLE
+#include <mach/mach_time.h>
 #elif defined NEPHILIM_UNIX
 #include <time.h>
-#elif defined PARABOLA_IPHONE
-#include <mach/mach_time.h>
+
 #endif
 
 namespace
@@ -22,7 +23,8 @@ namespace
 
 NEPHILIM_NS_BEGIN
 
-Time getCurrentTime(){
+Time getCurrentTime()
+{
 
 #ifdef NEPHILIM_WINDOWS
 	// Force the following code to run on first core
@@ -46,20 +48,21 @@ Time getCurrentTime(){
 
 #endif
 
-#ifdef NEPHILIM_UNIX
+#if defined NEPHILIM_APPLE
+	
+	static mach_timebase_info_data_t frequency = {0,0};
+	if(frequency.denom == 0)
+		mach_timebase_info(&frequency);
+	Uint64 nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
+	Time genTime;
+	genTime.m_microSeconds =  nanoseconds / 1000;
+	return genTime;
+	
+#elif defined NEPHILIM_UNIX
 					timespec time;
 					clock_gettime(CLOCK_MONOTONIC, &time);
 					Time genTime;
 					genTime.m_microSeconds =  static_cast<Uint64>(time.tv_sec) * 1000000 + time.tv_nsec / 1000;
-					return genTime;
-#elif defined NEPHILIM_IPHONE
-
-					static mach_timebase_info_data_t frequency = {0,0};
-					if(frequency.denom == 0)
-						mach_timebase_info(&frequency);
-					Uint64 nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
-					Time genTime;
-					genTime.m_microSeconds =  nanoseconds / 1000;
 					return genTime;
 
 #endif

@@ -51,7 +51,7 @@
     #define NEPHILIM_APPLE
     #include "TargetConditionals.h"
 
-	#ifdef TARGET_OS_IPHONE
+	#if TARGET_OS_IPHONE == 1
 		#define NEPHILIM_IOS
 		#define NEPHILIM_OS "ios"
 		#define NEPHILIM_GLES

@@ -8,7 +8,12 @@ void cglPrepareExtensions();
 /// All desktop platforms
 #if defined NEPHILIM_DESKTOP
 #include <GL/glew.h>
+
+#ifdef NEPHILIM_OSX
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 // FBO
 #define glGenFramebuffersCGL glGenFramebuffersEXT
@@ -42,6 +47,7 @@ void cglPrepareExtensions();
 
 /// Include iPhone GLES Headers
 #if defined NEPHILIM_IOS
+#warning IOS detected
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES2/gl.h>
 #endif

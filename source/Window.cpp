@@ -46,7 +46,7 @@ void Window::create(int screenWidth, int screenHeight){
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	myWindowImpl->setFramerateLimit(60);
-	m_handle = (int)myWindowImpl->getSystemHandle();
+	//m_handle = (int)myWindowImpl->getSystemHandle();
 
 #endif
 
