@@ -209,8 +209,8 @@ void UIDocument::update(float elapsedTime){
 };
 
 /// Pushes a new event through the ui system
-UIEventUsage UIDocument::pushEvent(Event& event){
-	UIEventUsage eventUsage;
+UIEventResult UIDocument::pushEvent(Event& event){
+	UIEventResult eventUsage;
 
 	bool result = true;
 	/// Tooltip related

@@ -151,11 +151,9 @@ void Texture::loadFromImage(Image &image, bool generateMipMaps){
 
 	m_size = image.getSize();
 	m_actualSize = m_size;
-	GLuint tt = m_texture;
+	GLuint tt = 0;
 	glGenTextures(1, &tt);
-	//Log("Just allocated texture at loadFromImage() %d", m_texture);
-
-	//PRINTLOG("ParabolaEngine", "Allocated texture with id: %d\n", m_texture);
+	m_texture = tt;
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 

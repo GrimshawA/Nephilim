@@ -147,7 +147,7 @@ void ScriptedGameCore::onCreate(){
 //	registerStateStack(&m_scripting);
 	registerScriptedGameCore(&m_scripting);
 	registerBrowserPreloader(&m_scripting);
-	registerNStateImage(&m_scripting);
+
 	registerNStateCustom(&m_scripting);
 	registerSprite(&m_scripting);
 //	registerView(&m_scripting);

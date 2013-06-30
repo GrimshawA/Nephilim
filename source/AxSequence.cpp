@@ -1,57 +1,130 @@
 #include <Nephilim/AxSequence.h>
-#include "Nephilim/Logger.h"
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
-/// Default construction
-AnimationGroupSequential::AnimationGroupSequential(){
-	m_index = 0;
-};
+/// Initializes in ordered mode by default
+AxSequence::AxSequence()
+: AxBase()
+, m_mode(Ordered)
+{
 
-/// Called to trigger the start of this animation
-void AnimationGroupSequential::play(){
-	// Restart if stopped
-	if(getStatus() == AnimationStates::Stopped){
-		m_index = 0;
-		if(m_animations.size() > 0){
-			m_animations[m_index]->setStatus(AnimationStates::Playing);
-			m_animations[m_index]->onBegin();
+}
+
+/// Initialize with a sequence mode
+AxSequence::AxSequence(SequenceModes mode)
+: AxBase()
+, m_mode(mode)
+{
+
+}
+
+/// Initialize with a sequence mode and 0 to 3 initial animations
+AxSequence::AxSequence(SequenceModes mode, AxBase *anim1, AxBase *anim2, AxBase* anim3)
+: AxBase()
+, m_mode(mode)
+{
+	if(anim1) add(anim1);
+	if(anim2) add(anim2);
+	if(anim3) add(anim3);
+}
+
+/// Destroy all animations
+AxSequence::~AxSequence()
+{
+	for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+	{
+		delete (*it);
+	}
+}
+
+/// Add a new target for animation
+void AxSequence::addTarget(AxTarget* target)
+{
+	for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+	{
+		(*it)->addTarget(target);
+	}
+}
+
+void AxSequence::deduceInitialParameters()
+{
+	for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+	{
+		(*it)->deduceInitialParameters();
+	}
+}
+
+bool AxSequence::isOver()
+{
+	return AxBase::isOver();
+}
+
+float AxSequence::getDuration()
+{
+	if(m_mode == Ordered)
+	{
+		float totalDuration = 0.f;
+		for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+		{
+			totalDuration += (*it)->getDuration();
+		}
+
+		m_duration = totalDuration;
+		return m_duration;
+	}
+	else
+	{
+		float higherDuration = 0.f;
+		for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+		{
+			if((*it)->getDuration() > higherDuration)
+				higherDuration = (*it)->getDuration();
+		}
+		m_duration = higherDuration;
+		return m_duration;
+	}
+}
+
+void AxSequence::add(AxBase* animation)
+{
+	m_animations.push_back(animation);
+
+	getDuration(); // hacky duration update
+}
+
+/// Updates the sequence appropriately
+float AxSequence::update(float delta)
+{
+	m_elapsed += delta;
+
+	// Sequential. Update one animation at a time
+	if(m_mode == Ordered)
+	{
+		AnimationIterator it = m_animations.begin();
+		float time_offset = 0.f;
+
+		while(it != m_animations.end() && (m_elapsed < time_offset || m_elapsed > time_offset + (*it)->getDuration()))
+		{
+			time_offset += (*it)->getDuration();
+			++it;
+		}
+
+		if(it != m_animations.end())
+		{
+			(*it)->update(delta);
+		}
+	}
+
+	else if(m_mode == Parallel)
+	{
+		for(AnimationIterator it = m_animations.begin(); it != m_animations.end(); ++it)
+		{
+			(*it)->update(delta);
 		}
 	}
 	
-	// Set as playing
-	setStatus(AnimationStates::Playing);
-	onBegin();
-};
-
-/// Called when the animation is updating
-/// \return MUST return the remaining time not used by the animation
-/// This is essential as in a play list of animations, when one finished, the next updates immediately.
-float AnimationGroupSequential::onUpdate(float elapsedTime){
-	if(getStatus() == AnimationStates::Stopped) return elapsedTime;
-
-	//PRINTLOG("sf", "TIME: %f\n", elapsedTime);
-
-	while((elapsedTime > 0.f) && (m_index < m_animations.size())){
-		elapsedTime -= m_animations[m_index]->onUpdate(elapsedTime);
-		if(m_animations[m_index]->getStatus() == AnimationStates::Stopped){
-
-			m_index++;
-
-			if(m_index < m_animations.size()){
-				m_animations[m_index]->setStatus(AnimationStates::Playing);
-				m_animations[m_index]->onBegin();
-			}
-			else{
-				// Nothing else to play now
-				setStatus(AnimationStates::Stopped);
-				onEnd();
-			}
-
-		}
-	}
-
-	return std::max<float>(elapsedTime, 0.f);
-};
+	return 0.f;
+}
 
 NEPHILIM_NS_END

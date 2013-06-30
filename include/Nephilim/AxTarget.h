@@ -2,6 +2,7 @@
 #define NephilimAxTarget_h__
 
 #include "Platform.h"
+#include "Vectors.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -14,22 +15,25 @@ class NEPHILIM_API AxTarget
 {
 public:
 
-	template<class T>
-	void axSetNumber(T number)
+	virtual vec2 axGetPosition2D()
 	{
-		printf("AxTarget SetNumber(%f)\n", number);
+		return vec2();
 	}
 
-};
+	virtual void axSetPosition2D(vec2 position)
+	{
 
-/**
-	\ingroup Animation
-	\class AxConnectedTarget
-	\brief Provides the ability to get animation results through signals
-*/
-class NEPHILIM_API AxConnectedTarget
-{
+	}
 
+	virtual void axSetAlpha(float alpha)
+	{
+
+	}
+
+	virtual float axGetAlpha()
+	{
+		return 1.f;
+	}
 };
 
 NEPHILIM_NS_END

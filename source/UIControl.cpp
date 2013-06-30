@@ -28,10 +28,6 @@ UIControl::UIControl()
 		m_stretchForContents(false),
 		m_hovered(false)
 {
-
-	m_resizeAnimation.addAnimable(this);
-	m_positionAnimation.addAnimable(this);
-
 	m_minimumDimensions = Vec2f(10,10);
 	m_maximumDimensions = Vec2f(5000,5000);
 };
@@ -42,12 +38,41 @@ vec2 UIControl::getPosition()
 	return vec2(m_bounds.left, m_bounds.top);
 }
 
+
+/// Feeds the position of the control to the animation systems
+vec2 UIControl::axGetPosition2D()
+{
+	return getPosition();
+}
+
+void UIControl::axSetPosition2D(vec2 position)
+{
+	setPosition(position.x, position.y);
+}
+
+void UIControl::axSetAlpha(float alpha)
+{
+	m_backgroundColor.a = static_cast<Uint8>(alpha * 255);
+}
+
+float UIControl::axGetAlpha()
+{
+	return static_cast<float>(m_backgroundColor.a / 255);
+}
+
 /// Set the flags for sizing
 void UIControl::setSizeFlags(Uint64 flags)
 {
 	m_sizeFlags = flags;
 
 	processSizeFlags();
+}
+
+void UIControl::commitAnimation(AxBase* animation)
+{
+	animation->addTarget(this);
+	animation->deduceInitialParameters();
+	m_animations.commit(animation);
 }
 
 /// Get the sizing flags
@@ -468,35 +493,17 @@ void UIControl::onResize(){
 /// Resizes the control over a defined time
 /// The lower border of the control will become at target position
 void UIControl::resizeToPoint(float x, float y, float duration){
-	Vec2f size;
-	size.x = x - m_bounds.left;
-	size.y = y - m_bounds.top;
-	// ensure min and max
-	if(size.x < m_minimumDimensions.x)size.x = m_minimumDimensions.x;
-	if(size.y < m_minimumDimensions.y)size.y = m_minimumDimensions.y;
-	if(size.x > m_maximumDimensions.x)size.x = m_maximumDimensions.x;
-	if(size.y > m_maximumDimensions.y)size.y = m_maximumDimensions.y;
 
-	m_resizeAnimation.setDestination(size.x,size.y);
-	m_resizeAnimation.setDuration(duration);
-	m_resizeAnimation.stop();
-	m_resizeAnimation.play();
 };
 
 void UIControl::resize(float width, float height, float duration)
 {
-	m_resizeAnimation.setDestination(width,height);
-	m_resizeAnimation.setDuration(duration);
-	m_resizeAnimation.stop();
-	m_resizeAnimation.play();
+
 };
 
 void UIControl::reposition(float x, float y, float duration)
 {
-	m_positionAnimation.setDestination(x, y);
-	m_positionAnimation.setDuration(duration);
-	m_positionAnimation.stop();
-	m_positionAnimation.play();
+
 };
 
 
@@ -541,14 +548,15 @@ void UIControl::updateLayout()
 }
 
 /// Update the control
-void UIControl::onUpdate(float elapsedTime){
+void UIControl::onUpdate(float elapsedTime)
+{
 
-	m_resizeAnimation.onUpdate(elapsedTime);
-	m_positionAnimation.onUpdate(elapsedTime);
 
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
 		(*it)->onUpdate(elapsedTime);
 	}
+
+	m_animations.update(elapsedTime);
 };
 
 /// Get the current size of the control that encompasses all its children

@@ -80,7 +80,7 @@ public:
 	void update(float elapsedTime);
 	
 	/// Pushes a new event through the ui system
-	UIEventUsage pushEvent(Event& event);
+	UIEventResult pushEvent(Event& event);
 
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control

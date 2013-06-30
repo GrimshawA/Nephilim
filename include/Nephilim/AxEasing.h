@@ -13,12 +13,6 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API AxEasingFunction
 {
 public:
-	/// The default easing function is linear interpolation
-	AxEasingFunction();
-
-	/// Compute a value with the easing function
-	float operator()(float elapsedTime, float startValue, float valueInterval, float duration);
-
 	/// Enumeration of built-in easing functions
 	enum NativeEasingFunction
 	{
@@ -27,6 +21,15 @@ public:
 		Other
 	};
 
+	/// The default easing function is linear interpolation
+	AxEasingFunction();
+
+	/// Construct from a easing type
+	AxEasingFunction(NativeEasingFunction function);
+
+	/// Compute a value with the easing function
+	float operator()(float elapsedTime, float startValue, float valueInterval, float duration);
+	
 	/// Choose a built-in easing function
 	void setFunction(NativeEasingFunction function);
 

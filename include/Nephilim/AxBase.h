@@ -16,27 +16,39 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API AxBase
 {
 public:
+	/// Default initialization
+	AxBase();
 
-	AxBase()
-		: m_looping(false)
-		, m_duration(-1.f)
-		, m_elapsed(0.f)
-	{
+	/// Initialize with a duration
+	AxBase(float duration);
 
-	}
+	/// Base destructor
+	virtual ~AxBase();
 
-	virtual ~AxBase()
-	{
+	/// Attempts to deduce initial animation parameters by looking at the targets
+	virtual void deduceInitialParameters();
 
-	}
+	/// Add a new target for animation
+	virtual void addTarget(AxTarget* target);
 
-	bool isOver()
-	{
-		return ((m_elapsed > m_duration) && !m_looping);
-	}
+	/// Get the number of targets
+	size_t getTargetCount();
+
+	/// By default isOver returns true if the elapsed time is bigger than the duration of the animation and it is not looping
+	virtual bool isOver();
+
+	/// Get the duration of the animation
+	virtual float getDuration();
 
 	/// Step forward the animation
-	virtual float update(float delta) = 0;
+	virtual float update(float delta)
+	{
+		return 0.f;
+	}
+
+	typedef std::list<AxTarget*>::iterator TargetIterator;
+
+protected:
 
 	std::list<AxTarget*> m_targets;
 	float m_duration;

@@ -56,9 +56,6 @@ NStateImage::NStateImage()
 {
 	cout<<"[NStateImage] Construct"<<endl;
 
-	m_fadeAnimation.addAnimation(new AnimationFade(&m_sprite, 1, 255, 1.5));
-	m_fadeAnimation.addAnimation(new AnimationStall(2));
-	m_fadeAnimation.addAnimation(new AnimationFade(&m_sprite, 255, 1, 1.5));
 
 };
 
@@ -76,7 +73,6 @@ void NStateImage::setImage(const String &image)
 	m_sprite.setTexture(m_texture);
 	m_sprite.resize(1024,768);
 
-	m_fadeAnimation.play();
 };
 
 /// Tells the state how much time it should update itself
@@ -85,13 +81,7 @@ void NStateImage::setImage(const String &image)
 bool NStateImage::onUpdate(Time &time)
 {
 	m_elapsedTime += time.asSeconds();
-	m_fadeAnimation.onUpdate(time.asSeconds());
-	if(m_elapsedTime >= m_duration)
-	{
-		// pop
-		cout<<"[NStateImage] Finished."<<endl;
-		finish(); 
-	}
+
 	return true;
 };
 

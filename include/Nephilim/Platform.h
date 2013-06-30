@@ -32,7 +32,7 @@
         #endif
 
 		#define NEPHILIM_SFML
-		#define SFML_STATIC
+		//#define SFML_STATIC
 		#define NEPHILIM_OS "windows"
 		#define NEPHILIM_WINDOWS
 		#define NEPHILIM_DESKTOP

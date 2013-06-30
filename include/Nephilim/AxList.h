@@ -30,13 +30,7 @@ public:
 	/// Updates the list of animations
 	void update(float delta);
 
-	struct AxListAnimation
-	{
-		AxBase* animation;
-
-	};
-
-	std::list<AxBase*> m_animations;
+	std::list<AxBase*> m_animations; ///< Processing animation list
 };
 
 

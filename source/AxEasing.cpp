@@ -22,6 +22,11 @@ AxEasingFunction::AxEasingFunction()
 	m_type = LinearInterpolation;
 }
 
+AxEasingFunction::AxEasingFunction(NativeEasingFunction function)
+{
+	setFunction(function);
+}
+
 float AxEasingFunction::operator()(float elapsedTime, float startValue, float valueInterval, float duration)
 {
 	return m_easeFunction(elapsedTime, startValue, valueInterval, duration);

@@ -15,9 +15,9 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 #ifdef NEPHILIM_DESKTOP
-class Window::WindowImplementation : public sf::RenderWindow{
+class Window::WindowImplementation : public sf::Window{
 public:
-	WindowImplementation() : sf::RenderWindow(){
+	WindowImplementation() : sf::Window(){
 
 	}
 };
@@ -222,7 +222,7 @@ void Window::setTitle(const String &title){
 
 	/*
 /// Creates a uninitialized window
-Window::Window() : sf::RenderWindow(){
+Window::Window() : sf::Window(){
 	myDispatcher.Parent = this;
 };
 /// Creates a window out of some settings
@@ -231,7 +231,7 @@ Window::Window() : sf::RenderWindow(){
 /// \param style is the configurable style of the window
 /// \param settings is the configuration of the OpenGL version and parameters such as antialiasing
 Window::Window(VideoMode mode, const String &title, Uint32 style, const sf::ContextSettings &settings)
-: sf::RenderWindow(mode, title, style, settings)
+: sf::Window(mode, title, style, settings)
 {
 
 };
@@ -239,7 +239,7 @@ Window::Window(VideoMode mode, const String &title, Uint32 style, const sf::Cont
 /// This normally means to take the client space of another window and adopt it
 /// Common use is to make this window rendering appear as a specific frame in another application
 Window::Window(sf::WindowHandle handle, const sf::ContextSettings &settings)
-: sf::RenderWindow(handle, settings)
+: sf::Window(handle, settings)
 {
 
 };

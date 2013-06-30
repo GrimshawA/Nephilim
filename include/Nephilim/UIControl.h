@@ -1,5 +1,5 @@
-#ifndef UIControl_h__
-#define UIControl_h__
+#ifndef NephilimUIControl_h__
+#define NephilimUIControl_h__
 
 #include "Platform.h"
 #include "Rect.h"
@@ -9,10 +9,9 @@
 #include "RectangleShape.h"
 #include "Renderer.h"
 #include "RefCount.h"
+#include "AxList.h"
+#include "AxTarget.h"
 #include <vector>
-
-#include "AnimationDimension.h"
-#include "AnimationPosition.h"
 
 #include "UISizePolicy.h"
 #include "UILayout.h"
@@ -21,6 +20,7 @@
 
 NEPHILIM_NS_BEGIN
 
+class AxBase;
 class ASSlot;
 
 namespace UIPositionFlag
@@ -43,13 +43,14 @@ namespace UISizeFlag
 	};
 }
 
-class NEPHILIM_API UIEventUsage
+class NEPHILIM_API UIEventResult
 {
 public:
 	bool hitControls;
 };
 
-class NEPHILIM_API UIControl : public sigc::trackable, public Animable, public RefCountable{
+class NEPHILIM_API UIControl : public AxTarget, public sigc::trackable, public Animable, public RefCountable
+{
 public:
 	friend class UILayout;
 
@@ -66,6 +67,9 @@ public:
 
 	/// Adds a child control
 	void attach(UIControl* control);
+
+	/// Submit an animation to be processed by the control
+	void commitAnimation(AxBase* animation);
 
 	/// Set a new layout to the control
 	void setLayout(UILayout* layout);
@@ -222,6 +226,15 @@ public:
 	/// Enables or disables a pseudo class
 	void setPseudoClass(const String& name, bool active);
 
+	/// Feeds the position of the control to the animation systems
+	virtual vec2 axGetPosition2D();
+
+	virtual void axSetPosition2D(vec2 position);
+
+	virtual void axSetAlpha(float alpha);
+
+	virtual float axGetAlpha();
+
 	/// Signal emitted whenever the slider value changes
 	sigc::signal<void, int> onValueChanged;
 
@@ -261,7 +274,7 @@ public:
 	/// Cascaded transform
 	mat4 m_transform;
 
-
+	AxList m_animations; ///< Animation list
 
 protected: // functions
 
@@ -298,9 +311,6 @@ protected:
 	/// Parent of the control, if any
 	UIControl* m_parent;
 
-	/// The resize animation
-	AnimationDimension m_resizeAnimation;
-	AnimationPosition m_positionAnimation;
 
 	/// Making this class able to animate sizes
 	virtual void animable_set_size(float x, float y);
@@ -335,8 +345,5 @@ void UIControl::setProperty(const String& propertyName, const T& propertyValue)
 	}
 };
 
-class ASEngine;
-bool registerUIControlSubtype(const String& name, ASEngine* engine);
-
 NEPHILIM_NS_END
-#endif // UIControl_h__
+#endif // NephilimUIControl_h__

@@ -2,33 +2,56 @@
 #define NephilimAxSequence_h__
 
 #include "Platform.h"
-#include "AnimationGroup.h"
+#include "AxBase.h"
+
+#include <list>
 
 NEPHILIM_NS_BEGIN
 
-
-
-
-/**
-	\ingroup Animation
-	\class AnimationGroupSequential
-	\brief Can hold and play animations in a sequential order, including other groups of animations
-*/
-class NEPHILIM_API AnimationGroupSequential : public AnimationGroup {
+class NEPHILIM_API AxSequence : public AxBase
+{
 public:
-	/// Default construction
-	AnimationGroupSequential();
+	/// Sequence mode types
+	enum SequenceModes
+	{
+		Ordered,
+		Parallel
+	};
 
-	/// Called when the animation is updating
-	/// \return MUST return the remaining time not used by the animation
-	/// This is essential as in a play list of animations, when one finished, the next updates immediately.
-	virtual float onUpdate(float elapsedTime);
+	/// Initializes in ordered mode by default
+	AxSequence();
 
-	/// Called to trigger the start of this animation
-	void play();
+	/// Initialize with a sequence mode
+	AxSequence(SequenceModes mode);
 
-private:
-	unsigned int m_index;
+	/// Initialize with a sequence mode and 0 to 3 initial animations
+	AxSequence(SequenceModes mode, AxBase *anim1 = NULL, AxBase *anim2 = NULL, AxBase* anim3 = NULL);
+
+	/// Destroy all animations
+	~AxSequence();
+
+	/// Attempts to deduce initial animation parameters by looking at the targets
+	virtual void deduceInitialParameters();
+
+	/// Add a new target for animation
+	virtual void addTarget(AxTarget* target);
+
+	/// Returns true when the sequence is finished
+	virtual bool isOver();
+
+	/// Add an animation to the sequence
+	void add(AxBase* animation);
+
+	/// Updates the sequence appropriately
+	virtual float update(float delta);
+
+	/// Get the duration of the animation
+	virtual float getDuration();
+
+	typedef std::list<AxBase*>::iterator AnimationIterator;
+	std::list<AxBase*> m_animations;
+	SequenceModes m_mode;
+	size_t m_current;
 };
 
 NEPHILIM_NS_END

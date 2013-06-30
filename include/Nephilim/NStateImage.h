@@ -36,11 +36,8 @@ private:
 	float m_duration;
 	float m_elapsedTime;
 
-	AnimationGroupSequential m_fadeAnimation;
 };
 
-class ASEngine;
-bool registerNStateImage(ASEngine* engine);
 
 NEPHILIM_NS_END
 #endif // NStateImage_h__
