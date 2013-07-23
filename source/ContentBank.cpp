@@ -1,37 +1,10 @@
-#include "Nephilim/ContentBank.h"
-#include "Nephilim/ASEngine.h"
-#include "Nephilim/Directory.h"
-#include "AS/aswrappedcall.h"
+#include <Nephilim/ContentBank.h>
+#include <Nephilim/Path.h>
 
 #include <iostream>
 using namespace std;
 
 NEPHILIM_NS_BEGIN
-
-bool registerContentBank(ASEngine* engine)
-{
-	engine->exportReferenceDataType("ContentBank");
-
-	if(engine->getPortableMode())
-	{
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "bool loadTexture(const string& in)", WRAP_MFN(ContentBank, loadTexture), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "bool load(const string& in)", WRAP_MFN(ContentBank, load), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "Texture@ getTexture(const string& in)", WRAP_MFN(ContentBank, getTexture), asCALL_GENERIC);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "File@ openRawFile(const string& in, const string& in)", WRAP_MFN(ContentBank, openRawFile), asCALL_GENERIC);
-
-	}
-	else
-	{
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "bool loadTexture(const string& in)", asMETHOD(ContentBank, loadTexture), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "bool load(const string& in)", asMETHOD(ContentBank, load), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "Texture@ getTexture(const string& in)", asMETHOD(ContentBank, getTexture), asCALL_THISCALL);
-		engine->getASEngine()->RegisterObjectMethod("ContentBank", "File@ openRawFile(const string& in, const string& in)", asMETHOD(ContentBank, openRawFile), asCALL_THISCALL);
-
-	}
-
-	return true;
-};
-
 
 /// Creates a loose content bank, destroys its resources on destruction
 ContentBank::ContentBank() : myLoader(this){

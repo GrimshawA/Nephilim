@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "AxBase.h"
 
-#include <list>
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
@@ -48,9 +48,11 @@ public:
 	/// Get the duration of the animation
 	virtual float getDuration();
 
-	typedef std::list<AxBase*>::iterator AnimationIterator;
-	std::list<AxBase*> m_animations;
-	SequenceModes m_mode;
+private:
+	typedef std::vector<AxBase*>::iterator AnimationIterator; ///< Iterator typedef
+
+	std::vector<AxBase*> m_animations; ///< List of animations cached in
+	SequenceModes m_mode;              ///< The mode of this sequence, parallel or ordered
 	size_t m_current;
 };
 

@@ -187,7 +187,59 @@ void Renderer::resetClippingRect()
 /// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
 void Renderer::setClippingRect(FloatRect rect)
 {
+	glScissor(rect.left, m_target->getSize().y - (rect.top + rect.height), rect.width, rect.height);
+}
 
+void Renderer::pushClippingRect(FloatRect rect)
+{
+	setClippingEnabled(true);
+
+	FloatRect finalRect;
+
+	if(m_scissorStack.empty())
+	{
+		// compare against the full window size
+		finalRect = FloatRect(0,0,m_target->getSize().x, m_target->getSize().y);
+	}
+	else
+	{
+		// compare against the previous scissor test
+		finalRect = m_scissorStack.top();
+	}
+
+	// Crop rect if needed and push
+	if(rect.left < finalRect.left)
+	{
+		rect.width = rect.width - finalRect.left - rect.left;
+		rect.left = finalRect.left;
+	}
+	if(rect.top < finalRect.top)
+	{
+		rect.height = rect.height - finalRect.top - rect.top;
+		rect.top = finalRect.top;
+	}
+	if(rect.left + rect.width > finalRect.left + finalRect.width)
+	{
+		rect.width = finalRect.left + finalRect.width - rect.left;
+	}
+	if(rect.top + rect.height > finalRect.top + finalRect.height)
+	{
+		rect.height = finalRect.top + finalRect.height - rect.top;
+	}	
+
+	// Push the final approved rect to the stack
+	m_scissorStack.push(rect);
+
+	// Activate the nested scissor region already cut
+	setClippingRect(rect);
+}
+
+void Renderer::popClippingRect()
+{
+	m_scissorStack.pop();
+
+	if(m_scissorStack.empty())
+		setClippingEnabled(false);
 }
 
 void Renderer::setDepthTestEnabled(bool enable)

@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "State.h"
 #include "ASSlot.h"
-#include "UIManager.h"
+//#include "UIManager.h"
 
 NEPHILIM_NS_BEGIN
 class ASEngine;
@@ -55,7 +55,7 @@ public:
 	/// The custom state needed parameters
 	void set(const String& file);
 
-	UIManager m_ui;
+//	UIManager m_ui;
 
 private:
 	Texture m_texture;

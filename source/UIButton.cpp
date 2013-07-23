@@ -14,18 +14,25 @@ UIButton::UIButton()
 {
 	setSize(200,40);
 	m_label = "unassigned";
-};
+}
 
 UIButton::~UIButton()
 {
-
 }
 
+UIButton::UIButton(const String& title)
+: UIControl()
+, m_color(0,0,0)
+, m_label(title)
+, hover(false)
+{
+	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
+	hoverproperties["color"] = UIProperty(Color::Blue);
 
-/// Constructs the button from a label text
-UIButton::UIButton(const String& title) : UIControl(), m_color(0,0,0), m_label(title), hover(false){
+	UIPropertyMap& normalproperties = m_styleInfo["normal"];
+	normalproperties["color"] = UIProperty(Color::Orange);
 
-};
+}
 
 void UIButton::setNormalTexture(const String& filename)
 {
@@ -63,7 +70,7 @@ bool UIButton::onEventNotification(Event& event){
 
 	if(event.type == Event::MouseButtonReleased){
 		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
-			onClick();
+			//onClick();
 		}
 
 		// drag test
@@ -88,11 +95,11 @@ bool UIButton::onEventNotification(Event& event){
 	if(event.type == Event::MouseMoved)
 	{
 		if(m_bounds.contains(event.mouseMove.x, event.mouseMove.y)){
-			setProperty<Color>("background-color", Color::White);
+			//setProperty<Color>("background-color", Color::White);
 		}
 		else
 		{
-			setProperty<Color>("background-color", Color(91,91,91));
+			//setProperty<Color>("background-color", Color(91,91,91));
 		}
 	}
 
@@ -128,48 +135,34 @@ void UIButton::setRawProperty(const String& name, const String& val)
 	}
 }
 
-
-void UIButton::bindSignal(const String &signalName, ASSlot* slot )
-{
-	UIControl::bindSignal(signalName, slot);
-
-	if(!slot){
-		cout<<"INVALID SLOT"<<endl;
-		return;
-	}
-
-	//cout<<"Binding slot: "<<slot<<endl;
-}
-
 /// Sets the label of the button
 void UIButton::setLabel(const String& text)
 {
 	m_label = text;
 	m_baseLabel = m_label;
-};
+}
 
 void UIButton::draw(Renderer* renderer)
 {
 	if(!m_stateContext->m_defaultFont.isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");
+	}	
+
+	RectangleShape background;
+	background.setPosition(getPosition());
+	background.setSize(getSize());
+	if(m_classInfo["hover"])
+	{
+		background.setColor(m_styleInfo["hover"]["color"].getColor());
 	}
-
-	
-
-	/*RectangleShape background;
-	if(!m_hovered)
-		background.setTexture(&m_normal);
 	else
 	{
-		background.setTexture(&m_hovert);
+		background.setColor(m_styleInfo["normal"]["color"].getColor());
 	}
-
-	background.setPosition(m_bounds.left, m_bounds.top);
-	background.setSize(m_bounds.width, m_bounds.height);
-	background.setColor(Color::White);
 	renderer->draw(background);
-	*/
+	
+
 	Text t;
 	t.setFont(m_stateContext->m_defaultFont);
 	t.setString(m_label);

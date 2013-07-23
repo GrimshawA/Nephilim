@@ -7,6 +7,7 @@ NEPHILIM_NS_BEGIN
 AxSequence::AxSequence()
 : AxBase()
 , m_mode(Ordered)
+, m_current(0)
 {
 
 }
@@ -15,6 +16,7 @@ AxSequence::AxSequence()
 AxSequence::AxSequence(SequenceModes mode)
 : AxBase()
 , m_mode(mode)
+, m_current(0)
 {
 
 }
@@ -23,6 +25,7 @@ AxSequence::AxSequence(SequenceModes mode)
 AxSequence::AxSequence(SequenceModes mode, AxBase *anim1, AxBase *anim2, AxBase* anim3)
 : AxBase()
 , m_mode(mode)
+, m_current(0)
 {
 	if(anim1) add(anim1);
 	if(anim2) add(anim2);
@@ -57,7 +60,14 @@ void AxSequence::deduceInitialParameters()
 
 bool AxSequence::isOver()
 {
-	return AxBase::isOver();
+	if(m_mode == Parallel)
+	{
+		return AxBase::isOver();
+	}
+	else
+	{
+		return (AxBase::isOver() && m_current == m_animations.size());
+	}
 }
 
 float AxSequence::getDuration()
@@ -101,19 +111,22 @@ float AxSequence::update(float delta)
 	// Sequential. Update one animation at a time
 	if(m_mode == Ordered)
 	{
-		AnimationIterator it = m_animations.begin();
-		float time_offset = 0.f;
-
-		while(it != m_animations.end() && (m_elapsed < time_offset || m_elapsed > time_offset + (*it)->getDuration()))
+		if(!m_animations.empty() && m_current < m_animations.size())
 		{
-			time_offset += (*it)->getDuration();
-			++it;
+			m_animations[m_current]->update(delta);
+
+			if(m_animations[m_current]->isOver())
+			{
+				m_current ++;
+				// re-deduce parameters for the new animation
+				if(m_current < m_animations.size())
+				{
+					m_animations[m_current]->deduceInitialParameters();
+				}
+			}
 		}
 
-		if(it != m_animations.end())
-		{
-			(*it)->update(delta);
-		}
+		// REVISIT: DOESNT WORK CORRECTLY
 	}
 
 	else if(m_mode == Parallel)

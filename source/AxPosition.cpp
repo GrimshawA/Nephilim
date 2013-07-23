@@ -33,7 +33,7 @@ void AxPosition2D::deduceInitialParameters()
 
 float AxPosition2D::update(float delta)
 {
-	Log("Position set %f to %f", m_begin.x, m_end.y);
+	//Log("Position set %f to %f", m_begin.x, m_end.y);
 	m_elapsed += delta;
 
 	vec2 result;

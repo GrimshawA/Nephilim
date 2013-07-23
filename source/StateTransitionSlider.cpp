@@ -21,7 +21,14 @@ StateTransitionSlider::StateTransitionSlider()
 	lastp = vec2(1024,0);
 }
 
-void StateTransitionSlider::update(const Time& time)
+void StateTransitionSlider::setColor(const Color& color)
+{
+	m_color = color;
+	m_rect.setColor(color);
+}
+
+
+void StateTransitionSlider::onUpdate(const Time& time)
 {
 	elapsedTime += time.asSeconds();
 

@@ -34,6 +34,11 @@ public:
 	{
 		return 1.f;
 	}
+
+	virtual void axKillTrigger()
+	{
+
+	}
 };
 
 NEPHILIM_NS_END

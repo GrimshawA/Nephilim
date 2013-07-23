@@ -1,7 +1,5 @@
-#ifndef Renderer_h__
-#define Renderer_h__
-
-#include <stack>
+#ifndef NephilimRenderer_h__
+#define NephilimRenderer_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -18,6 +16,7 @@
 #include "Texture.h"
 
 #include <map>
+#include <stack>
 
 NEPHILIM_NS_BEGIN
 
@@ -155,6 +154,12 @@ public:
 	/// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
 	virtual void setClippingRect(FloatRect rect);
 
+	///
+	virtual void pushClippingRect(FloatRect rect);
+
+	///
+	virtual void popClippingRect();
+
 	/// Set the current projection matrix
 	virtual void setProjectionMatrix(const mat4& projection);
 
@@ -191,22 +196,23 @@ public:
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
 protected:
-	Type           m_type;            ///< The type of this renderer
-	String         m_name;            ///< The string with the name of this renderer
-	Surface*       m_surface;         ///< Guaranteed to be a valid surface while the renderer lives
-	RenderTarget*  m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
-	Color          m_clearColor;      ///< The color of the background when clearing buffer
-	FloatRect      m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used
-	mat4           m_projection;      ///< Current projection matrix
-	mat4           m_view;            ///< Current view matrix
-	mat4           m_model;           ///< Current model matrix
-	Shader*        m_activeShader;    ///< Current active shader
-	bool		   m_shaderUsageHint; ///< Hint for the default shader usage
-	Texture		   m_defaultTexture;  ///< Full white 1x1 default texture
+	Type                  m_type;            ///< The type of this renderer
+	String                m_name;            ///< The string with the name of this renderer
+	Surface*              m_surface;         ///< Guaranteed to be a valid surface while the renderer lives
+	RenderTarget*         m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
+	Color                 m_clearColor;      ///< The color of the background when clearing buffer
+	FloatRect             m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used
+	mat4                  m_projection;      ///< Current projection matrix
+	mat4                  m_view;            ///< Current view matrix
+	mat4                  m_model;           ///< Current model matrix
+	Shader*               m_activeShader;    ///< Current active shader
+	bool		          m_shaderUsageHint; ///< Hint for the default shader usage
+	Texture		          m_defaultTexture;  ///< Full white 1x1 default texture
+	std::stack<FloatRect> m_scissorStack;    ///< Stack of scissor test regions
 
 	/// Conversion table of Render::Primitive::Type to GLenum
 	std::map<Render::Primitive::Type, int> m_primitiveTable;	
 };
 
 NEPHILIM_NS_END
-#endif // Renderer_h__
+#endif // NephilimRenderer_h__

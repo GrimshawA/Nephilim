@@ -36,7 +36,7 @@ StateTransitionBlocks::StateTransitionBlocks()
 	}
 }
 
-void StateTransitionBlocks::update(const Time& time)
+void StateTransitionBlocks::onUpdate(const Time& time)
 {
 	if(!m_next)
 	{

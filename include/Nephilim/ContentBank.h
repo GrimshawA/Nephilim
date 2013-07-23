@@ -1,5 +1,5 @@
-#ifndef PARABOLA_CONTENTBANK_H
-#define PARABOLA_CONTENTBANK_H
+#ifndef NephilimContentBank_h__
+#define NephilimContentBank_h__
 
 #include "Platform.h"
 #include "StringID.h"
@@ -49,7 +49,8 @@ class GameCore;
 		- ...
 
 */
-class NEPHILIM_API ContentBank{
+class NEPHILIM_API ContentBank
+{
 public:
 	/// Creates a loose content bank, destroys its resources on destruction
 	ContentBank();
@@ -110,8 +111,5 @@ private:
 	ContentLoader myLoader;
 };
 
-class ASEngine;
-bool registerContentBank(ASEngine* engine);
-
 NEPHILIM_NS_END
-#endif
+#endif // NephilimContentBank_h__

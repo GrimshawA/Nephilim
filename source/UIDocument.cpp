@@ -1,16 +1,18 @@
 #include <Nephilim/UIDocument.h>
+#include <Nephilim/UISurface.h>
 #include <Nephilim/Text.h>
 #include <Nephilim/UILabel.h>
 
+#include <algorithm>
+
 NEPHILIM_NS_BEGIN
 
-/// Construct the window
-UIDocument::UIDocument() : m_surfaceContainerLock(false), m_timeSinceLastMouseMovement(0.f), m_backgroundColor(Color::White){
-	m_surfaces.push_back(new UISurface());
-	m_surfaces.back()->setContext(&m_state);
-
-	m_backgroundColor =  Color(0,0,0,0);
-};
+UIDocument::UIDocument()
+: m_surfaceContainerLock(0)
+, m_backgroundColor(Color::Transparent)
+{
+	
+}
 
 void UIDocument::onDraw(Renderer* renderer)
 {
@@ -22,38 +24,38 @@ void UIDocument::onDraw(Renderer* renderer)
 	renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
 
 	/// Draw surfaces bottom to top
-	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	m_surfaceContainerLock++;
+	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
 		(*it)->draw(renderer);
 	}
+	m_surfaceContainerLock--;
 }
 
-/// Creates a new surface, which is underneath the relativeSurface specified
-UISurface* UIDocument::createSurfaceBelow(UISurface* relativeSurface, const String& name){
-	if(!relativeSurface) return NULL;
-
-	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		if((*it) == relativeSurface){
-			// This where where to insert
-			UISurface* surface = new UISurface();
-			surface->setSize(m_bounds.width, m_bounds.height);
-			surface->setName(name);
-			m_surfaces.insert(it, surface);
-			return surface;
+UISurface* UIDocument::getSurfaceByName(const String& name)
+{
+	UISurface* found = NULL;
+	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
+		if((*it)->getName() == name)
+		{
+			found = (*it);
 		}
 	}
 
-	return NULL;
-};
-
-/// Get a surface by its name
-UISurface* UIDocument::getSurfaceByName(const String& name){
-	for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		if((*it)->getName() == name){
-			return (*it);
+	if(!found)
+	{
+		for(unsigned int i = 0; i < m_pendingChanges.size(); i++)
+		{
+			if(m_pendingChanges[i].type == Add && m_pendingChanges[i].surface->getName() == name)
+			{
+				found = m_pendingChanges[i].surface;
+			}
 		}
 	}
-	return NULL;
-};
+
+	return found;
+}
 
 UICore& UIDocument::getContext(){
 	return m_state;
@@ -96,6 +98,15 @@ void UIDocument::clearUnusedSurfaces()
 
 }
 
+//debug
+void UIDocument::debugData()
+{
+	Log("Surface count: %d", m_surfaces.size());
+	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+		Log("Surface: %s", (*it)->getName().c_str());
+	}
+}
+
 /// Get the current surface count
 int UIDocument::getSurfaceCount()
 {
@@ -106,11 +117,12 @@ int UIDocument::getSurfaceCount()
 UISurface* UIDocument::operator[](const String& name)
 {
 	UISurface* surface = getSurfaceByName(name);
-	if(surface) return surface;
-	else
+	if(!surface)
 	{
-		return addSurface(name);
+		surface = addSurface(name);
 	}
+
+	return surface;
 }
 
 /// Get a surface directly by its index
@@ -151,7 +163,7 @@ void UIDocument::showMessageBox(const String& message)
 UIControl* UIDocument::getControlByName(const String& name){
 	UIControl* control = NULL;
 	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		control = (*it)->getControlByName(name);
+		control = (*it)->findByName(name);
 		if(control != NULL) return control; // the surface returned something
 	}
 
@@ -165,6 +177,7 @@ UISurface* UIDocument::addSurface(const String& name)
 	surface->setPosition(m_bounds.left, m_bounds.top);
 	surface->setSize(m_bounds.width, m_bounds.height);
 	surface->setContext(&m_state);
+	surface->m_parentDocument = this;
 
 	if(!m_surfaceContainerLock)
 		m_surfaces.push_back(surface);
@@ -195,88 +208,59 @@ void UIDocument::draw(Renderer* renderer){
 	}
 };
 
+/// Destroys a surface from its children
+void UIDocument::destroySurface(UISurface* surface)
+{
+	if(m_surfaceContainerLock > 0)
+	{
+		PendingChange op;
+		op.surface = surface;
+		op.type = Remove;
+		m_pendingChanges.push_back(op);
+	}
+	else
+	{
+		m_surfaces.erase(std::find(m_surfaces.begin(), m_surfaces.end(), surface));
+	}
+}
+
 /// Update the state of the ui
-void UIDocument::update(float elapsedTime){
-	m_timeSinceLastMouseMovement += elapsedTime;
-	if(m_timeSinceLastMouseMovement >= 1.2f){
-		// time to show a tool tip
-		m_showingToolTip = true;
-	}
-
+void UIDocument::update(float elapsedTime)
+{	
+	m_surfaceContainerLock++;
 	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++){
-		(*it)->onUpdate(elapsedTime);
+		(*it)->update(elapsedTime);
 	}
-};
+	m_surfaceContainerLock--;
+}
 
-/// Pushes a new event through the ui system
-UIEventResult UIDocument::pushEvent(Event& event){
+UIEventResult UIDocument::pushEvent(const Event& event)
+{
 	UIEventResult eventUsage;
 
-	bool result = true;
-	/// Tooltip related
-	if(event.type == Event::MouseMoved){
-		m_timeSinceLastMouseMovement = 0.f; m_showingToolTip = false;
-	
-		//test drag
-		if(m_state.m_dragControl)
+	// -- Raw event delivery system
+	m_surfaceContainerLock++;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
+	{
+		if((*it)->getChildCount() > 0)
 		{
-			m_state.m_dragControl->setPosition(event.mouseMove.x - m_state.m_dragOffset.x, event.mouseMove.y - m_state.m_dragOffset.y);
+			// deliver the event
+			(*it)->dispatchEvent(event);
+
+
+			if((*it)->isModal())
+				break;
 		}
-	}
-
-	if(event.type == Event::Resume)
-	{
-
-		m_state.m_defaultFont.loadFromFile("Brutality.ttf");
-
-		for(std::vector<UISurface*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-			(*it)->reloadGraphicalAssets();
-			
-
-		}
-	}
-
-
-	// Handling keyboard
-	if(event.type == Event::KeyPressed)
-	{
-		// Deliver input to the focused control
-		if(m_state.m_focusControl)
-		{
-			m_state.m_focusControl->onKeyPressed(event.key.code);
-		}
-	}
-	else if(event.type == Event::KeyReleased)
-	{
 
 	}
-	else if(event.type == Event::TextEntered)
-	{
-		// Deliver input to the focused control
-		if(m_state.m_focusControl)
-		{
-			m_state.m_focusControl->onTextEvent(event.text.unicode);
-		}
-	}
+	m_surfaceContainerLock--;
 
-	// lock for iteration
-	m_surfaceContainerLock = true;
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		if(!(*it)->onEventNotification(event)){
-			result = false; // no propagation of the event for lower layers if the surface returns false
-			break;
-		}
-	}
-	m_surfaceContainerLock = false;
-
-
-	// Handle events
+	// -- Built-in event handling
 	switch(event.type)
 	{
 		case Event::MouseMoved:
 			{
-				result = processMouseMove(event.mouseMove.x, event.mouseMove.y);
-				eventUsage.hitControls = result;
+				processMouseMove(event.mouseMove.x, event.mouseMove.y);
 			}
 		break;
 
@@ -292,11 +276,26 @@ UIEventResult UIDocument::pushEvent(Event& event){
 						m_state.m_focusControl = NULL;
 					}
 				}
-				result = processMouseButtonPressed(event.mouseButton.x, event.mouseButton.y, event.mouseButton.button);
-				eventUsage.hitControls = result;
-
+				bool result = processMouseButtonPressed(event.mouseButton.x, event.mouseButton.y, event.mouseButton.button);
+				eventUsage.hitControls = false;
 			}
 		break;
+
+		case Event::MouseButtonReleased:
+			{				
+				processMouseButtonReleased(event.mouseButton.x, event.mouseButton.y, event.mouseButton.button, eventUsage);
+			}
+			break;
+
+		case Event::TextEntered:
+			{
+				// Deliver input to the focused control
+				if(m_state.m_focusControl)
+				{
+					m_state.m_focusControl->onTextEvent(event.text.unicode);
+				}
+			}
+			break;
 	}
 
 	// now that surfaces were processed, apply changes to surfaces container
@@ -319,11 +318,26 @@ void UIDocument::setLanguage(const String& shortLanguageName)
 /// Process a mouse press event
 bool UIDocument::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	m_surfaceContainerLock = true;
+	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
 		(*it)->processMouseButtonPressed(x,y,button);
 	}
+	m_surfaceContainerLock = false;
+
 	return false;
 }
+
+void UIDocument::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info)
+{
+	m_surfaceContainerLock = true;
+	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
+		(*it)->processMouseButtonReleased(x, y, button, info);
+	}
+	m_surfaceContainerLock = false;
+}
+
 
 /// Process a mouve movement event
 bool UIDocument::processMouseMove(int x, int y)
@@ -334,7 +348,6 @@ bool UIDocument::processMouseMove(int x, int y)
 	return false;
 }
 
-
 void UIDocument::applyPendingChanges()
 {
 	for(unsigned int i = 0; i < m_pendingChanges.size(); i++)
@@ -343,6 +356,10 @@ void UIDocument::applyPendingChanges()
 		{
 			case Add:
 				m_surfaces.push_back(m_pendingChanges[i].surface);
+			break;
+
+			case Remove:
+				m_surfaces.erase(std::find(m_surfaces.begin(), m_surfaces.end(), m_pendingChanges[i].surface));
 			break;
 		}
 	}

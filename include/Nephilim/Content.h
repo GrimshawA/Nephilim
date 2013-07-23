@@ -1,18 +1,8 @@
-#ifndef PARABOLA_CONTENT_H
-#define PARABOLA_CONTENT_H
+#ifndef NephilimContent_h__
+#define NephilimContent_h__
 
-/************************************************************************/
-/* Parabola Engine Content Libraries - Artur Moreira                   */
-/************************************************************************/
-#include "ContentBank.h"
-#include "ContentList.h"
-#include "ContentLoader.h"
+/// Asset Managing
 
-/**
-	\defgroup Content
 
-	This module contains all the classes responsible to handle game content,
-	such as Sounds, Textures, Images, Particle systems, etc
-*/
 
-#endif
+#endif // Content_h__

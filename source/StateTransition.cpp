@@ -28,7 +28,15 @@ void StateTransition::update(const Time& time)
 	{
 		m_stack->updateList(m_futureList, time);
 	}
+
+	onUpdate(time);
 }
+
+void StateTransition::onUpdate(const Time& time)
+{
+
+}
+
 
 void StateTransition::drawPreviousFrame(Renderer* renderer)
 {
@@ -59,5 +67,9 @@ void StateTransition::finish()
 	m_finished = true;
 }
 
+void StateTransition::draw(Renderer* renderer)
+{
+
+}
 
 NEPHILIM_NS_END

@@ -21,7 +21,7 @@ public:
 
 protected:
 	/// Update the transition
-	virtual void update(const Time& time);
+	virtual void onUpdate(const Time& time);
 
 	/// Draw the transition
 	virtual void draw(Renderer* renderer);

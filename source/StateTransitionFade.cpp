@@ -22,10 +22,8 @@ StateTransitionFade::StateTransitionFade()
 	lastp = vec2(1024,0);
 }
 
-void StateTransitionFade::update(const Time& time)
+void StateTransitionFade::onUpdate(const Time& time)
 {
-	StateTransition::update(time);
-
 	elapsedTime += time.asSeconds();
 
 	if(elapsedTime > m_duration)

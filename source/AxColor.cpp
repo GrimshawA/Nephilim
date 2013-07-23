@@ -1,4 +1,5 @@
 #include <Nephilim/AxColor.h>
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -32,6 +33,8 @@ float AxAlpha::update(float delta)
 	float result = m_easing(m_elapsed, m_begin, m_end - m_begin, m_duration );
 
 	if(m_elapsed > m_duration) result = m_end;
+
+	//Log("Alpha updating %d", result);
 
 	for(TargetIterator it = m_targets.begin(); it != m_targets.end(); ++it)
 	{

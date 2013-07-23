@@ -1,6 +1,8 @@
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Texture.h>
+#include <Nephilim/Logger.h>
+#include <Nephilim/CGL.h>
 
 #include <cmath>
 
@@ -8,7 +10,11 @@ NEPHILIM_NS_BEGIN
 
 RectangleShape::RectangleShape()
 : m_geometry(Render::Primitive::TriangleFan, 4)
+, m_outline(Render::Primitive::Lines, 8)
 , m_texture(NULL)
+, m_width(1.f)
+, m_height(1.f)
+, m_outlineThickness(1.f)
 {
 	m_geometry[0].position = vec2(0.f,0.f);
 	m_geometry[1].position = vec2(1.f,0.f);
@@ -27,22 +33,76 @@ RectangleShape::RectangleShape()
 	m_geometry[1].color = Color::White;
 	m_geometry[2].color = Color::White;
 	m_geometry[3].color = Color::White;
+
+	setOutlineColor(Color(91,91,91,0));
+
+	updateInternalOutline();
+}
+
+void RectangleShape::updateInternalOutline()
+{
+	m_outline[0].position = vec2(0.f,0.f);
+	m_outline[1].position = vec2(m_width,0.f);
+
+	m_outline[2].position = vec2(m_width,0.f);
+	m_outline[3].position = vec2(m_width,m_height);
+
+	m_outline[4].position = vec2(m_width,m_height);
+	m_outline[5].position = vec2(0.f,m_height);
+
+	m_outline[6].position = vec2(0.f,0.f);
+	m_outline[7].position = vec2(0.f,m_height);
+}
+
+void RectangleShape::setRect(FloatRect rect)
+{
+	setPosition(rect.left, rect.top);
+	setSize(rect.width, rect.height);
+}
+
+void RectangleShape::setOutlineThickness(float thickness)
+{
+	m_outlineThickness = thickness;
 }
 
 void RectangleShape::setSize(const vec2& size)
 {
 	float width = size.x;
 	float height = size.y;
+	m_width = width;
+	m_height = height;
 	m_geometry[0].position = Vec2f(0.f,0.f);
 	m_geometry[1].position = Vec2f(width,0.f);
 	m_geometry[2].position = Vec2f(width,height);
 	m_geometry[3].position = Vec2f(0.f,height);
+
+	updateInternalOutline();
 }
 
 /// Get the size of the rectangle
 vec2 RectangleShape::getSize()
 {
 	return vec2(m_geometry[2].position.x, m_geometry[2].position.y);
+}
+
+void RectangleShape::setOutlineColor(const Color& outlineColor)
+{
+	for(int i = 0; i < m_outline.m_vertices.size(); ++i)
+	{
+		m_outline[i].color = outlineColor;
+	}
+}
+
+/// Check if a given point lies inside the shape
+bool RectangleShape::contains(vec2 point)
+{
+	vec2 fpoint = getInverseTransform().transformPoint(point);
+//	Log("(%f,%f) -> (%f, %f)", point.x, point.y, fpoint.x, fpoint.y);
+
+	return ((fpoint.x >= 0.f) 
+		&& (fpoint.x <= m_width)
+		&& (fpoint.y >= 0 )
+		&& (fpoint.y <= m_height));
 }
 
 /// Invert the vertical coordinates of the texture - hacky
@@ -60,6 +120,10 @@ void RectangleShape::setSize(float width, float height)
 	m_geometry[1].position = Vec2f(width,0.f);
 	m_geometry[2].position = Vec2f(width,height);
 	m_geometry[3].position = Vec2f(0.f,height);
+	m_width = width;
+	m_height = height;
+
+	updateInternalOutline();
 }
 
 void RectangleShape::setTexture(Texture* texture)
@@ -110,6 +174,9 @@ void RectangleShape::onDraw(Renderer* renderer)
 
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_geometry);
+	renderer->setDefaultTexture();
+	glLineWidth(m_outlineThickness);
+	renderer->draw(m_outline);
 	renderer->setModelMatrix(mat4::identity);
 	renderer->setDefaultTexture();
 }

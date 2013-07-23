@@ -143,7 +143,7 @@ void ScriptedGameCore::onCreate(){
 	//m_scripting.exportFiles();
 
 	m_scripting.exportMath();
-	registerContentBank(&m_scripting);
+//	registerContentBank(&m_scripting);
 //	registerStateStack(&m_scripting);
 	registerScriptedGameCore(&m_scripting);
 	registerBrowserPreloader(&m_scripting);
@@ -157,7 +157,7 @@ void ScriptedGameCore::onCreate(){
 
 	m_content.m_rootPath = m_fileSystemRoot;
 
-	m_ui.area = FloatRect(0,0,getWindow().getWidth(), getWindow().getHeight());
+//	m_ui.area = FloatRect(0,0,getWindow().getWidth(), getWindow().getHeight());
 
 
     if(m_preloadScriptPath.empty()) m_preloadScriptPath = "preload.as";
@@ -267,10 +267,10 @@ void ScriptedGameCore::onEvent(Event &event){
 	{
 //		PRINTLOG("Resize", "Resize: %d    %d\n", event.size.width, event.size.height);
 
-		for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+/*		for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 		{
 			(*it).second->setRect(FloatRect(0,0,event.size.width, event.size.height));
-		}
+		}*/
 	}
 
 	if(event.type == Event::Resume)
@@ -291,10 +291,10 @@ void ScriptedGameCore::onEvent(Event &event){
 		m_mainScript->call();
 	}
 
-	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+/*	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 	{
 		(*it).second->pushEvent(event);
-	}
+	}*/
 
 
 	if(event.type == Event::MouseWheelMoved  || event.type == Event::TouchPressed){

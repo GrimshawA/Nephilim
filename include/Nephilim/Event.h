@@ -337,6 +337,9 @@ public :
 class NEPHILIM_API Event{
 public:
 
+	/// Is this event related to the mouse or touch ?
+	bool isPointerType();
+
 	/// Returns true if the event refers to a pointer being pressed, like a touch or the mouse button
 	bool isPointerPressed() const;
 
@@ -350,26 +353,7 @@ public:
 		return (type == MouseMoved || type == TouchMoved);
 	}
 
-	Vec2i getPointerPosition()
-	{
-		if(type == MouseButtonPressed)
-		{
-			return Vec2i(mouseButton.x, mouseButton.y);
-		}
-		else if(type == MouseButtonReleased)
-		{
-			return Vec2i(mouseButton.x, mouseButton.y);
-		}
-		else if(type == MouseMoved)
-		{
-			return Vec2i(mouseMove.x, mouseMove.y);
-		}
-		else if(type == TouchPressed || type == TouchReleased || type == TouchMoved)
-		{
-			return Vec2i((int)touch.x, (int)touch.y);
-		}
-		else return Vec2i(0,0);
-	}
+	vec2i getPointerPosition() const;
 
 	struct TouchEvent
 	{

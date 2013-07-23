@@ -1,5 +1,5 @@
-#ifndef RectangleShape_h__
-#define RectangleShape_h__
+#ifndef NephilimRectangleShape_h__
+#define NephilimRectangleShape_h__
 
 #include "Platform.h"
 #include "Drawable.h"
@@ -21,6 +21,12 @@ class NEPHILIM_API RectangleShape : public Drawable, public Transformable
 public:
 	RectangleShape();
 
+	/// Check if a given point lies inside the shape
+	bool contains(vec2 point);
+
+	/// Set the rect of this rectangle
+	void setRect(FloatRect rect);
+
 	/// Get the size of the rectangle
 	vec2 getSize();
 
@@ -28,6 +34,10 @@ public:
 	void setSize(const vec2& size);
 
 	void setSize(float width, float height);
+
+	void setOutlineColor(const Color& outlineColor);
+
+	void setOutlineThickness(float thickness);
 
 	void setColor(const Color& color);
 
@@ -43,14 +53,22 @@ public:
 
 protected:
 
+	float m_width;
+	float m_height;
+
 	/// Draw with the renderer.draw(object) syntax
 	virtual void onDraw(Renderer* renderer);
 
 	VertexArray2D m_geometry;
 	VertexArray2D m_outline;
 
+	float m_outlineThickness;
+
 	Texture* m_texture;
+
+private:
+	void updateInternalOutline();
 };
 
 NEPHILIM_NS_END
-#endif // RectangleShape_h__
+#endif // NephilimRectangleShape_h__

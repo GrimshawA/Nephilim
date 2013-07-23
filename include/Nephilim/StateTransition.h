@@ -43,14 +43,12 @@ public:
 
 	/// Virtual method for updating the transition
 	virtual void update(const Time& time);
+	virtual void onUpdate(const Time& time);
 
-	virtual void draw(Renderer* renderer)
-	{
+	virtual void draw(Renderer* renderer);
 
-	}
-
-	bool allowUpdatesA;
-	bool allowUpdatesB;
+	bool allowUpdatesA; ///< Set to true to allow the exiting state to update
+	bool allowUpdatesB; ///< Set to true to allow the incoming state to update
 
 private:
 	friend class StateStack;

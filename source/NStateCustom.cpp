@@ -52,7 +52,7 @@ bool registerNStateCustom(ASEngine* engine)
 
 	}
 
-	engine->getASEngine()->RegisterObjectProperty("CustomState", "UIManager ui", asOFFSET(NStateCustom, m_ui));
+//	engine->getASEngine()->RegisterObjectProperty("CustomState", "UIManager ui", asOFFSET(NStateCustom, m_ui));
 
 	return true;
 };
@@ -117,7 +117,7 @@ void NStateCustom::onAttach()
 	m_scriptEngine->exportEvents();
 	//m_scriptEngine->exportFiles();	
 
-	registerContentBank(m_scriptEngine);
+//	registerContentBank(m_scriptEngine);
 //	registerView(m_scriptEngine);
 	m_scriptEngine->exportMath();
 //	registerStateStack(m_scriptEngine);
@@ -132,7 +132,7 @@ void NStateCustom::onAttach()
 
 	m_scriptEngine->exportGlobalProperty("CustomState this", this);
 
-	m_ui.setArea(0,0,m_parent->getParentGame()->getWindow().getWidth(), m_parent->getParentGame()->getWindow().getHeight());
+//	m_ui.setArea(0,0,m_parent->getParentGame()->getWindow().getWidth(), m_parent->getParentGame()->getWindow().getHeight());
 
 	if(m_parent && !m_exported)
 	{
@@ -174,10 +174,10 @@ bool NStateCustom::onEvent(Event &event)
 	{
 		//PRINTLOG("Resize", "Resize: %d    %d\n", event.size.width, event.size.height);
 
-		for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+/*		for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 		{
 			(*it).second->setRect(FloatRect(0,0,event.size.width, event.size.height));
-		}
+		}*/
 	}
 
 	if(m_script)
@@ -187,10 +187,10 @@ bool NStateCustom::onEvent(Event &event)
 		m_script->call();
 	}
 
-	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+/*	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 	{
 		(*it).second->pushEvent(event);
-	}
+	}*/
 	return true;
 }
 
@@ -207,10 +207,10 @@ bool NStateCustom::onUpdate(Time &time)
 		m_script->call();
 	}
 
-	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
+/*	for(std::map<String,UIDocument*>::iterator it = m_ui.m_windows.begin(); it != m_ui.m_windows.end(); it++)
 	{
 		(*it).second->update(time.asSeconds());
-	}
+	}*/
 
 	return true;
 };

@@ -336,9 +336,6 @@ void StateStack::update(Time &time)
 			index--;
 		}
 		m_stackLock = false;
-
-	
-		return;
 	}
 
 	if(!m_transition)

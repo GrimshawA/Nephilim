@@ -1,48 +1,62 @@
 #include <Nephilim/UISurface.h>
+#include <Nephilim/UIDocument.h>
+#include <Nephilim/Renderer.h>
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
-/// Construct the surface
-UISurface::UISurface() :
-	UIControl(),
-	m_modal(false)
+UISurface::UISurface()
+: UIControl()
+, m_modal(false)
+, m_parentDocument(NULL)
 {
 
-};
+}
 
-void UISurface::draw(Renderer* renderer){
+void UISurface::destroy()
+{
+	if(getParentDocument())
+	{
+		getParentDocument()->destroySurface(this);
+	}
+}
+
+void UISurface::draw(Renderer* renderer)
+{
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
 		(*it)->innerDraw(renderer);
 	}
 };
 
-/// Returns a control in the hierarchy with the name, or NULL if not found - TODO: recursive iterative
-UIControl* UISurface::getControlByName(const String& name){
-	UIControl* control = NULL;
-	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		if((*it)->getName() == name) return (*it); // the surface returned something
+/// Get the parent document of the surface
+UIDocument* UISurface::getParentDocument()
+{
+	return m_parentDocument;
+}
+
+/// Callback when a child of the control is removed
+void UISurface::onChildRemoved(UIControl* control)
+{
+	Log("Surface detected child removal %d %d %s", m_children.size(), m_modal, m_name.c_str());
+
+	if(m_children.empty() && m_modal)
+	{
+		Log("Destroying surface");
+		destroy();
 	}
+}
 
-	return NULL; // Nothing found.
-};
+/// Check if the surface is modal
+bool UISurface::isModal()
+{
+	return m_modal;
+}
 
-/// Callback to handle an event
-bool UISurface::onEventNotification(Event& event){
-	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->onEventNotification(event);
-	}
-
-	return true;
-};
-
-/// Set the unique name of this surface
-void UISurface::setName(const String& name){
-	m_name = name;
-};
-
-/// Get the unique name of this surface
-String UISurface::getName(){
-	return m_name;
-};
+/// When a surface is modal it will stop propagation of events to lower surfaces
+/// Also, when the last control in the surface is destroyed, the surface is destroyed automatically.
+void UISurface::setModal(bool enable)
+{
+	m_modal = enable;
+}
 
 NEPHILIM_NS_END

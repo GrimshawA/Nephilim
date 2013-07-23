@@ -1,18 +1,16 @@
-#ifndef NephilimUIWindow_h__
-#define NephilimUIWindow_h__
+#ifndef NephilimUIDocument_h__
+#define NephilimUIDocument_h__
 
 #include "Platform.h"
-#include "Event.h"
-#include "Renderer.h"
 #include "Drawable.h"
-
-#include "UIControl.h"
+#include "Event.h"
 #include "UICore.h"
-#include "UISurface.h"
-#include "UIToolTip.h"
-
 
 NEPHILIM_NS_BEGIN
+
+class Renderer;
+class UISurface;
+class UIControl;
 
 /**
 	\ingroup UI
@@ -22,7 +20,8 @@ NEPHILIM_NS_BEGIN
 	This class is a drawable and therefore can be rendered directly with Renderer::draw()
 	It works as a graphical object that contains user interface controls (widgets).
 
-	Its dimensions start at the origin (0,0) and end at (width,height)
+	When you render a UIDocument you are drawing a rectangle with the chosen dimensions in the plane z=0,
+	which includes all controls within that rectangle.
 */
 class NEPHILIM_API UIDocument : public Drawable
 {
@@ -49,10 +48,6 @@ public:
 	/// Set the current language of the ui system
 	void setLanguage(const String& shortLanguageName);
 
-	/// Creates a new surface, which is underneath the relativeSurface specified
-	/// \return NULL in case the relativeSurface is not a valid surface
-	UISurface* createSurfaceBelow(UISurface* relativeSurface, const String& name);
-
 	/// Get a surface by its name
 	UISurface* getSurfaceByName(const String& name);
 
@@ -61,6 +56,9 @@ public:
 	UISurface* getTopSurface();
 
 	UISurface* addSurface(const String& name);
+
+	/// Destroys a surface from its children
+	void destroySurface(UISurface* surface);
 
 	void applyPendingChanges();
 
@@ -80,7 +78,7 @@ public:
 	void update(float elapsedTime);
 	
 	/// Pushes a new event through the ui system
-	UIEventResult pushEvent(Event& event);
+	UIEventResult pushEvent(const Event& event);
 
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control
@@ -89,11 +87,17 @@ public:
 	/// Process a mouse press event
 	bool processMouseButtonPressed(int x, int y, Mouse::Button button);
 
+	/// Process a mouse release event
+	void processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info);
+
 	/// Destroys all surfaces without children
 	void clearUnusedSurfaces();
 
 	/// Get the current surface count
 	int getSurfaceCount();
+
+	//debug
+	void debugData();
 
 	/// Get a surface by its name. It will be created if it does not yet exist
 	UISurface* operator[](const String& name);
@@ -118,11 +122,6 @@ private:
 	/// The shared state of this ui system
 	UICore m_state;
 
-	/// Tooltips
-	UIToolTip* m_toolTip;
-	bool m_showingToolTip;
-	float m_timeSinceLastMouseMovement;
-
 	enum PendingChangeType
 	{
 		Add,
@@ -138,8 +137,8 @@ private:
 
 	std::vector<PendingChange> m_pendingChanges;
 
-	bool m_surfaceContainerLock;
+	int m_surfaceContainerLock;
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIWindow_h__
+#endif // NephilimUIDocument_h__

@@ -1,12 +1,13 @@
-#ifndef UISurface_h__
-#define UISurface_h__
+#ifndef NephilimUISurface_h__
+#define NephilimUISurface_h__
 
 #include "Platform.h"
-#include "Renderer.h"
-
 #include "UIControl.h"
 
 NEPHILIM_NS_BEGIN
+
+class Renderer;
+class UIDocument;
 
 /**
 	\ingroup UserInterface
@@ -15,32 +16,39 @@ NEPHILIM_NS_BEGIN
 
 	Note: In a proper hierarchy, only UISurface objects will have a NULL parent
 */
-class NEPHILIM_API UISurface : public UIControl{
+class NEPHILIM_API UISurface : public UIControl
+{
 public:
 	/// Construct the surface
 	UISurface();
 
-	/// Returns a control in the hierarchy with the name, or NULL if not found
-	UIControl* getControlByName(const String& name);
+	/// Destroy the surface
+	void destroy();
 
-	/// Callback to handle an event
-	bool onEventNotification(Event& event);
-
+	/// Draw the surface
 	virtual void draw(Renderer* renderer);
 
-	/// Set the unique name of this surface
-	void setName(const String& name);
+	/// Callback when a child of the control is removed
+	virtual void onChildRemoved(UIControl* control);
 
-	/// Get the unique name of this surface
-	String getName();
+	/// Check if the surface is modal
+	bool isModal();
+
+	/// When a surface is modal it will stop propagation of events to lower surfaces
+	/// Also, when the last control in the surface is destroyed, the surface is destroyed automatically.
+	void setModal(bool enable);
+
+	/// Get the parent document of the surface
+	UIDocument* getParentDocument();
 
 private:
-	/// The unique name of this surface
-	String m_name;
+	friend class UIDocument;
 
 	/// Is the surface modal or not?
 	bool m_modal;
+
+	UIDocument* m_parentDocument;
 };
 
 NEPHILIM_NS_END
-#endif // UISurface_h__
+#endif // NephilimUISurface_h__

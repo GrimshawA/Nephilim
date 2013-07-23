@@ -11,7 +11,6 @@
 #include "ContentBank.h"
 #include "UIDocument.h"
 #include "UIButton.h"
-#include "UIManager.h"
 
 #include <map>
 
@@ -72,7 +71,7 @@ public:
 	/// Content manager of the game
 	ContentBank m_content;
 
-	UIManager m_ui;
+	//UIManager m_ui;
 
 	MusicPlayer m_music;
 

@@ -1,43 +1,100 @@
 #include <Nephilim/UIControl.h>
 #include <Nephilim/Logger.h>
 
-#include <iostream>
-using namespace std;
+#include <algorithm>
 
 NEPHILIM_NS_BEGIN
 
-/// Base constructor of controls
 UIControl::UIControl()
 : RefCountable()
 , m_parent(NULL)
 , m_positionFlags(0)
 , m_sizeFlags(0)
-,
-		m_stateContext(NULL),
-		m_hasFocus(false),
-		m_layoutController(NULL),
-		m_backgroundColor(91,91,91),
-		m_topBorderColor(69,69,69),
-		m_leftBorderColor(m_topBorderColor),
-		m_rightBorderColor(m_topBorderColor),
-		m_bottomBorderColor(m_topBorderColor),
-		m_clipChildren(false),
-		m_clipContents(false),
-		m_visible(true),
-		m_drawBorder(true),
-		m_stretchForContents(false),
-		m_hovered(false)
+, m_childrenLock(0)
+, m_stateContext(NULL)
+, m_hasFocus(false)
+, m_layoutController(NULL)
+, m_backgroundColor(91,91,91)
+, m_topBorderColor(69,69,69)
+, m_leftBorderColor(m_topBorderColor)
+, m_rightBorderColor(m_topBorderColor)
+, m_bottomBorderColor(m_topBorderColor)
+, m_clipChildren(false)
+, m_clipContents(false)
+, m_visible(true)
+, m_drawBorder(true)
+, m_stretchForContents(false)
+, m_hovered(false)
+, drawColoredBackground(true)
 {
-	m_minimumDimensions = Vec2f(10,10);
-	m_maximumDimensions = Vec2f(5000,5000);
-};
+}
 
-/// Get the coordinates of the top-left corner of the control
+UIControl::~UIControl()
+{
+}
+
+void UIControl::setPosition(float x, float y)
+{
+	m_bounds.left = x;
+	m_bounds.top = y;
+
+	updateLayout();
+
+	onPositionChanged();
+}
+
+void UIControl::setPosition(vec2 position)
+{
+	setPosition(position.x, position.y);
+}
+
 vec2 UIControl::getPosition()
 {
 	return vec2(m_bounds.left, m_bounds.top);
 }
 
+void UIControl::setLocalPosition(float x, float y)
+{
+	UIControl* parent = getParent();
+	if(parent)
+	{
+		setPosition(parent->getPosition() + vec2(x,y));
+	}
+}
+
+void UIControl::setLocalPosition(vec2 localPosition)
+{
+	setLocalPosition(localPosition.x, localPosition.y);
+}
+
+vec2 UIControl::getLocalPosition()
+{
+	UIControl* parent = getParent();
+	
+	if(!parent)
+		return vec2(0.f, 0.f);
+
+	return getPosition() - parent->getPosition();
+}
+
+void UIControl::detach(UIControl* control)
+{
+	if(!control)
+		return;
+
+	if(m_childrenLock > 0)
+	{
+		// schedule
+		UIControlOperation op;
+		op.type = UIControlOperation::Detachment;
+		op.control = control;
+		m_pendingOperations.push_back(op);
+	}
+	else
+	{
+		m_children.erase(std::find(m_children.begin(), m_children.end(), control));
+	}
+}
 
 /// Feeds the position of the control to the animation systems
 vec2 UIControl::axGetPosition2D()
@@ -58,6 +115,11 @@ void UIControl::axSetAlpha(float alpha)
 float UIControl::axGetAlpha()
 {
 	return static_cast<float>(m_backgroundColor.a / 255);
+}
+
+void UIControl::axKillTrigger()
+{
+	destroy();
 }
 
 /// Set the flags for sizing
@@ -110,6 +172,10 @@ void UIControl::setPositionFlags(Uint64 flags)
 	processPositionFlags();
 }
 
+void UIControl::onChildRemoved(UIControl* control)
+{
+
+}
 
 /// Attempt to process positional flags
 void UIControl::processPositionFlags()
@@ -178,11 +244,32 @@ void UIControl::draw(Renderer* renderer){
 
 };
 
-/// Callback to handle events
-bool UIControl::onEventNotification(Event& event){
-	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->onEventNotification(event);
+void UIControl::dispatchEvent(const Event& event)
+{
+	// -- No handling of the event in this control or its children
+	if(!m_visible)
+	{
+		return;
 	}
+
+	/// Create a modifiable event, pass it to the control for possible alteration
+	Event modEvent = event;
+	onEventNotification(modEvent);
+
+	m_childrenLock++;
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
+	{
+		(*it)->dispatchEvent(modEvent);
+	}
+	m_childrenLock--;
+
+	if(m_childrenLock == 0)
+		applyPendingOperations();
+}
+
+bool UIControl::onEventNotification(Event& event)
+{
+	
 	return false;
 };
 
@@ -210,7 +297,7 @@ bool UIControl::focus()
 	}
 	else
 	{
-		cout<<"Cant focus an element without a hierarchy"<<endl;
+		//cout<<"Cant focus an element without a hierarchy"<<endl;
 	}
 
 	return true;
@@ -342,24 +429,22 @@ void UIControl::setProportion(float widthFactor, float heightFactor)
 /// Returns false if the mouse isnt on any control
 bool UIControl::processMouseMove(int x, int y)
 {
-	if(!m_hovered)
-	{
-		setPseudoClass("hover", true);
-		onMouseEnter();
-		m_hovered = true;
-
-		
-	}
-
 	onMouseMove();
 
-	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
 		FloatRect controlRect = (*it)->getBounds();
 		FloatRect testRect(controlRect.left, controlRect.top, controlRect.width - 1, controlRect.height - 1);
 
+		(*it)->processMouseMove(x,y);
+
 		if(testRect.contains(x,y))
 		{
-			(*it)->processMouseMove(x,y);
+			if(!(*it)->m_hovered)
+			{
+				(*it)->setPseudoClass("hover", true);
+				(*it)->m_hovered = true;
+			}
 		}
 		else
 		{
@@ -385,6 +470,7 @@ bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 		focus();
 	}
 
+	m_childrenLock++;
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 		if((*it)->getBounds().contains(x,y))
 		{
@@ -392,49 +478,38 @@ bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 			(*it)->processMouseButtonPressed(x,y, button);
 		}
 	}
+	m_childrenLock--;
+
+	if(m_childrenLock == 0) 
+		applyPendingOperations();
 
 	return result;
+}
+
+/// Process a mouse release event
+void UIControl::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info)
+{
+	m_childrenLock++;
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
+		if((*it)->getBounds().contains(x,y))
+		{
+			(*it)->onClick();
+		}
+
+		(*it)->processMouseButtonReleased(x,y, button, info);
+	}
+	m_childrenLock--;
+
+	if(m_childrenLock == 0) 
+		applyPendingOperations();
 }
 
 /// Enables or disables a pseudo class
 void UIControl::setPseudoClass(const String& name, bool active)
 {
-	if(active)
-	{
-		//cout<<"[UIControl] Pseudoclass enabled: "<<name<<endl;
-	}
+	//Log("Class enabled %s", name.c_str());
+	m_classInfo[name] = active;
 };
-
-void UIControl::bindSignal(const String& name, ASSlot* slot)
-{
-	/*if(name == "click")
-	{
-		//cout<<"Attempting to bind click to a slot"<<endl;
-		onClick.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}
-
-	if(name == "mousemove")
-	{
-		//cout<<"[UIControl] Mouse move attachment."<<endl;
-		onMouseMove.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}
-
-	if(name == "mouseenter")
-	{
-		onMouseEnter.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}
-
-	if(name == "mouseleave")
-	{
-		onMouseLeave.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}
-	if(name == "resize")
-	{
-		//cout<<"[UIControl] Resize Attachment"<<endl;
-		onSizeChanged.connect(MAKE_SLOT_OBJECT(ASSlot, slot, trigger));
-	}*/
-}
-
 
 /// Deep clone of the control and its hierarchy
 UIControl* UIControl::clone()
@@ -447,7 +522,13 @@ void UIControl::setRect(FloatRect rect)
 	setPosition(rect.left, rect.top);
 	setSize(rect.width, rect.height);
 	m_transform = mat4::translate(rect.left, rect.top, 0.f);
-};
+}
+
+void UIControl::setRect(float left, float top, float width, float height)
+{
+	setRect(FloatRect(left, top, width, height));
+}
+
 
 FloatRect UIControl::getRect()
 {
@@ -471,19 +552,117 @@ UIControl* UIControl::getParent()
 	return m_parent;
 }
 
+void UIControl::applyPendingOperations()
+{
+	if(m_childrenLock > 0) return ;
 
-/// Adds a new control ... wrong API todo
-void UIControl::attach(UIControl* control){
-	m_children.push_back(control);
+	for(size_t i = 0; i < m_pendingOperations.size(); ++i)
+	{
+		switch(m_pendingOperations[i].type)
+		{
+		case UIControlOperation::Attachment:
+			{
+				m_children.push_back(m_pendingOperations[i].control);
+			} break;
+
+		case UIControlOperation::Destruction:
+			{
+				m_children.erase(std::find(m_children.begin(), m_children.end(), m_pendingOperations[i].control));
+				onChildRemoved(m_pendingOperations[i].control);
+				delete m_pendingOperations[i].control;
+			} break;
+		
+		case UIControlOperation::Detachment:
+			{
+				m_children.erase(std::find(m_children.begin(), m_children.end(), m_pendingOperations[i].control));
+				onChildRemoved(m_pendingOperations[i].control);
+			} break;
+
+		}
+	}
+
+	m_pendingOperations.clear();
+}
+
+
+void UIControl::attach(UIControl* control)
+{
+	if(m_childrenLock == 0)
+	{
+		m_children.push_back(control);
+	}
+	else
+	{
+		UIControlOperation action;
+		action.control = control;
+		action.type = UIControlOperation::Attachment;
+		m_pendingOperations.push_back(action);
+	}
+
+
 	control->addReference();
 	// Assign
 	control->m_parent = this;
-	control->setContext(m_stateContext);
+
+	if(m_stateContext)
+		control->setContext(m_stateContext);
 
 	control->processSizeChange(getSize().x, getSize().y);
 
 	updateLayout();
-};
+}
+
+/// Makes the control invisible
+void UIControl::hide()
+{
+	m_visible = false;
+}
+
+/// Makes the control visible
+void UIControl::show()
+{
+	m_visible = true;
+}
+
+/// Find a control by its name in the control tree
+UIControl* UIControl::findByName(const String& name)
+{
+	if(getName() == name)
+		return this;
+
+	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
+		UIControl* cntrl = (*it)->findByName(name);
+		if(cntrl)
+		{
+			return cntrl;
+		}
+	}
+
+	return NULL;
+}
+
+/// Destroys the control and removes from the hierarchy
+void UIControl::destroy()
+{
+	UIControl* parent = getParent();
+	if(parent)
+	{
+		// I can remove myself from my parent's list
+		parent->destroyChild(this);
+	}
+}
+
+void UIControl::destroyChild(UIControl* child)
+{
+	if(m_childrenLock > 0)
+	{
+		UIControlOperation op;
+		op.type =  UIControlOperation::Destruction;
+		op.control = child;
+		m_pendingOperations.push_back(op);
+	}
+}
 
 /// Callback when the control is resized
 void UIControl::onResize(){
@@ -529,15 +708,6 @@ Vec2f UIControl::animable_get_position()
 	return Vec2f(m_bounds.left, m_bounds.top);
 };
 
-/// Set the position of the control
-void UIControl::setPosition(float x, float y)
-{
-	m_bounds.left = x;
-	m_bounds.top = y;
-
-	updateLayout();
-};
-
 /// Update layout of children
 void UIControl::updateLayout()
 {
@@ -547,17 +717,27 @@ void UIControl::updateLayout()
 	}
 }
 
-/// Update the control
 void UIControl::onUpdate(float elapsedTime)
+{	
+}
+
+void UIControl::update(float elapsedTime)
 {
+	onUpdate(elapsedTime);
 
-
+	m_childrenLock++;
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->onUpdate(elapsedTime);
+		(*it)->update(elapsedTime);
+	}
+	m_childrenLock--;
+
+	if(m_childrenLock == 0)
+	{
+		applyPendingOperations();
 	}
 
 	m_animations.update(elapsedTime);
-};
+}
 
 /// Get the current size of the control that encompasses all its children
 FloatRect UIControl::getContentBounds()
@@ -632,19 +812,23 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 {
 	if(!m_visible)return; // no drawing or propagation - ghost
 
-	renderer->setModelMatrix(transform * m_transform);
+	//renderer->setModelMatrix(transform * m_transform);
 
 	/// Draw the background color and borders - TODO: no debug draw
 	vec4 middlePoint = transform * m_transform * vec4(0,0,0,1);
 	//renderer->drawDebugQuad(middlePoint.x + m_bounds.width/2, middlePoint.y + m_bounds.height/2, 0,m_bounds.width, m_bounds.height, m_backgroundColor);
 	
-	renderer->setModelMatrix(transform * m_transform);
-	RectangleShape rect;
-	rect.setPosition(m_bounds.left, m_bounds.top);
-	rect.setSize(m_bounds.width, m_bounds.height);
-	rect.setColor(m_backgroundColor);
-	renderer->draw(rect);
-	renderer->setModelMatrix(transform * m_transform);
+//	renderer->setModelMatrix(transform * m_transform);
+	if(drawColoredBackground)
+	{
+		RectangleShape rect;
+		rect.setPosition(m_bounds.left, m_bounds.top);
+		rect.setSize(m_bounds.width, m_bounds.height);
+		rect.setColor(m_backgroundColor);
+		renderer->draw(rect);
+	}
+
+	//renderer->setModelMatrix(transform * m_transform);
 
 	if(m_drawBorder)
 	{
@@ -657,16 +841,20 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 
 
 	draw(renderer);
-	/*
-	// clip?
-	if(m_clipChildren)renderer->enableClipping(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
+	
+	// clip the overflowing children
+	if(m_clipChildren)
+	{
+		renderer->pushClippingRect(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
+	}
 
 	// Let children render as well
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
 		(*it)->innerDraw(renderer, transform * m_transform);
 	}
 
-	if(m_clipChildren)renderer->disableClipping();*/
+	if(m_clipChildren)
+		renderer->popClippingRect();
 }
 
 

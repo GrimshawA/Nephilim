@@ -19,12 +19,16 @@ public:
 	/// Constructor
 	StateTransitionSlider();
 
+	/// Set the color for the animation
+	void setColor(const Color& color);
+
 protected:
 	/// Update the transition
-	virtual void update(const Time& time);
+	virtual void onUpdate(const Time& time);
 
 	/// Draw the transition
 	virtual void draw(Renderer* renderer);
+
 
 private:
 	RectangleShape m_rect;
@@ -34,6 +38,7 @@ private:
 	vec2 lastp;
 	float m_duration;
 	float elapsedTime;
+	Color m_color;
 };
 
 NEPHILIM_NS_END

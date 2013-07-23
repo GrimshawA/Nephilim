@@ -23,8 +23,7 @@ public:
 	UIButton(const String& title);
 
 	~UIButton();
-
-
+	
 	/// Sets the label of the button
 	void setLabel(const String& text);
 

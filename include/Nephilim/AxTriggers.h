@@ -10,6 +10,8 @@ class NEPHILIM_API AxKillTrigger : public AxBase
 {
 public:
 
+	bool isOver();
+
 	float update(float delta);
 
 };

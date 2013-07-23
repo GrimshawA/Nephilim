@@ -11,6 +11,17 @@ NEPHILIM_NS_BEGIN
 class UIDocument;
 class UIControl;
 
+class NEPHILIM_API UIEventResult
+{
+public:
+	UIEventResult()
+	{
+		hitControls = false;
+	}
+
+	bool hitControls;
+};
+
 /**
 	\ingroup UI
 	\class UICore
