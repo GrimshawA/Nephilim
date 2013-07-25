@@ -10,6 +10,7 @@ NEPHILIM_NS_BEGIN
 UIDocument::UIDocument()
 : m_surfaceContainerLock(0)
 , m_backgroundColor(Color::Transparent)
+, transformPointerCoordinates(false)
 {
 	
 }
@@ -57,7 +58,8 @@ UISurface* UIDocument::getSurfaceByName(const String& name)
 	return found;
 }
 
-UICore& UIDocument::getContext(){
+UICore& UIDocument::getContext()
+{
 	return m_state;
 }
 
@@ -70,7 +72,8 @@ UIDocument::ControlList UIDocument::selectControls(const String& selector)
 }
 
 /// Sets new boundaries to this UIWindow
-void UIDocument::setRect(Rect<float> rect){
+void UIDocument::setRect(Rect<float> rect)
+{
 	m_bounds = rect;
 
 	// resize happened
@@ -89,13 +92,21 @@ void UIDocument::setRect(float left, float top, float width, float height)
 }
 
 /// Get the position of the exact middle of this UIWindow
-Vec2f UIDocument::getMiddlePosition(){
+Vec2f UIDocument::getMiddlePosition()
+{
 	return Vec2f(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2);
 };
 
 void UIDocument::clearUnusedSurfaces()
 {
 
+}
+
+/// Push a new modal surface to the top, it will destroy itself once there are no more controls in it
+void UIDocument::pushModalSurface()
+{
+	addSurface("auto_modal");
+	top()->setModal(true);
 }
 
 //debug
@@ -133,10 +144,10 @@ UISurface* UIDocument::operator[](unsigned int index)
 }
 
 /// Get the surface closer to the user
-UISurface* UIDocument::getTopSurface(){
+UISurface* UIDocument::top(){
 	if(m_surfaces.empty()) return NULL;
 	else{
-		return m_surfaces[0];
+		return m_surfaces.back();
 	}
 };
 
@@ -179,8 +190,10 @@ UISurface* UIDocument::addSurface(const String& name)
 	surface->setContext(&m_state);
 	surface->m_parentDocument = this;
 
-	if(!m_surfaceContainerLock)
+	if(m_surfaceContainerLock == 0)
+	{
 		m_surfaces.push_back(surface);
+	}
 	else
 	{
 		// Schedule add
@@ -232,10 +245,22 @@ void UIDocument::update(float elapsedTime)
 		(*it)->update(elapsedTime);
 	}
 	m_surfaceContainerLock--;
+
+	applyPendingChanges();
 }
 
 UIEventResult UIDocument::pushEvent(const Event& event)
 {
+	Event processedEvent = event;
+
+	// If required, change the pointer coordinates to the target coordinate system
+	if(transformPointerCoordinates)
+	{
+		vec2 normalized_mouse(static_cast<float>(event.getPointerPosition().x) / static_cast<float>(realWindowSize.x), static_cast<float>(event.getPointerPosition().y) / static_cast<float>(realWindowSize.y));
+		processedEvent.setPointerPosition(vec2i(static_cast<int>(normalized_mouse.x * targetWindowSize.x), static_cast<int>(normalized_mouse.y * targetWindowSize.y)));
+	}
+
+
 	UIEventResult eventUsage;
 
 	// -- Raw event delivery system
@@ -245,11 +270,14 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 		if((*it)->getChildCount() > 0)
 		{
 			// deliver the event
-			(*it)->dispatchEvent(event);
+			(*it)->dispatchEvent(processedEvent);
 
 
 			if((*it)->isModal())
+			{
+				eventUsage.clickPassedThrough = false;
 				break;
+			}
 		}
 
 	}
@@ -260,30 +288,38 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 	{
 		case Event::MouseMoved:
 			{
-				processMouseMove(event.mouseMove.x, event.mouseMove.y);
+				processMouseMove(processedEvent.mouseMove.x, processedEvent.mouseMove.y);
 			}
 		break;
 
+		case Event::TouchMoved:
+			{
+				processTouchMove(processedEvent.touch.x, processedEvent.touch.y);
+			}
+			break;
+
 		case Event::MouseButtonPressed:
 			{
-				// if the click is outside the focus control, unfocus it
-				if(m_state.m_focusControl)
-				{
-					if(!m_state.m_focusControl->getBounds().contains(event.mouseButton.x, event.mouseButton.y))
-					{
-						m_state.m_focusControl->blur();
-						m_state.m_focusControl->onLostFocus();
-						m_state.m_focusControl = NULL;
-					}
-				}
-				bool result = processMouseButtonPressed(event.mouseButton.x, event.mouseButton.y, event.mouseButton.button);
+				bool result = processMouseButtonPressed(processedEvent.mouseButton.x, processedEvent.mouseButton.y, processedEvent.mouseButton.button);
 				eventUsage.hitControls = false;
 			}
 		break;
 
+		case Event::TouchPressed:
+			{
+				bool result = processMouseButtonPressed(processedEvent.touch.x, processedEvent.touch.y, Mouse::Left);
+				eventUsage.hitControls = false;
+			}
+			break;
+
 		case Event::MouseButtonReleased:
 			{				
-				processMouseButtonReleased(event.mouseButton.x, event.mouseButton.y, event.mouseButton.button, eventUsage);
+				processMouseButtonReleased(processedEvent.mouseButton.x, processedEvent.mouseButton.y, processedEvent.mouseButton.button, eventUsage);
+			}
+			break;
+		case Event::TouchReleased:
+			{				
+				processMouseButtonReleased(processedEvent.touch.x, processedEvent.touch.y, Mouse::Left, eventUsage);
 			}
 			break;
 
@@ -292,7 +328,7 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 				// Deliver input to the focused control
 				if(m_state.m_focusControl)
 				{
-					m_state.m_focusControl->onTextEvent(event.text.unicode);
+					m_state.m_focusControl->onTextEvent(processedEvent.text.unicode);
 				}
 			}
 			break;
@@ -310,18 +346,25 @@ void UIDocument::setLanguage(const String& shortLanguageName)
 {
 	m_state.m_activeLanguage = shortLanguageName;
 	m_state.m_localization.m_currentLanguage = shortLanguageName;
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
 		(*it)->switchLanguage();
 	}
-};
+}
 
 /// Process a mouse press event
 bool UIDocument::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
 	m_surfaceContainerLock = true;
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
 	{
 		(*it)->processMouseButtonPressed(x,y,button);
+
+		if((*it)->isModal())
+		{
+			//eventUsage.clickPassedThrough = false;
+			break;
+		}
 	}
 	m_surfaceContainerLock = false;
 
@@ -331,9 +374,12 @@ bool UIDocument::processMouseButtonPressed(int x, int y, Mouse::Button button)
 void UIDocument::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info)
 {
 	m_surfaceContainerLock = true;
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); ++it)
 	{
 		(*it)->processMouseButtonReleased(x, y, button, info);
+
+		if((*it)->isModal())
+			break;
 	}
 	m_surfaceContainerLock = false;
 }
@@ -342,14 +388,37 @@ void UIDocument::processMouseButtonReleased(int x, int y, Mouse::Button button, 
 /// Process a mouve movement event
 bool UIDocument::processMouseMove(int x, int y)
 {
-	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	m_surfaceContainerLock = true;
+	bool quit = false;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && !quit; it++){
 		(*it)->processMouseMove(x,y);
+
+		if((*it)->isModal())
+			quit = true;
 	}
+	m_surfaceContainerLock = false;
 	return false;
 }
 
+void UIDocument::processTouchMove(int x, int y)
+{
+	m_surfaceContainerLock++;
+	bool quit = false;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && !quit; it++){
+		(*it)->processTouchMove(x,y);
+
+		if((*it)->isModal())
+			quit = true;
+	}
+	m_surfaceContainerLock--;
+}
+
+
 void UIDocument::applyPendingChanges()
 {
+	if(m_surfaceContainerLock > 0)
+		return;
+
 	for(unsigned int i = 0; i < m_pendingChanges.size(); i++)
 	{
 		switch(m_pendingChanges[i].type)
@@ -364,8 +433,6 @@ void UIDocument::applyPendingChanges()
 		}
 	}
 	m_pendingChanges.clear();
-};
-
-
+}
 
 NEPHILIM_NS_END

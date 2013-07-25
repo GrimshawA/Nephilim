@@ -25,6 +25,9 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
+
 #include "SFMLGlContext.hpp"
 #include <SFML/System/ThreadLocalPtr.hpp>
 #include <SFML/System/Mutex.hpp>
@@ -278,3 +281,6 @@ void GlContext::initialize()
 } // namespace priv
 
 } // namespace sf
+
+
+#endif

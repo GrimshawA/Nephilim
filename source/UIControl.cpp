@@ -5,6 +5,8 @@
 
 NEPHILIM_NS_BEGIN
 
+UIControl* UIControl::object = NULL;
+
 UIControl::UIControl()
 : RefCountable()
 , m_parent(NULL)
@@ -26,19 +28,35 @@ UIControl::UIControl()
 , m_stretchForContents(false)
 , m_hovered(false)
 , drawColoredBackground(true)
+, m_bounds(0.f, 0.f, 1.f, 1.f)
 {
 }
 
 UIControl::~UIControl()
 {
+	// I am being destroyed, destroy children
+	for(size_t i = 0; i < m_children.size(); ++i)
+	{
+		delete m_children[i];
+	}
 }
 
 void UIControl::setPosition(float x, float y)
 {
+	// Offset children
+	vec2 offset = vec2(x,y) - getPosition();
+
 	m_bounds.left = x;
 	m_bounds.top = y;
 
+	if(this == object)
+	{
+		Log("Setting position !!");
+	}
+
 	updateLayout();
+
+	offsetChildrenPosition(offset);
 
 	onPositionChanged();
 }
@@ -120,6 +138,14 @@ float UIControl::axGetAlpha()
 void UIControl::axKillTrigger()
 {
 	destroy();
+}
+
+void UIControl::offsetChildrenPosition(vec2 offset)
+{
+	for(size_t i = 0; i < m_children.size(); ++i)
+	{
+		m_children[i]->setPosition(m_children[i]->getPosition() + offset);
+	}
 }
 
 /// Set the flags for sizing
@@ -314,7 +340,8 @@ void UIControl::setContext(UICore* states)
 {
 	m_stateContext = states;
 
-	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
+	{
 		(*it)->setContext(states);
 	}
 
@@ -460,6 +487,41 @@ bool UIControl::processMouseMove(int x, int y)
 
 	return false;
 }
+
+bool UIControl::processTouchMove(int x, int y)
+{
+	onMouseMove();
+
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
+		FloatRect controlRect = (*it)->getBounds();
+		FloatRect testRect(controlRect.left, controlRect.top, controlRect.width - 1, controlRect.height - 1);
+
+		(*it)->processTouchMove(x,y);
+
+		if(testRect.contains(x,y))
+		{
+			if(!(*it)->m_hovered)
+			{
+				(*it)->setPseudoClass("hover", true);
+				(*it)->m_hovered = true;
+			}
+		}
+		else
+		{
+			// mouse is not in it, is it just leaving now?
+			if((*it)->m_hovered)
+			{
+				(*it)->setPseudoClass("hover", false);
+				(*it)->onMouseLeave();
+				(*it)->m_hovered = false;
+			}
+		}
+	}
+
+	return false;
+}
+
 
 /// Process a mouse press event
 bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
@@ -607,9 +669,9 @@ void UIControl::attach(UIControl* control)
 	if(m_stateContext)
 		control->setContext(m_stateContext);
 
-	control->processSizeChange(getSize().x, getSize().y);
+	//control->processSizeChange(getSize().x, getSize().y);
 
-	updateLayout();
+//	updateLayout();
 }
 
 /// Makes the control invisible
@@ -678,34 +740,6 @@ void UIControl::resizeToPoint(float x, float y, float duration){
 void UIControl::resize(float width, float height, float duration)
 {
 
-};
-
-void UIControl::reposition(float x, float y, float duration)
-{
-
-};
-
-
-
-/// Making this class able to animate sizes
-void UIControl::animable_set_size(float x, float y){
-	setSize(x,y);
-	onResize();
-};
-
-Vec2f UIControl::animable_get_size(){
-	return Vec2f(m_bounds.width, m_bounds.height);
-};
-
-void UIControl::animable_set_position(float x, float y)
-{
-	m_bounds.left = x;
-	m_bounds.top = y;
-};
-
-Vec2f UIControl::animable_get_position()
-{
-	return Vec2f(m_bounds.left, m_bounds.top);
 };
 
 /// Update layout of children
@@ -865,9 +899,9 @@ void UIControl::setCenter(Vec2f position){
 };
 
 /// Callback when the position of the control changed, for updating nested objects
-void UIControl::onPositionChanged(){
-
-};
+void UIControl::onPositionChanged()
+{
+}
 
 /// Define a new name for this control
 void UIControl::setName(const String& name){

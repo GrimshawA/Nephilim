@@ -34,4 +34,24 @@ vec2i Event::getPointerPosition() const
 	else return Vec2i(0,0);
 }
 
+void Event::setPointerPosition(vec2i pos)
+{
+	if(type == MouseButtonPressed || type == MouseButtonReleased)
+	{
+		mouseButton.x = pos.x;
+		mouseButton.y = pos.y;
+	}
+	else if(type == MouseMoved)
+	{
+		mouseMove.x = pos.x;
+		mouseMove.y = pos.y;
+	}
+	else if(type == TouchPressed || type == TouchReleased || type == TouchMoved)
+	{
+		touch.x = pos.x;
+		touch.y = pos.y;
+	}
+}
+
+
 NEPHILIM_NS_END

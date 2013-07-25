@@ -34,6 +34,12 @@ void Surface::activate()
 	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0); 
 }
 
+/// Set the title of the window if available
+void Surface::setTitle(const String& title)
+{
+	window->setTitle(title);
+}
+
 /// Implements RenderTarget::getSize()
 Vec2i Surface::getSize() const
 {

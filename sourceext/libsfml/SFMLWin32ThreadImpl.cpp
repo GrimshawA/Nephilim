@@ -21,7 +21,8 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
-
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
@@ -91,3 +92,4 @@ unsigned int __stdcall ThreadImpl::entryPoint(void* userData)
 } // namespace priv
 
 } // namespace sf
+#endif

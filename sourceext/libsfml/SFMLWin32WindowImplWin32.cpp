@@ -21,7 +21,8 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
-
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
@@ -883,3 +884,4 @@ LRESULT CALLBACK WindowImplWin32::globalOnEvent(HWND handle, UINT message, WPARA
 
 } // namespace sf
 
+#endif

@@ -57,7 +57,7 @@ void UIBoxLayout::doLayout(UIControl* parent)
 
 			if(m_animated)
 			{	
-				child->reposition(finalPosition.x, finalPosition.y, 1.f);
+		
 				child->resize(finalSize.x, finalSize.y, 1.f);
 			}
 			else
@@ -77,7 +77,7 @@ void UIBoxLayout::doLayout(UIControl* parent)
 
 			if(m_animated)
 			{	
-				child->reposition(parent->getBounds().left + (parent->getSize().x / parent->getChildCount() * i), parent->getBounds().top, 1.f);
+			//	child->reposition(parent->getBounds().left + (parent->getSize().x / parent->getChildCount() * i), parent->getBounds().top, 1.f);
 				child->resize(parent->getSize().x / parent->getChildCount(), parent->getSize().y, 1.f);
 			}
 			else

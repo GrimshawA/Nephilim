@@ -30,6 +30,7 @@
 */
 
 #define GLEW_STATIC
+#define GLEW_NO_GLU
 
 #include <GL/glew.h>
 

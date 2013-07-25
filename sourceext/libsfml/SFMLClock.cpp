@@ -25,6 +25,9 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
+
 #include <SFML/System/Clock.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
@@ -61,3 +64,4 @@ Time Clock::restart()
 }
 
 } // namespace sf
+#endif

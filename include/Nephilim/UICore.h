@@ -17,9 +17,13 @@ public:
 	UIEventResult()
 	{
 		hitControls = false;
+		clickPassedThrough = true; ///< Passes through unless specified otherwise
 	}
 
 	bool hitControls;
+
+	/// True when the click didn't hit any modal surfaces or any controls and reached the "background"
+	bool clickPassedThrough;
 };
 
 /**

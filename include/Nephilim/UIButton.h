@@ -56,6 +56,8 @@ public:
 
 	Color m_color;
 
+	
+
 private:
 	String m_label;
 	String m_baseLabel;

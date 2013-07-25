@@ -21,7 +21,8 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
-
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
@@ -223,3 +224,5 @@ void InputImpl::setMousePosition(const Vector2i& position, const Window& relativ
 } // namespace priv
 
 } // namespace sf
+
+#endif

@@ -21,7 +21,8 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
-
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
@@ -323,3 +324,5 @@ void WglContext::createContext(WglContext* shared, unsigned int bitsPerPixel, co
 } // namespace priv
 
 } // namespace sf
+
+#endif

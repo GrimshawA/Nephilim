@@ -25,6 +25,9 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include <Nephilim/Platform.h>
+#ifndef NEPHILIM_ANDROID
+
 #include "SFMLJoystickManager.hpp"
 
 
@@ -109,3 +112,5 @@ JoystickManager::~JoystickManager()
 } // namespace priv
 
 } // namespace sf
+
+#endif

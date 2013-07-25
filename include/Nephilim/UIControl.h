@@ -45,7 +45,7 @@ namespace UISizeFlag
 	};
 }
 
-class NEPHILIM_API UIControl : public AxTarget, public sigc::trackable, public Animable, public RefCountable
+class NEPHILIM_API UIControl : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
 	/// Base constructor
@@ -183,6 +183,7 @@ public:
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control
 	virtual bool processMouseMove(int x, int y);
+	virtual bool processTouchMove(int x, int y);
 
 	/// Process a mouse press event
 	bool processMouseButtonPressed(int x, int y, Mouse::Button button);
@@ -260,8 +261,6 @@ public:
 
 	void resize(float width, float height, float duration);
 
-	void reposition(float x, float y, float duration);
-
 	/// Enables or disables a pseudo class
 	void setPseudoClass(const String& name, bool active);
 
@@ -298,6 +297,8 @@ public:
 	/// Hierarchicly sets the context to all children
 	void setContext(UICore* states);
 
+	static UIControl* object;
+
 	bool m_clipContents; ///< Whether the contents of the control itself are clipped at the border
 	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle
 	/// Is the control being rendered?
@@ -324,6 +325,7 @@ public:
 
 	AxList m_animations; ///< Animation list
 
+	void offsetChildrenPosition(vec2 offset);
 
 	friend class UILayout;
 
@@ -367,25 +369,15 @@ public:
 	Color m_backgroundColor;
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 
-	/// The layout controller for this control
-	UILayout* m_layoutController;
 
-	/// Unique name of the control in the hierarchy
-	String m_name;
 
 	/// Children of the control
 	std::vector<UIControl*> m_children;
 	int m_childrenLock;
 
-	/// Parent of the control, if any
-	UIControl* m_parent;
-
-
-	/// Making this class able to animate sizes
-	virtual void animable_set_size(float x, float y);
-	virtual Vec2f animable_get_size();
-	virtual void animable_set_position(float x, float y);
-	virtual Vec2f animable_get_position();
+	String     m_name;             ///< Name
+	UIControl* m_parent;           ///< The parent control
+	UILayout*  m_layoutController; ///< Layouter
 };
 
 template<typename T>

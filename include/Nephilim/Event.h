@@ -354,6 +354,7 @@ public:
 	}
 
 	vec2i getPointerPosition() const;
+	void setPointerPosition(vec2i pos);
 
 	struct TouchEvent
 	{

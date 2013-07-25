@@ -53,7 +53,10 @@ public:
 
 	/// Get the surface closer to the user
 	/// \return the UISurface* or NULL if there are no surfaces
-	UISurface* getTopSurface();
+	UISurface* top();
+
+	/// Push a new modal surface to the top, it will destroy itself once there are no more controls in it
+	void pushModalSurface();
 
 	UISurface* addSurface(const String& name);
 
@@ -84,6 +87,8 @@ public:
 	/// Returns false if the mouse isnt on any control
 	bool processMouseMove(int x, int y);
 
+	void processTouchMove(int x, int y);
+
 	/// Process a mouse press event
 	bool processMouseButtonPressed(int x, int y, Mouse::Button button);
 
@@ -106,6 +111,9 @@ public:
 	/// You must ensure that index is valid
 	UISurface* operator[](unsigned int index);
 
+	bool transformPointerCoordinates;
+	vec2 realWindowSize;
+	vec2 targetWindowSize;
 
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 	Color m_backgroundColor;
