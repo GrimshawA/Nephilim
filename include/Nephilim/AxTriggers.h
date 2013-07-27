@@ -13,7 +13,6 @@ public:
 	bool isOver();
 
 	float update(float delta);
-
 };
 
 NEPHILIM_NS_END

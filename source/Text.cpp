@@ -37,7 +37,7 @@ Text::Text(String text, float x, float y) : m_string(text),
 
 void Text::onDraw(Renderer* renderer)
 {
-	if(!m_font || m_string.empty()) return;
+	if(!m_font || m_vertices.m_vertices.empty()) return;
 
 	m_font->getTexture(m_characterSize).bind();
 	renderer->setModelMatrix(renderer->getModelMatrix() * mat4(getTransform().getMatrix()));

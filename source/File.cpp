@@ -141,12 +141,14 @@ bool File::isReady(){
 };
 
 /// Checks if the file has reached its end
-bool File::atEnd(){
-	return (tell() >= m_fileSize);
+bool File::atEnd()
+{
+	return (tell() >= m_length);
 };
 
 /// Read the next character available - uses fgetc and assumes an open mode for text
-char File::getChar(){
+char File::getChar()
+{
 	return fgetc(m_handle);
 };
 

@@ -10,11 +10,14 @@ Color Color::Green = Color(30,210,60,255);
 Color Color::Orange = Color(255,165,0,255);
 Color Color::Blue = Color(30, 144, 255, 255);
 Color Color::Transparent = Color(0, 0, 0, 0);
+Color Color::Grey = Color(91, 91, 91, 255);
+Color Color::Yellow = Color(228, 225, 9, 255);
 
-Color::Color(){
+Color::Color()
+{
 	r = g = b = 0;
 	a = 255;
-};
+}
 
 Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
 	r = red;

@@ -28,14 +28,15 @@ public:
 	/// Converts a normalized color to a Color
 	static Color fromNormalized(const vec4& v);
 
-	/// Static Colors
-	static Color Red;
-	static Color White;
+	static Color Red;         ///< RGBA(x,x,x,x)
+	static Color White;       ///<
 	static Color Black;
 	static Color Green;
 	static Color Orange;
 	static Color Blue;
 	static Color Transparent;
+	static Color Grey;
+	static Color Yellow;
 
 	Uint8 r,g,b,a;
 };

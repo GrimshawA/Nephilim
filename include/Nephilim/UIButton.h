@@ -27,6 +27,9 @@ public:
 	/// Sets the label of the button
 	void setLabel(const String& text);
 
+	/// Get the label of the button
+	String getLabel();
+
 	void bindSignal(const String &signalName, ASSlot* slot );
 
 	/// Callback to handle an event

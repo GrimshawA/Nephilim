@@ -83,7 +83,7 @@ bool UIButton::onEventNotification(Event& event){
 
 	if(event.type == Event::TouchReleased){
 		if(m_bounds.contains(event.touch.x, event.touch.y)){
-			onClick();
+			//onClick();
 		}
 
 		// drag test
@@ -141,6 +141,11 @@ void UIButton::setLabel(const String& text)
 {
 	m_label = text;
 	m_baseLabel = m_label;
+}
+
+String UIButton::getLabel()
+{
+	return m_label;
 }
 
 void UIButton::draw(Renderer* renderer)

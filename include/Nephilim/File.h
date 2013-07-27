@@ -14,7 +14,8 @@ NEPHILIM_NS_BEGIN
 	\class File
 	\brief Provides file access functionality even for android packaged assets
 */
-class NEPHILIM_API File : public IODevice{
+class NEPHILIM_API File : public IODevice
+{
 public:
 	/// Constructs an uninitialized file
 	File();

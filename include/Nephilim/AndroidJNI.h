@@ -73,6 +73,7 @@ JNIEXPORT void
 		nx::AndroidInterface::setPackageName(s3);
 		nx::AndroidInterface::setActivityName(s4);
 		nx::AndroidInterface::setExternalStorageDirectory(s2);
+		nx::AndroidInterface::setInternalDataPath(s1);
 
 	/*myApp.myDataDirectory = s1;
 		myApp.myExternalStorageDirectory = s2; */

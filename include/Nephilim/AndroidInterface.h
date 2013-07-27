@@ -97,6 +97,12 @@ public:
 	/// Vibrate the device for miliseconds
 	static void vibrate(int miliseconds);
 
+	/// Sets the internal data path
+	static void setInternalDataPath(const String& path);
+
+	/// Get the internal data path of the application, where the save files are stored
+	static String getInternalDataPath();
+
 private:
 	static String m_externalStorageDirectory;
 	/// Suffix to automatically append to file names
@@ -105,6 +111,9 @@ private:
 
 	/// The android package name, usually its in the form of com.x.y.z
 	static String m_packageName;
+
+	/// The internal path to store save games
+	static String m_internalDataPath;
 
 	/// The name of the activity, as JNI understands it. Usually something like com/x/y/z/classname
 	static String m_JNIActivityName;

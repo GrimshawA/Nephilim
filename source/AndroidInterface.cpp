@@ -14,6 +14,20 @@ String AndroidInterface::m_packageName = "unknown";
 String AndroidInterface::m_JNIActivityName = "unknown";
 JavaVM* AndroidInterface::m_javaVM = NULL;
 String AndroidInterface::m_externalStorageDirectory = "";
+String AndroidInterface::m_internalDataPath = "";
+
+
+/// Sets the internal data path
+void AndroidInterface::setInternalDataPath(const String& path)
+{
+	m_internalDataPath = path;
+}
+
+/// Get the internal data path of the application, where the save files are stored
+String AndroidInterface::getInternalDataPath()
+{
+	return m_internalDataPath;
+}
 
 /// Set the asset suffix to be automatically applied to paths
 void AndroidInterface::setAssetSuffix(const String &suffix){

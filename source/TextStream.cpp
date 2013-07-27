@@ -28,7 +28,8 @@ TextStream::~TextStream(){
 };
 
 /// Check if this stream reached the end of device / no more to read
-bool TextStream::atEnd(){
+bool TextStream::atEnd()
+{
 	return m_device->atEnd();
 };
 
