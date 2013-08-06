@@ -757,8 +757,6 @@ void UIControl::onUpdate(float elapsedTime)
 
 void UIControl::update(float elapsedTime)
 {
-	onUpdate(elapsedTime);
-
 	m_childrenLock++;
 	for(std::vector<UIControl*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
 		(*it)->update(elapsedTime);
@@ -771,6 +769,9 @@ void UIControl::update(float elapsedTime)
 	}
 
 	m_animations.update(elapsedTime);
+
+	onUpdate(elapsedTime);
+
 }
 
 /// Get the current size of the control that encompasses all its children

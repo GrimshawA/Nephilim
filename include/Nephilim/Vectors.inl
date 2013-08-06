@@ -39,8 +39,9 @@ Vec2<T> Vec2<T>::normalized()
 /// Makes the vector unit-length
 template<class T>
 void Vec2<T>::normalize(){
-	x /= length();
-	y /= length();
+	float v_len = length();
+	x /= v_len;
+	y /= v_len;
 };
 
 /// Get the length of the vector
@@ -222,9 +223,10 @@ void Vec3<T>::setAll(T x){
 /// Makes the vector unit-length
 template<class T>
 void Vec3<T>::normalize(){
-	x /= length();
-	y /= length();
-	z /= length();
+	float v_len = length();
+	x /= v_len;
+	y /= v_len;
+	z /= v_len;
 };
 
 /// Compute the cross product
@@ -444,10 +446,11 @@ bool Vec4<T>::operator!=(const Vec4<T> &vec){
 template<class T>
 void Vec4<T>::normalize()
 {
-	x /= length();
-	y /= length();
-	z /= length();
-	w /= length();
+	float v_len = length();
+	x /= v_len;
+	y /= v_len;
+	z /= v_len;
+	w /= v_len;
 }
 
 template<class T>

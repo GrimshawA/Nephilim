@@ -27,8 +27,8 @@ StateTransitionBlocks::StateTransitionBlocks()
 
 	for(int i = 0; i < 300; ++i)
 	{
-		int p1 = Math::randomInt(0,positions.size() - 1);
-		int p2 = Math::randomInt(0,positions.size() - 1);
+		int p1 = math::randomInt(0,positions.size() - 1);
+		int p2 = math::randomInt(0,positions.size() - 1);
 
 		vec2 temp = positions[p2];
 		positions[p2] = positions[p1];

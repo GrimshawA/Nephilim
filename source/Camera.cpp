@@ -5,7 +5,7 @@ NEPHILIM_NS_BEGIN
 
 FPSCamera::FPSCamera()
 {
-	m_xAngle = Math::pi / 4;
+	m_xAngle = math::pi / 4;
 	m_yAngle = 0;
 }
 
@@ -14,8 +14,8 @@ void FPSCamera::rotate(float x, float y)
 	m_xAngle += x;
 	m_yAngle += y;
 
-	if(m_yAngle > Math::pi/2) m_yAngle = Math::pi/2;
-	if(m_yAngle < -Math::pi/2) m_yAngle = -Math::pi/2;
+	if(m_yAngle > math::pi/2) m_yAngle = math::pi/2;
+	if(m_yAngle < -math::pi/2) m_yAngle = -math::pi/2;
 }
 
 vec3 FPSCamera::getPosition()

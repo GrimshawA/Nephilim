@@ -141,6 +141,9 @@ public:
 	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
 	virtual void setDefaultShader();
 
+	/// Orders the renderer to reload the default shader
+	virtual void reloadDefaultShader();
+
 	/// Activates the shader for the next drawing calls
 	virtual void setShader(Shader& shader);
 
@@ -180,6 +183,9 @@ public:
 
 	/// Capture the currently bound frame buffer pixles to an image
 	bool readPixels(Image& image);
+
+	/// Orders the renderer to reload the default texture etc
+	void reloadResources();
 
 	// -- Low level calls
 

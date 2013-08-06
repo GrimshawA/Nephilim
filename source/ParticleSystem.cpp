@@ -35,7 +35,7 @@ void ParticleSystem::update(float deltaTime)
 		sprite.setPosition(position.x,position.y);
 		sprite.setTexture(*tex);
 		sprite.setOrigin(32,32);
-		sprite.setColor(Color(Math::randomInt(1,250), Math::randomInt(100,200), Math::randomInt(1,140)));
+		sprite.setColor(Color(math::randomInt(1,250), math::randomInt(100,200), math::randomInt(1,140)));
 		sprite.resize(32,32);
 		Particle pp;
 		pp.position  = vec3(position.x,position.y,0);

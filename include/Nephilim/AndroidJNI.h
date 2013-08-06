@@ -89,23 +89,21 @@ JNIEXPORT void	JNI_ACTIVITY_FUNC(nativeKeyDown) ( JNIEnv*  env , jobject thiz, j
 	android_keydown(keyCode);
 } 
 
-JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeInit)( JNIEnv*  env ){
-	android_init();  
-};
-
-/// Used to detect GL context lost
 static bool surfaceCreatedAtLeastOnce = false;
-JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeSurfaceCreated)( JNIEnv*  env ){
+JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeInit)( JNIEnv*  env )
+{
+	android_init(); 
+	surfaceCreatedAtLeastOnce = true;
+}
 
-	if(!surfaceCreatedAtLeastOnce)
-	{
-		surfaceCreatedAtLeastOnce = true;
-	}
-	else
+// -- In case the surface was created before already, this is a context recovery and we need to reload resources
+JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeSurfaceCreated)( JNIEnv*  env )
+{
+	if(surfaceCreatedAtLeastOnce)
 	{
 		android_gl_reload();
 	}
-};
+}
 
 JNIEXPORT void JNI_PACKAGE_FUNC(DemoRenderer_nativeRender) ( JNIEnv*  env ){
 	android_render();

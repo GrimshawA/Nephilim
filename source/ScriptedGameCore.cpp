@@ -273,7 +273,7 @@ void ScriptedGameCore::onEvent(Event &event){
 		}*/
 	}
 
-	if(event.type == Event::Resume)
+	if(event.type == Event::LostGraphicsContext)
 	{
 		//TESTLOG("RESUME CONTEXT LOST!!!\n");
 	}

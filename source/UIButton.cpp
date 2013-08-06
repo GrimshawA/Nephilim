@@ -45,75 +45,10 @@ void UIButton::setHoverTexture(const String& filename)
 	m_hovert.loadFromFile(filename);
 }
 
-bool UIButton::onEventNotification(Event& event){
-	if(event.type == Event::MouseButtonPressed){
-		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
-			// drag test
-			if(getContext())
-			{
-				getContext()->m_dragControl = this->clone();
-				getContext()->m_dragOffset = Vec2f(event.mouseButton.x - m_bounds.left, event.mouseButton.y - m_bounds.top);
-			}
-		}
+bool UIButton::onEventNotification(Event& event)
+{
+	
 
-		
-	}
-	if(event.type == Event::TouchPressed){
-		if(m_bounds.contains(event.touch.x, event.touch.y)){
-			// drag test
-			if(getContext())
-			{
-				getContext()->m_dragControl = this->clone();
-				getContext()->m_dragOffset = Vec2f(event.touch.x - m_bounds.left, event.touch.y - m_bounds.top);
-			}
-		}
-	}
-
-	if(event.type == Event::MouseButtonReleased){
-		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
-			//onClick();
-		}
-
-		// drag test
-		if(getContext())
-		{
-			getContext()->m_dragControl = NULL;
-		}
-	}
-
-	if(event.type == Event::TouchReleased){
-		if(m_bounds.contains(event.touch.x, event.touch.y)){
-			//onClick();
-		}
-
-		// drag test
-		if(getContext())
-		{
-			getContext()->m_dragControl = NULL;
-		}
-	}
-
-	if(event.type == Event::MouseMoved)
-	{
-		if(m_bounds.contains(event.mouseMove.x, event.mouseMove.y)){
-			//setProperty<Color>("background-color", Color::White);
-		}
-		else
-		{
-			//setProperty<Color>("background-color", Color(91,91,91));
-		}
-	}
-
-	if(event.type == Event::TouchMoved)
-	{
-		if(m_bounds.contains(event.touch.x, event.touch.y)){	
-			setProperty<Color>("background-color", Color::White);
-		}
-		else
-		{
-			setProperty<Color>("background-color", Color(91,91,91));
-		}
-	}
 	return true;
 }
 
@@ -153,7 +88,7 @@ void UIButton::draw(Renderer* renderer)
 	if(!m_stateContext->m_defaultFont.isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");
-	}	
+	}
 
 	RectangleShape background;
 	background.setPosition(getPosition());

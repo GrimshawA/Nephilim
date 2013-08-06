@@ -180,7 +180,7 @@ void GeometryData::randomFaceColors()
 	m_colors.resize(m_vertices.size());
 	for(size_t i = 0; i < m_vertices.size(); i += 6)
 	{
-		Color c(Math::randomInt(0,255), Math::randomInt(0,255), Math::randomInt(0,255));
+		Color c(math::randomInt(0,255), math::randomInt(0,255), math::randomInt(0,255));
 		m_colors[i] = c;
 		m_colors[i+1] = c;
 		m_colors[i+2] = c;
@@ -252,7 +252,7 @@ void GeometryData::addCylinder()
 
 	int hg_segments = 5;
 	int rd_segments = 100;
-	float rd_increment = Math::pi*2 / rd_segments;
+	float rd_increment = math::pi*2 / rd_segments;
 
 	for(int hg = 0; hg < hg_segments; ++hg)
 	{
@@ -297,7 +297,7 @@ void GeometryData::addCylinder()
 void GeometryData::addTorusKnot(int p, int q)
 {
 	int segments = 15000;
-	for(float theta = 0.f + Math::pi*2 / segments; theta < Math::pi*2; theta += Math::pi*2 / segments)
+	for(float theta = 0.f + math::pi*2 / segments; theta < math::pi*2; theta += math::pi*2 / segments)
 	{
 		float r = cos(q * theta) + 2;
 		Vec3f point(r * cos(p * theta), r * sin(p * theta), -sin(q * theta));
@@ -313,14 +313,14 @@ void GeometryData::addTorus(int p, int q)
 	int i_segments = 40;
 	for(int i = 0; i < i_segments; ++i)
 	{
-		float theta = i * Math::pi*2 / i_segments;
-		float ptheta = theta - Math::pi*2 / i_segments;
+		float theta = i * math::pi*2 / i_segments;
+		float ptheta = theta - math::pi*2 / i_segments;
 
 		int k_segments = 4;
 		for(int k = 0; k < k_segments; ++k)
 		{
-			float theta2 = k * Math::pi*2 / k_segments;
-			float ptheta2 = theta2 - Math::pi*2 / k_segments;
+			float theta2 = k * math::pi*2 / k_segments;
+			float ptheta2 = theta2 - math::pi*2 / k_segments;
 
 			// The 4 points of the quad
 			Vec3f p1, p2, p3, p4;

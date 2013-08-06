@@ -41,6 +41,19 @@ RendererGLES2::RendererGLES2()
 	m_type = OpenGLES2;
 	m_name = "OpenGL ES 2.0";
 
+	reloadDefaultShader();
+}
+
+/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
+void RendererGLES2::setDefaultShader()
+{
+	m_defaultShader.bind();
+	m_activeShader = &m_defaultShader;
+}
+
+void RendererGLES2::reloadDefaultShader()
+{
+	m_defaultShader.release();
 	m_defaultShader.loadShader(Shader::VertexUnit, gVertexSource);
 	m_defaultShader.loadShader(Shader::FragmentUnit, gFragmentSource);
 	m_defaultShader.addAttributeLocation(0, "vertex");
@@ -49,16 +62,9 @@ RendererGLES2::RendererGLES2()
 	m_defaultShader.create();
 	m_defaultShader.bind();
 
-	m_defaultShader.setUniformMatrix("projection", mat4().get());
-	m_defaultShader.setUniformMatrix("view", mat4().get());
-	m_defaultShader.setUniformMatrix("model", mat4().get());
-}
-
-/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
-void RendererGLES2::setDefaultShader()
-{
-	m_defaultShader.bind();
-	m_activeShader = &m_defaultShader;
+	m_defaultShader.setUniformMatrix("projection", m_projection.get());
+	m_defaultShader.setUniformMatrix("view", m_view.get());
+	m_defaultShader.setUniformMatrix("model", m_model.get());
 }
 
 /// Draw a vertex array

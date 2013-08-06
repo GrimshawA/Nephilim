@@ -14,7 +14,31 @@ NEPHILIM_NS_BEGIN
 Shader::Shader()
 : m_id(0)
 {
+}
 
+/// Safe release
+Shader::~Shader()
+{
+	release();
+}
+
+/// Reverts the shader back to an unitialized state
+void Shader::release()
+{
+	if(m_id > 0)
+	{
+		// Attach compiled shaders
+		for(std::vector<std::pair<ShaderTypes, unsigned int> >::iterator it = m_shaders.begin(); it != m_shaders.end(); ++it)
+		{
+			glDeleteShader(static_cast<GLuint>(it->second));
+		}
+
+		glDeleteProgram(m_id);
+
+		m_shaders.clear();
+		m_attribs.clear();
+		m_id = 0;
+	}
 }
 
 void Shader::pff()

@@ -1,7 +1,6 @@
 #ifndef NephilimNxMath_h__
 #define NephilimNxMath_h__
 
-
 #include "Platform.h"
 #include "Vectors.h"
 
@@ -9,11 +8,12 @@ NEPHILIM_NS_BEGIN
 
 /**
 	\ingroup Foundation
-	\namespace Math
+	\namespace math
 	\brief Contains useful math functions and constants to help in common game development tasks
 */
 
-namespace Math{
+namespace math
+{
 
 	/// The pi constant - 3.1415926
 	extern double pi;
@@ -57,32 +57,21 @@ namespace Math{
 	NEPHILIM_API double computeAngle(float x1, float y1, float x2, float y2);
 
 
-	/**
-		\brief Converts an angle in degrees to radians
 
-		Recommended use as degreeToRadian<double>(angle) for type compatibility with other functions.
-	*/
+	///	\brief Converts an angle in degrees to radians
 	template<class T>
-	T degreeToRadian(T degree){
-		T radian = 0;
-		radian = degree * (pi/180);
-		return radian;
+	T degreeToRadian(T degree)
+	{
+		return static_cast<T>(degree * (pi/180));
 	}
 
-	/**
-		\brief Converts an angle in radians to degrees
-
-		Recommended use as radianToDegree<double>(angle) for type compatibility with other functions.
-	*/
+	
+	///	\brief Converts an angle in radians to degrees
 	template<class T>
-	T radianToDegree(T radian){
-		T degree = 0.0f;
-		degree = radian * (180.f/pi);
-		return degree;
+	T radianToDegree(T radian)
+	{
+		return static_cast<T>(radian * (180.f/pi));
 	}
-
-	// He
-
 };
 
 /**

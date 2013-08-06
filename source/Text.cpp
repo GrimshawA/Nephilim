@@ -40,7 +40,9 @@ void Text::onDraw(Renderer* renderer)
 	if(!m_font || m_vertices.m_vertices.empty()) return;
 
 	m_font->getTexture(m_characterSize).bind();
-	renderer->setModelMatrix(renderer->getModelMatrix() * mat4(getTransform().getMatrix()));
+	renderer->setBlendingEnabled(true);
+	renderer->setBlendMode(Render::Blend::Alpha);
+	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 };
@@ -334,12 +336,6 @@ void Text::updateGeometry()
 
     // Recompute the bounding rectangle
     m_bounds = m_vertices.getBounds();
-
-
-	for(unsigned int i = 0; i < m_vertices.m_vertices.size(); i++){
-		//cout<< "Vertex: " << m_vertices.m_vertices[i].position.x << "," << m_vertices.m_vertices[i].position.y << endl;
-	}
-
 }
 
 NEPHILIM_NS_END

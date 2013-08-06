@@ -43,9 +43,9 @@ void android_init(){
 
 void android_gl_reload()
 {
-	/*pE::Event ev;
-	ev.type = pE::Event::Resume;
-	myApp.pendingEvents.push_back(ev);*/
+	NEPHILIM_NS::Event ev;
+	ev.type = NEPHILIM_NS::Event::LostGraphicsContext;
+	_engine->injectEvent(ev);
 }
 
 void android_render(){

@@ -237,7 +237,7 @@ mat4 mat4::getInverse()
 
 mat4 mat4::perspective(float fov, float aspectRatio, float zNear, float zFar)
 {
-	float rFov = Math::degreeToRadian<float>(fov);
+	float rFov = math::degreeToRadian<float>(fov);
 
 	float cotan = 0.0f, DeltaZ = float(zNear) - float(zFar),
 		angle = rFov / 2.0f, sine = sinf(angle);

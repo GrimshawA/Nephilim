@@ -87,7 +87,7 @@ BxVehicle::BxVehicle(BxScene& scene)
 		wheel.m_wheelsDampingCompression = suspensionCompression;
 		wheel.m_frictionSlip = wheelFriction;
 		wheel.m_rollInfluence = rollInfluence;
-		wheel.m_rotation = Math::pi/4;
+		wheel.m_rotation = math::pi/4;
 	}
 
 	Log("Vehicle created.\nNum Wheels: %d", vehicle->getNumWheels());

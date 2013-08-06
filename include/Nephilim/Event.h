@@ -484,12 +484,10 @@ public:
 		JoystickMoved,          ///< The joystick moved along an axis
 		JoystickConnected,      ///< A joystick was connected
 		JoystickDisconnected,   ///< A joystick was disconnected
-
-
-		TouchPressed,
-		TouchReleased,
-		TouchMoved,
-		Resume,
+		TouchPressed,           ///< A touch screen was pressed
+		TouchReleased,          ///< A touch screen was released
+		TouchMoved,             ///< A touch screen finger has moved
+		LostGraphicsContext,    ///< A graphics context was recovered and resources need to be reloaded
 
 		Count                   ///< Keep last -- the total number of event types
 	};
@@ -512,8 +510,6 @@ public:
 		JoystickConnectEvent joystickConnect; ///< Joystick (dis)connect event parameters
 		TouchEvent           touch;           ///< Touch event parameters
 	};
-
-
 };
 
 NEPHILIM_NS_END

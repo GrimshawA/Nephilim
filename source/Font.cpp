@@ -14,9 +14,6 @@
 #include <iostream>
 using namespace std;
 
-
-
-
 NEPHILIM_NS_BEGIN
 
 namespace

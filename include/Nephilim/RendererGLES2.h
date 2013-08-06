@@ -24,6 +24,8 @@ public:
 	/// This will cancel all shader-related settings and activate the default shader/fixed pipeline
 	virtual void setDefaultShader();
 
+	virtual void reloadDefaultShader();
+
 	/// Set the current projection matrix
 	virtual void setProjectionMatrix(const mat4& projection);
 

@@ -128,6 +128,10 @@ void Renderer::setDefaultBlending()
 	glBlendEquation(GL_FUNC_ADD);
 }
 
+void Renderer::reloadDefaultShader()
+{
+}
+
 void Renderer::setBlendMode(Render::Blend::Mode mode)
 {
 	setBlendingEnabled(true);
@@ -343,6 +347,16 @@ bool Renderer::readPixels(Image& image)
 	image.create(width, height, &pixels[0]);
 
 	return false;
+}
+
+/// Orders the renderer to reload the default texture etc
+void Renderer::reloadResources()
+{
+	reloadDefaultShader();
+
+	Image whiteTexture;
+	whiteTexture.create(1,1,Color::White);
+	m_defaultTexture.loadFromImage(whiteTexture);
 }
 
 /// Draw a debug circle with the given color and radius - slow

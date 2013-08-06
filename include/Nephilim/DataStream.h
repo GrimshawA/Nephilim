@@ -1,9 +1,10 @@
-#ifndef DataStream_h__
-#define DataStream_h__
+#ifndef NephilimDataStream_h__
+#define NephilimDataStream_h__
 
 #include "Platform.h"
 
 NEPHILIM_NS_BEGIN
+
 class IODevice;
 class String;
 
@@ -24,8 +25,14 @@ public:
 	/// Set the device of this data stream
 	void setDevice(IODevice& device);
 
-	/// Write a 64-bit integer
+	/// Write a 64-bit signed integer
 	DataStream& operator<<(Int64 value);
+
+	/// Write a 32-bit signed integer
+	DataStream& operator<<(Int32 value);
+
+	/// Write a 32-bit unsigned integer
+	DataStream& operator<<(Uint32 value);
 
 	/// Write a String
 	DataStream& operator<<(const String& value);
@@ -33,8 +40,14 @@ public:
 	/// Write a float
 	DataStream& operator<<(float value);
 
-	/// Read a 64-bit integer
+	/// Read a 64-bit signed integer
 	DataStream& operator>>(Int64& value);
+
+	/// Read a 32-bit signed integer
+	DataStream& operator>>(Int32& value);
+
+	/// Read a 32-bit unsigned integer
+	DataStream& operator>>(Uint32& value);
 
 	/// Read a String
 	DataStream& operator>>(String& value);
@@ -47,4 +60,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // DataStream_h__
+#endif // NephilimDataStream_h__

@@ -34,6 +34,12 @@ public:
 	/// This means an invalid shader, which causes, not guaranteed, that the fixed-pipeline is activated
 	Shader();
 
+	/// Safe release
+	~Shader();
+
+	/// Reverts the shader back to an unitialized state
+	void release();
+
 	/// Binds variables in the program to predefined location index
 	/// Just pass the location you want to be assigned to the variable name
 	/// Calling this function only makes sense BEFORE calling create().

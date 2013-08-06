@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\brief Contains useful math functions and constants to help in common game development tasks
 */
 
-namespace Math{
+namespace math{
 
 	/// The pi constant - 3.1415926
 	extern double pi;

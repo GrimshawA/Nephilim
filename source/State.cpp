@@ -37,7 +37,7 @@ void State::onRender(Renderer* renderer)
 /// Starts a random transition among the built-in ones
 void State::useRandomTransition()
 {
-	int id = Math::randomInt(0, 2);
+	int id = math::randomInt(0, 2);
 
 	switch(id)
 	{

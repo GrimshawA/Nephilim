@@ -143,13 +143,25 @@ UISurface* UIDocument::operator[](unsigned int index)
 	return m_surfaces[index];
 }
 
-/// Get the surface closer to the user
-UISurface* UIDocument::top(){
-	if(m_surfaces.empty()) return NULL;
-	else{
-		return m_surfaces.back();
+UISurface* UIDocument::top()
+{
+	if(m_surfaces.empty())
+	{
+		return NULL;
 	}
-};
+	else
+	{
+		UISurface* lastSurface = m_surfaces.back();
+		for(size_t i = 0; i < m_pendingChanges.size(); ++i)
+		{
+			if(m_pendingChanges[i].type == Add)
+			{
+				lastSurface = m_pendingChanges[i].surface;
+			}
+		}
+		return lastSurface;
+	}
+}
 
 void UIDocument::showMessageBox(const String& message)
 {
@@ -241,7 +253,8 @@ void UIDocument::destroySurface(UISurface* surface)
 void UIDocument::update(float elapsedTime)
 {	
 	m_surfaceContainerLock++;
-	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++){
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
+	{
 		(*it)->update(elapsedTime);
 	}
 	m_surfaceContainerLock--;
@@ -259,8 +272,7 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 		vec2 normalized_mouse(static_cast<float>(event.getPointerPosition().x) / static_cast<float>(realWindowSize.x), static_cast<float>(event.getPointerPosition().y) / static_cast<float>(realWindowSize.y));
 		processedEvent.setPointerPosition(vec2i(static_cast<int>(normalized_mouse.x * targetWindowSize.x), static_cast<int>(normalized_mouse.y * targetWindowSize.y)));
 	}
-
-
+	
 	UIEventResult eventUsage;
 
 	// -- Raw event delivery system
@@ -355,60 +367,73 @@ void UIDocument::setLanguage(const String& shortLanguageName)
 /// Process a mouse press event
 bool UIDocument::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
-	m_surfaceContainerLock = true;
-	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
+	m_surfaceContainerLock++;
+	bool canContinue = true;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++)
 	{
 		(*it)->processMouseButtonPressed(x,y,button);
 
 		if((*it)->isModal())
 		{
 			//eventUsage.clickPassedThrough = false;
-			break;
+			canContinue = false;
 		}
 	}
-	m_surfaceContainerLock = false;
+	m_surfaceContainerLock--;
 
 	return false;
 }
 
 void UIDocument::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info)
 {
-	m_surfaceContainerLock = true;
+	m_surfaceContainerLock++;
+	bool canContinue = true;
 	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); ++it)
 	{
-		(*it)->processMouseButtonReleased(x, y, button, info);
+		if(canContinue)
+		{
+			(*it)->processMouseButtonReleased(x, y, button, info);
 
-		if((*it)->isModal())
-			break;
+			if((*it)->isModal())
+			{
+				canContinue = false;
+			}
+		}
 	}
-	m_surfaceContainerLock = false;
+	m_surfaceContainerLock --;
+
+	applyPendingChanges();
 }
 
 
 /// Process a mouve movement event
 bool UIDocument::processMouseMove(int x, int y)
 {
-	m_surfaceContainerLock = true;
-	bool quit = false;
-	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && !quit; it++){
+	m_surfaceContainerLock++;
+	bool canContinue = true;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
 		(*it)->processMouseMove(x,y);
 
 		if((*it)->isModal())
-			quit = true;
+		{
+			canContinue = false;
+		}
 	}
-	m_surfaceContainerLock = false;
+	m_surfaceContainerLock--;
 	return false;
 }
 
 void UIDocument::processTouchMove(int x, int y)
 {
 	m_surfaceContainerLock++;
-	bool quit = false;
-	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && !quit; it++){
+	bool canContinue = true;
+	for(std::vector<UISurface*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
 		(*it)->processTouchMove(x,y);
 
 		if((*it)->isModal())
-			quit = true;
+		{
+			canContinue = false;
+		}
 	}
 	m_surfaceContainerLock--;
 }

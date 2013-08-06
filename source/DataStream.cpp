@@ -35,6 +35,26 @@ DataStream& DataStream::operator<<(Int64 value)
 	return *this;
 }
 
+/// Write a 64-bit signed integer
+DataStream& DataStream::operator<<(Int32 value)
+{
+	if(m_device)
+	{
+		m_device->write(reinterpret_cast<const char*>(&value), sizeof(value));
+	}
+	return *this;
+}
+
+/// Write a 32-bit unsigned integer
+DataStream& DataStream::operator<<(Uint32 value)
+{
+	if(m_device)
+	{
+		m_device->write(reinterpret_cast<const char*>(&value), sizeof(value));
+	}
+	return *this;
+}
+
 /// Write a String
 DataStream& DataStream::operator<<(const String& value)
 {
@@ -62,6 +82,26 @@ DataStream& DataStream::operator>>(Int64& value)
 	if(m_device)
 	{
 		m_device->read(reinterpret_cast<char*>(&value), sizeof(Int64));
+	}
+	return *this;
+}
+
+/// Read a 32-bit signed integer
+DataStream& DataStream::operator>>(Int32& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(Int32));
+	}
+	return *this;
+}
+
+/// Read a 32-bit unsigned integer
+DataStream& DataStream::operator>>(Uint32& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(Uint32));
 	}
 	return *this;
 }

@@ -32,7 +32,7 @@ Vec2f KxBody::getVelocity(){
 
 /// Get angle in degrees, directly compatible with SFML
 float KxBody::getDegreeAngle(){
-	return Math::radianToDegree(m_body->GetAngle());
+	return math::radianToDegree(m_body->GetAngle());
 };
 
 void KxBody::setVelocity(Vec2f velocity){

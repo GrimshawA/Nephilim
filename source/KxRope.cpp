@@ -10,7 +10,7 @@ void KxRopeBuilder::createBridge(Vec2f bridgeStart, Vec2f bridgeEnd, int stepCou
 	if(sim){
 		// A proper tree will always have the remaining calls valid.
 
-		float distance = Math::distance(bridgeStart, bridgeEnd);
+		float distance = math::distance(bridgeStart, bridgeEnd);
 		float gap = 2.f;
 		float stepWidth = (distance / stepCount);		
 		float altStepWidth = sim->toMeters(stepWidth);
