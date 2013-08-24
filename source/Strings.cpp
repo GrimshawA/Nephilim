@@ -81,17 +81,20 @@ bool String::matches(const String& wildcard)
 		while((it = find_first_of(c, 0)) != npos)erase(it, 1);
 	};
 
-	int String::toInt(){
-		return atoi(this->c_str());
-	}
+int String::toInt() const
+{
+	return atoi(this->c_str());
+}
 
-	float String::toFloat(){
-		return (float)atof(this->c_str());
-	};
+float String::toFloat() const
+{
+	return (float)atof(this->c_str());
+}
 
-	double String::toDouble(){
-		return atof(this->c_str());
-	};
+double String::toDouble() const
+{
+	return atof(this->c_str());
+}
 
 	void String::toLowerCase(){
 		for(unsigned int i = 0; i < length(); i++){

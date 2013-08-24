@@ -22,7 +22,7 @@ AxBase::AxBase(float duration)
 
 AxBase::~AxBase()
 {
-	Log("AxBase destructor");
+	//Log("AxBase destructor");
 }
 
 void AxBase::deduceInitialParameters()

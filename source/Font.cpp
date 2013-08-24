@@ -615,8 +615,8 @@ bool Font::setCurrentSize(unsigned int characterSize) const
 
 
 ////////////////////////////////////////////////////////////
-Font::Page::Page() :
-nextRow(2)
+Font::Page::Page()
+: nextRow(3)
 {
     // Make sure that the texture is initialized by default
     Image image;

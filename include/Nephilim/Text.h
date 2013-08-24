@@ -1,5 +1,5 @@
-#ifndef PARABOLA_TEXTRENDERING_H
-#define PARABOLA_TEXTRENDERING_H
+#ifndef NephilimText_h__
+#define NephilimText_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -19,7 +19,8 @@
 
 NEPHILIM_NS_BEGIN
 
-class UString : public std::basic_string<Uint32>{
+class UString : public std::basic_string<Uint32>
+{
 public:
 	UString(){
 
@@ -76,7 +77,8 @@ class Font;
 		Inherits all sf::Text functionality and extends it for some more utility functions
 
 */
-class NEPHILIM_API Text : public Drawable, public Transformable{
+class NEPHILIM_API Text : public Drawable, public Transformable
+{
 public:		
 	/// Creates a Text object with the default font, but no text string yet
 	Text();
@@ -140,4 +142,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimText_h__

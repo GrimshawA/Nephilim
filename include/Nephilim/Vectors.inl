@@ -7,26 +7,28 @@ Vec2<T>::Vec2()
 : x(static_cast<T>(0))
 , y(static_cast<T>(0))
 {
-
-};
+}
 
 template<class T>
-Vec2<T>::Vec2(T x, T y){
+Vec2<T>::Vec2(T x, T y)
+{
 	this->x = x;
 	this->y = y;
-};
+}
 
 template<class T>
-void Vec2<T>::set(T x, T y){
+void Vec2<T>::set(T x, T y)
+{
 	this->x = x;
 	this->y = y;
-};
+}
 
 template<class T>
-void Vec2<T>::setAll(T x){
+void Vec2<T>::setAll(T x)
+{
 	this->x = x;
 	this->y = x;
-};
+}
 
 template<class T>
 Vec2<T> Vec2<T>::normalized()
@@ -38,25 +40,28 @@ Vec2<T> Vec2<T>::normalized()
 
 /// Makes the vector unit-length
 template<class T>
-void Vec2<T>::normalize(){
+void Vec2<T>::normalize()
+{
 	float v_len = length();
 	x /= v_len;
 	y /= v_len;
-};
+}
 
 /// Get the length of the vector
 template<class T>
-float Vec2<T>::length(){
+float Vec2<T>::length() const
+{
 	return sqrt(x*x + y*y);
-};
+}
 
 template<class T>
 bool Vec2<T>::operator==(const Vec2<T> &vec) const
 {
 	if(x == vec.x && y == vec.y)
 		return true;
-	else return false;
-};
+	else
+		return false;
+}
 
 template<class T>
 bool Vec2<T>::operator!=(const Vec2<T> &vec) const
@@ -238,9 +243,10 @@ Vec3<T> Vec3<T>::cross(const Vec3<T> &vec)
 
 /// Get the length of the vector
 template<class T>
-float Vec3<T>::length(){
+float Vec3<T>::length() const
+{
 	return sqrt(x*x + y*y + z*z);
-};
+}
 
 template<class T>
 bool Vec3<T>::operator==(const Vec3<T> &vec){
@@ -454,9 +460,10 @@ void Vec4<T>::normalize()
 }
 
 template<class T>
-float Vec4<T>::length(){
+float Vec4<T>::length() const
+{
 	return sqrt(x*x + y*y + z*z + w*w);
-};
+}
 
 template<class T>
 Vec3<T> Vec4<T>::xyz()

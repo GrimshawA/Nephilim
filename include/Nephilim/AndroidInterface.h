@@ -76,6 +76,12 @@ public:
 	/// Request a frame render
 	static void requestFrameRender();
 
+	/// Enable multitouch support
+	static void enableMultiTouch();	
+	
+	/// Disable multitouch support
+	static void disableMultiTouch();
+
 	/// Toggle the software keyboard
 	static void toggleKeyboard();
 

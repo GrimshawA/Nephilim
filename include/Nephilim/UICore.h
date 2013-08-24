@@ -66,8 +66,6 @@ private:
 	std::map<String, FontResource*>    m_fonts;    ///< All fonts shared by the UI system
 	std::map<String, TextureResource*> m_textures; ///< All textures shared by the UI system
 
-
-
 public:
 
 
@@ -77,6 +75,9 @@ public:
 		Mouse
 	};
 
+	bool transformPointerCoordinates;
+	vec2 realWindowSize;
+	vec2 targetWindowSize;
 
 	Font m_defaultFont;
 	ScreenInputType m_screenInputType;

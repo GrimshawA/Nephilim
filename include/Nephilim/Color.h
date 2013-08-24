@@ -37,6 +37,10 @@ public:
 	static Color Transparent;
 	static Color Grey;
 	static Color Yellow;
+	static Color Bittersweet;
+	static Color Lavender;
+	static Color Grass;
+	static Color Aqua;
 
 	Uint8 r,g,b,a;
 };

@@ -10,7 +10,6 @@ NEPHILIM_NS_BEGIN
 UIDocument::UIDocument()
 : m_surfaceContainerLock(0)
 , m_backgroundColor(Color::Transparent)
-, transformPointerCoordinates(false)
 {
 	
 }
@@ -267,10 +266,10 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 	Event processedEvent = event;
 
 	// If required, change the pointer coordinates to the target coordinate system
-	if(transformPointerCoordinates)
+	if(m_state.transformPointerCoordinates)
 	{
-		vec2 normalized_mouse(static_cast<float>(event.getPointerPosition().x) / static_cast<float>(realWindowSize.x), static_cast<float>(event.getPointerPosition().y) / static_cast<float>(realWindowSize.y));
-		processedEvent.setPointerPosition(vec2i(static_cast<int>(normalized_mouse.x * targetWindowSize.x), static_cast<int>(normalized_mouse.y * targetWindowSize.y)));
+		vec2 normalized_mouse(static_cast<float>(event.getPointerPosition().x) / static_cast<float>(m_state.realWindowSize.x), static_cast<float>(event.getPointerPosition().y) / static_cast<float>(m_state.realWindowSize.y));
+		processedEvent.setPointerPosition(vec2i(static_cast<int>(normalized_mouse.x * m_state.targetWindowSize.x), static_cast<int>(normalized_mouse.y * m_state.targetWindowSize.y)));
 	}
 	
 	UIEventResult eventUsage;
@@ -284,14 +283,12 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 			// deliver the event
 			(*it)->dispatchEvent(processedEvent);
 
-
 			if((*it)->isModal())
 			{
 				eventUsage.clickPassedThrough = false;
 				break;
 			}
 		}
-
 	}
 	m_surfaceContainerLock--;
 
@@ -352,6 +349,28 @@ UIEventResult UIDocument::pushEvent(const Event& event)
 
 	return eventUsage;
 };
+
+int UIDocument::getModalSurfaceCount()
+{
+	int count = 0;
+
+	// Check the established list
+	for(std::vector<UISurface*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); ++it)
+	{
+		if((*it)->isModal())
+			count++;
+	}
+
+	for(size_t i = 0; i < m_pendingChanges.size(); ++i)
+	{
+		if(m_pendingChanges[i].type == Add && m_pendingChanges[i].surface->isModal())
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
 
 /// Set the current language of the ui system
 void UIDocument::setLanguage(const String& shortLanguageName)

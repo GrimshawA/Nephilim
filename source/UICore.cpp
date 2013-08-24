@@ -3,6 +3,7 @@
 NEPHILIM_NS_BEGIN
 
 UICore::UICore()
+: transformPointerCoordinates(false)
 {
 	m_fakeTouchScreen = false;
 

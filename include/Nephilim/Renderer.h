@@ -158,7 +158,7 @@ public:
 	virtual void setClippingRect(FloatRect rect);
 
 	///
-	virtual void pushClippingRect(FloatRect rect);
+	virtual void pushClippingRect(FloatRect rect, bool isNormalized = false);
 
 	///
 	virtual void popClippingRect();

@@ -8,6 +8,9 @@ extern void android_resize(int w, int h);
 extern void android_touchdown(float x, float y);
 extern void android_touchup(float x, float y);
 extern void android_touchmove(float x, float y);
+extern void android_multitouchdown(float x, float y, int index, int id);
+extern void android_multitouchup(float x, float y, int index, int id);
+extern void android_multitouchmove(float x, float y, int index, int id);
 extern void android_keydown(int key);
  
 #include <Nephilim/Strings.h>
@@ -49,14 +52,21 @@ extern "C"{
 		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeTouchUp) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y );
 	JNIEXPORT void
 		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeTouchMove) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y );
+	JNIEXPORT void
+		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchDown) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id );
+	JNIEXPORT void
+		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchUp) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id );
+	JNIEXPORT void
+		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchMove) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id );
 	JNIEXPORT jint
 		JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeGetGLVersion) ( JNIEnv*  env, jobject thiz );
 
 	JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved);
 };
 
-JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved){
-	__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "ONLOAD CALLED\n");
+JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved)
+{
+	//__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "ONLOAD CALLED\n");
 	nx::AndroidInterface::setJavaNativeInterfaceEnvironment(jvm);
 	return JNI_VERSION_1_2;
 };
@@ -123,12 +133,36 @@ JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeTouchMove) ( JNIEnv*  en
 	android_touchmove(x,y);   
 };
 
+// -- Multitouch down
+JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchDown) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id )
+{
+	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Down: %f %f index %d id %d\n", x,y,index,id);
+	android_multitouchdown(x,y,index,id);
+}
+
+// -- Multitouch up
+JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchUp) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id  )
+{
+	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Up: %f %f index %d id %d\n", x,y,index,id);
+	android_multitouchup(x,y,index,id);
+
+}
+
+// -- Multitouch move
+JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchMove) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id  )
+{
+	//__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Move: %f %f index %d id %d\n", x,y,index,id);
+	android_multitouchmove(x,y,index,id);
+
+}
+
 JNIEXPORT jint JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeGetGLVersion) ( JNIEnv*  env, jobject thiz )
 {
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to create a OpenGL ES 2.0 context.\n");
 #if defined NEPHILIM_GLES1
+	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "Attempting to create a OpenGL ES 1.1 context.\n");
 	return 1;
 #else
+	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "Attempting to create a OpenGL ES 2.0 context.\n");
 	return 2;
 #endif
 

@@ -82,6 +82,43 @@ void android_keydown(int key){
 	_engine->injectEvent(ev);
 }
 
+
+// -- Multi touch down
+void android_multitouchdown(float x, float y, int index, int id)
+{
+	NEPHILIM_NS::Event ev;
+	ev.type = NEPHILIM_NS::Event::TouchPressed;
+	ev.touch.x = x;
+	ev.touch.y = y;
+	ev.touch.index = index;
+	ev.touch.id = id;
+	_engine->injectEvent(ev);
+}
+// -- Multi touch up
+void android_multitouchup(float x, float y, int index, int id)
+{
+	NEPHILIM_NS::Event ev;
+	ev.type = NEPHILIM_NS::Event::TouchReleased;
+	ev.touch.x = x;
+	ev.touch.y = y;
+	ev.touch.index = index;
+	ev.touch.id = id;
+	_engine->injectEvent(ev);
+}
+// -- Multi touch move
+void android_multitouchmove(float x, float y, int index, int id)
+{
+	NEPHILIM_NS::Event ev;
+	ev.type = NEPHILIM_NS::Event::TouchMoved;
+	ev.touch.x = x;
+	ev.touch.y = y;
+	ev.touch.index = index;
+	ev.touch.id = id;
+	_engine->injectEvent(ev);
+}
+
+
+
 void android_touchdown(float x, float y){
 	NEPHILIM_NS::Event ev;
 	ev.type = NEPHILIM_NS::Event::TouchPressed;
@@ -89,6 +126,7 @@ void android_touchdown(float x, float y){
 	ev.touch.y = y;
 	_engine->injectEvent(ev);
 }
+
 
 void android_touchup(float x, float y){
 	NEPHILIM_NS::Event ev;

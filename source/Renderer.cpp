@@ -194,9 +194,18 @@ void Renderer::setClippingRect(FloatRect rect)
 	glScissor(rect.left, m_target->getSize().y - (rect.top + rect.height), rect.width, rect.height);
 }
 
-void Renderer::pushClippingRect(FloatRect rect)
+void Renderer::pushClippingRect(FloatRect rect, bool isNormalized)
 {
 	setClippingEnabled(true);
+
+	// If its normalized, convert back to pixels for the calculations
+	if(isNormalized)
+	{
+		rect.left *= getSurface().getWidth();
+		rect.width *= getSurface().getWidth();
+		rect.top *= getSurface().getHeight();
+		rect.height *= getSurface().getHeight();
+	}
 
 	FloatRect finalRect;
 

@@ -29,6 +29,7 @@ UIControl::UIControl()
 , m_hovered(false)
 , drawColoredBackground(true)
 , m_bounds(0.f, 0.f, 1.f, 1.f)
+, m_pointerPressCount(0)
 {
 }
 
@@ -526,26 +527,23 @@ bool UIControl::processTouchMove(int x, int y)
 /// Process a mouse press event
 bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
-	bool result = false;
-	if(isFocusable())
-	{
-		focus();
-	}
-
 	m_childrenLock++;
-	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
 		if((*it)->getBounds().contains(x,y))
 		{
-			result = true;
-			(*it)->processMouseButtonPressed(x,y, button);
+			(*it)->m_pointerPressCount++;
 		}
+
+		(*it)->processMouseButtonPressed(x,y, button);
+
 	}
 	m_childrenLock--;
 
-	if(m_childrenLock == 0) 
+	if(m_childrenLock == 0)
 		applyPendingOperations();
 
-	return result;
+	return true;
 }
 
 /// Process a mouse release event
@@ -555,9 +553,10 @@ void UIControl::processMouseButtonReleased(int x, int y, Mouse::Button button, U
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 		if((*it)->getBounds().contains(x,y))
 		{
-			(*it)->onClick();
-		}
-
+			if((*it)->m_pointerPressCount > 0)
+				(*it)->onClick();
+			(*it)->m_pointerPressCount = 0;
+		}		
 		(*it)->processMouseButtonReleased(x,y, button, info);
 	}
 	m_childrenLock--;
@@ -880,7 +879,14 @@ void UIControl::innerDraw(Renderer* renderer, const mat4& transform )
 	// clip the overflowing children
 	if(m_clipChildren)
 	{
-		renderer->pushClippingRect(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
+		if(getContext()->transformPointerCoordinates)
+		{
+			renderer->pushClippingRect(FloatRect(m_bounds.left / getContext()->targetWindowSize.x,m_bounds.top / getContext()->targetWindowSize.y,m_bounds.width / getContext()->targetWindowSize.x, m_bounds.height / getContext()->targetWindowSize.y), true);
+		}
+		else
+		{
+			renderer->pushClippingRect(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
+		}
 	}
 
 	// Let children render as well

@@ -8,7 +8,7 @@ bool Event::isPointerPressed() const
 	return (type == MouseButtonPressed || type == TouchPressed);
 }
 
-bool Event::isPointerType()
+bool Event::isPointerType() const
 {
 	return (type == MouseButtonPressed || type == TouchPressed || type == MouseButtonReleased || type == TouchReleased || type == MouseMoved || type == TouchMoved); 
 }

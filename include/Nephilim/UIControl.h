@@ -319,6 +319,8 @@ public:
 	/// Reload all graphics because they were destroyed and are unavailable now
 	virtual void reloadGraphicalAssets();
 
+	int m_pointerPressCount;
+
 
 	/// Cascaded transform
 	mat4 m_transform;

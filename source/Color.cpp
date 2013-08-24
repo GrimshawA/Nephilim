@@ -11,7 +11,11 @@ Color Color::Orange = Color(255,165,0,255);
 Color Color::Blue = Color(30, 144, 255, 255);
 Color Color::Transparent = Color(0, 0, 0, 0);
 Color Color::Grey = Color(91, 91, 91, 255);
-Color Color::Yellow = Color(228, 225, 9, 255);
+Color Color::Yellow = Color(212, 197, 36, 255);
+Color Color::Bittersweet = Color(212, 197, 36, 255);
+Color Color::Lavender = Color(172, 146, 236, 255);
+Color Color::Grass = Color(160, 212, 104, 255);
+Color Color::Aqua = Color(79, 193, 233, 255);
 
 Color::Color()
 {
@@ -19,7 +23,8 @@ Color::Color()
 	a = 255;
 }
 
-Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
+Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha)
+{
 	r = red;
 	g = green;
 	b = blue;

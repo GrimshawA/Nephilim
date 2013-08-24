@@ -26,37 +26,53 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 , m_offset(0)
 {
 	String mode;
-	switch(accessMode){
+	switch(accessMode)
+	{
 		case IODevice::BinaryRead: mode = "rb";break;
 		case IODevice::BinaryWrite: mode = "wb";break;
 		case IODevice::TextRead: mode = "r";break;
 		case IODevice::TextWrite: mode = "w";break;
 	}
-#ifdef NEPHILIM_ANDROID
-	if(path.length() > 0 && path[0] != '/')
-	{
-		// Asset
-		AndroidInterface::AssetFile asset = AndroidInterface::getAsset(path);
-		if(asset.success)
-		{
-			m_handle = fdopen(asset.fd, mode.c_str());
-			m_offset = asset.offset;
-			m_length = asset.length;
-			if(m_handle)
-				fseek(m_handle, m_offset, SEEK_SET);
-		}
-	}
-	else m_handle = fopen(path.c_str(), mode.c_str());
-#else
-	// Standard opening
-	m_handle = fopen(path.c_str(), mode.c_str());
-#endif
 
-	if(m_handle && m_length == 0){
+#ifdef NEPHILIM_ANDROID
+	if(path.length() > 0)
+	{
+		if(path[0] == '/')
+		{
+			m_handle = fopen(path.c_str(), mode.c_str());
+			if(m_handle)
+			{
+				fseek(m_handle, 0, SEEK_END);
+				m_length = ftell(m_handle);
+				int len = m_length;
+				fseek(m_handle, 0, SEEK_SET);
+				
+				Log("File: Length %d", len);
+			}
+		}
+		else
+		{
+			// Asset
+			AndroidInterface::AssetFile asset = AndroidInterface::getAsset(path);
+			if(asset.success)
+			{
+				m_handle = fdopen(asset.fd, mode.c_str());
+				m_offset = asset.offset;
+				m_length = asset.length;
+				if(m_handle)
+					fseek(m_handle, m_offset, SEEK_SET);
+			}
+		}		
+	}
+#else
+	m_handle = fopen(path.c_str(), mode.c_str());
+	if(m_handle)
+	{
 		fseek(m_handle, 0, SEEK_END);
 		m_length = m_fileSize = ftell(m_handle);
 		fseek(m_handle, 0, SEEK_SET);
 	}
+#endif
 
 	if(!m_handle)
 	{
@@ -98,7 +114,8 @@ String File::getLine()
 };
 
 /// Cleanup
-File::~File(){
+File::~File()
+{
     if(m_handle)
         fclose(m_handle);
 }
@@ -191,9 +208,10 @@ bool File::seek(Int64 offset, int origin){
 };
 
 /// Get the total size of the file (or region)
-Int64 File::getSize(){
+Int64 File::getSize()
+{
 	return m_length;
-};
+}
 
 /// Reads raw data from the stream with size len, stored in the buffer, it protects the reading of protected sections
 /// Returns the amount of bytes read
@@ -208,6 +226,9 @@ Int64 File::read(char* buffer, Int64 len) const{
 
 /// Tells the current position, relative to the allowed offset
 Int64 File::tell() const{
+	if(!m_handle)
+		return 0;
+
 	Int64 curr = ftell(m_handle);
 	return curr - m_offset;
 };

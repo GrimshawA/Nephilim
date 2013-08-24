@@ -109,8 +109,8 @@ void UIButton::draw(Renderer* renderer)
 	t.setString(m_label);
 	t.setColor(m_color);
 	t.setCharacterSize(m_bounds.height / 2);
-	t.setOrigin(t.getLocalBounds().width/2, t.getLocalBounds().height/2);
-	t.setPosition(m_bounds.left + m_bounds.width/2, m_bounds.top +  m_bounds.height/2);
+	t.setOrigin(static_cast<int>(t.getLocalBounds().width/2 + 0.5f), static_cast<int>(t.getLocalBounds().height/2 + 0.5f));
+	t.setPosition(static_cast<int>(m_bounds.left + m_bounds.width/2 + 0.5f), static_cast<int>(m_bounds.top +  m_bounds.height/2 + 0.5f));
 	renderer->draw(t);
 };
 

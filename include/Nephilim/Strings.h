@@ -53,13 +53,13 @@ public:
 	void removeCharacter(char c);
 
 	/// Convert to integer
-	int toInt();
+	int toInt() const;
 
 	/// Convert to float
-	float toFloat();
+	float toFloat() const;
 
 	/// Convert to double
-	double toDouble();
+	double toDouble() const;
 
 	/// Convert to a boolean. Returns true if the string equals "true", case-insensitive and false otherwise.
 	bool toBoolean();

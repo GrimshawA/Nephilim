@@ -338,7 +338,7 @@ class NEPHILIM_API Event{
 public:
 
 	/// Is this event related to the mouse or touch ?
-	bool isPointerType();
+	bool isPointerType() const;
 
 	/// Returns true if the event refers to a pointer being pressed, like a touch or the mouse button
 	bool isPointerPressed() const;
@@ -356,11 +356,13 @@ public:
 	vec2i getPointerPosition() const;
 	void setPointerPosition(vec2i pos);
 
+	///< Touch event parameters
 	struct TouchEvent
 	{
 		float x;  ///< The x coordinate of the touch, in device coordinates
 		float y;  ///< The y coordinate of the touch, in devices coordinates
-		int   id; ///< unused: reserved for multitouch implementation
+		int index;///< The index of the touch pointer - irrelevant most times
+		int id;   ///< The unique ID of the pointer, stays valid throughout the whole touch gesture
 	};
 
 	////////////////////////////////////////////////////////////

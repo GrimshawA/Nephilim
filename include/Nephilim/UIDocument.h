@@ -51,6 +51,9 @@ public:
 	/// Get a surface by its name
 	UISurface* getSurfaceByName(const String& name);
 
+	/// Get the count of modal surfaces
+	int getModalSurfaceCount();
+
 	/// Get the surface closer to the user
 	/// \return the UISurface* or NULL if there are no surfaces
 	UISurface* top();
@@ -110,10 +113,6 @@ public:
 	/// Get a surface directly by its index
 	/// You must ensure that index is valid
 	UISurface* operator[](unsigned int index);
-
-	bool transformPointerCoordinates;
-	vec2 realWindowSize;
-	vec2 targetWindowSize;
 
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 	Color m_backgroundColor;

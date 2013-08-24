@@ -48,12 +48,17 @@ public:
 	/// Build a Time object from an amount of seconds
 	static Time fromSeconds(float seconds);
 
+	/// Greater or equal operator for comparing times
+	bool operator>=(const Time& right);
+
 	/// Minus operator overload to subtract time spans
 	Time operator -(Time right);
 
 	/// The time span representation
 	Int64 m_microSeconds;
 	friend class Clock;
+
+	static const Time Zero;
 };
 
 NEPHILIM_NS_END

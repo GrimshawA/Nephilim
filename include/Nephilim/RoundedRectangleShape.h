@@ -19,6 +19,17 @@ class NEPHILIM_API RoundedRectangleShape : public Drawable, public Transformable
 public:
 	RoundedRectangleShape();
 
+	enum Corners
+	{
+		TopLeft,
+		TopRight,
+		BottomLeft,
+		BottomRight
+	};
+
+	/// Enable or disable roundedness on a specific corner
+	void setCornerRounded(Corners corner, bool rounded);
+
 	/// Get the size of the central area of the shape
 	vec2 getSize();
 
@@ -47,6 +58,7 @@ public:
 	void setOutlineColor(const Color& outlineColor);
 
 protected:
+
 	/// Drawable implementation for drawing the shape
 	virtual void onDraw(Renderer* renderer);
 
@@ -61,7 +73,12 @@ private:
 	Color m_outlineColor;
 	VertexArray2D m_geometry;
 	VertexArray2D m_outline;
-	float m_outlineThickness;	
+	float m_outlineThickness;
+
+	bool m_topLeftRounded;
+	bool m_topRightRounded;
+	bool m_bottomLeftRounded;
+	bool m_bottomRightRounded;
 };
 
 NEPHILIM_NS_END

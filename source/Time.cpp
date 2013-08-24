@@ -2,6 +2,8 @@
 
 NEPHILIM_NS_BEGIN
 
+const Time Time::Zero = Time::fromSeconds(0.f);
+
 Time::Time(){
 		m_microSeconds = 0;
 }
@@ -38,6 +40,11 @@ Time Time::fromMicroseconds(Int64 microSeconds){
 	return Time(microSeconds);
 };
 
+/// Greater or equal operator for comparing times
+bool Time::operator>=(const Time& right)
+{
+	return (m_microSeconds > right.m_microSeconds);
+}
 
 Time Time::operator -(Time right)
 {

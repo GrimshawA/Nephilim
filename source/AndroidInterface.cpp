@@ -285,9 +285,10 @@ void AndroidInterface::closeActivity(){
 };
 
 /// Request a frame render
-void AndroidInterface::requestFrameRender(){
+void AndroidInterface::requestFrameRender()
+{
 	JNIEnv* m_JNI;
-	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
+	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
 
 	jclass cls = m_JNI->FindClass(m_JNIActivityName);
 	if(cls != NULL){ 
@@ -297,6 +298,36 @@ void AndroidInterface::requestFrameRender(){
 		}
 	}  
 };
+
+/// Enable multitouch support
+void AndroidInterface::enableMultiTouch()
+{
+	JNIEnv* m_JNI;
+	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
+
+	jclass cls = m_JNI->FindClass(m_JNIActivityName);
+	if(cls != NULL){ 
+		jmethodID method = m_JNI->GetStaticMethodID(cls, "enableMultiTouch", "()V");
+		if(method != NULL){
+			m_JNI->CallStaticVoidMethod(cls, method);
+		}
+	}
+}
+
+/// Disable multitouch support
+void AndroidInterface::disableMultiTouch()
+{
+	JNIEnv* m_JNI;
+	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
+
+	jclass cls = m_JNI->FindClass(m_JNIActivityName);
+	if(cls != NULL){ 
+		jmethodID method = m_JNI->GetStaticMethodID(cls, "disableMultiTouch", "()V");
+		if(method != NULL){
+			m_JNI->CallStaticVoidMethod(cls, method);
+		}
+	}  
+}
 
 /// Toggle the software keyboard
 void AndroidInterface::toggleKeyboard(){

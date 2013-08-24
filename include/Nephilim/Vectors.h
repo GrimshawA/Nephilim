@@ -26,7 +26,7 @@ public:
 	Vec2(T x, T y);
 
 	/// Get the length of the vector
-	float length();
+	float length() const;
 
 	/// Makes the vector unit-length
 	void normalize();
@@ -124,7 +124,7 @@ public:
 	void setAll(T x);
 
 	/// Get the length of the vector
-	float length();
+	float length() const;
 
 	/// Makes the vector unit-length
 	void normalize();
@@ -224,7 +224,7 @@ public:
 	void normalize();
 
 	/// Get the length of the vector
-	float length();
+	float length() const;
 
 	/// Cast the vec4 to another type
 	template<class N>	Vec4<N> cast();
