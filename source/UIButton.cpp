@@ -12,9 +12,12 @@ UIButton::UIButton()
 : UIControl()
 , m_color(0,0,0)
 , hover(false)
+, m_normalTexture(NULL)
 {
 	setSize(200,40);
 	m_label = "unassigned";
+
+	buttonLabel.setColor(Color::White);
 }
 
 UIButton::~UIButton()
@@ -26,6 +29,7 @@ UIButton::UIButton(const String& title)
 , m_color(0,0,0)
 , m_label(title)
 , hover(false)
+, m_normalTexture(NULL)
 {
 	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
 	hoverproperties["color"] = UIProperty(Color::Blue);
@@ -37,12 +41,12 @@ UIButton::UIButton(const String& title)
 
 void UIButton::setNormalTexture(const String& filename)
 {
-	m_normal.loadFromFile(filename);
+	
 }
 
 void UIButton::setHoverTexture(const String& filename)
 {
-	m_hovert.loadFromFile(filename);
+	
 }
 
 bool UIButton::onEventNotification(Event& event)
@@ -101,17 +105,20 @@ void UIButton::draw(Renderer* renderer)
 	{
 		background.setColor(m_styleInfo["normal"]["color"].getColor());
 	}
+	if(m_normalTexture)
+	{
+		background.setTexture(m_normalTexture);
+	}
+
 	renderer->draw(background);
 	
-
-	Text t;
-	t.setFont(m_stateContext->m_defaultFont);
-	t.setString(m_label);
-	t.setColor(m_color);
-	t.setCharacterSize(m_bounds.height / 2);
-	t.setOrigin(static_cast<int>(t.getLocalBounds().width/2 + 0.5f), static_cast<int>(t.getLocalBounds().height/2 + 0.5f));
-	t.setPosition(static_cast<int>(m_bounds.left + m_bounds.width/2 + 0.5f), static_cast<int>(m_bounds.top +  m_bounds.height/2 + 0.5f));
-	renderer->draw(t);
+    // -- Label
+	buttonLabel.setFont(m_stateContext->m_defaultFont);
+	buttonLabel.setString(m_label);
+	buttonLabel.setCharacterSize(m_bounds.height / 2);
+	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
+	buttonLabel.setPosition(static_cast<int>((m_bounds.left + m_bounds.width / 2.f ) + 0.5f), static_cast<int>((m_bounds.top +  m_bounds.height / 2.f) + 0.5f));
+	renderer->draw(buttonLabel);
 };
 
 NEPHILIM_NS_END

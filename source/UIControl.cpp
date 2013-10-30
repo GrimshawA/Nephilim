@@ -387,45 +387,38 @@ void UIControl::switchLanguage()
 	}
 }
 
-/// Called to re adjust children positions and sizes if needed
-void UIControl::processSizeChange(float previousWidth, float previousHeight)
+void UIControl::processSizeChange(float previousWidth, float previousHeight, float newWidth, float newHeight)
 {
-	// Parent control had its size updated
-
-	if(hasSizeFlag(UISizeFlag::KeepRelativeSizeX))
+	// -- Go through children and adapt them according to their flags
+	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{
-		float p = m_bounds.width / previousWidth;
-		setSize(m_parent->getSize().x * p, getSize().y);
-	}
+		// -- Auto Resize: Ensure the same % width of the parent is occupied
+		if((*it)->hasSizeFlag(UISizeFlag::KeepRelativeSizeX))
+		{
+			float percent = (*it)->getSize().x / previousWidth;
+			(*it)->setSize(newWidth * percent, (*it)->getSize().y);
+		}
 
-	if(hasPositionFlag(UIPositionFlag::KeepRelativePositionX))
-	{
-		float p = m_bounds.left / previousWidth;
-		setPosition(m_parent->getSize().x * p, m_bounds.top);
-	}
+		// -- Auto Resize: Ensure the same % height of the parent is occupied
+		if((*it)->hasSizeFlag(UISizeFlag::KeepRelativeSizeY))
+		{
+			float percent = (*it)->getSize().y / previousHeight;
+			(*it)->setSize((*it)->getSize().x, newHeight * percent);
+		}
 
+		// -- Auto Reposition: Ensure the control sits at the same % of the parent widget
+		if((*it)->hasPositionFlag(UIPositionFlag::KeepRelativePositionX))
+		{
+			float percent = ((*it)->getPosition().x - getPosition().x) / previousWidth;
+			(*it)->setPosition(getPosition().x + (newWidth * percent), (*it)->getPosition().y);
+		}
 
-
-	processPositionFlags();
-
-
-	// size changed, update.
-	if(m_sizePolicy.widthPolicy == UISizePolicy::ParentProportional && m_parent)
-	{
-		setSize(m_parent->getSize().x * m_sizePolicy.width, m_parent->getSize().y * m_sizePolicy.height);
-//		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_sizePolicy.width);
-	}
-	// size changed, update.
-	if(m_positionPolicy.widthPolicy == UISizePolicy::ParentProportional && m_parent)
-	{
-		setPosition(m_parent->getSize().x * m_positionPolicy.width, m_parent->getSize().y * m_positionPolicy.height);
-//		PRINTLOG("f", "surface size: %f   width: %f\n", m_parent->getSize().x, m_positionPolicy.width);
-	}
-
-	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
-
-		// lets see!
-		(*it)->processSizeChange(previousWidth, previousHeight);
+		// -- Auto Reposition: Ensure the control sits at the same % of the parent widget
+		if((*it)->hasPositionFlag(UIPositionFlag::KeepRelativePositionY))
+		{
+			float percent = ((*it)->getPosition().y - getPosition().y) / previousHeight;
+			(*it)->setPosition((*it)->getPosition().x, getPosition().y + (newHeight * percent));
+		}
 	}
 }
 
@@ -457,6 +450,11 @@ void UIControl::setProportion(float widthFactor, float heightFactor)
 /// Returns false if the mouse isnt on any control
 bool UIControl::processMouseMove(int x, int y)
 {
+	if(!m_visible)
+	{
+		return true;
+	}
+
 	onMouseMove();
 
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
@@ -527,6 +525,11 @@ bool UIControl::processTouchMove(int x, int y)
 /// Process a mouse press event
 bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
+	if(!m_visible)
+	{
+		return true;
+	}
+
 	m_childrenLock++;
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
@@ -549,6 +552,11 @@ bool UIControl::processMouseButtonPressed(int x, int y, Mouse::Button button)
 /// Process a mouse release event
 void UIControl::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info)
 {
+	if(!m_visible)
+	{
+		return;
+	}
+
 	m_childrenLock++;
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++){
 		if((*it)->getBounds().contains(x,y))
@@ -803,39 +811,25 @@ bool UIControl::respondsToLayouts(){
 
 void UIControl::setSize(float width, float height)
 {
+	// -- This control is about to be resized, might need to do some automatic operations on children
+	processSizeChange(m_bounds.width, m_bounds.height, width, height);
+
 	float pX = m_bounds.width;
 	float pY = m_bounds.height;
 
 	m_bounds.width = width;
 	m_bounds.height = height;
-
-	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); it++)
-	{
-		// tell children that the size of this control has changed
-		(*it)->processSizeChange(pX, pY);
-	}
-
+	
 	onResize();
 
 	onSizeChanged();
-
-	if(m_parent && m_parent->m_stretchForContents) // Goes up the tree
-	{
-		float bottom = m_parent->getBounds().top + m_parent->getBounds().height;
-		// warn parent to stretch
-		float lowestBottom = m_parent->getBounds().top;
-		for(int i = 0; i < m_parent->getChildCount(); i++)
-		{
-			if(m_parent->getChild(i)->getBounds().top + m_parent->getChild(i)->getBounds().height > bottom) bottom = m_parent->getChild(i)->getBounds().top + m_parent->getChild(i)->getBounds().height;
-		}
-		m_parent->setSize(m_parent->getBounds().width, bottom - m_parent->getBounds().top);
-	}
 
 	updateLayout();
 };
 
 /// Immediately sets the center of the control to a new position
-void UIControl::setCenter(float x, float y){
+void UIControl::setCenter(float x, float y)
+{
 	m_bounds.setCenter(x,y);
 	onPositionChanged();
 

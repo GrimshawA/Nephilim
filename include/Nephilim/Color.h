@@ -1,5 +1,5 @@
-#ifndef PARABOLA_COLOR_H
-#define PARABOLA_COLOR_H
+#ifndef NephilimColor_h__
+#define NephilimColor_h__
 
 #include "Platform.h"
 #include "Vectors.h"
@@ -18,6 +18,9 @@ public:
 
 	/// Construct the color of your choice
 	Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha = 255);
+
+	/// Creates a color from another color and a custom alpha
+	Color(const Color& color, Uint8 alpha);
 
 	/// Return the color in the [0,1] range
 	vec4 normalized();
@@ -46,4 +49,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimColor_h__

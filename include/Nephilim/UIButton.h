@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "UIControl.h"
 #include "Strings.h"
+#include "Text.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -38,9 +39,6 @@ public:
 	void setNormalTexture(const String& filename);
 	void setHoverTexture(const String& filename);
 
-	Texture m_normal;
-	Texture m_hovert;
-
 	void innerLanguageSwitch();
 
 	template<typename T>
@@ -59,7 +57,9 @@ public:
 
 	Color m_color;
 
-	
+	Texture* m_normalTexture; ///< Either NULL or a valid texture to display
+
+	Text buttonLabel;
 
 private:
 	String m_label;

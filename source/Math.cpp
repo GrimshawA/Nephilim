@@ -48,6 +48,16 @@ namespace math{
 		float computeAngle(const Vec2f &x, const Vec2f &y){
 			return computeAngle(x.x, x.y, y.x,y.y);
 		};
+
+	/// \fn toHomogeneous()
+	/// \brief Converts a screen-space coordinate to a homogeneous space coordinate
+	/// \param point is the screen-space coordinate we want in homogeneous space
+	/// \param left and top are the offset from the top-left corner of the window of the desired target viewport
+	vec2 toHomogeneous(vec2i point, int left, int top, int width, int height)
+	{
+		return vec2(-1.f  + 2.f * (point.x - left)  / width,
+					 1.f  - 2.f * (point.y - top)  / height);
+	}
 };
 
 vec3 directionFromAngles(float x_angle, float y_angle)

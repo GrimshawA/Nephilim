@@ -186,10 +186,10 @@ public:
 	virtual bool processTouchMove(int x, int y);
 
 	/// Process a mouse press event
-	bool processMouseButtonPressed(int x, int y, Mouse::Button button);
+	virtual bool processMouseButtonPressed(int x, int y, Mouse::Button button);
 
 	/// Process a mouse release event
-	void processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info);
+	virtual void processMouseButtonReleased(int x, int y, Mouse::Button button, UIEventResult& info);
 
 	virtual bool onKeyPressed(Keyboard::Key key);
 	virtual bool onTextEvent(Uint32 code);
@@ -225,8 +225,8 @@ public:
 	/// Deep clone of the control and its hierarchy
 	virtual UIControl* clone();
 
-	/// Called to re adjust children positions and sizes if needed
-	virtual void processSizeChange(float previousWidth, float previousHeight);
+	/// Adjusts children to the new sizes according to UISizeFlags
+	virtual void processSizeChange(float previousWidth, float previousHeight, float newWidth, float newHeight);
 
 	/// Get bounds of the control
 	FloatRect getBounds();
@@ -376,6 +376,7 @@ public:
 	/// Children of the control
 	std::vector<UIControl*> m_children;
 	int m_childrenLock;
+	typedef std::vector<UIControl*>::iterator UIControlIterator;
 
 	String     m_name;             ///< Name
 	UIControl* m_parent;           ///< The parent control

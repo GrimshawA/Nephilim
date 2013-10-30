@@ -22,13 +22,16 @@ public:
 	RectangleShape();
 
 	/// Check if a given point lies inside the shape
-	bool contains(vec2 point);
+	bool contains(vec2 point) const;
+
+	/// Check if this rect intersects another
+	bool intersects(const RectangleShape& rect);
 
 	/// Set the rect of this rectangle
 	void setRect(FloatRect rect);
 
 	/// Get the size of the rectangle
-	vec2 getSize();
+	vec2 getSize() const;
 
 	/// Set the size of the rectangle
 	void setSize(const vec2& size);

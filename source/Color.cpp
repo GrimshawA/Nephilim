@@ -29,8 +29,16 @@ Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha)
 	g = green;
 	b = blue;
 	a = alpha;
-};
+}
 
+Color::Color(const Color& color, Uint8 alpha)
+: r(color.r)
+, g(color.g)
+, b(color.b)
+, a(alpha)
+{
+
+}
 
 /// Sums two colors
 Color Color::operator+(const Color& c) const

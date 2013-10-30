@@ -126,24 +126,28 @@ Vec2<T>& Vec2<T>::operator/=(const T &scalar){
 };
 
 template<class T>
-Vec2<T> Vec2<T>::operator+(const Vec2<T> &vec){
+Vec2<T> Vec2<T>::operator+(const Vec2<T> &vec) const
+{
 	Vec2<T> v(*this);
 	v += vec;
 	return v;
-};
+}
+
 template<class T>
-Vec2<T> Vec2<T>::operator+(const T &scalar){
+Vec2<T> Vec2<T>::operator+(const T &scalar) const
+{
 	Vec2<T> v(*this);
 	v += scalar;
 	return v;
-};
+}
 
 template<class T>
-Vec2<T> Vec2<T>::operator-(const Vec2<T> &vec){
+Vec2<T> Vec2<T>::operator-(const Vec2<T> &vec)
+{
 	Vec2<T> v(*this);
 	v -= vec;
 	return v;
-};
+}
 
 template<class T>
 Vec2<T> Vec2<T>::operator-(const T &scalar){

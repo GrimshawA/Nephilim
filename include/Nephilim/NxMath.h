@@ -72,6 +72,13 @@ namespace math
 	{
 		return static_cast<T>(radian * (180.f/pi));
 	}
+
+
+	/// \fn toHomogeneous()
+	/// \brief Converts a screen-space coordinate to a homogeneous space coordinate
+	/// \param point is the screen-space coordinate we want in homogeneous space
+	/// \param left and top are the offset from the top-left corner of the window of the desired target viewport
+	vec2 toHomogeneous(vec2i point, int left, int top, int width, int height);
 };
 
 /**

@@ -64,9 +64,9 @@ public:
 	Vec2<T>& operator/=(const T &scalar);
 
 	/// Addition operator overload that sums with another 3D Vector of the same type.
-	Vec2<T> operator+(const Vec2<T> &vec);
+	Vec2<T> operator+(const Vec2<T> &vec) const;
 	/// Addition operator overload that sums all members with a scalar value
-	Vec2<T> operator+(const T &scalar);
+	Vec2<T> operator+(const T &scalar) const;
 
 	/// Subtraction operator overload that sums with another 3D Vector of the same type.
 	Vec2<T> operator-(const Vec2<T> &vec);

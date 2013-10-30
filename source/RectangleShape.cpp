@@ -80,9 +80,9 @@ void RectangleShape::setSize(const vec2& size)
 }
 
 /// Get the size of the rectangle
-vec2 RectangleShape::getSize()
+vec2 RectangleShape::getSize() const
 {
-	return vec2(m_geometry[2].position.x, m_geometry[2].position.y);
+	return vec2(m_geometry.m_vertices[2].position.x, m_geometry.m_vertices[2].position.y);
 }
 
 void RectangleShape::setOutlineColor(const Color& outlineColor)
@@ -94,7 +94,7 @@ void RectangleShape::setOutlineColor(const Color& outlineColor)
 }
 
 /// Check if a given point lies inside the shape
-bool RectangleShape::contains(vec2 point)
+bool RectangleShape::contains(vec2 point) const
 {
 	vec2 fpoint = getInverseTransform().transformPoint(point);
 //	Log("(%f,%f) -> (%f, %f)", point.x, point.y, fpoint.x, fpoint.y);
@@ -104,6 +104,24 @@ bool RectangleShape::contains(vec2 point)
 		&& (fpoint.y >= 0 )
 		&& (fpoint.y <= m_height));
 }
+
+bool RectangleShape::intersects(const RectangleShape& rect)
+{
+	// -- Check if any of rect's points are within my rect
+	vec2 topLeft = rect.getTransform().transformPoint(vec2(0.f, 0.f));
+	vec2 topRight = rect.getTransform().transformPoint(vec2(rect.getSize().x, 0.f));
+	vec2 bottomLeft = rect.getTransform().transformPoint(vec2(0.f, rect.getSize().y));
+	vec2 bottomRight = rect.getTransform().transformPoint(vec2(rect.getSize().x, rect.getSize().y));
+
+	vec2 mtopLeft = getTransform().transformPoint(vec2(0.f, 0.f));
+	vec2 mtopRight = getTransform().transformPoint(vec2(getSize().x, 0.f));
+	vec2 mbottomLeft = getTransform().transformPoint(vec2(0.f, getSize().y));
+	vec2 mbottomRight = getTransform().transformPoint(vec2(getSize().x, getSize().y));
+
+	return (contains(topLeft) || contains(topRight) || contains(bottomLeft) || contains(bottomRight) ||
+		    rect.contains(mtopLeft) || rect.contains(mtopRight) || rect.contains(mbottomLeft) || rect.contains(mbottomRight));
+}
+
 
 /// Invert the vertical coordinates of the texture - hacky
 void RectangleShape::invertTextureCoordinates()
