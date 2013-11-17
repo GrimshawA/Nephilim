@@ -79,7 +79,7 @@ public:
 	vec2 realWindowSize;
 	vec2 targetWindowSize;
 
-	Font m_defaultFont;
+	Font* m_defaultFont;
 	ScreenInputType m_screenInputType;
 
 	bool m_hasHardwareKeyboard;

@@ -25,6 +25,17 @@ void DataStream::setDevice(IODevice& device)
 }
 
 
+/// Reads the next byte as a char
+char DataStream::readChar()
+{
+	char c = EOF;
+	if(m_device)
+	{
+		m_device->read(&c, sizeof(char));
+	}
+	return c;
+}
+
 /// Write a 64-bit integer
 DataStream& DataStream::operator<<(Int64 value)
 {
@@ -45,6 +56,26 @@ DataStream& DataStream::operator<<(Int32 value)
 	return *this;
 }
 
+/// Write a 16-bit signed integer
+DataStream& DataStream::operator<<(Int16 value)
+{
+	if(m_device)
+	{
+		m_device->write(reinterpret_cast<const char*>(&value), sizeof(value));
+	}
+	return *this;
+}
+
+/// Write a 8-bit signed integer
+DataStream& DataStream::operator<<(Int8 value)
+{
+	if(m_device)
+	{
+		m_device->write(reinterpret_cast<const char*>(&value), sizeof(value));
+	}
+	return *this;
+}
+
 /// Write a 32-bit unsigned integer
 DataStream& DataStream::operator<<(Uint32 value)
 {
@@ -54,6 +85,7 @@ DataStream& DataStream::operator<<(Uint32 value)
 	}
 	return *this;
 }
+
 
 /// Write a String
 DataStream& DataStream::operator<<(const String& value)
@@ -92,6 +124,16 @@ DataStream& DataStream::operator>>(Int32& value)
 	if(m_device)
 	{
 		m_device->read(reinterpret_cast<char*>(&value), sizeof(Int32));
+	}
+	return *this;
+}
+
+/// Read a 16-bit signed integer
+DataStream& DataStream::operator>>(Int16& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(Int16));
 	}
 	return *this;
 }

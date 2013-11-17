@@ -14,7 +14,8 @@ class Image;
 	\class Texture
 	\brief OpenGL Texture. RGBA format - 8 bits per component
 */
-class NEPHILIM_API Texture{
+class NEPHILIM_API Texture
+{
 public:
 	/// Creates a uninitialized texture
 	Texture();
@@ -24,6 +25,9 @@ public:
 
 	/// Releases the texture resource
 	~Texture();
+
+	/// Unload the texture
+	void unload();
 
 	/// Get the internal OpenGL identifier of this texture
 	unsigned int getIdentifier() const;

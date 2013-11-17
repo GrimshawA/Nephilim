@@ -1,5 +1,5 @@
-#ifndef StateStack_h__
-#define StateStack_h__
+#ifndef NephilimStateStack_h__
+#define NephilimStateStack_h__
 
 #include "Platform.h"
 
@@ -26,6 +26,8 @@ class GameCore;
 	Whenever you manipulate a StateStack object from a regular place, ie, not inside a State object execution,
 	you must always call process() to push the pending changes and refresh the state. In the other hand,
 	when the stack is being manipulated internally by State*, process() is completely irrelevant and other rules apply.
+
+	State - bool active - when a state is about to be added to execution, it becomes active, and goes inactive once it finishes
 */
 class NEPHILIM_API StateStack{
 public:
@@ -46,7 +48,15 @@ public:
 	/// Note: If a transition is passed while another is in effect, the older is deallocated and the new one is used.
 	void performTransition(StateTransition* transition);
 
+	/// Check if a given state is currently being executed
+	bool isActive(const String& name);
+
+	/// Check if a given state is currently being executed
+	bool isActive(State* state);
+	
+
 	void drawCurrentList(Renderer* renderer);
+
 
 	/// Push a state for execution directly
 	void add(State* state);
@@ -118,4 +128,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // StateStack_h__
+#endif // NephilimStateStack_h__

@@ -32,11 +32,18 @@ void StateStack::process()
 
 void StateStack::drawCurrentList(Renderer* renderer)
 {
-	int index = m_activeList.size() - 1;
+	/*int index = m_activeList.size() - 1;
 	while(index >= 0 && !m_activeList.empty())
 	{
 		m_activeList[index]->onRender(renderer);
 		index--;
+	}*/
+
+	int index = 0;
+	while(index < m_activeList.size() && !m_activeList.empty())
+	{
+		m_activeList[index]->onRender(renderer);
+		++index;
 	}
 }
 
@@ -49,6 +56,10 @@ void StateStack::applyChangesTo(std::vector<State*>& list)
 		case StateStackOperation::Erase:
 	
 			list.erase(std::find(list.begin(), list.end(), it->obj));
+			if(!isActive(it->obj))
+			{
+				it->obj->onDeactivate();
+			}
 			Log("Removed state for future list");
 
 			break;
@@ -69,6 +80,54 @@ void StateStack::applyChangesTo(std::vector<State*>& list)
 	}
 }
 
+/// Check if a given state is currently being executed
+bool StateStack::isActive(const String& name)
+{
+	State* state = getBinding(name);
+	if(state)
+	{
+		return isActive(state);
+	}
+	else
+	{
+		return false; // state doesn't exist
+	}
+}
+
+/// Check if a given state is currently being executed
+bool StateStack::isActive(State* state)
+{
+	// Check the pending operation queue
+	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
+	{
+		if((*it).type == StateStackOperation::Add && (*it).obj == state)
+		{
+			return true; // scheduled for execution, already active
+		}
+	}
+
+	// Check the currently active queue for the state
+	for(std::vector<State*>::iterator it = m_activeList.begin(); it != m_activeList.end(); ++it)
+	{
+		if((*it) == state)
+		{
+			return true; // the state is currently in the execution list
+		}
+	}
+
+	if(m_transition)
+	{
+		for(std::vector<State*>::iterator it = m_transition->m_futureList.begin(); it != m_transition->m_futureList.end(); ++it)
+		{
+			if((*it) == state)
+			{
+				return true; // the state is currently in the list about to be used after transition
+			}
+		}
+	}
+
+	return false; // not found anywhere
+}
 
 void StateStack::performTransition(StateTransition* transition)
 {
@@ -119,6 +178,8 @@ void StateStack::add(State* state)
 	sso.type = StateStackOperation::Add;
 	sso.obj = state;
 	m_pendingOperations.push_back(sso);
+
+	state->onActivate();
 };
 
 /// Push a binded state for execution by its name
@@ -126,10 +187,17 @@ void StateStack::add(const String& name)
 {
 	if(m_bindList.find(name) != m_bindList.end())
 	{
-		StateStackOperation sso;
-		sso.type = StateStackOperation::Add;
-		sso.obj = m_bindList[name];
-		m_pendingOperations.push_back(sso);
+		// Ensure its only added once
+		if(!isActive(name))
+		{
+			StateStackOperation sso;
+			sso.type = StateStackOperation::Add;
+			sso.obj = m_bindList[name];
+			m_pendingOperations.push_back(sso);
+
+			// Activate the state
+			 m_bindList[name]->onActivate();
+		}
 	}
 }
 
@@ -154,7 +222,6 @@ void StateStack::addWaiting(State* state)
 	//cout<<"[StateStack] State added to waiting list"<<endl;
 };
 
-
 /// Processes the list of changes to the stack
 void StateStack::applyChanges()
 {
@@ -167,12 +234,16 @@ void StateStack::applyChanges()
 				//cout<<"Trying to erase: "<< m_pendingOperations.front().obj<<endl;
 				m_pendingOperations.front().obj->m_scheduledRemoval = false;
 				m_activeList.erase(std::find(m_activeList.begin(), m_activeList.end(), m_pendingOperations.front().obj));
+				if(!isActive(m_pendingOperations.front().obj))
+				{
+					m_pendingOperations.front().obj->onDeactivate();
+				}
 				break;
 
 			case StateStackOperation::Add:
 				if(std::find(m_activeList.begin(), m_activeList.end(), m_pendingOperations.front().obj) == m_activeList.end())
 				{
-					m_pendingOperations.front().obj->onActivate();
+					//m_pendingOperations.front().obj->onActivate();
 					//m_pendingOperations.front().obj->addReference();
 					//cout<<"adding: "<<m_pendingOperations.front().obj<<endl;
 					m_activeList.push_back(m_pendingOperations.front().obj);		
@@ -213,7 +284,6 @@ bool StateStack::bind(const String& name, State* state)
 	return true;
 };
 
-/// Erase a state
 void StateStack::erase(State* state)
 {
 	if(std::find(m_activeList.begin(), m_activeList.end(), state) == m_activeList.end())
@@ -269,7 +339,8 @@ void StateStack::pushEvent(Event &event){
 
 		m_stackLock = true;
 		while(index != -1 && stop == false){
-			/*stop = !*/m_activeList[index]->onEvent(event);
+			m_activeList[index]->onEvent(event);
+			stop = !m_activeList[index]->m_letEventsThrough;
 			index--;
 		}
 		m_stackLock = false;
@@ -300,7 +371,8 @@ void StateStack::drawStates(Renderer *renderer){
 	int index = 0;
 	bool stop = false;
 
-	while(index < m_activeList.size()){
+	while(index < m_activeList.size())
+	{
 		m_activeList[index]->onDraw(renderer);
 		index++;
 	}

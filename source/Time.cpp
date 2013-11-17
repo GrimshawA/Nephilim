@@ -53,4 +53,15 @@ Time Time::operator -(Time right)
 	return t;
 }
 
+bool Time::operator!=(const Time& right) const
+{
+	return this->m_microSeconds != right.m_microSeconds;
+}
+
+bool Time::operator<=(const Time& right) const
+{
+	return this->m_microSeconds <= right.m_microSeconds;
+}
+
+
 NEPHILIM_NS_END

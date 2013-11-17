@@ -55,10 +55,14 @@ public:
 
 	bool hover;
 
+	FloatRect normal_texture_rect;
+	FloatRect hover_texture_rect;
+
 	Color m_color;
 
 	Texture* m_normalTexture; ///< Either NULL or a valid texture to display
 
+	RectangleShape backgroundShape;
 	Text buttonLabel;
 
 private:

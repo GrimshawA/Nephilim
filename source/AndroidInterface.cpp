@@ -279,9 +279,9 @@ void AndroidInterface::closeActivity(){
 	if(cls != NULL){
 		jmethodID method = m_JNI->GetStaticMethodID(cls, "closeActivity", "()V");
 		if(method != NULL){			
-			m_JNI->CallStaticVoidMethod(cls, method);			
-		}		
-	}	 
+			m_JNI->CallStaticVoidMethod(cls, method);	
+		}
+	}
 };
 
 /// Request a frame render

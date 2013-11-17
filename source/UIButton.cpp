@@ -18,6 +18,8 @@ UIButton::UIButton()
 	m_label = "unassigned";
 
 	buttonLabel.setColor(Color::White);
+
+	drawColoredBackground = false;
 }
 
 UIButton::~UIButton()
@@ -36,6 +38,12 @@ UIButton::UIButton(const String& title)
 
 	UIPropertyMap& normalproperties = m_styleInfo["normal"];
 	normalproperties["color"] = UIProperty(Color::Orange);
+
+
+	hoverproperties["text-color"] = UIProperty(Color::Black);
+	normalproperties["text-color"] = UIProperty(Color::Black);
+
+	drawColoredBackground = false;
 
 }
 
@@ -89,31 +97,30 @@ String UIButton::getLabel()
 
 void UIButton::draw(Renderer* renderer)
 {
-	if(!m_stateContext->m_defaultFont.isLoaded())
+	if(m_stateContext->m_defaultFont && !m_stateContext->m_defaultFont->isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");
 	}
 
-	RectangleShape background;
-	background.setPosition(getPosition());
-	background.setSize(getSize());
+	backgroundShape.setPosition(getPosition());
+	backgroundShape.setSize(getSize());
 	if(m_classInfo["hover"])
 	{
-		background.setColor(m_styleInfo["hover"]["color"].getColor());
+		buttonLabel.setColor(m_styleInfo["hover"]["text-color"].getColor());
+		backgroundShape.setColor(m_styleInfo["hover"]["color"].getColor());
+		backgroundShape.setTextureRect(hover_texture_rect);
 	}
 	else
 	{
-		background.setColor(m_styleInfo["normal"]["color"].getColor());
-	}
-	if(m_normalTexture)
-	{
-		background.setTexture(m_normalTexture);
+		buttonLabel.setColor(m_styleInfo["normal"]["text-color"].getColor());
+		backgroundShape.setColor(m_styleInfo["normal"]["color"].getColor());
+		backgroundShape.setTextureRect(normal_texture_rect);
 	}
 
-	renderer->draw(background);
+	renderer->draw(backgroundShape);
 	
     // -- Label
-	buttonLabel.setFont(m_stateContext->m_defaultFont);
+	buttonLabel.setFont(*m_stateContext->m_defaultFont);
 	buttonLabel.setString(m_label);
 	buttonLabel.setCharacterSize(m_bounds.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));

@@ -35,9 +35,17 @@ Texture::Texture(const Texture& other)
 
 Texture::~Texture()
 {
-	if(m_texture > 0){
+	// Ensure the texture is destroyed in the GPU when the texture dies
+	unload();
+}
+
+void Texture::unload()
+{
+	if(m_texture > 0)
+	{
 		GLuint tt = m_texture;
 		glDeleteTextures(1, &tt);
+		m_texture = 0;
 	}
 }
 

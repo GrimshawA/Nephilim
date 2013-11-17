@@ -4,6 +4,10 @@
 #include <Nephilim/CGL.h>
 #include <Nephilim/View.h>
 
+#ifdef NEPHILIM_ANDROID
+#include <Nephilim/AndroidInterface.h>
+#endif
+
 NEPHILIM_NS_BEGIN
 
 #ifdef ENGINE_VERSION_STRING
@@ -72,6 +76,11 @@ void Engine::update()
 	{
 		m_currentApp = NULL;
 		m_running = false;
+
+		// In android need to kill the activity
+#ifdef NEPHILIM_ANDROID
+		AndroidInterface::closeActivity();
+#endif
 	}
 
 	if(m_currentApp)

@@ -25,11 +25,20 @@ public:
 	/// Set the device of this data stream
 	void setDevice(IODevice& device);
 
+	/// Reads the next byte as a char
+	char readChar();
+
 	/// Write a 64-bit signed integer
 	DataStream& operator<<(Int64 value);
 
 	/// Write a 32-bit signed integer
 	DataStream& operator<<(Int32 value);
+
+	/// Write a 16-bit signed integer
+	DataStream& operator<<(Int16 value);
+
+	/// Write a 8-bit signed integer
+	DataStream& operator<<(Int8 value);
 
 	/// Write a 32-bit unsigned integer
 	DataStream& operator<<(Uint32 value);
@@ -45,6 +54,9 @@ public:
 
 	/// Read a 32-bit signed integer
 	DataStream& operator>>(Int32& value);
+
+	/// Read a 16-bit signed integer
+	DataStream& operator>>(Int16& value);
 
 	/// Read a 32-bit unsigned integer
 	DataStream& operator>>(Uint32& value);

@@ -1,7 +1,5 @@
-#ifndef MINIMAL_BUILD
-
-
-#include "Nephilim/NetworkPacket.h"
+#include <Nephilim/Packet.h>
+#include "SocketImpl.hpp"
 
 #include <iostream>
 #include <string.h>
@@ -158,8 +156,25 @@ Packet& Packet::operator>>(String& data){
 	return *this;
 };
 
-//////////////////////////////////////////////////////////////////////////
+const void* Packet::onSend(std::size_t& size)
+{
+	size = getDataSize();
+	return getData();
+}
 
+void Packet::onReceive(const void* data, std::size_t size)
+{
+	append(data, size);
+}
+
+/// Clear the contents
+void Packet::clear()
+{
+	m_data.clear();
+}
+
+//////////////////////////////////////////////////////////////////////////
+/*
 
 
 /// Creates a packet
@@ -193,6 +208,5 @@ Packet NetworkPacket::getData(){
 	p.append(myPacket->data, myPacket->dataLength);
 	return p;
 };
-
+*/
 NEPHILIM_NS_END
-#endif

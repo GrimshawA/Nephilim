@@ -11,10 +11,10 @@ StateTransitionFade::StateTransitionFade()
 	m_secondPhase = false;
 	elapsedTime = 0.f;
 	m_duration = 3.f;
-	alpha = 0;
+	alpha = 255;
 
-	m_rect.setColor(Color::Black);
-	m_rect.setSize(1024,768);
+	m_rect.setColor(Color(0,0,0,0));
+	m_rect.setSize(1.f,1.f);
 	m_rect.setPosition(0,0);
 
 	function.setFunction(AxEasingFunction::QuarticInterpolation);
@@ -54,6 +54,7 @@ void StateTransitionFade::onUpdate(const Time& time)
 void StateTransitionFade::draw(Renderer* renderer)
 {
 	(elapsedTime <= (m_duration / 2)) ? drawPreviousFrame(renderer) : drawNextFrame(renderer); 
+	renderer->setProjectionMatrix(View(0.f, 0.f, 1.f, 1.f).getMatrix());
 	renderer->draw(m_rect);
 }
 

@@ -389,6 +389,10 @@ void UIControl::switchLanguage()
 
 void UIControl::processSizeChange(float previousWidth, float previousHeight, float newWidth, float newHeight)
 {
+	// -- If the control was previously at a uninitialized size, don't process any flags
+	if(previousHeight == 0.f || previousWidth == 0.f)
+		return;
+
 	// -- Go through children and adapt them according to their flags
 	for(std::vector<UIControl*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{

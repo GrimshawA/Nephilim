@@ -79,14 +79,15 @@ public:
 
 		StateStack *m_parent;
 
-	private:
-		
-		friend class StateStack;
+private:		
+	friend class StateStack;
+
+	bool m_letEventsThrough;
 
 		int RefCount;
 
 		bool m_scheduledRemoval;
-	};
+};
 
 NEPHILIM_NS_END
 #endif // NephilimState_h__

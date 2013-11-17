@@ -15,6 +15,7 @@ NEPHILIM_NS_BEGIN
 State::State()
 : RefCountable()
 , m_scheduledRemoval(false)
+, m_letEventsThrough(false)
 {
 		m_parent = NULL;
 }
@@ -119,13 +120,7 @@ bool State::launchBindedState(const String& stateName)
 {
 	if(m_parent)
 	{
-		State* bindedState = m_parent->getBinding(stateName);
-		if(bindedState)
-		{
-			m_parent->add(bindedState);
-			return true;
-		}
-		else return false;
+		m_parent->add(stateName);
 	}
 	else return false;
 };

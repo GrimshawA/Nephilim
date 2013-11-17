@@ -51,6 +51,9 @@ public:
 	/// Set the sub region of the texture to display. These coordinates are in pixels and are normalized internally
 	void setTextureRect(float left, float top, float width, float height);
 
+	/// Set the sub region of the texture to display. These coordinates are in pixels and are normalized internally
+	void setTextureRect(FloatRect rect);
+
 	/// Invert the vertical coordinates of the texture - hacky
 	void invertTextureCoordinates();
 
