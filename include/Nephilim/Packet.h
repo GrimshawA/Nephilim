@@ -64,8 +64,20 @@ public:
 	/// Reads a Vec2f from the buffer current position
 	Packet& operator>>(Vec2f& data);
 
+	/// Reads a Int8 from the buffer current position
+	Packet& operator>>(Int8& data);
+
 	/// Reads a Int16 from the buffer current position
 	Packet& operator>>(Int16& data);
+
+	/// Reads a Int32 from the buffer current position
+	Packet& operator>>(Int32& data);
+
+	/// Reads a Uint8 from the buffer current position
+	Packet& operator>>(Uint8& data);
+
+	/// Reads a Uint16 from the buffer current position
+	Packet& operator>>(Uint16& data);
 
 	/// Reads a Uint32 from the buffer current position
 	Packet& operator>>(Uint32& data);
@@ -78,7 +90,7 @@ private:
 	/// The data buffer of the packet
 	std::vector<char> m_data;
 	/// The reading offset
-	std::size_t m_readPos;
+	mutable std::size_t m_readPos;
 };
 
 /**

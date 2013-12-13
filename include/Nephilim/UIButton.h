@@ -2,7 +2,7 @@
 #define NephilimUIButton_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Strings.h"
 #include "Text.h"
 
@@ -14,7 +14,7 @@ class ASSlot;
 	\class UIButton
 	\brief A simple button control
 */
-class NEPHILIM_API UIButton : public UIControl
+class NEPHILIM_API UIButton : public UIView
 {
 public:
 	/// Constructs the button
@@ -47,7 +47,25 @@ public:
 	/// Callback to render itself, renders children
 	virtual void draw(Renderer* renderer);
 
-	virtual UIControl* clone();
+	virtual UIView* clone();
+
+	enum UIButtonState
+	{
+		Regular,
+		Hovered,
+		Pressed,
+		Selected
+	};
+
+	struct TextureInfo
+	{
+		Texture* texture;
+		FloatRect rect;
+	};
+
+	std::map<UIButtonState, TextureInfo> stateTextures;
+
+	TextureInfo& getStateTextureInfo(UIButtonState state);
 
 	/// Signal is emitted when the button is clicked
 	
@@ -74,7 +92,7 @@ template<typename T>
 void UIButton::setProperty(const String& propertyName, const T& propertyValue)
 {
 	// Give precedence to parent
-	UIControl::setProperty<T>(propertyName, propertyValue);
+	UIView::setProperty<T>(propertyName, propertyValue);
 
 	if(propertyName == "color")
 	{

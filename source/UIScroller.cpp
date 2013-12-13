@@ -4,7 +4,7 @@
 NEPHILIM_NS_BEGIN
 
 UIScroller::UIScroller()
-: UIControl()
+: UIView()
 , m_holdingDown(false)
 , m_scrollsHorizontally(true)
 , m_lowerLimitV(0.f)

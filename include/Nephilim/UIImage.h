@@ -2,11 +2,11 @@
 #define UIImage_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIImage : public UIControl
+class NEPHILIM_API UIImage : public UIView
 {
 public:
 	UIImage();

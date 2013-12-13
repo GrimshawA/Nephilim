@@ -9,7 +9,7 @@
 #include "BrowserPreloader.h"
 #include "StateStack.h"
 #include "ContentBank.h"
-#include "UIDocument.h"
+#include "UICanvas.h"
 #include "UIButton.h"
 
 #include <map>

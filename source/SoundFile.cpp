@@ -173,7 +173,7 @@ bool SoundFile::openReadInternal(File& stream)
 	}
 	else
 	{
-		Log("Loaded a sound from a stream");
+		//Log("Loaded a sound from a stream");
 	}
 
 	// Initialize the internal state from the loaded information

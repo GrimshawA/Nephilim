@@ -14,13 +14,13 @@ AxPosition2D::AxPosition2D(float target_x, float target_y, float duration)
 , m_end(target_x, target_y)
 , m_easing(AxEasingFunction::QuarticInterpolation)
 {
-	Log("Position created");
+	//Log("Position created");
 	m_duration = duration;
 }
 
 AxPosition2D::~AxPosition2D()
 {
-	Log("Position destroyed");
+	//Log("Position destroyed");
 }
 
 void AxPosition2D::deduceInitialParameters()

@@ -60,6 +60,7 @@ void StateTransitionSlider::onUpdate(const Time& time)
 void StateTransitionSlider::draw(Renderer* renderer)
 {
 	(elapsedTime <= (m_duration / 2)) ? drawPreviousFrame(renderer) : drawNextFrame(renderer); 
+	renderer->setProjectionMatrix(View(0.f, 0.f, 1024.f, 768.f).getMatrix());
 	renderer->draw(m_rect);
 }
 

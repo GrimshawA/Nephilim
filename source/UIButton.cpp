@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 
 
 UIButton::UIButton()
-: UIControl()
+: UIView()
 , m_color(0,0,0)
 , hover(false)
 , m_normalTexture(NULL)
@@ -18,8 +18,6 @@ UIButton::UIButton()
 	m_label = "unassigned";
 
 	buttonLabel.setColor(Color::White);
-
-	drawColoredBackground = false;
 }
 
 UIButton::~UIButton()
@@ -27,7 +25,7 @@ UIButton::~UIButton()
 }
 
 UIButton::UIButton(const String& title)
-: UIControl()
+: UIView()
 , m_color(0,0,0)
 , m_label(title)
 , hover(false)
@@ -42,9 +40,6 @@ UIButton::UIButton(const String& title)
 
 	hoverproperties["text-color"] = UIProperty(Color::Black);
 	normalproperties["text-color"] = UIProperty(Color::Black);
-
-	drawColoredBackground = false;
-
 }
 
 void UIButton::setNormalTexture(const String& filename)
@@ -64,7 +59,7 @@ bool UIButton::onEventNotification(Event& event)
 	return true;
 }
 
-UIControl* UIButton::clone()
+UIView* UIButton::clone()
 {
 	return new UIButton(*this);
 };
@@ -95,6 +90,28 @@ String UIButton::getLabel()
 	return m_label;
 }
 
+UIButton::TextureInfo& UIButton::getStateTextureInfo(UIButtonState state)
+{
+	std::map<UIButtonState, TextureInfo>::iterator it = stateTextures.find(state);
+
+	// This state wasn't created yet, no texture assigned
+	if(it == stateTextures.end())
+	{
+		stateTextures[state].texture = NULL;
+		return stateTextures[state];
+	}
+	else
+	{
+		// In case we have a texture assigned but the rect is invalid, make it use the whole texture
+		if((*it).second.texture && ((*it).second.rect.width == 0.f || (*it).second.rect.height == 0.f))
+		{
+			(*it).second.rect = FloatRect(0.f, 0.f, (*it).second.texture->getSize().x, (*it).second.texture->getSize().y);
+		}
+		return (*it).second;
+	}
+}
+
+
 void UIButton::draw(Renderer* renderer)
 {
 	if(m_stateContext->m_defaultFont && !m_stateContext->m_defaultFont->isLoaded())
@@ -109,12 +126,26 @@ void UIButton::draw(Renderer* renderer)
 		buttonLabel.setColor(m_styleInfo["hover"]["text-color"].getColor());
 		backgroundShape.setColor(m_styleInfo["hover"]["color"].getColor());
 		backgroundShape.setTextureRect(hover_texture_rect);
+
+		TextureInfo texInfo = getStateTextureInfo(Hovered);
+		if(texInfo.texture)
+		{
+			backgroundShape.setTexture(texInfo.texture);
+			backgroundShape.setTextureRect(texInfo.rect);
+		}
 	}
 	else
 	{
 		buttonLabel.setColor(m_styleInfo["normal"]["text-color"].getColor());
 		backgroundShape.setColor(m_styleInfo["normal"]["color"].getColor());
 		backgroundShape.setTextureRect(normal_texture_rect);
+
+		TextureInfo texInfo = getStateTextureInfo(Regular);
+		if(texInfo.texture)
+		{
+			backgroundShape.setTexture(texInfo.texture);
+			backgroundShape.setTextureRect(texInfo.rect);
+		}
 	}
 
 	renderer->draw(backgroundShape);
@@ -125,6 +156,13 @@ void UIButton::draw(Renderer* renderer)
 	buttonLabel.setCharacterSize(m_bounds.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
 	buttonLabel.setPosition(static_cast<int>((m_bounds.left + m_bounds.width / 2.f ) + 0.5f), static_cast<int>((m_bounds.top +  m_bounds.height / 2.f) + 0.5f));
+	if(buttonLabel.getLocalBounds().width > getSize().x * 0.9f)
+	{
+		// The text is too big and passes the 90% of the button's width
+		float diminishRatio = (getSize().x * 0.9f) / buttonLabel.getLocalBounds().width;
+		buttonLabel.setCharacterSize(static_cast<unsigned int>(static_cast<float>(buttonLabel.getCharacterSize()) * diminishRatio));
+		buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
+	}
 	renderer->draw(buttonLabel);
 };
 

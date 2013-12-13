@@ -2,7 +2,7 @@
 #define UISoftwareKeyboard_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\class UISoftwareKeyboard
 	\brief A simple software keyboard
 */
-class NEPHILIM_API UISoftwareKeyboard : public UIControl{
+class NEPHILIM_API UISoftwareKeyboard : public UIView{
 public:
 	/// Constructs the button
 	UISoftwareKeyboard();
@@ -49,7 +49,7 @@ template<typename T>
 void UISoftwareKeyboard::setProperty(const String& propertyName, const T& propertyValue)
 {
 	// Give precedence to parent
-	UIControl::setProperty<T>(propertyName, propertyValue);
+	UIView::setProperty<T>(propertyName, propertyValue);
 
 	if(propertyName == "color")
 	{

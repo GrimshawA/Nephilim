@@ -23,6 +23,7 @@ namespace Render
 		{
 			Alpha,
 			Add,       ///< Simply sums the incoming color to the destination color.
+			AddAlpha,
 			Multiply,
 			None
 		};

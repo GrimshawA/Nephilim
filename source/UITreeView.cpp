@@ -6,7 +6,7 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Constructs the tree view
-UITreeView::UITreeView() : UIControl(), m_lineHeight(20.f)
+UITreeView::UITreeView() : UIView(), m_lineHeight(20.f)
 {
 
 };
@@ -33,7 +33,7 @@ void UITreeView::draw(Renderer* renderer)
 
 bool UITreeView::onEventNotification(Event& event)
 {
-	return UIControl::onEventNotification(event);
+	return UIView::onEventNotification(event);
 };
 
 void UITreeView::addItemUnder(const String& parent, const String& name)
@@ -193,7 +193,7 @@ bool UITreeView::Item::onEventNotification(Event& event){
 		}
 	}
 
-	return UIControl::onEventNotification(event);
+	return UIView::onEventNotification(event);
 };
 
 void UITreeView::Item::draw(Renderer* renderer)

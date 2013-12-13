@@ -2,12 +2,13 @@
 #define UILineEdit_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Text.h"
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UILineEdit : public UIControl{
+class NEPHILIM_API UILineEdit : public UIView
+{
 public:
 	UILineEdit();
 
@@ -22,12 +23,29 @@ public:
 
 	void setText(const String& text);
 
+	void setTextColor(const Color& color);
+
+	enum UILineEditTypes
+	{
+		Regular,
+		Password
+	};
+
+	void setType(UILineEditTypes type);
+
+	void setCharacterLimit(size_t limit);
+
 	void draw(Renderer* renderer);
 
 	Text t;
 	String s;
+	Color m_textColor;
 
 	int m_pipeIndex;
+
+	UILineEditTypes m_type;
+
+	size_t m_charLimit;
 };
 
 class ASEngine;

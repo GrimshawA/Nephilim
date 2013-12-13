@@ -2,7 +2,7 @@
 #define UIContextMenu_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	\class UIContextMenu
 	\brief A special control that is usually spawned by a right mouse click
 */
-class NEPHILIM_API UIContextMenu : public UIControl{
+class NEPHILIM_API UIContextMenu : public UIView{
 public:
 	void draw(Renderer* renderer);
 };

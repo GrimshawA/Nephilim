@@ -144,6 +144,12 @@ void Renderer::setBlendMode(Render::Blend::Mode mode)
 		}
 		break;
 
+		case Render::Blend::AddAlpha:
+			{
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);				
+			}
+			break;
+
 		case Render::Blend::Multiply:
 		{
 			glBlendFunc(GL_DST_COLOR, GL_ZERO);

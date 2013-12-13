@@ -74,18 +74,27 @@ void ContentBank::unloadContentList(ContentList &list){
 	return mySoundResources.find(name)->second;
 };*/
 
-/// Temp
-/// Creates a texture from a file
-bool ContentBank::loadTexture(const String &fileName){
-	cout<<"[ContentBank] Loading texture: "<<fileName<<endl;
-	myTextureResources[fileName] = new Texture();
+bool ContentBank::loadTexture(const String &fileName)
+{	
+	// -- The requested texture doesn't exist, create it and return it
+	if(myTextureResources.find(fileName) == myTextureResources.end())
+	{
+		myTextureResources[fileName] = new Texture();
+	}
+
 	return myTextureResources[fileName]->loadFromFile(fileName);
-	return false;
-};
+}
 
 /// Temp
 /// Get the texture
-Texture* ContentBank::getTexture(const String &texture_name){
+Texture* ContentBank::getTexture(const String &texture_name)
+{
+	// -- The requested texture doesn't exist, create it and return it
+	if(myTextureResources.find(texture_name) == myTextureResources.end())
+	{
+		myTextureResources[texture_name] = new Texture();
+	}
+
 	return myTextureResources[texture_name];
 };
 

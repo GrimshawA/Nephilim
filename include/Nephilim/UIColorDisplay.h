@@ -2,7 +2,7 @@
 #define UIColorDisplay_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Color.h"
 
 NEPHILIM_NS_BEGIN
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\class UIColorDisplay
 	\brief .
 */
-class NEPHILIM_API UIColorDisplay : public UIControl{
+class NEPHILIM_API UIColorDisplay : public UIView{
 public:
 
 

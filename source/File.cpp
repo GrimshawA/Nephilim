@@ -76,7 +76,7 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 
 	if(!m_handle)
 	{
-		Log("File::Error -> Couldn't open file: '%s'", path.c_str());
+		//Log("File::Error -> Couldn't open file: '%s'", path.c_str());
 	}
 };
 

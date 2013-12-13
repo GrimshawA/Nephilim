@@ -36,6 +36,18 @@ char DataStream::readChar()
 	return c;
 }
 
+/// Reads count chars and stores them in the pre allocated buffer destination
+void DataStream::readChars(int count, char* destination)
+{
+	if(m_device)
+	{
+		for(int i = 0; i < count; ++i)
+		{
+			m_device->read(&destination[i], sizeof(char)); 
+		}
+	}
+}
+
 /// Write a 64-bit integer
 DataStream& DataStream::operator<<(Int64 value)
 {
@@ -144,6 +156,26 @@ DataStream& DataStream::operator>>(Uint32& value)
 	if(m_device)
 	{
 		m_device->read(reinterpret_cast<char*>(&value), sizeof(Uint32));
+	}
+	return *this;
+}
+
+/// Read a 16-bit unsigned integer
+DataStream& DataStream::operator>>(Uint16& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(Uint16));
+	}
+	return *this;
+}
+
+/// Read a 8-bit unsigned integer
+DataStream& DataStream::operator>>(Uint8& value)
+{
+	if(m_device)
+	{
+		m_device->read(reinterpret_cast<char*>(&value), sizeof(Uint8));
 	}
 	return *this;
 }

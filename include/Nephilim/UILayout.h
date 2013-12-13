@@ -5,7 +5,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIControl;
+class UIView;
 /**
 	\ingroup UserInterface
 	\class UILayout
@@ -20,7 +20,7 @@ public:
 		Horizontal
 	};
 
-	virtual void doLayout(UIControl* parent) = 0;
+	virtual void doLayout(UIView* parent) = 0;
 };
 
 NEPHILIM_NS_END

@@ -8,7 +8,7 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Constructs the button
-UISoftwareKeyboard::UISoftwareKeyboard() : UIControl(), m_color(0,0,0) , hover(false){
+UISoftwareKeyboard::UISoftwareKeyboard() : UIView(), m_color(0,0,0) , hover(false){
 	UIButton* eraseButton = new UIButton("<-");
 	eraseButton->setPosition(1600, 700);
 	eraseButton->setSize(200,50);
@@ -23,7 +23,7 @@ void UISoftwareKeyboard::emitErase()
 
 
 /// Constructs the button from a label text
-UISoftwareKeyboard::UISoftwareKeyboard(const String& title) : UIControl(), m_color(0,0,0), m_label(title), hover(false){
+UISoftwareKeyboard::UISoftwareKeyboard(const String& title) : UIView(), m_color(0,0,0), m_label(title), hover(false){
 
 };
 
@@ -51,7 +51,7 @@ bool UISoftwareKeyboard::onEventNotification(Event& event){
 		//onTextEntered(event.text.unicode);
 	}
 
-	return UIControl::onEventNotification(event);
+	return UIView::onEventNotification(event);
 }
 
 /// Callback to render itself, renders children

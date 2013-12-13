@@ -2,14 +2,14 @@
 #define UITreeView_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Text.h"
 
 #include <vector>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UITreeView : public UIControl
+class NEPHILIM_API UITreeView : public UIView
 {
 public:
 	/// Constructs the tree view
@@ -28,10 +28,10 @@ public:
 	bool onEventNotification(Event& event);
 
 	/// A node in the tree
-	class Item : public UIControl
+	class Item : public UIView
 	{
 	public:
-		Item() : UIControl(), m_parent(NULL), m_parentItem(NULL){
+		Item() : UIView(), m_parent(NULL), m_parentItem(NULL){
 			advance = 10;
 			m_visible = false;
 			m_expanded = false;

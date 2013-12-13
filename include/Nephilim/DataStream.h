@@ -28,6 +28,9 @@ public:
 	/// Reads the next byte as a char
 	char readChar();
 
+	/// Reads count chars and stores them in the pre allocated buffer destination
+	void readChars(int count, char* destination);
+
 	/// Write a 64-bit signed integer
 	DataStream& operator<<(Int64 value);
 
@@ -60,6 +63,12 @@ public:
 
 	/// Read a 32-bit unsigned integer
 	DataStream& operator>>(Uint32& value);
+
+	/// Read a 16-bit unsigned integer
+	DataStream& operator>>(Uint16& value);
+
+	/// Read a 8-bit unsigned integer
+	DataStream& operator>>(Uint8& value);
 
 	/// Read a String
 	DataStream& operator>>(String& value);

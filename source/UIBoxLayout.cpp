@@ -1,5 +1,5 @@
 #include <Nephilim/UIBoxLayout.h>
-#include <Nephilim/UIControl.h>
+#include <Nephilim/UIView.h>
 #include <iostream>
 using namespace std;
 
@@ -20,7 +20,7 @@ UIBoxLayout::UIBoxLayout(UILayout::Orientation orientation, bool animated)
 }
 
 
-void UIBoxLayout::doLayout(UIControl* parent)
+void UIBoxLayout::doLayout(UIView* parent)
 {
 	if(!parent)return;
 
@@ -34,7 +34,7 @@ void UIBoxLayout::doLayout(UIControl* parent)
 
 		for(int i = 0; i < parent->getChildCount(); i++)
 		{
-			UIControl* child = parent->getChild(i);
+			UIView* child = parent->getChild(i);
 
 			// compute final size
 			Vec2f finalSize;
@@ -73,7 +73,7 @@ void UIBoxLayout::doLayout(UIControl* parent)
 	{
 		for(int i = 0; i < parent->getChildCount(); i++)
 		{
-			UIControl* child = parent->getChild(i);
+			UIView* child = parent->getChild(i);
 
 			if(m_animated)
 			{	

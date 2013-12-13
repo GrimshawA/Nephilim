@@ -19,7 +19,7 @@ public:
 
 	UIBoxLayout(UILayout::Orientation orientation, bool animated);
 
-	void doLayout(UIControl* parent);
+	void doLayout(UIView* parent);
 
 	bool m_animated;
 	UILayout::Orientation m_orientation;

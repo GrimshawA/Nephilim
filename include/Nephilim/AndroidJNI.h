@@ -136,14 +136,14 @@ JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeTouchMove) ( JNIEnv*  en
 // -- Multitouch down
 JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchDown) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id )
 {
-	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Down: %f %f index %d id %d\n", x,y,index,id);
+	//__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Down: %f %f index %d id %d\n", x,y,index,id);
 	android_multitouchdown(x,y,index,id);
 }
 
 // -- Multitouch up
 JNIEXPORT void JNI_PACKAGE_FUNC(DemoGLSurfaceView_nativeMultiTouchUp) ( JNIEnv*  env, jobject thiz, jfloat x, jfloat y, jint index, jint id  )
 {
-	__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Up: %f %f index %d id %d\n", x,y,index,id);
+	//__android_log_print(ANDROID_LOG_INFO, "Nephilim", "MT Up: %f %f index %d id %d\n", x,y,index,id);
 	android_multitouchup(x,y,index,id);
 
 }

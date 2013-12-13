@@ -84,7 +84,7 @@ bool Image::loadFromFile(const String &path){
 
 	if(!stream)
 	{
-	    Log("Image: Invalid path, could not fopen.");
+	    Log("Image: Invalid path: %s", path.c_str());
 	    return false;
 	}
 

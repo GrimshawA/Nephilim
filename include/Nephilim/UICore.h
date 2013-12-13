@@ -8,8 +8,8 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIDocument;
-class UIControl;
+class UICanvas;
+class UIView;
 
 class NEPHILIM_API UIEventResult
 {
@@ -29,7 +29,7 @@ public:
 /**
 	\ingroup UI
 	\class UICore
-	\brief Represents the core of a user interface system
+	\brief Set of configurations and common data shared by all controls in a hierarchy
 
 	This acts as a central storage unit for all user interface assets, localized strings etc.
 
@@ -40,7 +40,7 @@ public:
 class NEPHILIM_API UICore
 {
 public:
-	/// Construct the basic settings of the core automatically
+	/// Default construction
 	UICore();
 
 	/// \ingroup UI
@@ -69,6 +69,7 @@ private:
 public:
 
 
+
 	enum ScreenInputType
 	{
 		Touch,
@@ -94,8 +95,8 @@ public:
 	bool m_fakeAndroidOptionsWithControl;
 	bool m_blockHardwareKeyboard;
 
-	UIControl* m_focusControl;
-	UIControl* m_dragControl;
+	UIView* m_focusControl;
+	UIView* m_dragControl;
 	Vec2f m_dragOffset;
 
 	/// Does the user interface system use animation globally?

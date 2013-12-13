@@ -2,7 +2,7 @@
 #define UISlider_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	\class UISlider
 	\brief A common horizontal slider control.
 */
-class NEPHILIM_API UISlider : public UIControl{
+class NEPHILIM_API UISlider : public UIView{
 public:
 	/// Constructs the slider with default values
 	UISlider();

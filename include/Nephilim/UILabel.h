@@ -2,7 +2,7 @@
 #define NephilimUILabel_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\class UILabel
 	\brief A simple label control
 */
-class NEPHILIM_API UILabel : public UIControl{
+class NEPHILIM_API UILabel : public UIView{
 public:
 	/// Constructs the button
 	UILabel();
@@ -47,7 +47,7 @@ template<typename T>
 void UILabel::setProperty(const String& propertyName, const T& propertyValue)
 {
 	// Give precedence to parent
-	UIControl::setProperty<T>(propertyName, propertyValue);
+	UIView::setProperty<T>(propertyName, propertyValue);
 
 	if(propertyName == "color")
 	{

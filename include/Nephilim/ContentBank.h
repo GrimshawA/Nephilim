@@ -84,7 +84,6 @@ public:
 	/// Creates a texture from a file
 	bool loadTexture(const String &fileName);
 
-	/// Temp
 	/// Get the texture
 	Texture* getTexture(const String &texture_name);
 

@@ -2,7 +2,7 @@
 #define UIProgressBar_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\class UIProgressBar
 	\brief A simple progress bar control
 */
-class UIProgressBar : public UIControl{
+class UIProgressBar : public UIView{
 public:
 	/// Constructs the progress bar with default values
 	UIProgressBar();

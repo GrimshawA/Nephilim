@@ -2,7 +2,7 @@
 #define UIConsole_h__
 
 #include "Platform.h"
-#include "UIControl.h"
+#include "UIView.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	\class UIConsole
 	\brief A Console window to input commands
 */
-class NEPHILIM_API UIConsole : public UIControl{
+class NEPHILIM_API UIConsole : public UIView{
 public:
 	bool onEventNotification(Event& event);
 	void draw(Renderer* renderer);

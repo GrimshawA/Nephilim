@@ -1,4 +1,5 @@
-#include "Nephilim/Window.h"
+#include <Nephilim/Window.h>
+#include <Nephilim/Logger.h>
 
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -42,10 +43,12 @@ Window::~Window(){
 /// Attempts to launch a window if applicable
 void Window::create(int screenWidth, int screenHeight){
 #ifdef NEPHILIM_DESKTOP
-	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight,32), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(24, 8 , 8));
+	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(32, 8 , 8));
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	myWindowImpl->setFramerateLimit(60);
+	
+	//Log("Window(%dx%dx%d - depth(%d) AA(%d) stencil(%d) ",myWindowImpl->getSize().x, myWindowImpl->getSize().y, 32, myWindowImpl->getSettings().depthBits, myWindowImpl->getSettings().antialiasingLevel, myWindowImpl->getSettings().stencilBits );
 	//m_handle = (int)myWindowImpl->getSystemHandle();
 
 #endif

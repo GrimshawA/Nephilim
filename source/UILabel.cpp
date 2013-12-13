@@ -7,12 +7,12 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Constructs the button
-UILabel::UILabel() : UIControl(), m_color(0,0,0) , hover(false){
+UILabel::UILabel() : UIView(), m_color(0,0,0) , hover(false){
 
 };
 
 /// Constructs the button from a label text
-UILabel::UILabel(const String& title) : UIControl(), m_color(0,0,0), m_label(title), hover(false){
+UILabel::UILabel(const String& title) : UIView(), m_color(0,0,0), m_label(title), hover(false){
 
 };
 

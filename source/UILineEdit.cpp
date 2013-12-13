@@ -7,17 +7,51 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-UILineEdit::UILineEdit() : UIControl(), m_pipeIndex(0)
+UILineEdit::UILineEdit()
+: UIView()
+, m_pipeIndex(0)
+, m_textColor(Color::Black)
+, m_type(Regular)
+, m_charLimit(16)
+
 {
 
 }
 
+void UILineEdit::setTextColor(const Color& color)
+{
+	m_textColor = color;
+}
 
-bool UILineEdit::onEventNotification(Event& event){
-	/*if(event.type == Event::TextEntered){
-		s += event.text.unicode;
-		t.setString(s);
-	}*/
+
+bool UILineEdit::onEventNotification(Event& event)
+{
+	if(event.type == Event::MouseButtonPressed)
+	{
+		vec2 mouse(event.getPointerPosition().x, event.getPointerPosition().y);
+		if(mouse.x >= getPosition().x && mouse.y >= getPosition().y && mouse.x <= getPosition().x + getSize().x && mouse.y <= getPosition().y + getSize().y)
+		{
+			m_hasFocus = true;
+		}
+		else
+		{
+			m_hasFocus = false;
+		}
+	}
+
+	if(m_hasFocus)
+	{
+		if(event.type == Event::TextEntered)
+		{
+			onTextEvent(event.text.unicode);
+		}
+
+		if(event.type == Event::KeyPressed)
+		{
+			onKeyPressed(event.key.code);
+		}
+	}	
+
 	return true;
 };
 
@@ -54,17 +88,28 @@ bool UILineEdit::onTextEvent(Uint32 code)
 	else return false;
 }
 
+void UILineEdit::setCharacterLimit(size_t limit)
+{
+	m_charLimit = limit;
+}
+
 
 void UILineEdit::addCharacter(Uint32 charCode)
 {
-	s.insert(s.begin() + m_pipeIndex, charCode);
-	m_pipeIndex++;
+	if(s.length() < m_charLimit)
+	{
+		s.insert(s.begin() + m_pipeIndex, charCode);
+		m_pipeIndex++;
+	}	
 }
 
 void UILineEdit::eraseCharacter()
 {
-	s.erase(s.begin() + m_pipeIndex - 1);
-	m_pipeIndex--;
+	if(!s.empty())
+	{
+		s.erase(s.begin() + m_pipeIndex - 1);
+		m_pipeIndex--;
+	}
 }
 
 void UILineEdit::setText(const String& text){
@@ -72,26 +117,37 @@ void UILineEdit::setText(const String& text){
 	t.setString(s);
 };
 
+void UILineEdit::setType(UILineEditTypes type)
+{
+	m_type = type;
+}
 
-void UILineEdit::draw(Renderer* renderer){
-	t.setString(s);
-	t.setPosition(m_bounds.left,m_bounds.top);
-	t.setCharacterSize(15);
-	if(m_hasFocus)
+
+void UILineEdit::draw(Renderer* renderer)
+{
+	if(getContext() && getContext()->m_defaultFont)
+		t.setFont(*getContext()->m_defaultFont);
+
+	if(m_type == Regular)
 	{
-		t.setColor(Color::Red);
+		t.setString(s);
 	}
 	else
 	{
-		t.setColor(Color::White);
+		t.setString(String(s.length(), '*'));
 	}
-	
-	// The pipe
-	float pipePosition = t.getCharacterPosition(m_pipeIndex).x + 1;
-	renderer->draw(t);
-	renderer->drawDebugLine(Vec2f(m_bounds.left + pipePosition, m_bounds.top), Vec2f(m_bounds.left + pipePosition, m_bounds.top + t.getCharacterSize()), Color::Red);
+	t.setPosition(m_bounds.left,m_bounds.top);
+	t.setCharacterSize(static_cast<unsigned int>(getSize().y * 0.9f));	
+	t.setColor(m_textColor);
 
-	//renderer->drawDebugLine(Vec2f(0,0), Vec2f(400,400), Color::White);
+	renderer->draw(t);
+
+	// The pipe
+	if(m_hasFocus)
+	{
+		float pipePosition = t.getCharacterPosition(m_pipeIndex).x + 1;
+		renderer->drawDebugLine(Vec2f(m_bounds.left + pipePosition, m_bounds.top), Vec2f(m_bounds.left + pipePosition, m_bounds.top + t.getCharacterSize()), Color(0,0,0,150));
+	}
 };
 
 
