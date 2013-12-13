@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -67,7 +67,7 @@ public :
     /// this call will block the execution until the mutex
     /// is released.
     ///
-    /// \see Unlock
+    /// \see unlock
     ///
     ////////////////////////////////////////////////////////////
     void lock();
@@ -75,7 +75,7 @@ public :
     ////////////////////////////////////////////////////////////
     /// \brief Unlock the mutex
     ///
-    /// \see Lock
+    /// \see lock
     ///
     ////////////////////////////////////////////////////////////
     void unlock();
@@ -138,7 +138,7 @@ private :
 ///
 /// SFML mutexes are recursive, which means that you can lock
 /// a mutex multiple times in the same thread without creating
-/// a deadlock. In this case, the first call to Lock() behaves
+/// a deadlock. In this case, the first call to lock() behaves
 /// as usual, and the following ones have no effect.
 /// However, you must call unlock() exactly as many times as you
 /// called lock(). If you don't, the mutex won't be released.

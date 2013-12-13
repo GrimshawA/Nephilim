@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -116,7 +116,7 @@ public :
     /// This function gracefully closes the connection. If the
     /// socket is not connected, this function has no effect.
     ///
-    /// \see Connect
+    /// \see connect
     ///
     ////////////////////////////////////////////////////////////
     void disconnect();
@@ -134,7 +134,7 @@ public :
     /// \see receive
     ///
     ////////////////////////////////////////////////////////////
-    Status send(const char* data, std::size_t size);
+    Status send(const void* data, std::size_t size);
 
     ////////////////////////////////////////////////////////////
     /// \brief Receive raw data from the remote peer
@@ -152,7 +152,7 @@ public :
     /// \see send
     ///
     ////////////////////////////////////////////////////////////
-    Status receive(char* data, std::size_t size, std::size_t& received);
+    Status receive(void* data, std::size_t size, std::size_t& received);
 
     ////////////////////////////////////////////////////////////
     /// \brief Send a formatted packet of data to the remote peer
@@ -227,7 +227,7 @@ private:
 ///
 /// When a socket is connected to a remote host, you can
 /// retrieve informations about this host with the
-/// getRemoteAddress and GetRemotePort functions. You can
+/// getRemoteAddress and getRemotePort functions. You can
 /// also get the local port to which the socket is bound
 /// (which is automatically chosen when the socket is connected),
 /// with the getLocalPort function.

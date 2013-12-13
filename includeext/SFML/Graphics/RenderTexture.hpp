@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -41,7 +41,7 @@ namespace priv
 }
 
 ////////////////////////////////////////////////////////////
-/// \brief Target for off-screen 2D rendering into an texture
+/// \brief Target for off-screen 2D rendering into a texture
 ///
 ////////////////////////////////////////////////////////////
 class SFML_GRAPHICS_API RenderTexture : public RenderTarget
@@ -107,6 +107,29 @@ public :
     ///
     ////////////////////////////////////////////////////////////
     bool isSmooth() const;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Enable or disable texture repeating
+    ///
+    /// This function is similar to Texture::setRepeated.
+    /// This parameter is disabled by default.
+    ///
+    /// \param repeated True to enable repeating, false to disable it
+    ///
+    /// \see isRepeated
+    ///
+    ////////////////////////////////////////////////////////////
+    void setRepeated(bool repeated);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Tell whether the texture is repeated or not
+    ///
+    /// \return True if texture is repeated
+    ///
+    /// \see setRepeated
+    ///
+    ////////////////////////////////////////////////////////////
+    bool isRepeated() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Activate of deactivate the render-texture for rendering
@@ -216,7 +239,7 @@ private :
 /// // Create a new render-texture
 /// sf::RenderTexture texture;
 /// if (!texture.create(500, 500))
-///     return -1
+///     return -1;
 ///
 /// // The main loop
 /// while (window.isOpen())
@@ -250,7 +273,7 @@ private :
 /// Like sf::RenderWindow, sf::RenderTexture is still able to render direct
 /// OpenGL stuff. It is even possible to mix together OpenGL calls
 /// and regular SFML drawing commands. If you need a depth buffer for
-/// 3D rendering, don't forget to request it when calling RenderTexture::Create.
+/// 3D rendering, don't forget to request it when calling RenderTexture::create.
 ///
 /// \see sf::RenderTarget, sf::RenderWindow, sf::View, sf::Texture
 ///

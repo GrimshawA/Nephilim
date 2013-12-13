@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -232,19 +232,19 @@ public :
         ListingResponse(const Response& response, const std::vector<char>& data);
 
         ////////////////////////////////////////////////////////////
-        /// \brief Return the array of filenames
+        /// \brief Return the array of directory/file names
         ///
-        /// \return Array containing the requested filenames
+        /// \return Array containing the requested listing
         ///
         ////////////////////////////////////////////////////////////
-        const std::vector<std::string>& getFilenames() const;
+        const std::vector<std::string>& getListing() const;
 
     private :
 
         ////////////////////////////////////////////////////////////
         // Member data
         ////////////////////////////////////////////////////////////
-        std::vector<std::string> m_filenames; ///< Filenames extracted from the data
+        std::vector<std::string> m_listing; ///< Directory/file names extracted from the data
     };
 
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -75,7 +75,7 @@ public :
     /// \brief Get a read-write access to a vertex by its index
     ///
     /// This function doesn't check \a index, it must be in range
-    /// [0, GetVertexCount() - 1]. The behaviour is undefined
+    /// [0, getVertexCount() - 1]. The behaviour is undefined
     /// otherwise.
     ///
     /// \param index Index of the vertex to get
@@ -91,7 +91,7 @@ public :
     /// \brief Get a read-only access to a vertex by its index
     ///
     /// This function doesn't check \a index, it must be in range
-    /// [0, GetVertexCount() - 1]. The behaviour is undefined
+    /// [0, getVertexCount() - 1]. The behaviour is undefined
     /// otherwise.
     ///
     /// \param index Index of the vertex to get

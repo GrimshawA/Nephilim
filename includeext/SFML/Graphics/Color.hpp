@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -199,8 +199,8 @@ SFML_GRAPHICS_API Color& operator *=(Color& left, const Color& right);
 ///
 /// \code
 /// sf::Color color(255, 0, 0); // red
-/// color.red = 0;              // make it black
-/// color.blue = 128;           // make it dark blue
+/// color.r = 0;                // make it black
+/// color.b = 128;              // make it dark blue
 /// \endcode
 ///
 /// The fourth component of colors, named "alpha", represents

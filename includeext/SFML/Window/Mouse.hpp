@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -142,7 +142,7 @@ public :
 /// moved, pressed or released when your window is out of focus
 /// and no event is triggered.
 ///
-/// The SetPosition and GetPosition functions can be used to change
+/// The setPosition and getPosition functions can be used to change
 /// or retrieve the current position of the mouse pointer. There are
 /// two versions: one that operates in global coordinates (relative
 /// to the desktop) and one that operates in window coordinates

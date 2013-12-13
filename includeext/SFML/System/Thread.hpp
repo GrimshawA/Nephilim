@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -219,7 +219,7 @@ private :
 /// The function argument, if any, is copied in the sf::Thread
 /// instance, as well as the functor (if the corresponding
 /// constructor is used). Class instances, however, are passed
-/// by pointer to you must make sure that the object won't be
+/// by pointer so you must make sure that the object won't be
 /// destroyed while the thread is still using it.
 ///
 /// The thread ends when its function is terminated. If the

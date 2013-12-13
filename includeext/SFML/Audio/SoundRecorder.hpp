@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -109,8 +109,6 @@ protected :
     ////////////////////////////////////////////////////////////
     SoundRecorder();
 
-private :
-
     ////////////////////////////////////////////////////////////
     /// \brief Start capturing audio data
     ///
@@ -150,6 +148,8 @@ private :
     ///
     ////////////////////////////////////////////////////////////
     virtual void onStop();
+
+private :
 
     ////////////////////////////////////////////////////////////
     /// \brief Function called as the entry point of the thread
@@ -206,16 +206,16 @@ private :
 /// captured data to a sound buffer (see sf::SoundBufferRecorder).
 ///
 /// A derived class has only one virtual function to override:
-/// \li OnProcessSamples provides the new chunks of audio samples while the capture happens
+/// \li onProcessSamples provides the new chunks of audio samples while the capture happens
 ///
 /// Moreover, two additionnal virtual functions can be overriden
 /// as well if necessary:
-/// \li OnStart is called before the capture happens, to perform custom initializations
-/// \li OnStop is called after the capture ends, to perform custom cleanup
+/// \li onStart is called before the capture happens, to perform custom initializations
+/// \li onStop is called after the capture ends, to perform custom cleanup
 ///
 /// The audio capture feature may not be supported or activated
 /// on every platform, thus it is recommended to check its
-/// availability with the IsAvailable() function. If it returns
+/// availability with the isAvailable() function. If it returns
 /// false, then any attempt to use an audio recorder will fail.
 ///
 /// It is important to note that the audio capture happens in a

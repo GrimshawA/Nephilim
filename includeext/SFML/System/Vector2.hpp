@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -192,8 +192,8 @@ Vector2<T>& operator *=(Vector2<T>& left, T right);
 /// \relates Vector2
 /// \brief Overload of binary operator /
 ///
-/// \param left  Left operand (a scalar value)
-/// \param right Right operand (a vector)
+/// \param left  Left operand (a vector)
+/// \param right Right operand (a scalar value)
 ///
 /// \return Memberwise division by \a right
 ///
@@ -274,12 +274,13 @@ typedef Vector2<float>        Vector2f;
 /// and comparisons (==, !=), for example int or float.
 ///
 /// You generally don't have to care about the templated form (sf::Vector2<T>),
-/// the two most common specializations have special typedefs:
+/// the most common specializations have special typedefs:
 /// \li sf::Vector2<float> is sf::Vector2f
 /// \li sf::Vector2<int> is sf::Vector2i
+/// \li sf::Vector2<unsigned int> is sf::Vector2u
 ///
 /// The sf::Vector2 class has a small and simple interface, its x and y members
-/// can be accessed directly (there's no accessor like SetX(), GetX()) and it
+/// can be accessed directly (there's no accessor like setX(), getX()) and it
 /// contains no mathematical function like dot product, cross product, length, etc.
 ///
 /// Usage example:

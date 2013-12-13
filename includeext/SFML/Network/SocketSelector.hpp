@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -70,6 +70,7 @@ public :
     /// This function keeps a weak reference to the socket,
     /// so you have to make sure that the socket is not destroyed
     /// while it is stored in the selector.
+    /// This function does nothing if the socket is not valid.
     ///
     /// \param socket Reference to the socket to add
     ///
@@ -186,7 +187,7 @@ private :
 /// A selector doesn't store its own copies of the sockets
 /// (socket classes are not copyable anyway), it simply keeps
 /// a reference to the original sockets that you pass to the
-/// Add function. Therefore, you can't use the selector as a
+/// "add" function. Therefore, you can't use the selector as a
 /// socket container, you must store them oustide and make sure
 /// that they are alive as long as they are used in the selector.
 ///
@@ -229,6 +230,11 @@ private :
 ///                 // Add the new client to the selector so that we will
 ///                 // be notified when he sends something
 ///                 selector.add(*client);
+///             }
+///             else
+///             {
+///                 // Error, we won't get a new connection, delete the socket
+///                 delete client;
 ///             }
 ///         }
 ///         else

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -63,23 +63,6 @@
 
     // Unsupported system
     #error This operating system is not supported by SFML library
-
-#endif
-
-
-////////////////////////////////////////////////////////////
-// Identify the endianness
-////////////////////////////////////////////////////////////
-#if defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || (defined(__MIPS__) && defined(__MISPEB__)) || \
-    defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || defined(__sparc__) || defined(__hppa__)
-
-    // Big endian
-    #define SFML_ENDIAN_BIG
-
-#else
-
-    // Little endian
-    #define SFML_ENDIAN_LITTLE
 
 #endif
 

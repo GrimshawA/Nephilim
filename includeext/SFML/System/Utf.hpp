@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -749,7 +749,7 @@ typedef Utf<32> Utf32;
 ///
 /// sf::Utf is a low-level, generic interface for counting, iterating,
 /// encoding and decoding Unicode characters and strings. It is able
-/// to handle ANSI, wide, UTF-8, UTF-16 and UTF-32 encodings.
+/// to handle ANSI, wide, latin-1, UTF-8, UTF-16 and UTF-32 encodings.
 ///
 /// sf::Utf<X> functions are all static, these classes are not meant to
 /// be instanciated. All the functions are template, so that you

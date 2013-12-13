@@ -24,6 +24,7 @@
 
 #ifndef SFML_ALCHECK_HPP
 #define SFML_ALCHECK_HPP
+#ifndef NEPHILIM_ANDROID
 
 ////////////////////////////////////////////////////////////
 // Headers
@@ -74,5 +75,5 @@ void ensureALInit();
 
 } // namespace sf
 
-
+#endif
 #endif // SFML_ALCHECK_HPP

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -340,7 +340,7 @@ public :
     ////////////////////////////////////////////////////////////
     /// \brief Construct the HTTP client with the target host
     ///
-    /// This is equivalent to calling SetHost(host, port).
+    /// This is equivalent to calling setHost(host, port).
     /// The port has a default value of 0, which means that the
     /// HTTP client will use the right port according to the
     /// protocol used (80 for HTTP, 443 for HTTPS). You should
@@ -373,7 +373,7 @@ public :
     ////////////////////////////////////////////////////////////
     /// \brief Send a HTTP request and return the server's response.
     ///
-    /// You must have a valid host before sending a request (see SetHost).
+    /// You must have a valid host before sending a request (see setHost).
     /// Any missing mandatory header field in the request will be added
     /// with an appropriate value.
     /// Warning: this function waits for the server's response and may

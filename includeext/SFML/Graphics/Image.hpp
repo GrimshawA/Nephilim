@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
+// Copyright (C) 2007-2013 Laurent Gomila (laurent.gom@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -150,9 +150,9 @@ public :
     bool saveToFile(const std::string& filename) const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Return the size of the image
+    /// \brief Return the size (width and height) of the image
     ///
-    /// \return Size in pixels
+    /// \return Size of the image, in pixels
     ///
     ////////////////////////////////////////////////////////////
     Vector2u getSize() const;
@@ -230,7 +230,7 @@ public :
     ///
     /// The returned value points to an array of RGBA pixels made of
     /// 8 bits integers components. The size of the array is
-    /// GetWidth() * GetHeight() * 4.
+    /// width * height * 4 (getSize().x * getSize().y * 4).
     /// Warning: the returned pointer may become invalid if you
     /// modify the image, so you should never store it for too long.
     /// If the image is empty, a null pointer is returned.
