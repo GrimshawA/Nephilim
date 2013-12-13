@@ -25,14 +25,14 @@ void UILabel::setText(const String& text)
 /// Callback to handle an event
 bool UILabel::onEventNotification(Event& event){
 	if(event.type == Event::MouseButtonReleased){
-		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
+		if(mRect.contains(event.mouseButton.x, event.mouseButton.y)){
 			onClick();
 		}
 }	
 
 	if(event.type == Event::MouseMoved)
 	{
-		if(m_bounds.contains(event.mouseMove.x, event.mouseMove.y)){	
+		if(mRect.contains(event.mouseMove.x, event.mouseMove.y)){	
 			//setProperty<Color>("background-color", Color::White);
 		}
 		else
@@ -46,10 +46,10 @@ bool UILabel::onEventNotification(Event& event){
 void UILabel::draw(Renderer* renderer)
 {
 	Text t;
-	t.setFont(*m_stateContext->m_defaultFont);
+	t.setFont(*mCore->m_defaultFont);
 	t.setString(m_label);
 	t.setColor(m_color);
-	t.setPosition(m_bounds.left, m_bounds.top);
+	t.setPosition(mRect.left, mRect.top);
 	renderer->draw(t);
 }
 

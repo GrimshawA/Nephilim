@@ -11,7 +11,7 @@ UIView::UIView()
 , m_positionFlags(0)
 , m_sizeFlags(0)
 , m_childrenLock(0)
-, m_stateContext(NULL)
+, mCore(NULL)
 , m_hasFocus(false)
 , m_layoutController(NULL)
 , m_backgroundColor(91,91,91)
@@ -25,7 +25,7 @@ UIView::UIView()
 , m_drawBorder(true)
 , m_stretchForContents(false)
 , m_hovered(false)
-, m_bounds(0.f, 0.f, 1.f, 1.f)
+, mRect(0.f, 0.f, 1.f, 1.f)
 , m_pointerPressCount(0)
 {
 
@@ -40,18 +40,20 @@ UIView::~UIView()
 	}
 }
 
+/// Called before rendering the children UIView ( Virtual )
+void UIView::preRender(Renderer* renderer){}
+
+/// Called after rendering the children UIView ( Virtual )
+void UIView::postRender(Renderer* renderer){}
+
 void UIView::setPosition(float x, float y)
 {
 	// Offset children
 	vec2 offset = vec2(x,y) - getPosition();
 
-	m_bounds.left = x;
-	m_bounds.top = y;
-
-	if(this == object)
-	{
-		Log("Setting position !!");
-	}
+	// -- update the top-left position of this control
+	mRect.left = x;
+	mRect.top = y;
 
 	updateLayout();
 
@@ -67,7 +69,7 @@ void UIView::setPosition(vec2 position)
 
 vec2 UIView::getPosition()
 {
-	return vec2(m_bounds.left, m_bounds.top);
+	return vec2(mRect.left, mRect.top);
 }
 
 void UIView::setLocalPosition(float x, float y)
@@ -210,7 +212,7 @@ void UIView::processPositionFlags()
 	{
 		if( hasPositionFlag(UIPositionFlag::AttachBottom))
 		{
-			setPosition(m_bounds.left, getParent()->getSize().y - getSize().y);
+			setPosition(mRect.left, getParent()->getSize().y - getSize().y);
 		}
 	}
 }
@@ -246,7 +248,7 @@ UIView* UIView::getChild(int index)
 /// Get the current size of the control
 Vec2f UIView::getSize()
 {
-	return Vec2f(m_bounds.width, m_bounds.height);
+	return Vec2f(mRect.width, mRect.height);
 }
 
 /// Set a new layout to the control
@@ -300,7 +302,7 @@ bool UIView::onEventNotification(Event& event)
 
 /// Get bounds of the control
 FloatRect UIView::getBounds(){
-	return m_bounds;
+	return mRect;
 };
 
 /// Is the control able to get input focus or not?
@@ -337,7 +339,11 @@ bool UIView::hasFocus()
 /// Hierarchicly sets the context to all children
 void UIView::setContext(UICore* states)
 {
-	m_stateContext = states;
+	mCore = states;
+
+	// -- Being inserted in a UICanvas hierarchy
+	setPositionFlags(mCore->defaultPositionFlags);
+	setSizeFlags(mCore->defaultSizeFlags);
 
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{
@@ -604,19 +610,19 @@ void UIView::setRect(float left, float top, float width, float height)
 
 FloatRect UIView::getRect()
 {
-	return m_bounds;
+	return mRect;
 };
 
 /// Get the position of the exact middle of this UIWindow
 Vec2f UIView::getMiddlePosition(){
-	return Vec2f(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2);
+	return Vec2f(mRect.left + mRect.width/2, mRect.top + mRect.height/2);
 };
 
 
 /// Returns the UIWindow context or NULL if not attached
 UICore* UIView::getContext()
 {
-	return m_stateContext;
+	return mCore;
 };
 
 UIView* UIView::getParent()
@@ -676,8 +682,8 @@ void UIView::attach(UIView* control)
 	// Assign
 	control->m_parent = this;
 
-	if(m_stateContext)
-		control->setContext(m_stateContext);
+	if(mCore)
+		control->setContext(mCore);
 
 	//control->processSizeChange(getSize().x, getSize().y);
 
@@ -815,13 +821,13 @@ bool UIView::respondsToLayouts(){
 void UIView::setSize(float width, float height)
 {
 	// -- This control is about to be resized, might need to do some automatic operations on children
-	processSizeChange(m_bounds.width, m_bounds.height, width, height);
+	processSizeChange(mRect.width, mRect.height, width, height);
 
-	float pX = m_bounds.width;
-	float pY = m_bounds.height;
+	float pX = mRect.width;
+	float pY = mRect.height;
 
-	m_bounds.width = width;
-	m_bounds.height = height;
+	mRect.width = width;
+	mRect.height = height;
 	
 	onResize();
 
@@ -833,7 +839,7 @@ void UIView::setSize(float width, float height)
 /// Immediately sets the center of the control to a new position
 void UIView::setCenter(float x, float y)
 {
-	m_bounds.setCenter(x,y);
+	mRect.setCenter(x,y);
 	onPositionChanged();
 
 	updateLayout();
@@ -841,20 +847,27 @@ void UIView::setCenter(float x, float y)
 
 void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 {
-	if(!m_visible)return; // no drawing or propagation - ghost
+	// Invisible UIView, stop rendering itself or children
+	if(!m_visible)
+	{
+		return;
+	}
 
 	draw(renderer);
+
+	// -- Pre Render Step (Before Children)
+	preRender(renderer);
 	
 	// clip the overflowing children
 	if(m_clipChildren)
 	{
 		if(getContext()->transformPointerCoordinates)
 		{
-			renderer->pushClippingRect(FloatRect(m_bounds.left / getContext()->targetWindowSize.x,m_bounds.top / getContext()->targetWindowSize.y,m_bounds.width / getContext()->targetWindowSize.x, m_bounds.height / getContext()->targetWindowSize.y), true);
+			renderer->pushClippingRect(FloatRect(mRect.left / getContext()->targetWindowSize.x,mRect.top / getContext()->targetWindowSize.y,mRect.width / getContext()->targetWindowSize.x, mRect.height / getContext()->targetWindowSize.y), true);
 		}
 		else
 		{
-			renderer->pushClippingRect(FloatRect(m_bounds.left,m_bounds.top,m_bounds.width, m_bounds.height));
+			renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
 		}
 	}
 
@@ -865,6 +878,9 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 
 	if(m_clipChildren)
 		renderer->popClippingRect();
+
+	// -- Post Render Step (After Children)
+	postRender(renderer);
 }
 
 

@@ -68,7 +68,8 @@ private:
 
 public:
 
-
+	Uint64 defaultPositionFlags;
+	Uint64 defaultSizeFlags;
 
 	enum ScreenInputType
 	{

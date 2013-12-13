@@ -126,7 +126,7 @@ void NStateCustom::onAttach()
 	//registerNStateImage(&m_scripting);
 	registerNStateCustom(m_scriptEngine);
 	registerSprite(m_scriptEngine);
-	registerUIButton(m_scriptEngine);
+
 	registerUILineEdit(m_scriptEngine);
 	registerUIImage(m_scriptEngine);
 

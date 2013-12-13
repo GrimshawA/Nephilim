@@ -12,7 +12,7 @@ public:
 
 private:
 	std::vector<UIView*> m_children;
-	Rect<float> m_bounds;
+	Rect<float> mRect;
 };
 
 NEPHILIM_NS_END

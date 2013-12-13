@@ -30,14 +30,14 @@ UISoftwareKeyboard::UISoftwareKeyboard(const String& title) : UIView(), m_color(
 /// Callback to handle an event
 bool UISoftwareKeyboard::onEventNotification(Event& event){
 	if(event.type == Event::MouseButtonReleased){
-		if(m_bounds.contains(event.mouseButton.x, event.mouseButton.y)){
+		if(mRect.contains(event.mouseButton.x, event.mouseButton.y)){
 			onClick();
 		}
 	}	
 
 	if(event.type == Event::MouseMoved)
 	{
-		if(m_bounds.contains(event.mouseMove.x, event.mouseMove.y)){	
+		if(mRect.contains(event.mouseMove.x, event.mouseMove.y)){	
 			//setProperty<Color>("background-color", Color::White);
 		}
 		else
@@ -60,7 +60,7 @@ void UISoftwareKeyboard::draw(Renderer* renderer){
 	Text t;
 	t.setString(m_label);
 	t.setColor(m_color);
-	t.setPosition(m_bounds.left, m_bounds.top);
+	t.setPosition(mRect.left, mRect.top);
 	renderer->draw(t);
 };
 

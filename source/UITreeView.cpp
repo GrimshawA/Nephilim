@@ -43,7 +43,7 @@ void UITreeView::addItemUnder(const String& parent, const String& name)
 		m_items.push_back(new Item());
 		m_items.back()->m_caption = name;
 		m_items.back()->setName(name);
-		m_items.back()->setSize(m_bounds.width, m_lineHeight);
+		m_items.back()->setSize(mRect.width, m_lineHeight);
 		m_items.back()->m_clipChildren = true;
 		m_items.back()->m_visible = true;
 		m_items.back()->m_stretchForContents = true;
@@ -144,7 +144,7 @@ void UITreeView::Item::refreshGeometry()
 		item->refreshGeometry();
 		/// stretch for children
 		finalSize += item->getSize().y;
-		item->setPosition(0, m_bounds.top + 20 + rel_height);
+		item->setPosition(0, mRect.top + 20 + rel_height);
 		rel_height += item->getSize().y;
 	}
 };
@@ -180,7 +180,7 @@ void UITreeView::Item::collapse()
 bool UITreeView::Item::onEventNotification(Event& event){
 	if(event.type == Event::MouseButtonPressed)
 	{
-		if(FloatRect(m_bounds.left, m_bounds.top, m_bounds.width, 20.f).contains(event.mouseButton.x, event.mouseButton.y)){
+		if(FloatRect(mRect.left, mRect.top, mRect.width, 20.f).contains(event.mouseButton.x, event.mouseButton.y)){
 			cout<<"Hit!"<<endl;
 			if(event.mouseButton.button == Mouse::Left)
 				expand();
@@ -199,7 +199,7 @@ bool UITreeView::Item::onEventNotification(Event& event){
 void UITreeView::Item::draw(Renderer* renderer)
 {
 	Text t;
-	t.setPosition(m_bounds.left + advance, m_bounds.top);
+	t.setPosition(mRect.left + advance, mRect.top);
 	t.setString(m_caption);
 	t.setCharacterSize(20);
 	renderer->draw(t);

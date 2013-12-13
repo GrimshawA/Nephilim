@@ -11,17 +11,18 @@ NEPHILIM_NS_BEGIN
 UIButton::UIButton()
 : UIView()
 , m_color(0,0,0)
+, m_label("")
 , hover(false)
 , m_normalTexture(NULL)
 {
-	setSize(200,40);
-	m_label = "unassigned";
+	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
+	hoverproperties["color"] = UIProperty(Color::Blue);
 
-	buttonLabel.setColor(Color::White);
-}
+	UIPropertyMap& normalproperties = m_styleInfo["normal"];
+	normalproperties["color"] = UIProperty(Color::Orange);
 
-UIButton::~UIButton()
-{
+	hoverproperties["text-color"] = UIProperty(Color::Black);
+	normalproperties["text-color"] = UIProperty(Color::Black);
 }
 
 UIButton::UIButton(const String& title)
@@ -37,10 +38,33 @@ UIButton::UIButton(const String& title)
 	UIPropertyMap& normalproperties = m_styleInfo["normal"];
 	normalproperties["color"] = UIProperty(Color::Orange);
 
+	hoverproperties["text-color"] = UIProperty(Color::Black);
+	normalproperties["text-color"] = UIProperty(Color::Black);
+}
+
+/// Constructs a button with a given text directly at a given position
+UIButton::UIButton(const String& content, const FloatRect& rect)
+: UIView()
+, m_color(0,0,0)
+, m_label(content)
+, hover(false)
+, m_normalTexture(NULL)
+{
+	setRect(rect);
+
+	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
+	hoverproperties["color"] = UIProperty(Color::Blue);
+
+	UIPropertyMap& normalproperties = m_styleInfo["normal"];
+	normalproperties["color"] = UIProperty(Color::Orange);
 
 	hoverproperties["text-color"] = UIProperty(Color::Black);
 	normalproperties["text-color"] = UIProperty(Color::Black);
 }
+
+/// Destructor
+UIButton::~UIButton(){}
+
 
 void UIButton::setNormalTexture(const String& filename)
 {
@@ -66,7 +90,7 @@ UIView* UIButton::clone()
 
 void UIButton::innerLanguageSwitch()
 {
-	String res =  m_stateContext->m_localization.getString(m_baseLabel);
+	String res =  mCore->m_localization.getString(m_baseLabel);
 	if(!res.empty())m_label = res;
 }
 
@@ -114,7 +138,7 @@ UIButton::TextureInfo& UIButton::getStateTextureInfo(UIButtonState state)
 
 void UIButton::draw(Renderer* renderer)
 {
-	if(m_stateContext->m_defaultFont && !m_stateContext->m_defaultFont->isLoaded())
+	if(mCore->m_defaultFont && !mCore->m_defaultFont->isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");
 	}
@@ -151,11 +175,11 @@ void UIButton::draw(Renderer* renderer)
 	renderer->draw(backgroundShape);
 	
     // -- Label
-	buttonLabel.setFont(*m_stateContext->m_defaultFont);
+	buttonLabel.setFont(*mCore->m_defaultFont);
 	buttonLabel.setString(m_label);
-	buttonLabel.setCharacterSize(m_bounds.height / 2);
+	buttonLabel.setCharacterSize(mRect.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
-	buttonLabel.setPosition(static_cast<int>((m_bounds.left + m_bounds.width / 2.f ) + 0.5f), static_cast<int>((m_bounds.top +  m_bounds.height / 2.f) + 0.5f));
+	buttonLabel.setPosition(static_cast<int>((mRect.left + mRect.width / 2.f ) + 0.5f), static_cast<int>((mRect.top +  mRect.height / 2.f) + 0.5f));
 	if(buttonLabel.getLocalBounds().width > getSize().x * 0.9f)
 	{
 		// The text is too big and passes the 90% of the button's width

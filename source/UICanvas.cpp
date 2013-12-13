@@ -166,8 +166,6 @@ void UICanvas::showMessageBox(const String& message)
 {
 	UIView* modalBackground = new UIView();
 	
-	modalBackground->setProperty<Color>("background-color", Color(0,0,0, 80));
-	
 	UILayerView* surface = addSurface("modal");
 	surface->attach(modalBackground);
 	modalBackground->setRect(surface->getRect());
@@ -175,8 +173,6 @@ void UICanvas::showMessageBox(const String& message)
 	UILabel* label = new UILabel(message);
 	label->setSize(700,50);
 	label->setCenter(modalBackground->getMiddlePosition());
-	label->setProperty<Color>("background-color", Color(0,0,0));
-	label->setProperty<Color>("color", Color::White);
 	modalBackground->attach(label);
 };
 

@@ -7,7 +7,7 @@ NEPHILIM_NS_BEGIN
 
 /// Constructs the slider with default values
 UISlider::UISlider(){
-	m_bounds.set(0,0, 800, 200);
+	mRect.set(0,0, 800, 200);
 
 //	m_sliderRect.set(m_rect.left + 10, m_rect.top + m_rect.height/2,40,40);
 	dragging = false;
@@ -18,8 +18,8 @@ UISlider::UISlider(){
 
 /// Adjust the internal positions of objects according to bounds
 void UISlider::adjustPositions(){
-	m_draggableArea.set(0, 0,m_bounds.width*0.7, 40);
-	m_draggableArea.setCenter(m_bounds.left + m_bounds.width/2,m_bounds.top + m_bounds.height/2 );
+	m_draggableArea.set(0, 0,mRect.width*0.7, 40);
+	m_draggableArea.setCenter(mRect.left + mRect.width/2,mRect.top + mRect.height/2 );
 
 	m_sliderRect.set(0,0,40,40);
 	m_sliderRect.setPosition(m_draggableArea.left, m_draggableArea.top);

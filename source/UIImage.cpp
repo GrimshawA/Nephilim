@@ -29,9 +29,9 @@ void UIImage::setImage(const String& path)
 void UIImage::draw(Renderer* renderer)
 {
 	Sprite s;
-	s.setPosition(m_bounds.left, m_bounds.top);
+	s.setPosition(mRect.left, mRect.top);
 	s.setTexture(t);
-	s.resize(m_bounds.width, m_bounds.height);
+	s.resize(mRect.width, mRect.height);
 	renderer->draw(s);
 };
 

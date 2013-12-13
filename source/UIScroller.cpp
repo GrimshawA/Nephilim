@@ -17,7 +17,7 @@ UIScroller::UIScroller()
 bool UIScroller::onEventNotification(Event& event)
 {
 	
-	if(event.type == Event::MouseButtonPressed && m_bounds.contains(event.mouseButton.x, event.mouseButton.y))
+	if(event.type == Event::MouseButtonPressed && mRect.contains(event.mouseButton.x, event.mouseButton.y))
 	{
 		m_holdingDown = true;
 		m_lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
@@ -53,7 +53,7 @@ bool UIScroller::onEventNotification(Event& event)
 	if(event.isPointerType())
 	{
 		vec2i pointCoord = event.getPointerPosition();
-		if(!m_bounds.contains(pointCoord.x, pointCoord.y))
+		if(!mRect.contains(pointCoord.x, pointCoord.y))
 		{
 			event.type = Event::Count;
 		}

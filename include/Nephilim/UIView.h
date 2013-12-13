@@ -54,6 +54,12 @@ public:
 	/// Base destructor
 	virtual ~UIView();
 
+	/// Called before rendering the children UIView
+	virtual void preRender(Renderer* renderer);
+
+	/// Called after rendering the children UIView
+	virtual void postRender(Renderer* renderer);
+
 	/// Set the position of the control's top-left corner
 	void setPosition(float x, float y);
 	
@@ -123,6 +129,7 @@ public:
 
 	/// Check if there is a particular sizing flag
 	bool hasSizeFlag(Uint64 flag);
+
 
 	/// Get the currently assigned layout controller
 	/// \return NULL if there is no layout controller assigned
@@ -199,9 +206,6 @@ public:
 	/// Callback when the control is resized
 	virtual void onResize();
 
-	template<typename T>
-	void setProperty(const String& propertyName, const T& propertyValue);
-
 	/// Immediately sets the new size of the control 
 	void setSize(float width, float height);
 
@@ -216,8 +220,6 @@ public:
 
 	/// Immediately sets the center of the control to a new position
 	void setCenter(Vec2f position);
-
-
 
 	/// Define a new name for this control
 	void setName(const String& name);
@@ -292,7 +294,6 @@ public:
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
 
-	UICore* m_stateContext;
 
 	/// Hierarchicly sets the context to all children
 	void setContext(UICore* states);
@@ -336,7 +337,6 @@ protected: // functions
 
 public:
 	/// The bounds of the control, if scissor tests are enabled, nothing is drawn outside this rect
-	Rect<float> m_bounds;
 	RectangleShape m_background;
 
 	struct UIControlOperation
@@ -368,8 +368,6 @@ public:
 	Color m_backgroundColor;
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 
-
-
 	/// Children of the control
 	std::vector<UIView*> m_children;
 	int m_childrenLock;
@@ -378,32 +376,11 @@ public:
 	String     m_name;             ///< Name
 	UIView* m_parent;           ///< The parent control
 	UILayout*  m_layoutController; ///< Layouter
-};
 
-template<typename T>
-void UIView::setProperty(const String& propertyName, const T& propertyValue)
-{
-	if(propertyName == "background-color")
-	{
-		m_backgroundColor = propertyValue;
-		return;
-	}
-	else if(propertyName == "border-top-color")
-	{
-		m_topBorderColor = propertyValue;
-	}
-	else if(propertyName == "border-bottom-color")
-	{
-		m_bottomBorderColor = propertyValue;
-	}
-	else if(propertyName == "border-left-color")
-	{
-		m_leftBorderColor = propertyValue;
-	}
-	else if(propertyName == "border-right-color")
-	{
-		m_rightBorderColor = propertyValue;
-	}
+	//////////////////////////////////////////////////////////////////////////
+	// -- UIView definition
+	UICore*     mCore; ///< Core of this UICanvas
+	Rect<float> mRect; ///< Bounds of this UIView
 };
 
 NEPHILIM_NS_END

@@ -5,6 +5,8 @@ NEPHILIM_NS_BEGIN
 UICore::UICore()
 : transformPointerCoordinates(false)
 , m_defaultFont(NULL)
+, defaultPositionFlags(0)
+, defaultSizeFlags(0)
 {
 	m_fakeTouchScreen = false;
 

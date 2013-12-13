@@ -23,6 +23,9 @@ public:
 	/// Constructs the button from a label text
 	UIButton(const String& title);
 
+	/// Constructs a button with a given text directly at a given position
+	UIButton(const String& content, const FloatRect& rect);
+
 	~UIButton();
 	
 	/// Sets the label of the button
@@ -40,9 +43,6 @@ public:
 	void setHoverTexture(const String& filename);
 
 	void innerLanguageSwitch();
-
-	template<typename T>
-	void setProperty(const String& propertyName, const T& propertyValue);
 
 	/// Callback to render itself, renders children
 	virtual void draw(Renderer* renderer);
@@ -87,21 +87,6 @@ private:
 	String m_label;
 	String m_baseLabel;
 };
-
-template<typename T>
-void UIButton::setProperty(const String& propertyName, const T& propertyValue)
-{
-	// Give precedence to parent
-	UIView::setProperty<T>(propertyName, propertyValue);
-
-	if(propertyName == "color")
-	{
-		m_color = propertyValue;
-	}
-}
-
-class ASEngine;
-bool registerUIButton(ASEngine* engine);
 
 NEPHILIM_NS_END
 #endif // NephilimUIButton_h__
