@@ -1,6 +1,6 @@
 #include <Nephilim/BxVehicle.h>
 #include <Nephilim/BxScene.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 
 #include <bullet/btBulletDynamicsCommon.h>

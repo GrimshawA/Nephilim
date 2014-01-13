@@ -8,7 +8,7 @@
 #include "Strings.h"
 #include "RectangleShape.h"
 #include "Renderer.h"
-#include "RefCount.h"
+#include "ReferenceCountable.h"
 #include "AxList.h"
 #include "AxTarget.h"
 

@@ -1,5 +1,5 @@
 #include <Nephilim/Camera.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN
 

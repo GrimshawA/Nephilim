@@ -1,5 +1,5 @@
 #include <Nephilim/Matrix.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 #include <math.h>
 
 NEPHILIM_NS_BEGIN

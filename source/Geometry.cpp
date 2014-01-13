@@ -1,5 +1,5 @@
 #include <Nephilim/Geometry.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 #include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/DataStream.h>

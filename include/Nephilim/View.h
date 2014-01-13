@@ -6,7 +6,7 @@
 #include "Rect.h"
 #include "Transform.h"
 #include "Matrix.h"
-#include "RefCount.h"
+#include "ReferenceCountable.h"
 
 NEPHILIM_NS_BEGIN
 

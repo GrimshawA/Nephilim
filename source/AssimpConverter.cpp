@@ -1,4 +1,4 @@
-#include <Nephilim/AssimpConverter.h>
+#include <Nephilim/MeshImport/AssimpConverter.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Logger.h>
 

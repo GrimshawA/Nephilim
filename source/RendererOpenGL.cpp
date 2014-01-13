@@ -2,7 +2,7 @@
 #ifdef NEPHILIM_DESKTOP
 #include <Nephilim/RendererOpenGL.h>
 #include "Nephilim/View.h"
-#include "Nephilim/MMath.h"
+#include <Nephilim/NxMath.h>
 #include "Nephilim/CGL.h"
 #include <Nephilim/Matrix.h>
 

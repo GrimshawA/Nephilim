@@ -2,7 +2,7 @@
 #include <Nephilim/KxScene.h>
 
 #include <Box2D/Box2D.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN
 

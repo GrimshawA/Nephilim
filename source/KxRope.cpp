@@ -1,7 +1,7 @@
 #include <Nephilim/KxRope.h>
 #include <Nephilim/KxScene.h>
 
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN	
 
