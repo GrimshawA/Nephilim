@@ -33,12 +33,18 @@ public:
 
 	/// Returns a normalized copy of this vector
 	Vec2<T> normalized();
+
+	/// Rotates the vector by radians. Must be normalized.
+	void rotate(float radians);
 	
 	/// Sets all values of the 2D vector
 	void set(T x, T y);
 
 	/// Sets all values of the 2D vector as x
 	void setAll(T x);
+
+	/// Manhattan distance between the vectors
+	float manhattanDistance(const Vec2<T> &vec) const;
 
 	/// Comparison operator overload
 	bool operator==(const Vec2<T> &vec) const;

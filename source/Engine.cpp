@@ -106,13 +106,17 @@ void Engine::update()
 		// Draw a frame
 		if(m_renderer)
 		{
-			m_renderer->clearColorBuffer();
-			m_currentApp->innerRender();
-			m_surface.pushFrame();
+			render();			
 		}
 	}
 };
 
+/// Render one frame to the associated surface
+void Engine::render()
+{
+	m_currentApp->innerRender();
+	m_surface.pushFrame();
+}
 
 /// Inject an event into the engine "pipeline"
 void Engine::injectEvent(Event& event)
@@ -141,7 +145,8 @@ Renderer* Engine::getRenderer()
 /// Sets the command line arguments
 void Engine::setArgs(int count, char** args)
 {
-
+	mArgumentCount = count;
+	mArguments = args;
 }
 
 /// Returns a string with the version of the engine build. Usually like x.y.z

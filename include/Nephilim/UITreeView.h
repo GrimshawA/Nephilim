@@ -35,7 +35,6 @@ public:
 			advance = 10;
 			m_visible = false;
 			m_expanded = false;
-			setProperty<Color>("background-color", Color(0,0,0,0));
 		}
 		void draw(Renderer* renderer);
 		bool onEventNotification(Event& event);

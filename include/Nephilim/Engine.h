@@ -69,6 +69,9 @@ public:
 	/// Fetch input, update state and draw frame if appropriate
 	void update();
 
+	/// Render one frame to the associated surface
+	void render();
+
 	/// Terminate the engine completely
 	void shutdown();
 
@@ -101,6 +104,8 @@ public:
 	bool		m_running;			///< Qualified as running if some conditions are met
 	static String m_versionString;  ///< The version of string(at compile time)
 	std::vector<Event> m_events;    ///< The list of unprocessed events
+	int         mArgumentCount;
+	char**      mArguments;
 };
 
 NEPHILIM_NS_END

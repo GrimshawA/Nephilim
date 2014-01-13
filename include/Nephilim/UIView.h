@@ -209,12 +209,6 @@ public:
 	/// Immediately sets the new size of the control 
 	void setSize(float width, float height);
 
-	/// Set the proportion of the control , relative to its parent
-	void setProportion(float widthFactor, float heightFactor);
-
-	/// Set the placement proportion of the control
-	void setPlacement(float xFactor, float yFactor);
-
 	/// Immediately sets the center of the control to a new position
 	void setCenter(float x, float y);
 
@@ -304,9 +298,6 @@ public:
 	bool m_visible;
 	bool m_stretchForContents;
 	bool m_drawBorder; /// temp
-
-	UISizePolicy m_sizePolicy;
-	UISizePolicy m_positionPolicy;
 
 	Uint64 m_positionFlags;
 	Uint64 m_sizeFlags;

@@ -16,6 +16,16 @@ Vec2<T>::Vec2(T x, T y)
 	this->y = y;
 }
 
+/// Rotates the vector by radians. Must be normalized.
+template<class T>
+void Vec2<T>::rotate(float radians)
+{
+	float new_x = x * cos(radians) - y * sin(radians);
+	float new_y = x * sin(radians) + y * cos(radians);
+	x = new_x;
+	y = new_y;
+}
+
 template<class T>
 void Vec2<T>::set(T x, T y)
 {
@@ -43,8 +53,18 @@ template<class T>
 void Vec2<T>::normalize()
 {
 	float v_len = length();
-	x /= v_len;
-	y /= v_len;
+	if(v_len != 0.f)
+	{
+		x /= v_len;
+		y /= v_len;
+	}
+}
+
+/// Manhattan distance between
+template<class T>
+float Vec2<T>::manhattanDistance(const Vec2<T> &vec) const
+{
+	return fabs(vec.x - x) + fabs(vec.y - y);
 }
 
 /// Get the length of the vector
@@ -224,20 +244,25 @@ Vec2<T> Vec3<T>::xy()
 }
 
 template<class T>
-void Vec3<T>::setAll(T x){
+void Vec3<T>::setAll(T x)
+{
 	this->x = x;
 	this->y = x;
 	this->z = x;
-};
+}
 
 /// Makes the vector unit-length
 template<class T>
-void Vec3<T>::normalize(){
+void Vec3<T>::normalize()
+{
 	float v_len = length();
-	x /= v_len;
-	y /= v_len;
-	z /= v_len;
-};
+	if(v_len != 0.f)
+	{
+		x /= v_len;
+		y /= v_len;
+		z /= v_len;
+	}
+}
 
 /// Compute the cross product
 template<class T>

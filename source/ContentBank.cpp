@@ -1,5 +1,7 @@
 #include <Nephilim/ContentBank.h>
 #include <Nephilim/Path.h>
+#include <Nephilim/Clock.h>
+#include <Nephilim/Logger.h>
 
 #include <iostream>
 using namespace std;
@@ -7,11 +9,12 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Creates a loose content bank, destroys its resources on destruction
-ContentBank::ContentBank() : myLoader(this){
-
+ContentBank::ContentBank()
+: myLoader(this)
+{
 	// register most basic ones
 	registerResourceType("png", Content::Texture);
-	registerResourceType("ttf", Content::Font);
+	registerResourceType("ttf", Content::Font); 
 	/// .. and so on
 };
 
@@ -82,7 +85,13 @@ bool ContentBank::loadTexture(const String &fileName)
 		myTextureResources[fileName] = new Texture();
 	}
 
-	return myTextureResources[fileName]->loadFromFile(fileName);
+	Clock t;
+
+	bool result = myTextureResources[fileName]->loadFromFile(fileName);
+
+	Log("Loading %s took %d ms", fileName.c_str(), t.getElapsedTime().asMiliSeconds());
+
+	return result;
 }
 
 /// Temp

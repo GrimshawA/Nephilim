@@ -12,7 +12,9 @@ UIProgressBar::UIProgressBar() : m_currentValue(0){
 };
 
 /// Constructs the progress bar with defined values
-UIProgressBar::UIProgressBar(int maxValue, const String& message) : m_currentValue(0){
+UIProgressBar::UIProgressBar(int maxValue, const String& message)
+: m_currentValue(0)
+{
 	m_rect.set(300,300,300,70);
 };
 
@@ -28,8 +30,10 @@ void UIProgressBar::draw(Renderer* renderer){
 	renderer->draw(message);
 };
 
-bool UIProgressBar::onEventNotification(Event& event){
-	if(event.type == Event::KeyPressed){
+bool UIProgressBar::onEventNotification(Event& event)
+{
+	if(event.type == Event::KeyPressed)
+	{
 		cout<<"growing bar"<<endl;
 		m_currentValue += 5;
 	}

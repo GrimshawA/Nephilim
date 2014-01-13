@@ -128,7 +128,7 @@ void NStateCustom::onAttach()
 	registerSprite(m_scriptEngine);
 
 	registerUILineEdit(m_scriptEngine);
-	registerUIImage(m_scriptEngine);
+//	registerUIImage(m_scriptEngine);
 
 	m_scriptEngine->exportGlobalProperty("CustomState this", this);
 

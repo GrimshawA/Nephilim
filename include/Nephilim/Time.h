@@ -54,9 +54,18 @@ public:
 	/// Minus operator overload to subtract time spans
 	Time operator -(Time right);
 
+	/// Sum two time spans
+	Time operator +(const Time& right);
+
+	/// Increment by another time span
+	Time& operator +=(const Time& right);
+	
 	bool operator!=(const Time& right) const;
 
 	bool operator<=(const Time& right) const;
+
+
+
 
 	/// The time span representation
 	Int64 m_microSeconds;

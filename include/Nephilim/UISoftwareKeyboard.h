@@ -23,9 +23,6 @@ public:
 	/// Callback to handle an event
 	bool onEventNotification(Event& event);
 
-	template<typename T>
-	void setProperty(const String& propertyName, const T& propertyValue);
-
 	/// Callback to render itself, renders children
 	virtual void draw(Renderer* renderer);
 
@@ -44,18 +41,6 @@ public:
 private:
 	String m_label;
 };
-
-template<typename T>
-void UISoftwareKeyboard::setProperty(const String& propertyName, const T& propertyValue)
-{
-	// Give precedence to parent
-	UIView::setProperty<T>(propertyName, propertyValue);
-
-	if(propertyName == "color")
-	{
-		m_color = propertyValue;
-	}
-}
 
 
 NEPHILIM_NS_END

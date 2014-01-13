@@ -24,8 +24,5 @@ public:
 	String m_path;
 };
 
-class ASEngine;
-bool registerUIImage(ASEngine* engine);
-
 NEPHILIM_NS_END
 #endif // UIImage_h__

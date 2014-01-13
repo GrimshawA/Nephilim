@@ -19,9 +19,7 @@ NEPHILIM_NS_BEGIN
 */
 class NEPHILIM_API ProfileStatistics
 {
-public:
-	
-	
+public:	
 
 	struct fnTrack
 	{

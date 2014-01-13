@@ -267,9 +267,14 @@ UILayout* UIView::getLayout(){
 
 
 /// Callback to render itself, renders children
-void UIView::draw(Renderer* renderer){
-
-};
+void UIView::draw(Renderer* renderer)
+{
+	// -- debug rendering by lack of ovverride in the draw method
+	RectangleShape debugRect;
+	debugRect.setRect(getBounds());
+	debugRect.setColor(Color::Bittersweet);
+	renderer->draw(debugRect);
+}
 
 void UIView::dispatchEvent(const Event& event)
 {
@@ -430,30 +435,6 @@ void UIView::processSizeChange(float previousWidth, float previousHeight, float 
 	}
 }
 
-/// Set the placement proportion of the control
-void UIView::setPlacement(float xFactor, float yFactor)
-{
-	// assign proportion mode
-	m_positionPolicy.widthPolicy = UISizePolicy::ParentProportional;
-	m_positionPolicy.width = xFactor;
-	m_positionPolicy.height = yFactor;
-};
-
-/// Set the proportion of the control , relative to its parent
-void UIView::setProportion(float widthFactor, float heightFactor)
-{
-	if(m_parent)
-	{
-		setSize(m_parent->getSize().x * widthFactor, m_parent->getSize().y * heightFactor);
-	}
-
-	// assign proportion mode
-	m_sizePolicy.widthPolicy = UISizePolicy::ParentProportional;
-	m_sizePolicy.width = widthFactor;
-	m_sizePolicy.height = heightFactor;
-};
-
-
 /// Process a mouve movement event
 /// Returns false if the mouse isnt on any control
 bool UIView::processMouseMove(int x, int y)
@@ -478,6 +459,7 @@ bool UIView::processMouseMove(int x, int y)
 			{
 				(*it)->setPseudoClass("hover", true);
 				(*it)->m_hovered = true;
+				(*it)->onMouseEnter();
 			}
 		}
 		else

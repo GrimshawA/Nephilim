@@ -1,5 +1,5 @@
 #include <Nephilim/UIImage.h>
-#include <Nephilim/Sprite.h>
+#include <Nephilim/RectangleShape.h>
 #include <Nephilim/Logger.h>
 
 
@@ -28,10 +28,9 @@ void UIImage::setImage(const String& path)
 
 void UIImage::draw(Renderer* renderer)
 {
-	Sprite s;
-	s.setPosition(mRect.left, mRect.top);
-	s.setTexture(t);
-	s.resize(mRect.width, mRect.height);
+	RectangleShape s;
+	s.setRect(getBounds());
+	s.setTexture(&t);
 	renderer->draw(s);
 };
 

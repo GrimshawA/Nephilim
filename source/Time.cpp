@@ -53,6 +53,21 @@ Time Time::operator -(Time right)
 	return t;
 }
 
+/// Sum two time spans
+Time Time::operator +(const Time& right)
+{
+	Time t;
+	t.m_microSeconds = m_microSeconds + right.m_microSeconds;
+	return t;
+}
+
+/// Increment by another time span
+Time& Time::operator +=(const Time& right)
+{
+	this->m_microSeconds += right.m_microSeconds;
+	return *this;
+}
+
 bool Time::operator!=(const Time& right) const
 {
 	return this->m_microSeconds != right.m_microSeconds;
