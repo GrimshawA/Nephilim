@@ -79,6 +79,34 @@ namespace math
 	/// \param point is the screen-space coordinate we want in homogeneous space
 	/// \param left and top are the offset from the top-left corner of the window of the desired target viewport
 	vec2 toHomogeneous(vec2i point, int left, int top, int width, int height);
+
+	/**
+		\class Angle
+		\brief Represents an angle and operations made on them
+
+		Internally represented in radians, provides an interface to convert to other measurement units like degrees, as well as other operations.
+	*/
+	class NEPHILIM_API Angle
+	{
+	public:
+		/// Defaults to 0, by convention, facing "right"
+		Angle();
+
+		/// Initialize the angle with a radian angle
+		Angle(float val);
+
+		/// Get as degrees
+		float degrees();
+
+		/// Get as radians
+		float radians();
+
+		/// Constrain the angle on [0, pi*2]
+		void normalize();
+
+	private:
+		float value; ///< The internal representation of the angle
+	};
 };
 
 /**

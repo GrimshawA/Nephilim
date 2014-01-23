@@ -6,6 +6,7 @@
 #include "Drawable.h"
 #include "VertexArray2D.h"
 #include "Color.h"
+#include "Texture.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -25,6 +26,10 @@ public:
 
 	void setFillColor(Color color);
 
+	void setTexture(Texture* texture);
+
+	void setTextureCoords(float origin_x, float origin_y, float radius);
+
 	void setRadius(float radius);
 
 	void setOutlineThickness(float thickness);
@@ -35,11 +40,21 @@ public:
 
 	VertexArray2D m_vertices;
 	VertexArray2D m_outlineGeometry;
+
+	bool isDirty;
+
 	float m_radius;
 	float m_outlineThickness;
 	float m_pointCount;
+	float m_beginAngle;
+	float m_spanAngle;
+
 	Color m_fillColor;
 	Color m_outlineColor;
+
+	Texture* m_texture;
+	vec2     m_textureOrigin;
+	float    m_textureRadius;
 };
 
 NEPHILIM_NS_END

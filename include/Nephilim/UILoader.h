@@ -5,6 +5,8 @@
 #include "Strings.h"
 #include "pugixml/pugixml.hpp"
 
+#include "UIViewComponent.h"
+
 NEPHILIM_NS_BEGIN
 
 class UIView;
@@ -26,6 +28,24 @@ class NEPHILIM_API UILoader
 public:
 
 	void configure(UIView* view, const String& filename); // v1 test
+};
+
+/**
+	\ingroup UI
+	\class UIReloadComponent
+	\brief UI attachment for reloading itself from a file
+*/
+class NEPHILIM_API UIReloadComponent : public UIViewComponent
+{
+public:
+	UIReloadComponent(const String& file);
+
+	void onCreate()
+	{
+
+	}
+
+	String filename; ///< Where to load the UI from
 };
 
 NEPHILIM_NS_END

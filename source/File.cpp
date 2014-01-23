@@ -106,9 +106,18 @@ String File::getLine()
 {
 	String s;
 	char c = 0;
-	while(!atEnd() && c != '\n')
+	while(!atEnd())
 	{
-		s += (c = getChar());
+		c = getChar();
+		if(c == '\n')
+		{
+			// return prematurely
+			return s;
+		}
+		else
+		{			
+			s += c;
+		}
 	}
 	return s;
 };

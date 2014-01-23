@@ -115,6 +115,24 @@ void UIView::detach(UIView* control)
 	}
 }
 
+/// Destroy all children, needs revising
+void UIView::clear()
+{
+	if(m_childrenLock > 0)
+	{
+		Log("Cant clear now");
+		return;
+	}
+
+	// I am being destroyed, destroy children
+	for(size_t i = 0; i < m_children.size(); ++i)
+	{
+		delete m_children[i];
+	}
+
+	m_children.clear();
+}
+
 /// Feeds the position of the control to the animation systems
 vec2 UIView::axGetPosition2D()
 {
@@ -261,7 +279,8 @@ void UIView::setLayout(UILayout* layout){
 
 /// Get the currently assigned layout controller
 /// \return NULL if there is no layout controller assigned
-UILayout* UIView::getLayout(){
+UILayout* UIView::getLayout()
+{
 	return m_layoutController;
 };
 
@@ -269,11 +288,55 @@ UILayout* UIView::getLayout(){
 /// Callback to render itself, renders children
 void UIView::draw(Renderer* renderer)
 {
-	// -- debug rendering by lack of ovverride in the draw method
-	RectangleShape debugRect;
-	debugRect.setRect(getBounds());
-	debugRect.setColor(Color::Bittersweet);
-	renderer->draw(debugRect);
+	// back
+	RectangleShape backgroundRect;
+	if(m_children.size() > 0)
+	{
+		backgroundRect.setColor(Color::Grass);
+	}
+	else
+	{
+		backgroundRect.setColor(Color::Bittersweet);
+	}
+	backgroundRect.setRect(getBounds());
+	renderer->draw(backgroundRect);
+
+	if(m_children.size() > 0)
+	{
+		RectangleShape scrollBarBackground;
+		scrollBarBackground.setSize(17.f, getSize().y);
+		scrollBarBackground.setPosition(getPosition().x + getSize().y - 17.f, getPosition().y);
+		scrollBarBackground.setColor(Color::Blue);
+		renderer->draw(scrollBarBackground);
+
+		float lowestY = m_children[0]->getPosition().y;
+		float highestY = m_children[0]->getPosition().y + m_children[0]->getSize().y;
+		for(size_t i = 0; i < m_children.size(); ++i)
+		{
+			if(m_children[i]->getPosition().y < lowestY)
+			{
+				lowestY = m_children[i]->getPosition().y;
+			}
+
+			if(m_children[i]->getPosition().y + m_children[i]->getSize().y > highestY)
+			{
+				highestY = m_children[i]->getPosition().y + m_children[i]->getSize().y;
+			}
+		}
+
+		Log("Window %f to %f, Content %f to %f", getPosition().y, getPosition().y + getSize().y, lowestY, highestY);
+
+		float beginPercent = (getPosition().y - lowestY) / (highestY  - lowestY);
+		float endPercent = (getPosition().y + getSize().y - lowestY) / (highestY  - lowestY);
+
+		Log("You are viewing %f pc of the content", beginPercent);
+
+		RectangleShape scrollBarPaddle;
+		scrollBarPaddle.setSize(17.f, getSize().y * (endPercent-beginPercent));
+		scrollBarPaddle.setPosition(getPosition().x + getSize().y - 17.f, getPosition().y + getSize().y * beginPercent);
+		scrollBarPaddle.setColor(Color::Red);
+		renderer->draw(scrollBarPaddle);
+	}
 }
 
 void UIView::dispatchEvent(const Event& event)
@@ -297,6 +360,18 @@ void UIView::dispatchEvent(const Event& event)
 
 	if(m_childrenLock == 0)
 		applyPendingOperations();
+
+	if(event.type == Event::KeyPressed)
+	{
+		if(event.key.code == Keyboard::Down && getName() == "gringo")
+		{
+			offsetChildrenPosition(vec2(0.f, -10.f));
+		}
+		if(event.key.code == Keyboard::Up && getName() == "gringo")
+		{
+			offsetChildrenPosition(vec2(0.f, 10.f));
+		}
+	}
 }
 
 bool UIView::onEventNotification(Event& event)

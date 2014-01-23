@@ -58,7 +58,48 @@ namespace math{
 		return vec2(-1.f  + 2.f * (point.x - left)  / width,
 					 1.f  - 2.f * (point.y - top)  / height);
 	}
-};
+
+////////////////////////////////////////////////////////////////////////// Class Angle
+
+/// Defaults to 0, by convention, facing "right"
+Angle::Angle()
+: value(0.f)
+{
+}
+
+/// Initialize the angle with a radian angle
+Angle::Angle(float val)
+: value(val)
+{
+}
+
+/// Get as degrees
+float Angle::degrees()
+{
+	return radianToDegree(value);
+}
+
+/// Get as radians
+float Angle::radians()
+{
+	return value;
+}
+
+/// Constrain the angle on [0, pi*2]
+void Angle::normalize()
+{
+	while(value < 0.f)
+	{
+		value += pi*2.f;
+	}
+
+	while(value > pi*2.f)
+	{
+		value -= pi*2.f;
+	}
+}
+
+}; // end of namespace math
 
 vec3 directionFromAngles(float x_angle, float y_angle)
 {

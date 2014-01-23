@@ -24,6 +24,7 @@
 NEPHILIM_NS_BEGIN
 
 class AxBase;
+class UIViewComponent;
 
 namespace UIPositionFlag
 {
@@ -93,6 +94,9 @@ public:
 
 	/// Detach a child control without destroying it
 	void detach(UIView* control);
+
+	/// Destroy all children
+	void clear();
 
 	/// Destroys the control and removes from the hierarchy
 	void destroy();
@@ -318,7 +322,14 @@ public:
 
 	void offsetChildrenPosition(vec2 offset);
 
+	template<class T>
+	T* getComponent();
+
+
 	friend class UILayout;
+
+	std::vector<UIViewComponent*> components; ///< List of components in this view
+
 
 protected: // functions
 
@@ -373,6 +384,20 @@ public:
 	UICore*     mCore; ///< Core of this UICanvas
 	Rect<float> mRect; ///< Bounds of this UIView
 };
+
+
+template<class T>
+T* UIView::getComponent()
+{
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		T* component = dynamic_cast<T*>(components[i]);
+		if(component)
+			return component;
+	}
+
+	return NULL;
+}
 
 NEPHILIM_NS_END
 #endif // NephilimUIView_h__

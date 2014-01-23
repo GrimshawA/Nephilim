@@ -105,5 +105,12 @@ void UILoader::configure(UIView* view, const String& filename)
 	xml_to_uiview(xmlLoader.document, view);
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+UIReloadComponent::UIReloadComponent(const String& file)
+{
+	filename = file;
+}
+
 
 NEPHILIM_NS_END
