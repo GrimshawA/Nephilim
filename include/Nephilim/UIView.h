@@ -55,6 +55,9 @@ public:
 	/// Base destructor
 	virtual ~UIView();
 
+	/// Add a component to the view
+	void addComponent(UIViewComponent* component);
+
 	/// Called before rendering the children UIView
 	virtual void preRender(Renderer* renderer);
 
@@ -131,6 +134,8 @@ public:
 	/// Get the sizing flags
 	Uint64 getSizeFlags();
 
+	void enableAutoResize(bool enable);
+
 	/// Check if there is a particular sizing flag
 	bool hasSizeFlag(Uint64 flag);
 
@@ -144,6 +149,8 @@ public:
 
 	/// Is the control able to get input focus or not?
 	virtual bool isFocusable();
+
+	vec2 getCenter();
 
 	/// Check if the control currently has focus
 	bool hasFocus();

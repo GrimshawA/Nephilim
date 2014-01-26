@@ -46,6 +46,9 @@ public:
 	/// Write a 32-bit unsigned integer
 	DataStream& operator<<(Uint32 value);
 
+	/// Write a boolean as a unsigned byte
+	DataStream& operator<<(bool value);
+
 	/// Write a String
 	DataStream& operator<<(const String& value);
 
@@ -63,6 +66,9 @@ public:
 
 	/// Read a 32-bit unsigned integer
 	DataStream& operator>>(Uint32& value);
+
+	/// Read a 8-bit boolean
+	DataStream& operator>>(bool& value);
 
 	/// Read a 16-bit unsigned integer
 	DataStream& operator>>(Uint16& value);

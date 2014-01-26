@@ -2,8 +2,13 @@
 #define NephilimUIViewComponent_h__
 
 #include "Platform.h"
+#include "Event.h"
+#include "Time.h"
 
 NEPHILIM_NS_BEGIN
+
+class UIView;
+class Renderer;
 
 /**
 	\ingroup UI
@@ -16,6 +21,12 @@ public:
 	Int32 component_id; ///< Identify the type of the component
 
 	virtual void onCreate() = 0;
+
+	virtual void onEvent(Event event, UIView* view){}
+
+	virtual void onUpdate(const Time& time, UIView* view){}
+
+	virtual void onRender(Renderer* renderer, UIView* view){}
 
 	enum Type
 	{

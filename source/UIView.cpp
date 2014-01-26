@@ -1,4 +1,5 @@
 #include <Nephilim/UIView.h>
+#include <Nephilim/UIViewComponent.h>
 #include <Nephilim/Logger.h>
 
 #include <algorithm>
@@ -38,6 +39,12 @@ UIView::~UIView()
 	{
 		delete m_children[i];
 	}
+}
+
+/// Add a component to the view
+void UIView::addComponent(UIViewComponent* component)
+{
+	components.push_back(component);
 }
 
 /// Called before rendering the children UIView ( Virtual )
@@ -289,7 +296,7 @@ UILayout* UIView::getLayout()
 void UIView::draw(Renderer* renderer)
 {
 	// back
-	RectangleShape backgroundRect;
+	/*RectangleShape backgroundRect;
 	if(m_children.size() > 0)
 	{
 		backgroundRect.setColor(Color::Grass);
@@ -336,7 +343,7 @@ void UIView::draw(Renderer* renderer)
 		scrollBarPaddle.setPosition(getPosition().x + getSize().y - 17.f, getPosition().y + getSize().y * beginPercent);
 		scrollBarPaddle.setColor(Color::Red);
 		renderer->draw(scrollBarPaddle);
-	}
+	}*/
 }
 
 void UIView::dispatchEvent(const Event& event)
@@ -371,6 +378,12 @@ void UIView::dispatchEvent(const Event& event)
 		{
 			offsetChildrenPosition(vec2(0.f, 10.f));
 		}
+	}
+
+	// -- deliver events to the components
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->onEvent(event, this);
 	}
 }
 
@@ -826,6 +839,7 @@ void UIView::updateLayout()
 
 void UIView::onUpdate(float elapsedTime)
 {	
+
 }
 
 void UIView::update(float elapsedTime)
@@ -845,6 +859,10 @@ void UIView::update(float elapsedTime)
 
 	onUpdate(elapsedTime);
 
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->onUpdate(Time::fromSeconds(elapsedTime), this);
+	}
 }
 
 /// Get the current size of the control that encompasses all its children
@@ -912,6 +930,11 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 
 	draw(renderer);
 
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->onRender(renderer, this);
+	}
+
 	// -- Pre Render Step (Before Children)
 	preRender(renderer);
 	
@@ -940,16 +963,30 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 	postRender(renderer);
 }
 
+void UIView::enableAutoResize(bool enable)
+{
+	if(enable)
+	{
+		setPositionFlags(UIPositionFlag::KeepRelativePositionX | UIPositionFlag::KeepRelativePositionY);
+		setSizeFlags(UISizeFlag::KeepRelativeSizeX | UISizeFlag::KeepRelativeSizeY);
+	}
+}
 
 
 /// Immediately sets the center of the control to a new position
-void UIView::setCenter(Vec2f position){
+void UIView::setCenter(Vec2f position)
+{
 	setCenter(position.x, position.y);
-};
+}
 
 /// Callback when the position of the control changed, for updating nested objects
 void UIView::onPositionChanged()
 {
+}
+
+vec2 UIView::getCenter()
+{
+	return vec2(getPosition() + getSize() / 2.f);
 }
 
 /// Define a new name for this control
@@ -958,8 +995,9 @@ void UIView::setName(const String& name){
 };
 
 /// Get the name of the control
-String UIView::getName(){
+String UIView::getName()
+{
 	return m_name;
-};
+}
 
 NEPHILIM_NS_END

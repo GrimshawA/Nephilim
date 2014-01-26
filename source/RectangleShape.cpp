@@ -16,6 +16,26 @@ RectangleShape::RectangleShape()
 , m_height(1.f)
 , m_outlineThickness(1.f)
 {
+	initialize();
+}
+
+RectangleShape::RectangleShape(FloatRect rect, Color color)
+: m_geometry(Render::Primitive::TriangleFan, 4)
+, m_outline(Render::Primitive::Lines, 8)
+, m_texture(NULL)
+, m_width(1.f)
+, m_height(1.f)
+, m_outlineThickness(1.f)
+{
+	initialize();
+
+	setPosition(rect.left, rect.top);
+	setSize(rect.width, rect.height);
+	setColor(color);
+}
+
+void RectangleShape::initialize()
+{
 	m_geometry[0].position = vec2(0.f,0.f);
 	m_geometry[1].position = vec2(1.f,0.f);
 	m_geometry[2].position = vec2(1.f,1.f);

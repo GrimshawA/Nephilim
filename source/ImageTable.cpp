@@ -88,14 +88,14 @@ void ImageTable::processRawLine(const String& line)
 			textureRect.width = rectParams[2].toFloat();
 			textureRect.height = rectParams[3].toFloat();
 		}
-
+		
 		ImageData data;
 		data.src = src;
 		data.srcRect = textureRect;
 
 		table[alias] = data;
 
-		Log("alias %s = %s src with %f, %f, %f, %f rect", alias.c_str(), src.c_str(), textureRect.left, textureRect.top, textureRect.width, textureRect.height);
+		//Log("alias %s = %s src with %f, %f, %f, %f rect", alias.c_str(), src.c_str(), textureRect.left, textureRect.top, textureRect.width, textureRect.height);
 
 		//Log("%s|", alias.c_str());
 		//Log("%s|", src.c_str());

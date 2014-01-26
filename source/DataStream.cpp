@@ -98,6 +98,16 @@ DataStream& DataStream::operator<<(Uint32 value)
 	return *this;
 }
 
+/// Write a boolean as a unsigned byte
+DataStream& DataStream::operator<<(bool value)
+{
+	if(m_device)
+	{
+		Uint8 tempValue = static_cast<Uint8>(value);
+		m_device->write(reinterpret_cast<const char*>(&tempValue), sizeof(tempValue));
+	}
+	return *this;
+}
 
 /// Write a String
 DataStream& DataStream::operator<<(const String& value)
@@ -176,6 +186,18 @@ DataStream& DataStream::operator>>(Uint8& value)
 	if(m_device)
 	{
 		m_device->read(reinterpret_cast<char*>(&value), sizeof(Uint8));
+	}
+	return *this;
+}
+
+/// Read a 8-bit boolean
+DataStream& DataStream::operator>>(bool& value)
+{
+	if(m_device)
+	{
+		Uint8 tempValue;
+		m_device->read(reinterpret_cast<char*>(&tempValue), sizeof(Uint8));
+		value = static_cast<bool>(tempValue);
 	}
 	return *this;
 }

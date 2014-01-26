@@ -110,5 +110,22 @@ private:
 	ContentLoader myLoader;
 };
 
+/**
+	\class TextureList
+	\brief List of named texture objects
+*/
+class NEPHILIM_API TextureList
+{
+public:
+
+	class NEPHILIM_API TextureItem
+	{
+	public:
+		Texture* object;
+	};
+
+	std::map<String, TextureItem> textures;
+};
+
 NEPHILIM_NS_END
 #endif // NephilimContentBank_h__

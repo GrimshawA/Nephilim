@@ -1,74 +1,98 @@
 #include <Nephilim/UIScroller.h>
+#include <Nephilim/Renderer.h>
+#include <Nephilim/RectangleShape.h>
+#include <Nephilim/UIView.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
-UIScroller::UIScroller()
-: UIView()
-, m_holdingDown(false)
-, m_scrollsHorizontally(true)
-, m_lowerLimitV(0.f)
-, m_currentOffsetV(0.f)
+void UIComponentScroll::onCreate()
 {
-
+	scrolling = false;
 }
 
 
-bool UIScroller::onEventNotification(Event& event)
+void UIComponentScroll::onEvent(Event event, UIView* view)
 {
-	
-	if(event.type == Event::MouseButtonPressed && mRect.contains(event.mouseButton.x, event.mouseButton.y))
+
+	if(view->m_children.size() == 0)
+		return;
+
+	if(event.type == Event::MouseButtonPressed)
 	{
-		m_holdingDown = true;
-		m_lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
+		scrolling = true;
+		lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
 	}
 
 	if(event.type == Event::MouseButtonReleased)
-		m_holdingDown = false;
-
-	if(event.type == Event::MouseMoved && m_holdingDown)
 	{
-		// handle the offseting
-		vec2 offset = m_lastPosition - vec2(event.mouseMove.x, event.mouseMove.y);
-		
-		if(!m_scrollsHorizontally)
+		scrolling = false;
+	}
+
+	if(event.type == Event::MouseMoved)
+	{
+		vec2 newPosition(event.mouseMove.x, event.mouseMove.y);
+
+		if(scrolling)
+		{
+			vec2 offset = lastPosition - newPosition;
 			offset.x = 0.f;
+			offset.y *= -1.f;
+			view->offsetChildrenPosition(offset);
 
-		offset.y *= -1;
-
-	/*	if(m_currentOffsetV + offset.y < m_lowerLimitV)
-		{
-			offset.y = m_currentOffsetV - m_lowerLimitV;
-		}*/
-
-		m_currentOffsetV += offset.y;
-
-		Log("Curr Offset %f", m_currentOffsetV);
-
-		offsetChildren(offset);
-
-		m_lastPosition = vec2(event.mouseMove.x, event.mouseMove.y);
-	}
-
-	if(event.isPointerType())
-	{
-		vec2i pointCoord = event.getPointerPosition();
-		if(!mRect.contains(pointCoord.x, pointCoord.y))
-		{
-			event.type = Event::Count;
+			// apply test offset effect
+			float biggest_center = view->m_children[0]->getCenter().y;
+			float smallest_center = view->m_children[0]->getCenter().y;
+			for(size_t i = 0; i < view->m_children.size(); ++i)
+			{				
+				if(view->m_children[i]->getCenter().y > biggest_center)
+				{
+					biggest_center = view->m_children[i]->getCenter().y;
+				}
+				if(view->m_children[i]->getCenter().y < smallest_center)
+				{
+					smallest_center = view->m_children[i]->getCenter().y;
+				}
+			}
+			// lets ensure its in place. if the bottommost center is on top of the middle, correct
+			if(biggest_center < view->getCenter().y)
+			{
+				float recover_amount = view->getCenter().y - biggest_center;
+				view->offsetChildrenPosition(vec2(0.f, recover_amount));
+			}
+			// lets ensure its in place. if the bottommost center is on top of the middle, correct
+			if(smallest_center > view->getCenter().y)
+			{
+				float recover_amount = smallest_center - view->getCenter().y;
+				view->offsetChildrenPosition(vec2(0.f, -recover_amount));
+			}
 		}
-	}
 
-	return true;
+		// track mouse
+		lastPosition = vec2(event.mouseMove.x, event.mouseMove.y);
+	}
 }
 
-void UIScroller::offsetChildren(vec2 offset)
+void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 {
-	for(size_t i = 0; i < m_children.size(); ++i)
+	if(view->m_children.size() == 0)
+		return;
+
+	// apply test offset effect
+	for(size_t i = 0; i < view->m_children.size(); ++i)
 	{
-		m_children[i]->setPosition(m_children[i]->getPosition().x + offset.x, m_children[i]->getPosition().y + offset.y);
+		float y_pos = view->m_children[i]->getCenter().y;
+		float y_dist = fabs(y_pos - view->getCenter().y);
+		float offset = y_dist * 0.3f;
+
+		view->m_children[i]->setCenter(140.f + offset, view->m_children[i]->getCenter().y);
 	}
 }
 
+void UIComponentScroll::onRender(Renderer* renderer, UIView* view)
+{
+	RectangleShape backRect(view->getBounds(), Color::Bittersweet);
+	renderer->draw(backRect);
+}
 
 NEPHILIM_NS_END

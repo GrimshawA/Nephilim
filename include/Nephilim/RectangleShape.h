@@ -19,7 +19,11 @@ class Texture;
 class NEPHILIM_API RectangleShape : public Drawable, public Transformable
 {
 public:
+	/// Default initialization of the primitive
 	RectangleShape();
+
+	/// Initialize the primitive within a given rectangle and color
+	RectangleShape(FloatRect rect, Color color = Color::White);
 
 	/// Check if a given point lies inside the shape
 	bool contains(vec2 point) const;
@@ -74,6 +78,8 @@ protected:
 
 private:
 	void updateInternalOutline();
+
+	void initialize();
 };
 
 NEPHILIM_NS_END

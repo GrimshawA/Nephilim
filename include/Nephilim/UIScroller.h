@@ -2,32 +2,26 @@
 #define NephilimUIScroller_h__
 
 #include "Platform.h"
-#include "UIView.h"
+#include "UIViewComponent.h"
 #include "Vectors.h"
 
 NEPHILIM_NS_BEGIN
 
-/**
-	\ingroup UserInterface
-	\class UIScroller
-	\brief A control that works as a scrollable page
-*/
-class NEPHILIM_API UIScroller : public UIView
+class UIView;
+
+class NEPHILIM_API UIComponentScroll : public UIViewComponent
 {
 public:
-	UIScroller();
+	void onCreate();
 
-	bool onEventNotification(Event& event);
+	void onEvent(Event event, UIView* view);
 
-	void offsetChildren(vec2 offset);
+	void onUpdate(const Time& time, UIView* view);
 
-	bool m_scrollsHorizontally;
-	bool m_holdingDown;
-	vec2 m_lastPosition;
+	void onRender(Renderer* renderer, UIView* view);
 
-	float m_lowerLimitV;
-	float m_currentOffsetV;
-
+	bool scrolling;
+	vec2 lastPosition;
 };
 
 NEPHILIM_NS_END
