@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API NinePatchShape
 {
 public:
-	VertexData geometry;
+	VertexArray geometry;
 };
 
 NEPHILIM_NS_END

@@ -5,6 +5,7 @@
 #include "Event.h"
 
 #include <vector>
+#include <map>
 
 NEPHILIM_NS_BEGIN
 
@@ -18,7 +19,7 @@ class NEPHILIM_API InputGrabber
 public:
 	InputGrabber()
 	{
-		
+
 	}
 
 	void update(const Event& event)

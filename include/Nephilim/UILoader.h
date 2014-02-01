@@ -40,7 +40,7 @@ class NEPHILIM_API UIReloadComponent : public UIViewComponent
 public:
 	UIReloadComponent(const String& file);
 
-	void onCreate()
+	void onAttach(UIView* view)
 	{
 
 	}

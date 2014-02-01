@@ -5,8 +5,13 @@
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>
-#include <Shlobj.h>
 #include <CommDlg.h>
+
+#ifndef _WIN32_IE
+#define _WIN32_IE 0x0550
+#endif
+
+#include <Shlobj.h>
 #ifdef SetCurrentDirectory
 #undef SetCurrentDirectory
 #endif
@@ -19,7 +24,7 @@ NEPHILIM_NS_BEGIN
 
 namespace fs
 {
-	
+
 	bool copyFile(const String& source, const String& destination)
 	{
 		File src(source, IODevice::BinaryRead);
@@ -65,9 +70,9 @@ namespace fs
 
 			//Log("Proper relative path: %s", shortName.getRelativePathTo(source).c_str());
 
-			
+
 			ensureDirectory(destination + shortName.getRelativePathTo(source));
-			
+
 			if(!copyFile(fileList[i], destination + shortName.getRelativePathTo(source)))
 			{
 				copiedAll = false;
@@ -83,7 +88,7 @@ namespace fs
 		//Log("Need to ensure: %s", directory.c_str());
 
 		Path path(directory);
-		
+
 		StringList pathElements = path.m_path.split('/');
 
 		/*if(path.isFile())
@@ -91,7 +96,7 @@ namespace fs
 
 		String currentDir = pathElements[0];
 		for(size_t i = 1; i < pathElements.size(); ++i)
-		{			
+		{
 			FileSystem::makeDirectory(currentDir);
 			//Log("Creating %s", currentDir.c_str());
 			currentDir += "/" + pathElements[i];
@@ -121,7 +126,7 @@ String FileSystem::loadFileDialog(){
 #ifdef NEPHILIM_WINDOWS
 		char Filestring[256];
 		String returnstring;
-		
+
 		OPENFILENAMEA opf;
 		opf.hwndOwner = NULL;
 		opf.lpstrFilter = "";
@@ -148,7 +153,7 @@ String FileSystem::loadFileDialog(){
 			std::string s = static_cast<std::string>(opf.lpstrFile);
 			returnstring.assign(s.begin(), s.end());
 		}
-		
+
 		return returnstring;
 #else
 	return "";
@@ -174,9 +179,9 @@ String FileSystem::saveFileDialog(){
 	ofn.lpstrDefExt = L"as";
 	ofn.Flags  = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR;
 	ofn.lpstrTitle = L"Save File";
-	
 
-	if(GetSaveFileName(&ofn)){	
+
+	if(GetSaveFileName(&ofn)){
 		std::wstring s = static_cast<std::wstring>(ofn.lpstrFile);
 		result.assign(s.begin(), s.end());
 	}
@@ -282,7 +287,7 @@ String FileSystem::getExecutableDirectory(){
 					else
 					{
 						Files.insert(Files.end(), Directory + String("/") + FileName);
-					}					
+					}
 				}
 			};
 
@@ -333,7 +338,7 @@ String FileSystem::getExecutableDirectory(){
 		return Files;
 	}
 
-	
+
 	bool FileSystem::isDirectory(String Directory){
 		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = Directory;
@@ -403,7 +408,7 @@ String FileSystem::getExecutableDirectory(){
 						Files.push_back(FileData.cFileName);
 
 				}
-				
+
 			};
 
 			while(FindNextFileA(hFindHandle, &FileData))
@@ -420,7 +425,7 @@ String FileSystem::getExecutableDirectory(){
 						else
 							Files.push_back(FileData.cFileName);
 					}
-					
+
 				};
 			};
 
@@ -460,9 +465,9 @@ String FileSystem::getExecutableDirectory(){
 				Entry = readdir(Root);
 			}
 
-			closedir(Root); 
+			closedir(Root);
 #elif defined PARABOLA_ANDROID
-			 
+
 
 
 	#endif

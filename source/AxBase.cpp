@@ -35,7 +35,7 @@ void AxBase::addTarget(AxTarget* target)
 	m_targets.push_back(target);
 }
 
-size_t AxBase::getTargetCount()
+int AxBase::getTargetCount()
 {
 	return m_targets.size();
 }

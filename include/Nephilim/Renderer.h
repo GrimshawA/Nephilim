@@ -23,6 +23,7 @@ NEPHILIM_NS_BEGIN
 class RenderTarget;
 class Surface;
 class Image;
+class VertexArray;
 
 /**
 	\ingroup Graphics
@@ -74,6 +75,10 @@ public:
 
 	/// Draw a debug line with the given color - slow
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
+
+	/// Push client-side geometry to the GPU
+	/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
+	virtual void draw(const VertexArray& vertexData);
 
 	/// Draw a vertex array
 	virtual void draw(const VertexArray2D& varray, const RenderState& state = RenderState());

@@ -14,7 +14,7 @@ ContentBank::ContentBank()
 {
 	// register most basic ones
 	registerResourceType("png", Content::Texture);
-	registerResourceType("ttf", Content::Font); 
+	registerResourceType("ttf", Content::Font);
 	/// .. and so on
 };
 
@@ -78,7 +78,7 @@ void ContentBank::unloadContentList(ContentList &list){
 };*/
 
 bool ContentBank::loadTexture(const String &fileName)
-{	
+{
 	// -- The requested texture doesn't exist, create it and return it
 	if(myTextureResources.find(fileName) == myTextureResources.end())
 	{
@@ -89,7 +89,7 @@ bool ContentBank::loadTexture(const String &fileName)
 
 	bool result = myTextureResources[fileName]->loadFromFile(fileName);
 
-	Log("Loading %s took %d ms", fileName.c_str(), t.getElapsedTime().asMiliSeconds());
+	//Log("Loading %s took %d ms", fileName.c_str(), t.getElapsedTime().asMiliSeconds());
 
 	return result;
 }

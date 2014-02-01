@@ -17,7 +17,7 @@ float Time::asSeconds() const
 	return static_cast<float>(m_microSeconds / 1000000.f);
 }
 
-Int64 Time::asMiliSeconds(){
+Int64 Time::asMilliseconds(){
 	return m_microSeconds / 10000.f;
 };
 

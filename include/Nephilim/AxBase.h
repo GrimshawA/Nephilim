@@ -5,6 +5,7 @@
 #include "AxTarget.h"
 
 #include <list>
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
@@ -32,7 +33,7 @@ public:
 	virtual void addTarget(AxTarget* target);
 
 	/// Get the number of targets
-	size_t getTargetCount();
+	int getTargetCount();
 
 	/// By default isOver returns true if the elapsed time is bigger than the duration of the animation and it is not looping
 	virtual bool isOver();

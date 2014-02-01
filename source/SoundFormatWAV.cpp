@@ -2,6 +2,8 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/File.h>
 
+#include <string.h>
+
 NEPHILIM_NS_BEGIN
 //WARNING: This Doesn't Check To See If These Pointers Are Valid
 char* readWAV(String filename,BasicWAVEHeader* header)

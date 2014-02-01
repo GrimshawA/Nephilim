@@ -20,6 +20,7 @@
 #include "UICore.h"
 #include "UIProperty.h"
 #include "Matrix.h"
+#include "UIViewComponent.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -52,11 +53,25 @@ public:
 	/// Base constructor
 	UIView();
 
+	/// Construct and assign a parent directly
+	UIView(UIView* parent);
+
 	/// Base destructor
 	virtual ~UIView();
 
+	typedef UIView* Ptr;
+
+	/// Load the hierarchy of this view from a file and configure itself
+	void load(const String& filename);
+
 	/// Add a component to the view
 	void addComponent(UIViewComponent* component);
+
+	/// Add a new component from a pre registered type
+	void addComponent(const String& name);
+
+	/// Returns the first component with the given type
+	UIViewComponent* getComponentByType(UIViewComponent::Type type);
 
 	/// Called before rendering the children UIView
 	virtual void preRender(Renderer* renderer);

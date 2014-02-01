@@ -1,6 +1,9 @@
 #include <Nephilim/UILoader.h>
 #include <Nephilim/UIView.h>
 #include <Nephilim/UIImage.h>
+#include <Nephilim/Logger.h>
+#include <Nephilim/UI/UIComponentImage.h>
+#include <Nephilim/UIScroller.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -27,6 +30,18 @@ size_t getNodeChildrenCount(pugi::xml_node& node)
 	}
 
 	return i;
+}
+
+void configureViewFromAttributes(UIView* view, pugi::xml_node& node)
+{
+	if(!node.attribute("rx").empty())
+	{
+		view->setLocalPosition(node.attribute("rx").as_float() * view->getParent()->getSize().x, view->getLocalPosition().y);
+	}
+	if(!node.attribute("ry").empty())
+	{
+		view->setLocalPosition(view->getLocalPosition().x, node.attribute("ry").as_float() * view->getParent()->getSize().y);
+	}
 }
 
 // Take the definition of the xml node and create a new UI element, attached to a given parent
@@ -75,7 +90,26 @@ void add_child_element_from_xml(UIView* parent, pugi::xml_node& newChild)
 	}
 	else
 	{
+		// -- handling a component node
+		if(tag == "cdata")
+		{
+			Log("====> Adding Component");
 
+		}
+		// -- handling a child node
+		else 
+		{
+			Log("====> Adding Child");
+
+			if(tag == "text")
+			{	
+				generatedView = new UIView(parent);
+				//generatedView->setSize(300.f,300.f);
+				//generatedView->addComponent(new UIComponentDebugColor);
+				generatedView->addComponent(new UIComponentText(newChild.text().as_string(), UIComponentText::Left, UIComponentText::Left));
+				configureViewFromAttributes(generatedView, newChild);
+			}
+		}
 	}
 
 	// Now iterate the node children again and keep the hierarchy going

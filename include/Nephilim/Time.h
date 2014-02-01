@@ -34,7 +34,7 @@ public:
 	float asSeconds() const;
 
 	/// Convert the time spawn to miliseconds, where 1000 miliseconds = 1 second
-	Int64 asMiliSeconds();
+	Int64 asMilliseconds();
 
 	/// Returns the time span
 	Int64 asMicroseconds();
@@ -59,7 +59,7 @@ public:
 
 	/// Increment by another time span
 	Time& operator +=(const Time& right);
-	
+
 	bool operator!=(const Time& right) const;
 
 	bool operator<=(const Time& right) const;

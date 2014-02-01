@@ -50,6 +50,14 @@ RendererOpenGL::RendererOpenGL()
 	m_defaultShader.bind();
 };
 
+/// Push client-side geometry to the GPU
+/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
+/// Note: This will eventually be the only way to render client-side data
+void RendererOpenGL::draw(const VertexArray& vertexData)
+{
+
+}
+
 /// Draw a vertex array
 void RendererOpenGL::draw(const VertexArray2D& varray, const RenderState& state)
 {

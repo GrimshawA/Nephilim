@@ -2,6 +2,8 @@
 #include <Nephilim/StateStack.h>
 #include <Nephilim/State.h>
 
+#include <cstddef>
+
 NEPHILIM_NS_BEGIN
 
 StateTransition::StateTransition()

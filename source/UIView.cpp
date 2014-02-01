@@ -1,6 +1,9 @@
 #include <Nephilim/UIView.h>
+#include <Nephilim/UIScroller.h>
 #include <Nephilim/UIViewComponent.h>
 #include <Nephilim/Logger.h>
+
+#include <Nephilim/UILoader.h>
 
 #include <algorithm>
 
@@ -32,8 +35,46 @@ UIView::UIView()
 
 }
 
+
+/// Construct and assign a parent directly
+UIView::UIView(UIView* parent)
+: RefCountable()
+, m_parent(parent)
+, m_positionFlags(0)
+, m_sizeFlags(0)
+, m_childrenLock(0)
+, mCore(NULL)
+, m_hasFocus(false)
+, m_layoutController(NULL)
+, m_backgroundColor(91,91,91)
+, m_topBorderColor(69,69,69)
+, m_leftBorderColor(m_topBorderColor)
+, m_rightBorderColor(m_topBorderColor)
+, m_bottomBorderColor(m_topBorderColor)
+, m_clipChildren(false)
+, m_clipContents(false)
+, m_visible(true)
+, m_drawBorder(true)
+, m_stretchForContents(false)
+, m_hovered(false)
+, mRect(0.f, 0.f, 1.f, 1.f)
+, m_pointerPressCount(0)
+{
+	if(parent)
+	{
+		parent->attach(this);
+	}
+}
+
 UIView::~UIView()
 {
+	// Release all components to prevent leaks
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->onRelease(this);
+		delete components[i];
+	}
+
 	// I am being destroyed, destroy children
 	for(size_t i = 0; i < m_children.size(); ++i)
 	{
@@ -41,10 +82,30 @@ UIView::~UIView()
 	}
 }
 
+/// Load the hierarchy of this view from a file and configure itself
+void UIView::load(const String& filename)
+{
+	UILoader uiLoader;
+	uiLoader.configure(this, filename);
+}
+
 /// Add a component to the view
 void UIView::addComponent(UIViewComponent* component)
 {
+	if(!component)
+		return;
+
 	components.push_back(component);
+	component->onAttach(this);
+}
+
+/// Add a new component from a pre registered type
+void UIView::addComponent(const String& name)
+{
+	if(name == "scroller")
+	{
+		addComponent(new UIComponentScroll());
+	}
 }
 
 /// Called before rendering the children UIView ( Virtual )
@@ -909,6 +970,12 @@ void UIView::setSize(float width, float height)
 	onSizeChanged();
 
 	updateLayout();
+
+	// Let components know a resize was made
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->onResize(this);
+	}
 };
 
 /// Immediately sets the center of the control to a new position
@@ -972,6 +1039,18 @@ void UIView::enableAutoResize(bool enable)
 	}
 }
 
+/// Returns the first component with the given type
+UIViewComponent* UIView::getComponentByType(UIViewComponent::Type type)
+{
+	for(size_t i = 0; i < components.size(); ++i)
+	{
+		if(components[i]->component_id == type)
+		{
+			return components[i];
+		}
+	}
+	return NULL;
+}
 
 /// Immediately sets the center of the control to a new position
 void UIView::setCenter(Vec2f position)

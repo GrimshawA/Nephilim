@@ -82,6 +82,12 @@ mat4 Renderer::getModelMatrix()
 	return m_model;
 }
 
+/// Push client-side geometry to the GPU
+/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
+void Renderer::draw(const VertexArray& vertexData)
+{
+}
+
 /// Get the current clear color
 Color Renderer::getClearColor()
 {

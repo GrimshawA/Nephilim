@@ -2,31 +2,50 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/UIView.h>
+#include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
-void UIComponentScroll::onCreate()
+void UIComponentScroll::onAttach(UIView* view)
 {
+	component_id = UIViewComponent::ScrollComponent;
 	scrolling = false;
 }
 
 
 void UIComponentScroll::onEvent(Event event, UIView* view)
 {
-
 	if(view->m_children.size() == 0)
 		return;
 
 	if(event.type == Event::MouseButtonPressed)
 	{
-		scrolling = true;
-		lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
+		if(view->getBounds().contains(event.mouseButton.x, event.mouseButton.y))
+		{
+			scrolling = true;
+			lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
+		}
 	}
 
 	if(event.type == Event::MouseButtonReleased)
 	{
 		scrolling = false;
+
+		float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
+		UIView* closestView = view->m_children[0];
+		for(size_t i = 0; i < view->m_children.size(); ++i)
+		{				
+			float dist = fabs(view->m_children[i]->getCenter().y - view->getCenter().y);
+			if(dist < smallest_distance)
+			{
+				smallest_distance = dist;
+				closestView = view->m_children[i];
+			}
+		}
+
+		view->offsetChildrenPosition(vec2(0.f, view->getCenter().y - closestView->getCenter().y));
+
 	}
 
 	if(event.type == Event::MouseMoved)
@@ -73,6 +92,27 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 	}
 }
 
+UIView* UIComponentScroll::getSelectedView(UIView* view)
+{
+	if(view->m_children.size() == 0)
+		return NULL;
+
+	float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
+	UIView* closestView = view->m_children[0];
+	for(size_t i = 0; i < view->m_children.size(); ++i)
+	{				
+		float dist = fabs(view->m_children[i]->getCenter().y - view->getCenter().y);
+		if(dist < smallest_distance)
+		{
+			smallest_distance = dist;
+			closestView = view->m_children[i];
+		}
+	}
+
+	return closestView;
+}
+
+
 void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 {
 	if(view->m_children.size() == 0)
@@ -94,5 +134,25 @@ void UIComponentScroll::onRender(Renderer* renderer, UIView* view)
 	RectangleShape backRect(view->getBounds(), Color::Bittersweet);
 	renderer->draw(backRect);
 }
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+void UIComponentDebugColor::onAttach(UIView* view)
+{
+	color.r = math::randomInt(0, 255);
+	color.g = math::randomInt(0, 255);
+	color.b = math::randomInt(0, 255);
+	color.a = 255;
+}
+
+
+void UIComponentDebugColor::onRender(Renderer* renderer, UIView* view)
+{
+	RectangleShape backRect(view->getBounds(), color);
+	renderer->draw(backRect);
+}
+
 
 NEPHILIM_NS_END

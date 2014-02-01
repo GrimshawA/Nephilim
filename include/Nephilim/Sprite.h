@@ -1,17 +1,17 @@
-#ifndef PARABOLA_SPRITE_H
-#define PARABOLA_SPRITE_H
+#ifndef NephilimSprite_h__
+#define NephilimSprite_h__
 
 #include "Platform.h"
 #include "Strings.h"
-#include "AnimationInterface.h"
+
 #include "Vectors.h"
 #include "Drawable.h"
 #include "Transformable.h"
-#include "ReferenceCountable.h"
+
 #include "VertexArray2D.h"
 #include "Texture.h"
-#include <vector>
 
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
@@ -31,7 +31,8 @@ class ContentBank;
 		\class Sprite
 		\brief Extends sf::Sprite and implements more functionality.
 */
-class NEPHILIM_API Sprite: public Drawable, public Animable, public Transformable, public RefCountable{
+class NEPHILIM_API Sprite: public Drawable, public Transformable
+{
 public:
 	/// Default sprite
 	Sprite();
@@ -57,6 +58,9 @@ public:
 
 	void setPosition(float x, float y);
 
+	/// Set the position of the sprite
+	void setPosition(vec2 position);
+
 	FloatRect getGlobalBounds() const;
 
 	/// Get the binded texture
@@ -76,9 +80,6 @@ public:
 
 	Blend::BlendModes m_blendMode;
 
-protected:
-	/// Animation properties
-	void animable_set_alpha(int alpha);
 
 	/*/// Set the position from a vec2f
 	/// Position is the top-left coordinate
@@ -97,7 +98,7 @@ protected:
 	void setCenterPosition(Vec2f position);
 
 
-	
+
 	/// Check if a point is contained in the sprite
 	bool containsPoint(Vec2f point);
 
@@ -115,22 +116,8 @@ protected:
 
 	/// Flip the sprite horizontally
 	void flipVertical();
-
-	void animable_set_position(float x, float y){
-		setPosition(x,y);
-	}
-
-	Vec2f animable_get_position(){
-		return Vec2f(getPosition().x, getPosition().y);
-	};
-
-	void animable_set_color(int r, int g, int b, int a){
-		//setColor(Color(r,g,b,a));
-	}*/
+*/
 };
 
-class ASEngine;
-bool registerSprite(ASEngine* engine);
-
 NEPHILIM_NS_END
-#endif
+#endif //NephilimSprite_h__

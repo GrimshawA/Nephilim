@@ -2,6 +2,8 @@
 #include <Nephilim/IODevice.h>
 #include <Nephilim/Strings.h>
 
+#include <stdio.h>
+
 NEPHILIM_NS_BEGIN
 
 /// Constructs a invalid data stream
@@ -43,7 +45,7 @@ void DataStream::readChars(int count, char* destination)
 	{
 		for(int i = 0; i < count; ++i)
 		{
-			m_device->read(&destination[i], sizeof(char)); 
+			m_device->read(&destination[i], sizeof(char));
 		}
 	}
 }

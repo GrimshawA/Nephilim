@@ -11,13 +11,16 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Default sprite
-Sprite::Sprite() : m_vertices(Render::Primitive::TriangleFan,4) , m_texture(NULL), RefCountable(), m_blendMode(Blend::Alpha){
+Sprite::Sprite()
+: m_vertices(Render::Primitive::TriangleFan,4)
+, m_texture(NULL)
+, m_blendMode(Blend::Alpha)
+{
 	m_vertices[0].color = Color(255,255,255,255);
 	m_vertices[1].color = Color(255,255,255,255);
 	m_vertices[2].color = Color(255,255,255,255);
 	m_vertices[3].color = Color(255,255,255,255);
 	m_vertices.m_textured = true;
-	//cout<<"[Sprite] Born!!!!"<<endl;
 };
 
 /// Safe destruction
@@ -26,7 +29,8 @@ Sprite::~Sprite(){
 };
 
 /// Set the texture rect to show
-void Sprite::setTextureRect(const FloatRect &rect){
+void Sprite::setTextureRect(const FloatRect &rect)
+{
 	m_vertices[0].position = Vec2f(0.f,0.f);
 	m_vertices[1].position = Vec2f(rect.width,0.f);
 	m_vertices[2].position = Vec2f(rect.width,rect.height);
@@ -42,10 +46,10 @@ void Sprite::setTextureRect(const FloatRect &rect){
 	float top    = static_cast<float>(rect.top);
 	float bottom = top + rect.height;
 
-	/*left /= texture_width;
+	left /= texture_width;
 	right /= texture_width;
 	top /= texture_height;
-	bottom /= texture_height;*/
+	bottom /= texture_height;
 
 	m_vertices[0].texCoords = Vec2f(left, top);
 	m_vertices[1].texCoords = Vec2f(right, top);
@@ -56,10 +60,10 @@ void Sprite::setTextureRect(const FloatRect &rect){
 
 	}
 
-	m_vertices[0].texCoords = Vec2f(0, 0);
-	m_vertices[1].texCoords = Vec2f(1, 0);
-	m_vertices[2].texCoords = Vec2f(1, 1);
-	m_vertices[3].texCoords = Vec2f(0, 1);
+	//m_vertices[0].texCoords = Vec2f(0, 0);
+	//m_vertices[1].texCoords = Vec2f(1, 0);
+	//m_vertices[2].texCoords = Vec2f(1, 1);
+	//m_vertices[3].texCoords = Vec2f(0, 1);
 
 };
 
@@ -72,6 +76,12 @@ Vec2f Sprite::getPosition() const
 void Sprite::setPosition(float x, float y)
 {
 	Transformable::setPosition(x,y);
+}
+
+/// Set the position of the sprite
+void Sprite::setPosition(vec2 position)
+{
+    Transformable::setPosition(position.x, position.y);
 }
 
 
@@ -162,7 +172,7 @@ void Sprite::onDraw(Renderer* renderer){
 	m_texture->bind(Texture::Pixels);
 
 	*/
-	
+
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	if(m_texture) m_texture->bind();
 	renderer->draw(m_vertices);
@@ -178,11 +188,6 @@ void Sprite::onDraw(Renderer* renderer){
 	glPopMatrix();
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);*/
-};
-
-/// Animation properties
-void Sprite::animable_set_alpha(int alpha){
-	setColor(Color(m_vertices[0].color.r, m_vertices[0].color.g, m_vertices[0].color.b, alpha));
 };
 
 /*

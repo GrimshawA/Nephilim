@@ -53,7 +53,7 @@ private:
 
 	std::vector<AxBase*> m_animations; ///< List of animations cached in
 	SequenceModes m_mode;              ///< The mode of this sequence, parallel or ordered
-	size_t m_current;
+	unsigned int m_current;
 };
 
 NEPHILIM_NS_END
