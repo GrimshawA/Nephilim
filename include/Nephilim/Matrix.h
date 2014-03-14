@@ -92,7 +92,18 @@ class NEPHILIM_API mat3
 {
 public:
 
+	/// Access operator for elements
+	float operator[](unsigned int index) const;
+
+	/// Assign operator
+	float& operator[](unsigned int index);
+
+	void transpose();  
+
+private:
+	float m_matrix[9];
 };
+
 
 NEPHILIM_NS_END
 #endif // Matrix_h__

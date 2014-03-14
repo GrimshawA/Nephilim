@@ -89,6 +89,8 @@ public:
 	std::vector<Color> m_colors;
 	std::vector<Vec3f> m_normals;
 	std::vector<Vec2f> m_texCoords;
+	std::vector<vec4> boneIDs;
+	std::vector<vec4> boneWeights;
 
 	bool m_useColors;
 	bool m_useNormals;

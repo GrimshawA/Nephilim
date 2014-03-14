@@ -14,7 +14,7 @@ public:
 
 	Quaternion(float nx, float ny, float nz, float nw);
 
-	void normalize();
+	void normalize();  
 
 	float x,y,z,w;
 

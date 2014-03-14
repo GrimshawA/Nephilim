@@ -6,6 +6,92 @@ NEPHILIM_NS_BEGIN
 
 const mat4 mat4::identity = mat4();
 
+float m3_det( mat3 mat )
+{
+	float det;
+
+	det = mat[0] * ( mat[4]*mat[8] - mat[7]*mat[5] )
+		- mat[1] * ( mat[3]*mat[8] - mat[6]*mat[5] )
+		+ mat[2] * ( mat[3]*mat[7] - mat[6]*mat[4] );
+
+	return( det );
+}
+
+void m4_submat( mat4 mr, mat3& mb, int i, int j )
+{
+	int ti, tj, idst, jdst;
+
+	for ( ti = 0; ti < 4; ti++ )
+	{
+		if ( ti < i )
+			idst = ti;
+		else
+			if ( ti > i )
+				idst = ti-1;
+
+		for ( tj = 0; tj < 4; tj++ )
+		{
+			if ( tj < j )
+				jdst = tj;
+			else
+				if ( tj > j )
+					jdst = tj-1;
+
+			if ( ti != i && tj != j )
+				mb[idst*3 + jdst] = mr[ti*4 + tj ];
+		}
+	}
+}
+
+float m4_det( mat4 mr )
+{
+	float  det, result = 0, i = 1;
+	mat3 msub3;
+	int     n;
+
+	for ( n = 0; n < 4; n++, i *= -1 )
+	{
+		m4_submat( mr, msub3, 0, n );
+
+		det     = m3_det( msub3 );
+		result += mr[n] * det * i;
+	}
+
+	return( result );
+}
+
+int m4_inverse( mat4& mr, mat4 ma )
+{
+	mr = mat4::identity; // start as identity then store the inversion
+
+	// This function does everything assuming a row major matrix, we give it
+	//ma.transpose();
+
+	float  mdet = m4_det( ma );
+	mat3 mtemp;
+	int     i, j, sign;
+
+	if ( fabs( mdet ) < 0.0005 )
+		return( 0 );
+
+	for ( i = 0; i < 4; i++ )
+	{
+		for ( j = 0; j < 4; j++ )
+		{
+			sign = 1 - ( (i +j) % 2 ) * 2;
+
+			m4_submat( ma, mtemp, i, j );
+
+			mr[i+j*4] = ( m3_det( mtemp ) * sign ) / mdet;
+		}
+	}  
+
+	// We also get a row major inverse, lets transpose first
+	//mr.transpose();
+
+	return( 1 );
+}
+
 mat4::mat4()
 {
 	m_matrix[0] = 1.f; m_matrix[4] = 0.f; m_matrix[8]  = 0.f; m_matrix[12] = 0.f;
@@ -232,7 +318,11 @@ mat4 mat4::textureTransform(bool flipVertically, float scaleX, float scaleY)
 /// Get the inverse of this matrix
 mat4 mat4::getInverse()
 {
-	return mat4();
+	mat4 invertedMatrix;
+
+	m4_inverse(invertedMatrix, *this);
+
+	return invertedMatrix;
 }
 
 mat4 mat4::perspective(float fov, float aspectRatio, float zNear, float zFar)
@@ -295,5 +385,37 @@ mat4 mat4::translate(float x, float y, float z)
 	return m;
 }
 
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////     3x3 Matrix
+
+/// Access operator for elements
+float mat3::operator[](unsigned int index) const
+{
+	return m_matrix[index];
+}
+
+void mat3::transpose()
+{
+	// Temp matrix
+	mat3 m = *this;
+
+	m_matrix[0] = m[0];
+	m_matrix[1] = m[3];
+	m_matrix[2] = m[6];
+
+	m_matrix[3] = m[1];
+	m_matrix[4] = m[4];
+	m_matrix[5] = m[7];
+
+	m_matrix[6] = m[2];
+	m_matrix[7] = m[5];
+	m_matrix[8] = m[8];
+}
+
+/// Assign operator
+float& mat3::operator[](unsigned int index)
+{
+	return m_matrix[index];
+}
 
 NEPHILIM_NS_END

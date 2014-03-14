@@ -4,13 +4,13 @@
 #include <Nephilim/Image.h>
 #include <Nephilim/Surface.h>
 #include <Nephilim/CGL.h>
-#include <Nephilim/MMath.h>
+#include <Nephilim/NxMath.h>    
 #include <Nephilim/Texture.h>
+#include <Nephilim/Quaternion.h>
 
 #include <Nephilim/SceneGraph.h>
 #include <Nephilim/Camera.h>
 #include <Nephilim/InputGrabber.h>
-#include <Nephilim/SimpleAudio.h>
 #include <Nephilim/BxScene.h>
 #include <Nephilim/BxDraw.h>
 #include <Nephilim/Font.h>
@@ -20,6 +20,123 @@
 #include <bullet/btBulletDynamicsCommon.h>
 #include <bullet/BulletDynamics/Character/btKinematicCharacterController.h>
 #include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
+FPSCamera fpsCamera;
+
+#include "SKNLoader.h"
+#include "SKLLoader.h"
+#include "ANMLoader.h"
+
+GeometryData champion;
+Texture championTexture;
+SkeletonSKL skeleton;
+AnimationANM animations;
+
+Shader rigShader;
+
+static int currentFrame = 20;
+
+void getBoneTransforms(mat4* transforms, AnimationANM& animation, SkeletonSKL& skeleton)
+{
+	// lets try to get frame 20 for trying it out
+
+	mat4 localBoneTransforms[128];
+
+	for(int i = 0; i < skeleton.bones.size(); ++i)
+	{
+		int bone_id = skeleton.findIDByName(skeleton.bones[i].name);
+
+		// Get transformed matrix of the animation
+		mat4 absoluteBoneTransform = animation.getAbsoluteTransform(animation.NameToIndex(skeleton.bones[i].name), skeleton, currentFrame);
+
+		transforms[i] = absoluteBoneTransform * skeleton.bones[i].inverseBindPose;
+	}
+}
+
+String getFileContents(const String& filename)
+{
+	File myFile(filename, IODevice::TextRead);
+	if(!myFile)
+		return "";
+
+	String contents;
+
+	while(!myFile.atEnd())
+		contents += myFile.getChar();
+
+	contents += '\0';
+
+	return contents;
+}
+
+void SampleUI::onCreateExp()
+{
+	// Time to load the champion
+	SKNLoader::Load(champion, "K:\\Users\\Hellhound\\Desktop\\lolmodels\\model.skn");
+	champion.m_useNormals = false;
+
+	championTexture.loadFromFile("K:\\Users\\Hellhound\\Desktop\\lolmodels\\texture.png");
+
+	skeleton.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\skeleton.skl");
+	animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\Caitlyn_cop_Run.anm");
+	//animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\Caitlyn_cop_Idle2.anm");
+	//animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\Caitlyn_Dance.anm");
+	
+	// remap bone indices
+	for(int i = 0; i < champion.boneIDs.size(); ++i)
+	{
+		champion.boneIDs[i].x = skeleton.boneIndexToActualBone[champion.boneIDs[i].x];
+		champion.boneIDs[i].y = skeleton.boneIndexToActualBone[champion.boneIDs[i].y];
+		champion.boneIDs[i].z = skeleton.boneIndexToActualBone[champion.boneIDs[i].z];
+		champion.boneIDs[i].w = skeleton.boneIndexToActualBone[champion.boneIDs[i].w];
+	}
+
+	rigShader.loadShader(Shader::VertexUnit, getFileContents("K:\\Users\\Hellhound\\Desktop\\lolmodels\\rigged.vert"));
+	rigShader.loadShader(Shader::FragmentUnit, getFileContents("K:\\Users\\Hellhound\\Desktop\\lolmodels\\rigged.frag"));
+	rigShader.addAttributeLocation(0, "vertex");
+	rigShader.addAttributeLocation(1, "color");
+	rigShader.addAttributeLocation(2, "texCoord");
+	rigShader.addAttributeLocation(3, "in_Normal");
+	rigShader.addAttributeLocation(4, "in_BoneID");
+	rigShader.addAttributeLocation(5, "in_Weights");
+
+	if(rigShader.create())
+	{
+		Log("Rigging shader created");
+	}
+	rigShader.bind();
+
+	String vertexSource = getFileContents("K:\\Users\\Hellhound\\Desktop\\lolmodels\\rigged.vert");
+
+	//std::cout << vertexSource << std::endl;
+}
+
+void SampleUI::onRenderExp()
+{
+	championTexture.bind();
+
+	getRenderer()->setShader(rigShader);
+	getRenderer()->setModelMatrix(mat4::translate(0,-2.5f,4) * mat4::scale(0.03,0.03,0.03));
+	getRenderer()->setProjectionMatrix(mat4::perspective(80, static_cast<float>(getSurface().getWidth()) / static_cast<float>(getSurface().getHeight()), 1.f, 1000.f));
+	getRenderer()->setViewMatrix(fpsCamera.getMatrix());
+
+	mat4 boneTransforms[128];
+	for(int i = 0; i < 128; ++i)
+		boneTransforms[i] = mat4::identity;
+
+	// update the transforms with the animation
+	getBoneTransforms(boneTransforms, animations, skeleton);
+
+	int location = glGetUniformLocation(rigShader.m_id, "u_BoneTransform");
+	glUniformMatrix4fv(location, 128, false, reinterpret_cast<float*>(&boneTransforms[0]));
+
+	if(location == -1)
+	{
+		//Log("Invalid uniform array");
+	}
+
+	getRenderer()->draw(champion);
+	getRenderer()->setDefaultShader();
+}
 
 btKinematicCharacterController* m_character = NULL;
 btGhostObject *m_ghostObject = NULL;
@@ -68,8 +185,6 @@ bool focus = true;
 GeometryData IronMan;
 GeometryData House;
 Texture IronManTexture;
-FPSCamera fpsCamera;
-SimpleMusic music;
 InputGrabber input;
 
 Font fnt;
@@ -89,17 +204,17 @@ BxVehicle* vehicle;
 GeometryData vehicleChassis;
 GeometryData vehicleWheel;
 
-SimpleMusic nature;
-
 void SampleUI::onCreate()
 {	
 	getWindow().setSize(1920, 1080);
 	getWindow().setFullscreen(true);
 
-	nature.openFromFile("naturesounds.ogg");
-	nature.setLoop(true);
-	nature.play();
-	
+	onCreateExp();
+
+
+
+
+
 	fnt.loadFromFile("DejaVuSans.ttf");
 	txt.setFont(fnt);
 	txt.setString("Mr. Tony Stark");
@@ -141,7 +256,7 @@ void SampleUI::onCreate()
 
 	// Rotate the terrain
 
-	mat4 trf = mat4::rotatey(Math::pi/2);
+	mat4 trf = mat4::rotatey(math::pi/2);
 	for(int i = 0; i < terrain.m_vertices.size(); ++i)
 	{
 		terrain.m_vertices[i].x -= heightmap.getSize().x * GRID_SIZE / 2 - GRID_SIZE/2;
@@ -155,10 +270,6 @@ void SampleUI::onCreate()
 	terrain.setAllColors(Color::White);
 	terrain.scaleUV(100);
 
-	music.openFromFile("engine.WAV");
-	music.setLoop(true);
-	music.play();
-	music.stop();
 
 	IronManTexture.loadFromFile("maps/mk7.png");
 	IronManTexture.setRepeated(true);
@@ -285,13 +396,22 @@ void SampleUI::onEvent(Event &event)
 	}
 	if(event.type == Event::KeyPressed && event.key.code == Keyboard::Right)
 	{
-		current_z += 0.5;
+		//current_z += 0.5;
 		//Log("Current height: %f", current_height);
+		currentFrame++;
+		if(currentFrame >= animations.numFrames)
+		{
+			currentFrame = 0;
+		}
+
 	}
 	if(event.type == Event::KeyPressed && event.key.code == Keyboard::Left)
 	{
-		current_z -= 0.5;
+		//current_z -= 0.5;
 		//Log("Current height: %f", current_height);
+		currentFrame--;
+		if(currentFrame < 0)
+			currentFrame = animations.numFrames - 1;
 	}
 	if(event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
 	{
@@ -353,7 +473,7 @@ void SampleUI::onEvent(Event &event)
 	/// Add random sized cubes near me
 	if(event.type == Event::KeyPressed && event.key.code == Keyboard::E)
 	{
-		float dimensions = Math::random(0.5, 2.5);
+		float dimensions = math::random(0.5, 2.5);
 		makeBox(fpsCamera.getPosition() + fpsCamera.getDirection() * 25, vec3(dimensions,dimensions,dimensions), "brick", dimensions * 60);		
 	}
 
@@ -503,12 +623,12 @@ void SampleUI::onRender()
 	/// Draw the floor
 	getRenderer()->setModelMatrix(mat4::identity);
 	mGrassTexture.bind();
-	getRenderer()->draw(terrain);
+	//getRenderer()->draw(terrain);
 	
 
 	getRenderer()->setModelMatrix(mat4::translate(0,current_height,current_z));
 	mWaterTexture.bind();
-	getRenderer()->draw(ground);
+	//getRenderer()->draw(ground);
 
 	getRenderer()->setModelMatrix(mat4::identity);
 	//bulletWorld.m_scene->debugDrawWorld();
@@ -550,6 +670,8 @@ void SampleUI::onRender()
 	vehicle->vehicle->getWheelInfo(3).m_worldTransform.getOpenGLMatrix(mt);
 	getRenderer()->setModelMatrix(mat4(mt));
 	getRenderer()->draw(vehicleWheel);
+	
+	onRenderExp();
 
 	/// Draw 3D text
 	getRenderer()->setModelMatrix(mat4::translate(-3,8,0) * mat4::scale(0.01,-0.01,0.01));

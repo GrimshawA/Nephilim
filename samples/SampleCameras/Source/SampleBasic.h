@@ -16,6 +16,8 @@ public:
 	void onRender();
 	void onEvent(Event &event);
 	void onUpdate(Time time);
+	void onCreateExp();
+	void onRenderExp();
 
 	void makeBox(vec3 position, vec3 size, const String& texture, float mass);
 	Shader defaultShader;

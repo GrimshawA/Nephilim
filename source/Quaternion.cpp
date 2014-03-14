@@ -71,7 +71,7 @@ Quaternion Quaternion::fromMatrix(mat4 m)
 
 	if(T > 0.0000001)
 	{
-		float S = 2 * sqrt(T);
+		float S = 2 * sqrt(T);  
 
 		float W = 0.25 / S;
 
