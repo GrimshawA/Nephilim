@@ -9,10 +9,16 @@
 
 NEPHILIM_NS_BEGIN
 
+
+
 class NEPHILIM_API UIComponentImage : public UIViewComponent
 {
 public:
+	UIComponentImage(const String& src); /// Load from an image
 
+	void onRender(Renderer* renderer, UIView* view);
+
+	Texture* texture;
 };
 
 class NEPHILIM_API UIComponentText : public UIViewComponent

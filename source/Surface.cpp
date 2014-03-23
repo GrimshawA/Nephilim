@@ -9,6 +9,10 @@
 #include <Nephilim/AndroidInterface.h>
 #endif
 
+#ifdef NEPHILIM_WINDOWS
+#include <windows.h>
+#endif
+
 #include <stdio.h>
 
 NEPHILIM_NS_BEGIN
@@ -38,6 +42,15 @@ void Surface::activate()
 void Surface::setTitle(const String& title)
 {
 	window->setTitle(title);
+}
+
+/// Makes the window maximized - windows only
+void Surface::maximize()
+{
+#ifdef NEPHILIM_WINDOWS
+	HWND hnd = static_cast<HWND>(window->getHandle());
+	ShowWindow(hnd, SW_SHOWMAXIMIZED);
+#endif
 }
 
 /// Implements RenderTarget::getSize()

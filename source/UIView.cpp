@@ -357,18 +357,17 @@ UILayout* UIView::getLayout()
 void UIView::draw(Renderer* renderer)
 {
 	// back
-	/*RectangleShape backgroundRect;
-	if(m_children.size() > 0)
+	
+	if(components.size() == 0)
 	{
+		RectangleShape backgroundRect;
 		backgroundRect.setColor(Color::Grass);
+		backgroundRect.setRect(getBounds());
+		renderer->draw(backgroundRect);
 	}
-	else
-	{
-		backgroundRect.setColor(Color::Bittersweet);
-	}
-	backgroundRect.setRect(getBounds());
-	renderer->draw(backgroundRect);
+	
 
+	/*
 	if(m_children.size() > 0)
 	{
 		RectangleShape scrollBarBackground;
@@ -995,13 +994,21 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 		return;
 	}
 
+	if(m_clipContents)
+	{
+		renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
+	}
 	draw(renderer);
+
 
 	for(size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onRender(renderer, this);
 	}
-
+	if(m_clipContents)
+	{
+		renderer->popClippingRect();
+	}
 	// -- Pre Render Step (Before Children)
 	preRender(renderer);
 	

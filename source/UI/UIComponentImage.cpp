@@ -3,6 +3,22 @@
 
 NEPHILIM_NS_BEGIN
 
+UIComponentImage::UIComponentImage(const String& src)
+{
+	texture = new Texture();
+	texture->loadFromFile(src);
+}
+
+void UIComponentImage::onRender(Renderer* renderer, UIView* view)
+{
+	RectangleShape backgroundRect;
+	backgroundRect.setRect(view->getBounds());
+	backgroundRect.setTexture(texture);
+	renderer->draw(backgroundRect);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 UIComponentText::UIComponentText()
 : m_string("")
 , m_horizontal(Center)
@@ -39,10 +55,9 @@ void UIComponentText::onAttach(UIView* view)
 
 void UIComponentText::onRender(Renderer* renderer, UIView* view)
 {
-
-	text.setCharacterSize(14);
+	text.setCharacterSize(12);
 	text.setString(m_string);
-	text.setColor(Color(151,151,151));
+	text.setColor(Color::White);
 	text.setOrigin(0.f, 0.f);
 	text.setPosition(view->getPosition());
 

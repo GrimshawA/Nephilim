@@ -139,18 +139,27 @@ void UIComponentScroll::onRender(Renderer* renderer, UIView* view)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
+UIComponentDebugColor::UIComponentDebugColor()
+: mColor(Color::White)
+{
+
+}
+
+UIComponentDebugColor::UIComponentDebugColor(const Color& color)
+: mColor(color)
+{
+
+}
+
 void UIComponentDebugColor::onAttach(UIView* view)
 {
-	color.r = math::randomInt(0, 255);
-	color.g = math::randomInt(0, 255);
-	color.b = math::randomInt(0, 255);
-	color.a = 255;
+	
 }
 
 
 void UIComponentDebugColor::onRender(Renderer* renderer, UIView* view)
 {
-	RectangleShape backRect(view->getBounds(), color);
+	RectangleShape backRect(view->getBounds(), mColor);
 	renderer->draw(backRect);
 }
 

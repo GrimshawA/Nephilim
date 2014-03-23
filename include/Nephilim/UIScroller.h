@@ -32,11 +32,14 @@ class NEPHILIM_API UIComponentDebugColor : public UIViewComponent
 {
 public:
 
+	UIComponentDebugColor();
+	UIComponentDebugColor(const Color& color);
+
 	void onAttach(UIView* view);
 
 	void onRender(Renderer* renderer, UIView* view);
 
-	Color color;
+	Color mColor;
 };
 
 NEPHILIM_NS_END

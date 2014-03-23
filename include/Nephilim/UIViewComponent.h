@@ -22,7 +22,7 @@ public:
 
 	/// Called when the component is attached to a view
 	/// view is guaranteed to be valid until onRelease is called
-	virtual void onAttach(UIView* view) = 0;
+	virtual void onAttach(UIView* view){ };
 
 	/// Called when the parent view is being destroyed or the component is about to be removed
 	virtual void onRelease(UIView* view){}

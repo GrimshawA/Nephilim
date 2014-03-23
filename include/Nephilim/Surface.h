@@ -42,6 +42,9 @@ public:
 	/// Set the title of the window if available
 	void setTitle(const String& title);
 
+	/// Makes the window maximized - windows only
+	void maximize();
+
 	/// Convert a point in window-space to a homogeneous coordinate
 	/// \todo Use viewport data from renderer
 	vec2 convertToHomogeneousCoordinate(vec2i point);
