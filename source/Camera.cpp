@@ -34,7 +34,7 @@ vec3 FPSCamera::getDirection()
 }
 
 mat4 FPSCamera::getMatrix()
-{
+{                                                                                                                                                                               
 	return mat4::rotatex(m_yAngle) * mat4::rotatey(m_xAngle) * mat4::translate(-m_position.x,-m_position.y,-m_position.z);
 }
 

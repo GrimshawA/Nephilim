@@ -2,9 +2,8 @@
 #define ASXEngine_h__
 
 #include "Platform.h"
+#include "Strings.h"
 #include "ASXModule.h"
-#include "ASXRuntime.h"
-#include "ASXFunction.h"
 
 struct asSMessageInfo;
 class asIScriptEngine;
@@ -26,12 +25,14 @@ public:
 	/// Returns true if AngelScript is in the maximum compatibility mode - generic calls
 	bool getCompatibilityMode();
 
+	ASXModule getModule(const String& name);
+
 	/// Load a script
 //	bool load(const String& path);
 	
 private:
 	/// The logger bound to the engine
-	void messageLogger(const asSMessageInfo *msg, void *param);
+	//void messageLogger(const asSMessageInfo *msg, void *param);
 
 private:
 	asIScriptEngine* m_engine;   ///< The AngelScript engine

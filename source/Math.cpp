@@ -1,4 +1,5 @@
 #include <Nephilim/NxMath.h>
+#include <Nephilim/Matrix.h>
 #include <stdlib.h>
 #include <cmath>
 
@@ -99,13 +100,34 @@ void Angle::normalize()
 	}
 }
 
+Angle Angle::shortestArc(Angle a, Angle b)
+{
+	if (fabs(b.radians()-a.radians()) < math::pi)
+		return b.radians()-a.radians();
+	if (b.radians()>a.radians())
+		return b.radians()-a.radians()-math::pi*2.0f;
+	return b.radians()-a.radians()+math::pi*2.0f;
+}
+
+Angle Angle::fromDegrees(float degree)
+{
+	Angle angle;
+	angle.value = degreeToRadian(degree);
+	return angle;
+}
+
 }; // end of namespace math
 
 vec3 directionFromAngles(float x_angle, float y_angle)
 {
-	vec3 direction = vec3(-sin(x_angle),sin(y_angle), cos(x_angle));
+	/*vec3 direction = vec3(-sin(x_angle),sin(y_angle), cos(x_angle));
 	direction.normalize();
-	return direction * -1;
+	return direction * -1;*/
+
+	vec4 default_front(0,0,-1,0);
+	default_front = mat4::rotatey(-x_angle) * default_front;
+	default_front = mat4::rotatex(-y_angle) * default_front;
+	return default_front.xyz();
 }
 
 NEPHILIM_NS_END

@@ -104,6 +104,10 @@ namespace math
 		/// Constrain the angle on [0, pi*2]
 		void normalize();
 
+		static Angle shortestArc(Angle a, Angle b);
+
+		static Angle fromDegrees(float degree);
+
 	private:
 		float value; ///< The internal representation of the angle
 	};

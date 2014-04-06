@@ -25,6 +25,7 @@ UIComponentText::UIComponentText()
 , m_vertical(Center)
 {
 	component_id = UIViewComponent::TextComponent;
+	color = Color(151,151,151);
 }
 
 
@@ -34,18 +35,17 @@ UIComponentText::UIComponentText(const String& text, Alignment horizontal, Align
 , m_vertical(vertical)
 {
 	component_id = UIViewComponent::TextComponent;
+	color = Color(211,211,211);
 }
 
 void UIComponentText::onAttach(UIView* view)
-{
-	
+{	
 	text.setCharacterSize(14);
 	text.setString(m_string);
-	text.setColor(Color(151,151,151));
+	text.setColor(color);
 	text.setOrigin(0.f, 0.f);
 	text.setPosition(view->getPosition());
 
-	Log("sdfasf");
 	if(m_horizontal == Center)
 	{
 		text.setPosition(view->getPosition().x + view->getSize().x / 2.f, text.getPosition().y);
@@ -57,7 +57,7 @@ void UIComponentText::onRender(Renderer* renderer, UIView* view)
 {
 	text.setCharacterSize(12);
 	text.setString(m_string);
-	text.setColor(Color::White);
+	text.setColor(color);
 	text.setOrigin(0.f, 0.f);
 	text.setPosition(view->getPosition());
 
@@ -74,6 +74,8 @@ void UIComponentText::onRender(Renderer* renderer, UIView* view)
 	}
 
 	text.setFont(*view->getContext()->m_defaultFont);
+	text.setOrigin(static_cast<int>(text.getOrigin().x + 0.5f), static_cast<int>(text.getOrigin().y + 0.5f));
+	text.setPosition(static_cast<int>(text.getPosition().x + 0.5f), static_cast<int>(text.getPosition().y + 0.5f));
 	renderer->draw(text);
 }
 

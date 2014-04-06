@@ -23,5 +23,27 @@ Entity Scene::createEntity()
 	return entityRef;
 }
 
+Entity Scene::getEntityByIndex(size_t index)
+{
+	Entity entityRef;
+	entityRef.id = mEntities[index].mId;
+	entityRef.mScene = this;
+	return entityRef;
+}
+
+Entity Scene::getEntityById(Int32 id)
+{
+	Entity entityRef;
+	for(size_t i = 0; i < mEntities.size(); ++i)
+	{
+		if(mEntities[i].mId == id)
+		{
+			entityRef.id = mEntities[i].mId;
+			entityRef.mScene = this;
+		}
+	}
+	return entityRef;
+}
+
 };
 NEPHILIM_NS_END

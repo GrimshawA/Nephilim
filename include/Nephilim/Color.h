@@ -48,5 +48,20 @@ public:
 	Uint8 r,g,b,a;
 };
 
+class HSVColor
+{
+public:
+
+	float hue;
+	float sat;
+	float val;
+
+	Color toRGB();
+
+	static HSVColor RgbToHsv(Color color);
+
+	static HSVColor mix(const HSVColor& c1, const HSVColor& c2);
+};
+
 NEPHILIM_NS_END
 #endif // NephilimColor_h__

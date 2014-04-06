@@ -1,21 +1,26 @@
-#ifndef NephilimUIComponentListView_h__
-#define NephilimUIComponentListView_h__
-
-#include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
-#include <Nephilim/UIViewComponent.h>
-#include <Nephilim/Text.h>
-
+#include <Nephilim/UI/UIComponentMenu.h>
+#include <Nephilim/UIView.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+UIComponentMenu::UIComponentMenu()
 {
-public:
-	void onAttach(UIView* view);
 
-	void onRender(Renderer* renderer, UIView* view);
-};
+}
+
+void UIComponentMenu::onAttach(UIView* view)
+{
+
+}
+
+void UIComponentMenu::onEvent(Event event, UIView* view)
+{
+
+}
+
+void UIComponentMenu::onRender(Renderer* renderer, UIView* view)
+{
+
+}
 
 NEPHILIM_NS_END
-#endif // NephilimUIComponentImage_h__

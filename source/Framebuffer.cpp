@@ -34,6 +34,12 @@ void Framebuffer::activate()
 /// Attaches a texture to the color attachment 0
 void Framebuffer::attachTexture(const Texture& texture)
 {
+	if(m_id == 0)
+	{
+		Log("This is the default framebuffer");
+		return;
+	}
+
 	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
 	glFramebufferTexture2DCGL(GL_FRAMEBUFFER_CGL, GL_COLOR_ATTACHMENT0_CGL, GL_TEXTURE_2D, texture.getIdentifier(), 0);
 

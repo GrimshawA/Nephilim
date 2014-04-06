@@ -115,7 +115,7 @@ UIView* UIComponentScroll::getSelectedView(UIView* view)
 
 void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 {
-	if(view->m_children.size() == 0)
+	/*if(view->m_children.size() == 0)
 		return;
 
 	// apply test offset effect
@@ -126,7 +126,7 @@ void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 		float offset = y_dist * 0.3f;
 
 		view->m_children[i]->setCenter(140.f + offset, view->m_children[i]->getCenter().y);
-	}
+	}*/
 }
 
 void UIComponentScroll::onRender(Renderer* renderer, UIView* view)

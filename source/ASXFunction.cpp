@@ -1,10 +1,30 @@
 #include <Nephilim/ASXFunction.h>
 #include <Nephilim/ASXModule.h>
 #include <Nephilim/ASXRuntime.h>
-#include <AS/angelscript.h>
+
+#include <angelscript.h>
 
 NEPHILIM_NS_BEGIN
+	
 
+void ASXFunction::call()
+{
+	mRuntime->get()->PushState();
+	mRuntime->get()->Prepare(mFunction);
+	mRuntime->get()->Execute();
+	mRuntime->get()->PopState();
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 ASXFunctionBase::ASXFunctionBase()
 : m_function(NULL)
 , m_runtime(NULL)
@@ -69,6 +89,6 @@ void ASXFunctionBase::setIntArgument(int index, int arg)
 	m_runtime->get()->SetArgDWord(index, static_cast<asDWORD>(arg));
 }
 
-
+*/
 
 NEPHILIM_NS_END

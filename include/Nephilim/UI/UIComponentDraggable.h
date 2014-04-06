@@ -1,21 +1,24 @@
-#ifndef NephilimUIComponentListView_h__
-#define NephilimUIComponentListView_h__
+#ifndef NephilimUIComponentDraggable_h__
+#define NephilimUIComponentDraggable_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
 #include <Nephilim/UIViewComponent.h>
-#include <Nephilim/Text.h>
-
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+class NEPHILIM_API UIComponentDraggable : public UIViewComponent
 {
 public:
+	UIComponentDraggable();
+
 	void onAttach(UIView* view);
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onEvent(Event event, UIView* view);
+
+	vec2i previousMousePosition;
+
+	bool dragging;
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIComponentImage_h__
+#endif // NephilimUIComponentDraggable_h__

@@ -29,6 +29,8 @@ public:
 	/// Unload the texture
 	void unload();
 
+	void generateMipMaps();
+
 	/// Get the internal OpenGL identifier of this texture
 	unsigned int getIdentifier() const;
 

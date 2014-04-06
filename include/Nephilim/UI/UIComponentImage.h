@@ -47,6 +47,8 @@ public:
 	Alignment m_vertical;
 
 	Text text;
+
+	Color color;
 };
 
 NEPHILIM_NS_END

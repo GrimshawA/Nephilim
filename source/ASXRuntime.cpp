@@ -1,7 +1,7 @@
 #include <Nephilim/ASXRuntime.h>
 #include <Nephilim/ASXEngine.h>
-#include <Nephilim/ASXModule.h>
-#include <AS/angelscript.h>
+
+#include <angelscript.h>
 
 NEPHILIM_NS_BEGIN
 

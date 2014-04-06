@@ -1,21 +1,31 @@
-#ifndef NephilimUIComponentListView_h__
-#define NephilimUIComponentListView_h__
+#ifndef NephilimUIComponentMenuBar_h__
+#define NephilimUIComponentMenuBar_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
 #include <Nephilim/UIViewComponent.h>
-#include <Nephilim/Text.h>
-
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+class NEPHILIM_API UIComponentMenuBar : public UIViewComponent
 {
 public:
+	UIComponentMenuBar();
+
+	void openMenu(const String& name);
+
 	void onAttach(UIView* view);
 
+	void onEvent(Event event, UIView* view);
+
 	void onRender(Renderer* renderer, UIView* view);
+
+	void addMenu(const String& menuTitle);
+
+	void meteNojo(const String &name);
+
+	UIView* mParent;
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIComponentImage_h__
+#endif // NephilimUIComponentMenuBar_h__

@@ -50,6 +50,9 @@ public:
 	template<class CType>
 	CType& getComponent() const;
 
+	template<class CType>
+	bool hasComponent() const;
+
 	entity_id_type id;
 
 	Scene* mScene;
@@ -58,14 +61,32 @@ public:
 template<class CType>
 void Entity::addComponent()
 {
+	CType cp;
 
+	ComponentArray<CType>& components = mScene->getComponentList<CType>();
+	components.mComponents.push_back(cp);
+	components.mBinding[id] = components.mComponents.size() - 1;
 }
 
 template<class CType>
 CType& Entity::getComponent() const
 {
-	CType c;
-	return c;
+	ComponentArray<CType>& components = mScene->getComponentList<CType>();
+	return components.mComponents[ components.mBinding[id] ];
+}
+
+template<class CType>
+bool Entity::hasComponent() const
+{
+	ComponentArray<CType>& components = mScene->getComponentList<CType>();
+	if(components.mBinding.find(id) == components.mBinding.end())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 };

@@ -1,21 +1,50 @@
-#ifndef NephilimUIComponentListView_h__
-#define NephilimUIComponentListView_h__
+#ifndef NephilimUIComponentLineEdit_h__
+#define NephilimUIComponentLineEdit_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
 #include <Nephilim/UIViewComponent.h>
 #include <Nephilim/Text.h>
-
+#include <Nephilim/Signals.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+class NEPHILIM_API UIComponentLineEdit : public UIViewComponent
 {
 public:
-	void onAttach(UIView* view);
+	UIComponentLineEdit();
+
+	void onEvent(Event event, UIView* view);
+
+	virtual bool onKeyPressed(Keyboard::Key key);
+	virtual bool onTextEvent(Uint32 code);
+
+	void addCharacter(Uint32 charCode);
+	void eraseCharacter();
 
 	void onRender(Renderer* renderer, UIView* view);
+
+	enum UILineEditTypes
+	{
+		Regular,
+		Password
+	};
+
+	void setType(UILineEditTypes type);
+
+	void setCharacterLimit(size_t limit);
+
+	Text t;
+	String s;
+	Color m_textColor;
+
+	int m_pipeIndex;
+
+	UILineEditTypes m_type;
+
+	size_t m_charLimit;
+
+	sigc::signal<void, String> onReturnPressed;
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIComponentImage_h__
+#endif // NephilimUIComponentLineEdit_h__

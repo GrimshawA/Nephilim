@@ -1,5 +1,5 @@
-#ifndef ASXFunction_h__
-#define ASXFunction_h__
+#ifndef NephilimASXFunction_h__
+#define NephilimASXFunction_h__
 
 #include "Platform.h"
 #include "Strings.h"
@@ -13,6 +13,17 @@ class ASXEngine;
 class ASXRuntime;
 class ASXModule;
 
+class NEPHILIM_API ASXFunction
+{
+public:
+
+	void call();
+
+	asIScriptFunction* mFunction;
+	ASXRuntime*        mRuntime;
+};
+
+/*
 class NEPHILIM_API ASXFunctionBase
 {
 public:
@@ -139,6 +150,6 @@ public:
 		//printf("calling a void returner\n");
 	}
 };
-
+*/
 NEPHILIM_NS_END
-#endif // ASXFunction_h__
+#endif // NephilimASXFunction_h__

@@ -109,6 +109,16 @@ bool Texture::create(unsigned int width, unsigned int height)
 	return true;
 }
 
+void Texture::generateMipMaps()
+{
+#ifdef NEPHILIM_DESKTOP
+	bind();
+	glGenerateMipmapEXT(GL_TEXTURE_2D);
+	Log("Generated Mipmaps");
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+#endif
+}
+
 ////////////////////////////////////////////////////////////
 void Texture::update(const Image& image)
 {

@@ -1,21 +1,35 @@
-#ifndef NephilimUIComponentListView_h__
-#define NephilimUIComponentListView_h__
+#ifndef NephilimUIComponentTabView_h__
+#define NephilimUIComponentTabView_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
 #include <Nephilim/UIViewComponent.h>
-#include <Nephilim/Text.h>
 
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+class UIView;
+
+class NEPHILIM_API UIComponentTabView : public UIViewComponent
 {
 public:
+	UIComponentTabView();
+
 	void onAttach(UIView* view);
 
+	/// Show another tab by its index
+	void onTabButtonClicked(size_t index);
+
+	void onEvent(Event event, UIView* view);
+
 	void onRender(Renderer* renderer, UIView* view);
+
+	void refreshTabButtons();
+
+	/// Tabs in order
+	std::vector<UIView*> tabs;
+	UIView* parent;
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIComponentImage_h__
+#endif // NephilimUIComponentTabView_h__
