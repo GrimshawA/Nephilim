@@ -16,11 +16,15 @@ class ASXModule;
 class NEPHILIM_API ASXFunction
 {
 public:
+	ASXFunction();
 
+	void prepare();
 	void call();
+	void callOnObject(void* ptr);
 
 	asIScriptFunction* mFunction;
 	ASXRuntime*        mRuntime;
+	bool mPrepared;
 };
 
 /*

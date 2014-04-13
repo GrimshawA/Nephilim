@@ -7,6 +7,7 @@
 #include "Matrix.h"
 #include "Color.h"
 #include "RenderModes.h"
+#include "VertexArray.h"
 #include "Strings.h"
 
 #include <vector>
@@ -82,6 +83,8 @@ public:
 	void generateNormals();
 
 	void setAllColors(Color color);
+
+	void toVertexArray(VertexArray& varray);
 
 	virtual void onDraw(Renderer* renderer);
 

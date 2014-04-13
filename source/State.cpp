@@ -49,7 +49,7 @@ void State::useRandomTransition()
 }
 
 /// Tells the parent machine to do a transition animation
-void State::useTransition(StateTransition* transition)
+void State::useTransition(StateStackTransition* transition)
 {
 	if(m_parent)
 	{

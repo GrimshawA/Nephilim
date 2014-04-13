@@ -6,13 +6,42 @@
 
 NEPHILIM_NS_BEGIN
 	
+ASXFunction::ASXFunction()
+: mPrepared(false)
+{
+
+}
+
+void ASXFunction::prepare()
+{
+	mRuntime->get()->Prepare(mFunction);
+	mPrepared = true;
+}
+
 
 void ASXFunction::call()
 {
 	mRuntime->get()->PushState();
-	mRuntime->get()->Prepare(mFunction);
+
+	if(!mPrepared)
+		mRuntime->get()->Prepare(mFunction);
+
 	mRuntime->get()->Execute();
 	mRuntime->get()->PopState();
+	mPrepared = false;
+}
+
+void ASXFunction::callOnObject(void* ptr)
+{
+	mRuntime->get()->PushState();
+
+	if(!mPrepared)
+		mRuntime->get()->Prepare(mFunction);
+
+	mRuntime->get()->SetObject(ptr);
+	mRuntime->get()->Execute();
+	mRuntime->get()->PopState();
+	mPrepared = false;
 }
 	
 	

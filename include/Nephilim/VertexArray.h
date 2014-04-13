@@ -8,6 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
+class IndexArray;
 
 /**
 	\class Format
@@ -52,9 +53,25 @@ public:
 class NEPHILIM_API VertexArray
 {
 public:
+	void removeLast();
+
+	Int32 getVertexSize();
+
+	void swapVertices(Int32 index, Int32 goesTo);
+
+	Int32 getAttributeOffset(Int32 attributeIndex);
+	Int32 getAttributeSize(Int32 attributeIndex);
+
+	bool isVertexEqual(Int32 index1, Int32 index2);
+
+	void setVertexAttribute(Int32 vertexIndex, Int32 attributeIndex, void* data);
+
+	void allocateData(Int32 vertexCount);
+
+	static void removeDuplicateVertices(VertexArray& varray, IndexArray& iarray);
 
 	VertexFormat       format; ///< Format of the vertex data
-	std::vector<char*> data;   ///< The vertex raw data
+	std::vector<char>  data;   ///< The vertex raw data
 	size_t             count;  ///< Number of allocated vertices
 };
 
@@ -69,6 +86,10 @@ public:
 class NEPHILIM_API IndexArray
 {
 public:
+
+	void redirectFromTo(Int32 searchElement, Int32 becomes);
+	/// Whatever pointed at index1, now points at index 2, and vice versa
+	void swapIndices(Int32 index1, Int32 index2);
 
 	std::vector<Uint16> indices;
 };

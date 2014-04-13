@@ -4,6 +4,9 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/System.h>
 
+#include <Nephilim/BxScene.h>
+#include <Nephilim/BxBody.h>
+
 NEPHILIM_NS_BEGIN
 namespace rzr 
 {
@@ -15,6 +18,11 @@ namespace rzr
 class NEPHILIM_API SystemBullet : public System
 {
 public:
+	SystemBullet();
+
+	void update(float delta);
+
+	BxScene bulletWorld;
 
 };
 

@@ -21,6 +21,45 @@ GeometryData::GeometryData()
 	m_primitive = Render::Primitive::Triangles;
 }
 
+void GeometryData::toVertexArray(VertexArray& varray)
+{
+	VertexFormat::Attribute position_attribute;
+	VertexFormat::Attribute color_attribute;
+
+	position_attribute.hint = VertexFormat::Position;
+	color_attribute.hint    = VertexFormat::Color;
+
+	position_attribute.numComponents = 3;
+	position_attribute.size = sizeof(float);
+
+	color_attribute.numComponents = 4;
+	color_attribute.size = sizeof(float);
+
+	varray.format.attributes.push_back(position_attribute);
+	varray.format.attributes.push_back(color_attribute   );
+
+	// Two channels of data need to be copied now
+	varray.allocateData(m_vertices.size());
+
+	struct vertex_format_struct
+	{
+		vec3 p;
+		vec4 c;
+	};
+
+	vertex_format_struct* vertex_data = reinterpret_cast<vertex_format_struct*>(&varray.data[0]);
+
+	for(size_t i = 0; i < m_vertices.size(); ++i)
+	{
+		vertex_data[i].p = m_vertices[i];
+		vertex_data[i].c.x = (float)m_colors[i].r / 255.f;
+		vertex_data[i].c.y = (float)m_colors[i].g / 255.f;
+		vertex_data[i].c.z = (float)m_colors[i].b / 255.f;
+		vertex_data[i].c.w = (float)m_colors[i].a / 255.f;
+	}
+}
+
+
 void GeometryData::onDraw(Renderer* renderer)
 {
 	renderer->enableVertexAttribArray(0);
@@ -302,7 +341,7 @@ void GeometryData::addCylinder()
 /// Generates the geometry of a torus knot
 void GeometryData::addTorusKnot(int p, int q)
 {
-	int segments = 15000;
+	int segments = 1500;
 	for(float theta = 0.f + math::pi*2 / segments; theta < math::pi*2; theta += math::pi*2 / segments)
 	{
 		float r = cos(q * theta) + 2;

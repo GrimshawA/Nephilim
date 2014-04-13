@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 class String;
 class Time;
 class State;
-class StateTransition;
+class StateStackTransition;
 class Renderer;
 class Event;
 class GameCore;
@@ -41,12 +41,15 @@ public:
 	/// Can never be called while the stack is working(rendering,updating or fetching events)
 	void process();
 
+	/// Clear all active states
+	void clear();
+
 	/// Triggers a transition animation at any time
 	/// If there are no pending changes in the state stack, the transition happens but is useless.
 	/// Note: All transitions are deallocated when they finish. You must allocate it dynamically using new.
 	/// Note: Passing NULL will mean a immediate transition
 	/// Note: If a transition is passed while another is in effect, the older is deallocated and the new one is used.
-	void performTransition(StateTransition* transition);
+	void performTransition(StateStackTransition* transition);
 
 	/// Check if a given state is currently being executed
 	bool isActive(const String& name);
@@ -54,6 +57,7 @@ public:
 	/// Check if a given state is currently being executed
 	bool isActive(State* state);
 	
+	void drawList(std::vector<State*>& list, Renderer* renderer);
 
 	void drawCurrentList(Renderer* renderer);
 
@@ -116,13 +120,21 @@ public:
 	};
 
 private:
-	std::vector<State*> m_activeList; ///< The list of currently active states
+	std::vector<State*> mCurrentList; ///< The currently active stack
+	std::vector<State*> mFutureList;  ///< The stack that will be active after the transition
+
+	friend class StateStackTransition;
+
+
+
 	std::vector<State*> m_waitList; ///< The list of states waiting to become active
+
+
 	std::map<String, State*> m_bindList; ///< The list of binded states, that "live" under the stack
 
 	std::vector<StateStackOperation> m_pendingOperations; ///< The list of pending operations
 
-	StateTransition* m_transition; ///< The active transition
+	StateStackTransition* m_transition; ///< The active transition
 
 	bool m_stackLock;
 };

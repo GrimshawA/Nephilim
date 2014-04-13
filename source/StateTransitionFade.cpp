@@ -26,9 +26,11 @@ void StateTransitionFade::onUpdate(const Time& time)
 {
 	elapsedTime += time.asSeconds();
 
+
 	if(elapsedTime > m_duration)
 	{
 		finish();
+		//Log("Fade finished");
 	}
 	else
 	{
@@ -38,12 +40,14 @@ void StateTransitionFade::onUpdate(const Time& time)
 			float currentOffset = function(elapsedTime, 0, 1024, m_duration/2);
 			alpha = function(elapsedTime, 0, 255, m_duration/2);
 			m_secondPhase = false;
+			//Log("Fading out. Alpha %f", alpha);
 		}
 		else
 		{
 			float currentOffset = function(elapsedTime - m_duration/2 , 0, 1024, m_duration/2);
 			alpha = 255 - function(elapsedTime - m_duration/2, 0, 255, m_duration/2);
 			m_secondPhase = true;
+			//Log("Fading in Alpha %f", alpha);
 		}
 
 		m_rect.setColor(Color(0,0,0,alpha));
@@ -53,8 +57,21 @@ void StateTransitionFade::onUpdate(const Time& time)
 
 void StateTransitionFade::draw(Renderer* renderer)
 {
-	(elapsedTime <= (m_duration / 2)) ? drawPreviousFrame(renderer) : drawNextFrame(renderer); 
+	renderer->clearColorBuffer();
+
+	if(!m_secondPhase)
+	{
+		drawPreviousFrame(renderer);
+	}
+	else
+	{
+		drawNextFrame(renderer);
+	}
+
+	renderer->setDepthTestEnabled(false);
+	renderer->setBlendingEnabled(true);	
 	renderer->setProjectionMatrix(View(0.f, 0.f, 1.f, 1.f).getMatrix());
+	renderer->setViewMatrix(mat4::identity);
 	renderer->draw(m_rect);
 }
 

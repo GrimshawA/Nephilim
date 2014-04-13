@@ -20,14 +20,14 @@ class GameCore;
 
 	Used together with StateStack and State classes
 */
-class NEPHILIM_API StateTransition
+class NEPHILIM_API StateStackTransition
 {
 public:
 	/// Base construction
-	StateTransition();
+	StateStackTransition();
 
 	/// Virtual destructor
-	virtual ~StateTransition();
+	virtual ~StateStackTransition();
 
 	/// Set the duration of the transition effect
 	void setDuration(float duration);
@@ -54,7 +54,6 @@ private:
 	friend class StateStack;
 	StateStack* m_stack;
 
-	std::vector<State*> m_futureList;
 	bool m_finished;
 
 	float m_duration; ///< The total duration of the effect

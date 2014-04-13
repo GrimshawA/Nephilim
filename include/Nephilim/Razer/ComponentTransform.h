@@ -2,6 +2,7 @@
 #define NephilimRazerComponentTransform_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Matrix.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN
@@ -15,7 +16,13 @@ namespace rzr
 class NEPHILIM_API ComponentTransform : public Component
 {
 public:
+	ComponentTransform()
+	{
+		x = y = z = 0.f;
+	}
+
 	float x, y, z;
+	mat4 matrix;
 };
 
 };

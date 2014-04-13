@@ -30,6 +30,15 @@ void StateStack::process()
 	applyChanges();
 }
 
+/// Clear all active states
+void StateStack::clear()
+{
+	for(size_t i = 0; i < mCurrentList.size(); ++i)
+	{
+		mCurrentList[i]->finish();
+	}
+}
+
 void StateStack::drawCurrentList(Renderer* renderer)
 {
 	/*int index = m_activeList.size() - 1;
@@ -40,12 +49,25 @@ void StateStack::drawCurrentList(Renderer* renderer)
 	}*/
 
 	int index = 0;
-	while(index < m_activeList.size() && !m_activeList.empty())
+	while(index < mCurrentList.size() && !mCurrentList.empty())
 	{
-		m_activeList[index]->onRender(renderer);
+		mCurrentList[index]->onRender(renderer);
+		//Log("Rendering state: %s", mCurrentList[index]->mName.c_str());
 		++index;
 	}
 }
+
+void StateStack::drawList(std::vector<State*>& list, Renderer* renderer)
+{
+	size_t index = 0;
+	while(index < list.size() && !list.empty())
+	{
+		list[index]->onRender(renderer);
+	//	Log("Rendering state: %s", list[index]->mName.c_str());
+		++index;
+	}
+}
+
 
 void StateStack::applyChangesTo(std::vector<State*>& list)
 {
@@ -107,7 +129,7 @@ bool StateStack::isActive(State* state)
 	}
 
 	// Check the currently active queue for the state
-	for(std::vector<State*>::iterator it = m_activeList.begin(); it != m_activeList.end(); ++it)
+	for(std::vector<State*>::iterator it = mCurrentList.begin(); it != mCurrentList.end(); ++it)
 	{
 		if((*it) == state)
 		{
@@ -117,7 +139,7 @@ bool StateStack::isActive(State* state)
 
 	if(m_transition)
 	{
-		for(std::vector<State*>::iterator it = m_transition->m_futureList.begin(); it != m_transition->m_futureList.end(); ++it)
+		for(std::vector<State*>::iterator it = mFutureList.begin(); it != mFutureList.end(); ++it)
 		{
 			if((*it) == state)
 			{
@@ -129,7 +151,7 @@ bool StateStack::isActive(State* state)
 	return false; // not found anywhere
 }
 
-void StateStack::performTransition(StateTransition* transition)
+void StateStack::performTransition(StateStackTransition* transition)
 {
 	// There was already a transition, warning.
 	if(m_transition)
@@ -143,9 +165,9 @@ void StateStack::performTransition(StateTransition* transition)
 	m_transition->m_stack = this;
 
 	// A new transition kicked in, lets build the future stack for it
-	std::vector<State*> futureList = m_activeList;
+	/*std::vector<State*> futureList = mCurrentList;
 	applyChangesTo(futureList);
-	m_transition->m_futureList.insert(m_transition->m_futureList.end(), futureList.rbegin(), futureList.rend());
+	mFutureList.insert(mFutureList.end(), futureList.rbegin(), futureList.rend());*/
 
 	m_transition->activate();
 }
@@ -190,13 +212,21 @@ void StateStack::add(const String& name)
 		// Ensure its only added once
 		if(!isActive(name))
 		{
-			StateStackOperation sso;
-			sso.type = StateStackOperation::Add;
-			sso.obj = m_bindList[name];
-			m_pendingOperations.push_back(sso);
+			if(m_transition)
+			{
+				mFutureList.push_back(m_bindList[name]);
+				Log("Adding a state as future state");
+			}
+			else
+			{
+				StateStackOperation sso;
+				sso.type = StateStackOperation::Add;
+				sso.obj = m_bindList[name];
+				m_pendingOperations.push_back(sso);
+			}			
 
 			// Activate the state
-			 m_bindList[name]->onActivate();
+			m_bindList[name]->onActivate();
 		}
 	}
 }
@@ -205,7 +235,7 @@ void StateStack::add(const String& name)
 void StateStack::processWaitList()
 {
 	// erased, if reaches 0, add to stack from waiting list
-	if(m_activeList.empty() && !m_waitList.empty())
+	if(mCurrentList.empty() && !m_waitList.empty())
 	{
 		add(m_waitList.front());
 		m_waitList.front()->removeReference(); // remove waiting list reference
@@ -233,7 +263,7 @@ void StateStack::applyChanges()
 				//erase(m_pendingOperations.front().obj);
 				//cout<<"Trying to erase: "<< m_pendingOperations.front().obj<<endl;
 				m_pendingOperations.front().obj->m_scheduledRemoval = false;
-				m_activeList.erase(std::find(m_activeList.begin(), m_activeList.end(), m_pendingOperations.front().obj));
+				mCurrentList.erase(std::find(mCurrentList.begin(), mCurrentList.end(), m_pendingOperations.front().obj));
 				if(!isActive(m_pendingOperations.front().obj))
 				{
 					m_pendingOperations.front().obj->onDeactivate();
@@ -241,12 +271,12 @@ void StateStack::applyChanges()
 				break;
 
 			case StateStackOperation::Add:
-				if(std::find(m_activeList.begin(), m_activeList.end(), m_pendingOperations.front().obj) == m_activeList.end())
+				if(std::find(mCurrentList.begin(), mCurrentList.end(), m_pendingOperations.front().obj) == mCurrentList.end())
 				{
 					//m_pendingOperations.front().obj->onActivate();
 					//m_pendingOperations.front().obj->addReference();
 					//cout<<"adding: "<<m_pendingOperations.front().obj<<endl;
-					m_activeList.push_back(m_pendingOperations.front().obj);		
+					mCurrentList.push_back(m_pendingOperations.front().obj);		
 				}
 				else
 				{
@@ -286,7 +316,7 @@ bool StateStack::bind(const String& name, State* state)
 
 void StateStack::erase(State* state)
 {
-	if(std::find(m_activeList.begin(), m_activeList.end(), state) == m_activeList.end())
+	if(std::find(mCurrentList.begin(), mCurrentList.end(), state) == mCurrentList.end())
 	{
 		//cout<<"Trying to erase a state that is not in the stack. No consequences."<<endl;
 		return; 
@@ -304,10 +334,10 @@ void StateStack::erase(State* state)
 	{
 		// do
 		//state->removeReference();
-		std::vector<State*>::iterator it = std::find(m_activeList.begin(), m_activeList.end(), state);
-		if(it != m_activeList.end())
+		std::vector<State*>::iterator it = std::find(mCurrentList.begin(), mCurrentList.end(), state);
+		if(it != mCurrentList.end())
 		{
-			m_activeList.erase(it);
+			mCurrentList.erase(it);
 		}		
 		//cout<<"[StateStack] Erased"<<endl;
 
@@ -319,7 +349,7 @@ int StateStack::getActiveStateCount()
 {
 
 
-	return static_cast<int>(m_activeList.size());
+	return static_cast<int>(mCurrentList.size());
 }
 
 	
@@ -330,17 +360,17 @@ void StateStack::pushEvent(Event &event){
 	}
 	else
 	{
-		if(m_activeList.size() == 0){
+		if(mCurrentList.size() == 0){
 			return;
 		}
 
-		int index = m_activeList.size()-1;
+		int index = mCurrentList.size()-1;
 		bool stop = false;
 
 		m_stackLock = true;
 		while(index != -1 && stop == false){
-			m_activeList[index]->onEvent(event);
-			stop = !m_activeList[index]->m_letEventsThrough;
+			mCurrentList[index]->onEvent(event);
+			stop = !mCurrentList[index]->m_letEventsThrough;
 			index--;
 		}
 		m_stackLock = false;
@@ -364,16 +394,16 @@ void StateStack::drawStates(Renderer *renderer){
 		return;
 	}
 
-	if(m_activeList.size() == 0){
+	if(mCurrentList.size() == 0){
 		return;
 	}
 
 	int index = 0;
 	bool stop = false;
 
-	while(index < m_activeList.size())
+	while(index < mCurrentList.size())
 	{
-		m_activeList[index]->onDraw(renderer);
+		mCurrentList[index]->onDraw(renderer);
 		index++;
 	}
 };
@@ -395,16 +425,16 @@ void StateStack::update(Time &time)
 	}
 	else
 	{
-		if(m_activeList.size() == 0){
+		if(mCurrentList.size() == 0){
 			return;
 		}
 		// older states draw first
-		int index = m_activeList.size()-1;
+		int index = mCurrentList.size()-1;
 		bool stop = false;
 
 		m_stackLock = true;
 		while(index != -1 && stop == false){
-			/*stop = !*/m_activeList[index]->onUpdate(time);
+			/*stop = !*/mCurrentList[index]->onUpdate(time);
 			index--;
 		}
 		m_stackLock = false;

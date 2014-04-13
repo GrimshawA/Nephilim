@@ -13,7 +13,7 @@ NEPHILIM_NS_BEGIN
 	\class StateTransitionSlider
 	\brief Native state transition animation
 */
-class StateTransitionSlider : public StateTransition
+class StateTransitionSlider : public StateStackTransition
 {
 public:
 	/// Constructor

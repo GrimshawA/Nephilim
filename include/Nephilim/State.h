@@ -2,6 +2,7 @@
 #define NephilimState_h__
 
 #include "Platform.h"
+#include "Strings.h"
 #include "ReferenceCountable.h"
 
 NEPHILIM_NS_BEGIN
@@ -9,7 +10,7 @@ NEPHILIM_NS_BEGIN
 class String;
 class Time;
 class StateStack;
-class StateTransition;
+class StateStackTransition;
 class Renderer;
 class Event;
 
@@ -45,7 +46,7 @@ public:
 		StateStack* parentMachine();
 
 		/// Tells the parent machine to do a transition animation
-		void useTransition(StateTransition* transition);
+		void useTransition(StateStackTransition* transition);
 
 		/// Starts a random transition among the built-in ones
 		void useRandomTransition();
@@ -78,6 +79,8 @@ public:
 		virtual void onRender(Renderer* renderer);
 
 		StateStack *m_parent;
+
+		String mName; /// States can have names
 
 private:		
 	friend class StateStack;

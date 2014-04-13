@@ -8,6 +8,7 @@
 
 #include <angelscript.h>
 #include <AS/add_on/scriptstdstring/scriptstdstring.h>
+#include <AS/add_on/scriptarray/scriptarray.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -44,6 +45,7 @@ ASXEngine::ASXEngine()
 
 		// Register strings
 		RegisterStdString(m_engine);
+		RegisterScriptArray(m_engine, true);
 
 		m_engine->RegisterGlobalFunction("void print(const string& in)", asFUNCTION(printlog), asCALL_CDECL);
 	}
