@@ -31,6 +31,9 @@ public:
 	class NEPHILIM_API Attribute
 	{
 	public:
+		Attribute();
+		Attribute(Int32 attributeByteSize, Int32 attributeNumComponents, AttributeHint attributeHint);
+
 		Int32         size;            ///< Size, in bytes, of the data type
 		Int32         numComponents;   ///< Number of components that make up this attribute's data
 		AttributeHint hint;            ///< Hint about what this attribute actually is

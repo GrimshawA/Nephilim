@@ -3,6 +3,19 @@
 
 NEPHILIM_NS_BEGIN
 
+VertexFormat::Attribute::Attribute()
+{
+}
+
+VertexFormat::Attribute::Attribute(Int32 attributeByteSize, Int32 attributeNumComponents, AttributeHint attributeHint)
+: size(attributeByteSize)
+, numComponents(attributeNumComponents)
+, hint(attributeHint)
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void VertexArray::setVertexAttribute(Int32 vertexIndex, Int32 attributeIndex, void* data)
 {
 	char* dataAddress = reinterpret_cast<char*>(data);

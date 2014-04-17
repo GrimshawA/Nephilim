@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/Entity.h>
+#include <Nephilim/Razer/System.h>
 
 #include <vector>
 #include <map>
@@ -35,6 +36,8 @@ public:
 
 	/// &type_id(component_type) -> ComponentList
 	std::map<std::type_index, ComponentList*> componentArrays;
+
+	std::vector<System*> mRegisteredSystems;
 };
 
 template<class CType>
@@ -49,6 +52,11 @@ ComponentArray<CType>& Scene::getComponentList()
 	return *static_cast<ComponentArray<CType>*>(componentArrays[std::type_index(typeid(CType))]);
 }
 
+template<class CType>
+std::type_index getTypeOf()
+{
+	return std::type_index(typeid(CType));
+}
 
 };
 NEPHILIM_NS_END

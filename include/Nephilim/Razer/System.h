@@ -3,6 +3,8 @@
 
 #include <Nephilim/Platform.h>
 
+#include <typeindex>
+
 NEPHILIM_NS_BEGIN
 namespace rzr
 {
@@ -14,6 +16,8 @@ namespace rzr
 class NEPHILIM_API System
 {
 public:
+	virtual void onComponentAdded(std::type_index type_index, void* cdata){}
+
 	virtual ~System();
 };
 

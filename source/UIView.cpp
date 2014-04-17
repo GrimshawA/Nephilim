@@ -188,17 +188,25 @@ void UIView::clear()
 {
 	if(m_childrenLock > 0)
 	{
-		Log("Cant clear now");
-		return;
+		// Post pone the clearing
+		for(size_t i = 0; i < m_children.size(); ++i)
+		{
+			UIControlOperation action;
+			action.control = m_children[i];
+			action.type = UIControlOperation::Destruction;
+			m_pendingOperations.push_back(action);
+		}
 	}
-
-	// I am being destroyed, destroy children
-	for(size_t i = 0; i < m_children.size(); ++i)
+	else
 	{
-		delete m_children[i];
-	}
+		// I am being destroyed, destroy children
+		for(size_t i = 0; i < m_children.size(); ++i)
+		{
+			delete m_children[i];
+		}
 
-	m_children.clear();
+		m_children.clear();
+	}
 }
 
 /// Feeds the position of the control to the animation systems

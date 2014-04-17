@@ -45,9 +45,10 @@ void KxBody::setAngle(float radians){
 };
 
 /// Choose whether this body is allowed to rotate
-void KxBody::setFixedRotation(bool fixedRotation){
+void KxBody::setFixedRotation(bool fixedRotation)
+{
 	m_body->SetFixedRotation(fixedRotation);
-};
+}
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

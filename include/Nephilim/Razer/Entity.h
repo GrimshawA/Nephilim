@@ -66,6 +66,12 @@ void Entity::addComponent()
 	ComponentArray<CType>& components = mScene->getComponentList<CType>();
 	components.mComponents.push_back(cp);
 	components.mBinding[id] = components.mComponents.size() - 1;
+
+	// Notify systems
+	for(size_t i = 0; i < mScene->mRegisteredSystems.size(); ++i)
+	{
+		mScene->mRegisteredSystems[i]->onComponentAdded(getTypeOf<CType>(), (void*)&components.mComponents.back());
+	}
 }
 
 template<class CType>

@@ -130,7 +130,6 @@ KxBody* KxScene::CreateQuickBox(float x, float y, float width, float height)
 		fixDef.friction = 0.5f;
 		fixDef.restitution = 0.f;
 
-
 		body->CreateFixture(&fixDef);
 
 		KxBody *bodyActor = new KxBody(body);
