@@ -1,6 +1,9 @@
 #include <Nephilim/UIView.h>
-#include <Nephilim/UIScroller.h>
-#include <Nephilim/UIViewComponent.h>
+#include <Nephilim/UI/UIComponentTouchScroll.h>
+#include <Nephilim/UI/UIComponentDebug.h>
+#include <Nephilim/UI/UIComponentButton.h>
+#include <Nephilim/UIComponent.h>
+#include <Nephilim/StringList.h>
 #include <Nephilim/Logger.h>
 
 #include <Nephilim/UILoader.h>
@@ -82,11 +85,52 @@ UIView::~UIView()
 	}
 }
 
+//#include <Nephilim/UI/UIComponentTouchScroll.h>
+
+/// Creates a new UIView, names it and attaches it as a child, then returns it
+UIView* UIView::createChild(const String& name)
+{
+	// Instance a new view
+	UIView* view = new UIView();
+	view->setName(name);
+	view->setPosition(getPosition());
+
+	//view->addComponent(new UIComponentDebugColor(Color(100,100,100,100)));
+
+	// Attach
+	attach(view);
+
+	return view;
+}
+
 /// Load the hierarchy of this view from a file and configure itself
 void UIView::load(const String& filename)
 {
+	Log("=> Loading UI file to a container");
 	UILoader uiLoader;
 	uiLoader.configure(this, filename);
+}
+
+void UIView::setProperty(const String& str)
+{
+	StringList fields = str.split('=');
+	if(fields.size() == 2)
+	{
+		while(fields[0].size() > 0 && fields[0].at(fields[0].size()-1) == ' ')
+			fields[0].erase(fields[0].size()-1);
+
+		StringList target_object = fields[0].split('.');
+
+
+		String paramValue = fields[1];
+		while(paramValue.size() > 0 && paramValue[0] == ' ')
+			paramValue.erase(paramValue.begin());
+
+		for(size_t i = 0; i < components.size(); ++i)
+		{
+			components[i]->onPropertySet(target_object, paramValue);
+		}
+}	
 }
 
 /// Add a component to the view
@@ -106,6 +150,16 @@ void UIView::addComponent(const String& name)
 	{
 		addComponent(new UIComponentScroll());
 	}
+	else if(name == "cbutton")
+	{
+		addComponent(new UIComponentButton());
+	}
+	else if(name == "debug")
+	{
+		addComponent(new UIComponentDebugColor());
+	}
+
+	Log("[UIView] Adding component by name '%s'", name.c_str());
 }
 
 /// Called before rendering the children UIView ( Virtual )
@@ -256,6 +310,27 @@ void UIView::commitAnimation(AxBase* animation)
 	animation->addTarget(this);
 	animation->deduceInitialParameters();
 	m_animations.commit(animation);
+}
+
+bool UIView::hasAnimatedChildren()
+{
+	for(size_t i = 0; i < m_children.size(); ++i)
+	{
+		if(m_children[i]->hasAnimations())
+		{
+			return true;
+		}
+		else if(m_children[i]->hasAnimatedChildren())
+			return true;
+	}
+
+	return false;
+}
+
+/// Check if this control has any animation going on
+bool UIView::hasAnimations()
+{
+	return m_animations.m_animations.size() > 0;
 }
 
 /// Get the sizing flags
@@ -843,9 +918,20 @@ void UIView::show()
 /// Find a control by its name in the control tree
 UIView* UIView::findByName(const String& name)
 {
+	// Is this the requested view?
 	if(getName() == name)
 		return this;
 
+	// Let's make sure its not in pending attachments
+	for(std::vector<UIControlOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
+	{
+		if((*it).type ==  UIControlOperation::Attachment && (*it).control->getName() == name)
+		{
+			return (*it).control;
+		}
+	}
+
+	// Is any of the children the requested view?
 	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
 		UIView* cntrl = (*it)->findByName(name);

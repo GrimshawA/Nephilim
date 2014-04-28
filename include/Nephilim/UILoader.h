@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include "pugixml/pugixml.hpp"
 
-#include "UIViewComponent.h"
+#include "UIComponent.h"
 
 NEPHILIM_NS_BEGIN
 

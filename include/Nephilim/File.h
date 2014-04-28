@@ -37,6 +37,9 @@ public:
 	/// If you don't know the length when calling this function, pass -1 if you want the whole file.
 	bool open(FILE* fileHandle, Int64 startOffset, Int64 length);
 
+	/// This overload opens a file from the filesystem in the "r+" mode, reading and writing
+	bool open(const String& filename);
+
 	/// Check if the file is open and ready
 	bool isReady();
 

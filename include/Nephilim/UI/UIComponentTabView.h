@@ -2,7 +2,7 @@
 #define NephilimUIComponentTabView_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UIViewComponent.h>
+#include <Nephilim/UIComponent.h>
 
 #include <vector>
 

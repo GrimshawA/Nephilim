@@ -1,7 +1,8 @@
 #include <Nephilim/UI/UIComponentListView.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UIView.h>
-#include <Nephilim/UIScroller.h>
+#include <Nephilim/UI/UIComponentTouchScroll.h>
+#include <Nephilim/UI/UIComponentDebug.h>
 
 #include <Nephilim/Text.h>
 

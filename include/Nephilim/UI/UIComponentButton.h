@@ -2,7 +2,9 @@
 #define NephilimUIComponentButton_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UIViewComponent.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/UIComponent.h>
+#include <Nephilim/Color.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -17,7 +19,12 @@ public:
 
 	void onRender(Renderer* renderer, UIView* view);
 
+	void onPropertySet(const StringList& targetObject, const String& value);
+
 	bool hovering;
+
+	String mString;
+	Color mNormalColor;
 };
 
 NEPHILIM_NS_END

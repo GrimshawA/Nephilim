@@ -161,6 +161,29 @@ bool File::open(FILE* fileHandle, Int64 startOffset, Int64 length){
 	return true;
 };
 
+/// This overload opens a file from the filesystem in the "r+" mode, reading and writing
+bool File::open(const String& filename)
+{
+	FILE* fp = fopen(filename.c_str(), "r+");
+	
+	if(fp)
+	{
+		m_handle = fp;
+		fseek(m_handle, 0 , SEEK_END);
+		m_fileSize = ftell(m_handle);
+		fseek(m_handle, m_offset, SEEK_SET);
+
+		m_offset = 0;
+		m_length = m_fileSize;
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 /// Check if the file is open and ready
 bool File::isReady(){
 	return (m_handle != NULL);

@@ -1,6 +1,7 @@
 #include <Nephilim/UI/UIComponentTabView.h>
 #include <Nephilim/UI/UIComponentImage.h>
-#include <Nephilim/UIScroller.h>
+#include <Nephilim/UI/UIComponentTouchScroll.h>
+#include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UIView.h>
 
 NEPHILIM_NS_BEGIN

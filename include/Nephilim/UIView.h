@@ -20,7 +20,7 @@
 #include "UICore.h"
 #include "UIProperty.h"
 #include "Matrix.h"
-#include "UIViewComponent.h"
+#include "UIComponent.h"
 
 NEPHILIM_NS_BEGIN
 
@@ -107,6 +107,9 @@ public:
 	/// Find a control by its name in the control tree
 	UIView* findByName(const String& name);
 
+	/// Creates a new UIView, names it and attaches it as a child, then returns it
+	UIView* createChild(const String& name);
+
 	/// Adds a child control
 	void attach(UIView* control);
 
@@ -131,6 +134,12 @@ public:
 	/// Submit an animation to be processed by the control
 	void commitAnimation(AxBase* animation);
 
+	/// Check if this control has animated children
+	bool hasAnimatedChildren();
+
+	/// Check if this control has any animation going on
+	bool hasAnimations();
+
 	/// Set a new layout to the control
 	void setLayout(UILayout* layout);
 
@@ -154,6 +163,8 @@ public:
 	/// Check if there is a particular sizing flag
 	bool hasSizeFlag(Uint64 flag);
 
+	/// Set a property from a string
+	void setProperty(const String& str);
 
 	/// Get the currently assigned layout controller
 	/// \return NULL if there is no layout controller assigned

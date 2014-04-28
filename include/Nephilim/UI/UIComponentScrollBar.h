@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/RectangleShape.h>
-#include <Nephilim/UIViewComponent.h>
+#include <Nephilim/UIComponent.h>
 
 NEPHILIM_NS_BEGIN
 

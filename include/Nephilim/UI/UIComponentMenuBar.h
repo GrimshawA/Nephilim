@@ -2,7 +2,7 @@
 #define NephilimUIComponentMenuBar_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UIViewComponent.h>
+#include <Nephilim/UIComponent.h>
 #include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
