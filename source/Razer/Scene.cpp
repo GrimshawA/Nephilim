@@ -34,6 +34,7 @@ Entity Scene::getEntityByIndex(size_t index)
 Entity Scene::getEntityById(Int32 id)
 {
 	Entity entityRef;
+	entityRef.id = 0;
 	for(size_t i = 0; i < mEntities.size(); ++i)
 	{
 		if(mEntities[i].mId == id)

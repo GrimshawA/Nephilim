@@ -42,7 +42,8 @@ public:
 	}
 
 	/// Virtual method for updating the transition
-	virtual void update(const Time& time);
+	void update(const Time& time);
+
 	virtual void onUpdate(const Time& time);
 
 	virtual void draw(Renderer* renderer);
@@ -50,7 +51,7 @@ public:
 	bool allowUpdatesA; ///< Set to true to allow the exiting state to update
 	bool allowUpdatesB; ///< Set to true to allow the incoming state to update
 
-private:
+//private:
 	friend class StateStack;
 	StateStack* m_stack;
 

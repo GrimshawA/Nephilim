@@ -44,8 +44,9 @@ ASXEngine::ASXEngine()
 		m_engine->SetEngineProperty(asEP_INIT_GLOBAL_VARS_AFTER_BUILD, true);
 
 		// Register strings
-		RegisterStdString(m_engine);
 		RegisterScriptArray(m_engine, true);
+		RegisterStdString(m_engine);
+		RegisterStdStringUtils(m_engine);
 
 		m_engine->RegisterGlobalFunction("void print(const string& in)", asFUNCTION(printlog), asCALL_CDECL);
 	}

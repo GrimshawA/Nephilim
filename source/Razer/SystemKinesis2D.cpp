@@ -8,8 +8,15 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
+void SystemKinesis2D::update(const Time& deltaTime)
+{
+	mScene.update(deltaTime.asSeconds());
+}
+
 void SystemKinesis2D::onComponentAdded(std::type_index type_index, void* cdata)
 {
+	Log("=> Kinesis2D system: Component notification");
+
 	if( type_index == getTypeOf<ComponentKinesisBody2D>())
 	{
 		Log("Kinesis2D system detected a new component being added. %d", type_index);

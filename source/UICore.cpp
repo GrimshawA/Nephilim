@@ -7,6 +7,7 @@ UICore::UICore()
 , m_defaultFont(NULL)
 , defaultPositionFlags(0)
 , defaultSizeFlags(0)
+, content(NULL)
 {
 	m_fakeTouchScreen = false;
 

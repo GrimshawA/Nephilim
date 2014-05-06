@@ -8,6 +8,86 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
+ContentManager::ContentManager()
+: mDefaultGroup("")
+{
+	// Create the anonymous group where assets are loaded to by default
+	createGroup("");
+	mDefaultFonts = &mGroups[""]->mFonts;
+}
+
+ContentManager::~ContentManager()
+{
+	while(!mGroups.empty())
+	{
+		removeGroup(mGroups.begin()->first);
+	}
+}
+
+
+ContentGroup* ContentManager::createGroup(const String& name)
+{
+	mGroups[name] = new ContentGroup();
+	return mGroups[name];
+}
+
+void ContentManager::removeGroup(const String& name)
+{
+	if(mGroups.find(name) != mGroups.end())
+	{
+		delete mGroups[name];
+		mGroups.erase(mGroups.find(name));
+	}
+}
+
+/// The most elemental form of loading an asset
+/// Simply takes the filename and tries to deduce how to load it from extension
+bool ContentManager::load(const String& filename)
+{
+	// Make sure there is a target content holder
+	if(mGroups.find(mDefaultGroup) == mGroups.end())
+		return false;
+
+	String extension = Path(filename).getExtension();
+	extension.toLowerCase();
+
+	ContentGroup* targetGroup = mGroups[mDefaultGroup];
+
+	if(extension == "png")
+	{
+		Log("Loading texture: %s", filename.c_str());
+		targetGroup->mTextures[filename] = new Texture();
+		return targetGroup->mTextures[filename]->loadFromFile(filename);
+	}
+	else if(extension == "ttf" || extension == "otf")
+	{
+		Log("Loading font: %s", filename.c_str());
+		return targetGroup->mFonts.load(filename);
+	}
+
+	return false;
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+bool ContentGroupFonts::load(const String& filename)
+{
+	if(mFonts.find(filename) == mFonts.end())
+	{
+		mFonts[filename] = new Font();
+	}
+
+	return mFonts[filename]->loadFromFile(filename);
+}
+//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 /// Creates a loose content bank, destroys its resources on destruction
 ContentBank::ContentBank()
 : myLoader(this)

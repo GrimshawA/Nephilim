@@ -38,7 +38,7 @@ void ASXRuntime::popState()
 
 void ASXRuntime::set(ASXEngine& engine)
 {
-
+	m_context = engine.get()->CreateContext();
 }
 
 void ASXRuntime::reset(ASXModule& module)

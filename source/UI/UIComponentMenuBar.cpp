@@ -4,6 +4,7 @@
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UIView.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
+#include <Nephilim/UI/UIComponentLabel.h>
 #include <Nephilim/UI/UIComponentDebug.h>
 
 

@@ -6,10 +6,70 @@
 #include "ContentList.h"
 #include "ContentLoader.h"
 #include "Texture.h"
+#include "Font.h"
 #include "File.h"
 #include <map>
 
 NEPHILIM_NS_BEGIN
+
+class ContentGroupFonts
+{
+public:
+	bool load(const String& filename);
+
+	std::map<String, Font*> mFonts;
+};
+
+/// A content group holds an indefinite number of resources of different types
+class ContentGroup
+{
+public:
+
+	ContentGroupFonts mFonts;
+
+	std::map<String, Texture*> mTextures;
+};
+
+
+
+
+/// Content manager manages all content groups created
+class ContentManager
+{
+public:
+	/// Creates the default group - no name ""
+	ContentManager();
+
+	/// Ensure removal of all content groups and the resources
+	~ContentManager();
+
+	ContentGroup* createGroup(const String& name);
+
+	void removeGroup(const String& name);
+
+	/// The most elemental form of loading an asset
+	/// Simply takes the filename and tries to deduce how to load it from extension
+	bool load(const String& filename);
+
+	String mDefaultGroup; ///< The current default group
+	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group
+
+	std::map<String, ContentGroup*> mGroups;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 namespace Content
 {

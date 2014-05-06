@@ -21,6 +21,13 @@ public:
 
 	void setupTest();
 
+	void addStaticTile(float x, float y, float w, float h)
+	{
+		mScene.CreateStaticBox(x,y,w,h);
+	}
+
+	virtual void update(const Time& deltaTime);
+
 	KxScene mScene; ///< Physics scene
 };
 

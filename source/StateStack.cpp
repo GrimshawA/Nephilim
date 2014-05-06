@@ -30,13 +30,48 @@ void StateStack::process()
 	applyChanges();
 }
 
-/// Clear all active states
+bool StateStack::isTransitionActive()
+{
+	return (m_transition != NULL);
+}
+
 void StateStack::clear()
 {
-	for(size_t i = 0; i < mCurrentList.size(); ++i)
+	// If the transition is active, alter the future list instead
+	if(isTransitionActive())
 	{
-		mCurrentList[i]->finish();
+		for(size_t i = 0; i < mFutureList.size(); ++i)
+		{
+			mFutureList[i]->finish();
+		}
 	}
+	else
+	{
+		for(size_t i = 0; i < mCurrentList.size(); ++i)
+		{
+			mCurrentList[i]->finish();
+		}
+	}
+}
+
+/// Remove the top state from the stack
+void StateStack::pop()
+{
+	if(isTransitionActive())
+	{
+
+	}
+	else
+	{
+
+	}
+}
+
+/// Finishes the transition animation, deletes the transition
+/// and then commits all needed changes for regular functioning
+void StateStack::endTransition()
+{
+
 }
 
 void StateStack::drawCurrentList(Renderer* renderer)
@@ -163,12 +198,6 @@ void StateStack::performTransition(StateStackTransition* transition)
 	
 	m_transition = transition;
 	m_transition->m_stack = this;
-
-	// A new transition kicked in, lets build the future stack for it
-	/*std::vector<State*> futureList = mCurrentList;
-	applyChangesTo(futureList);
-	mFutureList.insert(mFutureList.end(), futureList.rbegin(), futureList.rend());*/
-
 	m_transition->activate();
 }
 
@@ -420,6 +449,7 @@ void StateStack::update(Time &time)
 
 	if(m_transition)
 	{
+		m_transition->m_stack = this;
 		m_transition->update(time);
 		return;
 	}
@@ -446,9 +476,11 @@ void StateStack::update(Time &time)
 
 void StateStack::updateList(std::vector<State*>& list, const Time& time)
 {
-	if(list.size() == 0){
+	if(list.size() == 0)
+	{
 		return;
 	}
+
 	// older states draw first
 	int index = list.size()-1;
 	bool stop = false;

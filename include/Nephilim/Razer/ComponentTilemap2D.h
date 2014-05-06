@@ -9,6 +9,9 @@
 #include <vector>
 
 NEPHILIM_NS_BEGIN
+
+class Tilemap;
+
 namespace rzr
 {
 
@@ -20,7 +23,7 @@ public:
 	String           mName;       ///< Name of the layer
 	int              mWidth;      ///< Amount of tiles per line
 	int              mHeight;     ///< Amount of tiles per column
-	std::vector<int> mTileData;   ///< Original tile data
+	std::vector<Uint16> mTileData;   ///< Original tile data
 	VertexArray      mVertexData; ///< Rendering data for the layer
 	IndexArray       mIndexData;  ///< Rendering data for the layer
 };
@@ -32,7 +35,7 @@ public:
 class NEPHILIM_API ComponentTilemap2D : public Component
 {
 public:
-	bool load(const String& filename);
+	bool load(const Tilemap& tileMap);
 
 	void getTileShape(int index, float& x, float &y, float& w, float& h);
 

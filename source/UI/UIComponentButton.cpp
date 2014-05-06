@@ -13,11 +13,11 @@ UIComponentButton::UIComponentButton()
 
 void UIComponentButton::onPropertySet(const StringList& targetObject, const String& value)
 {
-	Log("BUTTON SETTING PROPERTY %s", value.c_str());
+	//Log("BUTTON SETTING PROPERTY %s", value.c_str());
 
-	Log("List size %d", targetObject.size());
-	Log("List elem 1 %s", targetObject[0].c_str());
-	Log("List elem 1 %s", targetObject[1].c_str());
+	//Log("List size %d", targetObject.size());
+	//Log("List elem 1 %s", targetObject[0].c_str());
+	//Log("List elem 1 %s", targetObject[1].c_str());
 
 	if(targetObject.size() == 2 && targetObject[0] == "button" && targetObject[1] == "caption")
 	{

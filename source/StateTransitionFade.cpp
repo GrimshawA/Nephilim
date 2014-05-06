@@ -7,11 +7,16 @@
 NEPHILIM_NS_BEGIN
 
 StateTransitionFade::StateTransitionFade()
+: StateStackTransition()
 {
 	m_secondPhase = false;
 	elapsedTime = 0.f;
 	m_duration = 3.f;
 	alpha = 255;
+
+	m_stack = NULL;
+
+	this->allowUpdatesA = true;
 
 	m_rect.setColor(Color(0,0,0,0));
 	m_rect.setSize(1.f,1.f);
@@ -30,7 +35,7 @@ void StateTransitionFade::onUpdate(const Time& time)
 	if(elapsedTime > m_duration)
 	{
 		finish();
-		//Log("Fade finished");
+		Log("Fade finished");
 	}
 	else
 	{

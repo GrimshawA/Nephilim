@@ -1,6 +1,7 @@
 #include <Nephilim/Razer/ComponentTilemap2D.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Vectors.h>
+#include <Nephilim/Tilemap.h>
 #include <Nephilim/Logger.h>
 
 #include <pugixml/pugixml.hpp>
@@ -9,50 +10,20 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-bool ComponentTilemap2D::load(const String& filename)
+bool ComponentTilemap2D::load(const Tilemap& tileMap)
 {
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(filename.c_str());
-
-	if(!result)
+	for(size_t i = 0; i < tileMap.mLayers.size(); ++i)
 	{
-		Log("Failed to load TMX");
+		Tilemap2DLayer layer;
+		layer.mWidth = tileMap.mLayers[i]->mWidth;
+		layer.mHeight = tileMap.mLayers[i]->mWidth;
+		layer.mName = tileMap.mLayers[i]->mName;
+		layer.mTileData = tileMap.mLayers[i]->mTileData;
+
+		layer.generateRenderData();
+		
+		mLayers.push_back(layer);
 	}
-
-	pugi::xml_node root_node = doc.first_child();
-
-	for(pugi::xml_node_iterator it = root_node.begin(); it != root_node.end(); ++it)
-	{
-		Log("Parsing %s", it->name());
-		if(String(it->name()) == "layer")
-		{
-			Tilemap2DLayer layerData;
-
-			// Fill basic data
-			layerData.mWidth = it->attribute("width").as_int();
-			layerData.mHeight = it->attribute("height").as_int();
-			layerData.mName = it->attribute("name").as_string();
-
-			// Allocate data
-			layerData.mTileData.resize(layerData.mWidth * layerData.mHeight);
-
-			// <data> is under <layer>. It has N tile children
-			pugi::xml_node tile_layer_data = it->child("data");
-			int tile_count_check = 0;
-			for(pugi::xml_node_iterator tile_iterator = tile_layer_data.begin(); tile_iterator != tile_layer_data.end(); ++tile_iterator)
-			{
-				layerData.mTileData[tile_count_check] = tile_iterator->attribute("gid").as_int(0);
-				tile_count_check ++;
-
-				//Log("Tile node: %s", it->name());
-			}
-			Log("Layer data has %d tiles", tile_count_check);
-
-			layerData.generateRenderData();
-
-			mLayers.push_back(layerData);
-		}
-	}	
 
 	return true;
 }

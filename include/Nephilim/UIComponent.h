@@ -20,7 +20,14 @@ class String;
 class NEPHILIM_API UIViewComponent 
 {
 public:
+	UIViewComponent()
+	{
+		mParent = NULL;
+	}
+
 	Int32 component_id; ///< Identify the type of the component
+
+	UIView* mParent;
 
 	/// Called when the component is attached to a view
 	/// view is guaranteed to be valid until onRelease is called

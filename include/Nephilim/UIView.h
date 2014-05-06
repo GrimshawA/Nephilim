@@ -70,8 +70,16 @@ public:
 	/// Add a new component from a pre registered type
 	void addComponent(const String& name);
 
+	void addStringProperty(const String& propertyName, const String& propertyValue);
+
+	String getStringProperty(const String& propertyName);
+
 	/// Returns the first component with the given type
 	UIViewComponent* getComponentByType(UIViewComponent::Type type);
+
+	void printHierarchy(int tabs = 0);
+
+	bool isScheduledForRemoval(UIView* v);
 
 	/// Called before rendering the children UIView
 	virtual void preRender(Renderer* renderer);
@@ -363,6 +371,7 @@ public:
 
 	std::vector<UIViewComponent*> components; ///< List of components in this view
 
+	std::map<String, String> mStringProperties;
 
 protected: // functions
 

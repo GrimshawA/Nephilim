@@ -54,6 +54,9 @@ public:
 	/// \return the UISurface* or NULL if there are no surfaces
 	UILayerView* top();
 
+	/// Print hierarchy information for debugging
+	void printHierarchy();
+
 	/// Push a new modal surface to the top, it will destroy itself once there are no more controls in it
 	void pushModalSurface();
 

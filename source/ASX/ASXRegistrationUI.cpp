@@ -54,11 +54,17 @@ void registerUserInterfaceASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("UIView", "void load(const string& in)", asMETHOD(UIView, load), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void set(const string& in)", asMETHOD(UIView, setProperty), asCALL_THISCALL);
 
+	engine.get()->RegisterObjectMethod("UIView", "void setName(const string& in)", asMETHOD(UIView, setName), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("UIView", "string getName()", asMETHOD(UIView, getName), asCALL_THISCALL);
+
 	engine.get()->RegisterObjectMethod("UIView", "int getChildCount()", asMETHOD(UIView, getChildCount), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "UIView@ getChild(int)", asMETHOD(UIView, getChild), asCALL_THISCALL);
 
 	engine.get()->RegisterObjectMethod("UIView", "vec2 getPosition()", asMETHOD(UIView, getPosition), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void setPosition(float, float)", asMETHODPR(UIView, setPosition, (float,float), void), asCALL_THISCALL);
+	
+	engine.get()->RegisterObjectMethod("UIView", "void addStringProperty(const string& in,const string& in)", asMETHOD(UIView, addStringProperty), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("UIView", "string getStringProperty(const string& in)", asMETHOD(UIView, getStringProperty), asCALL_THISCALL);
 
 	engine.get()->RegisterObjectMethod("UIView", "void animate(const string& in)", asFUNCTION(animateUIViewByName), asCALL_CDECL_OBJLAST);
 }

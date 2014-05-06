@@ -11,13 +11,13 @@ StateStackTransition::StateStackTransition()
 : m_stack(NULL)
 , m_finished(false)
 {
-
+	Log("=> State transition instanced : %x", this);
 }
 
 /// Virtual destructor
 StateStackTransition::~StateStackTransition()
 {
-
+	Log("=> State transition destroyed : %x", this);
 }
 
 void StateStackTransition::setDuration(float duration)
@@ -27,6 +27,14 @@ void StateStackTransition::setDuration(float duration)
 
 void StateStackTransition::update(const Time& time)
 {
+
+	//Log("Updating transition %x, stack %x", this, m_stack);
+
+	if(allowUpdatesA && m_stack)
+	{
+		m_stack->updateList(m_stack->mCurrentList, time);
+	}
+
 	if(allowUpdatesB && m_stack)
 	{
 		m_stack->updateList(m_stack->mFutureList, time);
@@ -37,7 +45,6 @@ void StateStackTransition::update(const Time& time)
 	if(m_stack->mCurrentList.size() > 0 && m_stack->mFutureList.size() > 0)
 	{
 		//Log("Transition prev %s next %s", m_stack->mCurrentList[0]->mName.c_str(), m_stack->mFutureList[0]->mName.c_str());
-
 	}
 	/*else
 		Log("MAN, this is wrong.");*/

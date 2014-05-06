@@ -90,6 +90,16 @@ void UICanvas::setRect(float left, float top, float width, float height)
 	setRect(FloatRect(left,top,width, height));
 }
 
+/// Print hierarchy information for debugging
+void UICanvas::printHierarchy()
+{
+	// resize happened
+	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
+		(*it)->printHierarchy();
+	}
+}
+
 /// Get the position of the exact middle of this UIWindow
 Vec2f UICanvas::getMiddlePosition()
 {
@@ -178,9 +188,11 @@ void UICanvas::showMessageBox(const String& message)
 
 
 /// Returns a control in the hierarchy with the name, or NULL if not found
-UIView* UICanvas::getControlByName(const String& name){
+UIView* UICanvas::getControlByName(const String& name)
+{
 	UIView* control = NULL;
-	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
 		control = (*it)->findByName(name);
 		if(control != NULL) return control; // the surface returned something
 	}

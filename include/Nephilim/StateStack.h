@@ -51,6 +51,10 @@ public:
 	/// Note: If a transition is passed while another is in effect, the older is deallocated and the new one is used.
 	void performTransition(StateStackTransition* transition);
 
+	/// Finishes the transition animation, deletes the transition
+	/// and then commits all needed changes for regular functioning
+	void endTransition();
+
 	/// Check if a given state is currently being executed
 	bool isActive(const String& name);
 
@@ -67,6 +71,9 @@ public:
 
 	/// Push a binded state for execution by its name
 	void add(const String& name);
+
+	/// Remove the top state from the stack
+	void pop();
 
 	/// Adds a state to the waiting list
 	void addWaiting(State* state);
@@ -105,6 +112,8 @@ public:
 	/// Get a state or NULL
 	State* getBinding(const String& name);
 
+	bool isTransitionActive(); 
+
 	GameCore* m_parent;
 
 	struct StateStackOperation
@@ -119,7 +128,7 @@ public:
 		State* obj;
 	};
 
-private:
+//private:
 	std::vector<State*> mCurrentList; ///< The currently active stack
 	std::vector<State*> mFutureList;  ///< The stack that will be active after the transition
 

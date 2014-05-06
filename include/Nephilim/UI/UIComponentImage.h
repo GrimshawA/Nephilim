@@ -14,41 +14,20 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API UIComponentImage : public UIViewComponent
 {
 public:
+	UIComponentImage();
+
 	UIComponentImage(const String& src); /// Load from an image
 
-	void onRender(Renderer* renderer, UIView* view);
-
-	Texture* texture;
-};
-
-class NEPHILIM_API UIComponentText : public UIViewComponent
-{
-public:
-
-	enum Alignment
-	{
-		Left,
-		Center,
-		Right
-	};
-
-	UIComponentText();
-
-	UIComponentText(const String& text, Alignment horizontal, Alignment vertical);
-
-	/// On Attach
 	void onAttach(UIView* view);
 
 	void onRender(Renderer* renderer, UIView* view);
 
-	String m_string;
+	void onPropertySet(const StringList& targetObject, const String& value);
 
-	Alignment m_horizontal;
-	Alignment m_vertical;
+	void refreshTextureHandle();
 
-	Text text;
-
-	Color color;
+	Texture* mTexture;
+	String mSourceTexture;
 };
 
 NEPHILIM_NS_END

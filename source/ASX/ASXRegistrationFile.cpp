@@ -59,6 +59,8 @@ void registerFileASX(ASXEngine& engine)
 
 	engine.get()->RegisterObjectMethod("File", "bool open(const string& in)", asMETHODPR(ScriptFile, open, (const String&), bool), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("File", "string getLine()", asMETHOD(ScriptFile, getLine), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("File", "bool atEnd()", asMETHOD(ScriptFile, atEnd), asCALL_THISCALL);
+
 }
 
 NEPHILIM_NS_END

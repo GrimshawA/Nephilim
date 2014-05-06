@@ -10,6 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class UICanvas;
 class UIView;
+class ContentManager;
 
 class NEPHILIM_API UIEventResult
 {
@@ -43,14 +44,7 @@ public:
 	/// Default construction
 	UICore();
 
-	/// \ingroup UI
-	/// \class TextureResource
-	/// \brief A texture resource used by the UI system
-	class NEPHILIM_API TextureResource
-	{
-	public:
-
-	};
+	ContentManager* content;
 
 
 	/// \ingroup UI
@@ -62,9 +56,6 @@ public:
 
 	};
 
-private:
-	std::map<String, FontResource*>    m_fonts;    ///< All fonts shared by the UI system
-	std::map<String, TextureResource*> m_textures; ///< All textures shared by the UI system
 
 public:
 

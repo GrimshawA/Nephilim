@@ -2,6 +2,7 @@
 #define NephilimRazerSystem_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Time.h>
 
 #include <typeindex>
 
@@ -19,6 +20,12 @@ public:
 	virtual void onComponentAdded(std::type_index type_index, void* cdata){}
 
 	virtual ~System();
+
+
+	virtual void update(const Time& deltaTime)
+	{
+
+	}
 };
 
 };

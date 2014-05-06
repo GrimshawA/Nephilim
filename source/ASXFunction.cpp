@@ -14,6 +14,7 @@ ASXFunction::ASXFunction()
 
 void ASXFunction::prepare()
 {
+	mRuntime->get()->PushState();
 	mRuntime->get()->Prepare(mFunction);
 	mPrepared = true;
 }
@@ -21,10 +22,11 @@ void ASXFunction::prepare()
 
 void ASXFunction::call()
 {
-	mRuntime->get()->PushState();
-
 	if(!mPrepared)
+	{
+		mRuntime->get()->PushState();
 		mRuntime->get()->Prepare(mFunction);
+	}
 
 	mRuntime->get()->Execute();
 	mRuntime->get()->PopState();

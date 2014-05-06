@@ -169,11 +169,12 @@ bool File::open(const String& filename)
 	if(fp)
 	{
 		m_handle = fp;
+		m_offset = 0;
+
 		fseek(m_handle, 0 , SEEK_END);
 		m_fileSize = ftell(m_handle);
 		fseek(m_handle, m_offset, SEEK_SET);
 
-		m_offset = 0;
 		m_length = m_fileSize;
 
 		return true;

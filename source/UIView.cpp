@@ -2,6 +2,7 @@
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>
+#include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UIComponent.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/Logger.h>
@@ -140,6 +141,7 @@ void UIView::addComponent(UIViewComponent* component)
 		return;
 
 	components.push_back(component);
+	component->mParent = this;
 	component->onAttach(this);
 }
 
@@ -158,8 +160,22 @@ void UIView::addComponent(const String& name)
 	{
 		addComponent(new UIComponentDebugColor());
 	}
+	else if(name == "image")
+	{
+		addComponent(new UIComponentImage());
+	}
 
-	Log("[UIView] Adding component by name '%s'", name.c_str());
+	//Log("[UIView] Adding component by name '%s'", name.c_str());
+}
+
+void UIView::addStringProperty(const String& propertyName, const String& propertyValue)
+{
+	mStringProperties[propertyName] = propertyValue;
+}
+
+String UIView::getStringProperty(const String& propertyName)
+{
+	return mStringProperties[propertyName];
 }
 
 /// Called before rendering the children UIView ( Virtual )
@@ -372,6 +388,39 @@ void UIView::onChildRemoved(UIView* control)
 {
 
 }
+
+void UIView::printHierarchy(int tabs)
+{
+	String tabss;
+	for(int i = 0; i < tabs; ++i)
+		tabss += "\t";
+
+	Log("%s: %s", tabss.c_str(), getName().c_str());
+
+	for(size_t i = 0; i < m_children.size(); ++i)
+	{
+		if(!isScheduledForRemoval(m_children[i]))
+			m_children[i]->printHierarchy(tabs + 1);
+	}
+
+	for(std::vector<UIControlOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
+	{
+		if(it->type == UIControlOperation::Attachment)
+			it->control->printHierarchy(tabs + 1);
+	}
+}
+
+bool UIView::isScheduledForRemoval(UIView* v)
+{
+	for(std::vector<UIControlOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
+	{
+		if(it->type == UIControlOperation::Destruction && it->control == v)
+			return true;
+	}
+
+	return false;
+}
+
 
 /// Attempt to process positional flags
 void UIView::processPositionFlags()
@@ -928,6 +977,13 @@ UIView* UIView::findByName(const String& name)
 		if((*it).type ==  UIControlOperation::Attachment && (*it).control->getName() == name)
 		{
 			return (*it).control;
+		}
+		else if(it->type == UIControlOperation::Attachment)
+		{
+			// Propagate to this control children too
+			UIView* v = it->control->findByName(name);
+			if(v)
+				return v;
 		}
 	}
 
