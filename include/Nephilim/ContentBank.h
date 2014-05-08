@@ -31,8 +31,6 @@ public:
 };
 
 
-
-
 /// Content manager manages all content groups created
 class ContentManager
 {
@@ -50,6 +48,8 @@ public:
 	/// The most elemental form of loading an asset
 	/// Simply takes the filename and tries to deduce how to load it from extension
 	bool load(const String& filename);
+
+	Texture* getTexture(const String& name);
 
 	String mDefaultGroup; ///< The current default group
 	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group

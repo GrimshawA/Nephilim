@@ -68,6 +68,14 @@ bool ContentManager::load(const String& filename)
 	return false;
 }
 
+Texture* ContentManager::getTexture(const String& name)
+{
+	if(mGroups[mDefaultGroup]->mTextures.find(name) == mGroups[mDefaultGroup]->mTextures.end())
+		return NULL;
+
+	return mGroups[mDefaultGroup]->mTextures[name];
+}
+
 
 
 

@@ -2,23 +2,22 @@
 #include <Nephilim/UIView.h>
 #include <Nephilim/Text.h>
 #include <Nephilim/StringList.h>
+#include <Nephilim/ContentBank.h>
 
 NEPHILIM_NS_BEGIN
 
 UIComponentButton::UIComponentButton()
-: mString("Button")
+: UIViewComponent()
+, mString("Button")
+, mTexture(NULL)
+, mHoverTexture(NULL)
 {
 	mNormalColor = Color::Black;
+	mHoverColor = Color::Yellow;
 }
 
 void UIComponentButton::onPropertySet(const StringList& targetObject, const String& value)
 {
-	//Log("BUTTON SETTING PROPERTY %s", value.c_str());
-
-	//Log("List size %d", targetObject.size());
-	//Log("List elem 1 %s", targetObject[0].c_str());
-	//Log("List elem 1 %s", targetObject[1].c_str());
-
 	if(targetObject.size() == 2 && targetObject[0] == "button" && targetObject[1] == "caption")
 	{
 		mString = value;
@@ -29,6 +28,45 @@ void UIComponentButton::onPropertySet(const StringList& targetObject, const Stri
 		if(value == "red")
 		{
 			mNormalColor = Color::Red;
+		}
+	}
+
+	if(targetObject.size() == 2 && targetObject[0] == "button" && targetObject[1] == "texture")
+	{
+		mNormalColor = Color::White;
+		mNormalTextureSource = value;
+
+		refreshTextures();
+	}
+
+	if(targetObject.size() == 2 && targetObject[0] == "button" && targetObject[1] == "htexture")
+	{
+		mHoverColor = Color::White;
+		mHoverTextureSource = value;
+
+		refreshTextures();
+	}
+}
+
+void UIComponentButton::refreshTextures()
+{
+	if(mParent)
+	{
+		if(mParent->getContext()->content)
+		{
+			mTexture = mParent->getContext()->content->getTexture(mNormalTextureSource);
+			if(!mTexture)
+			{
+				mParent->getContext()->content->load(mNormalTextureSource);
+				mTexture = mParent->getContext()->content->getTexture(mNormalTextureSource);
+			}
+
+			mHoverTexture = mParent->getContext()->content->getTexture(mHoverTextureSource);
+			if(!mHoverTexture)
+			{
+				mParent->getContext()->content->load(mHoverTextureSource);
+				mHoverTexture = mParent->getContext()->content->getTexture(mHoverTextureSource);
+			}
 		}
 	}
 }
@@ -52,7 +90,11 @@ void UIComponentButton::onRender(Renderer* renderer, UIView* view)
 	{
 		RectangleShape hoverRect;
 		hoverRect.setRect(view->getBounds());
-		hoverRect.setColor(Color::Yellow);
+		hoverRect.setColor(mHoverColor);
+		if(mTexture)
+		{
+			hoverRect.setTexture(mHoverTexture);
+		}
 		renderer->draw(hoverRect);
 	}
 	else
@@ -60,6 +102,10 @@ void UIComponentButton::onRender(Renderer* renderer, UIView* view)
 		RectangleShape hoverRect;
 		hoverRect.setRect(view->getBounds());
 		hoverRect.setColor(mNormalColor);
+		if(mTexture)
+		{
+			hoverRect.setTexture(mTexture);
+		}
 		renderer->draw(hoverRect);
 	}
 

@@ -5,6 +5,7 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/UIComponent.h>
 #include <Nephilim/Color.h>
+#include <Nephilim/Texture.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -21,10 +22,20 @@ public:
 
 	void onPropertySet(const StringList& targetObject, const String& value);
 
+	void refreshTextures();
+
 	bool hovering;
 
 	String mString;
+
 	Color mNormalColor;
+	Color mHoverColor;
+
+	String mHoverTextureSource;
+	String mNormalTextureSource;
+
+	Texture* mTexture;
+	Texture* mHoverTexture;
 };
 
 NEPHILIM_NS_END
