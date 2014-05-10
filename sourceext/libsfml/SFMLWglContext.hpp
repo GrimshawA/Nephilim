@@ -25,6 +25,8 @@
 #ifndef SFML_WGLCONTEXT_HPP
 #define SFML_WGLCONTEXT_HPP
 
+#if defined _WIN32
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
@@ -133,4 +135,5 @@ private :
 
 } // namespace sf
 
+#endif
 #endif // SFML_WGLCONTEXT_HPP

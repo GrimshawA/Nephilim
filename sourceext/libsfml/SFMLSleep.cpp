@@ -31,7 +31,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include "SFMLWin32SleepImpl.hpp"
 #else
-    #include <SFML/System/Unix/SleepImpl.hpp>
+    #include "Unix/SleepImpl.hpp"
 #endif
 
 

@@ -15,8 +15,6 @@ void SystemKinesis2D::update(const Time& deltaTime)
 
 void SystemKinesis2D::onComponentAdded(std::type_index type_index, void* cdata)
 {
-	Log("=> Kinesis2D system: Component notification");
-
 	if( type_index == getTypeOf<ComponentKinesisBody2D>())
 	{
 		Log("Kinesis2D system detected a new component being added. %d", type_index);
@@ -24,6 +22,8 @@ void SystemKinesis2D::onComponentAdded(std::type_index type_index, void* cdata)
 
 		ComponentKinesisBody2D& bodyComponent = *static_cast<ComponentKinesisBody2D*>(cdata);
 		bodyComponent.body = body;
+		
+		Log("created a physical body");
 	}
 }
 

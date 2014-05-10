@@ -1,3 +1,4 @@
+#include <Nephilim/Strings.h>
 #include <Nephilim/StateTransition.h>
 #include <Nephilim/StateStack.h>
 #include <Nephilim/State.h>

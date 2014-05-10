@@ -31,7 +31,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include "SFMLWin32MutexImpl.hpp"
 #else
-    #include <SFML/System/Unix/MutexImpl.hpp>
+    #include "Unix/MutexImpl.hpp"
 #endif
 
 

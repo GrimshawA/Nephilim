@@ -31,7 +31,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include "SFMLWin32ThreadLocalImpl.hpp"
 #else
-    #include <SFML/System/Unix/ThreadLocalImpl.hpp>
+    #include "Unix/ThreadLocalImpl.hpp"
 #endif
 
 

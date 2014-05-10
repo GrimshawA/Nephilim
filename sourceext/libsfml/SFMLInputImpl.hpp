@@ -35,7 +35,7 @@
 #elif defined(SFML_SYSTEM_LINUX) || defined(SFML_SYSTEM_FREEBSD)
     #include <SFML/Window/Linux/InputImpl.hpp>
 #elif defined(SFML_SYSTEM_MACOS)
-    #include <SFML/Window/OSX/InputImpl.hpp>
+    #include "OSX/InputImpl.hpp" 
 #endif
 
 

@@ -32,7 +32,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include "SFMLWin32ThreadImpl.hpp"
 #else
-    #include <SFML/System/Unix/ThreadImpl.hpp>
+    #include "Unix/ThreadImpl.hpp"
 #endif
 
 

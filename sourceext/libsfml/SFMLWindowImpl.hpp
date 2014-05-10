@@ -154,7 +154,7 @@ public :
     /// \param title New title
     ///
     ////////////////////////////////////////////////////////////
-    virtual void setTitle(const String& title) = 0;
+    virtual void setTitle(const String& title){};
 
     ////////////////////////////////////////////////////////////
     /// \brief Change the window's icon

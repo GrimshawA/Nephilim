@@ -1,8 +1,9 @@
+#include <Nephilim/Strings.h>
 #include <Nephilim/StateStack.h>
 #include <Nephilim/StateTransition.h>
 #include <Nephilim/State.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Strings.h>
+
 #include <Nephilim/Logger.h>
 
 #include <algorithm>

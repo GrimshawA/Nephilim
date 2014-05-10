@@ -9,10 +9,10 @@
 NEPHILIM_NS_BEGIN
 
 static const char gVertexSource[] =
-	"#version 130\n"
-	"in vec4 vertex;\n"
-	"in vec4 color;\n"
-	"in vec2 texCoord;\n"
+	"#version 120\n"
+	"attribute vec4 vertex;\n"
+	"attribute vec4 color;\n"
+	"attribute vec2 texCoord;\n"
 	"uniform mat4 projection = mat4(1);\n"
 	"uniform mat4 model = mat4(1);\n"
 	"uniform mat4 view = mat4(1);\n"
@@ -25,7 +25,7 @@ static const char gVertexSource[] =
 	"}\n";
 
 static const char gFragmentSource[] = 
-	"#version 130\n"
+	"#version 120\n"
 	"uniform sampler2D texture;\n"
 	"varying vec4 outColor;\n"
 	"varying vec2 texUV;\n"

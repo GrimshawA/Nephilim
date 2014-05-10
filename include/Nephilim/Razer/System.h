@@ -4,6 +4,8 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Time.h>
 
+#include <vector>
+#include <map>
 #include <typeindex>
 
 NEPHILIM_NS_BEGIN

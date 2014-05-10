@@ -33,7 +33,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include "SFMLWin32ClockImpl.hpp"
 #else
-    #include <SFML/System/Unix/ClockImpl.hpp>
+    #include "Unix/ClockImpl.hpp"
 #endif
 
 
