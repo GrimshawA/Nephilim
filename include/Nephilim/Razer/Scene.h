@@ -21,6 +21,9 @@ class NEPHILIM_API Scene
 public:
 	Scene();
 
+	/// Registers a system to this scene
+	void registerSystem(System* system);
+
 	/// Create and return a new entity
 	Entity createEntity();
 

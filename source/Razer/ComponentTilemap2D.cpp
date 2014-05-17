@@ -14,15 +14,19 @@ bool ComponentTilemap2D::load(const Tilemap& tileMap)
 {
 	for(size_t i = 0; i < tileMap.mLayers.size(); ++i)
 	{
-		Tilemap2DLayer layer;
-		layer.mWidth = tileMap.mLayers[i]->mWidth;
-		layer.mHeight = tileMap.mLayers[i]->mWidth;
-		layer.mName = tileMap.mLayers[i]->mName;
-		layer.mTileData = tileMap.mLayers[i]->mTileData;
+		if(tileMap.mLayers[i]->mType == Tilemap::Layer::Tiles)
+		{
+			Tilemap2DLayer layer;
+			layer.mWidth = tileMap.mLayers[i]->mWidth;
+			layer.mHeight = tileMap.mLayers[i]->mWidth;
+			layer.mName = tileMap.mLayers[i]->mName;
+			layer.mTileData = tileMap.mLayers[i]->mTileData;
 
-		layer.generateRenderData();
+			layer.generateRenderData();
+
+			mLayers.push_back(layer);
+		}
 		
-		mLayers.push_back(layer);
 	}
 
 	return true;
@@ -58,10 +62,18 @@ void Tilemap2DLayer::generateRenderData()
 		for(int i = 0; i < mWidth; ++i)
 		{
 			
-			tile_array[vindex].position   = vec2(i * 32.f,        j * 32.f); // top-left corner
-			tile_array[vindex+1].position = vec2(i * 32.f + 32.f, j * 32.f); // top-right corner
-			tile_array[vindex+2].position = vec2(i * 32.f + 32.f, j * 32.f + 32.f); // bottom-right corner
-			tile_array[vindex+3].position = vec2(i * 32.f,        j * 32.f + 32.f); // bottom-left corner
+			tile_array[vindex].position   = vec2(i * 32.f,        -j * 32.f); // top-left corner
+			tile_array[vindex+1].position = vec2(i * 32.f + 32.f, -j * 32.f); // top-right corner
+			tile_array[vindex+2].position = vec2(i * 32.f + 32.f, -j * 32.f + 32.f); // bottom-right corner
+			tile_array[vindex+3].position = vec2(i * 32.f,        -j * 32.f + 32.f); // bottom-left corner
+
+			if(mTileData[tile_index] == 0)
+			{
+				tile_array[vindex].position   = vec2(0.f, 0.f); // top-left corner
+				tile_array[vindex+1].position = vec2(0.f, 0.f); // top-right corner
+				tile_array[vindex+2].position = vec2(0.f, 0.f); // bottom-right corner
+				tile_array[vindex+3].position = vec2(0.f, 0.f); // bottom-left corner
+			}
 
 			float alpha = mTileData[tile_index] == 0 ? alpha = 0.f : alpha = 1.f;
 

@@ -77,6 +77,12 @@ bool VertexArray::isVertexEqual(Int32 index1, Int32 index2)
 		return false;
 }
 
+/// Get the pointer to the attribute data of a given vertex
+char* VertexArray::getAttribute(Int32 attributeIndex, Int32 vertexIndex)
+{
+	return &data[0] + (getVertexSize() * vertexIndex) + getAttributeOffset(attributeIndex);
+}
+
 void VertexArray::removeLast()
 {
 	data.resize(data.size() - getVertexSize());
@@ -162,6 +168,11 @@ void IndexArray::swapIndices(Int32 index1, Int32 index2)
 			indices[i] = index1;
 		}
 	}
+}
+
+size_t IndexArray::size()
+{
+	return indices.size();
 }
 
 NEPHILIM_NS_END

@@ -1,5 +1,6 @@
 #include <Nephilim/UI/UIComponentLabel.h>
 #include <Nephilim/UIView.h>
+#include <Nephilim/StringList.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -38,6 +39,15 @@ void UIComponentText::onAttach(UIView* view)
 		text.setOrigin(text.getLocalBounds().width / 2.f, 0.f);
 	}
 }
+
+void UIComponentText::onPropertySet(const StringList& targetObject, const String& value)
+{
+	if(targetObject.size() == 2 && targetObject[0] == "text" && targetObject[1] == "caption")
+	{
+		m_string = value;
+	}
+}
+
 
 void UIComponentText::onRender(Renderer* renderer, UIView* view)
 {

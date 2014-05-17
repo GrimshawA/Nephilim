@@ -23,6 +23,10 @@ public:
 
 	void applyForceToCenter(float x, float y);
 
+	void setPosition(float x, float y);
+
+	void setPosition(const vec2& p);
+
 	vec2 getPosition();
 
 	void setFixedRotation(bool enable);

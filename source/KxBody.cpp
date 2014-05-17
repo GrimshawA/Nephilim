@@ -7,7 +7,8 @@
 NEPHILIM_NS_BEGIN
 
 /// Creates a body actor from a body
-KxBody::KxBody(b2Body *body) : m_userdata(NULL){
+KxBody::KxBody(b2Body *body) : m_userdata(NULL)
+{
 	m_body = body;
 };
 
@@ -16,9 +17,13 @@ float KxBody::getAngle(){
 	return m_body->GetAngle();
 };
 
-void KxBody::setPosition(Vec2f position){
-	m_body->SetTransform(b2Vec2(((KxScene*)m_body->GetWorld())->toMeters(position.x), ((KxScene*)m_body->GetWorld())->toMeters(position.y)), m_body->GetAngle());
-};
+void KxBody::setPosition(Vec2f position)
+{
+	position.x = scene->toMeters(position.x);
+	position.y = scene->toMeters(position.y);
+
+	m_body->SetTransform(b2Vec2(position.x, position.y), m_body->GetAngle());
+}
 
 
 Vec2f KxBody::getPosition()
@@ -35,14 +40,16 @@ float KxBody::getDegreeAngle(){
 	return math::radianToDegree(m_body->GetAngle());
 };
 
-void KxBody::setVelocity(Vec2f velocity){
+void KxBody::setVelocity(Vec2f velocity)
+{
 	m_body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
-};
+}
 
 /// Set the angle of rotation of the body, it is 0.f by default and is facing right, expressed in radians
-void KxBody::setAngle(float radians){
+void KxBody::setAngle(float radians)
+{
 	m_body->SetTransform(m_body->GetPosition(), radians);
-};
+}
 
 /// Choose whether this body is allowed to rotate
 void KxBody::setFixedRotation(bool fixedRotation)
@@ -54,7 +61,8 @@ void KxBody::setFixedRotation(bool fixedRotation)
 //////////////////////////////////////////////////////////////////////////
 
 /// Construct the shape from the fixture
-KinesisBodyShape::KinesisBodyShape(b2Fixture* fix){
+KinesisBodyShape::KinesisBodyShape(b2Fixture* fix)
+{
 
 };
 

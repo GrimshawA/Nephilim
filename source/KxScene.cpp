@@ -7,7 +7,7 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 KxScene::KxScene()
-: m_world(new b2World(b2Vec2(0.f, 1.4f)))
+: m_world(new b2World(b2Vec2(0.f, -1.1f)))
 , m_velocityIterations(6)
 , m_positionIterations(6)
 , m_pixelsPerMeter(100)

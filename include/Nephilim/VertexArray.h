@@ -62,6 +62,9 @@ public:
 
 	void swapVertices(Int32 index, Int32 goesTo);
 
+	/// Get the pointer to the attribute data of a given vertex
+	char* getAttribute(Int32 attributeIndex, Int32 vertexIndex);
+
 	Int32 getAttributeOffset(Int32 attributeIndex);
 	Int32 getAttributeSize(Int32 attributeIndex);
 
@@ -93,6 +96,8 @@ public:
 	void redirectFromTo(Int32 searchElement, Int32 becomes);
 	/// Whatever pointed at index1, now points at index 2, and vice versa
 	void swapIndices(Int32 index1, Int32 index2);
+
+	size_t size();
 
 	std::vector<Uint16> indices;
 };

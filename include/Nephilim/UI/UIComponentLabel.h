@@ -27,7 +27,7 @@ public:
 	void onAttach(UIView* view);
 
 	void onRender(Renderer* renderer, UIView* view);
-
+	void onPropertySet(const StringList& targetObject, const String& value);
 	String m_string;
 
 	Alignment m_horizontal;

@@ -8,6 +8,13 @@ Scene::Scene()
 {
 }
 
+/// Registers a system to this scene
+void Scene::registerSystem(System* system)
+{
+	system->mScene = this;
+	mRegisteredSystems.push_back(system);
+}
+
 /// Create and return a new entity
 Entity Scene::createEntity()
 {

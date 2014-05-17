@@ -49,7 +49,6 @@ void registerUserInterfaceASX(ASXEngine& engine)
 
 	engine.get()->RegisterObjectMethod("UIView", "UIView@ create(const string& in)", asMETHOD(UIView, createChild), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void setRect(float, float, float, float)", asMETHODPR(UIView, setRect, (float,float,float,float), void), asCALL_THISCALL);
-	engine.get()->RegisterObjectMethod("UIView", "void setSize(float, float)", asMETHOD(UIView, setSize), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void add(const string& in)", asMETHODPR(UIView, addComponent, (const String&), void), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void load(const string& in)", asMETHOD(UIView, load), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void set(const string& in)", asMETHOD(UIView, setProperty), asCALL_THISCALL);
@@ -63,6 +62,9 @@ void registerUserInterfaceASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("UIView", "vec2 getPosition()", asMETHOD(UIView, getPosition), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void setPosition(float, float)", asMETHODPR(UIView, setPosition, (float,float), void), asCALL_THISCALL);
 	
+	engine.get()->RegisterObjectMethod("UIView", "vec2 getSize()", asMETHOD(UIView, getSize), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("UIView", "void setSize(float, float)", asMETHOD(UIView, setSize), asCALL_THISCALL);
+
 	engine.get()->RegisterObjectMethod("UIView", "void addStringProperty(const string& in,const string& in)", asMETHOD(UIView, addStringProperty), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "string getStringProperty(const string& in)", asMETHOD(UIView, getStringProperty), asCALL_THISCALL);
 

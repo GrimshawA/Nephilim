@@ -1,5 +1,6 @@
 #include <Nephilim/Razer/ComponentKinesisBody2D.h>
 #include <Nephilim/KxBody.h>
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
@@ -17,7 +18,21 @@ void ComponentKinesisBody2D::applyForceToCenter(float x, float y)
 
 vec2 ComponentKinesisBody2D::getPosition()
 {
+	assert(body != NULL);
 	return body->getPosition();
+}
+
+void ComponentKinesisBody2D::setPosition(float x, float y)
+{
+	assert(body != NULL);
+	body->setPosition(vec2(x,y));
+	Log("Setting Position to %f %f", x,y);
+}
+
+void ComponentKinesisBody2D::setPosition(const vec2& p)
+{
+	assert(body != NULL);
+	body->setPosition(p);
 }
 
 void ComponentKinesisBody2D::setFixedRotation(bool enable)

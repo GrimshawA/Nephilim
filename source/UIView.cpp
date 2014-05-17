@@ -3,6 +3,9 @@
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UI/UIComponentImage.h>
+#include <Nephilim/UI/UIComponentLabel.h>
+
+
 #include <Nephilim/UIComponent.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/Logger.h>
@@ -163,6 +166,10 @@ void UIView::addComponent(const String& name)
 	else if(name == "image")
 	{
 		addComponent(new UIComponentImage());
+	}
+	else if(name == "text")
+	{
+		addComponent(new UIComponentText("None", UIComponentText::Center, UIComponentText::Center));
 	}
 
 	//Log("[UIView] Adding component by name '%s'", name.c_str());
