@@ -10,7 +10,7 @@ namespace rzr
 {
 
 /**
-	\class ComponentTransform
+	\class ComponentSprite
 	\brief 3D transform for a entity, scale + rotation + translation
 */
 class NEPHILIM_API ComponentSprite : public Component

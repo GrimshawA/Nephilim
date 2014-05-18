@@ -8,8 +8,11 @@
 #include <Nephilim/Razer/SystemKinesis2D.h>
 
 #include <Nephilim/Logger.h>
+#include <Nephilim/RectangleShape.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/CGL.h>
+
+#include <Nephilim/Razer/PostEffectBloom.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr{
@@ -17,11 +20,38 @@ namespace rzr{
 SystemRenderer::SystemRenderer()
 : System()
 {
+	// add a test bloom effect
+	mPostEffects.push_back(new PostEffectBloom);
 
+	// init the render to texture
+	mRenderTexture.create(1000.f, 500.f);
+	if(mFramebuffer.create())
+	{
+		mFramebuffer.activate();
+		mFramebuffer.attachTexture(mRenderTexture);
+
+		GLuint depthrenderbuffer;
+		glGenRenderbuffers(1, &depthrenderbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1000, 500);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		Log("=>>>>>>>>> Render Texture created");
+	}
+	else
+	{
+		Log(">>>>>>>>>>> Could not make render texture");
+	}
+	
 }
 
 void SystemRenderer::render()
 {
+	// Bind render to texture
+	mFramebuffer.activate();
+	glViewport(0, 0, 1000, 500);
+
 	// Find a camera
 	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
@@ -30,14 +60,13 @@ void SystemRenderer::render()
 		{
 			ComponentCamera& camera = ent.getComponent<ComponentCamera>();
 
-			mRenderer->setProjectionMatrix(mat4::perspective(90.f, 1000.f / 500.f, 1.f, 1000.f));
+			mRenderer->setProjectionMatrix(mat4::perspective(65.f, 1000.f / 500.f, 1.f, 1000.f));
 			mRenderer->setViewMatrix(mat4::lookAt(vec3(camera.x, camera.y, camera.z), vec3(camera.center_x, camera.center_y, camera.center_z) , camera.up));
 			mRenderer->clearDepthBuffer();
 			mRenderer->setDepthTestEnabled(true);
 			mRenderer->clearColorBuffer();
 			mRenderer->setBlendingEnabled(true);
 			mRenderer->setBlendMode(Render::Blend::Alpha);
-
 		}
 	}
 
@@ -54,14 +83,31 @@ void SystemRenderer::render()
 			ent.getComponent<ComponentTerrain>().surfaceTex.bind();
 			mRenderer->draw(ent.getComponent<ComponentTerrain>().geometry);
 		}
-		else if(ent.hasComponent<ComponentMesh>())
+		else if(ent.hasComponent<ComponentMesh>()) 
 		{
 			renderMesh(ent);
 		}
 	}
 
-	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mScene);
-	mRenderer->draw(dr);
+//	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mScene);
+	//mRenderer->draw(dr);
+
+	// Post processing
+	((PostEffectBloom*)mPostEffects[0])->apply(mRenderer, mRenderTexture);
+
+	/*mRenderer->setDefaultTarget();
+	mRenderer->setDefaultShader();
+	mRenderer->setProjectionMatrix(View(0, 0, 1000, 500).getMatrix());
+	mRenderer->setViewMatrix(mat4::identity);
+	mRenderer->setDefaultViewport();
+	mRenderer->setDepthTestEnabled(false);
+
+	RectangleShape finalComposite;
+	finalComposite.setTexture(&mRenderTexture);
+	finalComposite.invertTextureCoordinates();
+	finalComposite.setSize(1000.f, 500.f);
+	//finalComposite.setColor(Color::Blue);
+	mRenderer->draw(finalComposite);*/
 }
 
 void SystemRenderer::renderMesh(Entity& entity)

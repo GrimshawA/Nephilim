@@ -117,6 +117,12 @@ void Shader::bind() const
 	glUseProgram(static_cast<GLuint>(m_id));
 }
 
+unsigned int Shader::getIdentifier()
+{
+	return m_id;
+}
+
+
 /// Creates and links the program from previously compiled unit processors
 bool Shader::create()
 {

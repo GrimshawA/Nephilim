@@ -4,6 +4,9 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/System.h>
 #include <Nephilim/Renderer.h>
+#include <Nephilim/Framebuffer.h>
+#include <Nephilim/Texture.h>
+#include <Nephilim/Razer/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
@@ -22,6 +25,12 @@ public:
 	void renderMesh(Entity& entity);
 
 	Renderer* mRenderer;
+
+	Texture mRenderTexture;
+	Framebuffer mFramebuffer;
+
+	/// Preliminary list of post effects
+	std::vector<PostEffect*> mPostEffects;
 };
 
 };

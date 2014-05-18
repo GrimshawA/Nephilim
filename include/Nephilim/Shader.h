@@ -82,6 +82,8 @@ public:
 
 	void pff();
 
+	unsigned int getIdentifier();
+
 public:
 	unsigned int m_id; ///< Internal shader identifier
 	std::vector<std::pair<ShaderTypes, unsigned int> > m_shaders; ///< List of compiled shaders
