@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Matrix.h>
+#include <Nephilim/Quaternion.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN
@@ -20,6 +21,13 @@ public:
 	{
 		x = y = z = 0.f;
 	}
+
+	void rotateAxisAngle(float x_axis, float y_axis, float z_axis);
+
+	vec3 getForwardVector();
+	vec3 getRightVector();
+
+	Quaternion rotation;
 
 	float x, y, z;
 	mat4 matrix;

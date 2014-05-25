@@ -63,6 +63,66 @@ mat4 Quaternion::toMatrix()
 	return m;
 }
 
+Quaternion Quaternion::operator*(const Quaternion& q2)
+{
+	Quaternion qr;
+	vec3 va, vb, vc;
+	
+	qr.w = vec3(x,y,z).dot(vec3(q2.x, q2.y, q2.z));
+
+	va = vec3(x,y,z).cross(vec3(q2.x, q2.y, q2.z));
+	vb = vec3(x,y,z) * q2.w;
+	vc = vec3(q2.x, q2.y, q2.z) * w;
+
+	va = va + vb;
+	qr.x = va.x + vc.x;
+	qr.y = va.y + vc.y;
+	qr.z = va.z + vc.z;
+
+	qr.normalize();
+
+	// test 2
+	qr.w = w * q2.w - x * q2.x - y * q2.y - z * q2.z;
+	qr.x = w * q2.x + x * q2.w + y * q2.z - z * q2.y;
+	qr.y = w * q2.y - x * q2.z + y * q2.w + z * q2.x;
+	qr.z = w * q2.z + x * q2.y - y * q2.x + z * q2.w;
+
+	return qr;
+}
+
+
+void Quaternion::rotateEulerAngles(float ax, float ay, float az)
+{
+	vec3 vx(1.f, 0.f, 0.f), vy(0.f, 1.f, 0.f), vz(0.f, 0.f, 1.f);
+	Quaternion qx, qy, qz, qt;
+
+	// Extract a quaternion from a basis axis and a euler angle
+	Quaternion::fromAxisAngle( qx, vx, ax );
+	Quaternion::fromAxisAngle( qy, vy, ay );
+	Quaternion::fromAxisAngle( qz, vz, az );
+
+	qt = qx * qy;
+	qt = qt * qz;
+
+	// qt holds the resulting quaternion
+
+	*this = *this * qt;
+}
+
+void Quaternion::fromAxisAngle(Quaternion& q, vec3 axis, float angle)
+{
+	float sin_a = sin( angle / 2 );
+	float cos_a = cos( angle / 2 );
+
+	q.x    = axis.x * sin_a;
+	q.y    = axis.y * sin_a;
+	q.z    = axis.z * sin_a;
+	q.w    = cos_a;
+
+	q.normalize();
+}
+
+
 Quaternion Quaternion::fromMatrix(mat4 m)
 {
 	Quaternion q;

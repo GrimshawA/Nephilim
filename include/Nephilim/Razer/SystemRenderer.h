@@ -6,6 +6,7 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/Texture.h>
+#include <Nephilim/ContentBank.h>
 #include <Nephilim/Razer/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
@@ -24,10 +25,13 @@ public:
 	void renderTilemap(Entity& entity);
 	void renderMesh(Entity& entity);
 
-	Renderer* mRenderer;
+	Renderer*        mRenderer;
+	ContentManager*  mContentManager;
 
 	Texture mRenderTexture;
 	Framebuffer mFramebuffer;
+
+
 
 	/// Preliminary list of post effects
 	std::vector<PostEffect*> mPostEffects;

@@ -218,10 +218,13 @@ void RectangleShape::onDraw(Renderer* renderer)
 
 	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_geometry);
-	renderer->setDefaultTexture();
-	glLineWidth(m_outlineThickness);
-	renderer->draw(m_outline);
-	renderer->setModelMatrix(mat4::identity);
+	if(m_outlineThickness > 0.f)
+	{
+		renderer->setDefaultTexture();
+		glLineWidth(m_outlineThickness);
+		renderer->draw(m_outline);
+		renderer->setModelMatrix(mat4::identity);
+	}	
 	renderer->setDefaultTexture();
 }
 

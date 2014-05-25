@@ -1,4 +1,5 @@
 #include <Nephilim/VertexArray.h>
+#include <Nephilim/IndexArray.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
@@ -45,7 +46,7 @@ Int32 VertexArray::getAttributeSize(Int32 attributeIndex)
 	return format.attributes[attributeIndex].size * format.attributes[attributeIndex].numComponents;
 }
 
-Int32 VertexArray::getVertexSize()
+Int32 VertexArray::getVertexSize() const
 {
 	Int32 bytesPerVertex = 0;
 	for(size_t i = 0; i < format.attributes.size(); ++i)
@@ -87,6 +88,12 @@ void VertexArray::removeLast()
 {
 	data.resize(data.size() - getVertexSize());
 	count--;
+}
+
+/// Get the byte size of the current buffer
+Int32 VertexArray::getMemorySize() const
+{
+	return data.size();
 }
 
 void VertexArray::swapVertices(Int32 index, Int32 goesTo)
@@ -139,40 +146,6 @@ void VertexArray::removeDuplicateVertices(VertexArray& varray, IndexArray& iarra
 	}
 
 	Log("Done removing duplicated. Varray size: %d, IArray size %d", varray.count, iarray.indices.size());
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-void IndexArray::redirectFromTo(Int32 searchElement, Int32 becomes)
-{
-	for(size_t i = 0; i < indices.size(); ++i)
-	{
-		if(indices[i] == searchElement)
-		{
-			indices[i] = becomes;
-		}
-	}
-}
-
-/// Whatever pointed at index1, now points at index 2, and vice versa
-void IndexArray::swapIndices(Int32 index1, Int32 index2)
-{
-	for(size_t i = 0; i < indices.size(); ++i)
-	{
-		if(indices[i] == index1)
-		{
-			indices[i] = index2;
-		}
-		else if(indices[i] == index2)
-		{
-			indices[i] = index1;
-		}
-	}
-}
-
-size_t IndexArray::size()
-{
-	return indices.size();
 }
 
 NEPHILIM_NS_END

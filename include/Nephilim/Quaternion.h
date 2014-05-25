@@ -14,6 +14,10 @@ public:
 
 	Quaternion(float nx, float ny, float nz, float nw);
 
+	void rotateEulerAngles(float ax, float ay, float az);
+
+	Quaternion operator*(const Quaternion& q2);
+
 	void normalize();  
 
 	float x,y,z,w;
@@ -21,6 +25,7 @@ public:
 	mat4 toMatrix();
 	
 	static Quaternion fromMatrix(mat4 m);
+	static void fromAxisAngle(Quaternion& q, vec3 axis, float angle);
 };
 
 NEPHILIM_NS_END

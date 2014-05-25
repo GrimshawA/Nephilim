@@ -24,7 +24,7 @@ void Entity::addComponent()
 	// Notify systems
 	for(size_t i = 0; i < mScene->mRegisteredSystems.size(); ++i)
 	{
-		mScene->mRegisteredSystems[i]->onComponentAdded(getTypeOf<CType>(), (void*)&components.mComponents.back());
+		mScene->mRegisteredSystems[i]->onComponentAdded(getTypeOf<CType>(), (void*)&components.mComponents.back(), this);
 	}
 }
 

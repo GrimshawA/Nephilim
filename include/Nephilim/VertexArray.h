@@ -58,7 +58,10 @@ class NEPHILIM_API VertexArray
 public:
 	void removeLast();
 
-	Int32 getVertexSize();
+	Int32 getVertexSize() const;
+
+	/// Get the byte size of the current buffer
+	Int32 getMemorySize() const;
 
 	void swapVertices(Int32 index, Int32 goesTo);
 
@@ -80,28 +83,6 @@ public:
 	std::vector<char>  data;   ///< The vertex raw data
 	size_t             count;  ///< Number of allocated vertices
 };
-
-/**
-	\class IndexData
-	\brief Geometric faces information
-
-	Meant to be used together with VertexData,
-	to make up the faces of the polygons with
-	indices, using the vertex data.
-*/
-class NEPHILIM_API IndexArray
-{
-public:
-
-	void redirectFromTo(Int32 searchElement, Int32 becomes);
-	/// Whatever pointed at index1, now points at index 2, and vice versa
-	void swapIndices(Int32 index1, Int32 index2);
-
-	size_t size();
-
-	std::vector<Uint16> indices;
-};
-
 
 NEPHILIM_NS_END
 #endif // NephilimVertexArray_h__

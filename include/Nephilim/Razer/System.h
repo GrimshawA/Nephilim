@@ -13,6 +13,8 @@ namespace rzr
 {
 
 class Scene;
+class Entity;
+
 /**
 	\class System
 	\brief Game system manager
@@ -23,7 +25,7 @@ public:
 
 	virtual ~System();
 
-	virtual void onComponentAdded(std::type_index type_index, void* cdata){}
+	virtual void onComponentAdded(std::type_index type_index, void* cdata, Entity* entity){}
 
 	virtual void update(const Time& deltaTime){}
 

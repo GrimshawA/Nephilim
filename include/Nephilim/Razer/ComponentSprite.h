@@ -2,6 +2,7 @@
 #define NephilimRazerComponentSprite_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Vectors.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Razer/Component.h>
 
@@ -16,9 +17,17 @@ namespace rzr
 class NEPHILIM_API ComponentSprite : public Component
 {
 public:
+	ComponentSprite();
+
 	float width;
 	float height;
+
 	String tex;
+	
+	vec2 tex_rect_pos;
+	vec2 tex_rect_size;
+
+	vec2 scale;
 };
 
 };

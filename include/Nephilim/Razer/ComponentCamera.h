@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Vectors.h>
+#include <Nephilim/Matrix.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN
@@ -20,6 +21,8 @@ public:
 	vec3 position;
 	vec3 eye;
 	vec3 up;
+
+	mat4 cameraTransform;
 
 	float x,y,z; // where the camera is
 	float center_x, center_y, center_z;

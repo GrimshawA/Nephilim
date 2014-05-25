@@ -4,6 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/VertexArray.h>
+#include <Nephilim/IndexArray.h>
 #include <Nephilim/Razer/Component.h>
 
 #include <vector>

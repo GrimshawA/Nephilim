@@ -53,7 +53,7 @@ bool ContentManager::load(const String& filename)
 
 	ContentGroup* targetGroup = mGroups[mDefaultGroup];
 
-	if(extension == "png")
+	if(extension == "png" || extension == "jpg")
 	{
 		Log("Loading texture: %s", filename.c_str());
 		targetGroup->mTextures[filename] = new Texture();

@@ -144,7 +144,7 @@ bool ComponentMesh::loadCubesFromTilemap(Tilemap* tilemap)
 		vec3 p = *reinterpret_cast<vec3*>(mVertexArray.getAttribute(0, mIndexArray.indices[j]));
 		//Log("Index at %d is %d Vertex(%f, %f, %f)", j, mIndexArray.indices[j], p.x, p.y, p.z);
 	}
-
+	
 	return true;
 }
 

@@ -17,18 +17,18 @@ class SystemKinesis2D : public System
 {
 public:
 
-	void onComponentAdded(std::type_index type_index, void* cdata);
+	void onComponentAdded(std::type_index type_index, void* cdata, Entity* entity);
 
 	void setupTest();
 
 	void addStaticTile(float x, float y, float w, float h)
 	{
-		mScene.CreateStaticBox(x,y,w,h);
+		mPhysicsScene.CreateStaticBox(x,y,w,h);
 	}
 
 	virtual void update(const Time& deltaTime);
 
-	KxScene mScene; ///< Physics scene
+	KxScene mPhysicsScene; ///< Physics scene
 };
 
 };
