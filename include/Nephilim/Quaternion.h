@@ -16,6 +16,8 @@ public:
 
 	void rotateEulerAngles(float ax, float ay, float az);
 
+	void rotateAxisAngle(float angle, float ax, float ay, float az);
+
 	Quaternion operator*(const Quaternion& q2);
 
 	void normalize();  

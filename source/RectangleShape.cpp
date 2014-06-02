@@ -203,6 +203,8 @@ void RectangleShape::setTextureRect(float left, float top, float width, float he
 	m_geometry[1].texCoords = vec2((left + width) / m_texture->getSize().x , top / m_texture->getSize().y);
 	m_geometry[2].texCoords = vec2((left + width) / m_texture->getSize().x, (top + height) / m_texture->getSize().y);
 	m_geometry[3].texCoords = vec2(left / m_texture->getSize().x, (top + height) / m_texture->getSize().y);
+
+	//Log("Setting coords");
 }
 
 /// Set the sub region of the texture to display. These coordinates are in pixels and are normalized internally

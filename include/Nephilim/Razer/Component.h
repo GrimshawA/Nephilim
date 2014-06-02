@@ -16,7 +16,7 @@ namespace rzr {
 class NEPHILIM_API Component
 {
 public:
-
+	virtual ~Component(){}
 };
 
 class NEPHILIM_API ComponentList

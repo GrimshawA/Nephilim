@@ -32,6 +32,11 @@ bool Tilemap::loadTMX(const String& filename)
 
 	pugi::xml_node root_node = doc.first_child();
 
+	mWidth = root_node.attribute("width").as_int(0);
+	mHeight = root_node.attribute("height").as_int(0);
+	mTileWidth = root_node.attribute("tilewidth").as_int(0);
+	mTileHeight = root_node.attribute("tileheight").as_int(0);
+
 	for(pugi::xml_node_iterator it = root_node.begin(); it != root_node.end(); ++it)
 	{
 		if(String(it->name()) == "layer")

@@ -69,7 +69,7 @@ void SystemRenderer::render()
 
 			// Let's compute this camera transform
 			camera.cameraTransform = mat4::identity;
-			camera.cameraTransform = transform.rotation.toMatrix() * mat4::translate(-transform.x, -transform.y, -transform.z);
+			camera.cameraTransform = transform.rotation.toMatrix() * mat4::translate(-transform.position.x, -transform.position.y, -transform.position.z);
 
 			mRenderer->setProjectionMatrix(mat4::perspective(65.f, 1000.f / 500.f, 5.f, 3000.f));
 		//	mRenderer->setViewMatrix(mat4::lookAt(vec3(camera.x, camera.y, camera.z), vec3(camera.center_x, camera.center_y, camera.center_z) , camera.up));
@@ -109,23 +109,25 @@ void SystemRenderer::render()
 
 
 			RectangleShape spr;
-			spr.setPosition(transform.x, transform.y);
+			spr.setPosition(transform.position.x, transform.position.y);
 			spr.setSize(sprite.width, sprite.height);
 			spr.setOrigin(spr.getSize() / 2.f);
 			spr.setScale(sprite.scale.x, sprite.scale.y);
 			if(!sprite.tex.empty())
 			{
+				//Log("Rendering ship sprite: %s", sprite.tex.c_str());
+
 				spr.setTexture(mContentManager->getTexture(sprite.tex));
 				if(sprite.tex_rect_size.x > 0 && sprite.tex_rect_size.y > 0)
 				{
+					Log("Texture coords: %f, %f, %f, %f", sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
 					spr.setTextureRect(sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
 				}
-				spr.invertTextureCoordinates();
+				//spr.invertTextureCoordinates();
 			}
 			mRenderer->draw(spr);
 			mRenderer->setDefaultTexture();
 			mRenderer->setModelMatrix(mat4::identity);
-
 		}
 		if(ent.hasComponent<ComponentParticleEmitter>()) 
 		{
@@ -140,11 +142,12 @@ void SystemRenderer::render()
 				mRenderer->draw(emitter.particles[j].mSprite);
 			}
 			mRenderer->setBlendMode(Render::Blend::Alpha);
-		//	Log("rendering particles");
+			//Log("rendering particles");
 		}
 	}
 
-//	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mScene);
+	//mRenderer->setModelMatrix(mat4::identity);
+	//KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mPhysicsScene);
 	//mRenderer->draw(dr);
 
 	// Post processing
@@ -215,48 +218,44 @@ void SystemRenderer::renderMesh(Entity& entity)
 		mRenderer->disableVertexAttribArray(0);
 		mRenderer->disableVertexAttribArray(1);
 		mRenderer->disableVertexAttribArray(2);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 }
 
 void SystemRenderer::renderTilemap(Entity& entity)
-{
-	static Texture myTex;
+{	
+	ComponentTilemap2D& tilemap = entity.getComponent<ComponentTilemap2D>();
 
-	static bool loaded = false;
+	// Render a background
+	RectangleShape BackgroundShape;
+	BackgroundShape.setSize(tilemap.mLevelSize.x, tilemap.mLevelSize.y);
+	BackgroundShape.setColors(Color::Blue, Color::Blue, Color::Bittersweet, Color::Bittersweet);
+	mRenderer->draw(BackgroundShape);
 
-	if(!loaded)
+	// Render all chunks for now
+
+	mRenderer->setModelMatrix(mat4::translate(0, 0, 0));
+
+	for(size_t j = 0; j < tilemap.mChunks.size(); ++j)
 	{
-		myTex.loadFromFile("textures/tmw_desert_spacing.png");
-		loaded = true;
-	}
-
-	myTex.bind();
-
-	if(entity.hasComponent<ComponentTilemap2D>())
-	{
-		ComponentTilemap2D& tilemap = entity.getComponent<ComponentTilemap2D>();
-
-		mRenderer->setModelMatrix(mat4::translate(+500, 0, 0));
-
-		for(size_t j = 0; j < tilemap.mLayers.size(); ++j)
+		// Render each layer of each chunk
+		for(size_t k = 0; k < tilemap.mChunks[j].mLayers.size(); ++k)
 		{
-			if(tilemap.mLayers[j].mName == "LevelData")
-			{
-				mRenderer->enableVertexAttribArray(0);
-				mRenderer->enableVertexAttribArray(1);
-				mRenderer->enableVertexAttribArray(2);
+			mRenderer->enableVertexAttribArray(0);
+			mRenderer->enableVertexAttribArray(1);
+			mRenderer->enableVertexAttribArray(2);
 
-				mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, tilemap.mLayers[j].mVertexData.getVertexSize(), &tilemap.mLayers[j].mVertexData.data[0] + tilemap.mLayers[j].mVertexData.getAttributeOffset(0));
-				mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, tilemap.mLayers[j].mVertexData.getVertexSize(), &tilemap.mLayers[j].mVertexData.data[0] + tilemap.mLayers[j].mVertexData.getAttributeOffset(1));
-				mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, tilemap.mLayers[j].mVertexData.getVertexSize(), &tilemap.mLayers[j].mVertexData.data[0] + tilemap.mLayers[j].mVertexData.getAttributeOffset(2));
+			mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(0));
+			mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(1));
+			mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(2));
 
-				glDrawElements(GL_TRIANGLES, tilemap.mLayers[j].mIndexData.indices.size(), GL_UNSIGNED_SHORT, &tilemap.mLayers[j].mIndexData.indices[0]);
+			glDrawElements(GL_TRIANGLES, tilemap.mChunks[j].mLayers[k].mIndexData.indices.size(), GL_UNSIGNED_SHORT, &tilemap.mChunks[j].mLayers[k].mIndexData.indices[0]);
 
-				mRenderer->disableVertexAttribArray(0);
-				mRenderer->disableVertexAttribArray(1);
-				mRenderer->disableVertexAttribArray(2);
-			}				
-		}
+			mRenderer->disableVertexAttribArray(0);
+			mRenderer->disableVertexAttribArray(1);
+			mRenderer->disableVertexAttribArray(2);
+		}				
 	}
 }
 

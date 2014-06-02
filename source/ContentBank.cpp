@@ -55,13 +55,13 @@ bool ContentManager::load(const String& filename)
 
 	if(extension == "png" || extension == "jpg")
 	{
-		Log("Loading texture: %s", filename.c_str());
+		//Log("Loading texture: %s", filename.c_str());
 		targetGroup->mTextures[filename] = new Texture();
 		return targetGroup->mTextures[filename]->loadFromFile(filename);
 	}
 	else if(extension == "ttf" || extension == "otf")
 	{
-		Log("Loading font: %s", filename.c_str());
+		//Log("Loading font: %s", filename.c_str());
 		return targetGroup->mFonts.load(filename);
 	}
 

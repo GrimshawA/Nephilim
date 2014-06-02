@@ -2,6 +2,7 @@
 #define NephilimScene_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
 #include <Nephilim/Razer/Entity.h>
 #include <Nephilim/Razer/System.h>
 
@@ -19,6 +20,8 @@ namespace rzr {
 class NEPHILIM_API Scene
 {
 public:
+	class Layer;
+
 	Scene();
 
 	/// Registers a system to this scene
@@ -41,6 +44,14 @@ public:
 	std::map<std::type_index, ComponentList*> componentArrays;
 
 	std::vector<System*> mRegisteredSystems;
+	std::vector<Layer>   mLayers;
+
+	class Layer
+	{
+	public:
+		String mName;
+		Int32  mLayerID;
+	};
 };
 
 template<class CType>

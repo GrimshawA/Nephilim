@@ -78,6 +78,10 @@ public:
 
 
 	std::vector<Layer*> mLayers;
+	int mWidth;
+	int mHeight;
+	int mTileWidth;
+	int mTileHeight;
 };
 
 NEPHILIM_NS_END

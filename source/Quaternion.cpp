@@ -109,6 +109,15 @@ void Quaternion::rotateEulerAngles(float ax, float ay, float az)
 	*this = *this * qt;
 }
 
+void Quaternion::rotateAxisAngle(float angle, float ax, float ay, float az)
+{
+	Quaternion qr;
+	Quaternion::fromAxisAngle(qr, vec3(ax,ay,az), angle);
+
+	*this = *this * qr;
+}
+
+
 void Quaternion::fromAxisAngle(Quaternion& q, vec3 axis, float angle)
 {
 	float sin_a = sin( angle / 2 );

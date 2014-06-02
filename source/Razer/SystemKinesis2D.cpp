@@ -21,8 +21,8 @@ void SystemKinesis2D::update(const Time& deltaTime)
 	for(std::map<Int64, KxBody*>::iterator it = Bodies.begin(); it != Bodies.end(); ++it)
 	{
 		Entity ent = mScene->getEntityById(it->first);
-		ent.getComponent<ComponentTransform>().x = it->second->getPosition().x;
-		ent.getComponent<ComponentTransform>().y = it->second->getPosition().y;
+		ent.getComponent<ComponentTransform>().position.x = it->second->getPosition().x;
+		ent.getComponent<ComponentTransform>().position.y = it->second->getPosition().y;
 	}
 }
 

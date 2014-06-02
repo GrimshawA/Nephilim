@@ -3,6 +3,7 @@
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Tilemap.h>
 #include <Nephilim/Logger.h>
+#include <Nephilim/Path.h>
 
 #include <pugixml/pugixml.hpp>
 
@@ -10,26 +11,79 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-bool ComponentTilemap2D::load(const Tilemap& tileMap)
+/// Initializes an empty world
+ComponentTilemap2D::ComponentTilemap2D()
+: mTileSize(1.f, 1.f, 1.f)
+, mChunkSize(30.f, 30.f)
 {
-	for(size_t i = 0; i < tileMap.mLayers.size(); ++i)
+
+}
+
+/// Ensure destruction of all dependencies
+ComponentTilemap2D::~ComponentTilemap2D()
+{
+
+}
+
+/// The tiles for the main layer are cubes instead of flat squares
+void ComponentTilemap2D::useCubes(bool enabled)
+{
+
+}
+
+/// Enables the side view type of map mode
+void ComponentTilemap2D::setSideView(bool enabled)
+{
+
+}
+
+bool ComponentTilemap2D::load(const String& filename)
+{
+	Path path(filename);
+
+	if(path.getExtension() == "tmx")
 	{
-		if(tileMap.mLayers[i]->mType == Tilemap::Layer::Tiles)
-		{
-			Tilemap2DLayer layer;
-			layer.mWidth = tileMap.mLayers[i]->mWidth;
-			layer.mHeight = tileMap.mLayers[i]->mWidth;
-			layer.mName = tileMap.mLayers[i]->mName;
-			layer.mTileData = tileMap.mLayers[i]->mTileData;
-
-			layer.generateRenderData();
-
-			mLayers.push_back(layer);
-		}
+		// We're trying to load a Tiled map file (XML)
+		Tilemap level;
+		level.loadTMX(filename);
 		
+		// Total map size
+		mLevelSize.x = level.mWidth * mTileSize.x;
+		mLevelSize.y = level.mHeight * mTileSize.y;
+
+
+		Log("=> Loading 2D level with size(%f, %f)", mLevelSize.x, mLevelSize.y);
+
+		for(size_t i = 0; i < level.mLayers.size(); ++i)
+		{
+			mLayers.push_back(Layer(level.mLayers[i]->mName));
+		}
+
+		allocateChunks();
+
+		/// For each layer, lets fill the tile data
+		for(size_t i = 0; i < level.mLayers.size(); ++i)
+		{
+			
+		}
 	}
 
 	return true;
+}
+
+/// Generates a chunk list for culling out for the entire map
+void ComponentTilemap2D::allocateChunks()
+{
+	int pagesHorizontal = ceilf(mLevelSize.x / (mChunkSize.x * mTileSize.x));
+	int pagesVertical = ceilf(mLevelSize.y / (mChunkSize.y * mTileSize.y));
+
+	mChunks.resize(pagesHorizontal * pagesVertical);
+	for(size_t i = 0; i < mChunks.size(); ++i)
+	{
+		mChunks[i].mLayers.resize(mLayers.size());
+	}
+
+	Log("=> Allocated %d chunks for this map", mChunks.size());
 }
 
 void Tilemap2DLayer::generateRenderData()
@@ -135,7 +189,7 @@ void Tilemap2DLayer::generateRenderData()
 // Debug only
 void ComponentTilemap2D::getTileShape(int index, float& x, float &y, float& w, float& h)
 {
-	if(mLayers[0].mTileData[index] == 0)
+	/*if(mLayers[0].mTileData[index] == 0)
 	{
 		//no where
 
@@ -158,7 +212,7 @@ void ComponentTilemap2D::getTileShape(int index, float& x, float &y, float& w, f
 				tile_index ++;
 			}
 		}
-	}
+	}*/
 }
 
 

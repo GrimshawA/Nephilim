@@ -17,19 +17,35 @@ namespace rzr
 class NEPHILIM_API ComponentTransform : public Component
 {
 public:
-	ComponentTransform()
-	{
-		x = y = z = 0.f;
-	}
+	/// Initialize the transform to the "identity" transform
+	/// position(0,0,0), orientation as identity (down the -z axis), and a scale of 1
+	ComponentTransform();
 
-	void rotateAxisAngle(float x_axis, float y_axis, float z_axis);
+	/// Set the position from a vec3
+	void setPosition(const vec3& p);
+
+	/// Set the position from a vec2
+	void setPosition(const vec2& p);
+
+	/// Set the position from 3 floats
+	void setPosition(float px, float py);
+
+	/// Set the position from 3 floats
+	void setPosition(float px, float py, float pz);
+
+	/// Get the position of this transform
+	vec3 getPosition();
+
+	void rotateByEulerAngles(float x_axis, float y_axis, float z_axis);
+	void rotateByAxisAngle(float angle, float x_axis, float y_axis, float z_axis);
 
 	vec3 getForwardVector();
 	vec3 getRightVector();
 
 	Quaternion rotation;
+	vec3       position;
+	vec3       scale;
 
-	float x, y, z;
 	mat4 matrix;
 };
 

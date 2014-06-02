@@ -12,12 +12,22 @@ namespace rzr
 
 /**
 	\class ComponentSprite
-	\brief 3D transform for a entity, scale + rotation + translation
+	\brief A sprite is basically a flat rectangle with a texture assigned to it
 */
 class NEPHILIM_API ComponentSprite : public Component
 {
 public:
+	/// Initialize the sprite with no area
 	ComponentSprite();
+
+	/// Set the size of the sprite
+	void setSize(const vec2& s);
+
+	/// Set the size of the sprite
+	void setSize(float sx, float sy);
+
+	/// Get the size of the sprite
+	vec2 getSize();
 
 	float width;
 	float height;

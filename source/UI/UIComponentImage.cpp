@@ -37,7 +37,7 @@ void UIComponentImage::refreshTextureHandle()
 			if(mParent->getContext()->content->load(mSourceTexture))
 			{
 				mTexture = mParent->getContext()->content->mGroups[""]->mTextures[mSourceTexture];
-				Log("IMAGE IMAGE IMAGE HAS NOW A TEXTURE");
+				//Log("IMAGE IMAGE IMAGE HAS NOW A TEXTURE");
 			}
 			else
 			{
