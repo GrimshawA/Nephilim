@@ -42,6 +42,7 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("Tilemap2D", "bool load(const string& in)", asMETHOD(ComponentTilemap2D, load), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void useCubes(bool)", asMETHOD(ComponentTilemap2D, useCubes), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void setSideView(bool)", asMETHOD(ComponentTilemap2D, setSideView), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "void prepareLayer(const string& in)", asMETHOD(ComponentTilemap2D, prepareLayer), asCALL_THISCALL);
 	//engine.get()->RegisterObjectMethod("Tilemap2D", "void getTileShape(int, float& out, float& out, float& out, float& out)", asMETHOD(ComponentTilemap2D, getTileShape), asCALL_THISCALL);
 
 	//////////////////////////////////////////////////////////////////////////

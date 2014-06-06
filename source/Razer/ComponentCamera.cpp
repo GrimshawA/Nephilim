@@ -11,6 +11,9 @@ ComponentCamera::ComponentCamera()
 , x(0.f)
 , y(20.f)
 , z(20.f)
+, mOrtho(false)
+, zNear(1.f)
+, zFar(5000.f)
 {
 
 }

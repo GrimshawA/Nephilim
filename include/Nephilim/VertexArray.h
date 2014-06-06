@@ -56,6 +56,11 @@ public:
 class NEPHILIM_API VertexArray
 {
 public:
+	/// Default initialization
+	VertexArray();
+
+	void addAttribute(Int32 componentByteSize, Int32 numComponents, VertexFormat::AttributeHint hint);
+
 	void removeLast();
 
 	Int32 getVertexSize() const;

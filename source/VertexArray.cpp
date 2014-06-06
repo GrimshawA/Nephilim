@@ -17,6 +17,11 @@ VertexFormat::Attribute::Attribute(Int32 attributeByteSize, Int32 attributeNumCo
 
 //////////////////////////////////////////////////////////////////////////
 
+void VertexArray::addAttribute(Int32 componentByteSize, Int32 numComponents, VertexFormat::AttributeHint hint)
+{
+	format.attributes.push_back(VertexFormat::Attribute(componentByteSize, numComponents, hint));
+}
+
 void VertexArray::setVertexAttribute(Int32 vertexIndex, Int32 attributeIndex, void* data)
 {
 	char* dataAddress = reinterpret_cast<char*>(data);

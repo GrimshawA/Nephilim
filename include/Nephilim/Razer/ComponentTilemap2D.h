@@ -4,6 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Vectors.h>
+#include <Nephilim/Tilemap.h>
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/IndexArray.h>
 #include <Nephilim/Razer/Component.h>
@@ -26,8 +27,12 @@ public:
 	int              mWidth;      ///< Amount of tiles per line
 	int              mHeight;     ///< Amount of tiles per column
 	std::vector<Uint16> mTileData;   ///< Original tile data
-	VertexArray      mVertexData; ///< Rendering data for the layer
-	IndexArray       mIndexData;  ///< Rendering data for the layer
+
+
+	/// A chunk layer can have N different tilesets and a vertex array is made for each one
+	std::vector<VertexArray> mVertexSets;
+	std::vector<IndexArray>  mIndexSets;
+	std::vector<String>      mTextureSets;
 };
 
 /**
@@ -57,21 +62,34 @@ public:
 
 	/// Generates a chunk list for culling out for the entire map
 	void allocateChunks();
+
+	/// Converts the in memory tile data from a single layer to renderizable chunk data
+	void prepareLayer(const String& layerName);
 	
+	/// Takes the input data from tileLayer and generates the geometry for rendering as cubes
+	void generateCubes(Tilemap::Layer* tileLayer, const String& destLayer);
+
+	void generateTiles(Tilemap::Layer* tileLayer, const String& destLayer);
+
 	void getTileShape(int index, float& x, float &y, float& w, float& h);
 
 	std::vector<Layer> mLayers; ///< The layer information for this tilemap level
 	std::vector<Chunk> mChunks;
 
+	Tilemap mTilemapData; ///< The raw tilemap data stays in memory 
+
 	vec3 mTileSize;  ///< The absolute size of each grid cell a.k.a tile
 	vec2 mLevelSize; ///< The total size of this level, usually from (0,0) to (size.x, size.y)
 	vec2 mChunkSize; ///< The total size of each chunk, in tiles
+	vec2i mNumChunks; ///< Number of horizontal and vertical chunks allocated
 
 	class Chunk
 	{
 	public:
 		/// Each chunk has its own set of layers with the render data
 		std::vector<Tilemap2DLayer> mLayers;
+
+		Tilemap2DLayer& getLayer(const String& name);
 	};
 
 	class Layer
@@ -79,11 +97,13 @@ public:
 	public:
 		Layer(const String& name)
 		: mName(name)
+		, mCubeBased(false)
 		{
 
 		}
 
 		String mName;
+		bool mCubeBased;
 	};
 };
 

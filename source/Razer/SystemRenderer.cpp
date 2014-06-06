@@ -14,6 +14,7 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/KxDraw.h>
+#include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
 
 #include <Nephilim/Razer/PostEffectBloom.h>
@@ -71,14 +72,28 @@ void SystemRenderer::render()
 			camera.cameraTransform = mat4::identity;
 			camera.cameraTransform = transform.rotation.toMatrix() * mat4::translate(-transform.position.x, -transform.position.y, -transform.position.z);
 
-			mRenderer->setProjectionMatrix(mat4::perspective(65.f, 1000.f / 500.f, 5.f, 3000.f));
-		//	mRenderer->setViewMatrix(mat4::lookAt(vec3(camera.x, camera.y, camera.z), vec3(camera.center_x, camera.center_y, camera.center_z) , camera.up));
+			if(camera.mOrtho)
+			{
+				float zoom = 1.f / transform.position.z;
+				mRenderer->setProjectionMatrix(mat4::ortho(0, 1000.f * zoom, 0, 500.f * zoom, camera.zNear, camera.zFar));
+			}
+			else
+			{
+				mRenderer->setProjectionMatrix(mat4::perspective(10.f, 1000.f / 500.f, camera.zNear, camera.zFar));
+			}
 			mRenderer->setViewMatrix(camera.cameraTransform);
 			mRenderer->clearDepthBuffer();
 			mRenderer->setDepthTestEnabled(false);
 			mRenderer->clearColorBuffer();
 			mRenderer->setBlendingEnabled(true);
 			mRenderer->setBlendMode(Render::Blend::Alpha);
+
+			// debug
+			//View v(0, 0, 20, 10); v.setCenter((int)transform.position.x, (int)transform.position.y);
+			//mRenderer->setProjectionMatrix(v.getMatrix());
+			//mRenderer->setViewMatrix(mat4::identity);
+
+			//mRenderer->setProjectionMatrix(mat4::ortho(0, 20, 0, 10, 1, 3000));
 		}
 	}
 
@@ -120,7 +135,7 @@ void SystemRenderer::render()
 				spr.setTexture(mContentManager->getTexture(sprite.tex));
 				if(sprite.tex_rect_size.x > 0 && sprite.tex_rect_size.y > 0)
 				{
-					Log("Texture coords: %f, %f, %f, %f", sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
+					//Log("Texture coords: %f, %f, %f, %f", sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
 					spr.setTextureRect(sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
 				}
 				//spr.invertTextureCoordinates();
@@ -225,12 +240,15 @@ void SystemRenderer::renderMesh(Entity& entity)
 
 void SystemRenderer::renderTilemap(Entity& entity)
 {	
+	mRenderer->setDepthTestEnabled(false);
+
 	ComponentTilemap2D& tilemap = entity.getComponent<ComponentTilemap2D>();
 
 	// Render a background
 	RectangleShape BackgroundShape;
 	BackgroundShape.setSize(tilemap.mLevelSize.x, tilemap.mLevelSize.y);
-	BackgroundShape.setColors(Color::Blue, Color::Blue, Color::Bittersweet, Color::Bittersweet);
+	BackgroundShape.setColors(Color::Blue, Color::Blue, Color::Blue, Color::Blue);
+	BackgroundShape.setPosition(0.f, -tilemap.mLevelSize.y);
 	mRenderer->draw(BackgroundShape);
 
 	// Render all chunks for now
@@ -242,20 +260,38 @@ void SystemRenderer::renderTilemap(Entity& entity)
 		// Render each layer of each chunk
 		for(size_t k = 0; k < tilemap.mChunks[j].mLayers.size(); ++k)
 		{
-			mRenderer->enableVertexAttribArray(0);
-			mRenderer->enableVertexAttribArray(1);
-			mRenderer->enableVertexAttribArray(2);
+			for(size_t index_set = 0; index_set < tilemap.mChunks[j].mLayers[k].mIndexSets.size(); ++index_set)
+			{
+				IndexArray& indexData = tilemap.mChunks[j].mLayers[k].mIndexSets[index_set];
+				VertexArray& vertexData = tilemap.mChunks[j].mLayers[k].mVertexSets[index_set];
 
-			mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(0));
-			mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(1));
-			mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, tilemap.mChunks[j].mLayers[k].mVertexData.getVertexSize(), &tilemap.mChunks[j].mLayers[k].mVertexData.data[0] + tilemap.mChunks[j].mLayers[k].mVertexData.getAttributeOffset(2));
+				if(indexData.size() > 0)
+				{
+					// Bind tileset 
+					String tilesetResource = tilemap.mTilemapData.mTilesets[index_set].mPath;
+					Path p(tilesetResource);
+					tilesetResource = "textures/" + p.getFileName();
+					//Log("RENDERING WITH TILESET %s", tilesetResource.c_str());
+					glDisable( GL_MULTISAMPLE );
+					mContentManager->getTexture(tilesetResource)->bind();
+					//mRenderer->setDefaultTexture();
 
-			glDrawElements(GL_TRIANGLES, tilemap.mChunks[j].mLayers[k].mIndexData.indices.size(), GL_UNSIGNED_SHORT, &tilemap.mChunks[j].mLayers[k].mIndexData.indices[0]);
+					mRenderer->enableVertexAttribArray(0);
+					mRenderer->enableVertexAttribArray(1);
+					mRenderer->enableVertexAttribArray(2);
 
-			mRenderer->disableVertexAttribArray(0);
-			mRenderer->disableVertexAttribArray(1);
-			mRenderer->disableVertexAttribArray(2);
-		}				
+					mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, vertexData.getVertexSize(), &vertexData.data[0] + vertexData.getAttributeOffset(0));
+					mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, vertexData.getVertexSize(), &vertexData.data[0] + vertexData.getAttributeOffset(1));
+					mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, vertexData.getVertexSize(), &vertexData.data[0] + vertexData.getAttributeOffset(2));
+
+					glDrawElements(GL_TRIANGLES, indexData.indices.size(), GL_UNSIGNED_SHORT, &indexData.indices[0]);
+
+					mRenderer->disableVertexAttribArray(0);
+					mRenderer->disableVertexAttribArray(1);
+					mRenderer->disableVertexAttribArray(2);
+				}
+			}
+		}	
 	}
 }
 

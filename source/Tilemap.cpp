@@ -39,6 +39,21 @@ bool Tilemap::loadTMX(const String& filename)
 
 	for(pugi::xml_node_iterator it = root_node.begin(); it != root_node.end(); ++it)
 	{
+		if(String(it->name()) == "tileset")
+		{
+			pugi::xml_node inode = it->child("image");
+
+			Tileset t;
+			t.mFirstGID = it->attribute("firstgid").as_int(1);
+			t.mName =     it->attribute("name").as_string();
+			t.mWidth =    inode.attribute("width").as_int();
+			t.mHeight =   inode.attribute("height").as_int();
+			t.mPath =     inode.attribute("source").as_string();
+			t.mSpacing =  it->attribute("spacing").as_int(0);
+			t.mTileWidth =it->attribute("tilewidth").as_int();
+			t.mTileHeight=it->attribute("tileheight").as_int();
+			mTilesets.push_back(t);
+		}
 		if(String(it->name()) == "layer")
 		{
 			Layer* layerData = new Layer();
@@ -120,8 +135,49 @@ bool Tilemap::loadTMX(const String& filename)
 		}
 	}
 
+	// Fill the last GID in each tileset
+	for(size_t i = 0; i < mTilesets.size(); ++i)
+	{
+		mTilesets[i].computeLastGid();
+	}
+
 	return true;
 }
+
+/// Get the right UV for a given tile in a given layer
+FloatRect Tilemap::getTileUV(const String& layerName, size_t tileIndex)
+{
+	FloatRect rect(0.f, 0.f, 0.f, 0.f);
+
+	Layer* layer = getLayerByName(layerName);
+	if(layer && layer->mTileData.size() > tileIndex)
+	{
+		int gid = layer->mTileData[tileIndex];
+
+		// Find the right UV for this gid
+		convertGIDtoUV(gid, rect);
+
+		//Log("gid %d has UV rect %f %f %f %f", gid, rect.left, rect.top, rect.width, rect.height);
+	}
+
+	return rect;
+}
+
+void Tilemap::convertGIDtoUV(int gid, FloatRect& rect)
+{
+	if(gid > 0 && mTilesets.size() > 0)
+	{
+		for(size_t i = 0; i < mTilesets.size(); ++i)
+		{
+			if(mTilesets[i].containsGid(gid))
+			{
+				//Log("THE GID %d WAS FOUND IN TILESET %d", gid, i);
+				rect = mTilesets[i].getNormalizedCoordinates(gid);
+			}
+		}
+	}
+}
+
 
 int Tilemap::getLayerCount()
 {
@@ -175,6 +231,26 @@ vec2 Tilemap::Layer::getObjectPosition(const String& name)
 	return vec2(0.f, 0.f);
 }
 
+size_t Tilemap::getTilesetIndexOfGid(int gid)
+{
+	for(size_t i = 0; i < mTilesets.size(); ++i)
+	{
+		if(mTilesets[i].containsGid(gid))
+			return i;
+	}
+
+	return 0;
+}
+
+
+/// Check if the 2D coordinate is a valid tile coordinate in the layer
+bool Tilemap::Layer::isValidCoordinate2D(vec2i coord)
+{
+	int maxCoordX = mWidth - 1;
+	int maxCoordY = mHeight - 1;
+
+	return (coord.x <= maxCoordX && coord.y <= maxCoordY);
+}
 
 void Tilemap::Layer::getTileShape(int index, float& x, float& y, float& w, float& h)
 {
@@ -202,7 +278,87 @@ void Tilemap::Layer::getTileShape(int index, float& x, float& y, float& w, float
 	}
 }
 
+////////////////////////////////////////////////////////////////////////// Tileset
 
+vec2 half_pixel_correction(int x, int y, int tex_width, int tex_height)
+{
+	vec2 uv;
+	uv.x = (static_cast<float>(x) - 0.f) / tex_width;
+	uv.y = (static_cast<float>(y) - 0.f) / tex_height;
+	return uv;
+}
+
+FloatRect Tilemap::Tileset::getNormalizedCoordinates(int gid)
+{
+	int tileIndex = gid - mFirstGID; /// will give an index of the wanted tile from 0..tileCount
+
+	//Log("Tile index for gid %d is %d", gid, tileIndex);
+
+	int j = 0;
+	int xx = 0;
+	int yy = 0; 
+
+	int tilesPerRow = static_cast<float>(mWidth) / (mTileWidth + mSpacing);
+
+	float realWidth = tilesPerRow * mTileWidth;
+
+	// Cycle tiles to find the right one and its coords
+	while(j != tileIndex)
+	{
+		xx += mTileWidth + mSpacing;
+
+		if(xx >= realWidth)
+		{
+			xx = 0.f;
+			yy += mTileHeight + mSpacing;
+		}
+
+		j++;
+	}
+
+	if(gid == 25)
+		Log("Current XX YY %d %d", xx, yy);
+
+	float texel_x = 1.f / mWidth;
+
+	FloatRect rect;
+	rect.left = static_cast<float>(xx) / static_cast<float>(mWidth);
+	rect.top = static_cast<float>(yy) / static_cast<float>(mHeight);
+	rect.width = rect.left + (static_cast<float>(mTileWidth) / mWidth) - texel_x;
+	rect.height = rect.top + static_cast<float>(mTileHeight) / mHeight;
+
+	rect.width = half_pixel_correction(xx + mTileWidth, yy + mTileHeight, mWidth, mHeight).x;
+	rect.height = half_pixel_correction(xx + mTileWidth, yy + mTileHeight, mWidth, mHeight).y;
+
+	return rect;
+}
+
+bool Tilemap::Tileset::containsGid(int gid)
+{
+	if(gid >= mFirstGID && gid < mLastGID)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// Needs testing
+void Tilemap::Tileset::computeLastGid()
+{
+	int tilesInTexture = 0;
+	int tilesPerRow = mWidth / mTileWidth;
+	int tilesPerColumn = mHeight / mTileHeight;
+
+	tilesPerRow = tilesPerRow - mSpacing * tilesPerRow;
+	tilesPerColumn = tilesPerColumn - mSpacing * tilesPerColumn;
+
+	tilesInTexture = tilesPerRow * tilesPerColumn;
+
+	mLastGID = mFirstGID + tilesInTexture;
+}
 
 
 NEPHILIM_NS_END

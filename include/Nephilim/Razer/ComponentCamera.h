@@ -26,6 +26,14 @@ public:
 
 	float x,y,z; // where the camera is
 	float center_x, center_y, center_z;
+
+	bool mOrtho; // is it ortho or perspective
+	float fieldOfView;
+	float zNear;
+	float zFar;
+
+	float screenWidth;
+	float screenHeight;
 };
 
 };

@@ -57,7 +57,9 @@ bool ContentManager::load(const String& filename)
 	{
 		//Log("Loading texture: %s", filename.c_str());
 		targetGroup->mTextures[filename] = new Texture();
-		return targetGroup->mTextures[filename]->loadFromFile(filename);
+		bool r = targetGroup->mTextures[filename]->loadFromFile(filename);
+		targetGroup->mTextures[filename]->setSmooth(false);
+		return r;
 	}
 	else if(extension == "ttf" || extension == "otf")
 	{

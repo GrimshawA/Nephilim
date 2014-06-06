@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "Strings.h"
 #include "Vectors.h"
+#include "Rect.h"
 
 #include <vector>
 #include <map>
@@ -24,6 +25,9 @@ public:
 	bool loadTMX(const String& filename);
 
 	int getLayerCount();
+
+	/// Get the right UV for a given tile in a given layer
+	FloatRect getTileUV(const String& layerName, size_t tileIndex);
 
 	class Object
 	{
@@ -64,6 +68,10 @@ public:
 
 		vec2 getObjectPosition(const String& name);
 
+		/// Check if the 2D coordinate is a valid tile coordinate in the layer
+		bool isValidCoordinate2D(vec2i coord);
+
+
 		String mName;
 		int mWidth;
 		int mHeight;
@@ -72,12 +80,37 @@ public:
 		std::vector<Object> mObjects;
 	};
 
+	class Tileset
+	{
+	public:
+		String mPath; ///< Where the tileset is
+		String mName; ///< The name of the tileset
+		int mWidth;   ///< Width of the tileset in pixels
+		int mHeight;  ///< Height of the tileset in pixels
+		int mFirstGID;///< First tile's GID
+		int mLastGID; ///< Last tile's GID
+		int mSpacing; ///< Spacing between tiles
+		int mTileWidth;///< Each tile's width in pixels
+		int mTileHeight; ///< Each tile's height in pixels
+
+		void computeLastGid();
+
+		FloatRect getNormalizedCoordinates(int gid);
+
+		bool containsGid(int gid);
+	};
+
 	Layer* getLayer(int index);
 
 	Layer* getLayerByName(const String& name);
 
+	void convertGIDtoUV(int gid, FloatRect& rect);
+
+	size_t getTilesetIndexOfGid(int gid);
+
 
 	std::vector<Layer*> mLayers;
+	std::vector<Tileset> mTilesets;
 	int mWidth;
 	int mHeight;
 	int mTileWidth;
