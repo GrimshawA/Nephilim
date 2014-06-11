@@ -13,9 +13,10 @@ ComponentCamera::ComponentCamera()
 , z(20.f)
 , mOrtho(false)
 , zNear(1.f)
-, zFar(5000.f)
+, zFar(400.f)
+, fieldOfView(65.f)
 {
-
+	
 }
 
 

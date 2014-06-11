@@ -8,7 +8,9 @@
 #include <Nephilim/Razer/ComponentSprite.h>
 #include <Nephilim/Razer/ComponentTransform.h>
 #include <Nephilim/Razer/ComponentParticleEmitter.h>
+#include <Nephilim/Razer/ComponentModel.h>
 #include <Nephilim/Razer/ComponentMesh.h>
+#include <Nephilim/Razer/ComponentVehicle.h>
 #include <Nephilim/Razer/SystemKinesis2D.h>
 
 #include <Nephilim/Logger.h>
@@ -75,11 +77,11 @@ void SystemRenderer::render()
 			if(camera.mOrtho)
 			{
 				float zoom = 1.f / transform.position.z;
-				mRenderer->setProjectionMatrix(mat4::ortho(0, 1000.f * zoom, 0, 500.f * zoom, camera.zNear, camera.zFar));
+				mRenderer->setProjectionMatrix(mat4::ortho(0, int(1000.f * zoom), 0, int(500.f * zoom), camera.zNear, camera.zFar));
 			}
 			else
 			{
-				mRenderer->setProjectionMatrix(mat4::perspective(10.f, 1000.f / 500.f, camera.zNear, camera.zFar));
+				mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1000.f / 500.f, camera.zNear, camera.zFar));
 			}
 			mRenderer->setViewMatrix(camera.cameraTransform);
 			mRenderer->clearDepthBuffer();
@@ -105,10 +107,49 @@ void SystemRenderer::render()
 		{
 			renderTilemap(ent);
 		}
+		if(ent.hasComponent<ComponentVehicle>())
+		{
+			ComponentVehicle& v = ent.getComponent<ComponentVehicle>();
+
+			// Draw the debug vehicle
+
+			mRenderer->setDefaultTexture();
+
+			btTransform trans;
+			static_cast<btRigidBody*>(v.vehicle->m_carChassis)->getMotionState()->getWorldTransform(trans);
+			btScalar mt[16];
+			trans.getOpenGLMatrix(mt);
+			mRenderer->setModelMatrix(mat4(mt) * v.testModelMatrix);
+			//mRenderer->draw(v.vehicleChassis);
+
+			// draw our test model
+			v.testTexture.bind();
+			mRenderer->draw(v.testModel);
+
+			// Draw wheels
+			/*v.vehicle->vehicle->getWheelInfo(0).m_worldTransform.getOpenGLMatrix(mt);
+			mRenderer->setModelMatrix(mat4(mt));
+			mRenderer->draw(v.vehicleWheel);
+			v.vehicle->vehicle->getWheelInfo(1).m_worldTransform.getOpenGLMatrix(mt);
+			mRenderer->setModelMatrix(mat4(mt));
+			mRenderer->draw(v.vehicleWheel);
+			v.vehicle->vehicle->getWheelInfo(2).m_worldTransform.getOpenGLMatrix(mt);
+			mRenderer->setModelMatrix(mat4(mt));
+			mRenderer->draw(v.vehicleWheel);
+			v.vehicle->vehicle->getWheelInfo(3).m_worldTransform.getOpenGLMatrix(mt);
+			mRenderer->setModelMatrix(mat4(mt));
+			mRenderer->draw(v.vehicleWheel);*/
+		}
 		if(ent.hasComponent<ComponentTerrain>())
 		{
 			ent.getComponent<ComponentTerrain>().surfaceTex.bind();
+			mRenderer->setDepthTestEnabled(true);
+			mRenderer->setModelMatrix(ent.getComponent<ComponentTransform>().getMatrix());
 			mRenderer->draw(ent.getComponent<ComponentTerrain>().geometry);
+		}
+		if(ent.hasComponent<ComponentModel>())
+		{
+			renderModel(ent);
 		}
 		if(ent.hasComponent<ComponentMesh>()) 
 		{
@@ -127,7 +168,7 @@ void SystemRenderer::render()
 			spr.setPosition(transform.position.x, transform.position.y);
 			spr.setSize(sprite.width, sprite.height);
 			spr.setOrigin(spr.getSize() / 2.f);
-			spr.setScale(sprite.scale.x, sprite.scale.y);
+			spr.setScale(sprite.scale.x, -sprite.scale.y);
 			if(!sprite.tex.empty())
 			{
 				//Log("Rendering ship sprite: %s", sprite.tex.c_str());
@@ -160,9 +201,9 @@ void SystemRenderer::render()
 			//Log("rendering particles");
 		}
 	}
-
+	
 	//mRenderer->setModelMatrix(mat4::identity);
-	//KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mPhysicsScene);
+//	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mPhysicsScene);
 	//mRenderer->draw(dr);
 
 	// Post processing
@@ -181,6 +222,20 @@ void SystemRenderer::render()
 	finalComposite.setSize(1000.f, 500.f);
 	//finalComposite.setColor(Color::Blue);
 	mRenderer->draw(finalComposite);*/
+}
+
+void SystemRenderer::renderModel(Entity& entity)
+{
+	ComponentTransform& transform = entity.getComponent<ComponentTransform>();
+
+	GeometryData box;
+	box.addBox(1.75f / 2, 1.75f, 1.75f / 2);
+	box.randomFaceColors();
+
+	mRenderer->setDepthTestEnabled(true);
+	mRenderer->setModelMatrix(transform.getMatrix());
+	mRenderer->setDefaultTexture();
+	mRenderer->draw(box);
 }
 
 void SystemRenderer::renderMesh(Entity& entity)
@@ -251,6 +306,7 @@ void SystemRenderer::renderTilemap(Entity& entity)
 	BackgroundShape.setPosition(0.f, -tilemap.mLevelSize.y);
 	mRenderer->draw(BackgroundShape);
 
+	glDisable(GL_MULTISAMPLE);
 	// Render all chunks for now
 
 	mRenderer->setModelMatrix(mat4::translate(0, 0, 0));
@@ -272,7 +328,7 @@ void SystemRenderer::renderTilemap(Entity& entity)
 					Path p(tilesetResource);
 					tilesetResource = "textures/" + p.getFileName();
 					//Log("RENDERING WITH TILESET %s", tilesetResource.c_str());
-					glDisable( GL_MULTISAMPLE );
+					
 					mContentManager->getTexture(tilesetResource)->bind();
 					//mRenderer->setDefaultTexture();
 

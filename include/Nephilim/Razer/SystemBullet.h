@@ -20,7 +20,7 @@ class NEPHILIM_API SystemBullet : public System
 public:
 	SystemBullet();
 
-	void update(float delta);
+	virtual void update(const Time& deltaTime);
 
 	BxScene bulletWorld;
 

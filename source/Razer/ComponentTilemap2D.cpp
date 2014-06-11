@@ -37,6 +37,24 @@ void ComponentTilemap2D::setSideView(bool enabled)
 
 }
 
+void ComponentTilemap2D::generateCollisionData(const String& layerName, CollisionData& cd)
+{
+	Tilemap::Layer* tileLayer = mTilemapData.getLayerByName(layerName);
+	if(tileLayer)
+	{
+		CollisionData::Body& body = cd.addBody();
+
+		for(size_t i = 0; i < tileLayer->mTileData.size(); ++i)
+		{
+			if(tileLayer->mTileData[i] > 0)
+			{
+				// Add tile
+				body.addRect(i % tileLayer->mWidth + mTileSize.x / 2.f, i / tileLayer->mWidth + mTileSize.y / 2.f, mTileSize.x, mTileSize.y);
+			}
+		}
+	}
+}
+
 bool ComponentTilemap2D::load(const String& filename)
 {
 	Path path(filename);

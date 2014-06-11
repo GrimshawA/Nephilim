@@ -31,5 +31,13 @@ vec2 ComponentSprite::getSize()
 	return vec2(width, height);
 }
 
+void ComponentSprite::setTextureRect(float x, float y, float w, float h)
+{
+	tex_rect_pos.x = x;
+	tex_rect_pos.y = y;
+	tex_rect_size.x = w;
+	tex_rect_size.y = h;
+}
+
 };
 NEPHILIM_NS_END

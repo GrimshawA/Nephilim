@@ -282,9 +282,11 @@ void Tilemap::Layer::getTileShape(int index, float& x, float& y, float& w, float
 
 vec2 half_pixel_correction(int x, int y, int tex_width, int tex_height)
 {
+	vec2 texel_correction(1.f / tex_width, 1.f / tex_height);
+
 	vec2 uv;
-	uv.x = (static_cast<float>(x) - 0.f) / tex_width;
-	uv.y = (static_cast<float>(y) - 0.f) / tex_height;
+	uv.x = (static_cast<float>(x) - texel_correction.x) / tex_width;
+	uv.y = (static_cast<float>(y) - texel_correction.y) / tex_height;
 	return uv;
 }
 
@@ -321,14 +323,19 @@ FloatRect Tilemap::Tileset::getNormalizedCoordinates(int gid)
 
 	float texel_x = 1.f / mWidth;
 
+	vec2 texel_correction(1.f / mWidth, 1.f / mHeight);
+	texel_correction /= 2.f;
+
 	FloatRect rect;
 	rect.left = static_cast<float>(xx) / static_cast<float>(mWidth);
 	rect.top = static_cast<float>(yy) / static_cast<float>(mHeight);
 	rect.width = rect.left + (static_cast<float>(mTileWidth) / mWidth) - texel_x;
 	rect.height = rect.top + static_cast<float>(mTileHeight) / mHeight;
 
-	rect.width = half_pixel_correction(xx + mTileWidth, yy + mTileHeight, mWidth, mHeight).x;
-	rect.height = half_pixel_correction(xx + mTileWidth, yy + mTileHeight, mWidth, mHeight).y;
+	rect.left = float(xx) / mWidth + texel_correction.x; 
+	rect.top = float(yy) / mHeight + texel_correction.y;
+	rect.width = float(xx + mTileWidth) / mWidth - texel_correction.x;
+	rect.height = float(yy + mTileHeight) / mHeight - texel_correction.y;
 
 	return rect;
 }

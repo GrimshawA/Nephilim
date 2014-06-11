@@ -51,7 +51,7 @@ void FileReleaseRef(ScriptFile* obj)
 
 void registerFileASX(ASXEngine& engine)
 {
-	engine.get()->RegisterObjectType("File", sizeof(File), asOBJ_REF);
+	engine.get()->RegisterObjectType("File", sizeof(ScriptFile), asOBJ_REF);
 
 	engine.get()->RegisterObjectBehaviour("File", asBEHAVE_FACTORY, "File@ f()", asFUNCTION(FileInstancer), asCALL_CDECL);
 	engine.get()->RegisterObjectBehaviour("File", asBEHAVE_ADDREF, "void f()", asFUNCTION(FileAddRef), asCALL_CDECL_OBJLAST);

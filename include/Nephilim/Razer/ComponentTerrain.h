@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Texture.h>
+#include <Nephilim/Image.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Razer/Component.h>
 
@@ -17,7 +18,11 @@ namespace rzr
 class NEPHILIM_API ComponentTerrain : public Component
 {
 public:
-	void load();
+
+	bool load(const String& heightmapFileName);
+
+	Image heightmap;
+	Uint8* heightmapRaw;
 
 	GeometryData geometry;
 	Texture surfaceTex;

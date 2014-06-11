@@ -17,6 +17,11 @@ VertexFormat::Attribute::Attribute(Int32 attributeByteSize, Int32 attributeNumCo
 
 //////////////////////////////////////////////////////////////////////////
 
+/// Default initialization
+VertexArray::VertexArray()
+{
+}
+
 void VertexArray::addAttribute(Int32 componentByteSize, Int32 numComponents, VertexFormat::AttributeHint hint)
 {
 	format.attributes.push_back(VertexFormat::Attribute(componentByteSize, numComponents, hint));

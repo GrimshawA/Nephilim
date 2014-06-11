@@ -59,6 +59,7 @@ bool ContentManager::load(const String& filename)
 		targetGroup->mTextures[filename] = new Texture();
 		bool r = targetGroup->mTextures[filename]->loadFromFile(filename);
 		targetGroup->mTextures[filename]->setSmooth(false);
+		targetGroup->mTextures[filename]->setRepeated(false);
 		return r;
 	}
 	else if(extension == "ttf" || extension == "otf")

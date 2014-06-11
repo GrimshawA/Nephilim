@@ -92,10 +92,17 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 						if(tileLayer->isValidCoordinate2D(globalTileIndex2D) && tileLayer->getTile(tileIndex1D) > 0)
 						{
 							// Here we have a valid tile index that needs to be built
-							vbuff[tc*4+0].p = vec2(globalTileIndex2D.x * mTileSize.x + mTileSize.x, -globalTileIndex2D.y * mTileSize.y);
+							/*vbuff[tc*4+0].p = vec2(globalTileIndex2D.x * mTileSize.x + mTileSize.x, -globalTileIndex2D.y * mTileSize.y);
 							vbuff[tc*4+1].p = vec2(globalTileIndex2D.x * mTileSize.x + mTileSize.x, -globalTileIndex2D.y * mTileSize.y - mTileSize.y);
 							vbuff[tc*4+2].p = vec2(globalTileIndex2D.x * mTileSize.x              , -globalTileIndex2D.y * mTileSize.y - mTileSize.y);
-							vbuff[tc*4+3].p = vec2(globalTileIndex2D.x * mTileSize.x              , -globalTileIndex2D.y * mTileSize.y);
+							vbuff[tc*4+3].p = vec2(globalTileIndex2D.x * mTileSize.x              , -globalTileIndex2D.y * mTileSize.y);*/
+
+							vbuff[tc*4+0].p = vec2((globalTileIndex2D.x + 1) * mTileSize.x, -(globalTileIndex2D.y + 0) * mTileSize.y);
+							vbuff[tc*4+1].p = vec2((globalTileIndex2D.x + 1) * mTileSize.x, -(globalTileIndex2D.y + 1) * mTileSize.y);
+							vbuff[tc*4+2].p = vec2((globalTileIndex2D.x + 0) * mTileSize.x, -(globalTileIndex2D.y + 1) * mTileSize.y);
+							vbuff[tc*4+3].p = vec2((globalTileIndex2D.x + 0) * mTileSize.x, -(globalTileIndex2D.y + 0) * mTileSize.y);
+
+							Log("Tile %d is at (%f,%f), (%f,%f), (%f,%f), (%f,%f)", tc, vbuff[tc*4+0].p.x, vbuff[tc*4+0].p.y, vbuff[tc*4+1].p.x, vbuff[tc*4+1].p.y, vbuff[tc*4+2].p.x, vbuff[tc*4+2].p.y, vbuff[tc*4+3].p.x, vbuff[tc*4+3].p.y);
 
 							vbuff[tc*4+0].c = vec4(1.f, 1.f, 1.f, 1.f);
 							vbuff[tc*4+1].c = vec4(1.f, 1.f, 1.f, 1.f);

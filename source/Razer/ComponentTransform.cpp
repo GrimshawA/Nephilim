@@ -44,6 +44,12 @@ vec3 ComponentTransform::getPosition()
 	return position;
 }
 
+mat4 ComponentTransform::getMatrix()
+{
+	matrix = rotation.toMatrix() * mat4::translate(position.x, position.y, position.z) * mat4::scale(scale.x, scale.y, scale.z);
+	return matrix;
+}
+
 void ComponentTransform::rotateByEulerAngles(float x_axis, float y_axis, float z_axis)
 {
 	rotation.rotateEulerAngles(x_axis, y_axis, z_axis);

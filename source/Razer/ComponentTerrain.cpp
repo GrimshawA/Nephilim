@@ -10,16 +10,16 @@ static const float GRID_SIZE = 1.0f;
 static const float HEIGHT_FACTOR = 0.1f;
 static const float TEXTURE_INCREMENT = 0.2f;
 
-void ComponentTerrain::load()
+bool ComponentTerrain::load(const String& heightmapFileName)
 {
 	surfaceTex.loadFromFile("grass.png");
 	surfaceTex.setRepeated(true);
 	surfaceTex.generateMipMaps();
 
-	Image heightmap;
-	heightmap.loadFromFile("heightmap.png");
+	
+	heightmap.loadFromFile(heightmapFileName);
 
-	Uint8* heightmapRaw = new Uint8[heightmap.getSize().x * heightmap.getSize().y];
+	heightmapRaw = new Uint8[heightmap.getSize().x * heightmap.getSize().y];
 
 	int k = 0;
 	for( Uint16 x = 0; x < heightmap.getSize().x; ++x )
@@ -65,6 +65,8 @@ void ComponentTerrain::load()
 
 	geometry.setAllColors(Color::White);
 	geometry.scaleUV(100);
+
+	return true;
 }
 
 }

@@ -7,6 +7,7 @@
 #include <Nephilim/Tilemap.h>
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/IndexArray.h>
+#include <Nephilim/CollisionData.h>
 #include <Nephilim/Razer/Component.h>
 
 #include <vector>
@@ -66,6 +67,8 @@ public:
 	/// Converts the in memory tile data from a single layer to renderizable chunk data
 	void prepareLayer(const String& layerName);
 	
+	void generateCollisionData(const String& layerName, CollisionData& cd);
+
 	/// Takes the input data from tileLayer and generates the geometry for rendering as cubes
 	void generateCubes(Tilemap::Layer* tileLayer, const String& destLayer);
 

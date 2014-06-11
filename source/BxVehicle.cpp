@@ -38,27 +38,25 @@ BxVehicle::BxVehicle(BxScene& scene)
 
 	///never deactivate the vehicle
 	m_carChassis->setActivationState(DISABLE_DEACTIVATION);
-
 	
 	vehicle = new btRaycastVehicle(m_tuning, m_carChassis, m_vehicleRayCaster);
-	//vehicle->
-	scene.m_scene->addVehicle(vehicle);
-	//scene.m_scene->addAction(vehicle);
 
-	//choose coordinate system
+	scene.m_scene->addVehicle(vehicle);
+
 	vehicle->setCoordinateSystem(0,1,2);
-	//vehicle->updateVehicle(1 / 60.f);
-	//vehicle->resetSuspension();
+
 
 	Log("Vehicle speed: %f", vehicle->getCurrentSpeedKmHour());
+
+	float wheelDistanceZ = 4;
 
 	float wheelHeight = 0.f;
 
 	// Wheels
-	btVector3 connectionPointCS0(-1,wheelHeight,-1);
-	btVector3 connectionPointCS1(1,wheelHeight,-1);
-	btVector3 connectionPointCS2(-1,wheelHeight,1);
-	btVector3 connectionPointCS3(1,wheelHeight,1);
+	btVector3 connectionPointCS0(-1,wheelHeight,-wheelDistanceZ / 2.f);
+	btVector3 connectionPointCS1(1,wheelHeight,-wheelDistanceZ / 2.f);
+	btVector3 connectionPointCS2(-1,wheelHeight,wheelDistanceZ / 2.f);
+	btVector3 connectionPointCS3(1,wheelHeight,wheelDistanceZ / 2.f);
 
 	btVector3 wheelDirectionCS0(0,-1,0);
 	btVector3 wheelAxleCS(-1,0,0);

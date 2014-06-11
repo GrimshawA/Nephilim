@@ -43,7 +43,9 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void useCubes(bool)", asMETHOD(ComponentTilemap2D, useCubes), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void setSideView(bool)", asMETHOD(ComponentTilemap2D, setSideView), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void prepareLayer(const string& in)", asMETHOD(ComponentTilemap2D, prepareLayer), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "void generateCollisionData(const string& in, CollisionData& inout)", asMETHOD(ComponentTilemap2D, generateCollisionData), asCALL_THISCALL);
 	//engine.get()->RegisterObjectMethod("Tilemap2D", "void getTileShape(int, float& out, float& out, float& out, float& out)", asMETHOD(ComponentTilemap2D, getTileShape), asCALL_THISCALL);
+
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -52,10 +54,12 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asFUNCTION(dummy), asCALL_CDECL_OBJLAST);
 	engine.get()->RegisterObjectBehaviour("Transform", asBEHAVE_RELEASE, "void f()", asFUNCTION(dummy), asCALL_CDECL_OBJLAST);
 
+	engine.get()->RegisterObjectProperty("Transform", "vec3 position", asOFFSET(ComponentTransform, position));
 	engine.get()->RegisterObjectProperty("Transform", "float x", asOFFSET(ComponentTransform, position.x));
 	engine.get()->RegisterObjectProperty("Transform", "float y", asOFFSET(ComponentTransform, position.y));
 	engine.get()->RegisterObjectProperty("Transform", "float z", asOFFSET(ComponentTransform, position.z));
 	engine.get()->RegisterObjectProperty("Transform", "Quaternion q", asOFFSET(ComponentTransform, rotation));
+	engine.get()->RegisterObjectProperty("Transform", "vec3 scale", asOFFSET(ComponentTransform, scale));
 
 	// Basic transform functions
 	engine.get()->RegisterObjectMethod("Transform", "void setPosition(const vec3& in)", asMETHODPR(ComponentTransform, setPosition, (const vec3&), void), asCALL_THISCALL);
@@ -82,6 +86,7 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("Sprite", "void setSize(const vec2& in)", asMETHODPR(ComponentSprite, setSize, (const vec2&), void), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Sprite", "void setSize(float, float)", asMETHODPR(ComponentSprite, setSize, (float,float), void), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Sprite", "vec2 getSize()", asMETHOD(ComponentSprite, getSize), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Sprite", "void setTextureRect(float,float,float,float)", asMETHOD(ComponentSprite, setTextureRect), asCALL_THISCALL);
 
 	engine.get()->RegisterObjectProperty("Sprite", "float width", asOFFSET(ComponentSprite, width));
 	engine.get()->RegisterObjectProperty("Sprite", "float height", asOFFSET(ComponentSprite, height));

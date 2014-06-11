@@ -42,6 +42,8 @@ public:
 	vec3 getForwardVector();
 	vec3 getRightVector();
 
+	mat4 getMatrix();
+
 	Quaternion rotation;
 	vec3       position;
 	vec3       scale;

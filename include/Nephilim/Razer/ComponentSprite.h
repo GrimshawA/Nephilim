@@ -29,6 +29,8 @@ public:
 	/// Get the size of the sprite
 	vec2 getSize();
 
+	void setTextureRect(float x, float y, float w, float h);
+
 	float width;
 	float height;
 

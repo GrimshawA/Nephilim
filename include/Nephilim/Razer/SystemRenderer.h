@@ -24,6 +24,7 @@ public:
 	
 	void renderTilemap(Entity& entity);
 	void renderMesh(Entity& entity);
+	void renderModel(Entity& entity);
 
 	Renderer*        mRenderer;
 	ContentManager*  mContentManager;

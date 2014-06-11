@@ -63,7 +63,7 @@ public:
 	void CreateQuickLine(float x, float y, float xx, float yy);
 	b2Body* CreateStaticBox(float x, float y, float width, float height);
 	
-private:
+//private:
 	int m_velocityIterations; ///< Velocity iteration count
 	int m_positionIterations; ///< Position iteration count
 

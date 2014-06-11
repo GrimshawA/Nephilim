@@ -6,6 +6,7 @@
 #include <Nephilim/KxScene.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/KxBody.h>
+#include <Nephilim/CollisionData.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
@@ -16,6 +17,9 @@ namespace rzr
 class SystemKinesis2D : public System
 {
 public:
+	SystemKinesis2D();
+
+	void addCollisionData(CollisionData& data);
 
 	void onComponentAdded(std::type_index type_index, void* cdata, Entity* entity);
 
@@ -24,6 +28,12 @@ public:
 	void addStaticTile(float x, float y, float w, float h)
 	{
 		mPhysicsScene.CreateStaticBox(x,y,w,h);
+	}
+
+	void addDynamicTile(float x, float y, float w, float h)
+	{
+	//	mPhysicsScene.CreateQuickBox(x,y,w,h);
+		mPhysicsScene.CreateQuickCircle(x,y,1);
 	}
 
 	virtual void update(const Time& deltaTime);
