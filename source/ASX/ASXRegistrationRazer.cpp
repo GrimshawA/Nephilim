@@ -59,6 +59,7 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectProperty("Transform", "float y", asOFFSET(ComponentTransform, position.y));
 	engine.get()->RegisterObjectProperty("Transform", "float z", asOFFSET(ComponentTransform, position.z));
 	engine.get()->RegisterObjectProperty("Transform", "Quaternion q", asOFFSET(ComponentTransform, rotation));
+	engine.get()->RegisterObjectProperty("Transform", "Quaternion rotation", asOFFSET(ComponentTransform, rotation));
 	engine.get()->RegisterObjectProperty("Transform", "vec3 scale", asOFFSET(ComponentTransform, scale));
 
 	// Basic transform functions

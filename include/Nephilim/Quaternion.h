@@ -2,6 +2,7 @@
 #define NephilimQuaternion_h__
 
 #include "Platform.h"
+#include "Vectors.h"
 #include "Matrix.h"
 
 NEPHILIM_NS_BEGIN
@@ -14,11 +15,23 @@ public:
 
 	Quaternion(float nx, float ny, float nz, float nw);
 
+	Quaternion(vec3 v, float nw);
+
+	vec3 xyz();
+
 	void rotateEulerAngles(float ax, float ay, float az);
 
 	void rotateAxisAngle(float angle, float ax, float ay, float az);
 
+	float lengthSquared();
+
 	Quaternion operator*(const Quaternion& q2);
+
+	Quaternion operator*(float scalar);
+
+	Quaternion operator+(const Quaternion& q2);
+
+	inline Quaternion& operator*=(float scalar);
 
 	void normalize();  
 
@@ -28,6 +41,14 @@ public:
 	
 	static Quaternion fromMatrix(mat4 m);
 	static void fromAxisAngle(Quaternion& q, vec3 axis, float angle);
+
+	static Quaternion slerp(Quaternion& q1, Quaternion& q2, float blend);
+
+	static Quaternion lerp(Quaternion& q1, Quaternion& q2, float blend);
+
+	static float dot(Quaternion& q1, Quaternion& q2);
+
+	static Quaternion identity;
 };
 
 NEPHILIM_NS_END

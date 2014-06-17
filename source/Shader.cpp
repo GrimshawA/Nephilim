@@ -1,6 +1,7 @@
 #include <Nephilim/Shader.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
+#include <Nephilim/File.h>
 
 #include <iostream>
 using namespace std;
@@ -63,6 +64,71 @@ void Shader::pff()
 void Shader::addAttributeLocation(unsigned int location, const String& name)
 {
 	m_attribs.push_back(make_pair(location,name));
+}
+
+String getFileContents(const String& filename)
+{
+	File myFile(filename, IODevice::TextRead);
+	if(!myFile)
+		return "";
+
+	String contents;
+
+	while(!myFile.atEnd())
+		contents += myFile.getChar();
+
+	contents += '\0';
+
+	return contents;
+}
+
+/// Compiles a shader to be linked when create() is called, from a source file
+bool Shader::loadShaderFromFile(ShaderTypes type, const String& filename)
+{
+	bool success = false;
+
+	GLuint shader = 0;
+
+	switch(type)
+	{
+	case VertexUnit:	shader = glCreateShader(GL_VERTEX_SHADER);	break;
+	case FragmentUnit:	shader = glCreateShader(GL_FRAGMENT_SHADER);   break;
+	}
+
+	String shaderCode = getFileContents(filename);
+	const char* source = shaderCode.c_str();
+
+	if (shader) {
+		glShaderSource(shader, 1, &source, NULL);
+		glCompileShader(shader);
+		GLint compiled = 0;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			GLint infoLen = 0;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+			if (infoLen) {
+				char* buf = new char[infoLen];
+				if (buf) {
+					glGetShaderInfoLog(shader, infoLen, NULL, buf);
+					//PRINTLOG("GLSL", "Failed to load shader: %s\n", buf);
+					String mstr(buf);
+					//mstr.removeCharacter('\r');
+					//mstr.removeCharacter('\n');
+					std::cout << "GLSL: " << mstr << std::endl;
+					delete [] buf;
+				}
+				glDeleteShader(shader);
+				shader = 0;
+			}
+		}
+		else
+		{
+			m_shaders.push_back(std::make_pair(type, static_cast<unsigned int>(shader)));
+			success = true;
+		}
+	}
+
+	return success;
 }
 
 /// Compiles a shader to be linked when create() is called

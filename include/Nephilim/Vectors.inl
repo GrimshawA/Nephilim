@@ -251,6 +251,15 @@ void Vec3<T>::setAll(T x)
 	this->z = x;
 }
 
+template<class T>
+Vec3<T> Vec3<T>::lerp(Vec3<T> a, Vec3<T> b, float blend)
+{
+	a.x = blend * (b.x - a.x) + a.x;
+	a.y = blend * (b.y - a.y) + a.y;
+	a.z = blend * (b.z - a.z) + a.z;
+	return a;
+}
+
 /// Makes the vector unit-length
 template<class T>
 void Vec3<T>::normalize()

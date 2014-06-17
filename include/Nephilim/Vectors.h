@@ -109,7 +109,8 @@ typedef Vec2<double> Vec2d;
 	\brief 3D Vector
 */
 template<class T>
-class NEPHILIM_API Vec3{
+class NEPHILIM_API Vec3
+{
 public:
 	/// Creates an uninitialized Vec3
 	Vec3();
@@ -128,6 +129,9 @@ public:
 
 	/// Sets all values of the 3D vector as x
 	void setAll(T x);
+
+	/// Interpolate linearly two vectors
+	static Vec3<T> lerp(Vec3<T> a, Vec3<T> b, float blend);
 
 	/// Get the length of the vector
 	float length() const;

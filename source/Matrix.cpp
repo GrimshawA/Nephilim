@@ -374,6 +374,11 @@ mat4 mat4::lookAt(Vec3f eye, Vec3f center, Vec3f up)
 	return m;
 }
 
+mat4 mat4::translate(vec3 v)
+{
+	return mat4::translate(v.x, v.y, v.z);
+}
+
 mat4 mat4::translate(float x, float y, float z)
 {
 	mat4 m;

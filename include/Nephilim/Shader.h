@@ -57,6 +57,9 @@ public:
 	/// Compiles a shader to be linked when create() is called
 	bool loadShader(ShaderTypes type, const char* source);
 
+	/// Compiles a shader to be linked when create() is called, from a source file
+	bool loadShaderFromFile(ShaderTypes type, const String& filename);
+
 	/// Binds the shader to the GPU
 	void bind() const;
 

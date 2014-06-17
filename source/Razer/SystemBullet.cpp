@@ -126,10 +126,10 @@ void SystemBullet::update(const Time& deltaTime)
 		}
 	}
 
-	for(int i = 0; i < 4; i++)
-	{
-		bulletWorld.step(delta / 4.f);
-	}
+	//for(int i = 0; i < 4; i++)
+	//{
+		bulletWorld.step(delta);
+	//}
 
 	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
@@ -141,7 +141,11 @@ void SystemBullet::update(const Time& deltaTime)
 
 			vec3 ccPosition(cc.m_ghostObject->getWorldTransform().getOrigin().getX(), cc.m_ghostObject->getWorldTransform().getOrigin().getY(), cc.m_ghostObject->getWorldTransform().getOrigin().getZ());
 
+			btQuaternion quat = cc.m_ghostObject->getWorldTransform().getRotation();
+
 			transform.position = ccPosition;
+		//	transform.rotation = Quaternion(quat.getX(),quat.getY(),quat.getZ(),quat.getW() );
+
 
 			//Log("Transform updated");
 		}

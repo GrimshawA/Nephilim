@@ -51,6 +51,7 @@ public:
 
 	static mat4 scale(float x, float y, float z);
 	static mat4 translate(float x, float y, float z);
+	static mat4 translate(vec3 v);
 	static mat4 rotate(float angle_x, float angle_y, float angle_z);
 	static mat4 quaternion(float qx, float qy, float qz, float qw);
 

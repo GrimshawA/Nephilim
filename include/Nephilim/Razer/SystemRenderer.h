@@ -20,6 +20,7 @@ class NEPHILIM_API SystemRenderer : public System
 public:
 	SystemRenderer();
 
+	virtual void update(const Time& deltaTime);
 	virtual void render();
 	
 	void renderTilemap(Entity& entity);

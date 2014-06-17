@@ -4,6 +4,8 @@
 
 NEPHILIM_NS_BEGIN
 
+Quaternion Quaternion::identity;
+
 Quaternion::Quaternion()
 : x(0.f)
 , y(0.f)
@@ -18,6 +20,21 @@ Quaternion::Quaternion(float nx, float ny, float nz, float nw)
 , z(nz)
 , w(nw)
 {
+}
+
+Quaternion::Quaternion(vec3 v, float nw)
+: x(v.x)
+, y(v.y)
+, z(v.z)
+, w(nw)
+{
+
+}
+
+
+vec3 Quaternion::xyz()
+{
+	return vec3(x,y,z);
 }
 
 void Quaternion::normalize()
@@ -115,6 +132,131 @@ void Quaternion::rotateAxisAngle(float angle, float ax, float ay, float az)
 	Quaternion::fromAxisAngle(qr, vec3(ax,ay,az), angle);
 
 	*this = *this * qr;
+}
+
+float Quaternion::dot(Quaternion& q1, Quaternion& q2)
+{
+	return (q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w);
+}
+
+float Quaternion::lengthSquared()
+{
+	return (x * x + y * y + z * z + w * w);
+}
+
+
+Quaternion Quaternion::slerp(Quaternion& q1, Quaternion& q2, float blend)
+{
+	/*
+	// if either input is zero, return the other.
+	if (q1.lengthSquared() == 0.0f)
+	{
+		if (q2.lengthSquared() == 0.0f)
+		{
+			return Quaternion::identity;
+		}
+		return q2;
+	}
+	else if (q2.lengthSquared() == 0.0f)
+	{
+		return q1;
+	}
+	
+	float cosHalfAngle = q1.w * q2.w + (q1.xyz().dot(q2.xyz()));
+
+	if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+	{
+		// angle = 0.0f, so just return one input.
+		return q1;
+	}
+	else if (cosHalfAngle < 0.0f)
+	{
+		q2.xyz() = q2.xyz() * -1.f;
+		q2.w = -q2.w;
+		cosHalfAngle = -cosHalfAngle;
+	}
+
+	float blendA;
+	float blendB;
+	if (cosHalfAngle < 0.99f)
+	{
+		// do proper slerp for big angles
+		float halfAngle = (float)acos(cosHalfAngle);
+		float sinHalfAngle = (float)sin(halfAngle);
+		float oneOverSinHalfAngle = 1.0f / sinHalfAngle;
+		blendA = (float)sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+		blendB = (float)sin(halfAngle * blend) * oneOverSinHalfAngle;
+	}
+	else
+	{
+		// do lerp if angle is really small.
+		blendA = 1.0f - blend;
+		blendB = blend;
+	}
+
+	Quaternion result(q1.xyz() *blendA + q2.xyz() * blendB, blendA * q1.w + blendB * q2.w);
+	if (result.lengthSquared() > 0.0f)
+	{
+		result.normalize();
+		return result;
+	}
+	else
+		return Quaternion::identity;*/
+
+	float threshold = 0.05f;
+	float angle = Quaternion::dot(q1, q2);
+
+	if (angle < 0.0f)
+	{
+		q1 *= -1.0f;
+		angle *= -1.0f;
+	}
+	
+	if (angle <= (1.f - threshold)) // spherical interpolation
+	{
+		Quaternion qr;
+		const float theta = acosf(angle);
+		const float invsintheta = 1.f / sinf(theta);
+		const float scale = sinf(theta * (1.0f-blend)) * invsintheta;
+		const float invscale = sinf(theta * blend) * invsintheta;
+		qr = (q1*scale) + (q2*invscale);
+		return qr;
+	}
+	else // linear interploation
+		return lerp(q1, q2, blend);
+}
+
+Quaternion Quaternion::lerp(Quaternion& q1, Quaternion& q2, float blend)
+{
+	const float scale = 1.0f - blend;
+	Quaternion q = (q1*scale) + (q2*blend);
+	return q;
+}
+
+Quaternion& Quaternion::operator*=(float scalar)
+{
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
+	w *= scalar;
+	return *this;
+}
+
+Quaternion Quaternion::operator*(float scalar)
+{
+	Quaternion qr = *this;
+	qr *= scalar;
+	return qr;
+}
+
+Quaternion Quaternion::operator+(const Quaternion& q2)
+{
+	Quaternion qr = *this;
+	qr.x += q2.x;
+	qr.y += q2.y;
+	qr.z += q2.z;
+	qr.w += q2.w;
+	return qr;
 }
 
 

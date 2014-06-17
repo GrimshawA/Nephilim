@@ -11,6 +11,7 @@
 #include <Nephilim/Razer/ComponentModel.h>
 #include <Nephilim/Razer/ComponentMesh.h>
 #include <Nephilim/Razer/ComponentVehicle.h>
+#include <Nephilim/Razer/ComponentSkinnedModel.h>
 #include <Nephilim/Razer/SystemKinesis2D.h>
 
 #include <Nephilim/Logger.h>
@@ -46,13 +47,27 @@ SystemRenderer::SystemRenderer()
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		Log("=>>>>>>>>> Render Texture created");
+		//Log("=>>>>>>>>> Render Texture created");
 	}
 	else
 	{
 		Log(">>>>>>>>>>> Could not make render texture");
 	}
 	
+}
+
+void SystemRenderer::update(const Time& deltaTime)
+{
+	// Update skinning animations
+	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	{
+		Entity ent = mScene->getEntityByIndex(i);
+		if(ent.hasComponent<ComponentSkinnedModel>())
+		{
+			ComponentSkinnedModel& skinnedModel = ent.getComponent<ComponentSkinnedModel>();
+			skinnedModel.update(deltaTime);
+		}
+	}
 }
 
 void SystemRenderer::render()
@@ -106,6 +121,14 @@ void SystemRenderer::render()
 		if(ent.hasComponent<ComponentTilemap2D>())
 		{
 			renderTilemap(ent);
+		}
+		if(ent.hasComponent<ComponentSkinnedModel>())
+		{
+			ComponentSkinnedModel& skinnedModel = ent.getComponent<ComponentSkinnedModel>();
+			ComponentTransform& transform = ent.getComponent<ComponentTransform>();
+			mRenderer->setModelMatrix(transform.getMatrix() * skinnedModel.baseTransform);
+
+			skinnedModel.render(mRenderer);
 		}
 		if(ent.hasComponent<ComponentVehicle>())
 		{
