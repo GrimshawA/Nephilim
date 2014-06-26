@@ -30,13 +30,13 @@ public:
 	/// Content is initialized to a copy of the string object str.
 	String(const String& str);
 	/// Content is initialized to a copy of a substring of str. The substring is the portion of str that begins at the character position pos and takes up to n characters (it takes less than n if the end of str is reached before).
-	String(const String& str, size_t pos, size_t n = npos);
+	String(const String& str, std::size_t pos, std::size_t n = npos);
 	/// Content is initialized to a copy of the string formed by the first n characters in the array of characters pointed by s.
-	String(const char * s, size_t n);
+	String(const char * s, std::size_t n);
 	/// Content is initialized to a copy of the string formed by the null-terminated character sequence (C string) pointed by s.
 	String(const char * s);
 	/// Content is initialized as a string formed by a repetition of character c, n times.
-	String(size_t n, char c);
+	String(std::size_t n, char c);
 	/// Content is initialized from a std::string
 	String(const std::string &s);
 

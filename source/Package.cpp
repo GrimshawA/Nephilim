@@ -30,12 +30,12 @@ bool Package::extract(const String& directory)
 		Int64 fileCount = 0;
 		in >> fileCount;
 		m_header.m_files.resize(fileCount);
-		for(size_t i = 0; i < m_header.m_files.size(); i++)
+		for(std::size_t i = 0; i < m_header.m_files.size(); i++)
 		{
 			in >> m_header.m_files[i].m_name >>  m_header.m_files[i].m_offset >>  m_header.m_files[i].m_length;
 		}
 
-		for(size_t i = 0; i < m_header.m_files.size(); i++)
+		for(std::size_t i = 0; i < m_header.m_files.size(); i++)
 		{
 			File srcFile(file.getHandle(), m_header.m_files[i].m_offset, m_header.m_files[i].m_length);
 			File dstFile(directory + "/" + m_header.m_files[i].m_name, IODevice::BinaryWrite);

@@ -15,7 +15,7 @@ UIComponentScroll::UIComponentScroll()
 */
 void UIComponentScroll::onAttach(UIView* view)
 {
-	component_id = UIViewComponent::ScrollComponent;
+	component_id = UIComponent::ScrollComponent;
 	scrolling = false;
 
 	view->m_clipChildren = true;
@@ -29,7 +29,7 @@ void UIComponentScroll::onAttach(UIView* view)
 	if(mPageBased)
 	{
 		float offset = 0.f;
-		for(size_t i = 0; i < view->m_children.size(); ++i)
+		for(std::size_t i = 0; i < view->m_children.size(); ++i)
 		{
 			view->m_children[i]->setSize(view->getSize().x, view->getSize().y);
 			view->m_children[i]->setPosition(view->getPosition().x + offset, view->getPosition().y);
@@ -59,7 +59,7 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 
 		float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
 		UIView* closestView = view->m_children[0];
-		for(size_t i = 0; i < view->m_children.size(); ++i)
+		for(std::size_t i = 0; i < view->m_children.size(); ++i)
 		{				
 			float dist = fabs(view->m_children[i]->getCenter().y - view->getCenter().y);
 			if(dist < smallest_distance)
@@ -98,7 +98,7 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 			// apply test offset effect
 			/*float biggest_center = view->m_children[0]->getCenter().y;
 			float smallest_center = view->m_children[0]->getCenter().y;
-			for(size_t i = 0; i < view->m_children.size(); ++i)
+			for(std::size_t i = 0; i < view->m_children.size(); ++i)
 			{				
 				if(view->m_children[i]->getCenter().y > biggest_center)
 				{
@@ -135,7 +135,7 @@ UIView* UIComponentScroll::getSelectedView(UIView* view)
 
 	float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
 	UIView* closestView = view->m_children[0];
-	for(size_t i = 0; i < view->m_children.size(); ++i)
+	for(std::size_t i = 0; i < view->m_children.size(); ++i)
 	{				
 		float dist = fabs(view->m_children[i]->getCenter().y - view->getCenter().y);
 		if(dist < smallest_distance)

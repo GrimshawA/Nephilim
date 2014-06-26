@@ -4,7 +4,7 @@ NEPHILIM_NS_BEGIN
 
 Int32 Skeleton::getIndexFromName(const String& name)
 {
-	for(size_t i = 0; i < bones.size(); ++i)
+	for(std::size_t i = 0; i < bones.size(); ++i)
 	{
 		if(bones[i].name == name)
 			return i;
@@ -31,7 +31,7 @@ void Skeleton::convertToWorldSpace(std::vector<mat4>& localBoneTransforms)
 	std::vector<mat4> transforms_copy = localBoneTransforms;
 
 	// For each bone, compute the global transform of the bone
-	for(size_t i = 0; i < bones.size(); ++i)
+	for(std::size_t i = 0; i < bones.size(); ++i)
 	{
 		localBoneTransforms[i] = makeAbsoluteTransform(transforms_copy, i, *this);
 	}

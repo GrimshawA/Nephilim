@@ -136,7 +136,7 @@ bool Tilemap::loadTMX(const String& filename)
 	}
 
 	// Fill the last GID in each tileset
-	for(size_t i = 0; i < mTilesets.size(); ++i)
+	for(std::size_t i = 0; i < mTilesets.size(); ++i)
 	{
 		mTilesets[i].computeLastGid();
 	}
@@ -145,7 +145,7 @@ bool Tilemap::loadTMX(const String& filename)
 }
 
 /// Get the right UV for a given tile in a given layer
-FloatRect Tilemap::getTileUV(const String& layerName, size_t tileIndex)
+FloatRect Tilemap::getTileUV(const String& layerName, std::size_t tileIndex)
 {
 	FloatRect rect(0.f, 0.f, 0.f, 0.f);
 
@@ -167,7 +167,7 @@ void Tilemap::convertGIDtoUV(int gid, FloatRect& rect)
 {
 	if(gid > 0 && mTilesets.size() > 0)
 	{
-		for(size_t i = 0; i < mTilesets.size(); ++i)
+		for(std::size_t i = 0; i < mTilesets.size(); ++i)
 		{
 			if(mTilesets[i].containsGid(gid))
 			{
@@ -191,7 +191,7 @@ Tilemap::Layer* Tilemap::getLayer(int index)
 
 Tilemap::Layer* Tilemap::getLayerByName(const String& name)
 {
-	for(size_t i = 0; i < mLayers.size(); ++i)
+	for(std::size_t i = 0; i < mLayers.size(); ++i)
 	{
 		if(mLayers[i]->mName == name)
 			return mLayers[i];
@@ -220,7 +220,7 @@ int Tilemap::Layer::getType()
 
 vec2 Tilemap::Layer::getObjectPosition(const String& name)
 {
-	for(size_t i = 0 ; i < mObjects.size(); ++i)
+	for(std::size_t i = 0 ; i < mObjects.size(); ++i)
 	{
 		if(mObjects[i].mName == name)
 		{
@@ -231,9 +231,9 @@ vec2 Tilemap::Layer::getObjectPosition(const String& name)
 	return vec2(0.f, 0.f);
 }
 
-size_t Tilemap::getTilesetIndexOfGid(int gid)
+std::size_t Tilemap::getTilesetIndexOfGid(int gid)
 {
-	for(size_t i = 0; i < mTilesets.size(); ++i)
+	for(std::size_t i = 0; i < mTilesets.size(); ++i)
 	{
 		if(mTilesets[i].containsGid(gid))
 			return i;

@@ -100,6 +100,7 @@ mat4::mat4()
 	m_matrix[3] = 0.f; m_matrix[7] = 0.f; m_matrix[11] = 0.f; m_matrix[15] = 1.f;
 }
 
+
 ////////////////////////////////////////////////////////////
 mat4::mat4(	float a00, float a01, float a02, float a03,
 			float a10, float a11, float a12, float a13,
@@ -117,6 +118,10 @@ mat4::mat4(const float* elements)
 	for(int i = 0; i < 16; i++) m_matrix[i] = elements[i];
 }
 
+float mat4::element(int row, int col)
+{
+	return m_matrix[row + col*4];
+}
 
 const float* mat4::get() const
 {
@@ -173,6 +178,32 @@ vec4 mat4::operator*(const vec4& v)
 /// Multiply two 4x4 matrices
 mat4 mat4::operator*(const mat4& m) const
 {
+	/*return 	mat4 wrong because that constructor takes row major
+	( 
+		// Column 1
+		m_matrix[0]*m[0] + m_matrix[4]*m[1] + m_matrix[8]*m[2] + m_matrix[12]*m[3],
+		m_matrix[1]*m[0] + m_matrix[5]*m[1] + m_matrix[9]*m[2] + m_matrix[13]*m[3],
+		m_matrix[2]*m[0] + m_matrix[6]*m[1] + m_matrix[10]*m[2] + m_matrix[14]*m[3],
+		m_matrix[3]*m[0] + m_matrix[7]*m[1] + m_matrix[11]*m[2] + m_matrix[15]*m[3],
+
+		// Column 2
+		m_matrix[0]*m[4] + m_matrix[4]*m[5] + m_matrix[8]*m[6] + m_matrix[12]*m[7],
+		m_matrix[1]*m[4] + m_matrix[5]*m[5] + m_matrix[9]*m[6] + m_matrix[13]*m[7],
+		m_matrix[2]*m[4] + m_matrix[6]*m[5] + m_matrix[10]*m[6] + m_matrix[14]*m[7],
+		m_matrix[3]*m[4] + m_matrix[7]*m[5] + m_matrix[11]*m[6] + m_matrix[15]*m[7],
+
+		// Column 3
+		m_matrix[0]*m[8] + m_matrix[4]*m[9] + m_matrix[8]*m[10] + m_matrix[12]*m[11],
+		m_matrix[1]*m[8] + m_matrix[5]*m[9] + m_matrix[9]*m[10] + m_matrix[13]*m[11],
+		m_matrix[2]*m[8] + m_matrix[6]*m[9] + m_matrix[10]*m[10] + m_matrix[14]*m[11],
+		m_matrix[3]*m[8] + m_matrix[7]*m[9] + m_matrix[11]*m[10] + m_matrix[15]*m[11],
+
+		// Column 4
+		m_matrix[0]*m[12] + m_matrix[4]*m[13] + m_matrix[8]*m[14] + m_matrix[12]*m[15],
+		m_matrix[1]*m[12] + m_matrix[5]*m[13] + m_matrix[9]*m[14] + m_matrix[13]*m[15],
+		m_matrix[2]*m[12] + m_matrix[6]*m[13] + m_matrix[10]*m[14] + m_matrix[14]*m[15],
+		m_matrix[3]*m[12] + m_matrix[7]*m[13] + m_matrix[11]*m[14] + m_matrix[15]*m[15]
+	);*/
 	return mat4 ( m_matrix[0]*m[0] + m_matrix[4]*m[1] + m_matrix[8]*m[2] + m_matrix[12]*m[3],
 				  m_matrix[0]*m[4] + m_matrix[4]*m[5] + m_matrix[8]*m[6] + m_matrix[12]*m[7],
 				  m_matrix[0]*m[8] + m_matrix[4]*m[9] + m_matrix[8]*m[10] + m_matrix[12]*m[11],

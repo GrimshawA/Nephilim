@@ -41,14 +41,14 @@ void StateStack::clear()
 	// If the transition is active, alter the future list instead
 	if(isTransitionActive())
 	{
-		for(size_t i = 0; i < mFutureList.size(); ++i)
+		for(std::size_t i = 0; i < mFutureList.size(); ++i)
 		{
 			mFutureList[i]->finish();
 		}
 	}
 	else
 	{
-		for(size_t i = 0; i < mCurrentList.size(); ++i)
+		for(std::size_t i = 0; i < mCurrentList.size(); ++i)
 		{
 			mCurrentList[i]->finish();
 		}
@@ -95,7 +95,7 @@ void StateStack::drawCurrentList(Renderer* renderer)
 
 void StateStack::drawList(std::vector<State*>& list, Renderer* renderer)
 {
-	size_t index = 0;
+	std::size_t index = 0;
 	while(index < list.size() && !list.empty())
 	{
 		list[index]->onRender(renderer);

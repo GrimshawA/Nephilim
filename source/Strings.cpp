@@ -18,11 +18,11 @@ NEPHILIM_NS_BEGIN
 
 	};
 
-	String::String(const String& str, size_t pos, size_t n) : std::string(str, pos, n){
+	String::String(const String& str, std::size_t pos, std::size_t n) : std::string(str, pos, n){
 
 	};
 
-	String::String(const char * s, size_t n) : std::string(s, n){
+	String::String(const char * s, std::size_t n) : std::string(s, n){
 
 	};
 
@@ -30,7 +30,7 @@ NEPHILIM_NS_BEGIN
 
 	};
 
-	String::String(size_t n, char c) : std::string(n, c){
+	String::String(std::size_t n, char c) : std::string(n, c){
 
 	};
 
@@ -43,7 +43,7 @@ NEPHILIM_NS_BEGIN
 	};
 
 void String::removeUntilReverse(char c){
-	size_t ocurr = find_last_of(c);
+	std::size_t ocurr = find_last_of(c);
 	if(ocurr == npos)ocurr = 0;
 	erase(ocurr, npos);
 };
@@ -170,13 +170,13 @@ StringList String::split(char c, int limitCount) const
 }
 
 	bool String::startsWith(const String &str){
-		size_t result = find(str);
+		std::size_t result = find(str);
 		if(result == 0)return true;
 		else return false;
 	}
 
 	bool String::endsWith(const String &str){
-		size_t result = find(str);
+		std::size_t result = find(str);
 		if(result == length()-str.length())return true;
 		else return false;
 	}
@@ -268,12 +268,12 @@ StringList String::split(char c, int limitCount) const
 
 	/// Overload for operator[] for int literals - set operator
 	const char& String::operator[](int pos) const{
-		return std::string::operator []((size_t)pos);
+		return std::string::operator []((std::size_t)pos);
 	};
 
 	/// Overload for operator[] for int literals - get operator
 	char& String::operator[](int pos){
-		return std::string::operator []((size_t)pos);
+		return std::string::operator []((std::size_t)pos);
 
 	};
 

@@ -25,7 +25,7 @@
 NEPHILIM_NS_BEGIN
 
 class AxBase;
-class UIViewComponent;
+class UIComponent;
 
 namespace UIPositionFlag
 {
@@ -50,6 +50,9 @@ namespace UISizeFlag
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
+	/// Allows cleaner code, which uses UIView::Ptr as the type which can be changed anytime between other types of smart pointers without breaking code
+	typedef UIView* Ptr;
+
 	/// Base constructor
 	UIView();
 
@@ -65,7 +68,7 @@ public:
 	void load(const String& filename);
 
 	/// Add a component to the view
-	void addComponent(UIViewComponent* component);
+	void addComponent(UIComponent* component);
 
 	/// Add a new component from a pre registered type
 	void addComponent(const String& name);
@@ -75,7 +78,7 @@ public:
 	String getStringProperty(const String& propertyName);
 
 	/// Returns the first component with the given type
-	UIViewComponent* getComponentByType(UIViewComponent::Type type);
+	UIComponent* getComponentByType(UIComponent::Type type);
 
 	void printHierarchy(int tabs = 0);
 
@@ -369,7 +372,7 @@ public:
 
 	friend class UILayout;
 
-	std::vector<UIViewComponent*> components; ///< List of components in this view
+	std::vector<UIComponent*> components; ///< List of components in this view
 
 	std::map<String, String> mStringProperties;
 
@@ -431,7 +434,7 @@ public:
 template<class T>
 T* UIView::getComponent()
 {
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		T* component = dynamic_cast<T*>(components[i]);
 		if(component)
@@ -440,6 +443,24 @@ T* UIView::getComponent()
 
 	return NULL;
 }
+
+/**
+	\class UIViewPtr
+	\brief Provisory name: simple smart pointer wrapper that contains a reference to a single UIView
+*/	
+class NEPHILIM_API UIViewPtr
+{
+public:
+	/// Default initialization to NULL reference
+	UIViewPtr();
+
+	/// Automatic destruction of the UIView reference
+	/// In case the UIView is still inserted in a hierarchy, it is the responsability of the hierarchy to destroy it
+	/// If the UIView is loose then it is guaranteed to be destroyed
+	~UIViewPtr();
+
+	UIView* mRef;
+};
 
 NEPHILIM_NS_END
 #endif // NephilimUIView_h__

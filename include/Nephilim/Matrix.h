@@ -26,6 +26,8 @@ public:
 
 	mat4(const float* elements);
 
+	float element(int row, int col);
+
 	/// Invert the matrix
 	void invert();
 

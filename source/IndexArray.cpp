@@ -4,7 +4,7 @@ NEPHILIM_NS_BEGIN
 
 void IndexArray::redirectFromTo(Int32 searchElement, Int32 becomes)
 {
-	for(size_t i = 0; i < indices.size(); ++i)
+	for(std::size_t i = 0; i < indices.size(); ++i)
 	{
 		if(indices[i] == searchElement)
 		{
@@ -16,7 +16,7 @@ void IndexArray::redirectFromTo(Int32 searchElement, Int32 becomes)
 /// Whatever pointed at index1, now points at index 2, and vice versa
 void IndexArray::swapIndices(Int32 index1, Int32 index2)
 {
-	for(size_t i = 0; i < indices.size(); ++i)
+	for(std::size_t i = 0; i < indices.size(); ++i)
 	{
 		if(indices[i] == index1)
 		{
@@ -29,7 +29,7 @@ void IndexArray::swapIndices(Int32 index1, Int32 index2)
 	}
 }
 
-size_t IndexArray::size()
+std::size_t IndexArray::size()
 {
 	return indices.size();
 }

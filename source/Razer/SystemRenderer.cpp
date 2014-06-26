@@ -12,8 +12,11 @@
 #include <Nephilim/Razer/ComponentMesh.h>
 #include <Nephilim/Razer/ComponentVehicle.h>
 #include <Nephilim/Razer/ComponentSkinnedModel.h>
+#include <Nephilim/Razer/ComponentWater.h>
+#include <Nephilim/Razer/ComponentWater2.h>
 #include <Nephilim/Razer/SystemKinesis2D.h>
 
+#include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/KxDraw.h>
@@ -59,7 +62,7 @@ SystemRenderer::SystemRenderer()
 void SystemRenderer::update(const Time& deltaTime)
 {
 	// Update skinning animations
-	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity ent = mScene->getEntityByIndex(i);
 		if(ent.hasComponent<ComponentSkinnedModel>())
@@ -76,8 +79,17 @@ void SystemRenderer::render()
 	//mFramebuffer.activate();
 	//glViewport(0, 0, 1000, 500);
 
+	mRenderer->setClearColor(Color::Blue);
+	mRenderer->clearColorBuffer();
+
+	mat4 viewMatrix;
+	mat4 projectionMatrix;
+	vec3 cameraPosition;
+	Quaternion cameraRotation;
+	vec3 cameraForward;
+
 	// Find a camera
-	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity ent = mScene->getEntityByIndex(i);
 		if(ent.hasComponent<ComponentCamera>())
@@ -91,8 +103,7 @@ void SystemRenderer::render()
 
 			if(camera.mOrtho)
 			{
-				float zoom = 1.f / transform.position.z;
-				mRenderer->setProjectionMatrix(mat4::ortho(0, int(1000.f * zoom), 0, int(500.f * zoom), camera.zNear, camera.zFar));
+				mRenderer->setProjectionMatrix(mat4::ortho(-camera.size.x / 2.f, camera.size.x / 2.f, -camera.size.y / 2.f, camera.size.y / 2.f, camera.zNear, camera.zFar));
 			}
 			else
 			{
@@ -105,17 +116,16 @@ void SystemRenderer::render()
 			mRenderer->setBlendingEnabled(true);
 			mRenderer->setBlendMode(Render::Blend::Alpha);
 
-			// debug
-			//View v(0, 0, 20, 10); v.setCenter((int)transform.position.x, (int)transform.position.y);
-			//mRenderer->setProjectionMatrix(v.getMatrix());
-			//mRenderer->setViewMatrix(mat4::identity);
-
-			//mRenderer->setProjectionMatrix(mat4::ortho(0, 20, 0, 10, 1, 3000));
+			viewMatrix = camera.cameraTransform;
+			projectionMatrix = mRenderer->getProjectionMatrix();
+			cameraPosition = transform.position;
+			cameraRotation = transform.rotation;
+			cameraForward  = transform.getForwardVector();
 		}
 	}
 
 	// Render each entity
-	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity ent = mScene->getEntityByIndex(i);
 		if(ent.hasComponent<ComponentTilemap2D>())
@@ -179,6 +189,55 @@ void SystemRenderer::render()
 			mRenderer->setDepthTestEnabled(true);
 			renderMesh(ent);
 		}
+		if(ent.hasComponent<ComponentWater>()) 
+		{
+			mRenderer->setBlendingEnabled(false);
+			//mRenderer->clearAllBuffers();
+			mRenderer->setDefaultTexture();
+
+			ComponentWater& waterBody = ent.getComponent<ComponentWater>();
+			waterBody.viewMatrix = viewMatrix;
+			waterBody.projMatrix = projectionMatrix;
+			waterBody.cameraPosition = cameraPosition;
+			vec3 eulerAngles = cameraRotation.eulerAngles();
+
+			cameraRotation.normalize();
+
+			vec3 z_vector(0.f, 0.f, -1.f);
+			vec3 camera_vector = (cameraRotation.toMatrix() * vec4(z_vector, 0.f)).xyz();
+			cameraForward.normalize();
+
+			float x_angle = atan2(cameraForward.z, cameraForward.x);
+			float y_angle = atan2(-cameraForward.z, cameraForward.y);
+			//Log("x_angle %f", x_angle);
+
+			//float camera_angle_x = atan2()
+
+			waterBody.mCameraPhi = math::radianToDegree( x_angle);
+			waterBody.mCameraTheta = math::radianToDegree( y_angle);
+
+
+			if(!waterBody.ready)
+				waterBody.init();
+
+			waterBody.render2(mRenderer);
+
+			mRenderer->setDefaultShader();
+			mRenderer->setViewMatrix(mRenderer->getViewMatrix());
+			mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
+		}
+		/*if(ent.hasComponent<ComponentWater2>()) 
+		{
+			mRenderer->setBlendingEnabled(false);
+			//mRenderer->clearAllBuffers();
+			mRenderer->setDefaultTexture();
+
+			ComponentWater2& waterBody = ent.getComponent<ComponentWater2>();
+			if(!waterBody.ready)
+				waterBody.init();			
+			
+			waterBody.render(mRenderer);
+		}*/
 		if(ent.hasComponent<ComponentSprite>()) 
 		{
 			mRenderer->setDepthTestEnabled(false);
@@ -216,7 +275,7 @@ void SystemRenderer::render()
 			mRenderer->setBlendingEnabled(true);
 			mRenderer->setBlendMode(Render::Blend::AddAlpha);
 			mRenderer->setDepthTestEnabled(false);
-			for(size_t j = 0; j < emitter.particles.size(); ++j)
+			for(std::size_t j = 0; j < emitter.particles.size(); ++j)
 			{
 				mRenderer->draw(emitter.particles[j].mSprite);
 			}
@@ -253,12 +312,14 @@ void SystemRenderer::renderModel(Entity& entity)
 
 	GeometryData box;
 	box.addBox(1.75f / 2, 1.75f, 1.75f / 2);
-	box.randomFaceColors();
+	box.setAllColors(Color::White);
 
 	mRenderer->setDepthTestEnabled(true);
 	mRenderer->setModelMatrix(transform.getMatrix());
 	mRenderer->setDefaultTexture();
 	mRenderer->draw(box);
+
+	//Log("Rendering the box");
 }
 
 void SystemRenderer::renderMesh(Entity& entity)
@@ -329,17 +390,17 @@ void SystemRenderer::renderTilemap(Entity& entity)
 	BackgroundShape.setPosition(0.f, -tilemap.mLevelSize.y);
 	mRenderer->draw(BackgroundShape);
 
-	glDisable(GL_MULTISAMPLE);
+	//glDisable(GL_MULTISAMPLE);
 	// Render all chunks for now
 
 	mRenderer->setModelMatrix(mat4::translate(0, 0, 0));
 
-	for(size_t j = 0; j < tilemap.mChunks.size(); ++j)
+	for(std::size_t j = 0; j < tilemap.mChunks.size(); ++j)
 	{
 		// Render each layer of each chunk
-		for(size_t k = 0; k < tilemap.mChunks[j].mLayers.size(); ++k)
+		for(std::size_t k = 0; k < tilemap.mChunks[j].mLayers.size(); ++k)
 		{
-			for(size_t index_set = 0; index_set < tilemap.mChunks[j].mLayers[k].mIndexSets.size(); ++index_set)
+			for(std::size_t index_set = 0; index_set < tilemap.mChunks[j].mLayers[k].mIndexSets.size(); ++index_set)
 			{
 				IndexArray& indexData = tilemap.mChunks[j].mLayers[k].mIndexSets[index_set];
 				VertexArray& vertexData = tilemap.mChunks[j].mLayers[k].mVertexSets[index_set];

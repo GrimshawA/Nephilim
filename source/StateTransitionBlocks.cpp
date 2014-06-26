@@ -86,7 +86,7 @@ void StateTransitionBlocks::draw(Renderer* renderer)
 	else
 		drawNextFrame(renderer);
 
-	for(size_t i = 0; i < shapes.size(); ++i)
+	for(std::size_t i = 0; i < shapes.size(); ++i)
 	{
 		renderer->draw(shapes[i]);
 	}

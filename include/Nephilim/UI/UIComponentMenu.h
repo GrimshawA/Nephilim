@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentMenu : public UIViewComponent
+class NEPHILIM_API UIComponentMenu : public UIComponent
 {
 public:
 	UIComponentMenu();

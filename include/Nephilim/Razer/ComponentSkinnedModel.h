@@ -36,6 +36,8 @@ public:
 
 	mat4 boneTransforms[128];
 
+	void setRotation(Quaternion r);
+
 	/// How far into the animation we are
 	float mAnimationTime;
 	float mAnimationDuration;

@@ -27,7 +27,7 @@ public:
 	int getLayerCount();
 
 	/// Get the right UV for a given tile in a given layer
-	FloatRect getTileUV(const String& layerName, size_t tileIndex);
+	FloatRect getTileUV(const String& layerName, std::size_t tileIndex);
 
 	class Object
 	{
@@ -106,7 +106,7 @@ public:
 
 	void convertGIDtoUV(int gid, FloatRect& rect);
 
-	size_t getTilesetIndexOfGid(int gid);
+	std::size_t getTilesetIndexOfGid(int gid);
 
 
 	std::vector<Layer*> mLayers;

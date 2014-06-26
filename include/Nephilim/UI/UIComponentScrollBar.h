@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentScrollBar : public UIViewComponent
+class NEPHILIM_API UIComponentScrollBar : public UIComponent
 {
 public:
 	UIComponentScrollBar();

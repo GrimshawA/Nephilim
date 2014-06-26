@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class UIView;
 
-class NEPHILIM_API UIComponentTabView : public UIViewComponent
+class NEPHILIM_API UIComponentTabView : public UIComponent
 {
 public:
 	UIComponentTabView();
@@ -18,7 +18,7 @@ public:
 	void onAttach(UIView* view);
 
 	/// Show another tab by its index
-	void onTabButtonClicked(size_t index);
+	void onTabButtonClicked(std::size_t index);
 
 	void onEvent(Event event, UIView* view);
 

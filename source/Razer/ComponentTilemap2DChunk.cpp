@@ -17,7 +17,7 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 	Log("=> Preparing a layer of tiles");
 
 	// Chunk by chunk, generate its data for the specified layer
-	for(size_t i = 0; i < mChunks.size(); ++i)
+	for(std::size_t i = 0; i < mChunks.size(); ++i)
 	{		
 		int tileCount = 0;
 		
@@ -44,7 +44,7 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 		}
 
 		Log("Chunk %d has %d tiles.", i, tileCount);
-		for(size_t j = 0; j < tileCounts.size(); ++j)
+		for(std::size_t j = 0; j < tileCounts.size(); ++j)
 		{
 			Log("Tileset %d has %d tiles.", j, tileCounts[j]);
 		}
@@ -54,7 +54,7 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 		dl.mVertexSets.resize(tileCounts.size());
 		dl.mTextureSets.resize(tileCounts.size());
 		dl.mIndexSets.resize(tileCounts.size());
-		for(size_t j = 0; j < tileCounts.size(); ++j)
+		for(std::size_t j = 0; j < tileCounts.size(); ++j)
 		{
 			if(tileCounts[j] > 0)
 			{
@@ -145,7 +145,7 @@ void ComponentTilemap2D::generateCubes(Tilemap::Layer* tileLayer, const String& 
 
 		// Check how many cubes will be needed
 		int cubesNeeded = 0;
-		for(size_t i = 0; i < tileLayer->mTileData.size(); ++i)
+		for(std::size_t i = 0; i < tileLayer->mTileData.size(); ++i)
 		{
 			if(tileLayer->mTileData[i] > 0)
 			{
@@ -154,7 +154,7 @@ void ComponentTilemap2D::generateCubes(Tilemap::Layer* tileLayer, const String& 
 		}
 
 		// Chunk by chunk, generate its data for the specified layer
-		for(size_t i = 0; i < mChunks.size(); ++i)
+		for(std::size_t i = 0; i < mChunks.size(); ++i)
 		{
 			Chunk& c = mChunks[i];
 			Tilemap2DLayer& cl = c.getLayer(destLayer);

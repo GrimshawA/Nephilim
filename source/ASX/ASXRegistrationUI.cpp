@@ -24,14 +24,14 @@ void animateUIViewByName(const String& name, UIView* view)
 
 	if(name == "AdvancePage" && !view->hasAnimatedChildren())
 	{
-		for(size_t i = 0; i < view->getChildCount(); ++i)
+		for(std::size_t i = 0; i < view->getChildCount(); ++i)
 		{
 			view->getChild(i)->commitAnimation(new AxPosition2D(view->getChild(i)->getPosition().x - view->getSize().x, view->getChild(i)->getPosition().y, 1.f));
 		}
 	}
 	if(name == "ReturnPage" && !view->hasAnimatedChildren())
 	{
-		for(size_t i = 0; i < view->getChildCount(); ++i)
+		for(std::size_t i = 0; i < view->getChildCount(); ++i)
 		{
 			view->getChild(i)->commitAnimation(new AxPosition2D(view->getChild(i)->getPosition().x + view->getSize().x, view->getChild(i)->getPosition().y, 1.f));
 		}

@@ -1,7 +1,9 @@
 #include <Nephilim/Razer/ComponentVehicle.h>
 #include <Nephilim/Logger.h>
 
+#ifdef NEPHILIM_DESKTOP
 #include <Nephilim/MeshImport/AssimpConverter.h>
+#endif
 
 NEPHILIM_NS_BEGIN
 namespace rzr
@@ -14,6 +16,7 @@ ComponentVehicle::ComponentVehicle()
 
 void ComponentVehicle::prepareModels()
 {
+	#ifdef NEPHILIM_DESKTOP
 	// use assimp to load a car and use that to render later
 	AssimpImport ai;
 	if(ai.load("car.obj"))
@@ -27,6 +30,7 @@ void ComponentVehicle::prepareModels()
 
 	testTexture.loadFromFile("cart.jpg");
 	testTexture.setRepeated(true);
+#endif
 }
 
 void ComponentVehicle::applyEngineForce(float force, int wheelIndex)

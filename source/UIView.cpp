@@ -76,14 +76,14 @@ UIView::UIView(UIView* parent)
 UIView::~UIView()
 {
 	// Release all components to prevent leaks
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onRelease(this);
 		delete components[i];
 	}
 
 	// I am being destroyed, destroy children
-	for(size_t i = 0; i < m_children.size(); ++i)
+	for(std::size_t i = 0; i < m_children.size(); ++i)
 	{
 		delete m_children[i];
 	}
@@ -130,7 +130,7 @@ void UIView::setProperty(const String& str)
 		while(paramValue.size() > 0 && paramValue[0] == ' ')
 			paramValue.erase(paramValue.begin());
 
-		for(size_t i = 0; i < components.size(); ++i)
+		for(std::size_t i = 0; i < components.size(); ++i)
 		{
 			components[i]->onPropertySet(target_object, paramValue);
 		}
@@ -138,7 +138,7 @@ void UIView::setProperty(const String& str)
 }
 
 /// Add a component to the view
-void UIView::addComponent(UIViewComponent* component)
+void UIView::addComponent(UIComponent* component)
 {
 	if(!component)
 		return;
@@ -266,7 +266,7 @@ void UIView::clear()
 	if(m_childrenLock > 0)
 	{
 		// Post pone the clearing
-		for(size_t i = 0; i < m_children.size(); ++i)
+		for(std::size_t i = 0; i < m_children.size(); ++i)
 		{
 			UIControlOperation action;
 			action.control = m_children[i];
@@ -277,7 +277,7 @@ void UIView::clear()
 	else
 	{
 		// I am being destroyed, destroy children
-		for(size_t i = 0; i < m_children.size(); ++i)
+		for(std::size_t i = 0; i < m_children.size(); ++i)
 		{
 			delete m_children[i];
 		}
@@ -314,7 +314,7 @@ void UIView::axKillTrigger()
 
 void UIView::offsetChildrenPosition(vec2 offset)
 {
-	for(size_t i = 0; i < m_children.size(); ++i)
+	for(std::size_t i = 0; i < m_children.size(); ++i)
 	{
 		m_children[i]->setPosition(m_children[i]->getPosition() + offset);
 	}
@@ -337,7 +337,7 @@ void UIView::commitAnimation(AxBase* animation)
 
 bool UIView::hasAnimatedChildren()
 {
-	for(size_t i = 0; i < m_children.size(); ++i)
+	for(std::size_t i = 0; i < m_children.size(); ++i)
 	{
 		if(m_children[i]->hasAnimations())
 		{
@@ -404,7 +404,7 @@ void UIView::printHierarchy(int tabs)
 
 	Log("%s: %s", tabss.c_str(), getName().c_str());
 
-	for(size_t i = 0; i < m_children.size(); ++i)
+	for(std::size_t i = 0; i < m_children.size(); ++i)
 	{
 		if(!isScheduledForRemoval(m_children[i]))
 			m_children[i]->printHierarchy(tabs + 1);
@@ -497,13 +497,13 @@ void UIView::draw(Renderer* renderer)
 {
 	// back
 	
-	if(components.size() == 0)
+	/*if(components.size() == 0)
 	{
 		RectangleShape backgroundRect;
 		backgroundRect.setColor(Color::Grass);
 		backgroundRect.setRect(getBounds());
 		renderer->draw(backgroundRect);
-	}
+	}*/
 	
 
 	/*
@@ -517,7 +517,7 @@ void UIView::draw(Renderer* renderer)
 
 		float lowestY = m_children[0]->getPosition().y;
 		float highestY = m_children[0]->getPosition().y + m_children[0]->getSize().y;
-		for(size_t i = 0; i < m_children.size(); ++i)
+		for(std::size_t i = 0; i < m_children.size(); ++i)
 		{
 			if(m_children[i]->getPosition().y < lowestY)
 			{
@@ -580,7 +580,7 @@ void UIView::dispatchEvent(const Event& event)
 	}
 
 	// -- deliver events to the components
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onEvent(event, this);
 	}
@@ -903,7 +903,7 @@ void UIView::applyPendingOperations()
 {
 	if(m_childrenLock > 0) return ;
 
-	for(size_t i = 0; i < m_pendingOperations.size(); ++i)
+	for(std::size_t i = 0; i < m_pendingOperations.size(); ++i)
 	{
 		switch(m_pendingOperations[i].type)
 		{
@@ -1076,7 +1076,7 @@ void UIView::update(float elapsedTime)
 
 	onUpdate(elapsedTime);
 
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onUpdate(Time::fromSeconds(elapsedTime), this);
 	}
@@ -1128,7 +1128,7 @@ void UIView::setSize(float width, float height)
 	updateLayout();
 
 	// Let components know a resize was made
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onResize(this);
 	}
@@ -1158,7 +1158,7 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 	draw(renderer);
 
 
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onRender(renderer, this);
 	}
@@ -1204,9 +1204,9 @@ void UIView::enableAutoResize(bool enable)
 }
 
 /// Returns the first component with the given type
-UIViewComponent* UIView::getComponentByType(UIViewComponent::Type type)
+UIComponent* UIView::getComponentByType(UIComponent::Type type)
 {
-	for(size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		if(components[i]->component_id == type)
 		{

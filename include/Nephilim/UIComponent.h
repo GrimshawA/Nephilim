@@ -17,10 +17,10 @@ class String;
 	\class UIViewComponent
 	\brief Base class for all UI components
 */
-class NEPHILIM_API UIViewComponent 
+class NEPHILIM_API UIComponent 
 {
 public:
-	UIViewComponent()
+	UIComponent()
 	{
 		mParent = NULL;
 	}

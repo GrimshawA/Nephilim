@@ -243,7 +243,7 @@ NetworkPacket::~NetworkPacket(){
 };
 
 /// Get the packet size in bytes
-size_t NetworkPacket::getPacketSize(){
+std::size_t NetworkPacket::getPacketSize(){
 	return myPacket->dataLength;
 };
 

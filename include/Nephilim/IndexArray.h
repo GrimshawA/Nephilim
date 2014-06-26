@@ -23,7 +23,7 @@ public:
 	/// Whatever pointed at index1, now points at index 2, and vice versa
 	void swapIndices(Int32 index1, Int32 index2);
 
-	size_t size();
+	std::size_t size();
 
 	std::vector<Uint16> indices;
 };

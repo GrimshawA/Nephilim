@@ -47,7 +47,7 @@ namespace fs
 	{
 		bool copiedAll = true;
 		StringList fileList = FileSystem::scanDirectory(source, "*", false);
-		for(size_t i = 0; i < fileList.size(); ++i)
+		for(std::size_t i = 0; i < fileList.size(); ++i)
 		{
 			Path shortName(fileList[i]);
 			if(!copyFile(fileList[i], destination + shortName.getFileName()))
@@ -63,7 +63,7 @@ namespace fs
 	{
 		bool copiedAll = true;
 		StringList fileList = FileSystem::scanDirectory(source, "*", true);
-		for(size_t i = 0; i < fileList.size(); ++i)
+		for(std::size_t i = 0; i < fileList.size(); ++i)
 		{
 			Path shortName(fileList[i]);
 			//Log("Read file: %s", fileList[i].c_str());
@@ -95,7 +95,7 @@ namespace fs
 			pathElements.pop_back();*/
 
 		String currentDir = pathElements[0];
-		for(size_t i = 1; i < pathElements.size(); ++i)
+		for(std::size_t i = 1; i < pathElements.size(); ++i)
 		{
 			FileSystem::makeDirectory(currentDir);
 			//Log("Creating %s", currentDir.c_str());

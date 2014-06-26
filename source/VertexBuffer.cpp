@@ -12,15 +12,18 @@ namespace
 		GLenum usageMode;
 		switch(mode)
 		{
-		case VertexBuffer::StaticDraw: usageMode = GL_STATIC_DRAW; break;
-		case VertexBuffer::StaticCopy: usageMode = GL_STATIC_COPY; break;
-		case VertexBuffer::StaticRead: usageMode = GL_STATIC_READ; break;
-		case VertexBuffer::DynamicDraw: usageMode = GL_DYNAMIC_DRAW; break;
-		case VertexBuffer::DynamicCopy: usageMode = GL_DYNAMIC_COPY; break;
-		case VertexBuffer::DynamicRead: usageMode = GL_DYNAMIC_READ; break;
+		case VertexBuffer::StaticDraw: usageMode = GL_STATIC_DRAW; break;	
+		case VertexBuffer::DynamicDraw: usageMode = GL_DYNAMIC_DRAW; break;		
 		case VertexBuffer::StreamDraw: usageMode = GL_STREAM_DRAW; break;
+		
+#ifdef NEPHILIM_DESKTOP
 		case VertexBuffer::StreamCopy: usageMode = GL_STREAM_COPY; break;
 		case VertexBuffer::StreamRead: usageMode = GL_STREAM_READ; break;
+		case VertexBuffer::DynamicCopy: usageMode = GL_DYNAMIC_COPY; break;
+		case VertexBuffer::DynamicRead: usageMode = GL_DYNAMIC_READ; break;	
+		case VertexBuffer::StaticCopy: usageMode = GL_STATIC_COPY; break;
+		case VertexBuffer::StaticRead: usageMode = GL_STATIC_READ; break;
+#endif
 		default: usageMode = GL_STATIC_DRAW; break;
 		}
 		return usageMode;

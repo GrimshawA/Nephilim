@@ -49,7 +49,7 @@ void GeometryData::toVertexArray(VertexArray& varray)
 
 	vertex_format_struct* vertex_data = reinterpret_cast<vertex_format_struct*>(&varray.data[0]);
 
-	for(size_t i = 0; i < m_vertices.size(); ++i)
+	for(std::size_t i = 0; i < m_vertices.size(); ++i)
 	{
 		vertex_data[i].p = m_vertices[i];
 		vertex_data[i].c.x = (float)m_colors[i].r / 255.f;
@@ -223,7 +223,7 @@ void GeometryData::addPlane(float width, float depth, float height)
 void GeometryData::randomFaceColors()
 {
 	m_colors.resize(m_vertices.size());
-	for(size_t i = 0; i < m_vertices.size(); i += 6)
+	for(std::size_t i = 0; i < m_vertices.size(); i += 6)
 	{
 		Color c(math::randomInt(0,255), math::randomInt(0,255), math::randomInt(0,255));
 		m_colors[i] = c;
@@ -242,7 +242,7 @@ void GeometryData::randomFaceColors()
 void GeometryData::setAllColors(Color color)
 {
 	m_colors.resize(m_vertices.size());
-	for(size_t i = 0; i < m_colors.size(); ++i)
+	for(std::size_t i = 0; i < m_colors.size(); ++i)
 	{
 		m_colors[i] = color;
 	}
@@ -250,7 +250,7 @@ void GeometryData::setAllColors(Color color)
 
 void GeometryData::scaleUV(float factor)
 {
-	for(size_t i = 0; i < m_texCoords.size(); ++i)
+	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
 	{
 		m_texCoords[i].x *= factor;
 		m_texCoords[i].y *= factor;
@@ -259,7 +259,7 @@ void GeometryData::scaleUV(float factor)
 
 void GeometryData::offsetUV(float u, float v)
 {
-	for(size_t i = 0; i < m_texCoords.size(); ++i)
+	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
 	{
 		m_texCoords[i].x += u;
 		m_texCoords[i].y += v;

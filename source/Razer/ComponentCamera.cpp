@@ -14,10 +14,18 @@ ComponentCamera::ComponentCamera()
 , mOrtho(false)
 , zNear(1.f)
 , zFar(400.f)
-, fieldOfView(65.f)
+, fieldOfView(90.f)
+, size(1.f, 1.f)
 {
 	
 }
+
+void ComponentCamera::setSize(float width, float height)
+{
+	size.x = width;
+	size.y = height;
+}
+
 
 
 };

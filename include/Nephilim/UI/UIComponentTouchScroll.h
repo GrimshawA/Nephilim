@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class UIView;
 
-class NEPHILIM_API UIComponentScroll : public UIViewComponent
+class NEPHILIM_API UIComponentScroll : public UIComponent
 {
 public:
 	//UIComponentScroll();

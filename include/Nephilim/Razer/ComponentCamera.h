@@ -18,6 +18,10 @@ class NEPHILIM_API ComponentCamera : public Component
 public:
 	ComponentCamera();
 
+	void setSize(float width, float height);
+
+	vec2 size; /// The size of the ortho camera
+
 	vec3 position;
 	vec3 eye;
 	vec3 up;

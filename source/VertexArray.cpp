@@ -39,7 +39,7 @@ void VertexArray::setVertexAttribute(Int32 vertexIndex, Int32 attributeIndex, vo
 Int32 VertexArray::getAttributeOffset(Int32 attributeIndex)
 {
 	Int32 localOffset = 0;
-	for(size_t i = 0; i < format.attributes.size(); ++i)
+	for(std::size_t i = 0; i < format.attributes.size(); ++i)
 	{
 		if(i == attributeIndex)
 		{
@@ -59,7 +59,7 @@ Int32 VertexArray::getAttributeSize(Int32 attributeIndex)
 Int32 VertexArray::getVertexSize() const
 {
 	Int32 bytesPerVertex = 0;
-	for(size_t i = 0; i < format.attributes.size(); ++i)
+	for(std::size_t i = 0; i < format.attributes.size(); ++i)
 	{
 		bytesPerVertex += format.attributes[i].numComponents * format.attributes[i].size;
 	}
@@ -130,10 +130,10 @@ void VertexArray::removeDuplicateVertices(VertexArray& varray, IndexArray& iarra
 	// Lets remove duplicate vertices to get a smaller varray, iarray stays the same.
 
 	// For each vertex, find duplicates after it
-	for(size_t i = 0; i < varray.count ; ++i)
+	for(std::size_t i = 0; i < varray.count ; ++i)
 	{
 		// For each i, iterate from i+1 to end
-		for(size_t j = i + 1; j < varray.count; ++j)
+		for(std::size_t j = i + 1; j < varray.count; ++j)
 		{
 			if(varray.isVertexEqual(i,j))
 			{

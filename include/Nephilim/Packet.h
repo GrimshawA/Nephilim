@@ -109,7 +109,7 @@ public:
 	~NetworkPacket();
 
 	/// Get the packet size in bytes
-	size_t getPacketSize();
+	std::size_t getPacketSize();
 
 	/// Get the packet as a raw array
 	void* getRawData();

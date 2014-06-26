@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentText : public UIViewComponent
+class NEPHILIM_API UIComponentText : public UIComponent
 {
 public:
 

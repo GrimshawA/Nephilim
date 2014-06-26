@@ -35,7 +35,7 @@ public:
 	\class UIReloadComponent
 	\brief UI attachment for reloading itself from a file
 */
-class NEPHILIM_API UIReloadComponent : public UIViewComponent
+class NEPHILIM_API UIReloadComponent : public UIComponent
 {
 public:
 	UIReloadComponent(const String& file);

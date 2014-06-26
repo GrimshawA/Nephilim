@@ -22,9 +22,9 @@ bool UILoaderXML::loadFromFile(const String& filename)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-size_t getNodeChildrenCount(pugi::xml_node& node)
+std::size_t getNodeChildrenCount(pugi::xml_node& node)
 {
-	size_t i = 0;
+	std::size_t i = 0;
 	pugi::xml_node_iterator it = node.begin();
 	while(it != node.end())
 	{

@@ -44,7 +44,7 @@ void ComponentTilemap2D::generateCollisionData(const String& layerName, Collisio
 	{
 		CollisionData::Body& body = cd.addBody();
 
-		for(size_t i = 0; i < tileLayer->mTileData.size(); ++i)
+		for(std::size_t i = 0; i < tileLayer->mTileData.size(); ++i)
 		{
 			if(tileLayer->mTileData[i] > 0)
 			{
@@ -71,7 +71,7 @@ bool ComponentTilemap2D::load(const String& filename)
 		Log("=> Loading 2D level with size(%f, %f)", mLevelSize.x, mLevelSize.y);
 
 		// Init the layers
-		for(size_t i = 0; i < mTilemapData.mLayers.size(); ++i)
+		for(std::size_t i = 0; i < mTilemapData.mLayers.size(); ++i)
 		{
 			mLayers.push_back(Layer(mTilemapData.mLayers[i]->mName));
 		}
@@ -112,10 +112,10 @@ void ComponentTilemap2D::allocateChunks()
 	mNumChunks.y = pagesVertical;
 
 	mChunks.resize(pagesHorizontal * pagesVertical);
-	for(size_t i = 0; i < mChunks.size(); ++i)
+	for(std::size_t i = 0; i < mChunks.size(); ++i)
 	{
 		mChunks[i].mLayers.resize(mLayers.size());
-		for(size_t j = 0; j < mChunks[i].mLayers.size(); ++j)
+		for(std::size_t j = 0; j < mChunks[i].mLayers.size(); ++j)
 		{
 			mChunks[i].mLayers[j].mName = mLayers[j].mName;
 		}
@@ -126,7 +126,7 @@ void ComponentTilemap2D::allocateChunks()
 
 Tilemap2DLayer& ComponentTilemap2D::Chunk::getLayer(const String& name)
 {
-	for(size_t i = 0; i < mLayers.size(); ++i)
+	for(std::size_t i = 0; i < mLayers.size(); ++i)
 	{
 		if(mLayers[i].mName == name)
 			return mLayers[i];

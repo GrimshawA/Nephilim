@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "Vectors.h"
 #include "Matrix.h"
+#include <Nephilim/Spherical.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -18,6 +19,12 @@ public:
 	Quaternion(vec3 v, float nw);
 
 	vec3 xyz();
+
+	vec4 toAxisAngles();
+
+	vec3 eulerAngles();
+
+	Spherical sphericalCoordinates();
 
 	void rotateEulerAngles(float ax, float ay, float az);
 

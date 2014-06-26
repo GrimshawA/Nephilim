@@ -51,7 +51,7 @@ void UIComponentScrollBar::onUpdate(const Time& time, UIView* view)
 
 	float lowestY = view->m_children[0]->getPosition().y;
 	float highestY = view->m_children[0]->getPosition().y + view->m_children[0]->getSize().y;
-	for(size_t i = 0; i < view->m_children.size(); ++i)
+	for(std::size_t i = 0; i < view->m_children.size(); ++i)
 	{
 		if(view->m_children[i]->getPosition().y < lowestY)
 		{

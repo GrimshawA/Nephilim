@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 
 
 
-class NEPHILIM_API UIComponentImage : public UIViewComponent
+class NEPHILIM_API UIComponentImage : public UIComponent
 {
 public:
 	UIComponentImage();

@@ -22,7 +22,7 @@ bool ComponentMesh::loadCubesFromTilemap(Tilemap* tilemap)
 	// lets make the vertices
 	int cubeCount = 0;
 
-	for(size_t i = 0; i < tileLayer->getTileCount(); ++i)
+	for(std::size_t i = 0; i < tileLayer->getTileCount(); ++i)
 	{
 		if(tileLayer->mTileData[i] != 0)
 			cubeCount ++;
@@ -48,7 +48,7 @@ bool ComponentMesh::loadCubesFromTilemap(Tilemap* tilemap)
 
 	// Search the cubes and start filling the geometry
 	int cubeIndex = 0;
-	for(size_t i = 0; i < tileLayer->getTileCount(); ++i)
+	for(std::size_t i = 0; i < tileLayer->getTileCount(); ++i)
 	{
 		// Create a cube for this solid block
 		if(tileLayer->mTileData[i] != 0)
@@ -139,7 +139,7 @@ bool ComponentMesh::loadCubesFromTilemap(Tilemap* tilemap)
 	}
 
 	// Print arrays for debugging
-	for(size_t j = 0; j < mIndexArray.indices.size(); ++j)
+	for(std::size_t j = 0; j < mIndexArray.indices.size(); ++j)
 	{
 		vec3 p = *reinterpret_cast<vec3*>(mVertexArray.getAttribute(0, mIndexArray.indices[j]));
 		//Log("Index at %d is %d Vertex(%f, %f, %f)", j, mIndexArray.indices[j], p.x, p.y, p.z);

@@ -9,7 +9,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentListView : public UIViewComponent
+class NEPHILIM_API UIComponentListView : public UIComponent
 {
 public:
 	void onAttach(UIView* view);

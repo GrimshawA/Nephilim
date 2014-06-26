@@ -8,7 +8,6 @@
 
 #include <vector>
 #include <map>
-#include <typeindex>
 
 NEPHILIM_NS_BEGIN
 namespace rzr {
@@ -30,7 +29,7 @@ public:
 	/// Create and return a new entity
 	Entity createEntity();
 
-	Entity getEntityByIndex(size_t index);
+	Entity getEntityByIndex(std::size_t index);
 
 	Entity getEntityById(Int32 id);
 

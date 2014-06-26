@@ -6,7 +6,7 @@
 NEPHILIM_NS_BEGIN
 
 UIComponentImage::UIComponentImage()
-: UIViewComponent()
+: UIComponent()
 , mTexture(NULL)
 {
 
@@ -14,7 +14,7 @@ UIComponentImage::UIComponentImage()
 
 
 UIComponentImage::UIComponentImage(const String& src)
-: UIViewComponent()
+: UIComponent()
 , mTexture(NULL)
 {
 	mSourceTexture = src;
@@ -37,7 +37,6 @@ void UIComponentImage::refreshTextureHandle()
 			if(mParent->getContext()->content->load(mSourceTexture))
 			{
 				mTexture = mParent->getContext()->content->mGroups[""]->mTextures[mSourceTexture];
-				//Log("IMAGE IMAGE IMAGE HAS NOW A TEXTURE");
 			}
 			else
 			{

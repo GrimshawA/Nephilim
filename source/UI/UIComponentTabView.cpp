@@ -19,7 +19,7 @@ void UIComponentTabView::onAttach(UIView* view)
 void UIComponentTabView::refreshTabButtons()
 {
 	// Add a button per tab
-	for(size_t i = 0; i < tabs.size(); ++i)
+	for(std::size_t i = 0; i < tabs.size(); ++i)
 	{
 		UIView* tabButton = new UIView();
 		tabButton->setRect(parent->getPosition().x + 50.f * i, parent->getPosition().y, 49.f, 20.f);
@@ -31,12 +31,12 @@ void UIComponentTabView::refreshTabButtons()
 }
 
 /// Show another tab by its index
-void UIComponentTabView::onTabButtonClicked(size_t index)
+void UIComponentTabView::onTabButtonClicked(std::size_t index)
 {
 	if(index < 0 || index >= tabs.size() || tabs.size() == 0)
 		return;
 
-	for(size_t i = 0; i < tabs.size(); ++i)
+	for(std::size_t i = 0; i < tabs.size(); ++i)
 	{
 		tabs[i]->hide();
 	}
@@ -52,7 +52,7 @@ void UIComponentTabView::onEvent(Event event, UIView* view)
 	/*	if(event.key.code == Keyboard::Num1)
 		{
 			// Activate first tab
-			for(size_t i = 0; i < tabs.size(); ++i)
+			for(std::size_t i = 0; i < tabs.size(); ++i)
 			{
 				tabs[i]->hide();
 			}
@@ -63,7 +63,7 @@ void UIComponentTabView::onEvent(Event event, UIView* view)
 		if(event.key.code == Keyboard::Num2)
 		{
 			// Activate first tab
-			for(size_t i = 0; i < tabs.size(); ++i)
+			for(std::size_t i = 0; i < tabs.size(); ++i)
 			{
 				tabs[i]->hide();
 			}

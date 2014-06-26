@@ -1,5 +1,6 @@
 #include <Nephilim/Quaternion.h>
 #include <Nephilim/Logger.h>
+#include <Nephilim/NxMath.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -48,6 +49,127 @@ void Quaternion::normalize()
 		w /= magnitude;
 	}
 }
+
+vec4 Quaternion::toAxisAngles()
+{
+	Quaternion q = *this;
+
+	if (fabs(q.w) > 1.0f)
+		q.normalize();
+
+	vec4 result;
+
+	result.w = 2.0f * acosf(q.w); // angle
+	float den = sqrtf(1.0 - q.w * q.w);
+	if (den > 0.0001f)
+	{
+		result.x = q.x / den;
+		result.y = q.y / den;
+		result.z = q.z / den;
+	}
+	else
+	{
+		// This occurs when the angle is zero. 
+		// Not a problem: just set an arbitrary normalized axis.
+		result.x = 1;
+		result.y = 0;
+		result.z = 0;
+	}
+
+	return result;
+}
+
+float clamp(float v, float a, float b)
+{
+	if(v < a)
+		return a;
+
+	if(v > b)
+		return b;
+
+	return v;
+}
+
+vec3 Quaternion::eulerAngles()
+{
+	/*Quaternion q = *this;
+
+	float heading = atan2(2*q.y*q.w-2*q.x*q.z , 1 - 2*q.y*q.y - 2*q.z*q.z);
+	float attitude = asin(2*q.x*q.y + 2*q.z*q.w);
+	float bank = atan2(2*q.x * q.w-2*q.y*q.z , 1 - 2*q.x*q.x - 2*q.z * q.z);
+
+	return vec3(attitude, heading, bank);*/
+
+	Quaternion q = *this;
+	q.normalize();
+
+	vec3 euler;
+
+	const double sqw = q.w*q.w;
+	const double sqx = q.x*q.x;
+	const double sqy = q.y*q.y;
+	const double sqz = q.z*q.z;
+	const double test = 2.0 * (q.y*q.w - q.x*q.z);
+	
+	if (threshold(1.0, 0.000001) == test)
+	{
+		// heading = rotation about z-axis
+		euler.z = (float) (-2.0*atan2f(q.x, q.w));
+		// bank = rotation about x-axis
+		euler.x = 0;
+		// attitude = rotation about y-axis
+		euler.y = (float) (math::pi/2.0f);
+	}
+	else if (threshold(-1.0, 0.000001) == test)
+	{
+		// heading = rotation about z-axis
+		euler.z = (float) (2.0*atan2f(q.x, q.w));
+		// bank = rotation about x-axis
+		euler.x = 0.f;
+		// attitude = rotation about y-axis
+		euler.y = (float) (math::pi/-2.0f);
+	}
+	else
+	{
+		// heading = rotation about z-axis
+		euler.z = (float) atan2f(2.0f * (q.x*q.y +q.z*q.w), (sqx - sqy - sqz + sqw));
+		// bank = rotation about x-axis
+		euler.x = (float) atan2f(2.0f * (q.y*q.z +q.x*q.w),(-sqx - sqy + sqz + sqw));
+		// attitude = rotation about y-axis
+		euler.y = (float) asinf( clamp(test, -1.0, 1.0) );
+	}
+
+	return euler;
+}
+
+Spherical Quaternion::sphericalCoordinates()
+{
+	Spherical sph;
+
+	/*cos_angle  = q -> qw;
+	sin_angle  = sqrt( 1.0 - cos_angle * cos_angle );
+	angle      = acos( cos_angle ) * 2 * RADIANS;
+
+	if ( fabs( sin_angle ) < 0.0005 )
+		sa = 1;
+
+	tx = q -> qx / sa;
+	ty = q -> qy / sa;
+	tz = q -> qz / sa;
+
+	latitude = -asin( ty );
+
+	if ( tx * tx + tz * tz < 0.0005 )
+		longitude   = 0;
+	else
+		longitude  = atan2( tx, tz ) * RADIANS;
+
+	if ( longitude < 0 )
+		longitude += 360.0;
+		*/
+	return sph;
+}
+
 
 mat4 Quaternion::toMatrix()
 {

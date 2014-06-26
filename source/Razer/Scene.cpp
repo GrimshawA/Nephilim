@@ -30,7 +30,7 @@ Entity Scene::createEntity()
 	return entityRef;
 }
 
-Entity Scene::getEntityByIndex(size_t index)
+Entity Scene::getEntityByIndex(std::size_t index)
 {
 	Entity entityRef;
 	entityRef.id = mEntities[index].mId;
@@ -42,7 +42,7 @@ Entity Scene::getEntityById(Int32 id)
 {
 	Entity entityRef;
 	entityRef.id = 0;
-	for(size_t i = 0; i < mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mEntities.size(); ++i)
 	{
 		if(mEntities[i].mId == id)
 		{

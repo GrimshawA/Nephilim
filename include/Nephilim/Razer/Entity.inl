@@ -22,7 +22,7 @@ void Entity::addComponent()
 	components.mBinding[id] = components.mComponents.size() - 1;
 
 	// Notify systems
-	for(size_t i = 0; i < mScene->mRegisteredSystems.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mRegisteredSystems.size(); ++i)
 	{
 		mScene->mRegisteredSystems[i]->onComponentAdded(getTypeOf<CType>(), (void*)&components.mComponents.back(), this);
 	}

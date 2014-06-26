@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	, m_horizontal(Center)
 	, m_vertical(Center)
 {
-	component_id = UIViewComponent::TextComponent;
+	component_id = UIComponent::TextComponent;
 	color = Color(151,151,151);
 }
 
@@ -21,7 +21,7 @@ UIComponentText::UIComponentText(const String& text, Alignment horizontal, Align
 	, m_horizontal(horizontal)
 	, m_vertical(vertical)
 {
-	component_id = UIViewComponent::TextComponent;
+	component_id = UIComponent::TextComponent;
 	color = Color(211,211,211);
 }
 

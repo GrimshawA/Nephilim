@@ -44,7 +44,7 @@ void SystemBullet::update(const Time& deltaTime)
 {
 	float delta = deltaTime.asSeconds();
 
-	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity entity = mScene->getEntityByIndex(i);
 		if(entity.hasComponent<ComponentVehicle>())
@@ -131,7 +131,7 @@ void SystemBullet::update(const Time& deltaTime)
 		bulletWorld.step(delta);
 	//}
 
-	for(size_t i = 0; i < mScene->mEntities.size(); ++i)
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity entity = mScene->getEntityByIndex(i);
 		if(entity.hasComponent<ComponentCharacterController>())

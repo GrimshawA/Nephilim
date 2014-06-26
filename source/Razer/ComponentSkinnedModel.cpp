@@ -44,7 +44,7 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 	championTexture.loadFromFile("K:\\Users\\Hellhound\\Desktop\\lolmodels\\texture.png");
 
 	skeletonskl.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\skeleton.skl");
-	animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\Caitlyn_cop_Idle2.anm");
+	animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\fizz_run.anm");
 
 	// remap bone indices
 	for(int i = 0; i < champion.boneIDs.size(); ++i)
@@ -86,6 +86,11 @@ void ComponentSkinnedModel::loadAnimation(const String& filename)
 	convertANMToClip(ax, clip);
 
 	mAnimationTime = 0.f;
+}
+
+void ComponentSkinnedModel::setRotation(Quaternion r)
+{
+	baseTransform = r.toMatrix() * mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
 }
 
 vec3 getAbsolutePosition(AnimationClip& animationClip, Skeleton& skeleton, int frame, int bone_index)
@@ -168,10 +173,10 @@ void ComponentSkinnedModel::update(const Time& deltaTime)
 	int nextFrame = (currentFrame + 1) % clip.numFrames;
 	float blend = mAnimationTime - currentFrame;
 
-	Log("frames %d, frame time %f\nCurrent: %d\nNext: %d\nBlend %f", clip.numFrames, mAnimationTime, currentFrame, nextFrame, blend);
+	//Log("frames %d, frame time %f\nCurrent: %d\nNext: %d\nBlend %f", clip.numFrames, mAnimationTime, currentFrame, nextFrame, blend);
 
 	// For each bone of the skeleton, get its final matrix
-	/*for(size_t i = 0; i < modelSkeleton.bones.size(); ++i)
+	/*for(std::size_t i = 0; i < modelSkeleton.bones.size(); ++i)
 	{
 		vec3 position = vec3::lerp(getAbsolutePosition(clip, modelSkeleton, currentFrame, i), getAbsolutePosition(clip, modelSkeleton, nextFrame, i), blend);
 		Quaternion rotation = Quaternion::slerp(getAbsoluteRotation(clip, modelSkeleton, currentFrame, i), getAbsoluteRotation(clip, modelSkeleton, nextFrame, i), blend);
@@ -194,7 +199,7 @@ void ComponentSkinnedModel::update(const Time& deltaTime)
 	modelSkeleton.convertToWorldSpace(bone_transforms);
 
 	/// This code is correct, it assigns the final bind pose to whatever was in there
-	for(size_t i = 0; i < clip.tracks.size(); ++i)
+	for(std::size_t i = 0; i < clip.tracks.size(); ++i)
 	{
 		int bone_index = modelSkeleton.getIndexFromName(clip.tracks[i].name);
 
@@ -202,7 +207,7 @@ void ComponentSkinnedModel::update(const Time& deltaTime)
 	}
 	
 	/// This code is correct, it assigns the final matrices just fine
-	for(size_t i = 0; i < modelSkeleton.bones.size(); ++i)
+	for(std::size_t i = 0; i < modelSkeleton.bones.size(); ++i)
 	{
 		int index = clip.getTrackIndexByName(modelSkeleton.bones[i].name);
 		boneTransforms[i] = bone_transforms[index];

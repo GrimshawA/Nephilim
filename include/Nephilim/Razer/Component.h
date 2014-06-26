@@ -34,7 +34,7 @@ public:
 	std::vector<T> mComponents;
 
 	/// Maps entity id to its component
-	std::map<Int32, size_t> mBinding;
+	std::map<Int32, std::size_t> mBinding;
 };
 
 

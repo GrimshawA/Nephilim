@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class UIView;
 
-class NEPHILIM_API UIComponentDebugColor : public UIViewComponent
+class NEPHILIM_API UIComponentDebugColor : public UIComponent
 {
 public:
 

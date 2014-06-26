@@ -8,6 +8,7 @@
 #include <Nephilim/Razer/ComponentTilemap2D.h>
 #include <Nephilim/Razer/ComponentTransform.h>
 #include <Nephilim/Razer/ComponentSprite.h>
+#include <Nephilim/Razer/ComponentCamera.h>
 
 #include <angelscript.h>
 
@@ -24,6 +25,21 @@ using namespace rzr;
 
 void registerRazerComponentsASX(ASXEngine& engine)
 {
+	// Register camera component
+	engine.get()->RegisterObjectType("Camera", sizeof(ComponentTransform), asOBJ_REF);
+
+	engine.get()->RegisterObjectBehaviour("Camera", asBEHAVE_ADDREF, "void f()", asFUNCTION(dummy), asCALL_CDECL_OBJLAST);
+	engine.get()->RegisterObjectBehaviour("Camera", asBEHAVE_RELEASE, "void f()", asFUNCTION(dummy), asCALL_CDECL_OBJLAST);
+
+	engine.get()->RegisterObjectProperty("Camera", "float x", asOFFSET(ComponentCamera, x));
+	engine.get()->RegisterObjectProperty("Camera", "float y", asOFFSET(ComponentCamera, y));
+	engine.get()->RegisterObjectProperty("Camera", "float z", asOFFSET(ComponentCamera, z));
+	engine.get()->RegisterObjectProperty("Camera", "bool ortho", asOFFSET(ComponentCamera, mOrtho));
+	engine.get()->RegisterObjectProperty("Camera", "float fov", asOFFSET(ComponentCamera, fieldOfView));
+	engine.get()->RegisterObjectProperty("Camera", "vec2 size", asOFFSET(ComponentCamera, size));
+
+	engine.get()->RegisterObjectMethod("Camera", "void setSize(float,float)", asMETHOD(ComponentCamera, setSize), asCALL_THISCALL);
+
 	// Register the mesh component
 	engine.get()->RegisterObjectType("Mesh", sizeof(ComponentMesh), asOBJ_REF);
 

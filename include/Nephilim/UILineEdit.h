@@ -33,7 +33,7 @@ public:
 
 	void setType(UILineEditTypes type);
 
-	void setCharacterLimit(size_t limit);
+	void setCharacterLimit(std::size_t limit);
 
 	void draw(Renderer* renderer);
 
@@ -45,7 +45,7 @@ public:
 
 	UILineEditTypes m_type;
 
-	size_t m_charLimit;
+	std::size_t m_charLimit;
 };
 
 class ASEngine;

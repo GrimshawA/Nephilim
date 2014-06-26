@@ -4,9 +4,10 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Time.h>
 
+#include <typeindex>
+
 #include <vector>
 #include <map>
-#include <typeindex>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

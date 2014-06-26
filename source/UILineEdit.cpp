@@ -88,7 +88,7 @@ bool UILineEdit::onTextEvent(Uint32 code)
 	else return false;
 }
 
-void UILineEdit::setCharacterLimit(size_t limit)
+void UILineEdit::setCharacterLimit(std::size_t limit)
 {
 	m_charLimit = limit;
 }

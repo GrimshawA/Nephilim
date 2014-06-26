@@ -86,7 +86,7 @@ public:
 
 	VertexFormat       format; ///< Format of the vertex data
 	std::vector<char>  data;   ///< The vertex raw data
-	size_t             count;  ///< Number of allocated vertices
+	std::size_t             count;  ///< Number of allocated vertices
 };
 
 NEPHILIM_NS_END

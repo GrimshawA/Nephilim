@@ -86,7 +86,7 @@ void UIComponentLineEdit::setType(UILineEditTypes type)
 	m_type = type;
 }
 
-void UIComponentLineEdit::setCharacterLimit(size_t limit)
+void UIComponentLineEdit::setCharacterLimit(std::size_t limit)
 {
 	m_charLimit = limit;
 }

@@ -896,7 +896,7 @@ static void *setup_temp_malloc(vorb *f, int sz)
    return malloc(sz);
 }
 
-static void setup_temp_free(vorb *f, void *p, size_t sz)
+static void setup_temp_free(vorb *f, void *p, std::size_t sz)
 {
    if (f->alloc.alloc_buffer) {
       f->temp_offset += (sz+3)&~3;

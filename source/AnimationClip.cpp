@@ -21,7 +21,7 @@ mat4 AnimationClip::Track::getTransformFromTime(float t)
 
 void AnimationClip::getTransformsFromTime(float t, std::vector<mat4>& transforms)
 {
-	for(size_t i = 0; i < tracks.size(); ++i)
+	for(std::size_t i = 0; i < tracks.size(); ++i)
 	{
 		transforms[i] = tracks[i].getTransformFromTime(t);
 	}
@@ -29,7 +29,7 @@ void AnimationClip::getTransformsFromTime(float t, std::vector<mat4>& transforms
 
 Int32 AnimationClip::getTrackIndexByName(const String& name)
 {
-	for(size_t i = 0; i < tracks.size(); ++i)
+	for(std::size_t i = 0; i < tracks.size(); ++i)
 	{
 		if(tracks[i].name == name)
 		{

@@ -161,7 +161,7 @@ UILayerView* UICanvas::top()
 	else
 	{
 		UILayerView* lastSurface = m_surfaces.back();
-		for(size_t i = 0; i < m_pendingChanges.size(); ++i)
+		for(std::size_t i = 0; i < m_pendingChanges.size(); ++i)
 		{
 			if(m_pendingChanges[i].type == Add)
 			{
@@ -369,7 +369,7 @@ int UICanvas::getModalSurfaceCount()
 			count++;
 	}
 
-	for(size_t i = 0; i < m_pendingChanges.size(); ++i)
+	for(std::size_t i = 0; i < m_pendingChanges.size(); ++i)
 	{
 		if(m_pendingChanges[i].type == Add && m_pendingChanges[i].surface->isModal())
 		{

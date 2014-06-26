@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentResizable : public UIViewComponent
+class NEPHILIM_API UIComponentResizable : public UIComponent
 {
 public:
 	UIComponentResizable();

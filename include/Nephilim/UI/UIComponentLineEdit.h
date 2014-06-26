@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentLineEdit : public UIViewComponent
+class NEPHILIM_API UIComponentLineEdit : public UIComponent
 {
 public:
 	UIComponentLineEdit();
@@ -31,7 +31,7 @@ public:
 
 	void setType(UILineEditTypes type);
 
-	void setCharacterLimit(size_t limit);
+	void setCharacterLimit(std::size_t limit);
 
 	Text t;
 	String s;
@@ -41,7 +41,7 @@ public:
 
 	UILineEditTypes m_type;
 
-	size_t m_charLimit;
+	std::size_t m_charLimit;
 
 	sigc::signal<void, String> onReturnPressed;
 };

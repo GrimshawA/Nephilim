@@ -7,7 +7,7 @@
 NEPHILIM_NS_BEGIN
 
 UIComponentButton::UIComponentButton()
-: UIViewComponent()
+: UIComponent()
 , mString("Button")
 , mTexture(NULL)
 , mHoverTexture(NULL)

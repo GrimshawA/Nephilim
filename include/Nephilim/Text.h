@@ -62,7 +62,7 @@ public:
 		//*this += L'H';
 	} 
 
-	size_t getSize(){
+	std::size_t getSize(){
 		return size();
 	}
 };
