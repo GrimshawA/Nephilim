@@ -1,13 +1,16 @@
-#ifndef PARABOLA_GAMECORE_H
-#define PARABOLA_GAMECORE_H
+#ifndef Nephillim_GameCore_h
+#define Nephillim_GameCore_h
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/VirtualFS.h>
+#include <Nephilim/ContentManager.h>
 #include "Clock.h"
 #include "Logger.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "Event.h"
 #include "StringList.h"
+
 
 NEPHILIM_NS_BEGIN
 class GameCoreManager;
@@ -72,6 +75,8 @@ public:
 	/// Get the flags of the gl context
 	String getGLContextFlags();
 
+	VirtualFS mVirtualFS;
+
 protected:
 
 	/// Callback for updating the game
@@ -118,4 +123,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // Nephillim_GameCore_h

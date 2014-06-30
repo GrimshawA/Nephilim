@@ -2,6 +2,9 @@
 #define NephilimSceneFormat_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
+
+#include <list>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
@@ -31,7 +34,12 @@ class NEPHILIM_API SceneFormat
 {
 public:
 
+	struct Entity
+	{
+		String name;
+	};
 
+	std::list<Entity> entities;
 };
 
 };

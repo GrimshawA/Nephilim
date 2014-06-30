@@ -3,6 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
+#include <Nephilim/Time.h>
+#include <Nephilim/Event.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -28,6 +30,9 @@ class NEPHILIM_API Editor
 {
 public:
 	Editor();
+
+	virtual void onEvent(const Event& ev){}
+	virtual void onUpdate(Time elapsedTime){}
 
 	/// All instances of Editor based classes must identify the tool name
 	String mName;

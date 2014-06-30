@@ -45,7 +45,7 @@ void Window::create(int screenWidth, int screenHeight){
 #ifdef NEPHILIM_DESKTOP
 	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(32, 8 , 8));
 	m_fullscreen = false;
-	//myWindowImpl->setVerticalSyncEnabled(true);
+	myWindowImpl->setVerticalSyncEnabled(true);
 	//myWindowImpl->setFramerateLimit(60);
 	
 	//Log("Window(%dx%dx%d - depth(%d) AA(%d) stencil(%d) ",myWindowImpl->getSize().x, myWindowImpl->getSize().y, 32, myWindowImpl->getSettings().depthBits, myWindowImpl->getSettings().antialiasingLevel, myWindowImpl->getSettings().stencilBits );

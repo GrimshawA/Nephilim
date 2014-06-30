@@ -226,18 +226,6 @@ void SystemRenderer::render()
 			mRenderer->setViewMatrix(mRenderer->getViewMatrix());
 			mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
 		}
-		/*if(ent.hasComponent<ComponentWater2>()) 
-		{
-			mRenderer->setBlendingEnabled(false);
-			//mRenderer->clearAllBuffers();
-			mRenderer->setDefaultTexture();
-
-			ComponentWater2& waterBody = ent.getComponent<ComponentWater2>();
-			if(!waterBody.ready)
-				waterBody.init();			
-			
-			waterBody.render(mRenderer);
-		}*/
 		if(ent.hasComponent<ComponentSprite>()) 
 		{
 			mRenderer->setDepthTestEnabled(false);

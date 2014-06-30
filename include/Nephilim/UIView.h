@@ -62,7 +62,6 @@ public:
 	/// Base destructor
 	virtual ~UIView();
 
-	typedef UIView* Ptr;
 
 	/// Load the hierarchy of this view from a file and configure itself
 	void load(const String& filename);

@@ -15,6 +15,11 @@ namespace rzr {
 /**
 	\class Scene
 	\brief Represents a 3D world
+
+	Scene is a container for entities, which by contain components themselves.
+	For short, what a scene does is to hold world data, which is simulated by specialized systems.
+
+	In each rendering frame, there is also a specialized system which is able to produce a final image of the world's data
 */
 class NEPHILIM_API Scene
 {

@@ -1,5 +1,4 @@
 #include <Nephilim/UILoader.h>
-#include <Nephilim/UIView.h>
 #include <Nephilim/UIImage.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/UI/UIComponentImage.h>

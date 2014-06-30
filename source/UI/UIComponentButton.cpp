@@ -2,13 +2,24 @@
 #include <Nephilim/UIView.h>
 #include <Nephilim/Text.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/ContentBank.h>
+#include <Nephilim/ContentManager.h>
 
 NEPHILIM_NS_BEGIN
 
 UIComponentButton::UIComponentButton()
 : UIComponent()
 , mString("Button")
+, mTexture(NULL)
+, mHoverTexture(NULL)
+{
+	mNormalColor = Color::Black;
+	mHoverColor = Color::Yellow;
+}
+
+/// Default construction with a text
+UIComponentButton::UIComponentButton(const String& text)
+: UIComponent()
+, mString(text)
 , mTexture(NULL)
 , mHoverTexture(NULL)
 {

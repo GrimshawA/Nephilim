@@ -740,6 +740,7 @@ ComponentWater::ComponentWater()
 	mCameraTheta = 0.f;
 }
 
+#ifndef NEPHILIM_ANDROID
 void printMatrix(mat4f m, const char* cs)
 {
 	printf("mat4f %s\n", cs);
@@ -777,7 +778,7 @@ void printMatrix(mat4 m, const char* cs)
 	}
 	printf("------------------\n");
 }
-
+#endif
 
 void ComponentWater::redisplayFunc()
 {

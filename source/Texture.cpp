@@ -160,12 +160,16 @@ unsigned int Texture::getValidSize(unsigned int size)
 	return size;
 }
 
-void Texture::loadFromImage(Image &image, bool generateMipMaps){
+void Texture::loadFromImage(Image &image, bool generateMipMaps)
+{
 	if(image.getSize().x == 0 && image.getSize().y == 0)
 	{
-		// Invalid image.
 		return;
 	}
+
+	// Make sure the previous texture ceases to exist
+	// might need to optimize later by reusing
+	unload();
 
 	m_size = image.getSize();
 	m_actualSize = m_size;
@@ -189,6 +193,10 @@ void Texture::loadFromImage(Image &image, bool generateMipMaps){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+
+		// The texture was just loaded, restore the server-side texture states
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_isSmooth ? GL_LINEAR : GL_NEAREST);
 	}
 	else
 	{

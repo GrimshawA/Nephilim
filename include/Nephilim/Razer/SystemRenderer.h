@@ -6,7 +6,7 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/Texture.h>
-#include <Nephilim/ContentBank.h>
+#include <Nephilim/ContentManager.h>
 #include <Nephilim/Razer/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
@@ -29,6 +29,7 @@ public:
 
 	Renderer*        mRenderer;
 	ContentManager*  mContentManager;
+
 
 	Texture mRenderTexture;
 	Framebuffer mFramebuffer;

@@ -14,6 +14,9 @@ class NEPHILIM_API UIComponentButton : public UIComponent
 public:
 	UIComponentButton();
 
+	/// Default construction with a text
+	UIComponentButton(const String& text);
+
 	void onAttach(UIView* view);
 
 	void onEvent(Event event, UIView* view);

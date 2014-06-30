@@ -1,5 +1,5 @@
 #include "Nephilim/ContentLoader.h"
-#include "Nephilim/ContentBank.h"
+#include "Nephilim/ContentManager.h"
 #include "Nephilim/ContentList.h"
 
 NEPHILIM_NS_BEGIN

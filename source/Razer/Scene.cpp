@@ -1,4 +1,5 @@
 #include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/Entity.inl>
 
 NEPHILIM_NS_BEGIN
 namespace rzr{

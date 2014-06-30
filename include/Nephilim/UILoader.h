@@ -1,8 +1,10 @@
 #ifndef NephilimUILoader_h__
 #define NephilimUILoader_h__
 
-#include "Platform.h"
-#include "Strings.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/UIView.h>
+
 #include "pugixml/pugixml.hpp"
 
 #include "UIComponent.h"

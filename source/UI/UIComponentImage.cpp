@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UIView.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/ContentBank.h>
+#include <Nephilim/ContentManager.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -28,9 +28,10 @@ void UIComponentMenuBar::addMenu(const String& menuTitle)
 {
 	UIView* fileMenu = new UIView();
 	fileMenu->setName(menuTitle);
-	fileMenu->setRect(60.f * mParent->getChildCount(), 0.f, 60.f, 30.f);
-	fileMenu->addComponent(new UIComponentButton );
-	fileMenu->addComponent(new UIComponentText(menuTitle, UIComponentText::Center, UIComponentText::Center) );
+	fileMenu->setRect(mParent->getPosition().x + 60.f * mParent->getChildCount(), mParent->getPosition().y, 60.f, 30.f);
+	fileMenu->addComponent(new UIComponentButton(menuTitle) );
+	fileMenu->getComponent<UIComponentButton>()->mNormalColor = Color::Transparent;
+	//fileMenu->addComponent(new UIComponentText(menuTitle, UIComponentText::Center, UIComponentText::Center) );
 	fileMenu->onClick.connect(sigc::bind(sigc::mem_fun(this, &UIComponentMenuBar::openMenu), menuTitle));
 	mParent->attach(fileMenu);
 
@@ -45,7 +46,7 @@ void UIComponentMenuBar::addMenu(const String& menuTitle)
 	// Add one sample option..
 	UIView* exitAction = new UIView();
 	exitAction->addComponent(new UIComponentButton );
-	exitAction->addComponent(new UIComponentText("Exit", UIComponentText::Left, UIComponentText::Center) );
+	//exitAction->addComponent(new UIComponentText("Exit", UIComponentText::Left, UIComponentText::Center) );
 	exitAction->onClick.connect(sigc::bind(sigc::mem_fun(this, &UIComponentMenuBar::meteNojo), "SAAAAAAi"));
 	fileMenuContainer->attach(exitAction);
 	exitAction->setLocalPosition(0.f, 0.f);

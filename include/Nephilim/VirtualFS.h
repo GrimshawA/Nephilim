@@ -17,6 +17,9 @@ public:
 	/// Check if a given file exists
 	bool exists(const String& filename);
 
+	/// Translate a virtual to real path
+	String translate(const String& filename);
+
 	class IndexedDirectory
 	{
 	public:

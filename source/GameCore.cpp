@@ -137,9 +137,9 @@ void GameCore::setWindowTitle(const String &title){
 void GameCore::innerUpdate(Time time)
 {
 	// Frame skipping when too much time is accumulated
-	while(m_stackedTime > 3.f)
+	while(m_stackedTime > 0.5f)
 	{
-		m_stackedTime -= 3.f;
+		m_stackedTime -= 0.5f;
 	}
 
 	m_stackedTime += time.asSeconds();
