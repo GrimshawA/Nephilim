@@ -334,6 +334,7 @@ public:
 	sigc::signal<void> onSizeChanged;
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
+	sigc::signal<void, UIView*> onNewChild; /// Emitted when a child is attached
 
 
 	/// Hierarchicly sets the context to all children
@@ -427,6 +428,7 @@ public:
 	// -- UIView definition
 	UICore*     mCore; ///< Core of this UICanvas
 	Rect<float> mRect; ///< Bounds of this UIView
+	Rect<float> mPadding; ///< Padding in the view
 };
 
 

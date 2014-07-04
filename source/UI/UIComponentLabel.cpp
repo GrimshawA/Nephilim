@@ -55,7 +55,7 @@ void UIComponentText::onRender(Renderer* renderer, UIView* view)
 	text.setString(m_string);
 	text.setColor(color);
 	text.setOrigin(0.f, 0.f);
-	text.setPosition(view->getPosition());
+	text.setPosition(view->getPosition().x + mParent->mPadding.left, view->getPosition().y);
 
 	if(m_horizontal == Center)
 	{

@@ -36,6 +36,9 @@ public:
 	/// Called when the parent view is being destroyed or the component is about to be removed
 	virtual void onRelease(UIView* view){}
 
+	/// Called on the component when the UIView it is attached to has a new child
+	virtual void onChildAttached(UIView* child){};
+
 	virtual void onResize(UIView* view){}
 
 	virtual void onEvent(Event event, UIView* view){}

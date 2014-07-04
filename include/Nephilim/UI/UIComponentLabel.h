@@ -21,7 +21,7 @@ public:
 
 	UIComponentText();
 
-	UIComponentText(const String& text, Alignment horizontal, Alignment vertical);
+	UIComponentText(const String& text, Alignment horizontal = Center, Alignment vertical = Center);
 
 	/// On Attach
 	void onAttach(UIView* view);

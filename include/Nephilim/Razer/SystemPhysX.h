@@ -4,11 +4,17 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/System.h>
 
+namespace physx
+{
+	class PxPhysics;
+	class PxScene;
+}
+
 NEPHILIM_NS_BEGIN
+
+
 namespace rzr
 {
-
-class PxPhysics;
 
 /**
 	\class SystemPhysX
@@ -19,7 +25,10 @@ class NEPHILIM_API SystemPhysX : public System
 public:
 	SystemPhysX();
 
-	PxPhysics* mSimulation;
+	virtual void update(const Time& deltaTime);
+
+	physx::PxPhysics* mPhysics;
+	physx::PxScene* mScene;
 };
 
 }

@@ -43,6 +43,8 @@ void UIComponentDebugColor::onPropertySet(const StringList& targetObject, const 
 	}
 }
 
+
+
 void UIComponentDebugColor::onRender(Renderer* renderer, UIView* view)
 {
 	RectangleShape backRect(view->getBounds(), mColor);

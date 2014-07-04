@@ -934,6 +934,18 @@ void UIView::applyPendingOperations()
 
 void UIView::attach(UIView* control)
 {
+	// Failure to attach
+	if(!control)
+		return;
+
+	// Notify components of new added control
+	for(std::vector<UIComponent*>::iterator it = components.begin(); it != components.end(); ++it)
+	{
+		(*it)->onChildAttached(control);
+	}
+
+	onNewChild(control);
+
 	if(m_childrenLock == 0)
 	{
 		m_children.push_back(control);
