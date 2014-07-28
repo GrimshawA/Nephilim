@@ -40,6 +40,10 @@ void UIComponentDebugColor::onPropertySet(const StringList& targetObject, const 
 		{
 			mColor = Color::Blue;
 		}
+		if(value == "white")
+		{
+			mColor = Color::White;
+		}
 	}
 }
 

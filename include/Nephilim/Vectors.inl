@@ -425,6 +425,19 @@ float Vec3<T>::dot(const Vec3<T> &vec)
 	return (x*vec.x) + (y*vec.y) + (z*vec.z);
 }
 
+/// Calculate the distance between vectors
+template<class T>
+float Vec3<T>::distance(const Vec3<T> &vec)
+{
+	return sqrt(vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y);
+}
+
+/// Calculate the squared distance between vectors
+template<class T>
+float Vec3<T>::squaredDistance(const Vec3<T> &vec)
+{
+	return (vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y);
+}
 
 /************************************************************************/
 /* Vec4                                                                 */

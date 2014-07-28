@@ -3,7 +3,7 @@
 #include <Nephilim/UIView.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIComponentLabel.h>
+#include <Nephilim/UI/UIComponentText.h>
 
 #include <Nephilim/Text.h>
 

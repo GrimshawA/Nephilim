@@ -104,6 +104,7 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("Sprite", "void setSize(float, float)", asMETHODPR(ComponentSprite, setSize, (float,float), void), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Sprite", "vec2 getSize()", asMETHOD(ComponentSprite, getSize), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Sprite", "void setTextureRect(float,float,float,float)", asMETHOD(ComponentSprite, setTextureRect), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Sprite", "void setColor(int,int,int)", asMETHOD(ComponentSprite, setColor), asCALL_THISCALL);
 
 	engine.get()->RegisterObjectProperty("Sprite", "float width", asOFFSET(ComponentSprite, width));
 	engine.get()->RegisterObjectProperty("Sprite", "float height", asOFFSET(ComponentSprite, height));

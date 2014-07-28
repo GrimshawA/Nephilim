@@ -9,6 +9,7 @@
 NEPHILIM_NS_BEGIN
 
 class UIView;
+class Renderer;
 
 /**
 	\class Editor
@@ -33,6 +34,7 @@ public:
 
 	virtual void onEvent(const Event& ev){}
 	virtual void onUpdate(Time elapsedTime){}
+	virtual void onRender(Renderer* renderer){};
 
 	/// All instances of Editor based classes must identify the tool name
 	String mName;

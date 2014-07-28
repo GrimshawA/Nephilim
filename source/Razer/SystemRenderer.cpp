@@ -26,18 +26,21 @@
 #include <Nephilim/Razer/PostEffectBloom.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr{
+namespace rzr
+{
 	
 SystemRenderer::SystemRenderer()
 : System()
 , mRenderer(NULL)
 , mContentManager(NULL)
+, mTargetWidth(1900.f)
+, mTargetHeight(1000.f)
 {
 	// add a test bloom effect
 	mPostEffects.push_back(new PostEffectBloom);
 
 	// init the render to texture
-	mRenderTexture.create(1000.f, 500.f);
+	mRenderTexture.create(mTargetWidth, mTargetHeight);
 	if(mFramebuffer.create())
 	{
 		mFramebuffer.activate();
@@ -46,17 +49,116 @@ SystemRenderer::SystemRenderer()
 		GLuint depthrenderbuffer;
 		glGenRenderbuffers(1, &depthrenderbuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1000, 500);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, mTargetWidth, mTargetHeight);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//Log("=>>>>>>>>> Render Texture created");
 	}
 	else
 	{
 		Log(">>>>>>>>>>> Could not make render texture");
 	}
 	
+}
+
+
+/// This function will initialize the frame buffer and other things in order to produce a new frame out of the scene
+void SystemRenderer::startFrame()
+{
+	// Bind render to texture
+	mFramebuffer.activate();
+	glViewport(0, 0, mTargetWidth, mTargetHeight);
+
+	mRenderer->setClearColor(Color::Blue);
+	mRenderer->clearColorBuffer();
+}
+
+/// This function will basically truncate the output buffer and apply any post processing needed, generating the final composite
+void SystemRenderer::endFrame()
+{
+
+	//mRenderer->setModelMatrix(mat4::identity);
+	//	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mPhysicsScene);
+	//mRenderer->draw(dr);
+
+	// Post processing
+	//((PostEffectBloom*)mPostEffects[0])->apply(mRenderer, mRenderTexture);
+
+	/*mRenderer->setDefaultTarget();
+	mRenderer->setDefaultShader();
+	mRenderer->setProjectionMatrix(View(0, 0, 1000, 500).getMatrix());
+	mRenderer->setViewMatrix(mat4::identity);
+	mRenderer->setDefaultViewport();
+	mRenderer->setDepthTestEnabled(false);
+
+	RectangleShape finalComposite;
+	finalComposite.setTexture(&mRenderTexture);
+	finalComposite.invertTextureCoordinates();
+	finalComposite.setSize(1000.f, 500.f);
+	//finalComposite.setColor(Color::Blue);
+	mRenderer->draw(finalComposite);
+
+	mRenderer->setDefaultTarget();*/
+}
+
+/// All this function does is to render the current rendered scene frame to the backbuffer
+void SystemRenderer::drawToBackBuffer()
+{
+	mRenderer->setDefaultTarget();
+	mRenderer->setDefaultShader();
+	mRenderer->setProjectionMatrix(View(0, 0, 1000, 500).getMatrix());
+	mRenderer->setViewMatrix(mat4::identity);
+	mRenderer->setDefaultViewport();
+	mRenderer->setDepthTestEnabled(false);
+
+	RectangleShape finalComposite;
+	finalComposite.setTexture(&mRenderTexture);
+	finalComposite.invertTextureCoordinates();
+	finalComposite.setSize(1000.f, 500.f);
+	//finalComposite.setColor(Color::Blue);
+	mRenderer->draw(finalComposite);
+}
+
+void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
+{
+	// Find a camera
+	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
+	{
+		Entity ent = mScene->getEntityByIndex(i);
+		if(ent.hasComponent<ComponentCamera>())
+		{
+			ComponentCamera& camera = ent.getComponent<ComponentCamera>();
+			ComponentTransform& transform = ent.getComponent<ComponentTransform>();
+
+			// Let's compute this camera transform
+			camera.cameraTransform = mat4::identity;
+			camera.cameraTransform = transform.rotation.toMatrix() * mat4::translate(-transform.position.x, -transform.position.y, -transform.position.z);
+
+			if(camera.mOrtho)
+			{
+				mRenderer->setProjectionMatrix(mat4::ortho(-camera.size.x / 2.f, camera.size.x / 2.f, -camera.size.y / 2.f, camera.size.y / 2.f, camera.zNear, camera.zFar));
+			}
+			else
+			{
+				//mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar));
+				proj = mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar);
+			}
+		/*	mRenderer->setViewMatrix(camera.cameraTransform);
+			mRenderer->clearDepthBuffer();
+			mRenderer->setDepthTestEnabled(false);
+			mRenderer->clearColorBuffer();
+			mRenderer->setBlendingEnabled(true);
+			mRenderer->setBlendMode(Render::Blend::Alpha);*/
+
+			//Log("FOUND CAMERA");
+
+			view = camera.cameraTransform;
+
+			position = transform.position;
+			//cameraRotation = transform.rotation;
+			//cameraForward  = transform.getForwardVector();
+		}
+	}
 }
 
 void SystemRenderer::update(const Time& deltaTime)
@@ -73,15 +175,9 @@ void SystemRenderer::update(const Time& deltaTime)
 	}
 }
 
-void SystemRenderer::render()
+/// Render scene gets all scene render data and outputs it to the active target
+void SystemRenderer::renderScene()
 {
-	// Bind render to texture
-	//mFramebuffer.activate();
-	//glViewport(0, 0, 1000, 500);
-
-	mRenderer->setClearColor(Color::Blue);
-	mRenderer->clearColorBuffer();
-
 	mat4 viewMatrix;
 	mat4 projectionMatrix;
 	vec3 cameraPosition;
@@ -107,7 +203,7 @@ void SystemRenderer::render()
 			}
 			else
 			{
-				mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1000.f / 500.f, camera.zNear, camera.zFar));
+				mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar));
 			}
 			mRenderer->setViewMatrix(camera.cameraTransform);
 			mRenderer->clearDepthBuffer();
@@ -115,6 +211,8 @@ void SystemRenderer::render()
 			mRenderer->clearColorBuffer();
 			mRenderer->setBlendingEnabled(true);
 			mRenderer->setBlendMode(Render::Blend::Alpha);
+
+			//Log("FOUND CAMERA");
 
 			viewMatrix = camera.cameraTransform;
 			projectionMatrix = mRenderer->getProjectionMatrix();
@@ -239,6 +337,7 @@ void SystemRenderer::render()
 			spr.setSize(sprite.width, sprite.height);
 			spr.setOrigin(spr.getSize() / 2.f);
 			spr.setScale(sprite.scale.x, -sprite.scale.y);
+			spr.setColor(sprite.color);
 			if(!sprite.tex.empty())
 			{
 				//Log("Rendering ship sprite: %s", sprite.tex.c_str());
@@ -252,6 +351,7 @@ void SystemRenderer::render()
 				//spr.invertTextureCoordinates();
 			}
 			mRenderer->draw(spr);
+			//Log("RENDERING");
 			mRenderer->setDefaultTexture();
 			mRenderer->setModelMatrix(mat4::identity);
 		}
@@ -271,40 +371,36 @@ void SystemRenderer::render()
 			//Log("rendering particles");
 		}
 	}
-	
-	//mRenderer->setModelMatrix(mat4::identity);
-//	KxDraw dr(((SystemKinesis2D*)mScene->mRegisteredSystems[0])->mPhysicsScene);
-	//mRenderer->draw(dr);
+}
 
-	// Post processing
-	//((PostEffectBloom*)mPostEffects[0])->apply(mRenderer, mRenderTexture);
-
-	/*mRenderer->setDefaultTarget();
-	mRenderer->setDefaultShader();
-	mRenderer->setProjectionMatrix(View(0, 0, 1000, 500).getMatrix());
-	mRenderer->setViewMatrix(mat4::identity);
-	mRenderer->setDefaultViewport();
-	mRenderer->setDepthTestEnabled(false);
-
-	RectangleShape finalComposite;
-	finalComposite.setTexture(&mRenderTexture);
-	finalComposite.invertTextureCoordinates();
-	finalComposite.setSize(1000.f, 500.f);
-	//finalComposite.setColor(Color::Blue);
-	mRenderer->draw(finalComposite);*/
+void SystemRenderer::render()
+{
+	startFrame();
+	renderScene();
+	endFrame();
+	drawToBackBuffer();
 }
 
 void SystemRenderer::renderModel(Entity& entity)
 {
+	
 	ComponentTransform& transform = entity.getComponent<ComponentTransform>();
 
+	float box_dims = 2.f;
+
 	GeometryData box;
-	box.addBox(1.75f / 2, 1.75f, 1.75f / 2);
+	box.addBox(box_dims, box_dims, box_dims);
 	box.setAllColors(Color::White);
+
 
 	mRenderer->setDepthTestEnabled(true);
 	mRenderer->setModelMatrix(transform.getMatrix());
 	mRenderer->setDefaultTexture();
+	mRenderer->draw(box);
+
+	box.setAllColors(Color::Black);
+	box.m_primitive = Render::Primitive::LineLoop;
+	glLineWidth(2.f);
 	mRenderer->draw(box);
 
 	//Log("Rendering the box");

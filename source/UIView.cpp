@@ -3,7 +3,7 @@
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UI/UIComponentImage.h>
-#include <Nephilim/UI/UIComponentLabel.h>
+#include <Nephilim/UI/UIComponentText.h>
 
 
 #include <Nephilim/UIComponent.h>
@@ -174,6 +174,23 @@ void UIView::addComponent(const String& name)
 
 	//Log("[UIView] Adding component by name '%s'", name.c_str());
 }
+
+void UIView::addComponent(int type)
+{
+	switch(type)
+	{
+	case UIComponentList::Button:
+		addComponent(new UIComponentButton());
+		break;
+	case UIComponentList::Background:
+		addComponent(new UIComponentDebugColor());
+		break;
+	case UIComponentList::Text:
+		addComponent(new UIComponentText());
+		break;
+	}
+}
+
 
 void UIView::addStringProperty(const String& propertyName, const String& propertyValue)
 {

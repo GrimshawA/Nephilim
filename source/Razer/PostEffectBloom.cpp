@@ -29,7 +29,7 @@ namespace rzr
 
 PostEffectBloom::PostEffectBloom()
 {
-	mBrightnessShader.loadShader(Shader::VertexUnit, getFile("shaders/Fullpass.vert"));
+	/*mBrightnessShader.loadShader(Shader::VertexUnit, getFile("shaders/Fullpass.vert"));
 	mBrightnessShader.loadShader(Shader::FragmentUnit, getFile("shaders/Brightness.frag"));
 	mBrightnessShader.addAttributeLocation(0, "vertex");
 	mBrightnessShader.addAttributeLocation(1, "color");
@@ -51,7 +51,7 @@ PostEffectBloom::PostEffectBloom()
 	mSecondPassTextures[0].create(1000.f / 4, 500.f / 4);
 	mSecondPassTextures[0].setSmooth(true);
 	mSecondPassTextures[1].create(1000.f / 4, 500.f / 4);
-	mSecondPassTextures[1].setSmooth(true);
+	mSecondPassTextures[1].setSmooth(true);*/
 }
 
 void PostEffectBloom::apply(Renderer* renderer, Texture& renderTexture)

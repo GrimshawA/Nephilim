@@ -34,6 +34,9 @@ public:
 	/// Create and return a new entity
 	Entity createEntity();
 
+	/// Removes the entity if it is in the scene
+	void removeEntity(Int32 id);
+
 	Entity getEntityByIndex(std::size_t index);
 
 	Entity getEntityById(Int32 id);

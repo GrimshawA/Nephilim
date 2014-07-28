@@ -1,7 +1,8 @@
 #ifndef NephilimVectors_h__
 #define NephilimVectors_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
+
 #include <math.h>
 
 NEPHILIM_NS_BEGIN
@@ -144,6 +145,12 @@ public:
 
 	/// Compute the dot product
 	float dot(const Vec3<T> &vec);
+
+	/// Calculate the distance between vectors
+	float distance(const Vec3<T> &vec);
+
+	/// Calculate the squared distance between vectors
+	float squaredDistance(const Vec3<T> &vec);
 
 	/// Comparison operator overload
 	bool operator==(const Vec3<T> &vec);

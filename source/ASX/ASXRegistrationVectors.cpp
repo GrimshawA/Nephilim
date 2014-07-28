@@ -61,12 +61,18 @@ void registerVectorsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectBehaviour("vec3", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Vec3fDTOR), asCALL_CDECL_OBJLAST);
 	engine.get()->RegisterObjectBehaviour("vec3", asBEHAVE_CONSTRUCT, "void f(const vec3 &in)", asFUNCTION(Vec3fCCTOR), asCALL_CDECL_OBJLAST);
 	
+
+	engine.get()->RegisterObjectMethod("vec3", "vec3 opAdd(const vec3 &in)", asMETHODPR(vec3, operator+, (const vec3 &), vec3), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("vec3", "vec3 &opAddAssign(const vec3 &in)", asMETHODPR(vec3, operator+=, (const vec3 &), vec3&), asCALL_THISCALL);
+	
 	engine.get()->RegisterObjectMethod("vec3", "vec3 &opAssign(const vec3 &in)", asMETHODPR(vec3, operator=, (const vec3 &), vec3&), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("vec3", "vec3 opMul(const float& in)", asMETHODPR(vec3, operator*, (const float& in), vec3), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("vec3", "vec3 opSub(const vec3& in)", asMETHODPR(vec3, operator-, (const vec3& in), vec3), asCALL_THISCALL);
 	
 	engine.get()->RegisterObjectMethod("vec3", "float length()", asMETHOD(vec3, length), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("vec3", "float normalize()", asMETHOD(vec3, normalize), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("vec3", "float distance(const vec3& in)", asMETHOD(vec3, distance), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("vec3", "float squaredDistance(const vec3& in)", asMETHOD(vec3, squaredDistance), asCALL_THISCALL);
 
 	engine.get()->RegisterObjectProperty("vec3", "float x", asOFFSET(vec3, x));
 	engine.get()->RegisterObjectProperty("vec3", "float y", asOFFSET(vec3, y));

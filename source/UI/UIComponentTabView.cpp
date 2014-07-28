@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIComponentTabView.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
-#include <Nephilim/UI/UIComponentLabel.h>
+#include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UIView.h>
 

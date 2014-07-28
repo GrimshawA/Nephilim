@@ -27,24 +27,50 @@ public:
 
 	void updateItemPositions();
 
+	/// Computes the total height of the child item, including all its nested subtrees
+	vec2 computeChildSize(int index);
+
+	/// Get current size of this subtree container
+	/// This returns the size the container should be according to its items, not what is currently IS
+	vec2 getSize();
+
+	/// Get the current size of the <index> child item
+	vec2 getItemSize(int index);
+
+	/// Check if any of the children items are expandible (subtrees)
+	bool isSubTree(int index);
+
 	/// Whenever a child is added to any of this UIView's children
 	/// we need to act upon it
 	void onChildAddedToChild(UIView* subChild, UIView* child);
 
-	/// Grows one of the local items by an amount
-	void growItem(UIView* childItem, float amount);
+	/// Expands/Collapses the child item if it exists
+	void toggleItem(UIView* item);
+
+	/// Recomputes all sizes and positions for the entire hierarchy (can be heavy)
+	/// Resizes the treeView container view to fit its children unless its at level 0
+	void recomputeTree();
+
+	/// Toggle will expand/collapse the tree view
+	void toggle();
 
 	void onRender(Renderer* renderer, UIView* view);
+
+	float mLineHeight;
 
 	bool mSubTreeView;
 	int mSubTreeLevel;
 
-	sigc::signal<void, UIView*, float> onChildItemGrow;
+	float mSpacing; ///< Amount of space left empty between entries
+
+	bool collapsed; ///< A tree view can be either collapsed or expanded to show its children items
 };
 
 class NEPHILIM_API UIComponentTreeViewItem : public UIComponent
 {
 public:
+	void toggle();
+
 	void onRender(Renderer* renderer, UIView* view);
 };
 

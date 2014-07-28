@@ -13,11 +13,24 @@ NEPHILIM_NS_BEGIN
 StateStack::StateStack() 
 : m_stackLock(false)
 , m_transition(NULL)
+, mLocked(false)
+{
+}
+StateStack::~StateStack()
 {
 }
 
-StateStack::~StateStack()
+/// Lock the stack to prevent further changes
+/// It will be automatically unlocked when the next update() ends which has no transition active
+void StateStack::lock()
 {
+	mLocked = true;
+}
+
+/// Check if the stack is currently locked
+bool StateStack::isLocked()
+{
+	return mLocked;
 }
 
 void StateStack::process()
@@ -28,7 +41,8 @@ void StateStack::process()
 		return;
 	}
 
-	applyChanges();
+	applyChangesTo(mCurrentList);
+	m_pendingOperations.clear();
 }
 
 bool StateStack::isTransitionActive()
@@ -58,13 +72,17 @@ void StateStack::clear()
 /// Remove the top state from the stack
 void StateStack::pop()
 {
-	if(isTransitionActive())
+	if(!isLocked())
 	{
-
+		StateStackOperation sso;
+		sso.type = StateStackOperation::Pop;
+		sso.obj = NULL;
+		m_pendingOperations.push_back(sso);
+		Log("Popping");
 	}
 	else
 	{
-
+		Log("Cannot pop a locked stack");
 	}
 }
 
@@ -101,40 +119,6 @@ void StateStack::drawList(std::vector<State*>& list, Renderer* renderer)
 		list[index]->onRender(renderer);
 	//	Log("Rendering state: %s", list[index]->mName.c_str());
 		++index;
-	}
-}
-
-
-void StateStack::applyChangesTo(std::vector<State*>& list)
-{
-	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
-	{
-		switch(it->type)
-		{
-		case StateStackOperation::Erase:
-	
-			list.erase(std::find(list.begin(), list.end(), it->obj));
-			if(!isActive(it->obj))
-			{
-				it->obj->onDeactivate();
-			}
-			Log("Removed state for future list");
-
-			break;
-
-		case StateStackOperation::Add:
-			if(std::find(list.begin(), list.end(), it->obj) == list.end())
-			{
-				list.push_back(it->obj);
-				Log("Added state for future list");
-			}
-			else
-			{
-				//cout<<"Tried to add a state that was already there.."<<endl;
-			}
-
-			break;
-		}
 	}
 }
 
@@ -261,70 +245,48 @@ void StateStack::add(const String& name)
 	}
 }
 
-/// Checks if the stack is empty and if so adds a state from the wait list
-void StateStack::processWaitList()
+void StateStack::applyChangesTo(std::vector<State*>& list)
 {
-	// erased, if reaches 0, add to stack from waiting list
-	if(mCurrentList.empty() && !m_waitList.empty())
+	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
 	{
-		add(m_waitList.front());
-		m_waitList.front()->removeReference(); // remove waiting list reference
-		m_waitList.erase(m_waitList.begin());
+		switch(it->type)
+		{
+		case StateStackOperation::Erase:
+
+			list.erase(std::find(list.begin(), list.end(), it->obj));
+			if(!isActive(it->obj))
+			{
+				it->obj->onDeactivate();
+			}
+			Log("Removed state for future list");
+
+			break;
+
+		case StateStackOperation::Add:
+			if(std::find(list.begin(), list.end(), it->obj) == list.end())
+			{
+				list.push_back(it->obj);
+				Log("Added state for future list");
+			}
+			else
+			{
+				//cout<<"Tried to add a state that was already there.."<<endl;
+			}
+
+			break;
+
+		case StateStackOperation::Pop :
+			{
+				if(list.size() > 0)
+				{
+					list.erase(list.begin() + list.size() - 1);
+				}
+			}
+			break;
+		}
 	}
 }
 
-/// Adds a state to the waiting list
-void StateStack::addWaiting(State* state)
-{
-	state->addReference(); // reference just for the waiting list
-	m_waitList.push_back(state);
-
-	//cout<<"[StateStack] State added to waiting list"<<endl;
-};
-
-/// Processes the list of changes to the stack
-void StateStack::applyChanges()
-{
-	while(!m_pendingOperations.empty())
-	{
-		switch(m_pendingOperations.front().type)
-		{
-			case StateStackOperation::Erase:
-				//erase(m_pendingOperations.front().obj);
-				//cout<<"Trying to erase: "<< m_pendingOperations.front().obj<<endl;
-				m_pendingOperations.front().obj->m_scheduledRemoval = false;
-				mCurrentList.erase(std::find(mCurrentList.begin(), mCurrentList.end(), m_pendingOperations.front().obj));
-				if(!isActive(m_pendingOperations.front().obj))
-				{
-					m_pendingOperations.front().obj->onDeactivate();
-				}
-				break;
-
-			case StateStackOperation::Add:
-				if(std::find(mCurrentList.begin(), mCurrentList.end(), m_pendingOperations.front().obj) == mCurrentList.end())
-				{
-					//m_pendingOperations.front().obj->onActivate();
-					//m_pendingOperations.front().obj->addReference();
-					//cout<<"adding: "<<m_pendingOperations.front().obj<<endl;
-					mCurrentList.push_back(m_pendingOperations.front().obj);		
-				}
-				else
-				{
-					//cout<<"Tried to add a state that was already there.."<<endl;
-				}
-					
-				break;
-		}
-
-		m_pendingOperations.erase(m_pendingOperations.begin());
-	}
-
-	// There is a chance of already having more states - stack overflow if there is a loophole within state logic
-	if(!m_pendingOperations.empty())
-	{
-		applyChanges();
-	}
-};
 
 /// Bind a new state to the list
 bool StateStack::bind(const String& name, State* state)
@@ -369,9 +331,6 @@ void StateStack::erase(State* state)
 		{
 			mCurrentList.erase(it);
 		}		
-		//cout<<"[StateStack] Erased"<<endl;
-
-		processWaitList();
 	} 
 };
 
@@ -406,8 +365,8 @@ void StateStack::pushEvent(Event &event){
 		m_stackLock = false;
 	}
 
-	if(!m_transition)
-		applyChanges();	
+	//if(!m_transition)
+		//applyChanges();	
 };
 
 
@@ -445,7 +404,7 @@ void StateStack::update(Time &time)
 	{
 		delete m_transition;
 		m_transition = NULL;
-		applyChanges();
+//		applyChanges();
 	}
 
 	if(m_transition)
@@ -471,8 +430,14 @@ void StateStack::update(Time &time)
 		m_stackLock = false;
 	}
 
-	if(!m_transition)
-		applyChanges();
+	//if(!m_transition)
+	//	applyChanges();
+
+	// Unlock if appropriate
+	if(m_pendingOperations.size() == 0 && mLocked && !m_transition)
+	{
+		mLocked = false;
+	}
 };
 
 void StateStack::updateList(std::vector<State*>& list, const Time& time)

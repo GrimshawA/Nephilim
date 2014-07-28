@@ -31,6 +31,9 @@ public:
 	/// Invert the matrix
 	void invert();
 
+	/// Get the inverse of the matrix
+	mat4 inverse();
+
 	/// Get the inverse of this matrix
 	mat4 getInverse();
 

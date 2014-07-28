@@ -2,6 +2,7 @@
 #define NephilimRazerComponentSprite_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Color.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Razer/Component.h>
@@ -29,7 +30,11 @@ public:
 	/// Get the size of the sprite
 	vec2 getSize();
 
+	void setColor(int r, int g, int b);
+
 	void setTextureRect(float x, float y, float w, float h);
+
+	Color color;
 
 	float width;
 	float height;

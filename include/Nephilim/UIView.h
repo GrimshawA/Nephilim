@@ -47,6 +47,17 @@ namespace UISizeFlag
 	};
 }
 
+namespace UIComponentList
+{
+	enum Types
+	{
+		Button = 0,
+		Background,
+		Text,
+	};
+};
+
+
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
@@ -71,6 +82,8 @@ public:
 
 	/// Add a new component from a pre registered type
 	void addComponent(const String& name);
+
+	void addComponent(int type);
 
 	void addStringProperty(const String& propertyName, const String& propertyValue);
 

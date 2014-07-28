@@ -44,6 +44,7 @@ void SystemBullet::update(const Time& deltaTime)
 {
 	float delta = deltaTime.asSeconds();
 
+
 	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity entity = mScene->getEntityByIndex(i);

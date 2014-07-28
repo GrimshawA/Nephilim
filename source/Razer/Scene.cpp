@@ -31,6 +31,19 @@ Entity Scene::createEntity()
 	return entityRef;
 }
 
+/// Removes the entity if it is in the scene
+void Scene::removeEntity(Int32 id)
+{
+	for(size_t i = 0; i < mEntities.size(); ++i)
+	{
+		if(mEntities[i].mId == id)
+		{
+			mEntities.erase(mEntities.begin() + i);
+			return;
+		}
+	}
+}
+
 Entity Scene::getEntityByIndex(std::size_t index)
 {
 	Entity entityRef;

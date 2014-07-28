@@ -29,7 +29,8 @@ class GameCore;
 
 	State - bool active - when a state is about to be added to execution, it becomes active, and goes inactive once it finishes
 */
-class NEPHILIM_API StateStack{
+class NEPHILIM_API StateStack
+{
 public:
 	/// Creates an empty state machine
 	StateStack();
@@ -40,6 +41,15 @@ public:
 	/// Processes all the state changes that are pending
 	/// Can never be called while the stack is working(rendering,updating or fetching events)
 	void process();
+
+	/// Lock the stack to prevent further changes
+	/// It will be automatically unlocked when the next update() ends which has no transition active and all pending operations were
+	/// commited. This means the stack is ready for being altered again
+	/// When you call lock, that means you are done with your stack operations, and you can only do more when the stack is all ready
+	void lock();
+
+	/// Check if the stack is currently locked
+	bool isLocked();
 
 	/// Clear all active states
 	void clear();
@@ -75,12 +85,6 @@ public:
 	/// Remove the top state from the stack
 	void pop();
 
-	/// Adds a state to the waiting list
-	void addWaiting(State* state);
-
-	/// Checks if the stack is empty and if so adds a state from the wait list
-	void processWaitList();
-
 	/// Updates the right states 
 	void update(Time &time);
 
@@ -99,8 +103,7 @@ public:
 	/// Returns false if the name was already taken
 	bool bind(const String& name, State* state);
 
-	/// Processes the list of changes to the stack
-	void applyChanges();
+	/// This function will apply the pending operations to the state stack
 	void applyChangesTo(std::vector<State*>& list);
 
 	/// Erase a state
@@ -120,8 +123,9 @@ public:
 	{
 		enum Type
 		{
-			Erase = 0,
-			Add
+			Erase = 0, ///< Erases a given state instance from the list
+			Add,       ///< Adds a given state instance to the list
+			Pop,       ///< Remove the top state instance from the list
 		};
 
 		Type type;
@@ -134,11 +138,6 @@ public:
 
 	friend class StateStackTransition;
 
-
-
-	std::vector<State*> m_waitList; ///< The list of states waiting to become active
-
-
 	std::map<String, State*> m_bindList; ///< The list of binded states, that "live" under the stack
 
 	std::vector<StateStackOperation> m_pendingOperations; ///< The list of pending operations
@@ -146,6 +145,10 @@ public:
 	StateStackTransition* m_transition; ///< The active transition
 
 	bool m_stackLock;
+
+	/// If the stack is locked, all operations fail automatically
+	/// Normally, the stack is unlocked automatically once the transitions end
+	bool mLocked;
 };
 
 NEPHILIM_NS_END

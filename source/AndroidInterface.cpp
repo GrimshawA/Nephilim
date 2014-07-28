@@ -178,7 +178,7 @@ AndroidInterface::AssetFile AndroidInterface::getAsset(const String& filename)
 						result.length = length;
 					}
 				}
-			} 	
+			} 
 		}
 	}
 

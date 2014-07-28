@@ -41,6 +41,13 @@ void animateUIViewByName(const String& name, UIView* view)
 
 void registerUserInterfaceASX(ASXEngine& engine)
 {
+	// Register the UIComponents enum
+	engine.get()->RegisterEnum("UIComponent");
+	engine.get()->RegisterEnumValue("UIComponent", "Button", UIComponentList::Button);
+	engine.get()->RegisterEnumValue("UIComponent", "Background", UIComponentList::Background);
+	engine.get()->RegisterEnumValue("UIComponent", "Text", UIComponentList::Text);
+
+
 	// Register the UIView API
 	engine.get()->RegisterObjectType("UIView", sizeof(UIView), asOBJ_REF);
 
@@ -50,6 +57,8 @@ void registerUserInterfaceASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("UIView", "UIView@ create(const string& in)", asMETHOD(UIView, createChild), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void setRect(float, float, float, float)", asMETHODPR(UIView, setRect, (float,float,float,float), void), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void add(const string& in)", asMETHODPR(UIView, addComponent, (const String&), void), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("UIView", "void add(int)", asMETHODPR(UIView, addComponent, (int), void), asCALL_THISCALL);
+
 	engine.get()->RegisterObjectMethod("UIView", "void load(const string& in)", asMETHOD(UIView, load), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "void set(const string& in)", asMETHOD(UIView, setProperty), asCALL_THISCALL);
 

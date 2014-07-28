@@ -7,6 +7,7 @@ ComponentSprite::ComponentSprite()
 : width(1.f)
 , height(1.f)
 , scale(1.f, 1.f)
+, color(Color::White)
 {
 
 }
@@ -38,6 +39,14 @@ void ComponentSprite::setTextureRect(float x, float y, float w, float h)
 	tex_rect_size.x = w;
 	tex_rect_size.y = h;
 }
+
+void ComponentSprite::setColor(int r, int g, int b)
+{
+	color.r = r;
+	color.g = g;
+	color.b = b;
+}
+
 
 };
 NEPHILIM_NS_END

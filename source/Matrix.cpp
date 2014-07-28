@@ -356,6 +356,14 @@ mat4 mat4::getInverse()
 	return invertedMatrix;
 }
 
+/// Get the inverse of the matrix
+mat4 mat4::inverse()
+{
+	mat4 invertedMatrix;
+	m4_inverse(invertedMatrix, *this);
+	return invertedMatrix;
+}
+
 mat4 mat4::perspective(float fov, float aspectRatio, float zNear, float zFar)
 {
 	float rFov = math::degreeToRadian<float>(fov);
