@@ -25,6 +25,85 @@ ComponentTilemap2D::~ComponentTilemap2D()
 
 }
 
+/// Check if the tilemap has a layer with this name
+bool ComponentTilemap2D::hasLayer(const String& layerName)
+{
+	for(std::size_t i = 0; i < mLayers.size(); ++i)
+	{
+		if(mLayers[i].mName == layerName)
+			return true;
+	}
+
+	return false;
+}
+
+/// Check if a given layer has a given object
+bool ComponentTilemap2D::hasObject(const String& layerName, const String& objectName)
+{
+	Tilemap::Layer *tlayer = mTilemapData.getLayerByName(layerName);
+	if(tlayer)
+	{
+		Tilemap::Object* object = tlayer->getObject(objectName);
+		return (object != NULL);
+	}
+
+	return false;
+}
+
+/// Get how many points are there in the object
+size_t ComponentTilemap2D::getObjectPointCount(const String& layerName, const String& objectName)
+{
+	Tilemap::Layer *tlayer = mTilemapData.getLayerByName(layerName);
+	if(tlayer)
+	{
+		Tilemap::Object* object = tlayer->getObject(objectName);
+		if(object)
+		{
+			return object->mPoints.size();
+		}
+	}
+
+	return 0;
+}
+
+/// Get the point i in the given object
+vec2 ComponentTilemap2D::getObjectPoint(const String& layerName, const String& objectName, int index)
+{
+	Tilemap::Layer *tlayer = mTilemapData.getLayerByName(layerName);
+	if(tlayer)
+	{
+		Tilemap::Object* object = tlayer->getObject(objectName);
+		if(object)
+		{
+			return object->mPoints[index];
+		}
+	}
+
+	return vec2(0.f, 0.f);
+}
+
+/// Get the position of the given object
+vec2 ComponentTilemap2D::getObjectPosition(const String& layerName, const String& objectName)
+{
+	Tilemap::Layer *tlayer = mTilemapData.getLayerByName(layerName);
+	if(tlayer)
+	{
+		Tilemap::Object* object = tlayer->getObject(objectName);
+		if(object)
+		{
+			return object->mPosition;
+		}
+	}
+
+	return vec2(0.f, 0.f);
+}
+
+/// Change the tile size
+void ComponentTilemap2D::setTileSize(vec3 size)
+{
+	mTileSize = size;
+}
+
 /// The tiles for the main layer are cubes instead of flat squares
 void ComponentTilemap2D::useCubes(bool enabled)
 {
@@ -65,8 +144,10 @@ bool ComponentTilemap2D::load(const String& filename)
 		mTilemapData.loadTMX(filename);
 		
 		// Total map size
-		mLevelSize.x = mTilemapData.mWidth/* * mTileSize.x*/;
-		mLevelSize.y = mTilemapData.mHeight/* * mTileSize.y*/;
+		mLevelSize.x = mTilemapData.mWidth * mTileSize.x;
+		mLevelSize.y = mTilemapData.mHeight * mTileSize.y;
+		mLevelSizeInTiles.x = mTilemapData.mWidth;
+		mLevelSizeInTiles.y = mTilemapData.mHeight;
 
 		Log("=> Loading 2D level with size(%f, %f)", mLevelSize.x, mLevelSize.y);
 

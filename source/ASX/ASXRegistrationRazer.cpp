@@ -60,6 +60,12 @@ void registerRazerComponentsASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void setSideView(bool)", asMETHOD(ComponentTilemap2D, setSideView), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void prepareLayer(const string& in)", asMETHOD(ComponentTilemap2D, prepareLayer), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("Tilemap2D", "void generateCollisionData(const string& in, CollisionData& inout)", asMETHOD(ComponentTilemap2D, generateCollisionData), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "void setTileSize(vec3)", asMETHOD(ComponentTilemap2D, setTileSize), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "bool hasLayer(const string& in)", asMETHOD(ComponentTilemap2D, hasLayer), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "bool hasObject(const string& in, const string& in)", asMETHOD(ComponentTilemap2D, hasObject), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "uint getObjectPointCount(const string& in, const string& in)", asMETHOD(ComponentTilemap2D, getObjectPointCount), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "vec2 getObjectPoint(const string& in, const string& in, uint)", asMETHOD(ComponentTilemap2D, getObjectPoint), asCALL_THISCALL);
+	engine.get()->RegisterObjectMethod("Tilemap2D", "vec2 getObjectPosition(const string& in, const string& in)", asMETHOD(ComponentTilemap2D, getObjectPosition), asCALL_THISCALL);
 	//engine.get()->RegisterObjectMethod("Tilemap2D", "void getTileShape(int, float& out, float& out, float& out, float& out)", asMETHOD(ComponentTilemap2D, getTileShape), asCALL_THISCALL);
 
 

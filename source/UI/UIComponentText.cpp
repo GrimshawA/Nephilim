@@ -44,6 +44,21 @@ void UIComponentText::onPropertySet(const StringList& targetObject, const String
 	{
 		m_string = value;
 	}
+	if(targetObject.size() == 2 && targetObject[0] == "text" && targetObject[1] == "color")
+	{
+		if(value == "red")
+		{
+			color = Color::Red;
+		}
+		if(value == "blue")
+		{
+			color = Color::Blue;
+		}
+		if(value == "white")
+		{
+			color = Color::White;
+		}
+	}
 }
 
 

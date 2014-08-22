@@ -47,6 +47,9 @@ void registerUserInterfaceASX(ASXEngine& engine)
 	engine.get()->RegisterEnumValue("UIComponent", "Background", UIComponentList::Background);
 	engine.get()->RegisterEnumValue("UIComponent", "Text", UIComponentList::Text);
 
+	engine.get()->RegisterEnum("UIEvent");
+	engine.get()->RegisterEnumValue("UIEvent", "Click", UIEventList::Click);
+
 
 	// Register the UIView API
 	engine.get()->RegisterObjectType("UIView", sizeof(UIView), asOBJ_REF);

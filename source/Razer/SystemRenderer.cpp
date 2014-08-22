@@ -470,7 +470,7 @@ void SystemRenderer::renderTilemap(Entity& entity)
 	// Render a background
 	RectangleShape BackgroundShape;
 	BackgroundShape.setSize(tilemap.mLevelSize.x, tilemap.mLevelSize.y);
-	BackgroundShape.setColors(Color::Blue, Color::Blue, Color::Blue, Color::Blue);
+	BackgroundShape.setColors(Color::Bittersweet, Color::Bittersweet, Color::Bittersweet, Color::Bittersweet);
 	BackgroundShape.setPosition(0.f, -tilemap.mLevelSize.y);
 	mRenderer->draw(BackgroundShape);
 
@@ -494,10 +494,21 @@ void SystemRenderer::renderTilemap(Entity& entity)
 					// Bind tileset 
 					String tilesetResource = tilemap.mTilemapData.mTilesets[index_set].mPath;
 					Path p(tilesetResource);
-					tilesetResource = "textures/" + p.getFileName();
+					tilesetResource = "/textures/" + p.getFileName();
 					//Log("RENDERING WITH TILESET %s", tilesetResource.c_str());
+
+					//Log("Rendering tilemap with texture %s", tilesetResource.c_str());
 					
-					mContentManager->getTexture(tilesetResource)->bind();
+					Texture* tilesetTexture = mContentManager->getTexture(tilesetResource);
+					if(tilesetTexture)
+					{
+						tilesetTexture->bind();
+					}
+					else
+					{
+						mRenderer->setDefaultTexture();
+					}
+		
 					//mRenderer->setDefaultTexture();
 
 					mRenderer->enableVertexAttribArray(0);

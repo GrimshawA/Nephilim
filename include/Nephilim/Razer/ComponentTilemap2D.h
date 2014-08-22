@@ -52,6 +52,21 @@ public:
 	class Chunk;
 	class Layer;
 
+	/// Check if the tilemap has a layer with this name
+	bool hasLayer(const String& layerName);
+
+	/// Check if a given layer has a given object
+	bool hasObject(const String& layerName, const String& objectName);
+
+	/// Get how many points are there in the object
+	size_t getObjectPointCount(const String& layerName, const String& objectName);
+
+	/// Get the point i in the given object
+	vec2 getObjectPoint(const String& layerName, const String& objectName, int index);
+
+	/// Get the position of the given object
+	vec2 getObjectPosition(const String& layerName, const String& objectName);
+
 	/// The tiles for the main layer are cubes instead of flat squares
 	void useCubes(bool enabled);
 
@@ -76,13 +91,17 @@ public:
 
 	void getTileShape(int index, float& x, float &y, float& w, float& h);
 
+	/// Change the tile size
+	void setTileSize(vec3 size);
+
 	std::vector<Layer> mLayers; ///< The layer information for this tilemap level
 	std::vector<Chunk> mChunks;
 
 	Tilemap mTilemapData; ///< The raw tilemap data stays in memory 
 
 	vec3 mTileSize;  ///< The absolute size of each grid cell a.k.a tile
-	vec2 mLevelSize; ///< The total size of this level, usually from (0,0) to (size.x, size.y)
+	vec2 mLevelSize; ///< The total size of this level, usually from (0,0) to (size.x, size.y) , in absolute coordinates
+	vec2 mLevelSizeInTiles; ///< Size of this level, in number of tiles
 	vec2 mChunkSize; ///< The total size of each chunk, in tiles
 	vec2i mNumChunks; ///< Number of horizontal and vertical chunks allocated
 

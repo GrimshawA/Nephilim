@@ -57,6 +57,15 @@ namespace UIComponentList
 	};
 };
 
+namespace UIEventList
+{
+	enum EventTypes
+	{
+		Click
+	};
+}
+
+class UIAnimation;
 
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
@@ -357,7 +366,7 @@ public:
 	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle
 	/// Is the control being rendered?
 	bool m_visible;
-	bool m_stretchForContents;
+
 	bool m_drawBorder; /// temp
 
 	Uint64 m_positionFlags;
@@ -371,6 +380,8 @@ public:
 
 	int m_pointerPressCount;
 
+	///< Animations
+	std::vector<UIAnimation*> mAnimations;
 
 	/// Cascaded transform
 	mat4 m_transform;

@@ -1,5 +1,6 @@
 #include <Nephilim/Tilemap.h>
 #include <Nephilim/Logger.h>
+#include <Nephilim/StringList.h>
 
 #include <pugixml/pugixml.hpp>
 
@@ -116,7 +117,29 @@ bool Tilemap::loadTMX(const String& filename)
 				}
 				else if(hasChild("polyline", (*object_it)))
 				{
-					Log("POLYLINE");
+					obj.mObjectType = Object::PolyLine;
+					obj.mName = (*object_it).attribute("name").as_string("");
+
+					obj.mPosition.x = (*object_it).attribute("x").as_float(0);
+					obj.mPosition.y = (*object_it).attribute("y").as_float(0);
+					
+					// Now add all the points
+					pugi::xml_node polyline_node = object_it->child("polyline");
+
+					String pointsString = polyline_node.attribute("points").as_string();
+					StringList pointList = pointsString.split(' ');
+					for(size_t k = 0; k < pointList.size(); ++k)
+					{
+						StringList vs = pointList[k].split(',');
+						vec2 v;
+						if(vs.size() == 2)
+						{
+							v.x = vs[0].toFloat();
+							v.y = vs[1].toFloat();
+							Log("Pushing point to polyline");
+						}
+						obj.mPoints.push_back(v);
+					}
 
 				}
 				else // Rectangle
@@ -276,6 +299,17 @@ void Tilemap::Layer::getTileShape(int index, float& x, float& y, float& w, float
 			}
 		}
 	}
+}
+
+/// Get a object from its name
+Tilemap::Object* Tilemap::Layer::getObject(const String& name)
+{
+	for(size_t i = 0; i < mObjects.size(); ++i)
+	{
+		if(mObjects[i].mName == name)
+			return &mObjects[i];
+	}
+	return NULL;
 }
 
 ////////////////////////////////////////////////////////////////////////// Tileset

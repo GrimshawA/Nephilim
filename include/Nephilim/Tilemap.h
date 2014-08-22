@@ -68,6 +68,9 @@ public:
 
 		vec2 getObjectPosition(const String& name);
 
+		/// Get a object from its name
+		Object* getObject(const String& name);
+
 		/// Check if the 2D coordinate is a valid tile coordinate in the layer
 		bool isValidCoordinate2D(vec2i coord);
 
@@ -103,6 +106,8 @@ public:
 	Layer* getLayer(int index);
 
 	Layer* getLayerByName(const String& name);
+
+	
 
 	void convertGIDtoUV(int gid, FloatRect& rect);
 
