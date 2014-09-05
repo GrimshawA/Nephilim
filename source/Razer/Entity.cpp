@@ -1,12 +1,13 @@
 #include <Nephilim/Razer/Entity.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr{
+namespace rzr
+{
 
 EntityInternal::EntityInternal()
 : mId(0)
 {
-
+	 
 }
 
 EntityInternal::EntityInternal(entity_id_type id)

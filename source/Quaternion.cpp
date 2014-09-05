@@ -145,6 +145,7 @@ vec3 Quaternion::eulerAngles()
 Spherical Quaternion::sphericalCoordinates()
 {
 	Spherical sph;
+	sph.radius = 10;
 
 	/*cos_angle  = q -> qw;
 	sin_angle  = sqrt( 1.0 - cos_angle * cos_angle );

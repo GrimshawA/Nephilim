@@ -21,7 +21,7 @@ Entity Scene::createEntity()
 {
 	// Create new entity
 	EntityInternal entity;
-	entity.mId = nextAssignID.mId++;	
+	entity.mId = nextAssignID.mId++;
 	mEntities.push_back(entity);
 
 	// Return a reference

@@ -46,7 +46,8 @@ vec3 ComponentTransform::getPosition()
 
 mat4 ComponentTransform::getMatrix()
 {
-	matrix = rotation.toMatrix() * mat4::translate(position.x, position.y, position.z) * mat4::scale(scale.x, scale.y, scale.z);
+	//matrix = rotation.toMatrix() * mat4::translate(position.x, position.y, position.z) * mat4::scale(scale.x, scale.y, scale.z);
+	matrix = mat4::translate(position.x, position.y, position.z) * mat4::scale(scale.x, scale.y, scale.z) * rotation.toMatrix();
 	return matrix;
 }
 

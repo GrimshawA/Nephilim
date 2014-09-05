@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 /// Returns the current contents of the clipboard
 String Clipboard::getClipboardText(){
 #ifdef NEPHILIM_WINDOWS
-	HANDLE clip;
+	HANDLE clip = NULL;
 	if (OpenClipboard(NULL)) 
 		clip = GetClipboardData(CF_TEXT);
 	printf("%s\n",clip);

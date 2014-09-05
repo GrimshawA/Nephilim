@@ -22,7 +22,8 @@ class Surface;
 	\brief Base class for all games and applications.
 	
 */
-class NEPHILIM_API GameCore{
+class NEPHILIM_API GameCore
+{
 public:
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();

@@ -3,8 +3,15 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/GameCore.h>
+#include <Nephilim/StateStack.h>
+
+#include <Nephilim/Game/BaseSceneManager.h>
+
+#include <memory>
 
 NEPHILIM_NS_BEGIN
+
+class BaseScriptInterface;
 
 /**
 	\class BaseGame
@@ -26,6 +33,14 @@ class NEPHILIM_API BaseGame : public GameCore
 {
 public:
 
+	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
+	StateStack stateStack;
+
+	/// The game is prepared to own an arbitrary number of scenes, stored in this object
+	std::unique_ptr<BaseSceneManager> sceneManager;
+
+	/// The game is prepared to be connected with 0 to many languages at once and they can all coexist in harmony
+	std::vector<BaseScriptInterface*> scriptEngines;
 };
 
 NEPHILIM_NS_END
