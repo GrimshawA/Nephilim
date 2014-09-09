@@ -1,7 +1,7 @@
 #ifndef NephilimCamera_h__
 #define NephilimCamera_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Matrix.h"
 

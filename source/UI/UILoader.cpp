@@ -1,5 +1,5 @@
-#include <Nephilim/UILoader.h>
-#include <Nephilim/UIImage.h>
+#include <Nephilim/UI/UILoader.h>
+#include <Nephilim/UI/UIImage.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>

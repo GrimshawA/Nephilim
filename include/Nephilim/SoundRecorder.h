@@ -26,7 +26,7 @@
 #ifndef NephilimSoundRecorder_h__
 #define NephilimSoundRecorder_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Thread.h"
 
 #include <vector>

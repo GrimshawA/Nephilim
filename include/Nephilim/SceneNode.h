@@ -1,7 +1,7 @@
 #ifndef PARABOLA_SCENENODE_H
 #define PARABOLA_SCENENODE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Node.h"
 #include "Vectors.h"
 

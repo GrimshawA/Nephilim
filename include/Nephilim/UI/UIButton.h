@@ -1,10 +1,10 @@
 #ifndef NephilimUIButton_h__
 #define NephilimUIButton_h__
 
-#include "Platform.h"
-#include "UIView.h"
-#include "Strings.h"
-#include "Text.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIView.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Text.h>
 
 NEPHILIM_NS_BEGIN
 

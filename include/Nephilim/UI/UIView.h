@@ -1,16 +1,17 @@
 #ifndef NephilimUIView_h__
 #define NephilimUIView_h__
 
-#include "Platform.h"
-#include "Rect.h"
-#include "Event.h"
-#include "Signals.h"
-#include "Strings.h"
-#include "RectangleShape.h"
-#include "Renderer.h"
-#include "ReferenceCountable.h"
-#include "AxList.h"
-#include "AxTarget.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Rect.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/Signals.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Renderer.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/AxList.h>
+#include <Nephilim/AxTarget.h>
+#include <Nephilim/Matrix.h>
 
 #include <vector>
 #include <map>
@@ -19,7 +20,6 @@
 #include "UILayout.h"
 #include "UICore.h"
 #include "UIProperty.h"
-#include "Matrix.h"
 #include "UIComponent.h"
 
 NEPHILIM_NS_BEGIN
@@ -70,6 +70,13 @@ class UIAnimation;
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
+	/// First experiment on 3D view positioning
+	vec3 topLeftVertex;
+	vec3 bottomRightVertex;
+
+	/// Alternate representations, middle point + size + axis rotations  ^
+
+
 	/// Allows cleaner code, which uses UIView::Ptr as the type which can be changed anytime between other types of smart pointers without breaking code
 	typedef UIView* Ptr;
 
@@ -81,7 +88,6 @@ public:
 
 	/// Base destructor
 	virtual ~UIView();
-
 
 	/// Load the hierarchy of this view from a file and configure itself
 	void load(const String& filename);

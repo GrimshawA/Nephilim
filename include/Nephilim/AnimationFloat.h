@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONFLOAT_H
 #define PARABOLA_ANIMATIONFLOAT_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Animation.h"
 #include "AnimationEasing.h"
 

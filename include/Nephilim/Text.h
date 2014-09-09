@@ -1,7 +1,7 @@
 #ifndef NephilimText_h__
 #define NephilimText_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Drawable.h"
 #include "Transformable.h"

@@ -1,7 +1,7 @@
 #ifndef GenericMain_h__
 #define GenericMain_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Engine.h"
 
 using namespace NEPHILIM_NS;

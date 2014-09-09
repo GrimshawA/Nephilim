@@ -1,7 +1,7 @@
 #ifndef IpAddress_h__
 #define IpAddress_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Time.h"
 #include <istream>
 #include <ostream>

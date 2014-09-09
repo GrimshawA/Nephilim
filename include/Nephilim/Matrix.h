@@ -1,7 +1,7 @@
 #ifndef Matrix_h__
 #define Matrix_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 
 NEPHILIM_NS_BEGIN

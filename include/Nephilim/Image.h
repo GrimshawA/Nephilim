@@ -1,7 +1,7 @@
 #ifndef Image_h__
 #define Image_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Color.h"
 #include "Vectors.h"

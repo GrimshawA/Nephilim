@@ -20,7 +20,7 @@ freely, subject to the following restrictions:
 #ifndef NephilimEngine_h__
 #define NephilimEngine_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Clock.h"
 #include "Strings.h"
 #include "Event.h"

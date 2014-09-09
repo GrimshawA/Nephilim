@@ -1,7 +1,7 @@
 #ifndef NephilimAxColor_h__
 #define NephilimAxColor_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AxBase.h"
 #include "AxEasing.h"
 

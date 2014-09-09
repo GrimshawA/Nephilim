@@ -1,7 +1,7 @@
 #ifndef UIManager_h__
 #define UIManager_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Rect.h"
 

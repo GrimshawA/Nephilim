@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONFACTORY_H
 #define PARABOLA_ANIMATIONFACTORY_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationInterface.h"
 #include "Strings.h"
 #include "Signals.h"

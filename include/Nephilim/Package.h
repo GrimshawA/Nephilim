@@ -1,7 +1,7 @@
 #ifndef Package_h__
 #define Package_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 #include <vector>

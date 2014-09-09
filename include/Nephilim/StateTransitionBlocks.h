@@ -1,7 +1,7 @@
 #ifndef NephilimStateTransitionBlocks_h__
 #define NephilimStateTransitionBlocks_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "StateTransition.h"
 #include "RectangleShape.h"
 

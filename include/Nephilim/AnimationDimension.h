@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONDIMENSION_H
 #define PARABOLA_ANIMATIONDIMENSION_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "AnimationInterface.h"
 

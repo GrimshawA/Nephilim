@@ -1,7 +1,7 @@
 #ifndef NephilimASXFunction_h__
 #define NephilimASXFunction_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "ASXRuntime.h"
 

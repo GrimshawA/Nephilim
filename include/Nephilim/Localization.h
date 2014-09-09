@@ -1,7 +1,7 @@
 #ifndef PARABOLA_LOCALIZATION_H
 #define PARABOLA_LOCALIZATION_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "NameGenerator.h"
 #include "Signals.h"

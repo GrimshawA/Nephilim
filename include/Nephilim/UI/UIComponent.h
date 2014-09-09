@@ -1,9 +1,9 @@
 #ifndef NephilimUIComponent_h__
 #define NephilimUIComponent_h__
 
-#include "Platform.h"
-#include "Event.h"
-#include "Time.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/Time.h>
 
 NEPHILIM_NS_BEGIN
 

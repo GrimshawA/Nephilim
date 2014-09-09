@@ -1,7 +1,7 @@
 #ifndef PARABOLA_AS_SCRIPT_H
 #define PARABOLA_AS_SCRIPT_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AS/angelscript.h"
 #include "StringID.h"
 

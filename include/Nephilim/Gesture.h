@@ -1,7 +1,7 @@
 #ifndef NephilimGesture_h__
 #define NephilimGesture_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Signals.h"
 
 #include <vector>

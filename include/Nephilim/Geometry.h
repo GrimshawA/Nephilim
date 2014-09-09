@@ -1,7 +1,7 @@
 #ifndef Geometry_h__
 #define Geometry_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Drawable.h"
 #include "Matrix.h"

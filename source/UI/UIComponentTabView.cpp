@@ -3,7 +3,7 @@
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UIView.h>
+#include <Nephilim/UI/UIView.h>
 
 NEPHILIM_NS_BEGIN
 UIComponentTabView::UIComponentTabView()

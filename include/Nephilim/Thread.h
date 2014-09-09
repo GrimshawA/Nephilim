@@ -26,7 +26,7 @@
 #ifndef NephilimThread_h__
 #define NephilimThread_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include <cstdlib>
 
 NEPHILIM_NS_BEGIN

@@ -1,7 +1,7 @@
 #ifndef NephilimScriptEngine_h__
 #define NephilimScriptEngine_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "ScriptEngineTask.h"
 

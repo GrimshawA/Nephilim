@@ -1,7 +1,7 @@
 #ifndef NephilimUISurface_h__
 #define NephilimUISurface_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UIControl.h"
 
 NEPHILIM_NS_BEGIN

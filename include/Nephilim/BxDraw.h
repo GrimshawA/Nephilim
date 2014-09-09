@@ -1,7 +1,7 @@
 #ifndef NephilimBxDraw_h__
 #define NephilimBxDraw_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include <LinearMath/btIDebugDraw.h>
 #include <Nephilim/Geometry.h>
 

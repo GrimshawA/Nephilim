@@ -1,7 +1,7 @@
 #ifndef NephilimRenderer_h__
 #define NephilimRenderer_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Vectors.h"
 #include "Strings.h"

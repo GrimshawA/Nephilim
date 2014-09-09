@@ -1,9 +1,9 @@
 #ifndef UIColorDisplay_h__
 #define UIColorDisplay_h__
 
-#include "Platform.h"
-#include "UIView.h"
-#include "Color.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIView.h>
+#include <Nephilim/Color.h>
 
 NEPHILIM_NS_BEGIN
 

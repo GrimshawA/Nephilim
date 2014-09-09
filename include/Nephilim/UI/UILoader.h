@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/UIView.h>
+#include <Nephilim/UI/UIView.h>
 
 #include "pugixml/pugixml.hpp"
 

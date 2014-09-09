@@ -1,7 +1,7 @@
 #ifndef SocketSelector_h__
 #define SocketSelector_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Time.h"
 
 NEPHILIM_NS_BEGIN

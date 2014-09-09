@@ -1,7 +1,7 @@
 #ifndef NephilimVertexArray_h__
 #define NephilimVertexArray_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #include <vector>
 #include <cstddef>

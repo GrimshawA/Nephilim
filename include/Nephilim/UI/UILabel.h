@@ -1,9 +1,9 @@
 #ifndef NephilimUILabel_h__
 #define NephilimUILabel_h__
 
-#include "Platform.h"
-#include "UIView.h"
-#include "Strings.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIView.h>
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
 

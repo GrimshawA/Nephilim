@@ -1,7 +1,7 @@
 #ifndef PARABOLA_NETWORKTHREAD_H
 #define PARABOLA_NETWORKTHREAD_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include <SFML/System/Thread.hpp>
 #include <SFML/System/Mutex.hpp>
 #include <SFML/System/Lock.hpp>

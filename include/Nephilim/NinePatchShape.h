@@ -1,7 +1,7 @@
 #ifndef NinePatchShape_h__
 #define NinePatchShape_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "VertexData.h"
 
 NEPHILIM_NS_BEGIN

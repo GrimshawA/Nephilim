@@ -1,7 +1,7 @@
 #ifndef PARABOLA_SCRIPTENGINETASK_H
 #define PARABOLA_SCRIPTENGINETASK_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Signals.h"
 

@@ -1,7 +1,7 @@
 #ifndef PARABOLA_STRINGLISTS_H
 #define PARABOLA_STRINGLISTS_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include <vector>
 

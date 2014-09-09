@@ -1,7 +1,7 @@
 #ifndef NephilimQuaternion_h__
 #define NephilimQuaternion_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Matrix.h"
 #include <Nephilim/Spherical.h>

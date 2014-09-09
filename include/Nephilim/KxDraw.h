@@ -1,7 +1,7 @@
 #ifndef KinesisDebugDraw_h__
 #define KinesisDebugDraw_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Drawable.h"
 
 NEPHILIM_NS_BEGIN

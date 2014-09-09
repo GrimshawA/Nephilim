@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONPOSITION_H
 #define PARABOLA_ANIMATIONPOSITION_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "AnimationInterface.h"
 #include "AnimationEasing.h"

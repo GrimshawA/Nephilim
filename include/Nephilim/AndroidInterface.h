@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANDROIDINTERFACE_H
 #define PARABOLA_ANDROIDINTERFACE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "File.h"
 #include "StringList.h"
 

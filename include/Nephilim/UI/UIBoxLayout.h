@@ -1,7 +1,7 @@
 #ifndef UIBoxLayout_h__
 #define UIBoxLayout_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UILayout.h"
 
 NEPHILIM_NS_BEGIN

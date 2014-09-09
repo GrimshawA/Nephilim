@@ -26,7 +26,7 @@
 #ifndef NephilimMusic_h__
 #define NephilimMusic_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "SoundStream.h"
 #include "Mutex.h"
 #include "Time.h"

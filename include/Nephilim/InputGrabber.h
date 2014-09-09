@@ -1,7 +1,7 @@
 #ifndef NephilimInputGrabber_h__
 #define NephilimInputGrabber_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Event.h"
 
 #include <vector>

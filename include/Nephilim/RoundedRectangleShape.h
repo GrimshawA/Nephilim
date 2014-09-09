@@ -1,7 +1,7 @@
 #ifndef NephilimRoundedRectangleShape_h__
 #define NephilimRoundedRectangleShape_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Transformable.h"
 #include "Drawable.h"
 #include "VertexArray2D.h"

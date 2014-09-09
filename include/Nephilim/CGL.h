@@ -1,7 +1,7 @@
 #ifndef CGL_h__
 #define CGL_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 void cglPrepareExtensions();
 

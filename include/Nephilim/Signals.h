@@ -2,7 +2,7 @@
 #define PARABOLA_SIGNALS_H
 
 #include <sigc++/sigc++.h>
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN	
 

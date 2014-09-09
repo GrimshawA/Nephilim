@@ -1,7 +1,7 @@
 #ifndef BxBody_h__
 #define BxBody_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 class btCollisionObject;
 

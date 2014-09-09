@@ -1,10 +1,10 @@
 #ifndef NephilimUICanvas_h__
 #define NephilimUICanvas_h__
 
-#include "Platform.h"
-#include "Drawable.h"
-#include "Event.h"
-#include "UICore.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Drawable.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/UI/UICore.h>
 
 NEPHILIM_NS_BEGIN
 

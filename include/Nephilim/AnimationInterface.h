@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATION_INTERFACE_H
 
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Signals.h"
 #include "AnimationEasing.h"

@@ -1,7 +1,7 @@
 #ifndef NephilimRendererGLES2_h__
 #define NephilimRendererGLES2_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Renderer.h"
 
 NEPHILIM_NS_BEGIN

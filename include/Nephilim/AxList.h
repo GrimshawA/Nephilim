@@ -1,7 +1,7 @@
 #ifndef NephilimAxList_h__
 #define NephilimAxList_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationInterface.h"
 
 #include "AxBase.h"

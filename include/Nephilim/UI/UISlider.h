@@ -1,7 +1,7 @@
 #ifndef UISlider_h__
 #define UISlider_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UIView.h"
 
 NEPHILIM_NS_BEGIN

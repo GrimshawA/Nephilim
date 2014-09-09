@@ -1,7 +1,7 @@
 #ifndef PARABOLA_NAMEGENERATOR_H
 #define PARABOLA_NAMEGENERATOR_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

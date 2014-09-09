@@ -1,7 +1,7 @@
 #ifndef NephilimFont_h__
 #define NephilimFont_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Glyph.h"
 #include "Texture.h"
 

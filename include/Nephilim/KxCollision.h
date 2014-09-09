@@ -1,7 +1,7 @@
 #ifndef PARABOLA_KINESISCONTACTLISTENER_H
 #define PARABOLA_KINESISCONTACTLISTENER_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include <Box2D/Box2D.h>
 
 NEPHILIM_NS_BEGIN

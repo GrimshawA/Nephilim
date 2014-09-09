@@ -1,7 +1,7 @@
 #ifndef Texture_h__
 #define Texture_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Strings.h"
 #include "Color.h"

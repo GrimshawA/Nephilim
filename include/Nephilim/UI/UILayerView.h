@@ -1,7 +1,7 @@
 #ifndef NephilimUILayerView_h__
 #define NephilimUILayerView_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UIView.h"
 
 NEPHILIM_NS_BEGIN

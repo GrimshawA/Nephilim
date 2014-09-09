@@ -1,7 +1,7 @@
 #ifndef NephilimStateStack_h__
 #define NephilimStateStack_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #include <vector>
 #include <map>

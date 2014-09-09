@@ -1,7 +1,7 @@
 #ifndef NephilimAxTriggers_h__
 #define NephilimAxTriggers_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AxBase.h"
 
 NEPHILIM_NS_BEGIN

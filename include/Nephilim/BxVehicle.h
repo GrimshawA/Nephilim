@@ -1,7 +1,7 @@
 #ifndef NephilimBxVehicle_h__
 #define NephilimBxVehicle_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include <BulletDynamics/Vehicle/btRaycastVehicle.h>
 
 NEPHILIM_NS_BEGIN

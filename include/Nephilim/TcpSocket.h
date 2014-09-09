@@ -1,7 +1,7 @@
 #ifndef NephilimTcpSocket_h__
 #define NephilimTcpSocket_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Socket.h"
 #include "Time.h"
 

@@ -26,7 +26,7 @@
 #ifndef NephilimSoundSource_h__
 #define NephilimSoundSource_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 
 NEPHILIM_NS_BEGIN

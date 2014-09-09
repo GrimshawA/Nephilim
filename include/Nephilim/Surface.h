@@ -1,7 +1,7 @@
 #ifndef Surface_h__
 #define Surface_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Window.h"
 #include "RenderTarget.h"
 

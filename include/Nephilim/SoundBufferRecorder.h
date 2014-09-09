@@ -26,7 +26,7 @@
 #ifndef NephilimSoundBufferRecorder_h__
 #define NephilimSoundBufferRecorder_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "SoundBuffer.h"
 #include "SoundRecorder.h"
 

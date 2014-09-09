@@ -1,7 +1,7 @@
 #ifndef NephilimRectangleShape_h__
 #define NephilimRectangleShape_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Drawable.h"
 #include "Color.h"
 #include "Transformable.h"

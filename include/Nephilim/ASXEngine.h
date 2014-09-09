@@ -1,7 +1,7 @@
 #ifndef ASXEngine_h__
 #define ASXEngine_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "ASXModule.h"
 

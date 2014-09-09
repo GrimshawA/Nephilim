@@ -1,7 +1,7 @@
 #ifndef NephilimImageTable_h__
 #define NephilimImageTable_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Rect.h"
 

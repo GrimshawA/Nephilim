@@ -1,7 +1,7 @@
 #ifndef NephilimFile_h__
 #define NephilimFile_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "IODevice.h"
 

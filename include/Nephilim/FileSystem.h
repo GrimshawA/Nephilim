@@ -1,7 +1,7 @@
 #ifndef NephilimFileSystem_h__
 #define NephilimFileSystem_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "StringList.h"
 
 NEPHILIM_NS_BEGIN

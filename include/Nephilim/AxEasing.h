@@ -1,7 +1,7 @@
 #ifndef NephilimAxEasing_h__
 #define NephilimAxEasing_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

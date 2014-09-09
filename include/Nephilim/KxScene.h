@@ -1,7 +1,7 @@
 #ifndef KinesisWorld_h__
 #define KinesisWorld_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 
 #include "KxBody.h"

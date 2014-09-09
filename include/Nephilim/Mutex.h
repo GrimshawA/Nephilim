@@ -26,7 +26,7 @@
 #ifndef NephilimMutex_h__
 #define NephilimMutex_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

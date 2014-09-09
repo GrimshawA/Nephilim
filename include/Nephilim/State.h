@@ -1,7 +1,7 @@
 #ifndef NephilimState_h__
 #define NephilimState_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "ReferenceCountable.h"
 

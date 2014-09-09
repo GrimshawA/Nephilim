@@ -3,7 +3,7 @@
 #include <Nephilim/Renderer.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/RectangleShape.h>
-#include <Nephilim/UIView.h>
+#include <Nephilim/UI/UIView.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 

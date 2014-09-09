@@ -2,7 +2,7 @@
 #define NephilimUIComponentSpinner_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UIComponent.h>
+#include <Nephilim/UI/UIComponent.h>
 
 NEPHILIM_NS_BEGIN
 

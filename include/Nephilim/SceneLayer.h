@@ -1,7 +1,7 @@
 #ifndef PARABOLA_SCENELAYER_H
 #define PARABOLA_SCENELAYER_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Node.h"
 #include "EntityManager.h"
 

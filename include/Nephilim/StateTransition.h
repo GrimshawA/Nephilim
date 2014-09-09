@@ -1,7 +1,7 @@
 #ifndef NephilimStateTransition_h__
 #define NephilimStateTransition_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #include <vector>
 

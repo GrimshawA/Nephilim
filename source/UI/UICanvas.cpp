@@ -1,7 +1,7 @@
-#include <Nephilim/UICanvas.h>
-#include <Nephilim/UILayerView.h>
+#include <Nephilim/UI/UICanvas.h>
+#include <Nephilim/UI/UILayerView.h>
 #include <Nephilim/Text.h>
-#include <Nephilim/UILabel.h>
+#include <Nephilim/UI/UILabel.h>
 
 #include <algorithm>
 

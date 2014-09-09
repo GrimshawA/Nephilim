@@ -1,7 +1,7 @@
 #ifndef PARABOLA_NETWORKCLIENT_H
 #define PARABOLA_NETWORKCLIENT_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "NetworkSocket.h"
 #include "Signals.h"

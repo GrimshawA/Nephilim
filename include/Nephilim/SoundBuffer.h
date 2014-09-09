@@ -26,7 +26,7 @@
 #ifndef NephilimSoundBuffer_h__
 #define NephilimSoundBuffer_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Time.h"
 #include "Strings.h"
 

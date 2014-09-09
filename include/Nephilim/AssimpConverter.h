@@ -1,7 +1,7 @@
 #ifndef AssimpConverter_h__
 #define AssimpConverter_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 struct aiScene;

@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ENGINEPROFILE_H
 #define PARABOLA_ENGINEPROFILE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,7 +1,7 @@
 #ifndef NephilimAxBase_h__
 #define NephilimAxBase_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AxTarget.h"
 
 #include <list>

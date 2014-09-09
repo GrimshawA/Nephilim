@@ -1,7 +1,7 @@
 #ifndef Framebuffer_h__
 #define Framebuffer_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "RenderTarget.h"
 
 NEPHILIM_NS_BEGIN

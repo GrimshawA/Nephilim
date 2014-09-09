@@ -1,5 +1,5 @@
-#include <Nephilim/UILayerView.h>
-#include <Nephilim/UICanvas.h>
+#include <Nephilim/UI/UILayerView.h>
+#include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/Renderer.h>
 #include <Nephilim/Logger.h>
 

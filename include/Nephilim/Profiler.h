@@ -1,7 +1,7 @@
 #ifndef Profiler_h__
 #define Profiler_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Clock.h"
 

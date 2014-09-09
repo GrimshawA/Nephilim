@@ -1,7 +1,7 @@
 #ifndef CircleShape_h__
 #define CircleShape_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Transformable.h"
 #include "Drawable.h"
 #include "VertexArray2D.h"

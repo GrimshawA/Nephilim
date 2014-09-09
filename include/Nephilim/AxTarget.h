@@ -1,7 +1,7 @@
 #ifndef NephilimAxTarget_h__
 #define NephilimAxTarget_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 
 NEPHILIM_NS_BEGIN

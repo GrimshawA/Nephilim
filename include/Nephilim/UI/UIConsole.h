@@ -1,7 +1,7 @@
 #ifndef UIConsole_h__
 #define UIConsole_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UIView.h"
 
 NEPHILIM_NS_BEGIN

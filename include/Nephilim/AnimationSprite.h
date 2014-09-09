@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONSPRITE_H
 #define PARABOLA_ANIMATIONSPRITE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationInterface.h"
 #include "Sprite.h"
 #include "Rect.h"

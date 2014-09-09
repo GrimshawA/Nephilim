@@ -1,4 +1,4 @@
-#include <Nephilim/UIImage.h>
+#include <Nephilim/UI/UIImage.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/Logger.h>
 

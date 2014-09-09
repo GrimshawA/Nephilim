@@ -1,7 +1,7 @@
 #ifndef PARABOLA_KINESISACTORS_H
 #define PARABOLA_KINESISACTORS_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #include <Box2D/Box2D.h>
 #include "Vectors.h"

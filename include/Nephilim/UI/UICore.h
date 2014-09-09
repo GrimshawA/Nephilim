@@ -1,10 +1,10 @@
 #ifndef NephilimUICore_h__
 #define NephilimUICore_h__
 
-#include "Platform.h"
-#include "Vectors.h"
-#include "Font.h"
-#include "Localization.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Vectors.h>
+#include <Nephilim/Font.h>
+#include <Nephilim/Localization.h>
 
 NEPHILIM_NS_BEGIN
 

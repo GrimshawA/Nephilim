@@ -1,7 +1,7 @@
 #ifndef VertexArray_h__
 #define VertexArray_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Rect.h"
 #include "Color.h"

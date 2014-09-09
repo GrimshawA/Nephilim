@@ -1,7 +1,7 @@
 #ifndef KxQuery_h__
 #define KxQuery_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #include <vector>
 

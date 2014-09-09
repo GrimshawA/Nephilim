@@ -1,7 +1,7 @@
 #ifndef SCRIPTENGINENATIVECOMMANDS_H
 #define SCRIPTENGINENATIVECOMMANDS_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "ScriptEngineTask.h"
 
 NEPHILIM_NS_BEGIN

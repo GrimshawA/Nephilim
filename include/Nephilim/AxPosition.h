@@ -1,7 +1,7 @@
 #ifndef NephilimAxPosition_h__
 #define NephilimAxPosition_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AxBase.h"
 #include "AxEasing.h"
 #include "Vectors.h"

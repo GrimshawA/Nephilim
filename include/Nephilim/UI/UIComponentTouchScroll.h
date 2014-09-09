@@ -2,7 +2,7 @@
 #define NephilimUIComponentTouchScroll_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UIComponent.h>
+#include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Color.h>
 #include <Nephilim/Vectors.h>
 

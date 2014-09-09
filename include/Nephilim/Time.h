@@ -1,7 +1,7 @@
 #ifndef NephilimTime_h__
 #define NephilimTime_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,7 +1,7 @@
 #ifndef ANIMATIONCOLORRANGE_H
 #define ANIMATIONCOLORRANGE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationRange.h"
 #include "Colors.h"
 

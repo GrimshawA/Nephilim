@@ -1,7 +1,7 @@
 #ifndef PARABOLA_CRC32_H
 #define PARABOLA_CRC32_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

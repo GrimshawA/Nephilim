@@ -1,4 +1,4 @@
-#include <Nephilim/UIProgressBar.h>
+#include <Nephilim/UI/UIProgressBar.h>
 #include <Nephilim/Text.h>
 
 #include <iostream>

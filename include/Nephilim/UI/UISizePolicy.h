@@ -1,7 +1,7 @@
 #ifndef UISizePolicy_h__
 #define UISizePolicy_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

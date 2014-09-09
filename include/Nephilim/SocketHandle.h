@@ -1,7 +1,7 @@
 #ifndef SocketHandle_h__
 #define SocketHandle_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 #if defined(NEPHILIM_WINDOWS)
     #include <basetsd.h>

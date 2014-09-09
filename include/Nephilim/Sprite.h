@@ -1,7 +1,7 @@
 #ifndef NephilimSprite_h__
 #define NephilimSprite_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 #include "Vectors.h"

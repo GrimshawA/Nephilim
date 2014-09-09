@@ -1,7 +1,7 @@
 #ifndef ANIMATIONPOSITIONRANGE_H
 #define ANIMATIONPOSITIONRANGE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationRange.h"
 
 namespace pE{

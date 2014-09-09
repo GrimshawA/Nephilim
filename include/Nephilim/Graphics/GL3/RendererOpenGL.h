@@ -1,7 +1,7 @@
 #ifndef RendererOpenGL_h__
 #define RendererOpenGL_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Renderer.h"
 
 NEPHILIM_NS_BEGIN

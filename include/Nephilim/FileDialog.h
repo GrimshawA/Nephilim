@@ -1,7 +1,7 @@
 #ifndef NephilimFileDialog_h__
 #define NephilimFileDialog_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

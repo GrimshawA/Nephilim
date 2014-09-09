@@ -1,7 +1,7 @@
 #ifndef _ANIMATION_CURVES_H_
 #define _ANIMATION_CURVES_H_
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 namespace pE{
 	class AnimationCurve{

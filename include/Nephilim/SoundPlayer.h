@@ -1,7 +1,7 @@
 #ifndef PARABOLA_SOUNDPLAYER_H
 #define PARABOLA_SOUNDPLAYER_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 #include <SFML/Audio/Music.hpp>

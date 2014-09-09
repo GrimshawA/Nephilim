@@ -26,7 +26,7 @@
 #ifndef NephilimSleep_h__
 #define NephilimSleep_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Time.h"
 
 NEPHILIM_NS_BEGIN

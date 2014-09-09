@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONVIEW_H
 #define PARABOLA_ANIMATIONVIEW_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Animation.h"
 #include "Views.h"
 

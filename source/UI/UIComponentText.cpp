@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIComponentText.h>
-#include <Nephilim/UIView.h>
+#include <Nephilim/UI/UIView.h>
 #include <Nephilim/StringList.h>
 
 NEPHILIM_NS_BEGIN

@@ -6,11 +6,11 @@
 #include <Nephilim/UI/UIComponentText.h>
 
 
-#include <Nephilim/UIComponent.h>
+#include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/Logger.h>
 
-#include <Nephilim/UILoader.h>
+#include <Nephilim/UI/UILoader.h>
 
 #include <algorithm>
 

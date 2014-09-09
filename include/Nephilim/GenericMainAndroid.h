@@ -1,7 +1,7 @@
 #ifndef GenericMainAndroid_h__
 #define GenericMainAndroid_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 // -- Assumes a _engine global variable declared previously to communicate with
 

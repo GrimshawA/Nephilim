@@ -1,7 +1,7 @@
 #ifndef Shader_h__
 #define Shader_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef RenderTexture_h__
 #define RenderTexture_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Framebuffer.h"
 #include "Texture.h"
 

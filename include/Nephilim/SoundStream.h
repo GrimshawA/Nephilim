@@ -26,7 +26,7 @@
 #ifndef NephilimSoundStream_h__
 #define NephilimSoundStream_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "SoundSource.h"
 #include "Time.h"
 #include "Thread.h"

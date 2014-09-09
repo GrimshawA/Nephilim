@@ -1,7 +1,7 @@
 #ifndef PARABOLA_TREE_H
 #define PARABOLA_TREE_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

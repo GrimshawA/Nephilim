@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/UIComponent.h>
+#include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Color.h>
 #include <Nephilim/Texture.h>
 

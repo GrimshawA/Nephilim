@@ -1,7 +1,7 @@
 #ifndef NephilimTilemap_h__
 #define NephilimTilemap_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Vectors.h"
 #include "Rect.h"

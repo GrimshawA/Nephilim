@@ -1,7 +1,7 @@
 #ifndef KxMousePicker_h__
 #define KxMousePicker_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 class b2MouseJoint;
 

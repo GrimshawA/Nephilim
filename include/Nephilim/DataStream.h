@@ -1,7 +1,7 @@
 #ifndef NephilimDataStream_h__
 #define NephilimDataStream_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 

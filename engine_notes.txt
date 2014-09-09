@@ -1,0 +1,11 @@
+The public API of the engine is provided as a big amount of header files,
+provided under the include/ directory. The includeext/ directory is also important but it includes
+the third party code instead.
+
+For organization, all engine header files are under the Nephilim/ directory, and are then spread across different folders,
+so each module can be more or less self contained.
+
+Graphics/ - Contain all rendering code, from the base interface to specific implementations for OpenGL, OpenGL ES, DirectX 10, DirectX 11, Software, etc
+Network/  - Contain all network code in the engine
+
+TODO, finish

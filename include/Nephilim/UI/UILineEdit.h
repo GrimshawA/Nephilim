@@ -1,9 +1,9 @@
 #ifndef UILineEdit_h__
 #define UILineEdit_h__
 
-#include "Platform.h"
-#include "UIView.h"
-#include "Text.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIView.h>
+#include <Nephilim/Text.h>
 
 NEPHILIM_NS_BEGIN
 

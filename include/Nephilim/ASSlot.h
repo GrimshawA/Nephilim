@@ -1,7 +1,7 @@
 #ifndef ASSlot_h__
 #define ASSlot_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Signals.h"
 #include "ASEngine.h"
 

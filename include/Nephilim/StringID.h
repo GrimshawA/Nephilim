@@ -1,7 +1,7 @@
 #ifndef PARABOLA_STRINGID_H
 #define PARABOLA_STRINGID_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

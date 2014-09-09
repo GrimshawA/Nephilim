@@ -1,7 +1,7 @@
 #ifndef NephilimStateTransitionFade_h__
 #define NephilimStateTransitionFade_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "StateTransition.h"
 #include "RectangleShape.h"
 #include "AxEasing.h"

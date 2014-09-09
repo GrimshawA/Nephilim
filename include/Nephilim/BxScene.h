@@ -1,7 +1,7 @@
 #ifndef NephilimBxScene_h__
 #define NephilimBxScene_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "BxBody.h"
 
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef NephilimNxMath_h__
 #define NephilimNxMath_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 
 NEPHILIM_NS_BEGIN

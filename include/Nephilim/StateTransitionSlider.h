@@ -1,7 +1,7 @@
 #ifndef NephilimStateTransitionSlider_h__
 #define NephilimStateTransitionSlider_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "StateTransition.h"
 #include "RectangleShape.h"
 #include "AxEasing.h"

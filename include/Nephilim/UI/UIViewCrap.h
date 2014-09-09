@@ -1,7 +1,7 @@
 #ifndef PARABOLA_UIVIEW_H
 #define PARABOLA_UIVIEW_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Rect.h"
 #include <vector>
 

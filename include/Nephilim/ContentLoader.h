@@ -1,7 +1,7 @@
 #ifndef PARABOLA_CONTENTLOADER_H
 #define PARABOLA_CONTENTLOADER_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Signals.h"
 
 #include <vector>

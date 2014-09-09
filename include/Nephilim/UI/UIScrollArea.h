@@ -1,7 +1,7 @@
 #ifndef UIScrollArea_h__
 #define UIScrollArea_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "UIControl.h"
 
 NEPHILIM_NS_BEGIN

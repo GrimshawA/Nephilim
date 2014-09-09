@@ -1,7 +1,7 @@
 #ifndef ASXModule_h__
 #define ASXModule_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 class CScriptBuilder;

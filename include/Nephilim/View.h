@@ -1,7 +1,7 @@
 #ifndef View_h__
 #define View_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Vectors.h"
 #include "Rect.h"
 #include "Transform.h"

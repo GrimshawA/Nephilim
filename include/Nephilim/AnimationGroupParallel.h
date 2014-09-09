@@ -1,7 +1,7 @@
 #ifndef PARABOLA_ANIMATIONGROUPPARALLEL_H
 #define PARABOLA_ANIMATIONGROUPPARALLEL_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "AnimationGroup.h"
 
 NEPHILIM_NS_BEGIN

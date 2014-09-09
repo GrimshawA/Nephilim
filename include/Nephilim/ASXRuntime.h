@@ -1,7 +1,7 @@
 #ifndef ASXRuntime_h__
 #define ASXRuntime_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 
 class asIScriptContext;
 

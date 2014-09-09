@@ -1,7 +1,7 @@
 #ifndef NephilimPath_h__
 #define NephilimPath_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

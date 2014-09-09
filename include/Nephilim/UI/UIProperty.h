@@ -1,9 +1,9 @@
 #ifndef NephilimUIProperty_h__
 #define NephilimUIProperty_h__
 
-#include "Platform.h"
-#include "Strings.h"
-#include "Color.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Color.h>
 
 #include <map>
 

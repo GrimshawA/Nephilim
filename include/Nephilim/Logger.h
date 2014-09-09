@@ -1,7 +1,7 @@
 #ifndef Logger_h__
 #define Logger_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Strings.h"
 
 NEPHILIM_NS_BEGIN

@@ -1,7 +1,7 @@
 #ifndef PARABOLA_NETWORKSOCKET_H
 #define PARABOLA_NETWORKSOCKET_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 //#include <SFML/System/Mutex.hpp>
 //
 NEPHILIM_NS_BEGIN

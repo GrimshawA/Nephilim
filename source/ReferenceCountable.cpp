@@ -1,12 +1,12 @@
-#include "Nephilim/ReferenceCountable.h"
-#include "Nephilim/UIButton.h"
+#include <Nephilim/ReferenceCountable.h>
 
 #include <iostream>
 using namespace std;
 
 NEPHILIM_NS_BEGIN
 /// Sets the reference count to 1
-RefCountable::RefCountable(){
+RefCountable::RefCountable()
+{
 	refCount = 1;
 	//cout<<"[RefCount:"<<this<<"] Init: 1"<<endl;
 };

@@ -1,7 +1,7 @@
 #ifndef PARABOLA_RENDERERGLES_H
 #define PARABOLA_RENDERERGLES_H
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Renderer.h"
 
 #ifdef PARABOLA_ANDROID

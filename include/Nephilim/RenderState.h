@@ -1,7 +1,7 @@
 #ifndef RenderState_h__
 #define RenderState_h__
 
-#include "Platform.h"
+#include <Nephilim/Platform.h>
 #include "Matrix.h"
 
 NEPHILIM_NS_BEGIN

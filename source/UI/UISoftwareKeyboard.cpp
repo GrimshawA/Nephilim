@@ -1,6 +1,6 @@
-#include <Nephilim/UISoftwareKeyboard.h>
+#include <Nephilim/UI/UISoftwareKeyboard.h>
 #include <Nephilim/Text.h>
-#include <Nephilim/UIButton.h>
+#include <Nephilim/UI/UIButton.h>
 
 #include <iostream>
 using namespace std;
