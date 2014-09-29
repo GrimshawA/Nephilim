@@ -3,7 +3,7 @@
 #include <Nephilim/File.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/DataStream.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 
 #include <cstring>
@@ -60,7 +60,7 @@ void GeometryData::toVertexArray(VertexArray& varray)
 }
 
 
-void GeometryData::onDraw(Renderer* renderer)
+void GeometryData::onDraw(GraphicsDevice* renderer)
 {
 	renderer->enableVertexAttribArray(0);
 	if(m_useColors && m_colors.size() > 0) renderer->enableVertexAttribArray(1);

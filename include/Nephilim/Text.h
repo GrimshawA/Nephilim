@@ -90,7 +90,7 @@ public:
 		void setFont(const Font& font);
 		/// Draws the text
 		void setCharacterSize(unsigned int size);
-		virtual void onDraw(Renderer* renderer);
+		virtual void onDraw(GraphicsDevice* renderer);
 		void setString(const String& string);
 		/// Align the text to be centered between x and y - Horizontal Coordinates
 		void alignCenterH(float x, float y);

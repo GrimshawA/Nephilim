@@ -56,7 +56,7 @@ void StateStackTransition::onUpdate(const Time& time)
 
 }
 
-void StateStackTransition::drawPreviousFrame(Renderer* renderer)
+void StateStackTransition::drawPreviousFrame(GraphicsDevice* renderer)
 {
 	if(m_stack)
 	{
@@ -64,7 +64,7 @@ void StateStackTransition::drawPreviousFrame(Renderer* renderer)
 	}
 }
 
-void StateStackTransition::drawNextFrame(Renderer* renderer)
+void StateStackTransition::drawNextFrame(GraphicsDevice* renderer)
 {
 	if(m_stack)
 	{
@@ -81,7 +81,7 @@ void StateStackTransition::finish()
 	m_stack->mFutureList.clear();
 }
 
-void StateStackTransition::draw(Renderer* renderer)
+void StateStackTransition::draw(GraphicsDevice* renderer)
 {
 
 }

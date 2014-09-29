@@ -95,7 +95,7 @@ void UIComponentButton::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentButton::onRender(Renderer* renderer, UIView* view)
+void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	if(hovering)
 	{

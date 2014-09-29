@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 class Engine;
 /**
 	\ingroup Core
@@ -63,14 +63,14 @@ public:
 	void create();
 
 	/// Creates and returns the renderer if valid
-	Renderer* createRenderer();
+	GraphicsDevice* createRenderer();
 
 	/// Pushes the back buffer to the screen
 	void pushFrame();
 	
 	/// There is one renderer instanced at a time ONLY
 	/// The surface instances it as appropriate in order to have multiple gl versions outputs
-	Renderer* m_renderer;
+	GraphicsDevice* m_renderer;
 
 	IntRect getViewport(const View& view) const;
 

@@ -18,7 +18,7 @@ public:
 
 	void onEvent(Event event, UIView* view);
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 
 	void addMenu(const String& menuTitle);
 

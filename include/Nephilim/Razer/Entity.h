@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/Component.h>
-
+#include <Nephilim/Razer/Scene.h>
 
 #include <vector>
 
@@ -11,37 +11,22 @@ NEPHILIM_NS_BEGIN
 
 namespace rzr {
 
-
-
-#ifdef RAZER_ENTITY_64
-#define entity_id_type Int64
-#else
-#define entity_id_type Int32
-#endif
-
-/**
-	\class EntityInternal
-	\brief Internal representation of the entity
-*/
-class NEPHILIM_API EntityInternal
-{
-public:
-	EntityInternal();
-
-	EntityInternal(entity_id_type id);
-
-	entity_id_type mId;
-};
-
-class Scene;
-	
 /**
 	\class Entity
-	\brief Reference to an entity
+	\brief Utility class to manipulate entities in a scene
+
+	The scene object works independently without a Entity class.
+	TEntity is the base type of entities, and that's just an integer.
+
+	This class is a utility wrapper only for doing operations with entities quicker
 */
 class NEPHILIM_API Entity
 {
 public:
+	Entity();
+
+	Entity(TEntity e, Scene& s);
+
 
 	/// Add a new component to this entity
 	template<class CType>
@@ -54,10 +39,12 @@ public:
 	template<class CType>
 	bool hasComponent() const;
 
-	entity_id_type id;
+	TEntity id;
 
 	Scene* mScene;
 };
+
+#include <Nephilim/Razer/Entity.inl>
 
 };
 NEPHILIM_NS_END

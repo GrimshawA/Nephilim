@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 
 class StateStack;
 class Time;
-class Renderer;
+class GraphicsDevice;
 class State;
 class GameCore;
 
@@ -32,8 +32,8 @@ public:
 	/// Set the duration of the transition effect
 	void setDuration(float duration);
 
-	void drawPreviousFrame(Renderer* renderer);
-	void drawNextFrame(Renderer* renderer);
+	void drawPreviousFrame(GraphicsDevice* renderer);
+	void drawNextFrame(GraphicsDevice* renderer);
 	void finish();
 
 	virtual void activate()
@@ -46,7 +46,7 @@ public:
 
 	virtual void onUpdate(const Time& time);
 
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	bool allowUpdatesA; ///< Set to true to allow the exiting state to update
 	bool allowUpdatesB; ///< Set to true to allow the incoming state to update

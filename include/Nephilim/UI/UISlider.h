@@ -20,7 +20,7 @@ public:
 	void setValue(int value);
 
 	/// Callback to render itself
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	/// Callback to handle an event
 	bool onEventNotification(Event& event);

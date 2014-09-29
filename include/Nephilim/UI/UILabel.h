@@ -27,7 +27,7 @@ public:
 	bool onEventNotification(Event& event);
 
 	/// Callback to render itself, renders children
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	/// Signal is emitted when the button is clicked
 	sigc::signal<void> onClick;

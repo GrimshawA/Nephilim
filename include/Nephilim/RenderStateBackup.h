@@ -7,7 +7,7 @@
 NEPHILIM_NS_BEGIN
 
 class Texture;
-class Renderer;
+class GraphicsDevice;
 
 class NEPHILIM_API TextureBackup
 {
@@ -21,10 +21,10 @@ public:
 class NEPHILIM_API RendererTransformBackup
 {
 public:
-	RendererTransformBackup(Renderer* renderer);
+	RendererTransformBackup(GraphicsDevice* renderer);
 	~RendererTransformBackup();
 
-	Renderer* m_renderer;
+	GraphicsDevice* m_renderer;
 	mat4 p, v, m;
 };
 

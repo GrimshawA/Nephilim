@@ -31,7 +31,7 @@ freely, subject to the following restrictions:
 NEPHILIM_NS_BEGIN
 
 class GameCore;
-class Renderer;
+class GraphicsDevice;
 
 /**
 	\ingroup Core
@@ -85,7 +85,7 @@ public:
 	void injectEvent(Event& event);
 
 	/// Get the current renderer
-	Renderer* getRenderer();
+	GraphicsDevice* getRenderer();
 
 	/// Get a basic string describing the current OS
 	String getOS();
@@ -99,7 +99,7 @@ public:
 	GameCore*	m_currentApp;		///< The currently executing game/application
 	Clock		m_clock;			///< Clock that counts the elapsed time since the engine was instanced
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
-	Renderer*	m_renderer;			///< The unified graphics renderer system
+	GraphicsDevice*	m_renderer;			///< The unified graphics renderer system
 	Surface		m_surface;			///< The surface this engine is bound to
 	bool		m_running;			///< Qualified as running if some conditions are met
 	static String m_versionString;  ///< The version of string(at compile time)

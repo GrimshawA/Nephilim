@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 class UIDocument;
 
 /**
@@ -26,7 +26,7 @@ public:
 	void destroy();
 
 	/// Draw the surface
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	/// Callback when a child of the control is removed
 	virtual void onChildRemoved(UIControl* control);

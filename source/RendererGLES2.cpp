@@ -1,4 +1,4 @@
-#include <Nephilim/RendererGLES2.h>
+#include <Nephilim/Graphics/GLES2/RendererGLES2.h>
 #include <Nephilim/Shader.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Matrix.h>
@@ -36,7 +36,7 @@ static const char gFragmentSource[] =
 	"}\n";
 
 RendererGLES2::RendererGLES2()
-: Renderer()
+: GraphicsDevice()
 {
 	m_type = OpenGLES2;
 	m_name = "OpenGL ES 2.0";
@@ -97,21 +97,21 @@ void RendererGLES2::draw(const VertexArray2D& varray, const RenderState& state)
 /// Set the current projection matrix
 void RendererGLES2::setProjectionMatrix(const mat4& projection)
 {
-	Renderer::setProjectionMatrix(projection);
+	GraphicsDevice::setProjectionMatrix(projection);
 	if(m_activeShader) m_activeShader->setUniformMatrix("projection", projection.get());
 }
 
 /// Set the current view matrix
 void RendererGLES2::setViewMatrix(const mat4& view)
 {
-	Renderer::setViewMatrix(view);
+	GraphicsDevice::setViewMatrix(view);
 	if(m_activeShader) m_activeShader->setUniformMatrix("view", view.get());
 }
 
 /// Set the current model matrix
 void RendererGLES2::setModelMatrix(const mat4& model)
 {
-	Renderer::setModelMatrix(model);
+	GraphicsDevice::setModelMatrix(model);
 	if(m_activeShader) m_activeShader->setUniformMatrix("model", model.get());
 }
 

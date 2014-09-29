@@ -24,7 +24,7 @@ public:
 	bool onEventNotification(Event& event);
 
 	/// Callback to render itself, renders children
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	void emitErase();
 

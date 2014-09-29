@@ -12,7 +12,7 @@ class String;
 class Time;
 class State;
 class StateStackTransition;
-class Renderer;
+class GraphicsDevice;
 class Event;
 class GameCore;
 
@@ -71,9 +71,9 @@ public:
 	/// Check if a given state is currently being executed
 	bool isActive(State* state);
 	
-	void drawList(std::vector<State*>& list, Renderer* renderer);
+	void drawList(std::vector<State*>& list, GraphicsDevice* renderer);
 
-	void drawCurrentList(Renderer* renderer);
+	void drawCurrentList(GraphicsDevice* renderer);
 
 
 	/// Push a state for execution directly
@@ -95,7 +95,7 @@ public:
 	void pushEvent(Event &event);
 
 	/// Draws the right states
-	void drawStates(Renderer *renderer);
+	void drawStates(GraphicsDevice *renderer);
 
 	int getActiveStateCount();
 

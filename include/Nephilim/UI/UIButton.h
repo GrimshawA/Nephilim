@@ -45,7 +45,7 @@ public:
 	void innerLanguageSwitch();
 
 	/// Callback to render itself, renders children
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	virtual UIView* clone();
 

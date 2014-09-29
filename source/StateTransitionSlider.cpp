@@ -2,7 +2,7 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -57,7 +57,7 @@ void StateTransitionSlider::onUpdate(const Time& time)
 	}
 }
 
-void StateTransitionSlider::draw(Renderer* renderer)
+void StateTransitionSlider::draw(GraphicsDevice* renderer)
 {
 	(elapsedTime <= (m_duration / 2)) ? drawPreviousFrame(renderer) : drawNextFrame(renderer); 
 	renderer->setProjectionMatrix(View(0.f, 0.f, 1024.f, 768.f).getMatrix());

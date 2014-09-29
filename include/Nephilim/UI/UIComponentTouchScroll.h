@@ -24,7 +24,7 @@ public:
 	void onUpdate(const Time& time, UIView* view);
 
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 
 	bool scrolling;
 	vec2 lastPosition;

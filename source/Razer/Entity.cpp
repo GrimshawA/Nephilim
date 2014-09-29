@@ -4,14 +4,15 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-EntityInternal::EntityInternal()
-: mId(0)
+Entity::Entity()
+: mScene(nullptr)
 {
-	 
+
 }
 
-EntityInternal::EntityInternal(entity_id_type id)
-: mId(id)
+Entity::Entity(TEntity e, Scene& s)
+: mScene(&s)
+, id(e)
 {
 
 }

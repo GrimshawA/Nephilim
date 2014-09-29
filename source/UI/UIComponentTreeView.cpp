@@ -288,7 +288,7 @@ bool UIComponentTreeView::isSubTree(int index)
 }
 
 
-void UIComponentTreeView::onRender(Renderer* renderer, UIView* view)
+void UIComponentTreeView::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	// Draw a black background on the ROOT tree view
 	if(mSubTreeLevel == 0)
@@ -343,7 +343,7 @@ void UIComponentTreeViewItem::toggle()
 	}
 }
 
-void UIComponentTreeViewItem::onRender(Renderer* renderer, UIView* view)
+void UIComponentTreeViewItem::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	// Render this item full size
 

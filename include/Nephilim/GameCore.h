@@ -6,7 +6,7 @@
 #include <Nephilim/ContentManager.h>
 #include "Clock.h"
 #include "Logger.h"
-#include "Renderer.h"
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include "Window.h"
 #include "Event.h"
 #include "StringList.h"
@@ -58,7 +58,7 @@ public:
 	/// Get the root for file loading on this game
 	String getFileSystemRoot();
 
-	Renderer* getRenderer();
+	GraphicsDevice* getRenderer();
 
 	Surface& getSurface();
 

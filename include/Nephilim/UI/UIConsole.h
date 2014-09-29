@@ -14,7 +14,7 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API UIConsole : public UIView{
 public:
 	bool onEventNotification(Event& event);
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 
 	String m_input;
 

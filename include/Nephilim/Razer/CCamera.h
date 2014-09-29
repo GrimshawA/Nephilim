@@ -10,13 +10,13 @@ NEPHILIM_NS_BEGIN
 namespace rzr {
 
 /**
-	\class ComponentCamera
+	\class CCamera
 	\brief 
 */
-class NEPHILIM_API ComponentCamera : public Component
+class NEPHILIM_API CCamera : public Component
 {
 public:
-	ComponentCamera();
+	CCamera();
 
 	void setSize(float width, float height);
 

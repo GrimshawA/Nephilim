@@ -113,7 +113,7 @@ void UIComponentLineEdit::eraseCharacter()
 }
 
 
-void UIComponentLineEdit::onRender(Renderer* renderer, UIView* view)
+void UIComponentLineEdit::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape backgroundRect;
 	backgroundRect.setColor(Color(240,240,240,240));

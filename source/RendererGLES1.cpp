@@ -18,7 +18,7 @@
 NEPHILIM_NS_BEGIN
 
 RendererGLES::RendererGLES()
-: Renderer()
+: GraphicsDevice()
 {
 	m_type = OpenGLES1;
 	m_name = "OpenGL ES 1.1";

@@ -2,7 +2,7 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -79,7 +79,7 @@ void StateTransitionBlocks::onUpdate(const Time& time)
 
 }
 
-void StateTransitionBlocks::draw(Renderer* renderer)
+void StateTransitionBlocks::draw(GraphicsDevice* renderer)
 {
 	if(!m_next)
 		drawPreviousFrame(renderer);

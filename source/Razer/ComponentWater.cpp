@@ -1135,7 +1135,7 @@ void ComponentWater::init()
 }
 
 
-void ComponentWater::render2(Renderer* mRenderer)
+void ComponentWater::render2(GraphicsDevice* mRenderer)
 {
 	redisplayFunc();
 }

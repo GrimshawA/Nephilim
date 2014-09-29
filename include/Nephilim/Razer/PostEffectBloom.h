@@ -8,7 +8,7 @@
 #include <Nephilim/Razer/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
-class Renderer;
+class GraphicsDevice;
 
 namespace rzr
 {
@@ -18,9 +18,9 @@ class NEPHILIM_API PostEffectBloom : public PostEffect
 public:
 	PostEffectBloom();
 
-	void apply(Renderer* renderer, Texture& renderTexture);
+	void apply(GraphicsDevice* renderer, Texture& renderTexture);
 
-	void brightnessPass(Renderer* mRenderer);
+	void brightnessPass(GraphicsDevice* mRenderer);
 
 	Texture	mBrightnessTexture;
 	Texture	mFirstPassTextures[2];

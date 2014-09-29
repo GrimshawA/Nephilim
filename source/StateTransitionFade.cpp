@@ -2,7 +2,7 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -60,7 +60,7 @@ void StateTransitionFade::onUpdate(const Time& time)
 	}
 }
 
-void StateTransitionFade::draw(Renderer* renderer)
+void StateTransitionFade::draw(GraphicsDevice* renderer)
 {
 	renderer->clearColorBuffer();
 

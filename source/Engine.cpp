@@ -1,6 +1,6 @@
 #include <Nephilim/Engine.h>
 #include <Nephilim/GameCore.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/View.h>
 
@@ -137,7 +137,7 @@ bool Engine::isRunning()
 }
 
 /// Get the current renderer
-Renderer* Engine::getRenderer()
+GraphicsDevice* Engine::getRenderer()
 {
 	return m_renderer;
 }

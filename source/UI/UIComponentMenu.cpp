@@ -18,7 +18,7 @@ void UIComponentMenu::onEvent(Event event, UIView* view)
 
 }
 
-void UIComponentMenu::onRender(Renderer* renderer, UIView* view)
+void UIComponentMenu::onRender(GraphicsDevice* renderer, UIView* view)
 {
 
 }

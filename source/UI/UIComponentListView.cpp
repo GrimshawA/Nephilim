@@ -24,7 +24,7 @@ void UIComponentListView::onAttach(UIView* view)
 	view->m_clipChildren = true;
 }
 
-void UIComponentListView::onRender(Renderer* renderer, UIView* view)
+void UIComponentListView::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape backgroundRect;
 	backgroundRect.setColor(Color(240,240,240,40));

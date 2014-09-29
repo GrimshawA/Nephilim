@@ -43,7 +43,7 @@ bool UILabel::onEventNotification(Event& event){
 	return true;
 }
 
-void UILabel::draw(Renderer* renderer)
+void UILabel::draw(GraphicsDevice* renderer)
 {
 	Text t;
 	t.setFont(*mCore->m_defaultFont);

@@ -2,7 +2,7 @@
 #include <Nephilim/CGL.h>
 
 #include <Nephilim/ContentManager.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 #include <iostream>
 using namespace std;
@@ -147,7 +147,7 @@ FloatRect Sprite::getGlobalBounds() const
 
 
 /// Called to order rendering, when the drawing was issued in the traditional way ( m_renderer->draw(m_sprite) )
-void Sprite::onDraw(Renderer* renderer){
+void Sprite::onDraw(GraphicsDevice* renderer){
 	/*if(!m_texture) return;
 
 	glEnable(GL_TEXTURE_2D);

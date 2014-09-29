@@ -74,7 +74,7 @@ void UIComponentTabView::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentTabView::onRender(Renderer* renderer, UIView* view)
+void UIComponentTabView::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape topRect(FloatRect(view->getPosition().x, view->getPosition().y, view->getSize().x, 20.f), Color::White);
 	renderer->draw(topRect);

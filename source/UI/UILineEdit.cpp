@@ -123,7 +123,7 @@ void UILineEdit::setType(UILineEditTypes type)
 }
 
 
-void UILineEdit::draw(Renderer* renderer)
+void UILineEdit::draw(GraphicsDevice* renderer)
 {
 	if(getContext() && getContext()->m_defaultFont)
 		t.setFont(*getContext()->m_defaultFont);

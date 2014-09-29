@@ -17,7 +17,7 @@ public:
 	/// Reload all graphics because they were destroyed and are unavailable now
 	virtual void reloadGraphicalAssets();
 
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 
 	Texture t;
 

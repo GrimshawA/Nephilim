@@ -7,7 +7,7 @@
 #include <Nephilim/Signals.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/RectangleShape.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/AxList.h>
 #include <Nephilim/AxTarget.h>
@@ -70,12 +70,16 @@ class UIAnimation;
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
-	/// First experiment on 3D view positioning
-	vec3 topLeftVertex;
-	vec3 bottomRightVertex;
+	vec2  size;       ///< Size of the view
+	float z;          ///< Offset from the parent
+	float rotation_x; ///< Rotation around the X axis; 0 means no rotation; 
+	float rotation_y; ///< Rotation around the Y axis; 0 means no rotation;
+	float rotation_z; ///< Rotation around the Z axis; 0 means no rotation;
 
-	/// Alternate representations, middle point + size + axis rotations  ^
+	vec3  position;   ///< The 3D position of this view
 
+	Color col;
+	
 
 	/// Allows cleaner code, which uses UIView::Ptr as the type which can be changed anytime between other types of smart pointers without breaking code
 	typedef UIView* Ptr;
@@ -112,10 +116,10 @@ public:
 	bool isScheduledForRemoval(UIView* v);
 
 	/// Called before rendering the children UIView
-	virtual void preRender(Renderer* renderer);
+	virtual void preRender(GraphicsDevice* renderer);
 
 	/// Called after rendering the children UIView
-	virtual void postRender(Renderer* renderer);
+	virtual void postRender(GraphicsDevice* renderer);
 
 	/// Set the position of the control's top-left corner
 	void setPosition(float x, float y);
@@ -245,10 +249,11 @@ public:
 	/// If only a empty string is returned, no tooltip is shown
 	virtual String getToolTipLabel();
 
-	void innerDraw(Renderer* renderer, const mat4& transform = mat4());
+	/// Tell the UIView to draw itself, giving it its parent transform
+	void drawItself(GraphicsDevice* renderer, const mat4& transform = mat4::identity);
 
 	/// Callback to render itself, renders children
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer, mat4 transform);
 
 	/// Dispatches an event through the hierarchy
 	void dispatchEvent(const Event& event);
@@ -265,6 +270,7 @@ public:
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control
 	virtual bool processMouseMove(int x, int y);
+
 	virtual bool processTouchMove(int x, int y);
 
 	/// Process a mouse press event

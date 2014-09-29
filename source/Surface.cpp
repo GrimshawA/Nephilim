@@ -1,9 +1,9 @@
 #include <Nephilim/Surface.h>
 #include <Nephilim/Engine.h>
 #include <Nephilim/CGL.h>
-#include <Nephilim/RendererOpenGL.h>
-#include <Nephilim/RendererGLES.h>
-#include <Nephilim/RendererGLES2.h>
+#include <Nephilim/Graphics/GL3/RendererOpenGL.h>
+#include <Nephilim/Graphics/GLES/RendererGLES.h>
+#include <Nephilim/Graphics/GLES2/RendererGLES2.h>
 
 #if defined NEPHILIM_ANDROID
 #include <Nephilim/AndroidInterface.h>
@@ -66,9 +66,9 @@ void Surface::setSize(int width, int height)
 }
 
 /// Creates and returns the renderer if valid
-Renderer* Surface::createRenderer()
+GraphicsDevice* Surface::createRenderer()
 {
-	Renderer* renderer = NULL;
+	GraphicsDevice* renderer = NULL;
 
 	// Try to assemble the renderer
 	#ifdef NEPHILIM_DESKTOP

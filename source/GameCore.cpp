@@ -45,7 +45,7 @@ String GameCore::getFileSystemRoot()
 	return m_fileSystemRoot;
 }
 
-Renderer* GameCore::getRenderer()
+GraphicsDevice* GameCore::getRenderer()
 {
 	return m_creator->getRenderer();
 }

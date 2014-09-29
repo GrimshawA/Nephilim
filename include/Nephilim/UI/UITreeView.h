@@ -24,7 +24,7 @@ public:
 
 
 
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 	bool onEventNotification(Event& event);
 
 	/// A node in the tree
@@ -36,7 +36,7 @@ public:
 			m_visible = false;
 			m_expanded = false;
 		}
-		void draw(Renderer* renderer);
+		void draw(GraphicsDevice* renderer);
 		bool onEventNotification(Event& event);
 
 		/// Expans the item if possible

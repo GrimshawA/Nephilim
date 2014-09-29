@@ -1,17 +1,33 @@
 #ifndef NephilimRazerEntityInline_h__
 #define NephilimRazerEntityInline_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/Razer/Component.h>
-#include <Nephilim/Razer/Scene.h>
+/// Implementation of the GetComponent template function to take our Entity wrapper
+template<typename T>
+T* GetComponent(Entity& e)
+{
+	ComponentManager* componentManager = e.mScene->getComponentManager<T>();
+	Component* component = componentManager->getComponentFromEntity(e.id);
+	return static_cast<T*>(component);
+}
 
 
-#include <vector>
+/// GetMultiComponent is meant to retrieve a list of all the components of a given type bound to the same entity
+template<typename T>
+std::vector<T*> GetMultiComponent(Entity& e)
+{
+	std::vector<T*> list;
+	return list;
+}
 
-NEPHILIM_NS_BEGIN
+template<typename T>
+T* CreateComponent(Entity& e)
+{
+	ComponentManager* componentManager = e.mScene->getComponentManager<T>();
+	Component* component = componentManager->createComponentForEntity(e.id);
+	return static_cast<T*>(component);
+}
 
-namespace rzr {
-
+/*
 template<class CType>
 void Entity::addComponent()
 {
@@ -49,6 +65,5 @@ bool Entity::hasComponent() const
 	}
 }
 
-};
-NEPHILIM_NS_END
+*/
 #endif // NephilimRazerEntityInline_h__

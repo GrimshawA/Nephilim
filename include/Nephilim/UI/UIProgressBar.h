@@ -21,7 +21,7 @@ public:
 	UIProgressBar(int maxValue, const String& message);
 
 	/// Callback to render itself
-	virtual void draw(Renderer* renderer);
+	virtual void draw(GraphicsDevice* renderer);
 
 	bool onEventNotification(Event& event);
 

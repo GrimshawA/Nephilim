@@ -4,9 +4,9 @@
 #include <Nephilim/Razer/Entity.inl>
 #include <Nephilim/Razer/ComponentTilemap2D.h>
 #include <Nephilim/Razer/ComponentTerrain.h>
-#include <Nephilim/Razer/ComponentCamera.h>
+#include <Nephilim/Razer/CCamera.h>
 #include <Nephilim/Razer/ComponentSprite.h>
-#include <Nephilim/Razer/ComponentTransform.h>
+#include <Nephilim/Razer/CTransform.h>
 #include <Nephilim/Razer/ComponentParticleEmitter.h>
 #include <Nephilim/Razer/ComponentModel.h>
 #include <Nephilim/Razer/ComponentMesh.h>
@@ -69,7 +69,7 @@ void SystemRenderer::startFrame()
 	mFramebuffer.activate();
 	glViewport(0, 0, mTargetWidth, mTargetHeight);
 
-	mRenderer->setClearColor(Color::Blue);
+	//mRenderer->setClearColor(Color::Blue);
 	mRenderer->clearColorBuffer();
 }
 
@@ -122,9 +122,9 @@ void SystemRenderer::drawToBackBuffer()
 void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
 {
 	// Find a camera
-	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
+/*	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
-		Entity ent = mScene->getEntityByIndex(i);
+		TEntity ent = mScene->getEntityByIndex(i);
 		if(ent.hasComponent<ComponentCamera>())
 		{
 			ComponentCamera& camera = ent.getComponent<ComponentCamera>();
@@ -143,12 +143,6 @@ void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
 				//mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar));
 				proj = mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar);
 			}
-		/*	mRenderer->setViewMatrix(camera.cameraTransform);
-			mRenderer->clearDepthBuffer();
-			mRenderer->setDepthTestEnabled(false);
-			mRenderer->clearColorBuffer();
-			mRenderer->setBlendingEnabled(true);
-			mRenderer->setBlendMode(Render::Blend::Alpha);*/
 
 			//Log("FOUND CAMERA");
 
@@ -158,13 +152,13 @@ void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
 			//cameraRotation = transform.rotation;
 			//cameraForward  = transform.getForwardVector();
 		}
-	}
+	}*/
 }
 
 void SystemRenderer::update(const Time& deltaTime)
 {
 	// Update skinning animations
-	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
+	/*for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity ent = mScene->getEntityByIndex(i);
 		if(ent.hasComponent<ComponentSkinnedModel>())
@@ -172,13 +166,13 @@ void SystemRenderer::update(const Time& deltaTime)
 			ComponentSkinnedModel& skinnedModel = ent.getComponent<ComponentSkinnedModel>();
 			skinnedModel.update(deltaTime);
 		}
-	}
+	}*/
 }
 
 /// Render scene gets all scene render data and outputs it to the active target
 void SystemRenderer::renderScene()
 {
-	mat4 viewMatrix;
+/*	mat4 viewMatrix;
 	mat4 projectionMatrix;
 	vec3 cameraPosition;
 	Quaternion cameraRotation;
@@ -256,7 +250,7 @@ void SystemRenderer::renderScene()
 			// draw our test model
 			v.testTexture.bind();
 			mRenderer->draw(v.testModel);
-
+			*/
 			// Draw wheels
 			/*v.vehicle->vehicle->getWheelInfo(0).m_worldTransform.getOpenGLMatrix(mt);
 			mRenderer->setModelMatrix(mat4(mt));
@@ -270,7 +264,7 @@ void SystemRenderer::renderScene()
 			v.vehicle->vehicle->getWheelInfo(3).m_worldTransform.getOpenGLMatrix(mt);
 			mRenderer->setModelMatrix(mat4(mt));
 			mRenderer->draw(v.vehicleWheel);*/
-		}
+		/*}
 		if(ent.hasComponent<ComponentTerrain>())
 		{
 			ent.getComponent<ComponentTerrain>().surfaceTex.bind();
@@ -338,6 +332,7 @@ void SystemRenderer::renderScene()
 			spr.setOrigin(spr.getSize() / 2.f);
 			spr.setScale(sprite.scale.x, -sprite.scale.y);
 			spr.setColor(sprite.color);
+			spr.setRotation(math::radianToDegree(sprite.rot));
 			if(!sprite.tex.empty())
 			{
 				//Log("Rendering ship sprite: %s", sprite.tex.c_str());
@@ -370,7 +365,7 @@ void SystemRenderer::renderScene()
 			mRenderer->setBlendMode(Render::Blend::Alpha);
 			//Log("rendering particles");
 		}
-	}
+	}*/
 }
 
 void SystemRenderer::render()
@@ -384,7 +379,7 @@ void SystemRenderer::render()
 void SystemRenderer::renderModel(Entity& entity)
 {
 	
-	ComponentTransform& transform = entity.getComponent<ComponentTransform>();
+	/*CTransform& transform = entity.getComponent<CTransform>();
 
 	float box_dims = 2.f;
 
@@ -403,12 +398,12 @@ void SystemRenderer::renderModel(Entity& entity)
 	glLineWidth(2.f);
 	mRenderer->draw(box);
 
-	//Log("Rendering the box");
+	//Log("Rendering the box");*/
 }
 
 void SystemRenderer::renderMesh(Entity& entity)
 {
-	ComponentMesh& mesh = entity.getComponent<ComponentMesh>();
+	/*ComponentMesh& mesh = entity.getComponent<ComponentMesh>();
 
 	if(!mesh.mVertexBuffer)
 	{
@@ -458,12 +453,12 @@ void SystemRenderer::renderMesh(Entity& entity)
 		mRenderer->disableVertexAttribArray(2);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
+	}*/
 }
 
 void SystemRenderer::renderTilemap(Entity& entity)
 {	
-	mRenderer->setDepthTestEnabled(false);
+	/*mRenderer->setDepthTestEnabled(false);
 
 	ComponentTilemap2D& tilemap = entity.getComponent<ComponentTilemap2D>();
 
@@ -527,7 +522,7 @@ void SystemRenderer::renderTilemap(Entity& entity)
 				}
 			}
 		}	
-	}
+	}*/
 }
 
 

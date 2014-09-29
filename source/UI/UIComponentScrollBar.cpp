@@ -78,7 +78,7 @@ void UIComponentScrollBar::onUpdate(const Time& time, UIView* view)
 	totalHeight = highestY - lowestY;
 }
 
-void UIComponentScrollBar::onRender(Renderer* renderer, UIView* view)
+void UIComponentScrollBar::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape scrollBarBackground;
 	scrollBarBackground.setSize(17.f, view->getSize().y);

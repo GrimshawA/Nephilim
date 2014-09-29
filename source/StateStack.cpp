@@ -93,7 +93,7 @@ void StateStack::endTransition()
 
 }
 
-void StateStack::drawCurrentList(Renderer* renderer)
+void StateStack::drawCurrentList(GraphicsDevice* renderer)
 {
 	/*int index = m_activeList.size() - 1;
 	while(index >= 0 && !m_activeList.empty())
@@ -111,7 +111,7 @@ void StateStack::drawCurrentList(Renderer* renderer)
 	}
 }
 
-void StateStack::drawList(std::vector<State*>& list, Renderer* renderer)
+void StateStack::drawList(std::vector<State*>& list, GraphicsDevice* renderer)
 {
 	std::size_t index = 0;
 	while(index < list.size() && !list.empty())
@@ -370,7 +370,7 @@ void StateStack::pushEvent(Event &event){
 };
 
 
-void StateStack::drawStates(Renderer *renderer){
+void StateStack::drawStates(GraphicsDevice *renderer){
 
 	if(m_transition)
 	{

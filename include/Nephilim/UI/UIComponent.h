@@ -2,13 +2,14 @@
 #define NephilimUIComponent_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Matrix.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/Time.h>
 
 NEPHILIM_NS_BEGIN
 
 class UIView;
-class Renderer;
+class GraphicsDevice;
 class StringList;
 class String;
 
@@ -45,7 +46,8 @@ public:
 
 	virtual void onUpdate(const Time& time, UIView* view){}
 
-	virtual void onRender(Renderer* renderer, UIView* view){}
+	/// Render the component to the screen, giving it its view transform to know where to render
+	virtual void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform){}
 
 	virtual void onPropertySet(const StringList& targetObject, const String& value){}
 

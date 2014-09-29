@@ -2,18 +2,18 @@
 #define NephilimRenderer_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include "Vectors.h"
-#include "Strings.h"
-#include "Color.h"
-#include "Drawable.h"
-#include "VertexArray2D.h"
-#include "View.h"
-#include "Shader.h"
-#include "RenderModes.h"
-#include "RenderState.h"
-#include "Matrix.h"
-#include "Texture.h"
+#include <Nephilim/Strings.h>
+#include <Nephilim/Vectors.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Color.h>
+#include <Nephilim/Drawable.h>
+#include <Nephilim/VertexArray2D.h>
+#include <Nephilim/View.h>
+#include <Nephilim/Shader.h>
+#include <Nephilim/RenderModes.h>
+#include <Nephilim/RenderState.h>
+#include <Nephilim/Matrix.h>
+#include <Nephilim/Texture.h>
 
 #include <map>
 #include <stack>
@@ -37,7 +37,7 @@ class VertexArray;
 	- Textures are activated at texture unit 0, as default
 	- Whether the vertex array is textured or not, a uniform int textured variable will be set with 1 or 0, for true or false.
 */
-class NEPHILIM_API Renderer
+class NEPHILIM_API GraphicsDevice
 {
 public:
 	friend class Surface;
@@ -52,7 +52,7 @@ public:
 	};
 
 	/// Base constructor - virtual class 
-	Renderer();
+	GraphicsDevice();
 
 	/// Get the type of this renderer
 	Type getType();

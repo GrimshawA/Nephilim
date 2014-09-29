@@ -20,7 +20,7 @@ class NEPHILIM_API CircleShape : public Drawable, public Transformable
 public:
 	CircleShape();
 
-	virtual void onDraw(Renderer* renderer);
+	virtual void onDraw(GraphicsDevice* renderer);
 
 	void setPointCount(int segmentCount);
 

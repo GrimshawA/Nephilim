@@ -1,10 +1,10 @@
-#include <Nephilim/Razer/ComponentCamera.h>
+#include <Nephilim/Razer/CCamera.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-ComponentCamera::ComponentCamera()
+CCamera::CCamera()
 : up(0.f, 1.f, 0.f)
 , eye(0.f, 20.f, 20.f)
 , position(0.f, 0.f, 0.f)
@@ -20,7 +20,7 @@ ComponentCamera::ComponentCamera()
 	
 }
 
-void ComponentCamera::setSize(float width, float height)
+void CCamera::setSize(float width, float height)
 {
 	size.x = width;
 	size.y = height;

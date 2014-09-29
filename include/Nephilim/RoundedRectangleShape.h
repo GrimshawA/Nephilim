@@ -60,7 +60,7 @@ public:
 protected:
 
 	/// Drawable implementation for drawing the shape
-	virtual void onDraw(Renderer* renderer);
+	virtual void onDraw(GraphicsDevice* renderer);
 
 	void updateGeometry();
 

@@ -1,5 +1,5 @@
 #include <Nephilim/CircleShape.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
@@ -41,7 +41,7 @@ void CircleShape::setTextureCoords(float origin_x, float origin_y, float radius)
 	}
 }
 
-void CircleShape::onDraw(Renderer* renderer)
+void CircleShape::onDraw(GraphicsDevice* renderer)
 {
 	if(isDirty)
 		update();

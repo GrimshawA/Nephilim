@@ -41,7 +41,7 @@ public:
 	virtual ~Sprite();
 
 	/// Called to order rendering, when the drawing was issued in the traditional way ( m_renderer->draw(m_sprite) )
-	virtual void onDraw(Renderer* renderer);
+	virtual void onDraw(GraphicsDevice* renderer);
 
 	/// Set the texture of the sprite
 	void setTexture(const Texture &texture, bool resetRect = false);

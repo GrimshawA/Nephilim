@@ -77,8 +77,6 @@ public:
 
 	bool m_hasHardwareKeyboard;
 
-	LocalizationUnit m_localization;
-
 	bool m_allowsToolTips;
 
 	bool m_fakeTouchScreen;

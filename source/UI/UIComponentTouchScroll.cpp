@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/NxMath.h>
@@ -154,7 +154,7 @@ void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 
 }
 
-void UIComponentScroll::onRender(Renderer* renderer, UIView* view)
+void UIComponentScroll::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape backRect(view->getBounds(), Color::Bittersweet);
 	renderer->draw(backRect);

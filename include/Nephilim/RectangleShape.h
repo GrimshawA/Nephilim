@@ -67,7 +67,7 @@ protected:
 	float m_height;
 
 	/// Draw with the renderer.draw(object) syntax
-	virtual void onDraw(Renderer* renderer);
+	virtual void onDraw(GraphicsDevice* renderer);
 
 	VertexArray2D m_geometry;
 	VertexArray2D m_outline;

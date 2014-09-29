@@ -2,6 +2,7 @@
 #define NephilimNetworkConnection_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -27,8 +28,12 @@ class NEPHILIM_API Connection
 {
 public:
 
+	virtual void connect(const String& address, int port) = 0;
+
 	/// Sending a Packet through this connection
 	virtual void send(const Packet& pck) = 0;
+
+	virtual void update() = 0;
 };
 
 NEPHILIM_NS_END

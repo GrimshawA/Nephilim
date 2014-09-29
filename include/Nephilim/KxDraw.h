@@ -29,7 +29,7 @@ public:
 	KxScene* getScene();
 
 	/// Draw the debug data of KxScene
-	void onDraw(Renderer* renderer);
+	void onDraw(GraphicsDevice* renderer);
 
 private:
 	float m_pixelsPerMeter;

@@ -26,7 +26,7 @@ void UIImage::setImage(const String& path)
 	t.loadFromFile(path);
 }
 
-void UIImage::draw(Renderer* renderer)
+void UIImage::draw(GraphicsDevice* renderer)
 {
 	RectangleShape s;
 	s.setRect(getBounds());

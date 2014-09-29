@@ -1,5 +1,5 @@
 #include <Nephilim/Text.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/CGL.h>
@@ -35,14 +35,14 @@ Text::Text(String text, float x, float y) : m_string(text),
 		updateGeometry();
 };
 
-void Text::onDraw(Renderer* renderer)
+void Text::onDraw(GraphicsDevice* renderer)
 {
 	if(!m_font || m_vertices.m_vertices.empty()) return;
 
 	m_font->getTexture(m_characterSize).bind();
 	renderer->setBlendingEnabled(true);
 	renderer->setBlendMode(Render::Blend::Alpha);
-	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	//renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 };

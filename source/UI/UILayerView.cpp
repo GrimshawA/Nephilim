@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UILayerView.h>
 #include <Nephilim/UI/UICanvas.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
@@ -21,10 +21,10 @@ void UILayerView::destroy()
 	}
 }
 
-void UILayerView::draw(Renderer* renderer)
+void UILayerView::draw(GraphicsDevice* renderer)
 {
 	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->innerDraw(renderer);
+		(*it)->drawItself(renderer);
 	}
 };
 

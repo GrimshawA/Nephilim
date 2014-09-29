@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 
 class NEPHILIM_API BxDraw : public btIDebugDraw
 {
@@ -22,7 +22,7 @@ public:
 	void draw3dText(const btVector3 &location, const char *textString);
 	void setDebugMode(int debugMode);
 	int getDebugMode() const;
-	Renderer* renderer;
+	GraphicsDevice* renderer;
 
 	void finalize();
 	int index;

@@ -36,6 +36,17 @@ public:
 				m_keys[event.key.code] = false;
 			}break;
 
+			case Event::JoystickButtonPressed:
+			{
+				m_joystickKeys[event.joystickButton.button] = true;
+			}break;
+
+			case Event::JoystickButtonReleased:
+			{
+				m_joystickKeys[event.joystickButton.button] = false;
+
+			}break;
+
 			case Event::MouseButtonPressed:
 			{
 				m_mouseButtons[event.mouseButton.button] = true;
@@ -62,6 +73,16 @@ public:
 		}
 		return m_keys[key];
 	}
+
+	bool getJoystickButton(unsigned int button)
+	{
+		if (m_joystickKeys.find(button) == m_joystickKeys.end())
+		{
+			m_joystickKeys[button] = false;
+		}
+		return m_joystickKeys[button];
+	}
+
 	bool getMouseButton(Mouse::Button button)
 	{
 		if(m_mouseButtons.find(button) == m_mouseButtons.end())
@@ -77,6 +98,7 @@ public:
 	}
 
 	std::map<Keyboard::Key, bool> m_keys;
+	std::map<unsigned int, bool> m_joystickKeys;
 	std::map<Mouse::Button, bool> m_mouseButtons;
 
 	Vec2i m_mousePosition;

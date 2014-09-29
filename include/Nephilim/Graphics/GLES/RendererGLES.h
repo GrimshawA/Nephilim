@@ -2,7 +2,7 @@
 #define PARABOLA_RENDERERGLES_H
 
 #include <Nephilim/Platform.h>
-#include "Renderer.h"
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 #ifdef PARABOLA_ANDROID
 #include <GLES/gl.h>
@@ -16,7 +16,8 @@ NEPHILIM_NS_BEGIN
 	\class RendererGLES
 	\brief Renderer specialization for OpenGL ES 1.1
 */
-class NEPHILIM_API RendererGLES : public Renderer{
+class NEPHILIM_API RendererGLES : public GraphicsDevice
+{
 public:
 	RendererGLES();
 

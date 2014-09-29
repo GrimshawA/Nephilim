@@ -3,40 +3,20 @@
 
 #include <Nephilim/Platform.h>
 
-#include <vector>
-#include <map>
-
 NEPHILIM_NS_BEGIN
 namespace rzr {
 
 /**
 	\class Component
 	\brief Represents one characteristic added to entities
+
+	It is recommended for each component to be 64 or less bytes,
+	due to possible performance gains by benefiting from the CPU cache lines.
 */
 class NEPHILIM_API Component
 {
 public:
-	virtual ~Component(){}
 };
-
-class NEPHILIM_API ComponentList
-{
-public:
-	
-};
-
-template<class T>
-class ComponentArray : public ComponentList
-{
-public:
-
-	/// Array of components of a single type (Contiguous in memory)
-	std::vector<T> mComponents;
-
-	/// Maps entity id to its component
-	std::map<Int32, std::size_t> mBinding;
-};
-
 
 };
 NEPHILIM_NS_END

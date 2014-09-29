@@ -1,5 +1,5 @@
 #include <Nephilim/BxDraw.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN

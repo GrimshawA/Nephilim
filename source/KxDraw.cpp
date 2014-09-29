@@ -1,7 +1,7 @@
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/KxScene.h>
 
-#include "Nephilim/Renderer.h"
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 #include <Box2D/Box2D.h>
 
@@ -35,7 +35,7 @@ public:
 	void DrawAABB(b2AABB* aabb, const b2Color& color);
 
 	KxScene *myParent;
-	Renderer* renderer;
+	GraphicsDevice* renderer;
 };
 
 
@@ -64,7 +64,7 @@ KxScene* KxDraw::getScene()
 	return m_scene;
 }
 
-void KxDraw::onDraw(Renderer* renderer)
+void KxDraw::onDraw(GraphicsDevice* renderer)
 {
 	if(m_scene)
 	{

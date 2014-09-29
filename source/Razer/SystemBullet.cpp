@@ -3,7 +3,7 @@
 #include <Nephilim/Razer/Entity.h>
 #include <Nephilim/Razer/Entity.inl>
 #include <Nephilim/Razer/ComponentCharacterController.h>
-#include <Nephilim/Razer/ComponentTransform.h>
+#include <Nephilim/Razer/CTransform.h>
 #include <Nephilim/Razer/ComponentTerrain.h>
 #include <Nephilim/Razer/ComponentTerrainCollider.h>
 #include <Nephilim/Razer/ComponentVehicle.h>
@@ -44,7 +44,7 @@ void SystemBullet::update(const Time& deltaTime)
 {
 	float delta = deltaTime.asSeconds();
 
-
+	/*
 	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
 	{
 		Entity entity = mScene->getEntityByIndex(i);
@@ -150,7 +150,7 @@ void SystemBullet::update(const Time& deltaTime)
 
 			//Log("Transform updated");
 		}
-	}
+	}*/
 }
 
 };

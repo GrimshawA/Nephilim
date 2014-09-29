@@ -1,5 +1,5 @@
 #include <Nephilim/RectangleShape.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Texture.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/CGL.h>
@@ -213,7 +213,7 @@ void RectangleShape::setTextureRect(FloatRect rect)
 	setTextureRect(rect.left, rect.top, rect.width, rect.height);
 }
 
-void RectangleShape::onDraw(Renderer* renderer)
+void RectangleShape::onDraw(GraphicsDevice* renderer)
 {
 	if(m_texture) m_texture->bind();
 	else renderer->setDefaultTexture();

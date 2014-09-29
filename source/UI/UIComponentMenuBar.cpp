@@ -78,7 +78,7 @@ void UIComponentMenuBar::onEvent(Event event, UIView* view)
 
 }
 
-void UIComponentMenuBar::onRender(Renderer* renderer, UIView* view)
+void UIComponentMenuBar::onRender(GraphicsDevice* renderer, UIView* view)
 {
 
 }

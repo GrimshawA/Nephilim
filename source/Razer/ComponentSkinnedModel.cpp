@@ -214,7 +214,7 @@ void ComponentSkinnedModel::update(const Time& deltaTime)
 	}
 }
 
-void ComponentSkinnedModel::render(Renderer* mRenderer)
+void ComponentSkinnedModel::render(GraphicsDevice* mRenderer)
 {
 	championTexture.bind();
 

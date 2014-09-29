@@ -14,7 +14,7 @@ class NEPHILIM_API UIComponentListView : public UIComponent
 public:
 	void onAttach(UIView* view);
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 };
 
 NEPHILIM_NS_END

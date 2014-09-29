@@ -1,5 +1,5 @@
 #include <Nephilim/RoundedRectangleShape.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/NxMath.h>
 
@@ -19,7 +19,7 @@ RoundedRectangleShape::RoundedRectangleShape()
 {
 }
 
-void RoundedRectangleShape::onDraw(Renderer* renderer)
+void RoundedRectangleShape::onDraw(GraphicsDevice* renderer)
 {
 	if(m_geometryDirty)
 	{

@@ -1,4 +1,4 @@
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Surface.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
@@ -10,7 +10,7 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-Renderer::Renderer()
+GraphicsDevice::GraphicsDevice()
 : m_type(Other)
 , m_shaderUsageHint(true)
 {
@@ -30,27 +30,27 @@ Renderer::Renderer()
 };
 
 // -- Unimplemented API at Renderer level
-void Renderer::setDefaultShader(){}
-void Renderer::setShader(Shader& shader){}
+void GraphicsDevice::setDefaultShader(){}
+void GraphicsDevice::setShader(Shader& shader){}
 
-Renderer::Type Renderer::getType()
+GraphicsDevice::Type GraphicsDevice::getType()
 {
 	return m_type;
 }
 
 /// Get the full name of this renderer
-String Renderer::getName()
+String GraphicsDevice::getName()
 {
 	return m_name;
 }
 
-Surface& Renderer::getSurface()
+Surface& GraphicsDevice::getSurface()
 {
 	return *m_surface;
 }
 
 /// Set the clear color of the render target
-void Renderer::setClearColor(const Color& color)
+void GraphicsDevice::setClearColor(const Color& color)
 {
 	m_clearColor = color;
 	vec4 c = m_clearColor.normalized();
@@ -59,86 +59,86 @@ void Renderer::setClearColor(const Color& color)
 
 /// Set an hint to the renderer which tells it to prefer shaders by default(true), or to use the fixed pipeline instead
 /// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
-void Renderer::setShaderUsageHint(bool allow)
+void GraphicsDevice::setShaderUsageHint(bool allow)
 {
 	m_shaderUsageHint = allow;
 }
 
 /// Get a current renderer-global matrix
-mat4 Renderer::getProjectionMatrix()
+mat4 GraphicsDevice::getProjectionMatrix()
 {
 	return m_projection;
 }
 
 /// Get a current renderer-global matrix
-mat4 Renderer::getViewMatrix()
+mat4 GraphicsDevice::getViewMatrix()
 {
 	return m_view;
 }
 
 /// Get a current renderer-global matrix
-mat4 Renderer::getModelMatrix()
+mat4 GraphicsDevice::getModelMatrix()
 {
 	return m_model;
 }
 
 /// Push client-side geometry to the GPU
 /// This is usually slower than using a VBO because the data is uploaded to the GPU every time
-void Renderer::draw(const VertexArray& vertexData)
+void GraphicsDevice::draw(const VertexArray& vertexData)
 {
 }
 
 /// Get the current clear color
-Color Renderer::getClearColor()
+Color GraphicsDevice::getClearColor()
 {
 	return m_clearColor;
 }
 
-void Renderer::setTarget(RenderTarget& target)
+void GraphicsDevice::setTarget(RenderTarget& target)
 {
 	m_target = &target;
 	m_target->activate();
 }
 
-void Renderer::setDefaultTransforms()
+void GraphicsDevice::setDefaultTransforms()
 {
 	setProjectionMatrix(mat4::identity);
 	setViewMatrix(mat4::identity);
 	setModelMatrix(mat4::identity);
 }
 
-void Renderer::setDefaultViewport()
+void GraphicsDevice::setDefaultViewport()
 {
 	setViewport(0.f, 0.f, 1.f, 1.f);
 }
 
 /// Set the viewport in target-relative coordinates
 /// If you want to set the viewport in pixels, use setViewportInPixels()
-void Renderer::setViewport(float left, float top, float width, float height)
+void GraphicsDevice::setViewport(float left, float top, float width, float height)
 {
 	int bottom = m_target->getSize().y - (top*m_target->getSize().y + height*m_target->getSize().y);
 	glViewport(left * m_target->getSize().x, bottom, width * m_target->getSize().x, height * m_target->getSize().y);
 }
 
 /// Set the viewport as in glViewport()
-void Renderer::setViewportInPixels(int left, int top, int width, int height)
+void GraphicsDevice::setViewportInPixels(int left, int top, int width, int height)
 {
 	int bottom = m_target->getSize().y - (top + height);
 	glViewport(left, bottom, width, height);
 }
 
 /// Activates blending with the default mode: Alpha
-void Renderer::setDefaultBlending()
+void GraphicsDevice::setDefaultBlending()
 {
 	setBlendMode(Render::Blend::Alpha);
 	glBlendEquation(GL_FUNC_ADD);
 }
 
-void Renderer::reloadDefaultShader()
+void GraphicsDevice::reloadDefaultShader()
 {
 }
 
-void Renderer::setBlendMode(Render::Blend::Mode mode)
+void GraphicsDevice::setBlendMode(Render::Blend::Mode mode)
 {
 	setBlendingEnabled(true);
 
@@ -176,37 +176,37 @@ void Renderer::setBlendMode(Render::Blend::Mode mode)
 	}
 }
 
-void Renderer::setBlendingEnabled(bool enable)
+void GraphicsDevice::setBlendingEnabled(bool enable)
 {
 	if(enable) glEnable(GL_BLEND);
 	else		glDisable(GL_BLEND);
 }
 
-void Renderer::setDefaultTarget()
+void GraphicsDevice::setDefaultTarget()
 {
 	m_surface->activate();
 }
 
-void Renderer::setClippingEnabled(bool enable)
+void GraphicsDevice::setClippingEnabled(bool enable)
 {
 	if(enable) glEnable (GL_SCISSOR_TEST);
 	else       glDisable(GL_SCISSOR_TEST);
 }
 
 /// Resets the scissor clipping rectangle to the full target
-void Renderer::resetClippingRect()
+void GraphicsDevice::resetClippingRect()
 {
 
 }
 
 /// Set the scissor clipping rectangle, it cannot exceed the current rectangle
 /// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
-void Renderer::setClippingRect(FloatRect rect)
+void GraphicsDevice::setClippingRect(FloatRect rect)
 {
 	glScissor(rect.left, m_target->getSize().y - (rect.top + rect.height), rect.width, rect.height);
 }
 
-void Renderer::pushClippingRect(FloatRect rect, bool isNormalized)
+void GraphicsDevice::pushClippingRect(FloatRect rect, bool isNormalized)
 {
 	setClippingEnabled(true);
 
@@ -259,7 +259,7 @@ void Renderer::pushClippingRect(FloatRect rect, bool isNormalized)
 	setClippingRect(rect);
 }
 
-void Renderer::popClippingRect()
+void GraphicsDevice::popClippingRect()
 {
 	m_scissorStack.pop();
 
@@ -267,47 +267,47 @@ void Renderer::popClippingRect()
 		setClippingEnabled(false);
 }
 
-void Renderer::setDepthTestEnabled(bool enable)
+void GraphicsDevice::setDepthTestEnabled(bool enable)
 {
 	if(enable) glEnable(GL_DEPTH_TEST);
 	else       glDisable(GL_DEPTH_TEST);
 }
 
-void Renderer::clearDepthBuffer()
+void GraphicsDevice::clearDepthBuffer()
 {
 	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::clearStencilBuffer()
+void GraphicsDevice::clearStencilBuffer()
 {
 	glClear(GL_STENCIL_BUFFER_BIT);
 }
 
-void Renderer::clearColorBuffer()
+void GraphicsDevice::clearColorBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::clearAllBuffers()
+void GraphicsDevice::clearAllBuffers()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 /// Set the default depth test mode: false
-void Renderer::setDefaultDepthTesting()
+void GraphicsDevice::setDefaultDepthTesting()
 {
 	setDepthTestEnabled(false);
 }
 
 /// Binds the default 1x1 full white texture at texture unit 0
-void Renderer::setDefaultTexture()
+void GraphicsDevice::setDefaultTexture()
 {
 	glActiveTexture(GL_TEXTURE0);
 	m_defaultTexture.bind();
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow
-void Renderer::drawDebugQuad(float x, float y, float angle, float width, float height, Color color)
+void GraphicsDevice::drawDebugQuad(float x, float y, float angle, float width, float height, Color color)
 {
 	Transform vtransform;
 	vtransform.rotate(angle);
@@ -339,7 +339,7 @@ void Renderer::drawDebugQuad(float x, float y, float angle, float width, float h
 }
 
 /// Draw a debug line with the given color - slow
-void Renderer::drawDebugLine(Vec2f begin, Vec2f end, Color color)
+void GraphicsDevice::drawDebugLine(Vec2f begin, Vec2f end, Color color)
 {
 	VertexArray2D varray(Render::Primitive::Lines, 2);
 	varray[0].position = begin;
@@ -352,7 +352,7 @@ void Renderer::drawDebugLine(Vec2f begin, Vec2f end, Color color)
 }
 
 /// Capture the currently bound frame buffer pixles to an image
-bool Renderer::readPixels(Image& image)
+bool GraphicsDevice::readPixels(Image& image)
 {
 	int width = static_cast<int>(m_target->getSize().x);
 	int height = static_cast<int>(m_target->getSize().y);
@@ -371,7 +371,7 @@ bool Renderer::readPixels(Image& image)
 }
 
 /// Orders the renderer to reload the default texture etc
-void Renderer::reloadResources()
+void GraphicsDevice::reloadResources()
 {
 	reloadDefaultShader();
 
@@ -381,7 +381,7 @@ void Renderer::reloadResources()
 }
 
 /// Draw a debug circle with the given color and radius - slow
-void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color)
+void GraphicsDevice::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color)
 {
 	VertexArray2D varray(Render::Primitive::TriangleFan, 0);
 	const float k_segments = 32.0f;
@@ -409,48 +409,48 @@ void Renderer::drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color col
 	draw(varray);
 }
 
-void Renderer::drawArrays(Render::Primitive::Type primitiveType, int start, int count)
+void GraphicsDevice::drawArrays(Render::Primitive::Type primitiveType, int start, int count)
 {
 	glDrawArrays(static_cast<GLenum>(m_primitiveTable[primitiveType]), static_cast<GLint>(start), static_cast<GLsizei>(count));
 }
 
-void Renderer::enableVertexAttribArray(unsigned int index)
+void GraphicsDevice::enableVertexAttribArray(unsigned int index)
 {
 	glEnableVertexAttribArray(static_cast<GLuint>(index));
 }
 
-void Renderer::disableVertexAttribArray(unsigned int index)
+void GraphicsDevice::disableVertexAttribArray(unsigned int index)
 {
 	glDisableVertexAttribArray(static_cast<GLuint>(index));
 }
 
-void Renderer::setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr)
+void GraphicsDevice::setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr)
 {
 	glVertexAttribPointer(static_cast<GLuint>(index), static_cast<GLint>(numComponents), static_cast<GLenum>(componentType), static_cast<GLboolean>(normalized), static_cast<GLsizei>(stride), static_cast<const GLvoid*>(ptr));
 }
 
 
 /// Draw a vertex array
-void Renderer::draw(const VertexArray2D& varray, const RenderState& state)
+void GraphicsDevice::draw(const VertexArray2D& varray, const RenderState& state)
 {
 	Log("Why are you calling draw on an abstract base class?");
 }
 
 /// Allows a drawable to draw itself
-void Renderer::draw(Drawable &drawable)
+void GraphicsDevice::draw(Drawable &drawable)
 {
 	drawable.onDraw(this);
 }
 
-void Renderer::setProjectionMatrix(const mat4& projection)
+void GraphicsDevice::setProjectionMatrix(const mat4& projection)
 {
 	m_projection = projection;
 }
-void Renderer::setViewMatrix(const mat4& view)
+void GraphicsDevice::setViewMatrix(const mat4& view)
 {
 	m_view = view;
 }
-void Renderer::setModelMatrix(const mat4& model)
+void GraphicsDevice::setModelMatrix(const mat4& model)
 {
 	m_model = model;
 }

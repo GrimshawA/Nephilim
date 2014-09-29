@@ -13,7 +13,7 @@ NEPHILIM_NS_BEGIN
 */
 class NEPHILIM_API UIContextMenu : public UIView{
 public:
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 };
 
 NEPHILIM_NS_END

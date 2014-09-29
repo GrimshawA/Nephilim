@@ -21,7 +21,7 @@ public:
 
 	void onAttach(UIView* view);
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);
 
 	Color mColor;
 };

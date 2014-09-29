@@ -1,6 +1,6 @@
 #include <Nephilim/Platform.h>
 #ifdef NEPHILIM_DESKTOP
-#include <Nephilim/RendererOpenGL.h>
+#include <Nephilim/Graphics/GL3/RendererOpenGL.h>
 #include "Nephilim/View.h"
 #include <Nephilim/NxMath.h>
 #include "Nephilim/CGL.h"
@@ -35,7 +35,7 @@ static const char gFragmentSource[] =
 
 
 RendererOpenGL::RendererOpenGL()
-: Renderer()
+: GraphicsDevice()
 {
 	m_shaderUsageHint = true;
 	m_type = OpenGL;
@@ -121,19 +121,19 @@ void RendererOpenGL::setShader(Shader& shader)
 
 void RendererOpenGL::setProjectionMatrix(const mat4& projection)
 {
-	Renderer::setProjectionMatrix(projection);
+	GraphicsDevice::setProjectionMatrix(projection);
 	if(m_activeShader) m_activeShader->setUniformMatrix("projection", projection.get());
 }
 
 void RendererOpenGL::setViewMatrix(const mat4& view)
 {
-	Renderer::setViewMatrix(view);
+	GraphicsDevice::setViewMatrix(view);
 	if(m_activeShader) m_activeShader->setUniformMatrix("view", view.get());
 }
 
 void RendererOpenGL::setModelMatrix(const mat4& model)
 {
-	Renderer::setModelMatrix(model);
+	GraphicsDevice::setModelMatrix(model);
 	if(m_activeShader) m_activeShader->setUniformMatrix("model", model.get());
 }
 /*

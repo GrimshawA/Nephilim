@@ -56,7 +56,7 @@ void UIComponentImage::onPropertySet(const StringList& targetObject, const Strin
 	}
 }
 
-void UIComponentImage::onRender(Renderer* renderer, UIView* view)
+void UIComponentImage::onRender(GraphicsDevice* renderer, UIView* view)
 {
 	RectangleShape backgroundRect;
 	backgroundRect.setRect(view->getBounds());

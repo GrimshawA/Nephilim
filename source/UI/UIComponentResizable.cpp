@@ -44,7 +44,7 @@ void UIComponentResizable::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentResizable::onRender(Renderer* renderer, UIView* view)
+void UIComponentResizable::onRender(GraphicsDevice* renderer, UIView* view)
 {
 
 }

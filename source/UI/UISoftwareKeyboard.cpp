@@ -55,7 +55,7 @@ bool UISoftwareKeyboard::onEventNotification(Event& event){
 }
 
 /// Callback to render itself, renders children
-void UISoftwareKeyboard::draw(Renderer* renderer){
+void UISoftwareKeyboard::draw(GraphicsDevice* renderer){
 
 	Text t;
 	t.setString(m_label);

@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/StringList.h>
-
+#include <Nephilim/NxMath.h>
 NEPHILIM_NS_BEGIN
 
 UIComponentText::UIComponentText()
@@ -62,7 +62,7 @@ void UIComponentText::onPropertySet(const StringList& targetObject, const String
 }
 
 
-void UIComponentText::onRender(Renderer* renderer, UIView* view)
+void UIComponentText::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
 	text.setCharacterSize(12);
 	text.setString(m_string);
@@ -85,6 +85,10 @@ void UIComponentText::onRender(Renderer* renderer, UIView* view)
 	text.setFont(*view->getContext()->m_defaultFont);
 	text.setOrigin(static_cast<int>(text.getOrigin().x + 0.5f), static_cast<int>(text.getOrigin().y + 0.5f));
 	text.setPosition(static_cast<int>(text.getPosition().x + 0.5f), static_cast<int>(text.getPosition().y + 0.5f));
+	
+	mat4 localTransform = mat4::translate(vec3(0.f, 20.f, 1.f)) * mat4::rotatex(math::pi);
+
+	renderer->setModelMatrix(parentTransform * localTransform);
 	renderer->draw(text);
 }
 

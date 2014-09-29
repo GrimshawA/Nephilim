@@ -2,7 +2,7 @@
 #define RendererOpenGL_h__
 
 #include <Nephilim/Platform.h>
-#include "Renderer.h"
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	\class RendererOpenGL
 	\brief Renderer specialization for desktop platform's OpenGL
 */
-class NEPHILIM_API RendererOpenGL : public Renderer
+class NEPHILIM_API RendererOpenGL : public GraphicsDevice
 {
 public:
 	/// Initialize OpenGL renderer

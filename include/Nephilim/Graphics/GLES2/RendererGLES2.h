@@ -2,7 +2,7 @@
 #define NephilimRendererGLES2_h__
 
 #include <Nephilim/Platform.h>
-#include "Renderer.h"
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -13,7 +13,7 @@ class Shader;
 	\class RendererGLES2
 	\brief Renderer specialization for OpenGL ES 2.0
 */
-class NEPHILIM_API RendererGLES2 : public Renderer
+class NEPHILIM_API RendererGLES2 : public GraphicsDevice
 {
 public:
 	RendererGLES2();

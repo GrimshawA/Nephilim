@@ -45,7 +45,11 @@ public:
 	vec2 tex_rect_size;
 
 	vec2 scale;
+
+	float rot = 0.f;
 };
+
+typedef ComponentSprite CSprite;
 
 };
 NEPHILIM_NS_END

@@ -21,7 +21,7 @@ public:
 	void addCharacter(Uint32 charCode);
 	void eraseCharacter();
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 
 	enum UILineEditTypes
 	{

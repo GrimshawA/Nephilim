@@ -14,12 +14,12 @@ namespace rzr
 	\class ComponentTransform
 	\brief 3D transform for a entity, scale + rotation + translation
 */
-class NEPHILIM_API ComponentTransform : public Component
+class NEPHILIM_API CTransform : public Component
 {
 public:
 	/// Initialize the transform to the "identity" transform
 	/// position(0,0,0), orientation as identity (down the -z axis), and a scale of 1
-	ComponentTransform();
+	CTransform();
 
 	/// Set the position from a vec3
 	void setPosition(const vec3& p);
@@ -43,6 +43,8 @@ public:
 	vec3 getRightVector();
 
 	mat4 getMatrix();
+
+	Int32 parent = -1;
 
 	Quaternion rotation;
 	vec3       position;

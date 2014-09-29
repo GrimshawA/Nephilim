@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/AnimationClip.h>
 #include <Nephilim/Skeleton.h>
 #include <Nephilim/Razer/Component.h>
@@ -26,7 +26,7 @@ public:
 
 	void update(const Time& deltaTime);
 
-	void render(Renderer* mRenderer);
+	void render(GraphicsDevice* mRenderer);
 
 	void getBoneTransforms(mat4* transforms, AnimationANM& animation, SkeletonSKL& skeleton);
 

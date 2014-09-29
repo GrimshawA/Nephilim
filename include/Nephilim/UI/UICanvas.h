@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 class UILayerView;
 class UIView;
 
@@ -22,14 +22,26 @@ class UIView;
 class NEPHILIM_API UICanvas : public Drawable
 {
 public:
+
+	/// The name of this canvas
+	String m_name;
+
+public:
+
 	/// Construct the window
 	UICanvas();
 
 	/// Returns a control in the hierarchy with the name, or NULL if not found
 	UIView* getControlByName(const String& name);
 
+	/// Adds a layer to this canvas for 2D controls
+	void addLayer2D(const String& name);
+
+	/// Adds a layer to this canvas for 3D controls
+	void addLayer3D(const String& name);
+
 	/// Drawable rendering
-	void onDraw(Renderer* renderer);
+	void onDraw(GraphicsDevice* renderer);
 
 	/// Set new boundaries for this document
 	/// Note: It is preferred that this rect is in absolute coordinates in the same coordinate system as the mouse coordinates passed in
@@ -77,7 +89,7 @@ public:
 	UICore& getContext();
 
 	/// Draw the UI
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 
 	/// Update the state of the ui
 	void update(float elapsedTime);

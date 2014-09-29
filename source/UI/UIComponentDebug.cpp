@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIComponentDebug.h>
 
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/RectangleShape.h>
 #include <Nephilim/UI/UIView.h>
@@ -49,7 +49,7 @@ void UIComponentDebugColor::onPropertySet(const StringList& targetObject, const 
 
 
 
-void UIComponentDebugColor::onRender(Renderer* renderer, UIView* view)
+void UIComponentDebugColor::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
 	RectangleShape backRect(view->getBounds(), mColor);
 	renderer->draw(backRect);

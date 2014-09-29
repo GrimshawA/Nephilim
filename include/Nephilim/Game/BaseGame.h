@@ -4,8 +4,13 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/GameCore.h>
 #include <Nephilim/StateStack.h>
+#include <Nephilim/ContentManager.h>
+#include <Nephilim/Localization.h>
+#include <Nephilim/Audio/AudioManager.h>
+#include <Nephilim/UI/UIManager.h>
 
 #include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Razer/Scene.h>
 
 #include <memory>
 
@@ -32,15 +37,35 @@ class BaseScriptInterface;
 class NEPHILIM_API BaseGame : public GameCore
 {
 public:
-
+	
 	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
-	StateStack stateStack;
+	StateStack stateManager;
 
 	/// The game is prepared to own an arbitrary number of scenes, stored in this object
-	std::unique_ptr<BaseSceneManager> sceneManager;
+	BaseSceneManager sceneManager;
+
+	/// The game is always prepared to handle N individual user interface systems
+	UIManager userInterfaceManager;
+
+	/// The game can hold multiple resource groups and ensures their deallocation when closing
+	ContentManager contentManager;
+
+	/// The game has multi language support natively, its lightweight and avoids boilerplate code
+	LocalizationManager languageManager;
+
+	/// The game has audio playback support built in, along with sound groups managing
+	AudioManager audioManager;
 
 	/// The game is prepared to be connected with 0 to many languages at once and they can all coexist in harmony
 	std::vector<BaseScriptInterface*> scriptEngines;
+
+
+public:
+	BaseGame();
+
+	/// Create a new scene or return if already exists
+	rzr::Scene* createScene(const String& name);
+
 };
 
 NEPHILIM_NS_END

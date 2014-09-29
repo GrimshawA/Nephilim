@@ -90,8 +90,8 @@ UIView* UIButton::clone()
 
 void UIButton::innerLanguageSwitch()
 {
-	String res =  mCore->m_localization.getString(m_baseLabel);
-	if(!res.empty())m_label = res;
+/*	String res =  mCore->m_localization.getString(m_baseLabel);
+	if(!res.empty())m_label = res;*/
 }
 
 void UIButton::setRawProperty(const String& name, const String& val)
@@ -136,7 +136,7 @@ UIButton::TextureInfo& UIButton::getStateTextureInfo(UIButtonState state)
 }
 
 
-void UIButton::draw(Renderer* renderer)
+void UIButton::draw(GraphicsDevice* renderer)
 {
 	if(mCore->m_defaultFont && !mCore->m_defaultFont->isLoaded())
 	{

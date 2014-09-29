@@ -1,6 +1,6 @@
 #include <Nephilim/RenderStateBackup.h>
 #include <Nephilim/Texture.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 
 NEPHILIM_NS_BEGIN
@@ -16,7 +16,7 @@ TextureBackup::~TextureBackup()
 	glBindTexture(GL_TEXTURE_2D, id);
 }
 
-RendererTransformBackup::RendererTransformBackup(Renderer* renderer)
+RendererTransformBackup::RendererTransformBackup(GraphicsDevice* renderer)
 : m_renderer(renderer)
 {
 	if(m_renderer)

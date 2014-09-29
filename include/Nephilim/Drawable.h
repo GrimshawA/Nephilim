@@ -5,7 +5,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 /**	
 	\ingroup Graphics
 	\class Drawable
@@ -22,7 +22,7 @@ class Drawable
 public:
 
 	/// Called to order rendering, when the drawing was issued in the traditional way ( m_renderer->draw(m_sprite) )
-	virtual void onDraw(Renderer* renderer) = 0;
+	virtual void onDraw(GraphicsDevice* renderer) = 0;
 };
 
 NEPHILIM_NS_END

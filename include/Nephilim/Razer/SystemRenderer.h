@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/System.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/Texture.h>
 #include <Nephilim/ContentManager.h>
@@ -60,7 +60,7 @@ public:
 	void renderMesh(Entity& entity);
 	void renderModel(Entity& entity);
 
-	Renderer*        mRenderer;
+	GraphicsDevice*        mRenderer;
 	ContentManager*  mContentManager;
 
 

@@ -54,7 +54,7 @@ public:
 	/// Toggle will expand/collapse the tree view
 	void toggle();
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 
 	float mLineHeight;
 
@@ -71,7 +71,7 @@ class NEPHILIM_API UIComponentTreeViewItem : public UIComponent
 public:
 	void toggle();
 
-	void onRender(Renderer* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view);
 };
 
 NEPHILIM_NS_END

@@ -35,7 +35,7 @@ public:
 
 	void setCharacterLimit(std::size_t limit);
 
-	void draw(Renderer* renderer);
+	void draw(GraphicsDevice* renderer);
 
 	Text t;
 	String s;

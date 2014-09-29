@@ -11,7 +11,7 @@ class String;
 class Time;
 class StateStack;
 class StateStackTransition;
-class Renderer;
+class GraphicsDevice;
 class Event;
 
 /**
@@ -73,10 +73,10 @@ public:
 		/// Draws the state with the current renderer
 		/// If returns true, other states in the stack will be rendered
 		/// Otherwise this state has exclusivity over drawing
-		virtual bool onDraw(Renderer *renderer);
+		virtual bool onDraw(GraphicsDevice *renderer);
 
 		/// Draw the state
-		virtual void onRender(Renderer* renderer);
+		virtual void onRender(GraphicsDevice* renderer);
 
 		StateStack *m_parent;
 

@@ -14,7 +14,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Renderer;
+class GraphicsDevice;
 
 struct TorusKnotDef
 {
@@ -86,7 +86,7 @@ public:
 
 	void toVertexArray(VertexArray& varray);
 
-	virtual void onDraw(Renderer* renderer);
+	virtual void onDraw(GraphicsDevice* renderer);
 
 	std::vector<Vec3f> m_vertices;
 	std::vector<Color> m_colors;

@@ -30,7 +30,7 @@ void State::onUpdate(const Time &time)
 	
 }
 
-void State::onRender(Renderer* renderer)
+void State::onRender(GraphicsDevice* renderer)
 {
 
 }
@@ -129,7 +129,7 @@ bool State::launchBindedState(const String& stateName)
 	/// Draws the state with the current renderer
 	/// If returns true, other states in the stack will be rendered
 	/// Otherwise this state has exclusivity over drawing
-	bool State::onDraw(Renderer *renderer){
+	bool State::onDraw(GraphicsDevice *renderer){
 		return true;
 	};
 

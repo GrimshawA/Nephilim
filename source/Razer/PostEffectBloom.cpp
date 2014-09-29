@@ -1,6 +1,6 @@
 #include <Nephilim/Razer/PostEffectBloom.h>
 #include <Nephilim/Texture.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/File.h>
 #include <Nephilim/RectangleShape.h>
@@ -54,7 +54,7 @@ PostEffectBloom::PostEffectBloom()
 	mSecondPassTextures[1].setSmooth(true);*/
 }
 
-void PostEffectBloom::apply(Renderer* renderer, Texture& renderTexture)
+void PostEffectBloom::apply(GraphicsDevice* renderer, Texture& renderTexture)
 {
 	
 	// After the brightness pass operation, mBrightnessTexture contains the output of the scene
@@ -76,7 +76,7 @@ void PostEffectBloom::apply(Renderer* renderer, Texture& renderTexture)
 	renderer->draw(finalComposite);
 }
 
-void PostEffectBloom::brightnessPass(Renderer* mRenderer)
+void PostEffectBloom::brightnessPass(GraphicsDevice* mRenderer)
 {
 	// Trigger the right shader
 	mRenderer->setShader(mBrightnessShader);

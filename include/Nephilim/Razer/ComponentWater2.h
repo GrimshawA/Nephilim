@@ -2,7 +2,7 @@
 #define NephilimComponentWater2_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Renderer.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN
@@ -20,7 +20,7 @@ public:
 
 	void init();
 
-	void render(Renderer* mRenderer);
+	void render(GraphicsDevice* mRenderer);
 
 	bool ready;
 };

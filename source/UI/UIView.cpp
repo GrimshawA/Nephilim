@@ -5,6 +5,8 @@
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentText.h>
 
+#include <Nephilim/VertexArray.h>
+#include <Nephilim/CGL.h>
 
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/StringList.h>
@@ -201,10 +203,10 @@ String UIView::getStringProperty(const String& propertyName)
 }
 
 /// Called before rendering the children UIView ( Virtual )
-void UIView::preRender(Renderer* renderer){}
+void UIView::preRender(GraphicsDevice* renderer){}
 
 /// Called after rendering the children UIView ( Virtual )
-void UIView::postRender(Renderer* renderer){}
+void UIView::postRender(GraphicsDevice* renderer){}
 
 void UIView::setPosition(float x, float y)
 {
@@ -506,10 +508,54 @@ UILayout* UIView::getLayout()
 	return m_layoutController;
 };
 
-
 /// Callback to render itself, renders children
-void UIView::draw(Renderer* renderer)
+void UIView::draw(GraphicsDevice* renderer, mat4 transform)
 {
+
+
+
+	VertexArray va;
+	va.addAttribute(sizeof(float), 2, VertexFormat::Position);
+	va.addAttribute(sizeof(float), 4, VertexFormat::Color);
+
+	va.allocateData(6);
+
+	struct vertex_f
+	{
+		vec2 p;
+		vec4 c;
+	};
+
+	vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va.data[0]);
+
+	va_raw[0].p = vec2(size.x, 0.f);
+	va_raw[1].p = vec2(size.x, size.y);
+	va_raw[2].p = vec2(0.f, size.y);
+
+	va_raw[3].p = vec2(size.x, 0.f);
+	va_raw[4].p = vec2(0.f, size.y);
+	va_raw[5].p = vec2(0.f, 0.f);
+
+	va_raw[0].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[1].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[2].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[3].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[4].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[5].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+
+	renderer->enableVertexAttribArray(0);
+	renderer->enableVertexAttribArray(1);
+
+	renderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(0));
+	renderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(1));
+
+	renderer->setModelMatrix(transform);
+	renderer->setDefaultTexture();
+	renderer->drawArrays(Render::Primitive::Triangles, 0, 6);
+
+	renderer->disableVertexAttribArray(0);
+	renderer->disableVertexAttribArray(1);
+
 	// back
 	
 	/*if(components.size() == 0)
@@ -1170,7 +1216,7 @@ void UIView::setCenter(float x, float y)
 	updateLayout();
 };
 
-void UIView::innerDraw(Renderer* renderer, const mat4& transform )
+void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 {
 	// Invisible UIView, stop rendering itself or children
 	if(!m_visible)
@@ -1182,17 +1228,27 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 	{
 		renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
 	}
-	draw(renderer);
+
+	mat4 absoluteTransform = mat4::identity;
+
+	mat4 localTransform = mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x);
+
+	absoluteTransform = transform * localTransform;
+
+	// Tel
+	draw(renderer, absoluteTransform);
 
 
 	for(std::size_t i = 0; i < components.size(); ++i)
 	{
-		components[i]->onRender(renderer, this);
+		components[i]->onRender(renderer, this, absoluteTransform);
 	}
+
 	if(m_clipContents)
 	{
 		renderer->popClippingRect();
 	}
+
 	// -- Pre Render Step (Before Children)
 	preRender(renderer);
 	
@@ -1210,8 +1266,9 @@ void UIView::innerDraw(Renderer* renderer, const mat4& transform )
 	}
 
 	// Let children render as well
-	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->innerDraw(renderer, transform * m_transform);
+	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
+		(*it)->drawItself(renderer, absoluteTransform);
 	}
 
 	if(m_clipChildren)

@@ -14,7 +14,19 @@ UICanvas::UICanvas()
 	
 }
 
-void UICanvas::onDraw(Renderer* renderer)
+/// Adds a layer to this canvas for 2D controls
+void UICanvas::addLayer2D(const String& name)
+{
+	addSurface(name);
+}
+
+/// Adds a layer to this canvas for 3D controls
+void UICanvas::addLayer3D(const String& name)
+{
+	addSurface(name);
+}
+
+void UICanvas::onDraw(GraphicsDevice* renderer)
 {
 	//m_backgroundColor = Color::White;
 	//renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, m_backgroundColor);
@@ -227,7 +239,7 @@ UILayerView* UICanvas::addSurface(const String& name)
 
 
 /// Draw the UI
-void UICanvas::draw(Renderer* renderer){
+void UICanvas::draw(GraphicsDevice* renderer){
 	//renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, m_backgroundColor);
 	//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
 	//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);
@@ -383,12 +395,12 @@ int UICanvas::getModalSurfaceCount()
 /// Set the current language of the ui system
 void UICanvas::setLanguage(const String& shortLanguageName)
 {
-	m_state.m_activeLanguage = shortLanguageName;
+	/*m_state.m_activeLanguage = shortLanguageName;
 	m_state.m_localization.m_currentLanguage = shortLanguageName;
 	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		(*it)->switchLanguage();
-	}
+	}*/
 }
 
 /// Process a mouse press event
