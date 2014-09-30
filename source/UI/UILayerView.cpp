@@ -13,6 +13,11 @@ UILayerView::UILayerView()
 
 }
 
+void UILayerView::setCoordinateSpace(UI::CoordinateSpaces coordinateSpace)
+{
+	mCoordinateSpace = coordinateSpace;
+}
+
 void UILayerView::destroy()
 {
 	if(getParentDocument())
@@ -21,10 +26,18 @@ void UILayerView::destroy()
 	}
 }
 
-void UILayerView::draw(GraphicsDevice* renderer)
+void UILayerView::draw(GraphicsDevice* graphicsDevice)
 {
+	if (mCoordinateSpace == UI::WorldSpace)
+	{
+		// Set camera matrices
+		graphicsDevice->setProjectionMatrix(projectionMatrix);
+		graphicsDevice->setViewMatrix(viewMatrix);
+	}
+	
+
 	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
-		(*it)->drawItself(renderer);
+		(*it)->drawItself(graphicsDevice);
 	}
 };
 

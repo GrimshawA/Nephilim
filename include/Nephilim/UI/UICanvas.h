@@ -57,7 +57,7 @@ public:
 	void setLanguage(const String& shortLanguageName);
 
 	/// Get a surface by its name
-	UILayerView* getSurfaceByName(const String& name);
+	UILayerView* getLayer(const String& name);
 
 	/// Get the count of modal surfaces
 	int getModalSurfaceCount();
@@ -120,10 +120,6 @@ public:
 
 	/// Get a surface by its name. It will be created if it does not yet exist
 	UILayerView* operator[](const String& name);
-
-	/// Get a surface directly by its index
-	/// You must ensure that index is valid
-	UILayerView* operator[](unsigned int index);
 
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 	Color m_backgroundColor;

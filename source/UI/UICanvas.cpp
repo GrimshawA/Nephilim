@@ -44,7 +44,7 @@ void UICanvas::onDraw(GraphicsDevice* renderer)
 	m_surfaceContainerLock--;
 }
 
-UILayerView* UICanvas::getSurfaceByName(const String& name)
+UILayerView* UICanvas::getLayer(const String& name)
 {
 	UILayerView* found = NULL;
 	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
@@ -148,20 +148,13 @@ int UICanvas::getSurfaceCount()
 /// Get a surface by its name. It will be created if it does not yet exist
 UILayerView* UICanvas::operator[](const String& name)
 {
-	UILayerView* surface = getSurfaceByName(name);
+	UILayerView* surface = getLayer(name);
 	if(!surface)
 	{
 		surface = addSurface(name);
 	}
 
 	return surface;
-}
-
-/// Get a surface directly by its index
-/// You must ensure that index is valid
-UILayerView* UICanvas::operator[](unsigned int index)
-{
-	return m_surfaces[index];
 }
 
 UILayerView* UICanvas::top()
