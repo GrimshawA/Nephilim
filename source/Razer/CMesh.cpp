@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/ComponentMesh.h>
+#include <Nephilim/Razer/CMesh.h>
 #include <Nephilim/Tilemap.h>
 #include <Nephilim/Logger.h>
 
@@ -7,12 +7,12 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-ComponentMesh::ComponentMesh()
+CMesh::CMesh()
 {
 }
 
 /// here i assemble the cube data from a single tilemap
-bool ComponentMesh::loadCubesFromTilemap(Tilemap* tilemap)
+bool CMesh::loadCubesFromTilemap(Tilemap* tilemap)
 {
 	Tilemap::Layer* tileLayer = tilemap->getLayerByName("LevelData");
 

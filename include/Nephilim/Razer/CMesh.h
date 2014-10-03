@@ -19,13 +19,13 @@ class Tilemap;
 namespace rzr {
 
 /**
-	\class ComponentMesh
-	\brief 
+	\class CMesh
+	\brief Component: static mesh for manipulating and displaying a geometry
 */
-class NEPHILIM_API ComponentMesh : public Component
+class NEPHILIM_API CMesh : public Component
 {
 public:
-	ComponentMesh();
+	CMesh();
 
 	bool loadCubesFromTilemap(Tilemap* tilemap);
 

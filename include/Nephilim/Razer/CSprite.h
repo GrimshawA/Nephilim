@@ -12,14 +12,14 @@ namespace rzr
 {
 
 /**
-	\class ComponentSprite
-	\brief A sprite is basically a flat rectangle with a texture assigned to it
+	\class CSprite
+	\brief Component: 2D sprite
 */
-class NEPHILIM_API ComponentSprite : public Component
+class NEPHILIM_API CSprite : public Component
 {
 public:
 	/// Initialize the sprite with no area
-	ComponentSprite();
+	CSprite();
 
 	/// Set the size of the sprite
 	void setSize(const vec2& s);
@@ -49,7 +49,7 @@ public:
 	float rot = 0.f;
 };
 
-typedef ComponentSprite CSprite;
+typedef CSprite CSprite;
 
 };
 NEPHILIM_NS_END

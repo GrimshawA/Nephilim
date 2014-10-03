@@ -5,11 +5,11 @@
 #include <Nephilim/Razer/ComponentTilemap2D.h>
 #include <Nephilim/Razer/ComponentTerrain.h>
 #include <Nephilim/Razer/CCamera.h>
-#include <Nephilim/Razer/ComponentSprite.h>
+#include <Nephilim/Razer/CSprite.h>
 #include <Nephilim/Razer/CTransform.h>
 #include <Nephilim/Razer/ComponentParticleEmitter.h>
 #include <Nephilim/Razer/ComponentModel.h>
-#include <Nephilim/Razer/ComponentMesh.h>
+#include <Nephilim/Razer/CMesh.h>
 #include <Nephilim/Razer/ComponentVehicle.h>
 #include <Nephilim/Razer/ComponentSkinnedModel.h>
 #include <Nephilim/Razer/ComponentWater.h>

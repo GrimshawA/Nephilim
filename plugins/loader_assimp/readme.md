@@ -1,0 +1,1 @@
+# Official Plugin: Model importer / exporter using Assimp 3.1.1

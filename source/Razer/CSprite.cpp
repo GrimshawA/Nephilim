@@ -1,9 +1,9 @@
-#include <Nephilim/Razer/ComponentSprite.h>
+#include <Nephilim/Razer/CSprite.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr{
 
-ComponentSprite::ComponentSprite()
+CSprite::CSprite()
 : width(1.f)
 , height(1.f)
 , scale(1.f, 1.f)
@@ -13,26 +13,26 @@ ComponentSprite::ComponentSprite()
 }
 
 /// Set the size of the sprite
-void ComponentSprite::setSize(const vec2& s)
+void CSprite::setSize(const vec2& s)
 {
 	width = s.x;
 	height = s.y;
 }
 
 /// Set the size of the sprite
-void ComponentSprite::setSize(float sx, float sy)
+void CSprite::setSize(float sx, float sy)
 {
 	width = sx;
 	height = sy;
 }
 
 /// Get the size of the sprite
-vec2 ComponentSprite::getSize()
+vec2 CSprite::getSize()
 {
 	return vec2(width, height);
 }
 
-void ComponentSprite::setTextureRect(float x, float y, float w, float h)
+void CSprite::setTextureRect(float x, float y, float w, float h)
 {
 	tex_rect_pos.x = x;
 	tex_rect_pos.y = y;
@@ -40,7 +40,7 @@ void ComponentSprite::setTextureRect(float x, float y, float w, float h)
 	tex_rect_size.y = h;
 }
 
-void ComponentSprite::setColor(int r, int g, int b)
+void CSprite::setColor(int r, int g, int b)
 {
 	color.r = r;
 	color.g = g;

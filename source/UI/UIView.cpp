@@ -1093,12 +1093,15 @@ void UIView::destroy()
 
 void UIView::destroyChild(UIView* child)
 {
-	if(m_childrenLock > 0)
+	UIControlOperation op;
+	op.type =  UIControlOperation::Destruction;
+	op.control = child;
+	m_pendingOperations.push_back(op);	
+	
+	// -- if not busy, apply the changes now
+	if (m_childrenLock == 0)
 	{
-		UIControlOperation op;
-		op.type =  UIControlOperation::Destruction;
-		op.control = child;
-		m_pendingOperations.push_back(op);
+		applyPendingOperations();
 	}
 }
 
