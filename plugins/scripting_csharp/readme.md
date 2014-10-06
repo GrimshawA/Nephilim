@@ -1,0 +1,1 @@
+# Official Plugin: Model importer / exporter using the official FBX SDK
