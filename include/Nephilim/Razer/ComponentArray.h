@@ -21,6 +21,10 @@ class ComponentArray : public ComponentManager
 {
 public:
 
+
+	/// Get the number of components being used (not the amount allocated by the pool)
+	virtual std::size_t getInstanceCount();
+
 	virtual Component* getComponentFromEntity(TEntity e);
 
 	/// Creates a new component mapped to an entity
@@ -32,6 +36,12 @@ public:
 	/// Maps entity id to its component
 	std::map<TEntity, std::size_t> mBinding;
 };
+
+template<typename T>
+std::size_t ComponentArray<T>::getInstanceCount()
+{
+	return mComponents.size();
+}
 
 template<typename T>
 Component* ComponentArray<T>::getComponentFromEntity(TEntity e)

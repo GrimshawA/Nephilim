@@ -1,4 +1,4 @@
-#include <Nephilim/Quaternion.h>
+#include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
 

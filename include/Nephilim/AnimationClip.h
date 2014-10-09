@@ -2,7 +2,7 @@
 #define NephilimAnimationClip_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Quaternion.h>
+#include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Strings.h>
 

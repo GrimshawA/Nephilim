@@ -27,7 +27,7 @@
 #define NephilimSound_h__
 
 #include <Nephilim/Platform.h>
-#include "SoundSource.h"
+#include "SoundSourceSF.h"
 #include "Time.h"
 
 #include <cstdlib>

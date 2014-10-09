@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Matrix.h>
-#include <Nephilim/Quaternion.h>
+#include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN

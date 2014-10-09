@@ -2,8 +2,9 @@
 #define NephilimRazerSystemRenderer_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Razer/System.h>
+#include <Nephilim/Razer/RenderSystem.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
+
 #include <Nephilim/Framebuffer.h>
 #include <Nephilim/Texture.h>
 #include <Nephilim/ContentManager.h>
@@ -34,7 +35,7 @@ class Entity;
 	Optionally, it can also render directly to the screen when there are 
 	no post processing steps required. (better performance on android would be a use case)
 */
-class NEPHILIM_API SystemRenderer : public System
+class NEPHILIM_API SystemRenderer : public RenderSystem
 {
 public:
 	SystemRenderer();

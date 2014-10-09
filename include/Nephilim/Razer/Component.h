@@ -2,6 +2,7 @@
 #define NephilimRazerComponent_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Razer/ComponentHandle.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr {

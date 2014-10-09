@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/EntityManager.h>
+#include <Nephilim/Razer/CPointLight.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

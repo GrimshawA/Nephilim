@@ -7,6 +7,7 @@
 #include <Nephilim/Razer/CCamera.h>
 #include <Nephilim/Razer/CSprite.h>
 #include <Nephilim/Razer/CTransform.h>
+#include <Nephilim/Razer/CPointLight.h>
 #include <Nephilim/Razer/ComponentParticleEmitter.h>
 #include <Nephilim/Razer/ComponentModel.h>
 #include <Nephilim/Razer/CMesh.h>
@@ -30,7 +31,7 @@ namespace rzr
 {
 	
 SystemRenderer::SystemRenderer()
-: System()
+: RenderSystem()
 , mRenderer(NULL)
 , mContentManager(NULL)
 , mTargetWidth(1900.f)
@@ -172,6 +173,21 @@ void SystemRenderer::update(const Time& deltaTime)
 /// Render scene gets all scene render data and outputs it to the active target
 void SystemRenderer::renderScene()
 {
+
+	RectangleShape c(FloatRect(100, 100, 1000, 1000), Color::Grass);
+	mRenderer->draw(c);
+
+	ComponentManager* meshComponentManager = mScene->getComponentManager<CMesh>();
+	ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
+	
+	//Log("Num meshes: %d", meshComponentManager->getInstanceCount());
+
+	// -- We have N meshes, we need to render all of them, but take into account the lights in the scene
+	for (std::size_t i = 0; i < meshComponentManager->getInstanceCount(); ++i)
+	{
+
+	}
+
 /*	mat4 viewMatrix;
 	mat4 projectionMatrix;
 	vec3 cameraPosition;

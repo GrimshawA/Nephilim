@@ -23,7 +23,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/SoundSource.h>
+#include <Nephilim/SoundSourceSF.h>
 #include "ALCheck.hpp"
 
 NEPHILIM_NS_BEGIN

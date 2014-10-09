@@ -2,8 +2,8 @@
 #define NephilimQuaternion_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
-#include "Matrix.h"
+#include <Nephilim/Vectors.h>
+#include <Nephilim/Matrix.h>
 #include <Nephilim/Spherical.h>
 
 NEPHILIM_NS_BEGIN
