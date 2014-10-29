@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Vectors.h>
-#include <Nephilim/AABB.h>
+#include <Nephilim/Math/AABB.h>
 
 NEPHILIM_NS_BEGIN
 

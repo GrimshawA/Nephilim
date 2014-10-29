@@ -10,10 +10,11 @@
 #include <map>
 
 NEPHILIM_NS_BEGIN
+
+class World;
+
 namespace rzr
 {
-
-class Scene;
 class Entity;
 
 /**
@@ -32,7 +33,7 @@ public:
 
 	virtual void render(){}
 
-	Scene* mScene;
+	World* mScene;
 };
 
 };

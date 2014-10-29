@@ -1,4 +1,4 @@
-#include <Nephilim/GameCore.h>
+#include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Engine.h>
 #include <Nephilim/CGL.h>
 
@@ -14,6 +14,12 @@ GameCore::GameCore()
 , m_windowTitle("No name window")
 , mCloseRequested(false)
 {
+}
+
+/// Create a new scene or return if already exists
+World* GameCore::createScene(const String& name)
+{
+	return sceneManager.createScene(name);
 }
 
 /// Get a pointer to the engine

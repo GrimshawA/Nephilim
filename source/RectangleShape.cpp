@@ -218,7 +218,7 @@ void RectangleShape::onDraw(GraphicsDevice* renderer)
 	if(m_texture) m_texture->bind();
 	else renderer->setDefaultTexture();
 
-	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	//renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_geometry);
 	if(m_outlineThickness > 0.f)
 	{

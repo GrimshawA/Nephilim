@@ -25,10 +25,15 @@ public:
 	/// Get the number of components being used (not the amount allocated by the pool)
 	virtual std::size_t getInstanceCount();
 
+	virtual Component* getInstance(std::size_t index);
+
 	virtual Component* getComponentFromEntity(TEntity e);
 
 	/// Creates a new component mapped to an entity
 	virtual Component* createComponentForEntity(TEntity e);
+
+	/// Get the entity to which the instance belongs to
+	virtual TEntity getInstanceEntity(std::size_t index);
 
 	/// Array of components of a single type (Contiguous in memory)
 	std::vector<T> mComponents;
@@ -42,6 +47,26 @@ std::size_t ComponentArray<T>::getInstanceCount()
 {
 	return mComponents.size();
 }
+
+template<typename T>
+Component* ComponentArray<T>::getInstance(std::size_t index)
+{
+	return &mComponents[index];
+}
+
+/// Get the entity to which the instance belongs to
+template<typename T>
+TEntity ComponentArray<T>::getInstanceEntity(std::size_t index)
+{
+	for (std::map<TEntity, std::size_t>::iterator it = mBinding.begin(); it != mBinding.end(); ++it)
+	{
+		if (it->second == index)
+		{
+			return it->first;
+		}
+	}
+}
+
 
 template<typename T>
 Component* ComponentArray<T>::getComponentFromEntity(TEntity e)

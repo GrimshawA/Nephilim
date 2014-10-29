@@ -4,7 +4,11 @@
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/StringList.h>
+
 #include <Nephilim/UI/UIComponentDebug.h>
+#include <Nephilim/UI/UIComponentButton.h>
+
+#include <Nephilim/UI/UIBoxLayout.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -69,6 +73,34 @@ void processComponentsString(UIView* view, const String& str)
 
 void setup_view_from_node(UIView* view, pugi::xml_node& node)
 {
+	Log("preparing view: %s", node.name());
+
+	// Assumes a button class
+	if (String(node.name()) == "button")
+	{
+		view->addComponent(new UIComponentButton("stuff"));
+		view->setRect(0.f, 0.f, 100.f, 20.f);
+		Log("button=>");
+
+		pugi::xml_attribute attr = node.attribute("label");
+		if (attr)
+		{
+			view->getComponent<UIComponentButton>()->mString = attr.as_string("undefined");
+		}
+
+		pugi::xml_attribute attr_texture = node.attribute("texture");
+		if (attr_texture)
+		{
+			view->getComponent<UIComponentButton>()->mNormalTextureSource = attr_texture.as_string("/");
+		}
+
+		pugi::xml_attribute attr_texture_h = node.attribute("texture_h");
+		if (attr_texture_h)
+		{
+			view->getComponent<UIComponentButton>()->mHoverTextureSource = attr_texture_h.as_string("/");
+		}
+	}
+
 	for(pugi::xml_attribute_iterator it = node.attributes_begin(); it != node.attributes_end(); ++it)
 	{
 		String attributeName = it->name();
@@ -141,6 +173,7 @@ void setup_view_from_node(UIView* view, pugi::xml_node& node)
 				}
 
 				view->setLocalPosition(width, height);
+				Log("position set to %f, %f", width, height);
 			}
 		}
 		else if(attributeName == "components")
@@ -159,6 +192,22 @@ void setup_view_from_node(UIView* view, pugi::xml_node& node)
 				int b = elems[2].toInt();
 
 				view->addComponent(new UIComponentDebugColor(Color(r,g,b)));
+			}
+		}
+		// Check if we have a layouter
+		else if (attributeName == "layout")
+		{
+			String layout_string = it->as_string("");
+
+			Log("LAYOUT: %s", it->as_string());
+			if (layout_string == "box_h")
+			{
+				view->setLayout(new UIBoxLayout(UIBoxLayout::Horizontal, false));
+			}
+			if (layout_string == "box_v")
+			{
+				view->setLayout(new UIBoxLayout(UIBoxLayout::Vertical, false));
+
 			}
 		}
 	}
@@ -184,10 +233,16 @@ void add_node_to_view(pugi::xml_node& node, UIView* view)
 void UILoader::configure(UIView* view, const String& filename)
 {
 	UILoaderXML xmlLoader;
-	xmlLoader.loadFromFile(filename);
+	if (!xmlLoader.loadFromFile(filename))
+	{
+		Log("FAILED TO LOCATE FILE");
+	}
 
 	pugi::xml_node root_node = xmlLoader.document.first_child();
-	Log("Hello %s", root_node.name());
+	Log("Hello %s|", root_node.name()); 
+
+	// Apply the root node configs to our root view
+	setup_view_from_node(view, root_node);
 
 	// Iterate all the child nodes of the root to add to view
 	for(pugi::xml_node_iterator it = root_node.begin(); it != root_node.end(); ++it)

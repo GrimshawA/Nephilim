@@ -1,5 +1,5 @@
 #include <Nephilim/Razer/SystemRenderer.h>
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/Entity.h>
 #include <Nephilim/Razer/Entity.inl>
 #include <Nephilim/Razer/ComponentTilemap2D.h>
@@ -174,8 +174,8 @@ void SystemRenderer::update(const Time& deltaTime)
 void SystemRenderer::renderScene()
 {
 
-	RectangleShape c(FloatRect(100, 100, 1000, 1000), Color::Grass);
-	mRenderer->draw(c);
+// 	RectangleShape c(FloatRect(100, 100, 1000, 1000), Color::Grass);
+// 	mRenderer->draw(c);
 
 	ComponentManager* meshComponentManager = mScene->getComponentManager<CMesh>();
 	ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
@@ -187,6 +187,8 @@ void SystemRenderer::renderScene()
 	{
 
 	}
+
+	renderAllSprites();
 
 /*	mat4 viewMatrix;
 	mat4 projectionMatrix;
@@ -383,6 +385,30 @@ void SystemRenderer::renderScene()
 		}
 	}*/
 }
+
+void SystemRenderer::renderAllSprites()
+{
+	// Let's dirty draw all sprites
+	ComponentManager* spriteComponentManager = mScene->getComponentManager<CSprite>();
+	ComponentManager* transformComponentManager = mScene->getComponentManager<CTransform>();
+
+	// Iterate all sprites we have spawned
+	for (std::size_t i = 0; i < spriteComponentManager->getInstanceCount(); ++i)
+	{
+		// Get the i-th component in the manager
+		CSprite* sprite = static_cast<CSprite*>(spriteComponentManager->getInstance(i));
+		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(spriteComponentManager->getInstanceEntity(i));
+		
+
+		mRenderer->setModelMatrix(transform->getMatrix());
+		// draw
+		RectangleShape c;
+		c.setSize(sprite->width, sprite->height);
+		c.setColor(sprite->color);
+		mRenderer->draw(c);
+	}
+}
+
 
 void SystemRenderer::render()
 {

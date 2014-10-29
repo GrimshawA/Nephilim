@@ -1,5 +1,5 @@
 #include <Nephilim/Engine.h>
-#include <Nephilim/GameCore.h>
+#include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/View.h>

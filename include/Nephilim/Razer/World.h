@@ -13,21 +13,20 @@
 #include <vector>
 #include <map>
 
+
+
 NEPHILIM_NS_BEGIN
-namespace rzr {
-
+using namespace rzr;
 /**
-	\class Scene
-	\brief Represents a 3D world
-
-	Scene is a container for entities, which by contain components themselves.
-	For short, what a scene does is to hold world data, which is simulated by specialized systems.
-
-	In each rendering frame, there is also a specialized system which is able to produce a final image of the world's data
+	\class World
+	\brief Contains a single world space, filled with entities and components
 */
-class NEPHILIM_API Scene
+class NEPHILIM_API World
 {
 public:
+
+	///< Name of this world
+	String name;
 
 	/// This class is responsible for managing the entities alive
 	EntityManager entityManager;
@@ -42,7 +41,7 @@ public:
 
 
 public:
-	Scene();
+	World();
 
 	/// Allocate a component manager to type T as a ComponentArray<T>
 	template<typename T>
@@ -65,10 +64,13 @@ public:
 	void removeEntity(Int32 id);
 
 	TEntity getEntityByIndex(std::size_t index);
+
+	template<typename T>
+	void createComponent(T c, TEntity e);
 };
 
 template<typename T>
-ComponentManager* Scene::getComponentManager()
+ComponentManager* World::getComponentManager()
 {
 	if (componentManagers.find(std::type_index(typeid(T))) == componentManagers.end())
 	{
@@ -78,8 +80,18 @@ ComponentManager* Scene::getComponentManager()
 	return componentManagers[std::type_index(typeid(T))];
 }
 
+// -- Copy a component to its manager and bind to entity e
 template<typename T>
-void Scene::createDefaultComponentManager()
+void World::createComponent(T c, TEntity e)
+{
+	ComponentManager* componentManager = getComponentManager<T>();
+
+	T* component = static_cast<T*>(componentManager->createComponentForEntity(e));
+	*component = c;
+}
+
+template<typename T>
+void World::createDefaultComponentManager()
 {
 	if (componentManagers.find(std::type_index(typeid(T))) != componentManagers.end())
 	{
@@ -90,25 +102,5 @@ void Scene::createDefaultComponentManager()
 	componentManagers[std::type_index(typeid(T))] = new ComponentArray<T>();
 }
 
-/*
-template<class CType>
-ComponentArray<CType>& Scene::getComponentList()
-{
-	// Doesn't exist yet
-	if(componentArrays.find(std::type_index(typeid(CType))) == componentArrays.end())
-	{
-		componentArrays[std::type_index(typeid(CType))] = new ComponentArray<CType>();
-	}
-
-	return *static_cast<ComponentArray<CType>*>(componentArrays[std::type_index(typeid(CType))]);
-}
-
-template<class CType>
-std::type_index getTypeOf()
-{
-	return std::type_index(typeid(CType));
-}*/
-
-};
 NEPHILIM_NS_END
 #endif // NephilimScene_h__

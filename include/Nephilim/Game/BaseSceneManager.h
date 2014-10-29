@@ -2,7 +2,7 @@
 #define NephilimGameBaseSceneManager_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 
 NEPHILIM_NS_BEGIN
 using namespace rzr;
@@ -33,10 +33,15 @@ class NEPHILIM_API BaseSceneManager
 {
 public:
 
-	/// Create a new scene with a string name
-	Scene* createScene(const String& name);
+	std::vector<World*> mScenes;
 
-	std::vector<rzr::Scene*> mScenes;
+public:
+
+	/// Create a new scene with a string name
+	World* createScene(const String& name);
+
+	/// Get a scene by its name
+	World* getScene(const String& name);
 };
 
 NEPHILIM_NS_END

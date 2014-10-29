@@ -488,9 +488,9 @@ UIView* UIView::getChild(int index)
 };
 
 /// Get the current size of the control
-Vec2f UIView::getSize()
+vec2 UIView::getSize()
 {
-	return Vec2f(mRect.width, mRect.height);
+	return size;
 }
 
 /// Set a new layout to the control
@@ -1156,6 +1156,9 @@ void UIView::update(float elapsedTime)
 	{
 		components[i]->onUpdate(Time::fromSeconds(elapsedTime), this);
 	}
+
+	// let the layouter do its magic
+	updateLayout();
 }
 
 /// Get the current size of the control that encompasses all its children
@@ -1207,6 +1210,15 @@ void UIView::setSize(float width, float height)
 	for(std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->onResize(this);
+	}
+
+	size.x = width;
+	size.y = height;
+
+	// lets try to notify the parent layouters 
+	if (getParent() && getParent()->getLayout())
+	{
+		//getParent()->getLayout()->doLayout(getParent());
 	}
 };
 

@@ -61,6 +61,8 @@ public:
 	void renderMesh(Entity& entity);
 	void renderModel(Entity& entity);
 
+	void renderAllSprites();
+
 	GraphicsDevice*        mRenderer;
 	ContentManager*  mContentManager;
 

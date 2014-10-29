@@ -4,29 +4,71 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/VirtualFS.h>
 #include <Nephilim/ContentManager.h>
-#include "Clock.h"
-#include "Logger.h"
+#include <Nephilim/Clock.h>
+#include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include "Window.h"
-#include "Event.h"
-#include "StringList.h"
+#include <Nephilim/Window.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/StringList.h>
+
+#include <Nephilim/StateStack.h>
+#include <Nephilim/ContentManager.h>
+#include <Nephilim/Localization.h>
+#include <Nephilim/Audio/AudioManager.h>
+#include <Nephilim/UI/UIManager.h>
+
+#include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Razer/World.h>
 
 
 NEPHILIM_NS_BEGIN
-class GameCoreManager;
+
 class Engine;
 class Surface;
+
 /**
 	\ingroup Core
 	\class GameCore
 	\brief Base class for all games and applications.
+
+	This class contains all the necessary tools to build 
+	a game as you inherit from it.
+
+	You don't need to use all of its power, and you can take different
+	solutions, but in 99% cases this class should be enough for most
+	purposes.
 	
 */
 class NEPHILIM_API GameCore
 {
 public:
+
+	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
+	StateStack stateManager;
+
+	/// The game is prepared to own an arbitrary number of scenes, stored in this object
+	BaseSceneManager sceneManager;
+
+	/// The game is always prepared to handle N individual user interface systems
+	UIManager userInterfaceManager;
+
+	/// The game can hold multiple resource groups and ensures their deallocation when closing
+	ContentManager contentManager;
+
+	/// The game has multi language support natively, its lightweight and avoids boilerplate code
+	LocalizationManager languageManager;
+
+	/// The game has audio playback support built in, along with sound groups managing
+	AudioManager audioManager;
+
+
+public:
+	
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();
+
+	/// Create a new scene or return if already exists
+	World* createScene(const String& name);
 
 	/// Get a pointer to the engine
 	Engine* getEngine();

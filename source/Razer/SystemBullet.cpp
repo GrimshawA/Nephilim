@@ -1,5 +1,5 @@
 #include <Nephilim/Razer/SystemBullet.h>
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/Entity.h>
 #include <Nephilim/Razer/Entity.inl>
 #include <Nephilim/Razer/ComponentCharacterController.h>

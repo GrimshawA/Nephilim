@@ -25,6 +25,7 @@ UIComponentButton::UIComponentButton(const String& text)
 {
 	mNormalColor = Color::Black;
 	mHoverColor = Color::Yellow;
+
 }
 
 void UIComponentButton::onPropertySet(const StringList& targetObject, const String& value)
@@ -95,17 +96,28 @@ void UIComponentButton::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
 	if(hovering)
 	{
 		RectangleShape hoverRect;
 		hoverRect.setRect(view->getBounds());
 		hoverRect.setColor(mHoverColor);
-		if(mTexture)
+		if (mHoverTexture)
 		{
 			hoverRect.setTexture(mHoverTexture);
 		}
+		else if (!mHoverTextureSource.empty())
+		{
+			// let's try to get the thing
+			mHoverTexture = new Texture();
+			if (mHoverTexture->loadFromFile(mHoverTextureSource))
+				Log("LOADED THE THING");
+
+			hoverRect.setTexture(mHoverTexture);
+
+		}
+		
 		renderer->draw(hoverRect);
 	}
 	else
@@ -117,8 +129,20 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view)
 		{
 			hoverRect.setTexture(mTexture);
 		}
+		else if (!mNormalTextureSource.empty())
+		{
+			// let's try to get the thing
+			mTexture = new Texture();
+			if(mTexture->loadFromFile(mNormalTextureSource))
+				Log("LOADED THE THING");
+
+			hoverRect.setTexture(mTexture);
+
+		}
 		renderer->draw(hoverRect);
 	}
+
+	renderer->setModelMatrix(mat4::identity);
 
 	// -- Label
 	Text buttonLabel;
@@ -127,6 +151,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view)
 	buttonLabel.setCharacterSize(view->mRect.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
 	buttonLabel.setPosition(static_cast<int>((view->mRect.left + view->mRect.width / 2.f ) + 0.5f), static_cast<int>((view->mRect.top +  view->mRect.height / 2.f) + 0.5f));
+	buttonLabel.setColor(Color::White);
 	if(buttonLabel.getLocalBounds().width > view->getSize().x * 0.9f)
 	{
 		// The text is too big and passes the 90% of the button's width
@@ -135,6 +160,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view)
 		buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
 	}
 	renderer->draw(buttonLabel);
+	//Log("Drawing button text: %s", mString.c_str());
 }
 
 NEPHILIM_NS_END

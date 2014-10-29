@@ -10,7 +10,7 @@ Entity::Entity()
 
 }
 
-Entity::Entity(TEntity e, Scene& s)
+Entity::Entity(TEntity e, World& s)
 : mScene(&s)
 , id(e)
 {

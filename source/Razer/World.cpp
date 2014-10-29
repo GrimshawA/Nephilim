@@ -1,30 +1,29 @@
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/CTransform.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr{
 
-Scene::Scene()
+World::World()
 //: nextAssignID(1)
 {
 }
 
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
-void Scene::updateTransformHierarchy()
+void World::updateTransformHierarchy()
 {
 
 	//ComponentArray<CTransform>& transforms = getComponentList<CTransform>();
 }
 
 /// Registers a system to this scene
-void Scene::registerSystem(System* system)
+void World::registerSystem(System* system)
 {
 	system->mScene = this;
 	mRegisteredSystems.push_back(system);
 }
 
 /// Create and return a new entity
-TEntity Scene::createEntity()
+TEntity World::createEntity()
 {
 	// Create new entity
 	TEntity entity = 0;
@@ -34,7 +33,7 @@ TEntity Scene::createEntity()
 }
 
 /// Removes the entity if it is in the scene
-void Scene::removeEntity(Int32 id)
+void World::removeEntity(Int32 id)
 {
 /*	for(size_t i = 0; i < mEntities.size(); ++i)
 	{
@@ -46,25 +45,9 @@ void Scene::removeEntity(Int32 id)
 	}*/
 }
 
-TEntity Scene::getEntityByIndex(std::size_t index)
+TEntity World::getEntityByIndex(std::size_t index)
 {
 	return entityManager.entities[index];
 }
 
-// Entity Scene::getEntityById(Int32 id)
-// {
-// 	Entity entityRef;
-// 	entityRef.id = 0;
-// 	for(std::size_t i = 0; i < mEntities.size(); ++i)
-// 	{
-// 		if(mEntities[i].mId == id)
-// 		{
-// 			entityRef.id = mEntities[i].mId;
-// 			entityRef.mScene = this;
-// 		}
-// 	}
-// 	return entityRef;
-// }
-
-};
 NEPHILIM_NS_END

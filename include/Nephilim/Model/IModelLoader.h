@@ -2,6 +2,9 @@
 #define NephilimIModelLoader_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Model/Mesh.h>
+
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
@@ -20,7 +23,8 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API IModelLoader
 {
 public:
-
+	/// Interface: asks the loader to retrieve its set of mesh data to our storage container
+	virtual bool loadStaticModel(std::vector<Mesh>& storage){}
 };
 
 NEPHILIM_NS_END

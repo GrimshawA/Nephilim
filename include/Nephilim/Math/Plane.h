@@ -2,8 +2,11 @@
 #define NephilimPlane_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Vectors.h>
+
 
 NEPHILIM_NS_BEGIN
+class Ray;
 
 /**
 	\class Plane

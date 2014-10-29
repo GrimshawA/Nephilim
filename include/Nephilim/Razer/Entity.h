@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/Component.h>
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 
 #include <vector>
 
@@ -25,7 +25,7 @@ class NEPHILIM_API Entity
 public:
 	Entity();
 
-	Entity(TEntity e, Scene& s);
+	Entity(TEntity e, World& s);
 
 
 	/// Add a new component to this entity
@@ -41,7 +41,7 @@ public:
 
 	TEntity id;
 
-	Scene* mScene;
+	World* mScene;
 };
 
 #include <Nephilim/Razer/Entity.inl>

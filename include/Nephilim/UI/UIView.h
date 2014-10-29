@@ -70,14 +70,17 @@ class UIAnimation;
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
 {
 public:
-	vec2  size;       ///< Size of the view
-	float z;          ///< Offset from the parent
-	float rotation_x; ///< Rotation around the X axis; 0 means no rotation; 
-	float rotation_y; ///< Rotation around the Y axis; 0 means no rotation;
-	float rotation_z; ///< Rotation around the Z axis; 0 means no rotation;
+	vec2    size;            ///< Size of the view rectangle
+	float   rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
+	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
+	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
+	UICore* mCore = nullptr; ///< Soft reference to a UICore, for localization, content and others
+
 
 	vec3  position;   ///< The 3D position of this view
-
+	String     m_name;             ///< Name
+	UIView* m_parent;           ///< The parent control
+	
 	Color col;
 	
 
@@ -233,7 +236,7 @@ public:
 	UIView* getChild(int index);
 
 	/// Get the current size of the control
-	Vec2f getSize();
+	vec2 getSize();
 
 	/// Get the bounding rect of this control and all its children
 	FloatRect getContentBounds();
@@ -355,6 +358,8 @@ public:
 
 	virtual void axKillTrigger();
 
+public:                                                        // Old Properties
+
 	/// Signal emitted whenever the slider value changes
 	sigc::signal<void, int> onValueChanged;
 
@@ -419,8 +424,6 @@ protected: // functions
 
 
 public:
-	/// The bounds of the control, if scissor tests are enabled, nothing is drawn outside this rect
-	RectangleShape m_background;
 
 	struct UIControlOperation
 	{
@@ -456,13 +459,12 @@ public:
 	int m_childrenLock;
 	typedef std::vector<UIView*>::iterator UIControlIterator;
 
-	String     m_name;             ///< Name
-	UIView* m_parent;           ///< The parent control
+	
 	UILayout*  m_layoutController; ///< Layouter
 
 	//////////////////////////////////////////////////////////////////////////
 	// -- UIView definition
-	UICore*     mCore; ///< Core of this UICanvas
+
 	Rect<float> mRect; ///< Bounds of this UIView
 	Rect<float> mPadding; ///< Padding in the view
 };
@@ -480,24 +482,6 @@ T* UIView::getComponent()
 
 	return NULL;
 }
-
-/**
-	\class UIViewPtr
-	\brief Provisory name: simple smart pointer wrapper that contains a reference to a single UIView
-*/	
-class NEPHILIM_API UIViewPtr
-{
-public:
-	/// Default initialization to NULL reference
-	UIViewPtr();
-
-	/// Automatic destruction of the UIView reference
-	/// In case the UIView is still inserted in a hierarchy, it is the responsability of the hierarchy to destroy it
-	/// If the UIView is loose then it is guaranteed to be destroyed
-	~UIViewPtr();
-
-	UIView* mRef;
-};
 
 NEPHILIM_NS_END
 #endif // NephilimUIView_h__

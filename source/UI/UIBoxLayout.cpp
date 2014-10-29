@@ -1,5 +1,6 @@
 #include <Nephilim/UI/UIBoxLayout.h>
 #include <Nephilim/UI/UIView.h>
+#include <Nephilim/Logger.h>
 #include <iostream>
 using namespace std;
 
@@ -22,75 +23,33 @@ UIBoxLayout::UIBoxLayout(UILayout::Orientation orientation, bool animated)
 
 void UIBoxLayout::doLayout(UIView* parent)
 {
+
 	if(!parent)return;
 
 	if(m_orientation == UILayout::Vertical)
 	{
-		float spaceToGive = parent->getSize().y;
-		float currentEvenSpace = spaceToGive / parent->getChildCount();
-		float parentWidth = parent->getSize().x;
-		int childLeft = parent->getChildCount();
-		float currentPosition = parent->getBounds().top;
-
-		for(int i = 0; i < parent->getChildCount(); i++)
+		float latestY = parent->getPosition().y;
+		for (std::size_t i = 0; i < parent->getChildCount(); ++i)
 		{
+			// simply put the view below where the previous ends
 			UIView* child = parent->getChild(i);
+			child->setPosition(parent->getPosition().x, latestY);
 
-			// compute final size
-			Vec2f finalSize;
-			finalSize.x = parentWidth;
-			finalSize.y = currentEvenSpace;
-
-			// check rules
-			if(i == 0)finalSize.y = 100;
-
-			// recompute even space if needed
-			spaceToGive -= finalSize.y;
-			childLeft--;
-			currentEvenSpace = spaceToGive / childLeft;
-
-			Vec2f finalPosition;
-			finalPosition.x = parent->getBounds().left;
-			finalPosition.y = currentPosition;
-
-			currentPosition += finalSize.y;
-
-			if(m_animated)
-			{	
-		
-				child->resize(finalSize.x, finalSize.y, 1.f);
-			}
-			else
-			{
-				// make it full width and distribute height
-				child->setSize(finalSize.x, finalSize.y);
-				// align left and distribute
-				child->setPosition(finalPosition.x, finalPosition.y);
-			}
+			latestY += child->getSize().y;
 		}
 	}
 	else
 	{
-		for(int i = 0; i < parent->getChildCount(); i++)
+		float latestX = parent->getPosition().x;
+		for (std::size_t i = 0; i < parent->getChildCount(); ++i)
 		{
+			// simply put the view below where the previous ends
 			UIView* child = parent->getChild(i);
+			child->setPosition(latestX, parent->getPosition().y);
 
-			if(m_animated)
-			{	
-			//	child->reposition(parent->getBounds().left + (parent->getSize().x / parent->getChildCount() * i), parent->getBounds().top, 1.f);
-				child->resize(parent->getSize().x / parent->getChildCount(), parent->getSize().y, 1.f);
-			}
-			else
-			{
-				// make it full width and distribute height
-				child->setSize(parent->getSize().x / parent->getChildCount(), parent->getSize().y );
-				// align left and distribute
-				child->setPosition(parent->getBounds().left + (parent->getSize().x / parent->getChildCount() * i), parent->getBounds().top);
-			}
+			latestX += child->getSize().x;
 		}
 	}
-
-	cout<<"Layouting: "<<parent->getChildCount()<<endl;
 };
 
 NEPHILIM_NS_END

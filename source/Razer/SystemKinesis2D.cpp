@@ -1,7 +1,7 @@
 #include <Nephilim/Razer/SystemKinesis2D.h>
 #include <Nephilim/Razer/ComponentKinesisBody2D.h>
 #include <Nephilim/Razer/CTransform.h>
-#include <Nephilim/Razer/Scene.h>
+#include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/Entity.h>
 
 #include <Nephilim/Logger.h>
