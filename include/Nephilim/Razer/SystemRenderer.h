@@ -5,8 +5,8 @@
 #include <Nephilim/Razer/RenderSystem.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
-#include <Nephilim/Framebuffer.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/Framebuffer.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Razer/PostEffect.h>
 

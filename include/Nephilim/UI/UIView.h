@@ -6,7 +6,7 @@
 #include <Nephilim/Event.h>
 #include <Nephilim/Signals.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/AxList.h>
@@ -15,12 +15,15 @@
 
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "UISizePolicy.h"
 #include "UILayout.h"
 #include "UICore.h"
 #include "UIProperty.h"
 #include "UIComponent.h"
+
+#include <Nephilim/UI/UIAnimation.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -75,6 +78,11 @@ public:
 	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
 	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
 	UICore* mCore = nullptr; ///< Soft reference to a UICore, for localization, content and others
+
+
+	/// Holds the animations currently active on this view
+	/// Each animation is bound to the view itself, and is automatically destroyed with it
+	//std::vector<std::unique_ptr<UIAnimation> > animations;
 
 
 	vec3  position;   ///< The 3D position of this view

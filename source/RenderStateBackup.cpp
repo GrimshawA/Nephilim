@@ -1,5 +1,5 @@
-#include <Nephilim/RenderStateBackup.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/RenderStateBackup.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 

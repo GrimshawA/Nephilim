@@ -25,6 +25,7 @@ NEPHILIM_NS_BEGIN
 
 class Engine;
 class Surface;
+class IScriptEngine;
 
 /**
 	\ingroup Core
@@ -42,6 +43,8 @@ class Surface;
 class NEPHILIM_API GameCore
 {
 public:
+
+	std::vector<IScriptEngine*> scriptEngines;
 
 	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
 	StateStack stateManager;

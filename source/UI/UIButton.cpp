@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIButton.h>
 #include <Nephilim/Text.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 
 #include <iostream>
 using namespace std;

@@ -19,7 +19,7 @@
 
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
@@ -400,12 +400,28 @@ void SystemRenderer::renderAllSprites()
 		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(spriteComponentManager->getInstanceEntity(i));
 		
 
-		mRenderer->setModelMatrix(transform->getMatrix());
-		// draw
-		RectangleShape c;
-		c.setSize(sprite->width, sprite->height);
-		c.setColor(sprite->color);
-		mRenderer->draw(c);
+		mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+
+		Texture* t = mContentManager->getTexture(sprite->tex);
+		if (!t)
+		{
+			mContentManager->load(sprite->tex);
+		}
+		else
+		{
+			// draw
+			RectangleShape c;
+			c.setSize(sprite->width, sprite->height);
+			c.setColor(sprite->color);
+			c.setTexture(t);
+			if (sprite->tex_rect_size.x > 0.f && sprite->tex_rect_size.y > 0.f)
+			{
+				c.setTextureRect(sprite->tex_rect_pos.x, sprite->tex_rect_pos.y, sprite->tex_rect_size.x, sprite->tex_rect_size.y);
+				//c.setTextureRect(0.f, 0.f, 1000.f, 1000.f);
+			}
+			//c.invertTextureCoordinates();
+			mRenderer->draw(c);
+		}	
 	}
 }
 

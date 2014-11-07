@@ -1,7 +1,7 @@
-#include <Nephilim/Framebuffer.h>
+#include <Nephilim/Graphics/Framebuffer.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

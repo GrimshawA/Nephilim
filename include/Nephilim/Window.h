@@ -6,7 +6,7 @@
 #include "Vectors.h"
 #include "Event.h"
 #include "View.h"
-#include "RenderTarget.h"
+#include <Nephilim/Graphics/RenderTarget.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -21,6 +21,9 @@ public:
 	/// position(0,0,0), orientation as identity (down the -z axis), and a scale of 1
 	CTransform();
 
+	/// Construct from a position
+	CTransform(vec3 pos);
+
 	/// Set the position from a vec3
 	void setPosition(const vec3& p);
 

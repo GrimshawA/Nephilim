@@ -1,6 +1,6 @@
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/CGL.h>
 

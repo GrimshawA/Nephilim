@@ -6,8 +6,19 @@ namespace rzr{
 CSprite::CSprite()
 : width(1.f)
 , height(1.f)
-, scale(1.f, 1.f)
 , color(Color::White)
+, scale(1.f, -1.f)
+{
+
+}
+
+/// Constructor with a texture name and size
+CSprite::CSprite(vec2 size, const String& texture)
+: width(size.x)
+, height(size.y)
+, color(Color::White)
+, tex(texture)
+, scale(1.f, -1.f)
 {
 
 }

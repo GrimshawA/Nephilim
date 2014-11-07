@@ -9,7 +9,7 @@
 #include "Transformable.h"
 
 #include "VertexArray2D.h"
-#include "Texture.h"
+#include <Nephilim/Graphics/GLTexture.h>
 
 #include <vector>
 

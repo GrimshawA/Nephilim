@@ -2,8 +2,8 @@
 #define RenderTexture_h__
 
 #include <Nephilim/Platform.h>
-#include "Framebuffer.h"
-#include "Texture.h"
+#include <Nephilim/Graphics/Framebuffer.h>
+#include <Nephilim/Graphics/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

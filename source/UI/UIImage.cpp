@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIImage.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Logger.h>
 
 

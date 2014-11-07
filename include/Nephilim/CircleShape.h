@@ -6,7 +6,7 @@
 #include "Drawable.h"
 #include "VertexArray2D.h"
 #include "Color.h"
-#include "Texture.h"
+#include <Nephilim/Graphics/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

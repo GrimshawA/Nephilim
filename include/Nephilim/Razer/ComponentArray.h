@@ -65,6 +65,8 @@ TEntity ComponentArray<T>::getInstanceEntity(std::size_t index)
 			return it->first;
 		}
 	}
+
+	return 0;
 }
 
 

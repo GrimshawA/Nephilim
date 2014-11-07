@@ -24,6 +24,11 @@ ContentManager::~ContentManager()
 	}
 }
 
+/// Order the content manager to create a new mesh with a given resource id
+MeshResource* ContentManager::createMesh(const String& resource_id)
+{
+	return new MeshResource();
+}
 
 ContentGroup* ContentManager::createGroup(const String& name)
 {

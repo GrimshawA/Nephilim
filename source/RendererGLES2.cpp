@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/GLES2/RendererGLES2.h>
-#include <Nephilim/Shader.h>
+#include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Matrix.h>
 #include <Nephilim/Logger.h>

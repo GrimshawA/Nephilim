@@ -21,6 +21,9 @@ public:
 	/// Initialize the sprite with no area
 	CSprite();
 
+	/// Constructor with a texture name and size
+	CSprite(vec2 size, const String& texture);
+
 	/// Set the size of the sprite
 	void setSize(const vec2& s);
 
@@ -45,8 +48,6 @@ public:
 	vec2 tex_rect_size;
 
 	vec2 scale;
-
-	float rot = 0.f;
 };
 
 typedef CSprite CSprite;

@@ -5,7 +5,7 @@
 #include "Vectors.h"
 #include "Rect.h"
 #include "Color.h"
-#include "RenderModes.h"
+#include <Nephilim/Graphics/RenderModes.h>
 
 #include <vector>
 

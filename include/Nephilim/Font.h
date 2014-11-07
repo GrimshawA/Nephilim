@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include "Glyph.h"
-#include "Texture.h"
+#include <Nephilim/Graphics/GLTexture.h>
 
 #include <map>
 #include <string>

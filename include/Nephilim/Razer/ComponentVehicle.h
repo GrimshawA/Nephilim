@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Razer/Component.h>
 #include <Nephilim/BxVehicle.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Geometry.h>
 
 NEPHILIM_NS_BEGIN

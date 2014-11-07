@@ -1,5 +1,5 @@
 #include <Nephilim/Razer/ComponentWater.h>
-#include <Nephilim/Shader.h>
+#include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/NxMath.h>

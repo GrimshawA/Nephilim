@@ -1,4 +1,4 @@
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Image.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/CGL.h>

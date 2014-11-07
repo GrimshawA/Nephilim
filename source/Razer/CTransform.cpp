@@ -10,6 +10,14 @@ CTransform::CTransform()
 {
 }
 
+/// Construct from a position
+CTransform::CTransform(vec3 pos)
+: position(pos)
+, scale(1.f, 1.f, 1.f)
+{
+
+}
+
 /// Sets the position from a vec3
 void CTransform::setPosition(const vec3& p)
 {

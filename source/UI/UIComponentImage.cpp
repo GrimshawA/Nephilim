@@ -18,6 +18,8 @@ UIComponentImage::UIComponentImage(const String& src)
 , mTexture(NULL)
 {
 	mSourceTexture = src;
+	mTexture = new Texture();
+	mTexture->loadFromFile(src);
 }
 
 void UIComponentImage::onAttach(UIView* view)
@@ -56,11 +58,12 @@ void UIComponentImage::onPropertySet(const StringList& targetObject, const Strin
 	}
 }
 
-void UIComponentImage::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentImage::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
 	RectangleShape backgroundRect;
 	backgroundRect.setRect(view->getBounds());
 	if(mTexture) backgroundRect.setTexture(mTexture);
+	else backgroundRect.setColor(Color::Red);
 	renderer->draw(backgroundRect);
 }
 

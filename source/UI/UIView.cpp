@@ -222,6 +222,10 @@ void UIView::setPosition(float x, float y)
 	offsetChildrenPosition(offset);
 
 	onPositionChanged();
+
+	// update the correct vars
+	position.x = x;
+	position.y = y;
 }
 
 void UIView::setPosition(vec2 position)
@@ -511,13 +515,9 @@ UILayout* UIView::getLayout()
 /// Callback to render itself, renders children
 void UIView::draw(GraphicsDevice* renderer, mat4 transform)
 {
-
-
-
 	VertexArray va;
 	va.addAttribute(sizeof(float), 2, VertexFormat::Position);
 	va.addAttribute(sizeof(float), 4, VertexFormat::Color);
-
 	va.allocateData(6);
 
 	struct vertex_f

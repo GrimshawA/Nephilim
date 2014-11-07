@@ -1,5 +1,5 @@
 #include <Nephilim/ShaderGen.h>
-#include <Nephilim/Shader.h>
+#include <Nephilim/Graphics/Shader.h>
 
 static const char gVertexShader2[] =
 	"#version 330\n"

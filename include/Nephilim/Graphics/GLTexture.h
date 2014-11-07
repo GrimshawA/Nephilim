@@ -1,10 +1,12 @@
-#ifndef Texture_h__
-#define Texture_h__
+#ifndef NephilimGLTexture_h__
+#define NephilimGLTexture_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
-#include "Strings.h"
-#include "Color.h"
+#include <Nephilim/Graphics/Texture2D.h>
+
+#include <Nephilim/Vectors.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Color.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -14,7 +16,7 @@ class Image;
 	\class Texture
 	\brief OpenGL Texture. RGBA format - 8 bits per component
 */
-class NEPHILIM_API Texture
+class NEPHILIM_API Texture : public Texture2D
 {
 public:
 	/// Creates a uninitialized texture
@@ -92,4 +94,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // Texture_h__
+#endif // NephilimGLTexture_h__

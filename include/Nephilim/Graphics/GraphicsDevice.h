@@ -9,11 +9,11 @@
 #include <Nephilim/Drawable.h>
 #include <Nephilim/VertexArray2D.h>
 #include <Nephilim/View.h>
-#include <Nephilim/Shader.h>
-#include <Nephilim/RenderModes.h>
-#include <Nephilim/RenderState.h>
+#include <Nephilim/Graphics/Shader.h>
+#include <Nephilim/Graphics/RenderModes.h>
+#include <Nephilim/Graphics/RenderState.h>
 #include <Nephilim/Matrix.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 
 #include <map>
 #include <stack>

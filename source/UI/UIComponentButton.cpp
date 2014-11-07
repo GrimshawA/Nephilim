@@ -3,6 +3,7 @@
 #include <Nephilim/Text.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/ContentManager.h>
+#include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -159,7 +160,11 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 		buttonLabel.setCharacterSize(static_cast<unsigned int>(static_cast<float>(buttonLabel.getCharacterSize()) * diminishRatio));
 		buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
 	}
+	mat4 localTransform = mat4::translate(vec3(0.f, 20.f, 1.f)) * mat4::rotatex(math::pi);
+
+	renderer->setModelMatrix(parentTransform);
 	renderer->draw(buttonLabel);
+	renderer->setModelMatrix(mat4::identity);
 	//Log("Drawing button text: %s", mString.c_str());
 }
 

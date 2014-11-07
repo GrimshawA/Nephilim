@@ -2,10 +2,10 @@
 #define NephilimRectangleShape_h__
 
 #include <Nephilim/Platform.h>
-#include "Drawable.h"
-#include "Color.h"
-#include "Transformable.h"
-#include "VertexArray2D.h"
+#include <Nephilim/Drawable.h>
+#include <Nephilim/Color.h>
+#include <Nephilim/Transformable.h>
+#include <Nephilim/VertexArray2D.h>
 
 NEPHILIM_NS_BEGIN
 

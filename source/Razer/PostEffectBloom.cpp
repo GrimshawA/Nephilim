@@ -1,9 +1,9 @@
 #include <Nephilim/Razer/PostEffectBloom.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/File.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/VertexArray2D.h>
 
 NEPHILIM_NS_BEGIN

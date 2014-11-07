@@ -6,7 +6,7 @@
 #include "Drawable.h"
 #include "Matrix.h"
 #include "Color.h"
-#include "RenderModes.h"
+#include <Nephilim/Graphics/RenderModes.h>
 #include "VertexArray.h"
 #include "Strings.h"
 

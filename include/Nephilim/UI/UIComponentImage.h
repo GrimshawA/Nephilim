@@ -20,7 +20,7 @@ public:
 
 	void onAttach(UIView* view);
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);
 
 	void onPropertySet(const StringList& targetObject, const String& value);
 

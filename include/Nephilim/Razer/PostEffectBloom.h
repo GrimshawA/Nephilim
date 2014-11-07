@@ -2,9 +2,9 @@
 #define NephilimRazerPostEffectBloom_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Shader.h>
-#include <Nephilim/Texture.h>
-#include <Nephilim/Framebuffer.h>
+#include <Nephilim/Graphics/Shader.h>
+#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/Framebuffer.h>
 #include <Nephilim/Razer/PostEffect.h>
 
 NEPHILIM_NS_BEGIN

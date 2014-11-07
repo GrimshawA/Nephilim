@@ -1,7 +1,7 @@
 #include <Nephilim/Text.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Image.h>
 #include <cassert>
@@ -42,11 +42,10 @@ void Text::onDraw(GraphicsDevice* renderer)
 	m_font->getTexture(m_characterSize).bind();
 	renderer->setBlendingEnabled(true);
 	renderer->setBlendMode(Render::Blend::Alpha);
-	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	//renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 };
-
 
 ////////////////////////////////////////////////////////////
 void Text::setString(const String& string)

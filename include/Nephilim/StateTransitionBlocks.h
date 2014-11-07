@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include "StateTransition.h"
-#include "RectangleShape.h"
+#include <Nephilim/Graphics/RectangleShape.h>
 
 NEPHILIM_NS_BEGIN
 

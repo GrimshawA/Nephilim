@@ -2,7 +2,7 @@
 #define NephilimRazerComponentParticleEmitter_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Razer/Component.h>
 
 NEPHILIM_NS_BEGIN

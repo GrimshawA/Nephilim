@@ -6,9 +6,11 @@
 #include "StringID.h"
 #include "ContentList.h"
 #include "ContentLoader.h"
-#include "Texture.h"
+#include <Nephilim/Graphics/GLTexture.h>
 #include "Font.h"
 #include "File.h"
+#include <Nephilim/Model/Mesh.h>
+
 #include <map>
 
 NEPHILIM_NS_BEGIN
@@ -21,6 +23,14 @@ public:
 	std::map<String, Font*> mFonts;
 };
 
+class MeshResource
+{
+public:
+
+	/// The list of meshes in this resource
+	std::vector<Mesh> meshes;
+};
+
 /// A content group holds an indefinite number of resources of different types
 class ContentGroup
 {
@@ -29,6 +39,7 @@ public:
 	ContentGroupFonts mFonts;
 
 	std::map<String, Texture*> mTextures;
+	std::map<String, MeshResource*> mMeshes;
 };
 
 
@@ -43,6 +54,9 @@ public:
 	~ContentManager();
 
 	ContentGroup* createGroup(const String& name);
+
+	/// Order the content manager to create a new mesh with a given resource id
+	MeshResource* createMesh(const String& resource_id);
 
 	void removeGroup(const String& name);
 

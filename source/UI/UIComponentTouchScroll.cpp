@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/RectangleShape.h>
+#include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>

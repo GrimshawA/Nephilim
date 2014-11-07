@@ -3,6 +3,9 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/State.h>
+#include <Nephilim/Scripting/IScript.h>
+
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
@@ -27,6 +30,12 @@ NEPHILIM_NS_BEGIN
 */
 class NEPHILIM_API BaseState : public State
 {
+public:
+
+	/// Collection of scripts attached to this state
+	std::vector<IScript*> attachedScripts;
+
+
 public:
 
 	/// Simplest way to call a function in all the attached scripts

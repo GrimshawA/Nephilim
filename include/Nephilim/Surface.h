@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include "Window.h"
-#include "RenderTarget.h"
+#include <Nephilim/Graphics/RenderTarget.h>
 
 NEPHILIM_NS_BEGIN
 

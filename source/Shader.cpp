@@ -1,4 +1,4 @@
-#include <Nephilim/Shader.h>
+#include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/File.h>
