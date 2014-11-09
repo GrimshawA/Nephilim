@@ -2,8 +2,6 @@
 #define NephilimRazerSystemBulletPhysics_h__
 
 #include <Nephilim/Platform.h>
-
-/*
 #include <Nephilim/Razer/System.h>
 
 #include <Nephilim/BxScene.h>
@@ -13,7 +11,10 @@ NEPHILIM_NS_BEGIN
 namespace rzr 
 {
 
-
+/**
+	\class SystemBullet
+	\brief 
+*/
 class NEPHILIM_API SystemBullet : public System
 {
 public:
@@ -27,6 +28,4 @@ public:
 
 };
 NEPHILIM_NS_END
-
-*/
 #endif // NephilimRazerSystemBulletPhysics_h__
