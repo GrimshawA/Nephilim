@@ -2,7 +2,8 @@
 #define NephilimGesture_h__
 
 #include <Nephilim/Platform.h>
-#include "Signals.h"
+
+#include <sigc++/sigc++.h>
 
 #include <vector>
 

@@ -3,7 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include "AxBase.h"
-#include "Signals.h"
+
+#include <sigc++/sigc++.h>
 
 NEPHILIM_NS_BEGIN
 

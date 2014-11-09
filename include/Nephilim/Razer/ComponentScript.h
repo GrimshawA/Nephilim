@@ -2,6 +2,7 @@
 #define NephilimRazerComponentScript_h__
 
 #include <Nephilim/Platform.h>
+/*
 #include <Nephilim/Strings.h>
 #include <Nephilim/ASXEngine.h>
 #include <Nephilim/ASXModule.h>
@@ -15,10 +16,7 @@
 NEPHILIM_NS_BEGIN
 namespace rzr {
 
-/**
-	\class 
-	\brief 
-*/
+
 class NEPHILIM_API ComponentScript : public Component
 {
 public:
@@ -36,5 +34,5 @@ public:
 
 };
 NEPHILIM_NS_END
-
+*/
 #endif // NephilimRazerComponentScript_h__

@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Matrix.h>
-#include <Nephilim/Spherical.h>
+#include <Nephilim/Math/Spherical.h>
 
 NEPHILIM_NS_BEGIN
 

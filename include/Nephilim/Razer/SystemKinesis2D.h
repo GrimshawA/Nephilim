@@ -2,18 +2,20 @@
 #define NephilimRazerSystemKinesis2D_h__
 
 #include <Nephilim/Platform.h>
+/*
 #include <Nephilim/Razer/System.h>
 #include <Nephilim/KxScene.h>
 #include <Nephilim/KxDraw.h>
 #include <Nephilim/KxBody.h>
 #include <Nephilim/CollisionData.h>
-
+*/
 NEPHILIM_NS_BEGIN
 namespace rzr
 {
 /**
 	\class SystemKinesis2D
 */
+/*
 class SystemKinesis2D : public System
 {
 public:
@@ -40,7 +42,7 @@ public:
 
 	KxScene mPhysicsScene; ///< Physics scene
 };
-
+*/
 };
 NEPHILIM_NS_END
 #endif // NephilimRazerSystemKinesis2D_h__

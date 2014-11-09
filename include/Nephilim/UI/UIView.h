@@ -4,7 +4,6 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Rect.h>
 #include <Nephilim/Event.h>
-#include <Nephilim/Signals.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
@@ -24,6 +23,8 @@
 #include "UIComponent.h"
 
 #include <Nephilim/UI/UIAnimation.h>
+
+#include <libsigc++/sigc++/sigc++.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,4 +1,5 @@
 #include <Nephilim/Razer/ComponentScript.h>
+/*
 #include <Nephilim/ASXFunction.h>
 #include <Nephilim/Logger.h>
 
@@ -29,4 +30,8 @@ void ComponentScript::update()
 }
 
 };
+
+
 NEPHILIM_NS_END
+
+*/

@@ -1,4 +1,4 @@
-#include <Nephilim/CircleShape.h>
+#include <Nephilim/Graphics/CircleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>

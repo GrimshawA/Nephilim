@@ -1,4 +1,4 @@
-#include <Nephilim/IndexBuffer.h>
+#include <Nephilim/Graphics/IndexBuffer.h>
 #include <Nephilim/CGL.h>
 
 NEPHILIM_NS_BEGIN

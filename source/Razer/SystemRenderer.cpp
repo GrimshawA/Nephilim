@@ -20,7 +20,6 @@
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/KxDraw.h>
 #include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
 

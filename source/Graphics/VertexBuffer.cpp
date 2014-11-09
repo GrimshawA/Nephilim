@@ -1,4 +1,4 @@
-#include <Nephilim/VertexBuffer.h>
+#include <Nephilim/Graphics/VertexBuffer.h>
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/CGL.h>
 

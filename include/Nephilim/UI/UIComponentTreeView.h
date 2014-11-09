@@ -2,8 +2,9 @@
 #define NephilimUIComponentTreeView_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Signals.h>
 #include <Nephilim/UI/UIComponent.h>
+
+#include <sigc++/sigc++.h>
 
 NEPHILIM_NS_BEGIN
 

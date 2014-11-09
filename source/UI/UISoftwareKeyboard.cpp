@@ -12,7 +12,7 @@ UISoftwareKeyboard::UISoftwareKeyboard() : UIView(), m_color(0,0,0) , hover(fals
 	UIButton* eraseButton = new UIButton("<-");
 	eraseButton->setPosition(1600, 700);
 	eraseButton->setSize(200,50);
-	eraseButton->onClick.connect(MAKE_SLOT_LOCAL(UISoftwareKeyboard, emitErase));
+	eraseButton->onClick.connect(sigc::mem_fun(this, &UISoftwareKeyboard::emitErase));
 	attach(eraseButton);
 };
 

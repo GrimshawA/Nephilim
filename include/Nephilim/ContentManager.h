@@ -182,9 +182,6 @@ private:
 	//Resource Pools
 	std::map<String, Texture*> myTextureResources;
 	//std::map<String, sf::SoundBuffer*> mySoundResources;
-
-	/// Owns a loader
-	ContentLoader myLoader;
 };
 
 /**

@@ -1,4 +1,4 @@
-#include <Nephilim/Resource.h>
+#include <Nephilim/Game/Resource.h>
 
 NEPHILIM_NS_BEGIN
 

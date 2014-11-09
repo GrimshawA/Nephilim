@@ -1,4 +1,4 @@
-#include <Nephilim/RoundedRectangleShape.h>
+#include <Nephilim/Graphics/RoundedRectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/NxMath.h>

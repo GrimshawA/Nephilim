@@ -4,7 +4,8 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Text.h>
-#include <Nephilim/Signals.h>
+
+#include <sigc++/sigc++.h>
 
 NEPHILIM_NS_BEGIN
 

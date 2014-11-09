@@ -1,4 +1,5 @@
 #include <Nephilim/Razer/ComponentVehicle.h>
+/*
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
@@ -24,3 +25,5 @@ void ComponentVehicle::applyEngineForce(float force, int wheelIndex)
 
 }
 NEPHILIM_NS_END
+
+*/

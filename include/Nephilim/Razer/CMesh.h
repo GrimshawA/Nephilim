@@ -7,8 +7,8 @@
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/IndexArray.h>
 
-#include <Nephilim/VertexBuffer.h>
-#include <Nephilim/IndexBuffer.h>
+#include <Nephilim/Graphics/VertexBuffer.h>
+#include <Nephilim/Graphics/IndexBuffer.h>
 
 #include <Nephilim/Razer/Component.h>
 
