@@ -1,7 +1,7 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/StateStack.h>
 #include <Nephilim/StateTransition.h>
-#include <Nephilim/State.h>
+#include <Nephilim/Game/GameState.h>
 #include <Nephilim/Time.h>
 
 #include <Nephilim/Logger.h>
@@ -111,7 +111,7 @@ void StateStack::drawCurrentList(GraphicsDevice* renderer)
 	}
 }
 
-void StateStack::drawList(std::vector<State*>& list, GraphicsDevice* renderer)
+void StateStack::drawList(std::vector<GameState*>& list, GraphicsDevice* renderer)
 {
 	std::size_t index = 0;
 	while(index < list.size() && !list.empty())
@@ -125,7 +125,7 @@ void StateStack::drawList(std::vector<State*>& list, GraphicsDevice* renderer)
 /// Check if a given state is currently being executed
 bool StateStack::isActive(const String& name)
 {
-	State* state = getBinding(name);
+	GameState* state = getBinding(name);
 	if(state)
 	{
 		return isActive(state);
@@ -137,7 +137,7 @@ bool StateStack::isActive(const String& name)
 }
 
 /// Check if a given state is currently being executed
-bool StateStack::isActive(State* state)
+bool StateStack::isActive(GameState* state)
 {
 	// Check the pending operation queue
 	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
@@ -149,7 +149,7 @@ bool StateStack::isActive(State* state)
 	}
 
 	// Check the currently active queue for the state
-	for(std::vector<State*>::iterator it = mCurrentList.begin(); it != mCurrentList.end(); ++it)
+	for (std::vector<GameState*>::iterator it = mCurrentList.begin(); it != mCurrentList.end(); ++it)
 	{
 		if((*it) == state)
 		{
@@ -159,7 +159,7 @@ bool StateStack::isActive(State* state)
 
 	if(m_transition)
 	{
-		for(std::vector<State*>::iterator it = mFutureList.begin(); it != mFutureList.end(); ++it)
+		for (std::vector<GameState*>::iterator it = mFutureList.begin(); it != mFutureList.end(); ++it)
 		{
 			if((*it) == state)
 			{
@@ -187,9 +187,9 @@ void StateStack::performTransition(StateStackTransition* transition)
 }
 
 /// Get a state or NULL
-State* StateStack::getBinding(const String& name)
+GameState* StateStack::getBinding(const String& name)
 {
-	std::map<String, State*>::iterator it = m_bindList.find(name);
+	std::map<String, GameState*>::iterator it = m_bindList.find(name);
 	if(it != m_bindList.end())
 	{
 		return it->second;
@@ -204,9 +204,8 @@ GameCore* StateStack::getParentGame()
 };
 
 /// Adds state to immediate execution
-void StateStack::add(State* state)
+void StateStack::add(GameState* state)
 {
-	state->addReference();
 	state->m_parent = this;
 	state->onAttach();
 
@@ -245,7 +244,7 @@ void StateStack::add(const String& name)
 	}
 }
 
-void StateStack::applyChangesTo(std::vector<State*>& list)
+void StateStack::applyChangesTo(std::vector<GameState*>& list)
 {
 	for(std::vector<StateStackOperation>::iterator it = m_pendingOperations.begin(); it != m_pendingOperations.end(); ++it)
 	{
@@ -289,7 +288,7 @@ void StateStack::applyChangesTo(std::vector<State*>& list)
 
 
 /// Bind a new state to the list
-bool StateStack::bind(const String& name, State* state)
+bool StateStack::bind(const String& name, GameState* state)
 {
 	if(m_bindList.find(name) != m_bindList.end())
 	{
@@ -297,7 +296,6 @@ bool StateStack::bind(const String& name, State* state)
 	}
 	else
 	{
-		state->addReference();
 		state->m_parent = this;
 		state->onAttach();
 		m_bindList[name] = state;
@@ -306,7 +304,7 @@ bool StateStack::bind(const String& name, State* state)
 	return true;
 };
 
-void StateStack::erase(State* state)
+void StateStack::erase(GameState* state)
 {
 	if(std::find(mCurrentList.begin(), mCurrentList.end(), state) == mCurrentList.end())
 	{
@@ -326,7 +324,7 @@ void StateStack::erase(State* state)
 	{
 		// do
 		//state->removeReference();
-		std::vector<State*>::iterator it = std::find(mCurrentList.begin(), mCurrentList.end(), state);
+		std::vector<GameState*>::iterator it = std::find(mCurrentList.begin(), mCurrentList.end(), state);
 		if(it != mCurrentList.end())
 		{
 			mCurrentList.erase(it);
@@ -440,7 +438,7 @@ void StateStack::update(Time &time)
 	}
 };
 
-void StateStack::updateList(std::vector<State*>& list, const Time& time)
+void StateStack::updateList(std::vector<GameState*>& list, const Time& time)
 {
 	if(list.size() == 0)
 	{

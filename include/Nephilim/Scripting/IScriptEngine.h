@@ -2,8 +2,11 @@
 #define NephilimIScriptEngine_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
+
+class IScript;
 
 /**
 	\class IScriptEngine
@@ -28,6 +31,11 @@ class NEPHILIM_API IScriptEngine
 public:
 	virtual void testFunction() = 0;
 
+	virtual IScript* compile(const String& filename){ return nullptr; }
+
+	virtual void execute(const String& source){}
+
+	virtual void registerFunction(const String& signature, void* funcPtr){}
 };
 
 NEPHILIM_NS_END

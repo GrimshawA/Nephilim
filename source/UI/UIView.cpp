@@ -536,12 +536,12 @@ void UIView::draw(GraphicsDevice* renderer, mat4 transform)
 	va_raw[4].p = vec2(0.f, size.y);
 	va_raw[5].p = vec2(0.f, 0.f);
 
-	va_raw[0].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
-	va_raw[1].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
-	va_raw[2].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
-	va_raw[3].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
-	va_raw[4].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
-	va_raw[5].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, 1.f);
+	va_raw[0].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
+	va_raw[1].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
+	va_raw[2].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
+	va_raw[3].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
+	va_raw[4].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
+	va_raw[5].c = vec4(float(col.r) / 255.f, float(col.g) / 255.f, float(col.b) / 255.f, float(col.a) / 255.f);
 
 	renderer->enableVertexAttribArray(0);
 	renderer->enableVertexAttribArray(1);

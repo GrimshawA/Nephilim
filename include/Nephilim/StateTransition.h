@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 class StateStack;
 class Time;
 class GraphicsDevice;
-class State;
+class GameState;
 class GameCore;
 
 /**

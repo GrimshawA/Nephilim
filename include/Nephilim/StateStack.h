@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class String;
 class Time;
-class State;
+class GameState;
 class StateStackTransition;
 class GraphicsDevice;
 class Event;
@@ -69,15 +69,15 @@ public:
 	bool isActive(const String& name);
 
 	/// Check if a given state is currently being executed
-	bool isActive(State* state);
+	bool isActive(GameState* state);
 	
-	void drawList(std::vector<State*>& list, GraphicsDevice* renderer);
+	void drawList(std::vector<GameState*>& list, GraphicsDevice* renderer);
 
 	void drawCurrentList(GraphicsDevice* renderer);
 
 
 	/// Push a state for execution directly
-	void add(State* state);
+	void add(GameState* state);
 
 	/// Push a binded state for execution by its name
 	void add(const String& name);
@@ -89,7 +89,7 @@ public:
 	void update(Time &time);
 
 	/// Perform a update on the list
-	void updateList(std::vector<State*>& list, const Time& time);
+	void updateList(std::vector<GameState*>& list, const Time& time);
 
 	/// Delivers the event to the right events
 	void pushEvent(Event &event);
@@ -101,19 +101,19 @@ public:
 
 	/// Bind a new state to the list
 	/// Returns false if the name was already taken
-	bool bind(const String& name, State* state);
+	bool bind(const String& name, GameState* state);
 
 	/// This function will apply the pending operations to the state stack
-	void applyChangesTo(std::vector<State*>& list);
+	void applyChangesTo(std::vector<GameState*>& list);
 
 	/// Erase a state
-	void erase(State* state);
+	void erase(GameState* state);
 
 	/// Get the parent game, if any
 	GameCore* getParentGame();
 
 	/// Get a state or NULL
-	State* getBinding(const String& name);
+	GameState* getBinding(const String& name);
 
 	bool isTransitionActive(); 
 
@@ -129,16 +129,16 @@ public:
 		};
 
 		Type type;
-		State* obj;
+		GameState* obj;
 	};
 
 //private:
-	std::vector<State*> mCurrentList; ///< The currently active stack
-	std::vector<State*> mFutureList;  ///< The stack that will be active after the transition
+	std::vector<GameState*> mCurrentList; ///< The currently active stack
+	std::vector<GameState*> mFutureList;  ///< The stack that will be active after the transition
 
 	friend class StateStackTransition;
 
-	std::map<String, State*> m_bindList; ///< The list of binded states, that "live" under the stack
+	std::map<String, GameState*> m_bindList; ///< The list of binded states, that "live" under the stack
 
 	std::vector<StateStackOperation> m_pendingOperations; ///< The list of pending operations
 
