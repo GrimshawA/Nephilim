@@ -10,8 +10,10 @@
 #include "Font.h"
 #include "File.h"
 #include <Nephilim/Model/Mesh.h>
+#include <Nephilim/Plugins/Plugin.h>
 
 #include <map>
+#include <memory>
 
 NEPHILIM_NS_BEGIN
 
@@ -72,6 +74,8 @@ public:
 	std::map<String, ContentGroup*> mGroups;
 
 	VirtualFS* filesystems;
+
+	std::vector<std::unique_ptr<Plugin> > plugins;
 };
 
 
