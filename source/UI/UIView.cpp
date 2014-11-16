@@ -801,19 +801,21 @@ bool UIView::processMouseMove(int x, int y)
 
 		(*it)->processMouseMove(x,y);
 
-		if(testRect.contains(x,y))
+		//if (testRect.contains(x, y))
+		if ((*it)->isHit(vec2(x, y)))
 		{
-			if(!(*it)->m_hovered)
+			if (!(*it)->m_hovered)
 			{
 				(*it)->setPseudoClass("hover", true);
 				(*it)->m_hovered = true;
 				(*it)->onMouseEnter();
 			}
 		}
+
 		else
 		{
 			// mouse is not in it, is it just leaving now?
-			if((*it)->m_hovered)
+			if ((*it)->m_hovered)
 			{
 				(*it)->setPseudoClass("hover", false);
 				(*it)->onMouseLeave();
@@ -824,6 +826,32 @@ bool UIView::processMouseMove(int x, int y)
 
 	return false;
 }
+
+bool UIView::isHit(vec2 point)
+{
+	// transform point to be in this view local space, for a simple rect test then
+	vec4 view_local = matrix.inverse() * vec4(point.x, point.y, 0.f, 1.f);
+
+	if (m_name == "captainScreenButton")
+	{
+		Log("UIView::isHit() with mouse=%f %f became %f %f in local", point.x, point.y, view_local.x, view_local.y);
+	}
+
+
+	if (   (view_local.x >= 0.f) 
+		&& (view_local.x <= size.x)
+		&& (view_local.y >= 0.f)
+		&& (view_local.y <= size.y) )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
 
 bool UIView::processTouchMove(int x, int y)
 {
@@ -871,7 +899,8 @@ bool UIView::processMouseButtonPressed(int x, int y, Mouse::Button button)
 	m_childrenLock++;
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
-		if((*it)->getBounds().contains(x,y) && (*it)->m_visible)
+		//if ((*it)->getBounds().contains(x, y) && (*it)->m_visible)
+		if ((*it)->m_visible && (*it)->isHit(vec2(x,y)))
 		{
 			(*it)->m_pointerPressCount++;
 		}
@@ -898,7 +927,8 @@ void UIView::processMouseButtonReleased(int x, int y, Mouse::Button button, UIEv
 	m_childrenLock++;
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
-		if((*it)->getBounds().contains(x,y) && (*it)->m_visible)
+		//if((*it)->getBounds().contains(x,y) && (*it)->m_visible)
+		if ((*it)->m_visible && (*it)->isHit(vec2(x, y)))
 		{
 			if((*it)->m_pointerPressCount > 0)
 				(*it)->onClick();
@@ -1246,9 +1276,12 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 
 	mat4 absoluteTransform = mat4::identity;
 
-	mat4 localTransform = mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x);
+	mat4 localTransform = mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x) * mat4::rotatez(rotation_z) 
+		* mat4::translate(-pivot.x,-pivot.y,0.f);
 
 	absoluteTransform = transform * localTransform;
+
+	this->matrix = absoluteTransform;
 
 	// Tel
 	draw(renderer, absoluteTransform);

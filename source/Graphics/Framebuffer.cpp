@@ -36,7 +36,7 @@ void Framebuffer::attachTexture(const Texture& texture)
 {
 	if(m_id == 0)
 	{
-		Log("This is the default framebuffer");
+		//Log("This is the default framebuffer");
 		return;
 	}
 
@@ -45,7 +45,7 @@ void Framebuffer::attachTexture(const Texture& texture)
 
 	if(glCheckFramebufferStatusCGL(GL_FRAMEBUFFER_CGL) == GL_FRAMEBUFFER_COMPLETE_CGL)
 	{
-		Log("Created a complete framebuffer");
+		//Log("Created a complete framebuffer");
 	}
 }
 

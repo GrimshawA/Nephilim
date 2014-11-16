@@ -1,7 +1,6 @@
 #include <Nephilim/Razer/ComponentManager.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr {
 
 ComponentManager::~ComponentManager()
 {
@@ -35,8 +34,6 @@ TEntity ComponentManager::getInstanceEntity(std::size_t index)
 std::size_t ComponentManager::getInstanceCount()
 {
 	return 0;
-}
-
 }
 
 NEPHILIM_NS_END

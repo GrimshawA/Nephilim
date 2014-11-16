@@ -4,9 +4,6 @@
 
 NEPHILIM_NS_BEGIN
 
-namespace rzr
-{
-
 CMesh::CMesh()
 {
 }
@@ -148,5 +145,4 @@ bool CMesh::loadCubesFromTilemap(Tilemap* tilemap)
 	return true;
 }
 
-};
 NEPHILIM_NS_END

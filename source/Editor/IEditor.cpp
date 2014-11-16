@@ -1,8 +1,8 @@
-#include <Nephilim/Editor/Editor.h>
+#include <Nephilim/Editor/IEditor.h>
 
 NEPHILIM_NS_BEGIN
 
-Editor::Editor()
+IEditor::IEditor()
 : mView(NULL)
 , mInstanceId(0)
 {

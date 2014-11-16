@@ -1,11 +1,22 @@
 #include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/CTransform.h>
 
+#include <Nephilim/Razer/CMesh.h>
+#include <Nephilim/Razer/CTransform.h>
+#include <Nephilim/Razer/CSprite.h>
+#include <Nephilim/Razer/CCamera.h>
+#include <Nephilim/Razer/CSkinnedMesh.h>
+
 NEPHILIM_NS_BEGIN
 
 World::World()
-//: nextAssignID(1)
 {
+	// Init some component managers
+	createDefaultComponentManager<CTransform>();
+	createDefaultComponentManager<CMesh>();
+	createDefaultComponentManager<CSprite>();
+	createDefaultComponentManager<CCamera>();
+	createDefaultComponentManager<ComponentSkinnedModel>();
 }
 
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering

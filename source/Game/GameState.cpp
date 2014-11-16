@@ -65,19 +65,14 @@ void GameState::useTransition(StateStackTransition* transition)
 		m_parent->performTransition(transition);
 	}
 }
-void GameState::onActivate(){
+void GameState::onActivate()
+{}
 
-};
+void GameState::onDeactivate()
+{}
 
-void GameState::onDeactivate(){
-
-};
-
-/// Callback when the state enters the bind list or the stack
 void GameState::onAttach()
-{
-
-};
+{}
 
 void GameState::onMessageReceived(String message){
 
@@ -86,6 +81,12 @@ void GameState::onMessageReceived(String message){
 void GameState::onDataReceived(String dataID, void* data){
 
 };
+
+/// Get the game object that is running this state
+GameCore& GameState::getGame()
+{
+	return *mGame;
+}
 
 StateStack* GameState::parentMachine(){
 	return m_parent;

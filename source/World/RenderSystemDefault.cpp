@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/SystemRenderer.h>
+#include <Nephilim/Razer/RenderSystemDefault.h>
 #include <Nephilim/Razer/World.h>
 #include <Nephilim/Razer/Entity.h>
 #include <Nephilim/Razer/Entity.inl>
@@ -8,11 +8,11 @@
 #include <Nephilim/Razer/CSprite.h>
 #include <Nephilim/Razer/CTransform.h>
 #include <Nephilim/Razer/CPointLight.h>
-#include <Nephilim/Razer/ComponentParticleEmitter.h>
+#include <Nephilim/Razer/CEmitter.h>
 #include <Nephilim/Razer/ComponentModel.h>
 #include <Nephilim/Razer/CMesh.h>
-#include <Nephilim/Razer/ComponentVehicle.h>
-#include <Nephilim/Razer/ComponentSkinnedModel.h>
+#include <Nephilim/Razer/CInput.h>
+#include <Nephilim/Razer/CSkinnedMesh.h>
 #include <Nephilim/Razer/ComponentWater.h>
 #include <Nephilim/Razer/ComponentWater2.h>
 #include <Nephilim/Razer/SystemKinesis2D.h>
@@ -29,10 +29,8 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 	
-SystemRenderer::SystemRenderer()
+RenderSystemDefault::RenderSystemDefault()
 : RenderSystem()
-, mRenderer(NULL)
-, mContentManager(NULL)
 , mTargetWidth(1900.f)
 , mTargetHeight(1000.f)
 {
@@ -63,18 +61,18 @@ SystemRenderer::SystemRenderer()
 
 
 /// This function will initialize the frame buffer and other things in order to produce a new frame out of the scene
-void SystemRenderer::startFrame()
+void RenderSystemDefault::startFrame()
 {
 	// Bind render to texture
-	mFramebuffer.activate();
+	/*mFramebuffer.activate();
 	glViewport(0, 0, mTargetWidth, mTargetHeight);
 
 	//mRenderer->setClearColor(Color::Blue);
-	mRenderer->clearColorBuffer();
+	mRenderer->clearColorBuffer();*/
 }
 
 /// This function will basically truncate the output buffer and apply any post processing needed, generating the final composite
-void SystemRenderer::endFrame()
+void RenderSystemDefault::endFrame()
 {
 
 	//mRenderer->setModelMatrix(mat4::identity);
@@ -102,7 +100,7 @@ void SystemRenderer::endFrame()
 }
 
 /// All this function does is to render the current rendered scene frame to the backbuffer
-void SystemRenderer::drawToBackBuffer()
+void RenderSystemDefault::drawToBackBuffer()
 {
 	mRenderer->setDefaultTarget();
 	mRenderer->setDefaultShader();
@@ -119,7 +117,7 @@ void SystemRenderer::drawToBackBuffer()
 	mRenderer->draw(finalComposite);
 }
 
-void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
+void RenderSystemDefault::getActiveCamera(vec3& position, mat4& proj, mat4& view)
 {
 	// Find a camera
 /*	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
@@ -155,7 +153,7 @@ void SystemRenderer::getActiveCamera(vec3& position, mat4& proj, mat4& view)
 	}*/
 }
 
-void SystemRenderer::update(const Time& deltaTime)
+void RenderSystemDefault::update(const Time& deltaTime)
 {
 	// Update skinning animations
 	/*for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
@@ -170,7 +168,7 @@ void SystemRenderer::update(const Time& deltaTime)
 }
 
 /// Render scene gets all scene render data and outputs it to the active target
-void SystemRenderer::renderScene()
+void RenderSystemDefault::renderScene()
 {
 
 // 	RectangleShape c(FloatRect(100, 100, 1000, 1000), Color::Grass);
@@ -385,7 +383,7 @@ void SystemRenderer::renderScene()
 	}*/
 }
 
-void SystemRenderer::renderAllSprites()
+void RenderSystemDefault::renderAllSprites()
 {
 	// Let's dirty draw all sprites
 	ComponentManager* spriteComponentManager = mScene->getComponentManager<CSprite>();
@@ -408,32 +406,98 @@ void SystemRenderer::renderAllSprites()
 		}
 		else
 		{
-			// draw
-			RectangleShape c;
-			c.setSize(sprite->width, sprite->height);
-			c.setColor(sprite->color);
-			c.setTexture(t);
+			VertexArray va;
+			va.addAttribute(sizeof(float), 2, VertexFormat::Position);
+			va.addAttribute(sizeof(float), 4, VertexFormat::Color);
+			va.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
+			va.allocateData(6);
+
+			struct vertex_f
+			{
+				vec2 p;
+				vec4 c;
+				vec2 uv;
+			};
+
+//			Log("Rendering sprite %f %f", sprite->width, sprite->height);
+
+
+			vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va.data[0]);
+
+			va_raw[0].p = vec2(sprite->width, 0.f);
+			va_raw[1].p = vec2(sprite->width, sprite->height);
+			va_raw[2].p = vec2(0.f, sprite->height);
+
+			va_raw[3].p = vec2(sprite->width, 0.f);
+			va_raw[4].p = vec2(0.f, sprite->height);
+			va_raw[5].p = vec2(0.f, 0.f);
+
+			va_raw[0].uv = vec2(1.f, 0.f);
+			va_raw[1].uv = vec2(1.f, 1.f);
+			va_raw[2].uv = vec2(0.f, 1.f);
+
+			va_raw[3].uv = vec2(1.f, 0.f);
+			va_raw[4].uv = vec2(0.f, 1.f);
+			va_raw[5].uv = vec2(0.f, 0.f);
+
 			if (sprite->tex_rect_size.x > 0.f && sprite->tex_rect_size.y > 0.f)
 			{
-				c.setTextureRect(sprite->tex_rect_pos.x, sprite->tex_rect_pos.y, sprite->tex_rect_size.x, sprite->tex_rect_size.y);
-				//c.setTextureRect(0.f, 0.f, 1000.f, 1000.f);
+				float x1 = sprite->tex_rect_pos.x / t->getSize().x;
+				float x2 = x1 + sprite->tex_rect_size.x / t->getSize().x;
+
+				float y1 = sprite->tex_rect_pos.y / t->getSize().y;
+				float y2 = y1 + sprite->tex_rect_size.y / t->getSize().y;
+
+				va_raw[0].uv = vec2(x2, y1);
+				va_raw[1].uv = vec2(x2, y2);
+				va_raw[2].uv = vec2(x1, y2);
+
+				va_raw[3].uv = vec2(x2, y1);
+				va_raw[4].uv = vec2(x1, y2);
+				va_raw[5].uv = vec2(x1, y1);
 			}
-			//c.invertTextureCoordinates();
-			mRenderer->draw(c);
+
+			va_raw[0].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+			va_raw[1].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+			va_raw[2].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+			va_raw[3].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+			va_raw[4].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+			va_raw[5].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+
+			mRenderer->enableVertexAttribArray(0);
+			mRenderer->enableVertexAttribArray(1);
+			mRenderer->enableVertexAttribArray(2);
+
+			mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(0));
+			mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(1));
+			mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(2));
+			
+			mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+
+			t->bind();
+			mRenderer->drawArrays(Render::Primitive::Triangles, 0, 6);
+
+			mRenderer->disableVertexAttribArray(0);
+			mRenderer->disableVertexAttribArray(1);
+			mRenderer->disableVertexAttribArray(2);
+
+			mRenderer->setModelMatrix(mat4::identity);
+			mRenderer->setDefaultTexture();
+
 		}	
 	}
 }
 
 
-void SystemRenderer::render()
+void RenderSystemDefault::render()
 {
 	startFrame();
 	renderScene();
-	endFrame();
-	drawToBackBuffer();
+//	endFrame();
+	//drawToBackBuffer();
 }
 
-void SystemRenderer::renderModel(Entity& entity)
+void RenderSystemDefault::renderModel(Entity& entity)
 {
 	
 	/*CTransform& transform = entity.getComponent<CTransform>();
@@ -458,7 +522,7 @@ void SystemRenderer::renderModel(Entity& entity)
 	//Log("Rendering the box");*/
 }
 
-void SystemRenderer::renderMesh(Entity& entity)
+void RenderSystemDefault::renderMesh(Entity& entity)
 {
 	/*ComponentMesh& mesh = entity.getComponent<ComponentMesh>();
 
@@ -513,7 +577,7 @@ void SystemRenderer::renderMesh(Entity& entity)
 	}*/
 }
 
-void SystemRenderer::renderTilemap(Entity& entity)
+void RenderSystemDefault::renderTilemap(Entity& entity)
 {	
 	/*mRenderer->setDepthTestEnabled(false);
 

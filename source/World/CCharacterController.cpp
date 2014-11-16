@@ -1,16 +1,16 @@
-#include <Nephilim/Razer/ComponentCharacterController.h>
+#include <Nephilim/Razer/CCharacterController.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-ComponentCharacterController::ComponentCharacterController()
+CCharacterController::CCharacterController()
 : m_character(NULL)
 , m_ghostObject(NULL)
 {
 }
 
-void ComponentCharacterController::setVelocity(const vec3& v)
+void CCharacterController::setVelocity(const vec3& v)
 {
 	if(m_character)
 	{
@@ -18,7 +18,7 @@ void ComponentCharacterController::setVelocity(const vec3& v)
 	}
 }
 
-vec3 ComponentCharacterController::getPosition()
+vec3 CCharacterController::getPosition()
 {
 	vec3 p(0.f, 0.f, 0.f);
 	if(m_character)

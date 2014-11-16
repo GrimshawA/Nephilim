@@ -14,12 +14,19 @@ GameCore::GameCore()
 , m_windowTitle("No name window")
 , mCloseRequested(false)
 {
+	stateManager.mGame = this;
 }
 
 /// Create a new scene or return if already exists
-World* GameCore::createScene(const String& name)
+World* GameCore::createWorld(const String& name)
 {
-	return sceneManager.createScene(name);
+	World* world = sceneManager.createScene(name);
+
+	// Init this world
+	world->graphicsDevice = getRenderer();
+	world->contentManager = &contentManager;
+
+	return world;
 }
 
 /// Get a pointer to the engine

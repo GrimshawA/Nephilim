@@ -24,12 +24,13 @@ static const char gVertexSource[] =
 	"  texUV = texCoord;\n"
 	"}\n";
 
-static const char gFragmentSource[] = 
-	"#version 120\n"
-	"uniform sampler2D texture;\n"
-	"varying vec4 outColor;\n"
-	"varying vec2 texUV;\n"
-	"void main() {\n"
+static const char gFragmentSource[] =
+"#version 120\n"
+"uniform sampler2D texture;\n"
+"varying vec4 outColor;\n"
+"varying vec2 texUV;\n"
+"void main() {\n"
+" if(texture2D(texture,texUV).a == 0) discard;"
 	"   gl_FragColor = texture2D(texture, texUV) * outColor;\n"
 	"}\n";
 

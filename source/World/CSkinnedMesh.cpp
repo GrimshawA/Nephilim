@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/ComponentSkinnedModel.h>
+#include <Nephilim/Razer/CSkinnedMesh.h>
 #include <Nephilim/File.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/CGL.h>
@@ -38,13 +38,13 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 	baseTransform = mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
 
 	// Time to load the champion
-	SKNLoader::Load(champion, "K:\\Users\\Hellhound\\Desktop\\lolmodels\\model.skn");
+	SKNLoader::Load(champion, "lolmodels\\model.skn");
 	champion.m_useNormals = false;
 
-	championTexture.loadFromFile("K:\\Users\\Hellhound\\Desktop\\lolmodels\\texture.png");
+	championTexture.loadFromFile("lolmodels\\texture.png");
 
-	skeletonskl.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\skeleton.skl");
-	animations.Load("K:\\Users\\Hellhound\\Desktop\\lolmodels\\fizz_run.anm");
+	skeletonskl.Load("lolmodels\\skeleton.skl");
+	animations.Load("lolmodels\\fizz_run.anm");
 
 	// remap bone indices
 	for(int i = 0; i < champion.boneIDs.size(); ++i)
@@ -55,8 +55,8 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 		champion.boneIDs[i].w = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].w];
 	}
 
-	rigShader.loadShaderFromFile(Shader::VertexUnit, String("K:\\Users\\Hellhound\\Desktop\\lolmodels\\rigged.vert"));
-	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("K:\\Users\\Hellhound\\Desktop\\lolmodels\\rigged.frag"));
+	rigShader.loadShaderFromFile(Shader::VertexUnit, String("lolmodels\\rigged.vert"));
+	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("lolmodels\\rigged.frag"));
 	rigShader.addAttributeLocation(0, "vertex");
 	rigShader.addAttributeLocation(1, "color");
 	rigShader.addAttributeLocation(2, "texCoord");

@@ -1,8 +1,6 @@
 #include <Nephilim/Razer/CTransform.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
 CTransform::CTransform()
 : position(0.f, 0.f, 0.f)
@@ -99,5 +97,4 @@ vec3 CTransform::getRightVector()
 	return v.xyz();
 }
 
-};
 NEPHILIM_NS_END

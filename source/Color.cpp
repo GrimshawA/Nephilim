@@ -21,6 +21,7 @@ Color Color::Bittersweet = Color(212, 197, 36, 255);
 Color Color::Lavender = Color(172, 146, 236, 255);
 Color Color::Grass = Color(160, 212, 104, 255);
 Color Color::Aqua = Color(79, 193, 233, 255);
+Color Color::NavyBlue = Color(20, 31, 61, 255);
 
 Color::Color()
 {

@@ -14,6 +14,9 @@ ContentManager::ContentManager()
 	// Create the anonymous group where assets are loaded to by default
 	createGroup("");
 	mDefaultFonts = &mGroups[""]->mFonts;
+
+	filesystems = new VirtualFS();
+	filesystems->indexSearchPath("./", "/");
 }
 
 ContentManager::~ContentManager()

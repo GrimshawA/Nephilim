@@ -200,7 +200,7 @@ GameState* StateStack::getBinding(const String& name)
 /// Get the parent game, if any
 GameCore* StateStack::getParentGame()
 {
-	return m_parent;
+	return mGame;
 };
 
 /// Adds state to immediate execution
@@ -208,6 +208,7 @@ void StateStack::add(GameState* state)
 {
 	state->m_parent = this;
 	state->onAttach();
+	state->mGame = mGame;
 
 	StateStackOperation sso;
 	sso.type = StateStackOperation::Add;
@@ -239,6 +240,7 @@ void StateStack::add(const String& name)
 			}			
 
 			// Activate the state
+			m_bindList[name]->mGame = mGame;
 			m_bindList[name]->onActivate();
 		}
 	}
@@ -257,7 +259,7 @@ void StateStack::applyChangesTo(std::vector<GameState*>& list)
 			{
 				it->obj->onDeactivate();
 			}
-			Log("Removed state for future list");
+			//Log("Removed state for future list");
 
 			break;
 
@@ -265,7 +267,7 @@ void StateStack::applyChangesTo(std::vector<GameState*>& list)
 			if(std::find(list.begin(), list.end(), it->obj) == list.end())
 			{
 				list.push_back(it->obj);
-				Log("Added state for future list");
+				//Log("Added state for future list");
 			}
 			else
 			{
@@ -298,6 +300,7 @@ bool StateStack::bind(const String& name, GameState* state)
 	{
 		state->m_parent = this;
 		state->onAttach();
+		state->mGame = mGame;
 		m_bindList[name] = state;
 	}
 

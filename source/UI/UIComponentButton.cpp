@@ -99,7 +99,7 @@ void UIComponentButton::onEvent(Event event, UIView* view)
 
 void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
-	if(hovering)
+	if(view->m_hovered)
 	{
 		RectangleShape hoverRect;
 		hoverRect.setRect(view->getBounds());
@@ -164,7 +164,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 
 	renderer->setModelMatrix(parentTransform);
 	renderer->draw(buttonLabel);
-	renderer->setModelMatrix(mat4::identity);
+	//renderer->setModelMatrix(mat4::identity);
 	//Log("Drawing button text: %s", mString.c_str());
 }
 
