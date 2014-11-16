@@ -2,7 +2,7 @@
 #define NephilimGameBaseSceneManager_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Razer/World.h>
+#include <Nephilim/World/World.h>
 
 NEPHILIM_NS_BEGIN
 using namespace rzr;

@@ -1,21 +1,21 @@
-#include <Nephilim/Razer/RenderSystemDefault.h>
-#include <Nephilim/Razer/World.h>
-#include <Nephilim/Razer/Entity.h>
-#include <Nephilim/Razer/Entity.inl>
-#include <Nephilim/Razer/ComponentTilemap2D.h>
-#include <Nephilim/Razer/ComponentTerrain.h>
-#include <Nephilim/Razer/CCamera.h>
-#include <Nephilim/Razer/CSprite.h>
-#include <Nephilim/Razer/CTransform.h>
-#include <Nephilim/Razer/CPointLight.h>
-#include <Nephilim/Razer/CEmitter.h>
-#include <Nephilim/Razer/ComponentModel.h>
-#include <Nephilim/Razer/CMesh.h>
-#include <Nephilim/Razer/CInput.h>
-#include <Nephilim/Razer/CSkinnedMesh.h>
-#include <Nephilim/Razer/ComponentWater.h>
-#include <Nephilim/Razer/ComponentWater2.h>
-#include <Nephilim/Razer/SystemKinesis2D.h>
+#include <Nephilim/World/RenderSystemDefault.h>
+#include <Nephilim/World/World.h>
+#include <Nephilim/World/Entity.h>
+#include <Nephilim/World/Entity.inl>
+#include <Nephilim/World/ComponentTilemap2D.h>
+#include <Nephilim/World/ComponentTerrain.h>
+#include <Nephilim/World/CCamera.h>
+#include <Nephilim/World/CSprite.h>
+#include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/CPointLight.h>
+#include <Nephilim/World/CEmitter.h>
+#include <Nephilim/World/ComponentModel.h>
+#include <Nephilim/World/CMesh.h>
+#include <Nephilim/World/CInput.h>
+#include <Nephilim/World/CSkinnedMesh.h>
+#include <Nephilim/World/ComponentWater.h>
+#include <Nephilim/World/ComponentWater2.h>
+#include <Nephilim/World/SystemKinesis2D.h>
 
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
@@ -23,7 +23,7 @@
 #include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
 
-#include <Nephilim/Razer/PostEffectBloom.h>
+#include <Nephilim/World/PostEffectBloom.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

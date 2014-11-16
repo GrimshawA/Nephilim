@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/PostEffectBloom.h>
+#include <Nephilim/World/PostEffectBloom.h>
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>

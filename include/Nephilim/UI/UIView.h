@@ -75,11 +75,12 @@ class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefC
 {
 public:
 	vec2    size;            ///< Size of the view rectangle
+	vec2    pivot;           ///< Pivot for positioning and rotations
 	float   rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
 	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
 	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
 	UICore* mCore = nullptr; ///< Soft reference to a UICore, for localization, content and others
-
+	mat4    matrix;
 
 	/// Holds the animations currently active on this view
 	/// Each animation is bound to the view itself, and is automatically destroyed with it
@@ -163,6 +164,8 @@ public:
 
 	/// Creates a new UIView, names it and attaches it as a child, then returns it
 	UIView* createChild(const String& name);
+
+	bool isHit(vec2 point);
 
 	/// Adds a child control
 	void attach(UIView* control);

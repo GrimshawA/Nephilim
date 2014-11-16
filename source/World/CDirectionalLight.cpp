@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CDirectionalLight.h>
+#include <Nephilim/World/CDirectionalLight.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

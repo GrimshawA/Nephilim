@@ -11,7 +11,8 @@ NEPHILIM_NS_BEGIN
 	\class Color
 	\brief Describes a color in the RGB8888 format
 */
-class NEPHILIM_API Color{
+class NEPHILIM_API Color
+{
 public:
 	/// Default color is full-alpha(opaque) black
 	Color();
@@ -44,6 +45,7 @@ public:
 	static Color Lavender;
 	static Color Grass;
 	static Color Aqua;
+	static Color NavyBlue;
 
 	Uint8 r,g,b,a;
 };

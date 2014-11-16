@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CEmitter.h>
+#include <Nephilim/World/CEmitter.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

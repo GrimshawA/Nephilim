@@ -1,11 +1,11 @@
-#include <Nephilim/Razer/World.h>
-#include <Nephilim/Razer/CTransform.h>
+#include <Nephilim/World/World.h>
+#include <Nephilim/World/CTransform.h>
 
-#include <Nephilim/Razer/CMesh.h>
-#include <Nephilim/Razer/CTransform.h>
-#include <Nephilim/Razer/CSprite.h>
-#include <Nephilim/Razer/CCamera.h>
-#include <Nephilim/Razer/CSkinnedMesh.h>
+#include <Nephilim/World/CMesh.h>
+#include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/CSprite.h>
+#include <Nephilim/World/CCamera.h>
+#include <Nephilim/World/CSkinnedMesh.h>
 
 NEPHILIM_NS_BEGIN
 

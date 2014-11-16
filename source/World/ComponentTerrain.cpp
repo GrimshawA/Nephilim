@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/ComponentTerrain.h>
+#include <Nephilim/World/ComponentTerrain.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Image.h>
 

@@ -14,6 +14,7 @@ class StateStack;
 class StateStackTransition;
 class Time;
 class GraphicsDevice;
+class GameCore;
 
 /**
 	\class GameState
@@ -26,6 +27,8 @@ class GraphicsDevice;
 class NEPHILIM_API GameState
 {
 public:
+
+	GameCore* mGame = nullptr;
 
 	/// Collection of scripts attached to this state
 	std::vector<IScript*> attachedScripts;
@@ -72,6 +75,9 @@ public:
 
 	/// Sends a simple message to the binded state
 	void sendMessage(const String& bindName, const String& message);
+
+	/// Get the game object that is running this state
+	GameCore& getGame();
 
 	bool allowsUnderlyingRendering()
 	{

@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/ComponentText.h>
+#include <Nephilim/World/ComponentText.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

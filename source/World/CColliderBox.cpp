@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CColliderBox.h>
+#include <Nephilim/World/CColliderBox.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

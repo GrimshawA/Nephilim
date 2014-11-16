@@ -32,6 +32,11 @@ class GameCore;
 class NEPHILIM_API StateStack
 {
 public:
+	/// Reference to the GameCore instance that owns this stack
+	GameCore* mGame = nullptr;
+
+
+public:
 	/// Creates an empty state machine
 	StateStack();
 
@@ -117,7 +122,6 @@ public:
 
 	bool isTransitionActive(); 
 
-	GameCore* m_parent;
 
 	struct StateStackOperation
 	{

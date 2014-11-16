@@ -18,7 +18,7 @@
 #include <Nephilim/UI/UIManager.h>
 
 #include <Nephilim/Game/BaseSceneManager.h>
-#include <Nephilim/Razer/World.h>
+#include <Nephilim/World/World.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -71,7 +71,7 @@ public:
 	GameCore();
 
 	/// Create a new scene or return if already exists
-	World* createScene(const String& name);
+	World* createWorld(const String& name);
 
 	/// Get a pointer to the engine
 	Engine* getEngine();

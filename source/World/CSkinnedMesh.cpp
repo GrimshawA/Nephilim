@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CSkinnedMesh.h>
+#include <Nephilim/World/CSkinnedMesh.h>
 #include <Nephilim/File.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/CGL.h>

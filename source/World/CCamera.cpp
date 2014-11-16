@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CCamera.h>
+#include <Nephilim/World/CCamera.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

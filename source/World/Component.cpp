@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/Component.h>
+#include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN
 

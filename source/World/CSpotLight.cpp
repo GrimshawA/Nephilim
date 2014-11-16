@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CSpotLight.h>
+#include <Nephilim/World/CSpotLight.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

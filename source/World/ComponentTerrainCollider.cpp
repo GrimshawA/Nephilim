@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/ComponentTerrainCollider.h>
+#include <Nephilim/World/ComponentTerrainCollider.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr

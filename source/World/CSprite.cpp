@@ -1,4 +1,4 @@
-#include <Nephilim/Razer/CSprite.h>
+#include <Nephilim/World/CSprite.h>
 
 NEPHILIM_NS_BEGIN
 namespace rzr{
