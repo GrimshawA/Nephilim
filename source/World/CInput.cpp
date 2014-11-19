@@ -11,10 +11,9 @@ void CInput::fireAxis(const String& axisName)
 	axisMappings[axisName].binding.emit(1.f);
 }
 
-
-void CInput::bindAction(const String& actionName, int mode, void* object, void* functor)
+void CInput::fireAction(const String& actionName)
 {
-
+	actionBindings[actionName].binding();
 }
 
 NEPHILIM_NS_END

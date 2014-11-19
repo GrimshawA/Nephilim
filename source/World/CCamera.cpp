@@ -27,6 +27,5 @@ void CCamera::setSize(float width, float height)
 }
 
 
-
 };
 NEPHILIM_NS_END

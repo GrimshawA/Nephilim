@@ -3,17 +3,15 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
+#include <Nephilim/World/Actor.h>
 #include <Nephilim/World/EntityManager.h>
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/System.h>
 #include <Nephilim/World/Component.h>
-
 #include <Nephilim/World/ComponentArray.h>
 
 #include <vector>
 #include <map>
-
-
 
 NEPHILIM_NS_BEGIN
 using namespace rzr;
@@ -49,9 +47,22 @@ public:
 	/// The content manager that provides assets for this world
 	ContentManager* contentManager = nullptr;
 
+	/// The currently instanced list of actors
+	std::vector<Actor*> actors;
 
 public:
 	World();
+
+	/// Spawns an actor
+	Actor* spawnActor();
+
+	/// Spawns an actor with type T (must be a subclass of Actor)
+	template<typename T>
+	T* spawnActor();
+
+	/// Destroys an actor
+	void destroyActor(Actor* actor);
+
 
 	/// Allocate a component manager to type T as a ComponentArray<T>
 	template<typename T>
@@ -82,6 +93,8 @@ public:
 
 	template<typename T>
 	void createComponent(T c, TEntity e);
+
+
 };
 
 template<typename T>
@@ -127,6 +140,18 @@ void World::createDefaultComponentManager()
 	}
 	
 	componentManagers[std::type_index(typeid(T))] = new ComponentArray<T>();
+}
+
+/// Spawns an actor with type T (must be a subclass of Actor)
+template<typename T>
+T* World::spawnActor()
+{
+	T* myObj = new T();
+	myObj->mWorld = this;
+
+	actors.push_back(myObj);
+
+	return myObj;
 }
 
 NEPHILIM_NS_END

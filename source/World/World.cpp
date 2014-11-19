@@ -19,6 +19,12 @@ World::World()
 	createDefaultComponentManager<ComponentSkinnedModel>();
 }
 
+/// Spawns an actor
+Actor* World::spawnActor()
+{
+	return new Actor();
+}
+
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
 void World::updateTransformHierarchy()
 {
@@ -59,6 +65,11 @@ void World::removeEntity(Int32 id)
 TEntity World::getEntityByIndex(std::size_t index)
 {
 	return entityManager.entities[index];
+}
+
+void World::destroyActor(Actor* actor)
+{
+	delete actor;
 }
 
 NEPHILIM_NS_END
