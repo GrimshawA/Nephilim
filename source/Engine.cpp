@@ -20,9 +20,8 @@ Engine::Engine()
 : m_currentApp(NULL)
 , m_renderer(NULL)
 , m_running(false)
-, m_surface(this)
+, m_window(nullptr)
 {
-
 };
 
 Engine::~Engine()
@@ -57,12 +56,13 @@ void Engine::init()
 {
 
 	// stub code
-	m_surface.create();
+	m_window = new Window();
+	m_window->create();
 
 	cglPrepareExtensions();
 
 	// Attempt to initialize the renderer
-	m_renderer = m_surface.createRenderer();
+	m_renderer = m_window->createRenderer();
 
 	m_running = m_renderer ? true : false;
 }
@@ -87,7 +87,7 @@ void Engine::update()
 	{
 		// Poll events
 		Event event;
-		while(m_surface.window->pollEvent(event))
+		while(m_window->pollEvent(event))
 		{
 			m_currentApp->onEvent(event);
 		}
@@ -115,7 +115,7 @@ void Engine::update()
 void Engine::render()
 {
 	m_currentApp->innerRender();
-	m_surface.pushFrame();
+	m_window->pushFrame();
 }
 
 /// Inject an event into the engine "pipeline"
@@ -137,7 +137,7 @@ bool Engine::isRunning()
 }
 
 /// Get the current renderer
-GraphicsDevice* Engine::getRenderer()
+GraphicsDevice* Engine::getGraphicsDevice()
 {
 	return m_renderer;
 }

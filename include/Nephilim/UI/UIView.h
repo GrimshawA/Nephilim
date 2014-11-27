@@ -69,6 +69,23 @@ namespace UIEventList
 	};
 }
 
+namespace UIFlag
+{
+	enum UIFlagTypes
+	{
+		FIXED_WIDTH        = 1 << 0,  ///< The width can not be mutated by layouting
+		FIXED_HEIGHT       = 1 << 1,  ///< The height can not be mutated by layouting
+		FILL_PARENT_WIDTH  = 1 << 2,  ///< The view always resizes to fill the parent's width
+		FILL_PARENT_HEIGHT = 1 << 3,  ///< The view always resizes to fill the parent's height
+		ANCHOR_BOTTOM      = 1 << 4,  ///< The view anchors to its parent bottom line
+		ANCHOR_LEFT        = 1 << 5,  ///< The view anchors to its parent left line
+		ANCHOR_TOP         = 1 << 6,  ///< The view anchors to its parent top line
+		ANCHOR_RIGHT       = 1 << 7,  ///< The view anchors to its parent right line
+		RELATIVE_WIDTH     = 1 << 8,  ///< As the parent grows, this view maintains horizontal proportion
+		RELATIVE_HEIGHT    = 1 << 9,  ///< As the parent grows, this view maintains horizontal proportion
+	};
+}
+
 class UIAnimation;
 
 class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
@@ -82,6 +99,10 @@ public:
 	UICore* mCore = nullptr; ///< Soft reference to a UICore, for localization, content and others
 	mat4    matrix;
 
+	vec2 scrolling_offset;   ///< Scroll bars just move this variable around, effectively shifting all elements all around 
+	
+	Uint32 mFlags;
+
 	/// Holds the animations currently active on this view
 	/// Each animation is bound to the view itself, and is automatically destroyed with it
 	//std::vector<std::unique_ptr<UIAnimation> > animations;
@@ -93,6 +114,17 @@ public:
 	
 	Color col;
 	
+// Inheritance
+protected:
+
+	/// Called on subclasses to draw custom stuff
+	virtual void onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld);
+
+	/// Called on subclasses to notify the widget was just resized
+	virtual void onResize();
+
+public:
+
 
 	/// Allows cleaner code, which uses UIView::Ptr as the type which can be changed anytime between other types of smart pointers without breaking code
 	typedef UIView* Ptr;
@@ -106,8 +138,30 @@ public:
 	/// Base destructor
 	virtual ~UIView();
 
+	/// Get the current width of this widget
+	float width();
+
+	/// Get the current height of this widget
+	float height();
+
+	/// Get the bounding box of the children
+	/// Coordinates in local space, relative to this view
+	FloatRect childrenRect();
+
+	/// Set any flags for the view
+	void setFlag(Uint32 flags);
+
+	bool hasFlags(Uint32 flags);
+
 	/// Load the hierarchy of this view from a file and configure itself
 	void load(const String& filename);
+
+	/// Template to instance directly given types as children
+	template<typename T>
+	T* createChild(const String& name);
+
+	/// Get the current world position
+	vec3 getWorldPosition();
 
 	/// Add a component to the view
 	void addComponent(UIComponent* component);
@@ -250,9 +304,6 @@ public:
 	/// Get the current size of the control
 	vec2 getSize();
 
-	/// Get the bounding rect of this control and all its children
-	FloatRect getContentBounds();
-
 	/// Returns the UIWindow context or NULL if not attached
 	UICore* getContext();
 
@@ -299,8 +350,7 @@ public:
 
 	virtual void onAttach(){}
 
-	/// Callback when the control is resized
-	virtual void onResize();
+
 
 	/// Immediately sets the new size of the control 
 	void setSize(float width, float height);
@@ -494,6 +544,24 @@ T* UIView::getComponent()
 
 	return NULL;
 }
+
+/// Template to instance directly given types as children
+template<typename T>
+T* UIView::createChild(const String& name)
+{
+	// Instance a new view
+	T* view = new T();
+	view->setName(name);
+	//view->setPosition(getPosition());
+
+	// Attach
+	attach(view);
+
+	return view;
+}
+
+/// UIView or UIWidget are the same thing.
+typedef UIView UIWidget;
 
 NEPHILIM_NS_END
 #endif // NephilimUIView_h__

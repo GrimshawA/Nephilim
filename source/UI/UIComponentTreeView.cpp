@@ -1,5 +1,7 @@
 #include <Nephilim/UI/UIComponentTreeView.h>
 #include <Nephilim/UI/UIComponentDebug.h>
+#include <Nephilim/UI/UIComponentText.h>
+#include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Logger.h>
 
@@ -16,11 +18,88 @@ UIComponentTreeView::UIComponentTreeView()
 
 }
 
+void UIComponentTreeView::addItem(const String& content)
+{
+	UIView* item = mParent->createChild("item");
+	item->addComponent(new UIComponentDebugColor(Color::Transparent));
+	item->addComponent(new UIComponentText(content, UIComponentText::Left, UIComponentText::Center));
+	item->setFlag(UIFlag::FILL_PARENT_WIDTH);
+	item->setRect(0.f, 0.f, mParent->size.x, 20.f);
+	item->mPadding.left = 20.f;
+
+	// add a tiny icon
+	UIView* icon = item->createChild("icon");
+	icon->setSize(20.f, 20.f);
+	icon->setPosition(0.f, 0.f);
+	icon->addComponent(new UIComponentImage("./Core/EditorAssets/person14.png"));
+
+	item->onClick.connect(sigc::bind(sigc::mem_fun(this, &UIComponentTreeView::itemClicked), item));
+
+	positionRows();
+}
+
+void UIComponentTreeView::itemClicked(UIView* node)
+{
+	for (std::size_t i = 0; i < selectedItems.size(); ++i)
+	{
+		selectedItems[i]->getComponent<UIComponentDebugColor>()->mColor = Color::Transparent;
+	}
+	selectedItems.clear();
+
+	node->getComponent<UIComponentDebugColor>()->mColor = Color::Blue;
+	selectedItems.push_back(node);
+}
+
+
+void UIComponentTreeView::addTree(const String& content)
+{
+	// We add a child item, who is a subtree itself. It has its own subtree manager component
+
+
+	// for now add a NavyBlue subtree area
+	UIView* item = mParent->createChild("tree");
+	//item->addComponent(new UIComponentDebugColor(Color::NavyBlue));
+	//item->addComponent(new UIComponentText(content));
+	item->setFlag(UIFlag::FILL_PARENT_WIDTH);
+	item->addComponent(new UIComponentSubTree());
+	item->setRect(0.f, 0.f, mParent->size.x, 20.f);
+	item->m_clipChildren = true;
+	item->mPadding.left = 20.f;
+
+	// add a tiny icon
+	/*UIView* icon = item->createChild("icon");
+	icon->setSize(10.f, 10.f);
+	icon->setPosition(5.f, 6.f);
+	icon->addComponent(new UIComponentImage("./Core/EditorAssets/folder5.png"));*/
+
+	UIComponentSubTree* subTree = item->getComponent<UIComponentSubTree>();
+	subTree->addItem(content); // first one added is the title.
+	subTree->addItem("Actor 1");
+	subTree->addItem("Actor 2");
+	subTree->addItem("Actor 3");
+
+	// Ensure the root level stays positioned, after the additions
+	positionRows();
+}
+
+void UIComponentTreeView::positionRows()
+{
+	float pos_y = 0.f;
+
+	for (std::size_t i = 0; i < mParent->getChildCount(); ++i)
+	{
+		UIView* child = mParent->getChild(i);
+		child->position.y = pos_y;
+
+		pos_y += child->size.y + 1.f;
+	}
+}
+
 /// This is called ONLY when a new item is added to the tree view
 /// All items added are in the same level in the tree
 void UIComponentTreeView::onChildAttached(UIView* child)
 {
-	Log("CHILD ADDED %s", child->getName().c_str());
+	/*Log("CHILD ADDED %s", child->getName().c_str());
 
 	// Immediately set this children to its right spot
 	float offsetY = 0.f;
@@ -79,7 +158,7 @@ void UIComponentTreeView::onChildAttached(UIView* child)
 		}
 
 		//Log("ADDED ITEM TO A SUBTREE, SUBTREE CONTAINER NOW %f", mParent->getSize().y);
-	}
+	}*/
 }
 
 /// Toggle will expand/collapse the tree view
@@ -288,40 +367,46 @@ bool UIComponentTreeView::isSubTree(int index)
 }
 
 
-void UIComponentTreeView::onRender(GraphicsDevice* renderer, UIView* view)
+////////////////////////////////////////////////////////////////////////// UICOMPONENTSUBTREE
+
+void UIComponentSubTree::addItem(const String& content)
 {
-	// Draw a black background on the ROOT tree view
-	if(mSubTreeLevel == 0)
+	UIView* item = mParent->createChild("item");
+	//item->addComponent(new UIComponentDebugColor(Color::Red));
+	item->addComponent(new UIComponentText(content, UIComponentText::Left, UIComponentText::Center));
+	item->setRect(0.f, 0.f, mParent->size.x, 20.f);
+	item->setFlag(UIFlag::FILL_PARENT_WIDTH);
+	if (mParent->getChildCount() == 1)
 	{
-		RectangleShape back;
-		back.setRect(view->getBounds());
-		back.setColor(Color(36,36,36));
-		renderer->draw(back);
+		item->mPadding.left += mParent->mPadding.left;
 	}
-	/*else if(mSubTreeLevel == 1)
+	else
 	{
-		RectangleShape back;
-		back.setRect(view->getBounds());
-		back.setColor(Color::Grass);
-		renderer->draw(back);
+		item->mPadding.left += mParent->mPadding.left + 20.f;
 	}
-	else if(mSubTreeLevel == 2)
+
+	positionRows();
+}
+
+void UIComponentSubTree::positionRows()
+{
+	float pos_y = 0.f;
+
+	for (std::size_t i = 0; i < mParent->getChildCount(); ++i)
 	{
-		RectangleShape back;
-		back.setRect(view->getBounds());
-		back.setColor(Color::Bittersweet);
-		renderer->draw(back);
+		UIView* child = mParent->getChild(i);
+		child->position.y = pos_y;
+
+		pos_y += child->size.y + 1.f;
 	}
-	else if(mSubTreeLevel == 3)
-	{
-		RectangleShape back;
-		back.setRect(view->getBounds());
-		back.setColor(Color::Lavender);
-		renderer->draw(back);
-	}*/
+
+	// Parent must become the total size now 
+	mParent->size.y = pos_y ;
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+
 
 void UIComponentTreeViewItem::toggle()
 {

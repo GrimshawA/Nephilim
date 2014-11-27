@@ -6,11 +6,17 @@
 
 #include <sigc++/sigc++.h>
 
+#include <vector>
+
 NEPHILIM_NS_BEGIN
+
+class UIDataModel;
 
 /**
 	\class UIComponentTreeView
 	\brief Tree view explorer widget
+
+	This is the high level tree view manager, which includes any number of items and subtrees.
 
 	Specification:
 	1. The UIView which has the component UIComponentTreeView can have N children
@@ -21,7 +27,22 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API UIComponentTreeView : public UIComponent
 {
 public:
+	/// The model for this tree view
+	UIDataModel* model = nullptr;
+
+	std::vector<UIView*> selectedItems;
+
+public:
 	UIComponentTreeView();
+
+	void itemClicked(UIView* node);
+
+	void addItem(const String& content);
+
+	void addTree(const String& content);
+
+	/// This will ensure positioning of the children
+	void positionRows();
 
 	/// Called on the component when the UIView it is attached to has a new child
 	virtual void onChildAttached(UIView* child);
@@ -55,8 +76,6 @@ public:
 	/// Toggle will expand/collapse the tree view
 	void toggle();
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
-
 	float mLineHeight;
 
 	bool mSubTreeView;
@@ -65,6 +84,17 @@ public:
 	float mSpacing; ///< Amount of space left empty between entries
 
 	bool collapsed; ///< A tree view can be either collapsed or expanded to show its children items
+};
+
+class NEPHILIM_API UIComponentSubTree : public UIComponent
+{
+public:
+
+
+	void addItem(const String& content);
+
+	/// This will ensure positioning of the children
+	void positionRows();
 };
 
 class NEPHILIM_API UIComponentTreeViewItem : public UIComponent

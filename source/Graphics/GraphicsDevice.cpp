@@ -44,9 +44,9 @@ String GraphicsDevice::getName()
 	return m_name;
 }
 
-Surface& GraphicsDevice::getSurface()
+Window* GraphicsDevice::getWindow()
 {
-	return *m_surface;
+	return m_window;
 }
 
 /// Set the clear color of the render target
@@ -96,8 +96,8 @@ Color GraphicsDevice::getClearColor()
 
 void GraphicsDevice::setTarget(RenderTarget& target)
 {
-	m_target = &target;
-	m_target->activate();
+	//m_window = &target;
+	//m_window->activate();
 }
 
 void GraphicsDevice::setDefaultTransforms()
@@ -116,14 +116,14 @@ void GraphicsDevice::setDefaultViewport()
 /// If you want to set the viewport in pixels, use setViewportInPixels()
 void GraphicsDevice::setViewport(float left, float top, float width, float height)
 {
-	int bottom = m_target->getSize().y - (top*m_target->getSize().y + height*m_target->getSize().y);
-	glViewport(left * m_target->getSize().x, bottom, width * m_target->getSize().x, height * m_target->getSize().y);
+	int bottom = m_window->getSize().y - (top*m_window->getSize().y + height*m_window->getSize().y);
+	glViewport(left * m_window->getSize().x, bottom, width * m_window->getSize().x, height * m_window->getSize().y);
 }
 
 /// Set the viewport as in glViewport()
 void GraphicsDevice::setViewportInPixels(int left, int top, int width, int height)
 {
-	int bottom = m_target->getSize().y - (top + height);
+	int bottom = m_window->getSize().y - (top + height);
 	glViewport(left, bottom, width, height);
 }
 
@@ -203,7 +203,7 @@ void GraphicsDevice::resetClippingRect()
 /// You can only request a sub-region of the current clipping area, unless you call resetClippingRect() first
 void GraphicsDevice::setClippingRect(FloatRect rect)
 {
-	glScissor(rect.left, m_target->getSize().y - (rect.top + rect.height), rect.width, rect.height);
+	glScissor(rect.left, m_window->getSize().y - (rect.top + rect.height), rect.width, rect.height);
 }
 
 void GraphicsDevice::pushClippingRect(FloatRect rect, bool isNormalized)
@@ -213,10 +213,10 @@ void GraphicsDevice::pushClippingRect(FloatRect rect, bool isNormalized)
 	// If its normalized, convert back to pixels for the calculations
 	if(isNormalized)
 	{
-		rect.left *= getSurface().getWidth();
-		rect.width *= getSurface().getWidth();
-		rect.top *= getSurface().getHeight();
-		rect.height *= getSurface().getHeight();
+		rect.left *= getWindow()->width();
+		rect.width *= getWindow()->width();
+		rect.top *= getWindow()->height();
+		rect.height *= getWindow()->height();
 	}
 
 	FloatRect finalRect;
@@ -224,7 +224,7 @@ void GraphicsDevice::pushClippingRect(FloatRect rect, bool isNormalized)
 	if(m_scissorStack.empty())
 	{
 		// compare against the full window size
-		finalRect = FloatRect(0,0,m_target->getSize().x, m_target->getSize().y);
+		finalRect = FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y);
 	}
 	else
 	{
@@ -355,8 +355,8 @@ void GraphicsDevice::drawDebugLine(Vec2f begin, Vec2f end, Color color)
 /// Capture the currently bound frame buffer pixles to an image
 bool GraphicsDevice::readPixels(Image& image)
 {
-	int width = static_cast<int>(m_target->getSize().x);
-	int height = static_cast<int>(m_target->getSize().y);
+	int width = static_cast<int>(m_window->getSize().x);
+	int height = static_cast<int>(m_window->getSize().y);
 
 	// copy rows one by one and flip them (OpenGL's origin is bottom while SFML's origin is top)
 	std::vector<Uint8> pixels(width * height * 4);

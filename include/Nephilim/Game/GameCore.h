@@ -7,7 +7,6 @@
 #include <Nephilim/Clock.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Window.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/StringList.h>
 
@@ -24,7 +23,7 @@
 NEPHILIM_NS_BEGIN
 
 class Engine;
-class Surface;
+class Window;
 class IScriptEngine;
 
 /**
@@ -77,7 +76,8 @@ public:
 	Engine* getEngine();
 
 	/// Get the window/screen handler
-	Window& getWindow();
+	/// Returns nullptr when the game is windowless
+	Window* getWindow();
 
 	/// Shutdown this game immediately
 	void close();
@@ -104,8 +104,6 @@ public:
 	String getFileSystemRoot();
 
 	GraphicsDevice* getRenderer();
-
-	Surface& getSurface();
 
 	Engine* m_creator;
 

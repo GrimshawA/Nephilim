@@ -21,7 +21,7 @@
 NEPHILIM_NS_BEGIN
 
 class RenderTarget;
-class Surface;
+class Window;
 class Image;
 class VertexArray;
 
@@ -40,8 +40,6 @@ class VertexArray;
 class NEPHILIM_API GraphicsDevice
 {
 public:
-	friend class Surface;
-	
 	/// Enumerates all types of native renderers
 	enum Type
 	{
@@ -61,7 +59,7 @@ public:
 	String getName();
 
 	/// Get the current surface
-	Surface& getSurface();
+	Window* getWindow();
 
 	/// Set an hint to the renderer which tells it to prefer shaders by default(true), or to use the fixed pipeline instead
 	/// By default, it means a direction relation with setDefaultShader(). Applies only to platforms with both options available.
@@ -207,9 +205,11 @@ public:
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
 protected:
+	friend class Window;
+
 	Type                  m_type;            ///< The type of this renderer
 	String                m_name;            ///< The string with the name of this renderer
-	Surface*              m_surface;         ///< Guaranteed to be a valid surface while the renderer lives
+	Window*               m_window;          ///< Guaranteed to be a valid surface while the renderer lives
 	RenderTarget*         m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
 	Color                 m_clearColor;      ///< The color of the background when clearing buffer
 	FloatRect             m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used

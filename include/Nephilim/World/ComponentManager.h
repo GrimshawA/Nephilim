@@ -58,6 +58,8 @@ public:
 	/// Creates a new component mapped to an entity
 	virtual Component* createComponentForEntity(TEntity e);
 
+	virtual void removeComponentsFromEntity(TEntity e){}
+
 	/// Get the 'index' component in this manager
 	virtual Component* getInstance(std::size_t index);
 

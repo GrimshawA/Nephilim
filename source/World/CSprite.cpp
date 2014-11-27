@@ -1,7 +1,6 @@
 #include <Nephilim/World/CSprite.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr{
 
 CSprite::CSprite()
 : width(1.f)
@@ -58,6 +57,4 @@ void CSprite::setColor(int r, int g, int b)
 	color.b = b;
 }
 
-
-};
 NEPHILIM_NS_END

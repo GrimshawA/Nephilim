@@ -17,6 +17,22 @@ World::World()
 	createDefaultComponentManager<CSprite>();
 	createDefaultComponentManager<CCamera>();
 	createDefaultComponentManager<ComponentSkinnedModel>();
+
+	Level* defaultLevel = new Level();
+	levels.push_back(defaultLevel);
+}
+
+/// Load a level into memory by its name
+/// This requires that the level is previously indexed into this world
+bool World::loadLevel(const String& name)
+{
+	return false;
+}
+
+/// Load directly the new level into this world, and index it too
+bool World::loadLevel(Level* level)
+{
+	return false;
 }
 
 /// Spawns an actor
@@ -28,8 +44,13 @@ Actor* World::spawnActor()
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
 void World::updateTransformHierarchy()
 {
+	for (std::size_t i = 0; i < actors.size(); ++i)
+	{
+		if (actors[i]->root != nullptr)
+		{
 
-	//ComponentArray<CTransform>& transforms = getComponentList<CTransform>();
+		}
+	}
 }
 
 /// Registers a system to this scene
@@ -52,14 +73,12 @@ TEntity World::createEntity()
 /// Removes the entity if it is in the scene
 void World::removeEntity(Int32 id)
 {
-/*	for(size_t i = 0; i < mEntities.size(); ++i)
+	entityManager.destroy(id);
+
+	for (auto it = componentManagers.begin(); it != componentManagers.end(); ++it)
 	{
-		if(mEntities[i] == id)
-		{
-			mEntities.erase(mEntities.begin() + i);
-			return;
-		}
-	}*/
+		it->second->removeComponentsFromEntity(id);
+	}
 }
 
 TEntity World::getEntityByIndex(std::size_t index)

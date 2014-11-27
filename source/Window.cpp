@@ -1,11 +1,18 @@
 #include <Nephilim/Window.h>
 #include <Nephilim/Logger.h>
 
+#include <Nephilim/Graphics/GL3/RendererOpenGL.h>
+#include <Nephilim/Graphics/GLES/RendererGLES.h>
+#include <Nephilim/Graphics/GLES2/RendererGLES2.h>
+#include <Nephilim/CGL.h>
+
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
-#elif defined PARABOLA_ANDROID
-//android specifics
+#endif
+
+#ifdef NEPHILIM_WINDOWS
+#include <windows.h>
 #endif
 
 #include <iostream>
@@ -55,17 +62,97 @@ void Window::create(int screenWidth, int screenHeight){
 
 };
 
+/// Sets a new title to the window
+void Window::setTitle(const String &title)
+{
+
+}
+
+/// Activate the surface as the active frame buffer
+void Window::activate()
+{
+	// this doesnt account ios yet
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0);
+}
+
 /// Change the size of the window if possible
 void Window::setSize(int width, int height)
 {
 #ifdef NEPHILIM_DESKTOP
 	myWindowImpl->setSize(sf::Vector2u(width, height));
+#endif
+}
 
+/// Makes the window maximized - windows only
+void Window::maximize()
+{
+#ifdef NEPHILIM_WINDOWS
+	HWND hnd = static_cast<HWND>(getHandle());
+	ShowWindow(hnd, SW_SHOWMAXIMIZED);
+#endif
+}
+
+void Window::create()
+{
+	create(1024, 768);
+}
+
+IntRect Window::getViewport(const View& view) const
+{
+	float w = static_cast<float>(width());
+	float h = static_cast<float>(height());
+	const FloatRect& viewport = view.getViewport();
+
+	return IntRect(static_cast<int>(0.5f + w  * viewport.left),
+		static_cast<int>(0.5f + h * viewport.top),
+		static_cast<int>(w  * viewport.width),
+		static_cast<int>(h * viewport.height));
+}
+
+/// Creates and returns the renderer if valid
+GraphicsDevice* Window::createRenderer()
+{
+	GraphicsDevice* renderer = NULL;
+
+	// Try to assemble the renderer
+#ifdef NEPHILIM_DESKTOP
+	renderer = new RendererOpenGL();
+
+#elif defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
+	if (m_engine->glesHint == 2)
+		renderer = new RendererGLES2();
+	else
+		renderer = new RendererGLES();
+#endif
+
+	if (renderer)
+	{
+	//	renderer->m_target = this;
+		renderer->m_window = this;
+
+		renderer->setDefaultTarget();
+		renderer->setDefaultShader();
+		renderer->setDefaultBlending();
+		renderer->setDefaultTransforms();
+		renderer->setDefaultViewport();
+		renderer->setDefaultDepthTesting();
+	}
+
+	return renderer;
+}
+
+/// Pushes the back buffer to the screen
+void Window::pushFrame()
+{
+	swapBuffers();
+#if defined NEPHILIM_ANDROID
+	AndroidInterface::requestFrameRender();
 #endif
 }
 
 
-void Window::create(void* handle){
+void Window::create(void* handle)
+{
 #ifdef NEPHILIM_DESKTOP
 	myWindowImpl->create(reinterpret_cast<sf::WindowHandle>(handle));
 	m_fullscreen = false;
@@ -89,31 +176,28 @@ void Window::setFramerateLimit(int limit){
 
 
 /// Get the width of the screen/window
-int Window::getWidth() const{
-#ifdef NEPHILIM_DESKTOP
+int Window::width() const
+{
+#if defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
+	return m_windowWidth;
+#else
 	return myWindowImpl->getSize().x;
-#elif defined PARABOLA_ANDROID
-	return Application::myInstance->myWindowWidth;
-#elif defined PARABOLA_IPHONE
-    return 480;
 #endif
-
 };
 
 /// Get the height of the screen/window
-int Window::getHeight() const{
-#ifdef NEPHILIM_DESKTOP
+int Window::height() const
+{
+#if defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
+	return m_windowHeight;
+#else
 	return myWindowImpl->getSize().y;
-#elif defined PARABOLA_ANDROID
-	return Application::myInstance->myWindowHeight;
-#elif defined PARABOLA_IPHONE
-    return 320;
 #endif
 };
 
 /// Get the size of the window
 Vec2i Window::getSize() const{
-	return (Vec2i(getWidth(), getHeight()));
+	return (Vec2i(width(), height()));
 };
 
 void Window::setMousePosition(Vec2i point)
@@ -141,18 +225,15 @@ void Window::setFullscreen(bool enable){
 #endif
 };
 
-////////////////////////////////////////////////////////////
-IntRect Window::getViewport(const View& view) const
+/// Convert a point in window-space to a homogeneous coordinate
+vec2 Window::convertToHomogeneousCoordinate(vec2i point)
 {
-	float width  = static_cast<float>(getSize().x);
-	float height = static_cast<float>(getSize().y);
-	const FloatRect& viewport = view.getViewport();
-
-	return IntRect(static_cast<int>(0.5f + width  * viewport.left),
-		static_cast<int>(0.5f + height * viewport.top),
-		static_cast<int>(width  * viewport.width),
-		static_cast<int>(height * viewport.height));
+	vec2 coords;
+	coords.x = -1.f + 2.f * (point.x - 0) / width();
+	coords.y = 1.f - 2.f * (point.y - 0) / height();
+	return coords;
 }
+
 
 /// Convert a point from target coordinates to the view coordinates
 Vec2f Window::convertCoords(const Vec2i &point, const View &view){
@@ -205,20 +286,10 @@ WindowHandle Window::getHandle()
 #endif
 };
 
-
 /// Swaps buffers
 void Window::swapBuffers(){
 #ifdef NEPHILIM_DESKTOP
 	myWindowImpl->display();
-#endif
-};
-
-/// Sets a new title to the window
-void Window::setTitle(const String &title){
-#ifdef NEPHILIM_DESKTOP
-	myWindowImpl->setTitle(title);
-#elif defined PARABOLA_ANDROID
-
 #endif
 };
 

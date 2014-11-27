@@ -1,4 +1,5 @@
 #include <Nephilim/UI/UIComponentDraggable.h>
+#include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Logger.h>
 
@@ -27,10 +28,20 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 	if(event.isPointerPressed())
 	{
 		vec2i mouse_position = event.getPointerPosition();
-		if(view->getBounds().contains(mouse_position.x, mouse_position.y))
+		if(view->isHit(vec2(mouse_position.x, mouse_position.y)))
 		{
 			previousMousePosition = mouse_position;
 			dragging = true;
+
+			// drag started, create the clone element
+			UIView* temp_view = new UIView();
+			temp_view->addComponent(new UIComponentDebugColor(Color::Yellow));
+			temp_view->setSize(100.f, 100.f);
+			temp_view->setPosition(view->getWorldPosition().xy());
+			view->getContext()->dragElement = temp_view;
+			view->getContext()->dragElementOwner = this;
+
+			Log("Drag-Clone Start");
 		}
 	}
 	else if(event.isPointerMoved())
@@ -46,17 +57,23 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 			if(mAxis == Both || mAxis == VerticalOnly)
 				axisCancellation.y = 1.f;
 
-			view->setPosition(view->getPosition() + vec2(offset.x, offset.y) * axisCancellation);
+			if (view->getContext()->dragElement && view->getContext()->dragElementOwner == this)
+			{
+				//view->getContext()->dragElement->setPosition(view->getContext()->dragElement->getPosition() + vec2(offset.x, offset.y) * axisCancellation);
+				
+				view->getContext()->dragElement->setPosition(event.getPointerPosition().x, event.getPointerPosition().y);
+
+			}
 			
 			// can't trespass parent
-			if(view->getParent() && view->getPosition().x < view->getParent()->getPosition().x)
+		/*	if(view->getParent() && view->getPosition().x < view->getParent()->getPosition().x)
 			{
 				view->setPosition(view->getParent()->getPosition().x, view->getPosition().y);
 			}
 			if(view->getParent() && view->getPosition().x + view->getSize().x > view->getParent()->getPosition().x + view->getParent()->getSize().x)
 			{
 				view->setPosition(view->getParent()->getPosition().x + view->getParent()->getSize().x - view->getSize().x, view->getPosition().y);
-			}
+			}*/
 
 			previousMousePosition = mouse_position;
 		}
@@ -64,7 +81,29 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 	else if(event.isPointerReleased())
 	{
 		dragging = false;
+
+		if (view->getContext()->dragElement  && view->getContext()->dragElementOwner == this)
+		{
+			Log("Drag-Clone Drop");
+
+			UIDragEvent drag;
+			drag.dropPosition = event.getPointerPosition();
+			drag.dragSource = view;
+			drag.dragElement = view->getContext()->dragElement;
+			onDragDrop(drag);
+
+			//Log("Emitted on %d", onDragDrop.size());
+
+			delete view->getContext()->dragElement;
+			view->getContext()->dragElement = nullptr;
+			view->getContext()->dragElementOwner = nullptr;
+		}
 	}
+}
+
+void UIComponentDraggable::checkSignals()
+{
+	Log("onDragDrop has %d connections", onDragDrop.size());
 }
 
 NEPHILIM_NS_END

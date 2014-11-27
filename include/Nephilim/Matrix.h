@@ -6,6 +6,8 @@
 
 NEPHILIM_NS_BEGIN
 
+class mat3;
+
 /**
 	\ingroup Foundation
 	\class mat4
@@ -26,6 +28,9 @@ public:
 
 	mat4(const float* elements);
 
+	/// Construct a mat4x4 from a mat3x3 with the fourth line as identity
+	mat4(const mat3& m);
+
 	float element(int row, int col);
 
 	/// Invert the matrix
@@ -34,8 +39,11 @@ public:
 	/// Get the inverse of the matrix
 	mat4 inverse();
 
-	/// Get the inverse of this matrix
-	mat4 getInverse();
+	/// Get the inverse of the matrix (only for 2d transforms)
+	/// Calculates the inverted 4x4 matrix by ignoring the
+	/// third line and column, pretending it to be a 3x3 matrix
+	/// corresponding to a 2D transform.
+	mat4 inverse2d();
 
 	/// Get the matrix array ptr
 	const float* get() const;
@@ -45,6 +53,17 @@ public:
 
 	/// Get a transposed copy of this matrix
 	mat4 transposed();
+
+	/// Get the determinant of the 4x4 matrix
+	/// DOES NOT WORK YET IN ALL CASES
+	float determinant();
+
+	/// Calculate the determinant of the matrix (only if it is a 2D transform)
+	/// Ignores the third row and column, and computes the determinant
+	/// from the resulting 3x3 matrix.
+	/// This is for speeding up computation in very specific cases
+	/// like getting a ortho projection inverse quicker
+	inline float determinant2d();
 
 	float& operator[](unsigned int index);
 	float operator[](unsigned int index) const;
@@ -74,7 +93,11 @@ public:
 	static mat4 textureTransform(bool flipVertically, float scaleX, float scaleY);
 
 	/// Multiply the matrix by a vector
-	vec4 operator*(const vec4& v);
+	vec4 operator*(const vec4& v) const;
+
+	/// Multiply the 4x4 matrix by a vec3. W component is assumed to be 1.0
+	/// Returns vec3 for convenience
+	vec3 operator*(const vec3& v) const;
 
 	/// Multiply two 4x4 matrices
 	mat4 operator*(const mat4& m) const;
@@ -97,6 +120,12 @@ private:
 class NEPHILIM_API mat3
 {
 public:
+	/// Default construction
+	mat3();
+
+	mat3(float a00, float a01, float a02,
+		 float a10, float a11, float a12,
+	 	 float a20, float a21, float a22);
 
 	/// Access operator for elements
 	float operator[](unsigned int index) const;
@@ -110,6 +139,7 @@ private:
 	float m_matrix[9];
 };
 
+void debugPrint(mat4& m);
 
 NEPHILIM_NS_END
 #endif // Matrix_h__

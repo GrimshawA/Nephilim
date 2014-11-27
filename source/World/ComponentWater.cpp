@@ -864,8 +864,8 @@ void ComponentWater::redisplayFunc()
 	glViewport(0, 0, width, height);
 
 	glUseProgram(sky->program);
-	glUniformMatrix4fv(glGetUniformLocation(sky->program, "screenToCamera"), 1, false, tproj.getInverse().get());
-	glUniformMatrix4fv(glGetUniformLocation(sky->program, "cameraToWorld"), 1, false, tview.getInverse().get());
+	glUniformMatrix4fv(glGetUniformLocation(sky->program, "screenToCamera"), 1, false, tproj.inverse().get());
+	glUniformMatrix4fv(glGetUniformLocation(sky->program, "cameraToWorld"), 1, false, tview.inverse().get());
 	glUniform3f(glGetUniformLocation(sky->program, "worldCamera"), 0.0, 0.0, ch);
 	glUniform3f(glGetUniformLocation(sky->program, "worldSunDir"), sun.x, sun.y, sun.z);
 	glUniform1f(glGetUniformLocation(sky->program, "hdrExposure"), hdrExposure);
@@ -882,8 +882,8 @@ void ComponentWater::redisplayFunc()
 	
 
 	glUseProgram(render->program);
-	glUniformMatrix4fv(glGetUniformLocation(render->program, "screenToCamera"), 1, false, tproj.getInverse().get());
-	glUniformMatrix4fv(glGetUniformLocation(render->program, "cameraToWorld"), 1, false, tview.getInverse().get());
+	glUniformMatrix4fv(glGetUniformLocation(render->program, "screenToCamera"), 1, false, tproj.inverse().get());
+	glUniformMatrix4fv(glGetUniformLocation(render->program, "cameraToWorld"), 1, false, tview.inverse().get());
 
 	mat4 worldToScreen = tproj * tview ;
 

@@ -4,11 +4,20 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIComponent.h>
 
+#include <sigc++/sigc++.h>
+
 NEPHILIM_NS_BEGIN
+
+class UIDragEvent;
 
 class NEPHILIM_API UIComponentDraggable : public UIComponent
 {
 public:
+
+	sigc::signal<void, const UIDragEvent&> onDragDrop;
+
+	void checkSignals();
+
 	enum MovementAxis
 	{
 		HorizontalOnly,

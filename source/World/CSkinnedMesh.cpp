@@ -11,12 +11,7 @@ NEPHILIM_NS_BEGIN
 namespace rzr
 {
 
-GeometryData champion;
-Texture championTexture;
-SkeletonSKL skeletonskl;
-AnimationANM animations;
 
-Shader rigShader;
 /*
 void ComponentSkinnedModel::getBoneTransforms(mat4* transforms, AnimationANM& animation, SkeletonSKL& skeleton)
 {

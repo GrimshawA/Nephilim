@@ -23,8 +23,27 @@ void Actor::destroy()
 /// This is the transform that converts anything in actor space to world space
 CTransform Actor::getTransform()
 {
-	CTransform t;
-	return t;
+	CTransform transform;
+	if (root)
+	{
+		transform = root->t;
+	}
+	return transform;
+}
+
+/// Set a transform for the root
+void Actor::setTransform(const CTransform& transform)
+{
+	if (root)
+	{
+		root->t = transform;
+	}
+}
+
+/// Get the position of this Actor
+vec3 Actor::getActorLocation()
+{
+	return getTransform().position;
 }
 
 NEPHILIM_NS_END

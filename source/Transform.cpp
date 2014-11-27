@@ -28,6 +28,7 @@
 #include <Nephilim/Transform.h>
 #include <cmath>
 
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////
@@ -71,6 +72,8 @@ Transform Transform::getInverse() const
     float det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
                 m_matrix[1] * (m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) +
                 m_matrix[3] * (m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]);
+
+	Log("COMPUTED DET %f in VIEW", det);
 
     // Compute the inverse if the determinant is not zero
     // (don't use an epsilon because the determinant may *really* be tiny)
@@ -253,7 +256,6 @@ Transform operator *(const Transform& left, const Transform& right)
 {
     return Transform(left).combine(right);
 }
-
 
 ////////////////////////////////////////////////////////////
 Transform& operator *=(Transform& left, const Transform& right)

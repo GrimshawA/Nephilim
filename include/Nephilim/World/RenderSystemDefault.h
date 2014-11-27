@@ -3,6 +3,10 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/RenderSystem.h>
+#include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/CSprite.h>
+
+
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
 #include <Nephilim/Graphics/Framebuffer.h>
@@ -62,6 +66,7 @@ public:
 	void renderModel(Entity& entity);
 
 	void renderAllSprites();
+	void renderSprite(CTransform* transform, CSprite* sprite);
 
 
 

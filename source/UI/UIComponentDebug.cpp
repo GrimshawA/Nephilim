@@ -51,7 +51,8 @@ void UIComponentDebugColor::onPropertySet(const StringList& targetObject, const 
 
 void UIComponentDebugColor::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
-	RectangleShape backRect(view->getBounds(), mColor);
+	renderer->setModelMatrix(parentTransform);
+	RectangleShape backRect(FloatRect(0.f, 0.f, view->size.x, view->size.y), mColor);
 	renderer->draw(backRect);
 }
 

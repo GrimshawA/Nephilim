@@ -38,6 +38,10 @@ public:
 
 	float screenWidth;
 	float screenHeight;
+
+public:
+	/// Returns a ready projection matrix for these configs
+	mat4 getProjection();
 };
 
 };

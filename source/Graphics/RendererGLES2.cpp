@@ -3,7 +3,7 @@
 #include <Nephilim/CGL.h>
 #include <Nephilim/Matrix.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/Surface.h>
+#include <Nephilim/Window.h>
 
 #include <iostream>
 using namespace std;

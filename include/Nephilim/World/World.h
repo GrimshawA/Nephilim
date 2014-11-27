@@ -9,6 +9,7 @@
 #include <Nephilim/World/System.h>
 #include <Nephilim/World/Component.h>
 #include <Nephilim/World/ComponentArray.h>
+#include <Nephilim/World/Level.h>
 
 #include <vector>
 #include <map>
@@ -27,8 +28,11 @@ class NEPHILIM_API World
 {
 public:
 
-	///< Name of this world
+	/// Name of this world
 	String name;
+
+	/// With this flag set to true, the world can load many levels at once
+	bool multiLevel = true;
 
 	/// This class is responsible for managing the entities alive
 	EntityManager entityManager;
@@ -50,8 +54,18 @@ public:
 	/// The currently instanced list of actors
 	std::vector<Actor*> actors;
 
+	/// Array of levels in this world
+	std::vector<Level*> levels;
+
 public:
 	World();
+
+	/// Load a level into memory by its name
+	/// This requires that the level is previously indexed into this world
+	bool loadLevel(const String& name);
+
+	/// Load directly the new level into this world, and index it too
+	bool loadLevel(Level* level);
 
 	/// Spawns an actor
 	Actor* spawnActor();
@@ -146,7 +160,7 @@ void World::createDefaultComponentManager()
 template<typename T>
 T* World::spawnActor()
 {
-	T* myObj = new T();
+	T* myObj = new T(this);
 	myObj->mWorld = this;
 
 	actors.push_back(myObj);

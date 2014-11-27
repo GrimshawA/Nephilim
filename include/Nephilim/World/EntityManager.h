@@ -26,6 +26,11 @@ public:
 	std::vector<TEntity> entities;
 
 	TEntity nextAssignment = 1;
+
+public:
+
+	/// Destroy this entity
+	void destroy(TEntity entity);
 };
 
 NEPHILIM_NS_END

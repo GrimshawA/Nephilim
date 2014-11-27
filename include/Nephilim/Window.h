@@ -1,14 +1,17 @@
-#ifndef PARABOLA_WINDOW_H
-#define PARABOLA_WINDOW_H
+#ifndef NephilimWindow_h__
+#define NephilimWindow_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include "Vectors.h"
-#include "Event.h"
-#include "View.h"
+#include <Nephilim/Strings.h>
+#include <Nephilim/Vectors.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/View.h>
 #include <Nephilim/Graphics/RenderTarget.h>
 
 NEPHILIM_NS_BEGIN
+
+class GraphicsDevice;
+class Engine;
 
 typedef void* WindowHandle;
 /**
@@ -18,19 +21,35 @@ typedef void* WindowHandle;
 	\brief Represents a screen or window where the engine is able to draw graphics
 
 */
-class NEPHILIM_API Window{
+class NEPHILIM_API Window
+{
 public:
 	/// Default constructor
 	Window();
 		
 	/// Destroy the window
 	~Window();
+
+	/// Get the width of the screen/window
+	int width() const;
+
+	/// Get the height of the screen/window
+	int height() const;
+
 	/// Change the size of the window if possible
 	void setSize(int width, int height);
+
 	/// Attempts to launch a window if applicable
 	void create(int screenWidth, int screenHeight);
 
 	void create(void* handle);
+
+	void pushFrame();
+
+	GraphicsDevice* createRenderer();
+
+	/// Default creation of a window
+	void create();
 
 	/// Sets the window as active for drawing
 	bool setActive(bool flag = true) const;
@@ -39,12 +58,6 @@ public:
 	Vec2f convertCoords(const Vec2i &point, const View &view);
 
 	void setMousePosition(Vec2i point);
-
-	/// Get the width of the screen/window
-	int getWidth() const;
-
-	/// Get the height of the screen/window
-	int getHeight() const;
 
 	/// Get the size of the window
 	Vec2i getSize() const;
@@ -74,14 +87,26 @@ public:
 	/// Sets a new title to the window
 	void setTitle(const String &title);
 
+	/// Activate the surface as the active framebuffer
+	void activate();
 
+	/// Convert a point in window-space to a homogeneous coordinate
+	/// \todo Use viewport data from renderer
+	vec2 convertToHomogeneousCoordinate(vec2i point);
+
+	/// Makes the window maximized - windows only
+	void maximize();
 public:
 	class WindowImplementation;
 	WindowImplementation* myWindowImpl;
 
 	bool m_fullscreen;
 	int m_handle;
+
+	int m_windowWidth, m_windowHeight;
+
 };
 
 NEPHILIM_NS_END
-#endif
+
+#endif // NephilimWindow_h__

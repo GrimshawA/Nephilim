@@ -7,6 +7,10 @@
 #include <Nephilim/AnimationClip.h>
 #include <Nephilim/Skeleton.h>
 #include <Nephilim/World/Component.h>
+#include <Nephilim/Geometry.h>
+#include "SKNLoader.h"
+#include "SKLLoader.h"
+#include "ANMLoader.h"
 
 class AnimationANM;
 class SkeletonSKL;
@@ -44,6 +48,13 @@ public:
 
 	AnimationClip clip;
 	Skeleton modelSkeleton;
+
+	GeometryData champion;
+	Texture championTexture;
+	SkeletonSKL skeletonskl;
+	AnimationANM animations;
+
+	Shader rigShader;
 };
 
 };

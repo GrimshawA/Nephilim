@@ -42,6 +42,12 @@ void UICanvas::onDraw(GraphicsDevice* renderer)
 		(*it)->draw(renderer);
 	}
 	m_surfaceContainerLock--;
+
+	if (getContext().dragElement)
+	{
+		getContext().dragElement->drawItself(renderer, mat4::identity);
+		Log("Rendering the drag element");
+	}
 }
 
 UILayerView* UICanvas::getLayer(const String& name)
@@ -242,6 +248,17 @@ void UICanvas::draw(GraphicsDevice* renderer){
 	/// Draw surfaces bottom to top
 	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 		(*it)->draw(renderer);
+	}
+
+
+	if (getContext().dragElement)
+	{
+		getContext().dragElement->drawItself(renderer, mat4::identity);
+	}
+
+	if (getContext().contextMenuElement)
+	{
+		getContext().contextMenuElement->drawItself(renderer, mat4::identity);
 	}
 };
 

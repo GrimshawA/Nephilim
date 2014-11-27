@@ -72,13 +72,13 @@ void UIComponentText::onRender(GraphicsDevice* renderer, UIView* view, const mat
 
 	if(m_horizontal == Center)
 	{
-		text.setPosition(view->getPosition().x + view->getSize().x / 2.f, text.getPosition().y);
+		text.setPosition(view->getSize().x / 2.f, text.getPosition().y);
 		text.setOrigin(text.getLocalBounds().width / 2.f, 0.f);
 	}
 
 	if(m_vertical == Center)
 	{
-		text.setPosition(text.getPosition().x, view->getPosition().y + view->getSize().y / 2.f);
+		text.setPosition(text.getPosition().x, view->getSize().y / 2.f);
 		text.setOrigin(text.getOrigin().x, text.getLocalBounds().height / 2.f);
 	}
 
@@ -88,7 +88,7 @@ void UIComponentText::onRender(GraphicsDevice* renderer, UIView* view, const mat
 	
 	mat4 localTransform = mat4::translate(vec3(0.f, 20.f, 1.f)) * mat4::rotatex(math::pi);
 
-	renderer->setModelMatrix(parentTransform);
+	renderer->setModelMatrix(parentTransform * text.getTransform().getMatrix());
 	renderer->draw(text);
 }
 

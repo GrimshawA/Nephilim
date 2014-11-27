@@ -24,7 +24,7 @@ UIComponentImage::UIComponentImage(const String& src)
 
 void UIComponentImage::onAttach(UIView* view)
 {
-	refreshTextureHandle(); // Might need to be updated
+	//refreshTextureHandle(); // Might need to be updated
 }
 
 void UIComponentImage::refreshTextureHandle()
@@ -60,6 +60,8 @@ void UIComponentImage::onPropertySet(const StringList& targetObject, const Strin
 
 void UIComponentImage::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
+	renderer->setModelMatrix(parentTransform);
+
 	RectangleShape backgroundRect;
 	backgroundRect.setRect(view->getBounds());
 	if(mTexture) backgroundRect.setTexture(mTexture);

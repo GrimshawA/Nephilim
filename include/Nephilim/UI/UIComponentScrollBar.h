@@ -18,7 +18,7 @@ public:
 
 	void onEvent(Event event, UIView* view);
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);
 
 	vec2i previousMousePosition;
 	RectangleShape scrollBarPaddle;

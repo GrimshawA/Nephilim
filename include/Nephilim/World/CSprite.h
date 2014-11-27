@@ -8,8 +8,6 @@
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
 /**
 	\class CSprite
@@ -50,9 +48,6 @@ public:
 	vec2 scale;
 };
 
-typedef CSprite CSprite;
-
-};
 NEPHILIM_NS_END
 
 #endif // NephilimRazerComponentSprite_h__

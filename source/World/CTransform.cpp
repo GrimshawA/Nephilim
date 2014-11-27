@@ -74,7 +74,7 @@ vec3 CTransform::getForwardVector()
 	vec4 v(0.f, 0.f, -1.f, 0.f);
 
 	mat4 rm = rotation.toMatrix();
-	rm.invert();
+	//rm.invert();
 
 	v = rm * v;
 	v.normalize();

@@ -40,7 +40,9 @@ UIView::UIView()
 , mRect(0.f, 0.f, 1.f, 1.f)
 , m_pointerPressCount(0)
 {
+	rotation_x = rotation_y = rotation_z = 0.f;
 
+	mFlags = 0;
 }
 
 
@@ -72,6 +74,11 @@ UIView::UIView(UIView* parent)
 		parent->attach(this);
 	}
 }
+
+/// Called on subclasses to draw custom stuff
+void UIView::onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld){}
+
+
 
 UIView::~UIView()
 {
@@ -105,6 +112,18 @@ UIView* UIView::createChild(const String& name)
 	attach(view);
 
 	return view;
+}
+
+/// Get the current width of this widget
+float UIView::width()
+{
+	return size.x;
+}
+
+/// Get the current height of this widget
+float UIView::height()
+{
+	return size.y;
 }
 
 /// Load the hierarchy of this view from a file and configure itself
@@ -189,6 +208,17 @@ void UIView::addComponent(int type)
 		addComponent(new UIComponentText());
 		break;
 	}
+}
+
+/// Set any flags for the view
+void UIView::setFlag(Uint32 flags)
+{
+	mFlags |= flags;
+}
+
+bool UIView::hasFlags(Uint32 flags)
+{
+	return (mFlags & flags) == flags;
 }
 
 
@@ -515,7 +545,7 @@ UILayout* UIView::getLayout()
 /// Callback to render itself, renders children
 void UIView::draw(GraphicsDevice* renderer, mat4 transform)
 {
-	VertexArray va;
+	/*VertexArray va;
 	va.addAttribute(sizeof(float), 2, VertexFormat::Position);
 	va.addAttribute(sizeof(float), 4, VertexFormat::Color);
 	va.allocateData(6);
@@ -555,55 +585,9 @@ void UIView::draw(GraphicsDevice* renderer, mat4 transform)
 
 	renderer->disableVertexAttribArray(0);
 	renderer->disableVertexAttribArray(1);
+	*/
 
-	// back
-	
-	/*if(components.size() == 0)
-	{
-		RectangleShape backgroundRect;
-		backgroundRect.setColor(Color::Grass);
-		backgroundRect.setRect(getBounds());
-		renderer->draw(backgroundRect);
-	}*/
-	
-
-	/*
-	if(m_children.size() > 0)
-	{
-		RectangleShape scrollBarBackground;
-		scrollBarBackground.setSize(17.f, getSize().y);
-		scrollBarBackground.setPosition(getPosition().x + getSize().y - 17.f, getPosition().y);
-		scrollBarBackground.setColor(Color::Blue);
-		renderer->draw(scrollBarBackground);
-
-		float lowestY = m_children[0]->getPosition().y;
-		float highestY = m_children[0]->getPosition().y + m_children[0]->getSize().y;
-		for(std::size_t i = 0; i < m_children.size(); ++i)
-		{
-			if(m_children[i]->getPosition().y < lowestY)
-			{
-				lowestY = m_children[i]->getPosition().y;
-			}
-
-			if(m_children[i]->getPosition().y + m_children[i]->getSize().y > highestY)
-			{
-				highestY = m_children[i]->getPosition().y + m_children[i]->getSize().y;
-			}
-		}
-
-		Log("Window %f to %f, Content %f to %f", getPosition().y, getPosition().y + getSize().y, lowestY, highestY);
-
-		float beginPercent = (getPosition().y - lowestY) / (highestY  - lowestY);
-		float endPercent = (getPosition().y + getSize().y - lowestY) / (highestY  - lowestY);
-
-		Log("You are viewing %f pc of the content", beginPercent);
-
-		RectangleShape scrollBarPaddle;
-		scrollBarPaddle.setSize(17.f, getSize().y * (endPercent-beginPercent));
-		scrollBarPaddle.setPosition(getPosition().x + getSize().y - 17.f, getPosition().y + getSize().y * beginPercent);
-		scrollBarPaddle.setColor(Color::Red);
-		renderer->draw(scrollBarPaddle);
-	}*/
+	//renderer->setModelMatrix(transform);
 }
 
 void UIView::dispatchEvent(const Event& event)
@@ -654,7 +638,8 @@ bool UIView::onEventNotification(Event& event)
 };
 
 /// Get bounds of the control
-FloatRect UIView::getBounds(){
+FloatRect UIView::getBounds()
+{
 	return mRect;
 };
 
@@ -753,6 +738,22 @@ void UIView::processSizeChange(float previousWidth, float previousHeight, float 
 	// -- Go through children and adapt them according to their flags
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{
+		if ((*it)->hasFlags(UIFlag::FILL_PARENT_WIDTH))
+		{
+			(*it)->setSize(newWidth, (*it)->getSize().y);
+			Log("FILLING PARENT WIDTH");
+		}
+		if ((*it)->hasFlags(UIFlag::FILL_PARENT_HEIGHT))
+		{
+			(*it)->setSize((*it)->getSize().x, newHeight);
+			Log("FILLING PARENT HEIGHT");
+		}
+		if ((*it)->hasFlags(UIFlag::ANCHOR_RIGHT))
+		{
+			(*it)->setPosition(newWidth - (*it)->width(), (*it)->getPosition().y);
+			Log("FILLING PARENT HEIGHT");
+		}
+
 		// -- Auto Resize: Ensure the same % width of the parent is occupied
 		if((*it)->hasSizeFlag(UISizeFlag::KeepRelativeSizeX))
 		{
@@ -1135,10 +1136,8 @@ void UIView::destroyChild(UIView* child)
 	}
 }
 
-/// Callback when the control is resized
-void UIView::onResize(){
-
-}
+/// Virtual
+void UIView::onResize(){}
 
 /// Resizes the control over a defined time
 /// The lower border of the control will become at target position
@@ -1192,25 +1191,21 @@ void UIView::update(float elapsedTime)
 }
 
 /// Get the current size of the control that encompasses all its children
-FloatRect UIView::getContentBounds()
+FloatRect UIView::childrenRect()
 {
-	FloatRect bounds = getBounds();
+	FloatRect boundingRect(0.f, 0.f, size.x, size.y);
 
-	for(int i = 0; i < getChildCount(); i++)
+	for(std::size_t i = 0; i < getChildCount(); i++)
 	{
-		// get bounds of the children
-		FloatRect cbounds = getChild(i)->getContentBounds();
+		UIView* c = getChild(i);
 
-		if(getChild(i)->m_visible)
+		// get bounds of the children
+		if (c->position.y + c->size.y >= boundingRect.height)
 		{
-			// stretch to children if needed
-			if(cbounds.left < bounds.left) bounds.left = cbounds.left;
-			if(cbounds.top < bounds.top) bounds.top = cbounds.top;
-			if(cbounds.left + cbounds.width > bounds.left + bounds.width) bounds.width = cbounds.left + cbounds.width - bounds.left;
-			if(cbounds.top + cbounds.height > bounds.top + bounds.height) bounds.height = cbounds.top + cbounds.height - bounds.top;
+			boundingRect.height = c->position.y + c->size.y;
 		}
 	}
-	return bounds;
+	return boundingRect;
 };
 
 /// Returns true when the control is subject of being layout in a grid or other organization form
@@ -1274,17 +1269,17 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 		renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
 	}
 
-	mat4 absoluteTransform = mat4::identity;
-
 	mat4 localTransform = mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x) * mat4::rotatez(rotation_z) 
 		* mat4::translate(-pivot.x,-pivot.y,0.f);
 
-	absoluteTransform = transform * localTransform;
+	mat4 absoluteTransform = transform * localTransform;
 
 	this->matrix = absoluteTransform;
 
 	// Tel
 	draw(renderer, absoluteTransform);
+
+	renderer->setModelMatrix(absoluteTransform);
 
 
 	for(std::size_t i = 0; i < components.size(); ++i)
@@ -1299,19 +1294,24 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 
 	// -- Pre Render Step (Before Children)
 	preRender(renderer);
-	
+
+	localTransform = mat4::translate(scrolling_offset.x, scrolling_offset.y, 0.f) * mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x) * mat4::rotatez(rotation_z)
+		* mat4::translate(-pivot.x, -pivot.y, 0.f);
+
+	absoluteTransform = transform * localTransform;
+
+	onDraw(renderer, absoluteTransform);
+
 	// clip the overflowing children
 	if(m_clipChildren)
-	{
-		if(getContext()->transformPointerCoordinates)
-		{
-			renderer->pushClippingRect(FloatRect(mRect.left / getContext()->targetWindowSize.x,mRect.top / getContext()->targetWindowSize.y,mRect.width / getContext()->targetWindowSize.x, mRect.height / getContext()->targetWindowSize.y), true);
-		}
-		else
-		{
-			renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
-		}
+	{	
+		renderer->setClippingEnabled(true);
+		renderer->setClippingRect(FloatRect(getWorldPosition().x, getWorldPosition().y, size.x, size.y));
+
+		//renderer->pushClippingRect(FloatRect(getWorldPosition().x,getWorldPosition().y, size.x, size.y));
 	}
+
+
 
 	// Let children render as well
 	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
@@ -1324,6 +1324,12 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 
 	// -- Post Render Step (After Children)
 	postRender(renderer);
+}
+
+/// Get the current world position
+vec3 UIView::getWorldPosition()
+{
+	return matrix * vec3(0.f, 0.f, 0.f);
 }
 
 void UIView::enableAutoResize(bool enable)

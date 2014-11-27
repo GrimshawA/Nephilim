@@ -11,6 +11,15 @@ NEPHILIM_NS_BEGIN
 class UICanvas;
 class UIView;
 class ContentManager;
+class UIComponent;
+
+class NEPHILIM_API UIDragEvent
+{
+public:
+	vec2i dropPosition;
+	UIView* dragSource;
+	UIView* dragElement;
+};
 
 class NEPHILIM_API UIEventResult
 {
@@ -46,6 +55,16 @@ public:
 
 	ContentManager* content;
 
+
+	/// Drag components use this element to spawn the temporary element in drags
+	UIView* dragElement = nullptr;
+	UIComponent* dragElementOwner = nullptr;
+
+	/// Anyone can use this element to spawn tooltips anytime
+	UIView* toolTipElement = nullptr;
+
+	/// To instance context menus
+	UIView* contextMenuElement = nullptr;
 
 	/// \ingroup UI
 	/// \class FontResource

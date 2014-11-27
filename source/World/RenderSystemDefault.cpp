@@ -7,7 +7,6 @@
 #include <Nephilim/World/CCamera.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CPointLight.h>
 #include <Nephilim/World/CEmitter.h>
 #include <Nephilim/World/ComponentModel.h>
 #include <Nephilim/World/CMesh.h>
@@ -175,7 +174,7 @@ void RenderSystemDefault::renderScene()
 // 	mRenderer->draw(c);
 
 	ComponentManager* meshComponentManager = mScene->getComponentManager<CMesh>();
-	ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
+	//ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
 	
 	//Log("Num meshes: %d", meshComponentManager->getInstanceCount());
 
@@ -186,6 +185,22 @@ void RenderSystemDefault::renderScene()
 	}
 
 	renderAllSprites();
+
+
+
+	// Don't have actors caching their components by type, need to go get them directly in the actor
+	for (std::size_t i = 0; i < mScene->actors.size(); ++i)
+	{
+		Actor* actor = mScene->actors[i];
+		for (std::size_t j = 0; j < actor->components.size(); ++j)
+		{
+			SpriteComponent* spriteComponent = dynamic_cast<SpriteComponent*>(actor->components[j]);
+			if (spriteComponent)
+			{
+				renderSprite(&spriteComponent->t, &spriteComponent->s);
+			}
+		}
+	}
 
 /*	mat4 viewMatrix;
 	mat4 projectionMatrix;
@@ -383,6 +398,101 @@ void RenderSystemDefault::renderScene()
 	}*/
 }
 
+void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
+{
+
+
+	mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+
+	Texture* t = mContentManager->getTexture(sprite->tex);
+	if (!t)
+	{
+		mContentManager->load(sprite->tex);
+	}
+	else
+	{
+		VertexArray va;
+		va.addAttribute(sizeof(float), 2, VertexFormat::Position);
+		va.addAttribute(sizeof(float), 4, VertexFormat::Color);
+		va.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
+		va.allocateData(6);
+
+		struct vertex_f
+		{
+			vec2 p;
+			vec4 c;
+			vec2 uv;
+		};
+
+		//			Log("Rendering sprite %f %f", sprite->width, sprite->height);
+
+
+		vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va.data[0]);
+
+		va_raw[0].p = vec2(sprite->width, 0.f);
+		va_raw[1].p = vec2(sprite->width, sprite->height);
+		va_raw[2].p = vec2(0.f, sprite->height);
+
+		va_raw[3].p = vec2(sprite->width, 0.f);
+		va_raw[4].p = vec2(0.f, sprite->height);
+		va_raw[5].p = vec2(0.f, 0.f);
+
+		va_raw[0].uv = vec2(1.f, 0.f);
+		va_raw[1].uv = vec2(1.f, 1.f);
+		va_raw[2].uv = vec2(0.f, 1.f);
+
+		va_raw[3].uv = vec2(1.f, 0.f);
+		va_raw[4].uv = vec2(0.f, 1.f);
+		va_raw[5].uv = vec2(0.f, 0.f);
+
+		if (sprite->tex_rect_size.x > 0.f && sprite->tex_rect_size.y > 0.f)
+		{
+			float x1 = sprite->tex_rect_pos.x / t->getSize().x;
+			float x2 = x1 + sprite->tex_rect_size.x / t->getSize().x;
+
+			float y1 = sprite->tex_rect_pos.y / t->getSize().y;
+			float y2 = y1 + sprite->tex_rect_size.y / t->getSize().y;
+
+			va_raw[0].uv = vec2(x2, y1);
+			va_raw[1].uv = vec2(x2, y2);
+			va_raw[2].uv = vec2(x1, y2);
+
+			va_raw[3].uv = vec2(x2, y1);
+			va_raw[4].uv = vec2(x1, y2);
+			va_raw[5].uv = vec2(x1, y1);
+		}
+
+		va_raw[0].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+		va_raw[1].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+		va_raw[2].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+		va_raw[3].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+		va_raw[4].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+		va_raw[5].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
+
+		mRenderer->enableVertexAttribArray(0);
+		mRenderer->enableVertexAttribArray(1);
+		mRenderer->enableVertexAttribArray(2);
+
+		mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(0));
+		mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(1));
+		mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(2));
+
+		mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+
+		t->bind();
+		mRenderer->drawArrays(Render::Primitive::Triangles, 0, 6);
+
+		mRenderer->disableVertexAttribArray(0);
+		mRenderer->disableVertexAttribArray(1);
+		mRenderer->disableVertexAttribArray(2);
+
+		mRenderer->setModelMatrix(mat4::identity);
+		mRenderer->setDefaultTexture();
+
+	}
+}
+
+
 void RenderSystemDefault::renderAllSprites()
 {
 	// Let's dirty draw all sprites
@@ -396,95 +506,7 @@ void RenderSystemDefault::renderAllSprites()
 		CSprite* sprite = static_cast<CSprite*>(spriteComponentManager->getInstance(i));
 		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(spriteComponentManager->getInstanceEntity(i));
 		
-
-		mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
-
-		Texture* t = mContentManager->getTexture(sprite->tex);
-		if (!t)
-		{
-			mContentManager->load(sprite->tex);
-		}
-		else
-		{
-			VertexArray va;
-			va.addAttribute(sizeof(float), 2, VertexFormat::Position);
-			va.addAttribute(sizeof(float), 4, VertexFormat::Color);
-			va.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
-			va.allocateData(6);
-
-			struct vertex_f
-			{
-				vec2 p;
-				vec4 c;
-				vec2 uv;
-			};
-
-//			Log("Rendering sprite %f %f", sprite->width, sprite->height);
-
-
-			vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va.data[0]);
-
-			va_raw[0].p = vec2(sprite->width, 0.f);
-			va_raw[1].p = vec2(sprite->width, sprite->height);
-			va_raw[2].p = vec2(0.f, sprite->height);
-
-			va_raw[3].p = vec2(sprite->width, 0.f);
-			va_raw[4].p = vec2(0.f, sprite->height);
-			va_raw[5].p = vec2(0.f, 0.f);
-
-			va_raw[0].uv = vec2(1.f, 0.f);
-			va_raw[1].uv = vec2(1.f, 1.f);
-			va_raw[2].uv = vec2(0.f, 1.f);
-
-			va_raw[3].uv = vec2(1.f, 0.f);
-			va_raw[4].uv = vec2(0.f, 1.f);
-			va_raw[5].uv = vec2(0.f, 0.f);
-
-			if (sprite->tex_rect_size.x > 0.f && sprite->tex_rect_size.y > 0.f)
-			{
-				float x1 = sprite->tex_rect_pos.x / t->getSize().x;
-				float x2 = x1 + sprite->tex_rect_size.x / t->getSize().x;
-
-				float y1 = sprite->tex_rect_pos.y / t->getSize().y;
-				float y2 = y1 + sprite->tex_rect_size.y / t->getSize().y;
-
-				va_raw[0].uv = vec2(x2, y1);
-				va_raw[1].uv = vec2(x2, y2);
-				va_raw[2].uv = vec2(x1, y2);
-
-				va_raw[3].uv = vec2(x2, y1);
-				va_raw[4].uv = vec2(x1, y2);
-				va_raw[5].uv = vec2(x1, y1);
-			}
-
-			va_raw[0].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-			va_raw[1].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-			va_raw[2].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-			va_raw[3].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-			va_raw[4].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-			va_raw[5].c = vec4(float(sprite->color.r) / 255.f, float(sprite->color.g) / 255.f, float(sprite->color.b) / 255.f, float(sprite->color.a) / 255.f);
-
-			mRenderer->enableVertexAttribArray(0);
-			mRenderer->enableVertexAttribArray(1);
-			mRenderer->enableVertexAttribArray(2);
-
-			mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(0));
-			mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(1));
-			mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(2));
-			
-			mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
-
-			t->bind();
-			mRenderer->drawArrays(Render::Primitive::Triangles, 0, 6);
-
-			mRenderer->disableVertexAttribArray(0);
-			mRenderer->disableVertexAttribArray(1);
-			mRenderer->disableVertexAttribArray(2);
-
-			mRenderer->setModelMatrix(mat4::identity);
-			mRenderer->setDefaultTexture();
-
-		}	
+		renderSprite(transform, sprite);
 	}
 }
 

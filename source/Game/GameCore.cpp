@@ -36,14 +36,9 @@ Engine* GameCore::getEngine()
 }
 
 /// Get the window/screen handler
-Window& GameCore::getWindow()
+Window* GameCore::getWindow()
 {
-    return *m_creator->m_surface.window;
-}
-
-Surface& GameCore::getSurface()
-{
-	return m_creator->m_surface;
+    return m_creator->m_window;
 }
 
 /// Sets the base directory to load resources from
@@ -60,7 +55,7 @@ String GameCore::getFileSystemRoot()
 
 GraphicsDevice* GameCore::getRenderer()
 {
-	return m_creator->getRenderer();
+	return m_creator->getGraphicsDevice();
 }
 
 /// Get the opengl version of this surface's context

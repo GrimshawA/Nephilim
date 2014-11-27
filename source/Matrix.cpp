@@ -1,8 +1,18 @@
 #include <Nephilim/Matrix.h>
 #include <Nephilim/NxMath.h>
+#include <Nephilim/Logger.h>
 #include <math.h>
 
 NEPHILIM_NS_BEGIN
+
+#include <stdio.h>
+void debugPrint(mat4& m)
+{
+	printf("[%f][%f][%f][%f]\n", m[0], m[4], m[8], m[12]);
+	printf("[%f][%f][%f][%f]\n", m[1], m[5], m[9], m[13]);
+	printf("[%f][%f][%f][%f]\n", m[2], m[6], m[10], m[14]);
+	printf("[%f][%f][%f][%f]\n", m[3], m[7], m[11], m[15]);
+}
 
 const mat4 mat4::identity = mat4();
 
@@ -45,6 +55,12 @@ void m4_submat( mat4 mr, mat3& mb, int i, int j )
 
 float m4_det( mat4 mr )
 {
+	// test this det now
+	/*float det2 = mr[0] * (mr[15] * mr[5] - mr[7] * mr[13]) -
+		mr[1] * (mr[15] * mr[4] - mr[7] * mr[12]) +
+		mr[3] * (mr[13] * mr[4] - mr[5] * mr[12]);
+	return det2;*/
+
 	float  det, result = 0, i = 1;
 	mat3 msub3;
 	int     n;
@@ -64,10 +80,8 @@ int m4_inverse( mat4& mr, mat4 ma )
 {
 	mr = mat4::identity; // start as identity then store the inversion
 
-	// This function does everything assuming a row major matrix, we give it
-	//ma.transpose();
+	float  mdet = ma.determinant();
 
-	float  mdet = m4_det( ma );
 	mat3 mtemp;
 	int     i, j, sign;
 
@@ -118,6 +132,34 @@ mat4::mat4(const float* elements)
 	for(int i = 0; i < 16; i++) m_matrix[i] = elements[i];
 }
 
+/// Construct a mat4x4 from a mat3x3 with the fourth line as identity
+mat4::mat4(const mat3& m)
+{
+	// col 1
+	m_matrix[0] = m[0];
+	m_matrix[1] = m[1];
+	m_matrix[2] = 0.f;
+	m_matrix[3] = m[2];
+
+	// col 2
+	m_matrix[4] = m[3];
+	m_matrix[5] = m[4];
+	m_matrix[6] = 0.f;
+	m_matrix[7] = m[5];
+
+	// col 3
+	m_matrix[8] = 0.f;
+	m_matrix[9] = 0.f;
+	m_matrix[10] = 1.f;
+	m_matrix[11] = 0.f;
+
+	// col 4
+	m_matrix[12] = m[6];
+	m_matrix[13] = m[7];
+	m_matrix[14] = 0.f;
+	m_matrix[15] = m[8];
+}
+
 float mat4::element(int row, int col)
 {
 	return m_matrix[row + col*4];
@@ -127,6 +169,49 @@ const float* mat4::get() const
 {
 	return &m_matrix[0];
 }
+
+/// Get the determinant of the 4x4 matrix
+float mat4::determinant()
+{
+	return m4_det(*this);
+}
+
+/// Calculate the determinant of the matrix
+/// Works only for transforms in 2D, as it ignores
+/// there is a third dimension in the matrix
+inline float mat4::determinant2d()
+{
+	return m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
+		m_matrix[1] * (m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) +
+		m_matrix[3] * (m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]);
+}
+
+mat4 mat4::inverse2d()
+{
+	float det = determinant2d();
+
+	// Compute the inverse if the determinant is not zero
+	// (don't use an epsilon because the determinant may *really* be tiny)
+	if (det != 0.f)
+	{
+		return mat4(
+			mat3((m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) / det,
+			-(m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) / det,
+			(m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]) / det,
+			-(m_matrix[15] * m_matrix[1] - m_matrix[3] * m_matrix[13]) / det,
+			(m_matrix[15] * m_matrix[0] - m_matrix[3] * m_matrix[12]) / det,
+			-(m_matrix[13] * m_matrix[0] - m_matrix[1] * m_matrix[12]) / det,
+			(m_matrix[7] * m_matrix[1] - m_matrix[3] * m_matrix[5]) / det,
+			-(m_matrix[7] * m_matrix[0] - m_matrix[3] * m_matrix[4]) / det,
+			(m_matrix[5] * m_matrix[0] - m_matrix[1] * m_matrix[4]) / det)
+			);
+	}
+	else
+	{
+		return mat4::identity;
+	}
+}
+
 
 float& mat4::operator[](unsigned int index)
 {
@@ -167,7 +252,7 @@ mat4 mat4::operator*(float scalar)
 }
 
 /// Multiply the matrix by a vector
-vec4 mat4::operator*(const vec4& v)
+vec4 mat4::operator*(const vec4& v) const
 {
 	return vec4(	m_matrix[0]*v.x + m_matrix[4]*v.y + m_matrix[8]*v.z + m_matrix[12]*v.w,
 					m_matrix[1]*v.x + m_matrix[5]*v.y + m_matrix[9]*v.z + m_matrix[13]*v.w,
@@ -175,35 +260,16 @@ vec4 mat4::operator*(const vec4& v)
 					m_matrix[3]*v.x + m_matrix[7]*v.y + m_matrix[11]*v.z + m_matrix[15]*v.w);
 }
 
+/// Multiply the 4x4 matrix by a vec3. W component is assumed to be 1.0
+/// Returns vec3 for convenience
+vec3 mat4::operator*(const vec3& v) const
+{
+	return (*this * vec4(v, 1.0f)).xyz();
+}
+
 /// Multiply two 4x4 matrices
 mat4 mat4::operator*(const mat4& m) const
-{
-	/*return 	mat4 wrong because that constructor takes row major
-	( 
-		// Column 1
-		m_matrix[0]*m[0] + m_matrix[4]*m[1] + m_matrix[8]*m[2] + m_matrix[12]*m[3],
-		m_matrix[1]*m[0] + m_matrix[5]*m[1] + m_matrix[9]*m[2] + m_matrix[13]*m[3],
-		m_matrix[2]*m[0] + m_matrix[6]*m[1] + m_matrix[10]*m[2] + m_matrix[14]*m[3],
-		m_matrix[3]*m[0] + m_matrix[7]*m[1] + m_matrix[11]*m[2] + m_matrix[15]*m[3],
-
-		// Column 2
-		m_matrix[0]*m[4] + m_matrix[4]*m[5] + m_matrix[8]*m[6] + m_matrix[12]*m[7],
-		m_matrix[1]*m[4] + m_matrix[5]*m[5] + m_matrix[9]*m[6] + m_matrix[13]*m[7],
-		m_matrix[2]*m[4] + m_matrix[6]*m[5] + m_matrix[10]*m[6] + m_matrix[14]*m[7],
-		m_matrix[3]*m[4] + m_matrix[7]*m[5] + m_matrix[11]*m[6] + m_matrix[15]*m[7],
-
-		// Column 3
-		m_matrix[0]*m[8] + m_matrix[4]*m[9] + m_matrix[8]*m[10] + m_matrix[12]*m[11],
-		m_matrix[1]*m[8] + m_matrix[5]*m[9] + m_matrix[9]*m[10] + m_matrix[13]*m[11],
-		m_matrix[2]*m[8] + m_matrix[6]*m[9] + m_matrix[10]*m[10] + m_matrix[14]*m[11],
-		m_matrix[3]*m[8] + m_matrix[7]*m[9] + m_matrix[11]*m[10] + m_matrix[15]*m[11],
-
-		// Column 4
-		m_matrix[0]*m[12] + m_matrix[4]*m[13] + m_matrix[8]*m[14] + m_matrix[12]*m[15],
-		m_matrix[1]*m[12] + m_matrix[5]*m[13] + m_matrix[9]*m[14] + m_matrix[13]*m[15],
-		m_matrix[2]*m[12] + m_matrix[6]*m[13] + m_matrix[10]*m[14] + m_matrix[14]*m[15],
-		m_matrix[3]*m[12] + m_matrix[7]*m[13] + m_matrix[11]*m[14] + m_matrix[15]*m[15]
-	);*/
+{	
 	return mat4 ( m_matrix[0]*m[0] + m_matrix[4]*m[1] + m_matrix[8]*m[2] + m_matrix[12]*m[3],
 				  m_matrix[0]*m[4] + m_matrix[4]*m[5] + m_matrix[8]*m[6] + m_matrix[12]*m[7],
 				  m_matrix[0]*m[8] + m_matrix[4]*m[9] + m_matrix[8]*m[10] + m_matrix[12]*m[11],
@@ -228,13 +294,12 @@ mat4 mat4::operator*(const mat4& m) const
 /// Invert the matrix
 void mat4::invert()
 {
-	mat4 inverse = getInverse();
-	*this = inverse;
+	*this = this->inverse();
 }
 
 mat4 mat4::ortho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	mat4 m;
+	mat4 m = mat4::identity;
 	m[0] = 2.0f / (right - left);
 	m[5] = 2.0f / (top - bottom);
 	m[10] = 1.0f / (zNear - zFar);
@@ -346,16 +411,6 @@ mat4 mat4::textureTransform(bool flipVertically, float scaleX, float scaleY)
 	return matrix;
 }
 
-/// Get the inverse of this matrix
-mat4 mat4::getInverse()
-{
-	mat4 invertedMatrix;
-
-	m4_inverse(invertedMatrix, *this);
-
-	return invertedMatrix;
-}
-
 /// Get the inverse of the matrix
 mat4 mat4::inverse()
 {
@@ -431,6 +486,29 @@ mat4 mat4::translate(float x, float y, float z)
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////     3x3 Matrix
+
+/// Default construction
+mat3::mat3()
+{
+
+}
+
+mat3::mat3(float a00, float a01, float a02,
+	       float a10, float a11, float a12,
+	       float a20, float a21, float a22)
+{
+	m_matrix[0] = a00;
+	m_matrix[1] = a10;
+	m_matrix[2] = a20;
+
+	m_matrix[3] = a01;
+	m_matrix[4] = a11;
+	m_matrix[5] = a21;
+
+	m_matrix[6] = a02;
+	m_matrix[7] = a12;
+	m_matrix[8] = a22;
+}
 
 /// Access operator for elements
 float mat3::operator[](unsigned int index) const

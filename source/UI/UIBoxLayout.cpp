@@ -28,12 +28,13 @@ void UIBoxLayout::doLayout(UIView* parent)
 
 	if(m_orientation == UILayout::Vertical)
 	{
-		float latestY = parent->getPosition().y;
+		float latestY = 0.f;
 		for (std::size_t i = 0; i < parent->getChildCount(); ++i)
 		{
 			// simply put the view below where the previous ends
 			UIView* child = parent->getChild(i);
-			child->setPosition(parent->getPosition().x, latestY);
+
+			child->setPosition(0.f, latestY);
 
 			latestY += child->getSize().y;
 		}

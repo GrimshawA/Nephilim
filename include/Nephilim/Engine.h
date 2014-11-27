@@ -21,10 +21,10 @@ freely, subject to the following restrictions:
 #define NephilimEngine_h__
 
 #include <Nephilim/Platform.h>
-#include "Clock.h"
-#include "Strings.h"
-#include "Event.h"
-#include "Surface.h"
+#include <Nephilim/Clock.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Event.h>
+#include <Nephilim/Window.h>
 
 #include <vector>
 
@@ -85,7 +85,7 @@ public:
 	void injectEvent(Event& event);
 
 	/// Get the current renderer
-	GraphicsDevice* getRenderer();
+	GraphicsDevice* getGraphicsDevice();
 
 	/// Get a basic string describing the current OS
 	String getOS();
@@ -99,8 +99,8 @@ public:
 	GameCore*	m_currentApp;		///< The currently executing game/application
 	Clock		m_clock;			///< Clock that counts the elapsed time since the engine was instanced
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
-	GraphicsDevice*	m_renderer;			///< The unified graphics renderer system
-	Surface		m_surface;			///< The surface this engine is bound to
+	GraphicsDevice*	m_renderer;		///< The unified graphics renderer system
+	Window*     m_window;
 	bool		m_running;			///< Qualified as running if some conditions are met
 	static String m_versionString;  ///< The version of string(at compile time)
 	std::vector<Event> m_events;    ///< The list of unprocessed events

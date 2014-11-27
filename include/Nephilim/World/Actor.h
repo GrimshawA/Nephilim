@@ -3,8 +3,35 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/CSprite.h>
 
 NEPHILIM_NS_BEGIN
+
+class ActorComponent
+{
+public:
+	virtual void damn(){}
+};
+
+class SceneComponent : public ActorComponent
+{
+public:
+	CTransform t;
+
+	std::vector<SceneComponent*> attachedComponents;
+
+};
+
+class SpriteComponent : public SceneComponent
+{
+public:
+	SpriteComponent()
+	{
+
+	}
+
+	CSprite s;
+};
 
 class World;
 
@@ -22,10 +49,18 @@ class World;
 class NEPHILIM_API Actor
 {
 private:
-	friend class World; ///< World can access private members as he instances Actors
+	/// World can access private members as he instances Actors
+	friend class World;
 
 	/// Pointer to the World instance that created this actor
 	World* mWorld = nullptr;
+
+	/// The root component of this Actor
+	SceneComponent* root = nullptr;
+
+public:
+	/// The array of components on this Actor
+	std::vector<ActorComponent*> components;
 
 public:
 	/// Get the world instance that created this actor
@@ -35,11 +70,36 @@ public:
 	/// This is the transform that converts anything in actor space to world space
 	CTransform getTransform();
 
+	/// Set a transform for the root
+	void setTransform(const CTransform& transform);
+
+	/// Get the position of this Actor
+	vec3 getActorLocation();
+
 	/// Destroy this actor
 	/// As soon as this function is called, the Actor object may not be used anymore
 	void destroy();
 
+	/// Create a new instance of component type T
+	template<typename T>
+	T* createComponent();
+
 };
+
+/// Create a new instance of component type T
+template<typename T>
+T* Actor::createComponent()
+{
+	T* component = new T();
+	components.push_back(component);
+
+	if (root == nullptr)
+	{
+		root = component;
+	}
+
+	return component;
+}
 
 NEPHILIM_NS_END
 #endif // NephilimActor_h__

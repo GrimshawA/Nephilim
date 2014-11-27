@@ -26,6 +26,18 @@ void CCamera::setSize(float width, float height)
 	size.y = height;
 }
 
+/// Returns a ready projection matrix for these configs
+mat4 CCamera::getProjection()
+{
+	if (mOrtho)
+	{
+		return mat4::ortho(0.f, size.x, 0.f, size.y, 1.f, 4000.f);
+	}
+	else
+	{
+		return mat4::perspective(50.f, 1.2f, 1.f, 3000.f);
+	}
+}
 
 };
 NEPHILIM_NS_END
