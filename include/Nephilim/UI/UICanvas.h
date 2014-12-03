@@ -9,7 +9,7 @@
 NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
-class UILayerView;
+class UIWindow;
 class UIView;
 
 /**
@@ -30,6 +30,10 @@ public:
 
 	/// Construct the window
 	UICanvas();
+
+	/// Update the window size of the UI canvas
+	/// This will effectively change the size of all subwindows to match the new canvas size, if they are fullscreen
+	void setWindowSize(int w, int h);
 
 	/// Returns a control in the hierarchy with the name, or NULL if not found
 	UIView* getControlByName(const String& name);
@@ -57,14 +61,14 @@ public:
 	void setLanguage(const String& shortLanguageName);
 
 	/// Get a surface by its name
-	UILayerView* getLayer(const String& name);
+	UIWindow* getLayer(const String& name);
 
 	/// Get the count of modal surfaces
 	int getModalSurfaceCount();
 
 	/// Get the surface closer to the user
 	/// \return the UISurface* or NULL if there are no surfaces
-	UILayerView* top();
+	UIWindow* top();
 
 	/// Print hierarchy information for debugging
 	void printHierarchy();
@@ -72,10 +76,10 @@ public:
 	/// Push a new modal surface to the top, it will destroy itself once there are no more controls in it
 	void pushModalSurface();
 
-	UILayerView* addSurface(const String& name);
+	UIWindow* addSurface(const String& name);
 
 	/// Destroys a surface from its children
-	void destroySurface(UILayerView* surface);
+	void destroySurface(UIWindow* surface);
 
 	void applyPendingChanges();
 
@@ -119,7 +123,7 @@ public:
 	void debugData();
 
 	/// Get a surface by its name. It will be created if it does not yet exist
-	UILayerView* operator[](const String& name);
+	UIWindow* operator[](const String& name);
 
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 	Color m_backgroundColor;
@@ -131,7 +135,7 @@ private:
 
 	/// Multiple layers in the interface controls
 	/// m_surfaces[0] is the top layer, the closer to the user
-	std::vector<UILayerView*> m_surfaces;
+	std::vector<UIWindow*> m_surfaces;
 
 	/// The shared state of this ui system
 	UICore m_state;
@@ -146,7 +150,7 @@ private:
 
 	typedef struct{
 		PendingChangeType type;
-		UILayerView* surface;
+		UIWindow* surface;
 	} PendingChange;
 
 	std::vector<PendingChange> m_pendingChanges;

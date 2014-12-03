@@ -8,6 +8,8 @@
 #include <Nephilim/View.h>
 #include <Nephilim/Graphics/RenderTarget.h>
 
+#include <sigc++/sigc++.h>
+
 NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
@@ -21,14 +23,21 @@ typedef void* WindowHandle;
 	\brief Represents a screen or window where the engine is able to draw graphics
 
 */
-class NEPHILIM_API Window
+class NEPHILIM_API Window : public sigc::trackable
 {
+public:
+	/// Emitted whenever external files are dropped into this window
+	sigc::signal<void, int, int, const StringList&> onDragDrop;
+
 public:
 	/// Default constructor
 	Window();
 		
 	/// Destroy the window
 	~Window();
+
+	/// Redirect drag and drop listener
+	void handleInternalDragDrop(int x, int y, const StringList& fileNames);
 
 	/// Get the width of the screen/window
 	int width() const;
@@ -39,12 +48,17 @@ public:
 	/// Change the size of the window if possible
 	void setSize(int width, int height);
 
+	/// Move the window by an amount
+	void move(int x, int y);
+
 	/// Attempts to launch a window if applicable
 	void create(int screenWidth, int screenHeight);
 
 	void create(void* handle);
 
 	void pushFrame();
+
+
 
 	GraphicsDevice* createRenderer();
 
@@ -104,6 +118,17 @@ public:
 	int m_handle;
 
 	int m_windowWidth, m_windowHeight;
+
+};
+
+class NEPHILIM_API Desktop
+{
+public:
+	/// Get the width of the desktop
+	static int width();
+
+	/// Get the width of the desktop
+	static int height();
 
 };
 

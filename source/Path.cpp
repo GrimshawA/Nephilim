@@ -16,8 +16,18 @@ Path::Path()
 Path::Path(const String& path)
 : m_path(path)
 {
-
+	normalizeSlashes();
 }
+
+void Path::normalizeSlashes()
+{
+	for (std::size_t i = 0; i < m_path.size(); ++i)
+	{
+		if (m_path[i] == '\\')
+			m_path[i] = '/';
+	}
+}
+
 
 /// Returns the file name only without the directory
 String Path::getFileName()

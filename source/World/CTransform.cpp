@@ -89,7 +89,6 @@ vec3 CTransform::getRightVector()
 	vec4 v(1.f, 0.f, 0.f, 0.f);
 
 	mat4 rm = rotation.toMatrix()/* * mat4::scale(1,1,1)*/;
-	rm.invert();
 
 	v = rm * v;
 	v.normalize();

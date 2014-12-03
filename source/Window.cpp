@@ -47,20 +47,38 @@ Window::~Window(){
 	delete myWindowImpl;
 }
 
+/// Move the window by an amount
+void Window::move(int x, int y)
+{
+#ifdef NEPHILIM_WINDOWS
+	HWND hnd = static_cast<HWND>(getHandle());
+	MoveWindow(hnd, x, y, width(), height(), true);
+#endif
+}
+
 /// Attempts to launch a window if applicable
-void Window::create(int screenWidth, int screenHeight){
+void Window::create(int screenWidth, int screenHeight)
+{
 #ifdef NEPHILIM_DESKTOP
-	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(32, 8 , 8));
+	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::None, sf::ContextSettings(32, 8 , 8));
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	//myWindowImpl->setFramerateLimit(60);
 	
+	static_cast<sf::Window*>(myWindowImpl)->onDragDrop.connect(sigc::mem_fun(this, &Window::handleInternalDragDrop));
+
 	//Log("Window(%dx%dx%d - depth(%d) AA(%d) stencil(%d) ",myWindowImpl->getSize().x, myWindowImpl->getSize().y, 32, myWindowImpl->getSettings().depthBits, myWindowImpl->getSettings().antialiasingLevel, myWindowImpl->getSettings().stencilBits );
 	//m_handle = (int)myWindowImpl->getSystemHandle();
 
 #endif
 
 };
+
+/// Redirect drag and drop listener
+void Window::handleInternalDragDrop(int x, int y, const StringList& fileNames)
+{
+	onDragDrop(x, y, fileNames);
+}
 
 /// Sets a new title to the window
 void Window::setTitle(const String &title)
@@ -292,5 +310,19 @@ void Window::swapBuffers(){
 	myWindowImpl->display();
 #endif
 };
+
+//////////////////////////////////////////////////////////////////////////
+
+/// Get the width of the desktop
+int Desktop::width()
+{
+	return GetSystemMetrics(SM_CXSCREEN);
+}
+
+/// Get the width of the desktop
+int Desktop::height()
+{
+	return GetSystemMetrics(SM_CYSCREEN);
+}
 
 NEPHILIM_NS_END

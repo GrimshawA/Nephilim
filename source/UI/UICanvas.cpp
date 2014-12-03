@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UICanvas.h>
-#include <Nephilim/UI/UILayerView.h>
+#include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/Text.h>
 #include <Nephilim/UI/UILabel.h>
 
@@ -26,6 +26,16 @@ void UICanvas::addLayer3D(const String& name)
 	addSurface(name);
 }
 
+/// Update the window size of the UI canvas
+/// This will effectively change the size of all subwindows to match the new canvas size, if they are fullscreen
+void UICanvas::setWindowSize(int w, int h)
+{
+	for (std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
+		(*it)->setSize(w, h);
+	}
+}
+
 void UICanvas::onDraw(GraphicsDevice* renderer)
 {
 	//m_backgroundColor = Color::White;
@@ -37,7 +47,7 @@ void UICanvas::onDraw(GraphicsDevice* renderer)
 
 	/// Draw surfaces bottom to top
 	m_surfaceContainerLock++;
-	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		(*it)->draw(renderer);
 	}
@@ -50,10 +60,10 @@ void UICanvas::onDraw(GraphicsDevice* renderer)
 	}
 }
 
-UILayerView* UICanvas::getLayer(const String& name)
+UIWindow* UICanvas::getLayer(const String& name)
 {
-	UILayerView* found = NULL;
-	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	UIWindow* found = NULL;
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		if((*it)->getName() == name)
 		{
@@ -94,7 +104,7 @@ void UICanvas::setRect(Rect<float> rect)
 	m_bounds = rect;
 
 	// resize happened
-	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 		(*it)->setPosition(m_bounds.left, m_bounds.top);
 		(*it)->setSize(m_bounds.width, m_bounds.height);
 	}
@@ -112,7 +122,7 @@ void UICanvas::setRect(float left, float top, float width, float height)
 void UICanvas::printHierarchy()
 {
 	// resize happened
-	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		(*it)->printHierarchy();
 	}
@@ -140,7 +150,7 @@ void UICanvas::pushModalSurface()
 void UICanvas::debugData()
 {
 	Log("Surface count: %d", m_surfaces.size());
-	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	for(std::vector<UIWindow*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 		Log("Surface: %s", (*it)->getName().c_str());
 	}
 }
@@ -152,9 +162,9 @@ int UICanvas::getSurfaceCount()
 }
 
 /// Get a surface by its name. It will be created if it does not yet exist
-UILayerView* UICanvas::operator[](const String& name)
+UIWindow* UICanvas::operator[](const String& name)
 {
-	UILayerView* surface = getLayer(name);
+	UIWindow* surface = getLayer(name);
 	if(!surface)
 	{
 		surface = addSurface(name);
@@ -163,7 +173,7 @@ UILayerView* UICanvas::operator[](const String& name)
 	return surface;
 }
 
-UILayerView* UICanvas::top()
+UIWindow* UICanvas::top()
 {
 	if(m_surfaces.empty())
 	{
@@ -171,7 +181,7 @@ UILayerView* UICanvas::top()
 	}
 	else
 	{
-		UILayerView* lastSurface = m_surfaces.back();
+		UIWindow* lastSurface = m_surfaces.back();
 		for(std::size_t i = 0; i < m_pendingChanges.size(); ++i)
 		{
 			if(m_pendingChanges[i].type == Add)
@@ -187,7 +197,7 @@ void UICanvas::showMessageBox(const String& message)
 {
 	UIView* modalBackground = new UIView();
 	
-	UILayerView* surface = addSurface("modal");
+	UIWindow* surface = addSurface("modal");
 	surface->attach(modalBackground);
 	modalBackground->setRect(surface->getRect());
 
@@ -202,7 +212,7 @@ void UICanvas::showMessageBox(const String& message)
 UIView* UICanvas::getControlByName(const String& name)
 {
 	UIView* control = NULL;
-	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	for(std::vector<UIWindow*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		control = (*it)->findByName(name);
 		if(control != NULL) return control; // the surface returned something
@@ -211,9 +221,9 @@ UIView* UICanvas::getControlByName(const String& name)
 	return NULL; // Nothing found.
 };
 
-UILayerView* UICanvas::addSurface(const String& name)
+UIWindow* UICanvas::addSurface(const String& name)
 {
-	UILayerView* surface = new UILayerView();
+	UIWindow* surface = new UIWindow();
 	surface->setName(name);
 	surface->setPosition(m_bounds.left, m_bounds.top);
 	surface->setSize(m_bounds.width, m_bounds.height);
@@ -246,7 +256,7 @@ void UICanvas::draw(GraphicsDevice* renderer){
 	//renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
 
 	/// Draw surfaces bottom to top
-	for(std::vector<UILayerView*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
 		(*it)->draw(renderer);
 	}
 
@@ -263,7 +273,7 @@ void UICanvas::draw(GraphicsDevice* renderer){
 };
 
 /// Destroys a surface from its children
-void UICanvas::destroySurface(UILayerView* surface)
+void UICanvas::destroySurface(UIWindow* surface)
 {
 	if(m_surfaceContainerLock > 0)
 	{
@@ -282,7 +292,7 @@ void UICanvas::destroySurface(UILayerView* surface)
 void UICanvas::update(float elapsedTime)
 {	
 	m_surfaceContainerLock++;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
 	{
 		(*it)->update(elapsedTime);
 	}
@@ -306,7 +316,7 @@ UIEventResult UICanvas::pushEvent(const Event& event)
 
 	// -- Raw event delivery system
 	m_surfaceContainerLock++;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); it++)
 	{
 		if((*it)->getChildCount() > 0)
 		{
@@ -385,7 +395,7 @@ int UICanvas::getModalSurfaceCount()
 	int count = 0;
 
 	// Check the established list
-	for(std::vector<UILayerView*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); ++it)
+	for(std::vector<UIWindow*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); ++it)
 	{
 		if((*it)->isModal())
 			count++;
@@ -418,7 +428,7 @@ bool UICanvas::processMouseButtonPressed(int x, int y, Mouse::Button button)
 {
 	m_surfaceContainerLock++;
 	bool canContinue = true;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++)
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++)
 	{
 		(*it)->processMouseButtonPressed(x,y,button);
 
@@ -437,7 +447,7 @@ void UICanvas::processMouseButtonReleased(int x, int y, Mouse::Button button, UI
 {
 	m_surfaceContainerLock++;
 	bool canContinue = true;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); ++it)
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend(); ++it)
 	{
 		if(canContinue)
 		{
@@ -460,7 +470,7 @@ bool UICanvas::processMouseMove(int x, int y)
 {
 	m_surfaceContainerLock++;
 	bool canContinue = true;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
 		(*it)->processMouseMove(x,y);
 
 		if((*it)->isModal())
@@ -476,7 +486,7 @@ void UICanvas::processTouchMove(int x, int y)
 {
 	m_surfaceContainerLock++;
 	bool canContinue = true;
-	for(std::vector<UILayerView*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
+	for(std::vector<UIWindow*>::reverse_iterator it = m_surfaces.rbegin(); it != m_surfaces.rend() && canContinue; it++){
 		(*it)->processTouchMove(x,y);
 
 		if((*it)->isModal())

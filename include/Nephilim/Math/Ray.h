@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Vectors.h>
-#include <Nephilim/Math/AABB.h>
+#include <Nephilim/Math/BBox.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -36,7 +36,7 @@ public:
 	int sign[3];
 
 
-	bool hits(AABB aabb);
+	bool hits(BBox aabb);
 };
 
 NEPHILIM_NS_END

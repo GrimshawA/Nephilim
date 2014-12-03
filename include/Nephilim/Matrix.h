@@ -37,7 +37,7 @@ public:
 	void invert();
 
 	/// Get the inverse of the matrix
-	mat4 inverse();
+	mat4 inverse() const;
 
 	/// Get the inverse of the matrix (only for 2d transforms)
 	/// Calculates the inverted 4x4 matrix by ignoring the

@@ -8,14 +8,12 @@
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
 /**
 	\class ComponentTransform
 	\brief 3D transform for a entity, scale + rotation + translation
 */
-class NEPHILIM_API ComponentTerrain : public Component
+class NEPHILIM_API CHeightmapTerrain : public Component
 {
 public:
 
@@ -28,6 +26,5 @@ public:
 	Texture surfaceTex;
 };
 
-};
 NEPHILIM_NS_END
 #endif // NephilimRazerComponentTerrain_h__

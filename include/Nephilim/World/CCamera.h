@@ -5,9 +5,9 @@
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Matrix.h>
 #include <Nephilim/World/Component.h>
+#include <Nephilim/Math/Ray.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr {
 
 /**
 	\class CCamera
@@ -39,11 +39,16 @@ public:
 	float screenWidth;
 	float screenHeight;
 
+	/// Static: Unprojects a point from NDC to a world-space Ray
+	/// (This function may move. An helper function to save boilerplate code)
+	/// Outputs a ray with origin at the NEAR plane, at mouse coordinate, and direction towards where camera is looking
+	/// mouse input must be already normalized (-1 to 1) on both dimensions
+	static Ray UnProjectPoint(const mat4& projection, const mat4& view, Vector2D mouse);
+
 public:
 	/// Returns a ready projection matrix for these configs
 	mat4 getProjection();
 };
 
-};
 NEPHILIM_NS_END
 #endif // NephilimRazerComponentCamera_h__

@@ -95,7 +95,11 @@ public:
 	/// Direct accessors
 	T y;
 };
+
+/// Vector2D and vec2 are the notations for floating precision 2D vectors, without the need for template notation
 typedef Vec2<float> vec2;
+typedef Vec2<float> Vector2D;
+
 typedef Vec2<int> vec2i;
 
 typedef Vec2<float> Vec2f;
@@ -202,6 +206,7 @@ public:
 	T z;
 };
 typedef Vec3<float> vec3;
+typedef Vec3<float> Vector3D;
 
 typedef Vec3<float> Vec3f;
 typedef Vec3<int> Vec3i;

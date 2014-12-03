@@ -1,11 +1,11 @@
-#include <Nephilim/UI/UILayerView.h>
+#include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
-UILayerView::UILayerView()
+UIWindow::UIWindow()
 : UIView()
 , m_modal(false)
 , m_parentDocument(NULL)
@@ -13,12 +13,12 @@ UILayerView::UILayerView()
 
 }
 
-void UILayerView::setCoordinateSpace(UI::CoordinateSpaces coordinateSpace)
+void UIWindow::setCoordinateSpace(UI::CoordinateSpaces coordinateSpace)
 {
 	mCoordinateSpace = coordinateSpace;
 }
 
-void UILayerView::destroy()
+void UIWindow::destroy()
 {
 	if(getParentDocument())
 	{
@@ -26,7 +26,7 @@ void UILayerView::destroy()
 	}
 }
 
-void UILayerView::draw(GraphicsDevice* graphicsDevice)
+void UIWindow::draw(GraphicsDevice* graphicsDevice)
 {
 	if (mCoordinateSpace == UI::WorldSpace)
 	{
@@ -42,13 +42,13 @@ void UILayerView::draw(GraphicsDevice* graphicsDevice)
 };
 
 /// Get the parent document of the surface
-UICanvas* UILayerView::getParentDocument()
+UICanvas* UIWindow::getParentDocument()
 {
 	return m_parentDocument;
 }
 
 /// Callback when a child of the control is removed
-void UILayerView::onChildRemoved(UIView* control)
+void UIWindow::onChildRemoved(UIView* control)
 {
 	Log("Surface detected child removal %d %d %s", m_children.size(), m_modal, m_name.c_str());
 
@@ -60,14 +60,14 @@ void UILayerView::onChildRemoved(UIView* control)
 }
 
 /// Check if the surface is modal
-bool UILayerView::isModal()
+bool UIWindow::isModal()
 {
 	return m_modal;
 }
 
 /// When a surface is modal it will stop propagation of events to lower surfaces
 /// Also, when the last control in the surface is destroyed, the surface is destroyed automatically.
-void UILayerView::setModal(bool enable)
+void UIWindow::setModal(bool enable)
 {
 	m_modal = enable;
 }

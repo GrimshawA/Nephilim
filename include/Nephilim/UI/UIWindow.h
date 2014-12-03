@@ -1,5 +1,5 @@
-#ifndef NephilimUILayerView_h__
-#define NephilimUILayerView_h__
+#ifndef NephilimUIWindow_h__
+#define NephilimUIWindow_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Matrix.h>
@@ -20,11 +20,13 @@ namespace UI
 }
 
 /**
-	\ingroup UI
-	\class UILayerView
-	\brief Root of UI hierarchies. This is the canvas which provides a coordinate system for the views to dwell in
+	\class UIWindow
+	\brief Root element of a UI hierarchy
+
+	UIWindow objects have no root, as they are the top of the hierarchy.
+	UICanvas effectively owns N UIWindows inside it, either full screen to always fit or as modal dialogs.
 */
-class NEPHILIM_API UILayerView : public UIView
+class NEPHILIM_API UIWindow : public UIView
 {
 private:
 	/// Coordinate space of the controls in this hierarchy
@@ -36,7 +38,7 @@ public:
 
 public:
 	/// Construct the surface
-	UILayerView();
+	UIWindow();
 
 	/// Set the coordinate space for this layer
 	/// Each layer can have an arbitrary way to render itself, from full 3D to regular 2D
@@ -73,4 +75,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUILayerView_h__
+#endif // NephilimUIWindow_h__

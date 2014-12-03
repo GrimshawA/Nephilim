@@ -1,16 +1,14 @@
-#include <Nephilim/World/ComponentTerrain.h>
+#include <Nephilim/World/CHeightmapTerrain.h>
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Image.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
 static const float GRID_SIZE = 1.0f;
 static const float HEIGHT_FACTOR = 0.1f;
 static const float TEXTURE_INCREMENT = 0.2f;
 
-bool ComponentTerrain::load(const String& heightmapFileName)
+bool CHeightmapTerrain::load(const String& heightmapFileName)
 {
 	surfaceTex.loadFromFile("grass.png");
 	surfaceTex.setRepeated(true);
@@ -69,5 +67,4 @@ bool ComponentTerrain::load(const String& heightmapFileName)
 	return true;
 }
 
-}
 NEPHILIM_NS_END

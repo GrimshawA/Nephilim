@@ -26,6 +26,7 @@ UIComponentButton::UIComponentButton(const String& text)
 {
 	mNormalColor = Color::Black;
 	mHoverColor = Color::Yellow;
+	mNormalColor = Color::Transparent;
 
 }
 

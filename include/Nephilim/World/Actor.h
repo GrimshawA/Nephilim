@@ -4,6 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CSprite.h>
+#include <Nephilim/Math/BBox.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -55,6 +56,9 @@ private:
 	/// Pointer to the World instance that created this actor
 	World* mWorld = nullptr;
 
+	/// Name of this actor, it doesn't have to be unique
+	String mName;
+
 	/// The root component of this Actor
 	SceneComponent* root = nullptr;
 
@@ -65,6 +69,9 @@ public:
 public:
 	/// Get the world instance that created this actor
 	World* getWorld();
+
+	/// Get the bounding box of this actor and its contents
+	BBox getActorBounds();
 
 	/// Get the transform of this Actor
 	/// This is the transform that converts anything in actor space to world space

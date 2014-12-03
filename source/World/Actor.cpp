@@ -9,6 +9,25 @@ World* Actor::getWorld()
 	return mWorld;
 }
 
+/// Get the bounding box of this actor and its contents
+BBox Actor::getActorBounds()
+{
+	Vector3D extents;
+
+	if (dynamic_cast<SpriteComponent*>(root))
+	{
+		extents.z = 0.f;
+		extents.x = static_cast<SpriteComponent*>(root)->s.getSize().x;
+		extents.y = static_cast<SpriteComponent*>(root)->s.getSize().y;
+	}
+
+
+	BBox box;
+	box.parameters[0] = getActorLocation();
+	box.parameters[1] = extents;
+	return box;
+}
+
 /// Destroy this actor
 /// As soon as this function is called, the Actor object may not be used anymore
 void Actor::destroy()

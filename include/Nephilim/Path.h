@@ -18,6 +18,8 @@ public:
 
 	Path(const String& path);
 
+	void normalizeSlashes();
+
 	/// Returns the file name only without the directory
 	String getFileName();
 

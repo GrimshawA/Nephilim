@@ -11,6 +11,7 @@
 NEPHILIM_NS_BEGIN
 
 class World;
+class Landscape;
 
 /**
 	\class Level
@@ -61,6 +62,8 @@ public:
 
 	/// World that has this level loaded
 	World* world;
+
+	std::vector<Landscape*> landscapes;
 
 public: // TEMP STUFF; FOR PROTOTYPING World MODULE
 

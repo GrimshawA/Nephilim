@@ -1,9 +1,13 @@
 #include <Nephilim/World/RenderSystemDefault.h>
 #include <Nephilim/World/World.h>
+#include <Nephilim/World/Level.h>
+#include <Nephilim/World/Landscape.h>
+
+
 #include <Nephilim/World/Entity.h>
 #include <Nephilim/World/Entity.inl>
 #include <Nephilim/World/ComponentTilemap2D.h>
-#include <Nephilim/World/ComponentTerrain.h>
+#include <Nephilim/World/CHeightmapTerrain.h>
 #include <Nephilim/World/CCamera.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CTransform.h>
@@ -169,9 +173,26 @@ void RenderSystemDefault::update(const Time& deltaTime)
 /// Render scene gets all scene render data and outputs it to the active target
 void RenderSystemDefault::renderScene()
 {
+	mRenderer->clearDepthBuffer();
 
-// 	RectangleShape c(FloatRect(100, 100, 1000, 1000), Color::Grass);
-// 	mRenderer->draw(c);
+	// Draw level terrains if applicable
+	for (std::size_t i = 0; i < mScene->levels.size(); ++i)
+	{
+		Level* level = mScene->getLevel(i);
+
+		for (std::size_t j = 0; j < level->landscapes.size(); ++j)
+		{
+			level->landscapes[j]->terrain.surfaceTex.bind();
+
+			mRenderer->setDepthTestEnabled(true);
+			mRenderer->setModelMatrix(level->landscapes[j]->rootTransform.getMatrix());
+			mRenderer->draw(level->landscapes[j]->terrain.geometry);
+		
+
+			
+		}
+	}
+
 
 	ComponentManager* meshComponentManager = mScene->getComponentManager<CMesh>();
 	//ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();

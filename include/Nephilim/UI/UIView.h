@@ -2,6 +2,8 @@
 #define NephilimUIView_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIPainter.h>
+
 #include <Nephilim/Rect.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/Strings.h>
@@ -11,6 +13,7 @@
 #include <Nephilim/AxList.h>
 #include <Nephilim/AxTarget.h>
 #include <Nephilim/Matrix.h>
+
 
 #include <vector>
 #include <map>
@@ -30,6 +33,19 @@ NEPHILIM_NS_BEGIN
 
 class AxBase;
 class UIComponent;
+
+struct UIPointerEvent
+{ 
+	Vector2D screenSpace; ///< Location of the pointer event in screen coordinates
+	Vector2D screenSpaceDelta; ///< Difference between this event and the last event handled
+
+	/// Get the offset since the last pointer's event handled
+	Vector2D getCursorDelta()
+	{
+		return screenSpaceDelta;
+	}
+};
+
 
 namespace UIPositionFlag
 {
@@ -117,11 +133,17 @@ public:
 // Inheritance
 protected:
 
-	/// Called on subclasses to draw custom stuff
-	virtual void onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld);
+	/// Called on the subclass to have it paint its contents
+	virtual void onPaint(UIPainter& painter);
 
 	/// Called on subclasses to notify the widget was just resized
 	virtual void onResize();
+
+// Signals
+public:
+
+	sigc::signal<void> sizeChanged; ///< Emitted when the widget changes size
+
 
 public:
 
@@ -350,7 +372,8 @@ public:
 
 	virtual void onAttach(){}
 
-
+	/// Move the widget around, relative to where it currently is
+	void move(float x, float y);
 
 	/// Immediately sets the new size of the control 
 	void setSize(float width, float height);
@@ -432,7 +455,7 @@ public:                                                        // Old Properties
 	sigc::signal<void> onClick;
 	sigc::signal<void> onDoubleClick;
 	sigc::signal<void> onTripleClick;
-	sigc::signal<void> onSizeChanged;
+	
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
 	sigc::signal<void, UIView*> onNewChild; /// Emitted when a child is attached

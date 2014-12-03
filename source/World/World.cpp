@@ -35,6 +35,12 @@ bool World::loadLevel(Level* level)
 	return false;
 }
 
+/// Get one of the currently loaded levels
+Level* World::getLevel(std::size_t index)
+{
+	return levels[index];
+}
+
 /// Spawns an actor
 Actor* World::spawnActor()
 {

@@ -76,7 +76,7 @@ UIView::UIView(UIView* parent)
 }
 
 /// Called on subclasses to draw custom stuff
-void UIView::onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld){}
+void UIView::onPaint(UIPainter& painter){}
 
 
 
@@ -247,9 +247,9 @@ void UIView::setPosition(float x, float y)
 	mRect.left = x;
 	mRect.top = y;
 
-	updateLayout();
+	//updateLayout();
 
-	offsetChildrenPosition(offset);
+	//offsetChildrenPosition(offset);
 
 	onPositionChanged();
 
@@ -719,6 +719,12 @@ void UIView::reloadGraphicalAssets()
 	}
 }
 
+/// Move the widget around, relative to where it currently is
+void UIView::move(float x, float y)
+{
+	setPosition(getPosition() + vec2(x, y));
+}
+
 void UIView::switchLanguage()
 {
 	innerLanguageSwitch();
@@ -741,17 +747,22 @@ void UIView::processSizeChange(float previousWidth, float previousHeight, float 
 		if ((*it)->hasFlags(UIFlag::FILL_PARENT_WIDTH))
 		{
 			(*it)->setSize(newWidth, (*it)->getSize().y);
-			Log("FILLING PARENT WIDTH");
+			//Log("FILLING PARENT WIDTH");
 		}
 		if ((*it)->hasFlags(UIFlag::FILL_PARENT_HEIGHT))
 		{
 			(*it)->setSize((*it)->getSize().x, newHeight);
-			Log("FILLING PARENT HEIGHT");
+			//Log("FILLING PARENT HEIGHT");
 		}
 		if ((*it)->hasFlags(UIFlag::ANCHOR_RIGHT))
 		{
 			(*it)->setPosition(newWidth - (*it)->width(), (*it)->getPosition().y);
-			Log("FILLING PARENT HEIGHT");
+			//Log("FILLING PARENT HEIGHT");
+		}
+		if ((*it)->hasFlags(UIFlag::ANCHOR_BOTTOM))
+		{
+			(*it)->setPosition((*it)->getPosition().x, newHeight - (*it)->getSize().y);
+			//Log("ANCHORING");
 		}
 
 		// -- Auto Resize: Ensure the same % width of the parent is occupied
@@ -1225,9 +1236,7 @@ void UIView::setSize(float width, float height)
 	mRect.width = width;
 	mRect.height = height;
 	
-	onResize();
 
-	onSizeChanged();
 
 	updateLayout();
 
@@ -1240,11 +1249,17 @@ void UIView::setSize(float width, float height)
 	size.x = width;
 	size.y = height;
 
+	onResize();
+
+
 	// lets try to notify the parent layouters 
 	if (getParent() && getParent()->getLayout())
 	{
 		//getParent()->getLayout()->doLayout(getParent());
 	}
+
+	// Last thing
+	sizeChanged();
 };
 
 /// Immediately sets the center of the control to a new position
@@ -1300,7 +1315,13 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 
 	absoluteTransform = transform * localTransform;
 
-	onDraw(renderer, absoluteTransform);
+	// We setup a painter and pass it on for actual safe rendering with no hacks or boilerplate
+	UIPainter painter;
+	painter.graphicsDevice = renderer;
+	painter.baseMatrix = absoluteTransform;
+	if (getContext())
+		painter.activeFont = getContext()->m_defaultFont;
+	onPaint(painter);
 
 	// clip the overflowing children
 	if(m_clipChildren)

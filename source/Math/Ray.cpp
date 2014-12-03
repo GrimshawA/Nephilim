@@ -2,7 +2,7 @@
 
 NEPHILIM_NS_BEGIN
 
-bool Ray::hits(AABB aabb)
+bool Ray::hits(BBox aabb)
 {
 	return true;
 }

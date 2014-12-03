@@ -67,6 +67,9 @@ public:
 	/// Load directly the new level into this world, and index it too
 	bool loadLevel(Level* level);
 
+	/// Get one of the currently loaded levels
+	Level* getLevel(std::size_t index = 0);
+
 	/// Spawns an actor
 	Actor* spawnActor();
 
