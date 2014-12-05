@@ -39,10 +39,35 @@ struct UIPointerEvent
 	Vector2D screenSpace; ///< Location of the pointer event in screen coordinates
 	Vector2D screenSpaceDelta; ///< Difference between this event and the last event handled
 
+	Mouse::Button effectingButton;
+
+	enum
+	{
+		None,
+		Pressed,
+		Released,
+		Moved
+	};
+
+	int eventType = None;
+
+	vec2i windowSpace;
+
 	/// Get the offset since the last pointer's event handled
 	Vector2D getCursorDelta()
 	{
 		return screenSpaceDelta;
+	}
+
+	/// Get the button that raised this event
+	Mouse::Button getButton()
+	{
+		return effectingButton;
+	}
+
+	bool isPointerDown()
+	{
+		return eventType == Pressed;
 	}
 };
 
@@ -138,6 +163,9 @@ protected:
 
 	/// Called on subclasses to notify the widget was just resized
 	virtual void onResize();
+
+	/// Called when the view receives a mouse/touch related event
+	virtual void onPointerEvent(const UIPointerEvent& event);
 
 // Signals
 public:

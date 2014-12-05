@@ -22,9 +22,21 @@ public:
 	vec3 normal;
 
 public:
+	/// Construct a default plane
+	Plane();
+
+	/// Construct a plane from a position and a normal
+	Plane(Vector3D orig, Vector3D norm);
+
+	/// Flips the plane so it faces the opposing side
+	void flip();
+
 	/// Returns true if the ray intersects the plane
 	/// and sets t to the distance along the ray where the intersection happens.
 	bool raycast(const Ray& r, float& t);
+
+	/// Performs a raycast on the plane on both sides, to ensure it hits from either one
+	bool raycastTwoSided(const Ray& r, float &t);
 };
 
 NEPHILIM_NS_END

@@ -17,11 +17,19 @@ class World;
 	Landscapes are especially optimized for terrains, details
 	like rocks and foliage and trees. Also support 2D spline based
 	terrains, 2D static sprites, and tile map based maps.
+
+	One should never need to inherit Landscape, only write new
+	components for it. Usually, its only inherited for custom streaming features
+	or really fancy new terrain handling methods.
 */
 class NEPHILIM_API Landscape
 {
 public:
 
+	struct LandscapeHeightmapTerrainParams
+	{
+
+	};
 
 	CHeightmapTerrain terrain;
 
@@ -35,7 +43,6 @@ public:
 
 	/// Get the location of this Landscape object
 	Vector3D getLandscapeLocation();
-
 };
 
 NEPHILIM_NS_END

@@ -78,7 +78,8 @@ UIView::UIView(UIView* parent)
 /// Called on subclasses to draw custom stuff
 void UIView::onPaint(UIPainter& painter){}
 
-
+/// Called when the view receives a mouse/touch related event
+void UIView::onPointerEvent(const UIPointerEvent& event){}
 
 UIView::~UIView()
 {
@@ -601,6 +602,29 @@ void UIView::dispatchEvent(const Event& event)
 	/// Create a modifiable event, pass it to the control for possible alteration
 	Event modEvent = event;
 	onEventNotification(modEvent);
+
+	if (event.isPointerType())
+	{
+		UIPointerEvent pointerEvent;
+		pointerEvent.windowSpace = event.getPointerPosition();
+
+		if (event.isPointerPressed())
+		{
+			pointerEvent.eventType = UIPointerEvent::Pressed;
+			pointerEvent.effectingButton = event.mouseButton.button;
+		}
+		else if (event.isPointerReleased())
+		{
+			pointerEvent.eventType = UIPointerEvent::Released;
+			pointerEvent.effectingButton = event.mouseButton.button;
+		}
+		else
+		{
+			pointerEvent.eventType = UIPointerEvent::Moved;
+		}
+
+		onPointerEvent(pointerEvent);
+	}
 
 	m_childrenLock++;
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)

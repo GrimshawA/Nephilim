@@ -6,10 +6,16 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentMenu : public UIComponent
+/*
+	\class UIComponentMenuCaster
+	\brief Used to open submenus from clicking a view
+*/
+class NEPHILIM_API UIComponentMenuCaster : public UIComponent
 {
 public:
-	UIComponentMenu();
+	UIComponentMenuCaster();
+
+	void toggleMenu();
 
 	void onAttach(UIView* view);
 

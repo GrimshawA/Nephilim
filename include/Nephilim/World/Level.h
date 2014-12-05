@@ -46,7 +46,7 @@ class Landscape;
 
 	Levels are collections of:
 	1) Static sprites and meshes, which never ever change
-	2) Landscape objects with terrains etc
+	2) Landscape objects with terrains, tilemaps, voxels or other.
 	3) Actor spawn locations, with Actor class and initial data
 
 	Levels should not be used on their own, but through World objects.
@@ -63,6 +63,7 @@ public:
 	/// World that has this level loaded
 	World* world;
 
+	/// Landscape array of this level
 	std::vector<Landscape*> landscapes;
 
 public: // TEMP STUFF; FOR PROTOTYPING World MODULE

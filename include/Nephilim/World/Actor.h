@@ -2,6 +2,7 @@
 #define NephilimActor_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/Math/BBox.h>
@@ -47,7 +48,7 @@ class World;
 	This is a higher level abstraction than using the World's 
 	low level component-based structures.
 */
-class NEPHILIM_API Actor
+class NEPHILIM_API Actor : public GameObject
 {
 private:
 	/// World can access private members as he instances Actors

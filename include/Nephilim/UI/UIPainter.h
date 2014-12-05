@@ -42,13 +42,23 @@ public:
 	mat4 baseMatrix;
 	GraphicsDevice* graphicsDevice = nullptr;
 
+	int currentTextSize = 12;
+
 	/// Current color used for drawing rects etc
 	Color currentColor = Color(50,50,50);
+
+	Color currentTextFill = Color::White;
 
 	/// Currently active font, all text is rendered by default with it
 	Font* activeFont = nullptr;
 
 public:
+
+	/// Set a new fill color for subsequent shapes
+	void setFillColor(Color fill);
+
+	/// Set a new fill color for subsequent text drawing
+	void setTextFillColor(Color textFill);
 
 	/// Draw a rectangle
 	void drawRect(FloatRect rectangle);

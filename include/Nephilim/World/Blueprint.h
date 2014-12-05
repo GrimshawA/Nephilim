@@ -2,6 +2,7 @@
 #define NephilimWorldBlueprint_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/World/GameObject.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -20,7 +21,7 @@ class World;
 	occlusion zones and all kinds of fancy stuff.
 
 */
-class NEPHILIM_API Blueprint
+class NEPHILIM_API Blueprint : public GameObject
 {
 private:
 

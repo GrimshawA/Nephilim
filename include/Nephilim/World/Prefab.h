@@ -5,6 +5,7 @@
 #include <Nephilim/Strings.h>
 
 #include <vector>
+#include <map>
 
 NEPHILIM_NS_BEGIN
 
@@ -23,6 +24,17 @@ public:
 	struct ComponentInfo
 	{
 		String tag;
+		std::map<String, String> attributes;
+
+		void set(const String& key, const String& val)
+		{
+			attributes[key] = val;
+		}
+
+		String get(const String& key) const
+		{
+			return attributes.find(key)->second;
+		}
 	};
 
 	struct SubObject
@@ -40,6 +52,12 @@ public:
 	std::vector<SubObject> subObjectData;
 
 public:
+
+	String getRootClassName() const
+	{
+		return "Actor";
+	}
+
 	bool load(const String& filename);
 	bool save(const String& filename);
 };

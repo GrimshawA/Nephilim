@@ -50,11 +50,11 @@ void UIScrollBar::onResize()
 }
 
 
-void UIScrollBar::onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld)
+void UIScrollBar::onPaint(UIPainter& painter)
 {
 	RectangleShape backRect(FloatRect(0.f, 0.f, size.x, size.y), Color(121, 121, 121));
-	graphicsDevice->setModelMatrix(viewToWorld * backRect.getTransform().getMatrix());
-	graphicsDevice->draw(backRect);
+	painter.graphicsDevice->setModelMatrix(painter.baseMatrix * backRect.getTransform().getMatrix());
+	painter.graphicsDevice->draw(backRect);
 
 	if (linkedView)
 	{
@@ -63,8 +63,8 @@ void UIScrollBar::onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld
 	}
 
 	RectangleShape backRect2(FloatRect(2.f, 2.f + paddleOffset, size.x - 4.f, paddleHeight - 4.f), Color(21, 21, 21));
-	graphicsDevice->setModelMatrix(viewToWorld * backRect2.getTransform().getMatrix());
-	graphicsDevice->draw(backRect2);
+	painter.graphicsDevice->setModelMatrix(painter.baseMatrix * backRect2.getTransform().getMatrix());
+	painter.graphicsDevice->draw(backRect2);
 }
 
 NEPHILIM_NS_END

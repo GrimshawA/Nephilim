@@ -5,6 +5,8 @@
 #include <Nephilim/Vectors.h>
 #include <Nephilim/Math/BBox.h>
 
+#include <algorithm>
+
 NEPHILIM_NS_BEGIN
 
 /**
@@ -38,6 +40,33 @@ public:
 
 	bool hits(BBox aabb);
 };
+
+static bool intersection(BBox b, Ray r)
+{
+	double t = 50000;
+
+	double tx1 = (b.parameters[0].x - r.origin.x)*r.inv_direction.x;
+	double tx2 = (b.parameters[1].x - r.origin.x)*r.inv_direction.x;
+
+	double tmin = std::min(tx1, tx2);
+	double tmax = std::max(tx1, tx2);
+
+	double ty1 = (b.parameters[0].y - r.origin.y)*r.inv_direction.y;
+	double ty2 = (b.parameters[1].y - r.origin.y)*r.inv_direction.y;
+
+	tmin = std::max(tmin, std::min(ty1, ty2));
+	tmax = std::min(tmax, std::max(ty1, ty2));
+
+	double tz1 = (b.parameters[0].z - r.origin.z) * r.inv_direction.z;
+	double tz2 = (b.parameters[1].z - r.origin.z) * r.inv_direction.z;
+
+	tmin = std::max(tmin, std::min(tz1, tz2));
+	tmax = std::min(tmax, std::max(tz1, tz2));
+
+	return tmax >= std::max(0.0, tmin) && tmin < t;
+
+	//return tmax >= tmin;
+}
 
 NEPHILIM_NS_END
 #endif // NephilimRay_h__

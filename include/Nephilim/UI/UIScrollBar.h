@@ -39,7 +39,7 @@ public:
 public:
 
 	/// Draw the bars themselves
-	void onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld);
+	void onPaint(UIPainter& painter);
 
 	bool onEventNotification(Event& event);
 

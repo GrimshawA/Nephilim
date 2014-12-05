@@ -44,5 +44,7 @@ public:
 	static BBox Create(Vector3D origin, Vector3D extents);
 };
 
+
+
 NEPHILIM_NS_END
 #endif // NephilimAABB_h__

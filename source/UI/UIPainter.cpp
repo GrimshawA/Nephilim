@@ -27,9 +27,9 @@ void UIPainter::drawText(const String& text)
 	if (activeFont)
 	{
 		Text textObject;
-		textObject.setCharacterSize(12);
+		textObject.setCharacterSize(currentTextSize);
 		textObject.setString(text);
-		textObject.setColor(Color::White);
+		textObject.setColor(currentTextFill);
 		textObject.setOrigin(0.f, 0.f);
 		textObject.setFont(*activeFont);
 
@@ -44,9 +44,9 @@ void UIPainter::drawText(Vector2D point, const String& text)
 	if (activeFont)
 	{
 		Text textObject;
-		textObject.setCharacterSize(12);
+		textObject.setCharacterSize(currentTextSize);
 		textObject.setString(text);
-		textObject.setColor(Color::White);
+		textObject.setColor(currentTextFill);
 		textObject.setOrigin(0.f, 0.f);
 		textObject.setFont(*activeFont);
 		textObject.setPosition(point);
@@ -62,9 +62,9 @@ void UIPainter::drawText(FloatRect rectangle, int flags, const String& text)
 	if (activeFont)
 	{
 		Text textObject;
-		textObject.setCharacterSize(12);
+		textObject.setCharacterSize(currentTextSize);
 		textObject.setString(text);
-		textObject.setColor(Color::White);
+		textObject.setColor(currentTextFill);
 		textObject.setOrigin(0.f, 0.f);
 		textObject.setFont(*activeFont);
 
@@ -85,5 +85,16 @@ void UIPainter::drawText(FloatRect rectangle, int flags, const String& text)
 	}
 }
 
+/// Set a new fill color for subsequent shapes
+void UIPainter::setFillColor(Color fill)
+{
+	currentColor = fill;
+}
+
+/// Set a new fill color for subsequent text drawing
+void UIPainter::setTextFillColor(Color textFill)
+{
+	currentTextFill = textFill;
+}
 
 NEPHILIM_NS_END

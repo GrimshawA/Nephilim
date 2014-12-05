@@ -12,9 +12,20 @@ bool Prefab::load(const String& filename)
 
 	if (result)
 	{
-		pugi::xml_node root_node = document.child("root");
+		pugi::xml_node root_node = document.first_child();
 		if (root_node)
 		{
+			auto sprite_components = root_node.children("Sprite");
+			for (auto it = sprite_components.begin(); it != sprite_components.end(); ++it)
+			{
+				ComponentInfo component;
+				component.tag = "Sprite";
+				component.set("width", it->attribute("width").as_string("100"));
+				component.set("height", it->attribute("height").as_string("100"));
+				component.set("asset", it->attribute("asset").as_string("!"));
+				objectData.push_back(component);
+			}
+
 			// Got the root node, probably a valid prefab file, let's parse
 			auto spawn_nodes = root_node.children("spawn");
 			int count = 0;

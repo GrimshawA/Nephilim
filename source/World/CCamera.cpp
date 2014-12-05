@@ -33,7 +33,7 @@ mat4 CCamera::getProjection()
 	}
 	else
 	{
-		return mat4::perspective(70.f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.05f, 1000.f);
+		return mat4::perspective(70.f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.05f, 5000.f);
 	}
 }
 

@@ -1,11 +1,12 @@
 #include <Nephilim/World/World.h>
 #include <Nephilim/World/CTransform.h>
-
 #include <Nephilim/World/CMesh.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CCamera.h>
 #include <Nephilim/World/CSkinnedMesh.h>
+
+#include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -35,6 +36,37 @@ bool World::loadLevel(Level* level)
 	return false;
 }
 
+/// This is the most basic prefab instancing class
+/// Returns a pointer to the allocated object if applicable
+GameObject* World::spawnPrefab(const Prefab& prefab)
+{
+	GameObject* GeneratedObject = nullptr;
+
+	String ClassName = prefab.getRootClassName();
+
+	// We're spawning an actor directly
+	if (ClassName == "Actor")
+	{
+		Actor* actor = spawnActor();
+
+		for (auto it = prefab.objectData.cbegin(); it != prefab.objectData.cend(); ++it)
+		{
+			if (it->tag == "Sprite")
+			{
+				SpriteComponent* spriteComponent = actor->createComponent<SpriteComponent>();
+				spriteComponent->s.setSize(it->get("width").toFloat(), it->get("height").toFloat());
+				spriteComponent->s.tex = it->get("asset");
+			}
+		}
+
+		GeneratedObject = actor;	
+
+		Log("Actor spawned from a prefab");
+	}
+
+	return GeneratedObject;
+}
+
 /// Get one of the currently loaded levels
 Level* World::getLevel(std::size_t index)
 {
@@ -44,7 +76,10 @@ Level* World::getLevel(std::size_t index)
 /// Spawns an actor
 Actor* World::spawnActor()
 {
-	return new Actor();
+	Actor* actor = new Actor();
+	actor->mWorld = this;
+	actors.push_back(actor);
+	return actor;
 }
 
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering

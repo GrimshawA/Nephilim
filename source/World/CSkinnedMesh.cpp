@@ -33,13 +33,13 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 	baseTransform = mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
 
 	// Time to load the champion
-	SKNLoader::Load(champion, "lolmodels\\model.skn");
+	SKNLoader::Load(champion, "VAYNE\\model.skn");
 	champion.m_useNormals = false;
 
-	championTexture.loadFromFile("lolmodels\\texture.png");
+	championTexture.loadFromFile("VAYNE\\texture.png");
 
-	skeletonskl.Load("lolmodels\\skeleton.skl");
-	animations.Load("lolmodels\\fizz_run.anm");
+	skeletonskl.Load("VAYNE\\skeleton.skl");
+	animations.Load("VAYNE\\Vayne_run.anm");
 
 	// remap bone indices
 	for(int i = 0; i < champion.boneIDs.size(); ++i)

@@ -3,7 +3,9 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
+#include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
+#include <Nephilim/World/Prefab.h>
 #include <Nephilim/World/EntityManager.h>
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/System.h>
@@ -73,6 +75,12 @@ public:
 	/// Spawns an actor
 	Actor* spawnActor();
 
+	/// This function will produce an object in the world from a prefab definition
+	/// Returns a pointer to the allocated object if applicable, its up to the user to determine its actual type and manage that
+	/// This function is not recommended use. One should refer to the prefab by name, and the World will look it up by itself.
+	/// This is only for convenience, for quickly spawning some objects from a quickly hacked together definition.
+	GameObject* spawnPrefab(const Prefab& prefab);
+
 	/// Spawns an actor with type T (must be a subclass of Actor)
 	template<typename T>
 	T* spawnActor();
@@ -114,62 +122,8 @@ public:
 
 };
 
-template<typename T>
-ComponentManager* World::getComponentManager()
-{
-	if (componentManagers.find(std::type_index(typeid(T))) == componentManagers.end())
-	{
-		componentManagers[std::type_index(typeid(T))] = new ComponentArray<T>();
-	}
-
-	return componentManagers[std::type_index(typeid(T))];
-}
-
-// -- Copy a component to its manager and bind to entity e
-template<typename T>
-void World::createComponent(T c, TEntity e)
-{
-	ComponentManager* componentManager = getComponentManager<T>();
-
-	T* component = static_cast<T*>(componentManager->createComponentForEntity(e));
-	*component = c;
-}
-
-/// Instances a new RenderSystem with type T and initializes it
-/// T must be a derived type of RenderSystem
-template<typename T>
-T* World::createRenderSystem()
-{
-	RenderSystem* renderSystem = new T();
-	registerSystem(renderSystem);
-	renderSystem->mRenderer = this->graphicsDevice;
-	renderSystem->mContentManager = this->contentManager;
-	return static_cast<T*>(renderSystem);
-}
-
-template<typename T>
-void World::createDefaultComponentManager()
-{
-	if (componentManagers.find(std::type_index(typeid(T))) != componentManagers.end())
-	{
-		delete componentManagers[std::type_index(typeid(T))];
-		componentManagers.erase(componentManagers.find(std::type_index(typeid(T))));
-	}
-	
-	componentManagers[std::type_index(typeid(T))] = new ComponentArray<T>();
-}
-
-/// Spawns an actor with type T (must be a subclass of Actor)
-template<typename T>
-T* World::spawnActor()
-{
-	T* myObj = new T(this);
-	myObj->mWorld = this;
-
-	actors.push_back(myObj);
-
-	return myObj;
-}
+/// The template definitions are stored elsewhere
+#include <Nephilim/World/World.inl>
 
 NEPHILIM_NS_END
 #endif // NephilimScene_h__

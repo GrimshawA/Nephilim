@@ -40,7 +40,7 @@ void UIComponentMenuBar::addMenu(const String& menuTitle)
 	fileMenuContainer->hide();
 	fileMenuContainer->setRect(5.f, 32.f, 150.f, 300.f);
 	fileMenuContainer->addComponent(new UIComponentDebugColor(Color(31,31,31)));
-	fileMenuContainer->addComponent(new UIComponentMenu);
+	fileMenuContainer->addComponent(new UIComponentMenuCaster);
 	fileMenu->attach(fileMenuContainer);
 
 	// Add one sample option..
