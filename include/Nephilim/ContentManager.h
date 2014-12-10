@@ -2,6 +2,8 @@
 #define NephilimContentBank_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Game/Resource.h>
+
 #include <Nephilim/VirtualFS.h>
 #include "StringID.h"
 #include "ContentList.h"
@@ -9,7 +11,7 @@
 #include <Nephilim/Graphics/GLTexture.h>
 #include "Font.h"
 #include "File.h"
-#include <Nephilim/Model/Mesh.h>
+
 #include <Nephilim/Plugins/Plugin.h>
 
 #include <map>
@@ -17,20 +19,14 @@
 
 NEPHILIM_NS_BEGIN
 
+class StaticMesh;
+
 class ContentGroupFonts
 {
 public:
 	bool load(const String& filename);
 
 	std::map<String, Font*> mFonts;
-};
-
-class MeshResource
-{
-public:
-
-	/// The list of meshes in this resource
-	std::vector<Mesh> meshes;
 };
 
 /// A content group holds an indefinite number of resources of different types
@@ -41,9 +37,8 @@ public:
 	ContentGroupFonts mFonts;
 
 	std::map<String, Texture*> mTextures;
-	std::map<String, MeshResource*> mMeshes;
-};
 
+};
 
 /// Content manager manages all content groups created
 class ContentManager
@@ -57,8 +52,11 @@ public:
 
 	ContentGroup* createGroup(const String& name);
 
-	/// Order the content manager to create a new mesh with a given resource id
-	MeshResource* createMesh(const String& resource_id);
+	/// Find a mesh in our storage, so it can be used somewhere
+	Resource<StaticMesh> findMesh(const String& name);
+
+	std::vector<StaticMesh*> staticMeshContainer;
+	std::vector<String>      staticMeshNames;
 
 	void removeGroup(const String& name);
 

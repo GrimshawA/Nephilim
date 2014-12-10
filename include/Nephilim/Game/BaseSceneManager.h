@@ -5,7 +5,7 @@
 #include <Nephilim/World/World.h>
 
 NEPHILIM_NS_BEGIN
-using namespace rzr;
+
 /**
 	\class BaseSceneManager
 	\brief Plugs into the BaseGame to support multiple scenes in the same game

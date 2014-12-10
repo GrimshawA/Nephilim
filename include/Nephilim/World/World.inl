@@ -11,7 +11,7 @@ ComponentManager* World::getComponentManager()
 
 // -- Copy a component to its manager and bind to entity e
 template<typename T>
-void World::createComponent(T c, TEntity e)
+void World::createComponent(T c, Entity e)
 {
 	ComponentManager* componentManager = getComponentManager<T>();
 

@@ -1,5 +1,5 @@
-#ifndef Geometry_h__
-#define Geometry_h__
+#ifndef NephilimGeometry_h__
+#define NephilimGeometry_h__
 
 #include <Nephilim/Platform.h>
 #include "Vectors.h"
@@ -11,6 +11,7 @@
 #include "Strings.h"
 
 #include <vector>
+#include <stdint.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -100,10 +101,24 @@ public:
 	bool m_useTexCoords;
 };
 
+class NEPHILIM_API GeomObject
+{
+public:
+	// A face is made of three indices into an array of vertices
+	struct GeomFace
+	{
+		uint16_t v1;
+		uint16_t v2;
+		uint16_t v3;
+	};
+
+	std::vector<GeomFace> faces;
+};
+
 
 /// Calculates the normal of a triangle - TODO
 Vec3f calculateNormal(Vec3f p1, Vec3f p2, Vec3f p3);
 
 NEPHILIM_NS_END
 
-#endif // Geometry_h__
+#endif // NephilimGeometry_h__

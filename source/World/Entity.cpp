@@ -1,21 +1,15 @@
 #include <Nephilim/World/Entity.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
-Entity::Entity()
-: mScene(nullptr)
+bool operator==(Entity& e1, Entity& e2)
 {
-
+	return e1.id == e2.id;
 }
 
-Entity::Entity(TEntity e, World& s)
-: mScene(&s)
-, id(e)
+bool operator<(const Entity e1, const Entity e2)
 {
-
+	return e1.id < e2.id;
 }
 
-};
 NEPHILIM_NS_END

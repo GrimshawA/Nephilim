@@ -24,9 +24,6 @@ String getFile(const String& filename)
 	return s;
 }
 
-namespace rzr
-{
-
 PostEffectBloom::PostEffectBloom()
 {
 	/*mBrightnessShader.loadShader(Shader::VertexUnit, getFile("shaders/Fullpass.vert"));
@@ -101,5 +98,4 @@ void PostEffectBloom::brightnessPass(GraphicsDevice* mRenderer)
 	//mRenderer->draw(r);
 }
 
-}
 NEPHILIM_NS_END

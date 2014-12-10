@@ -2,12 +2,13 @@
 #define NephilimMesh_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Geometry.h>
 
 NEPHILIM_NS_BEGIN
 
 /**
-	\class Mesh
-	\brief Contains geometry
+	\class StaticMesh
+	\brief Holds geometry
 
 	This class is only to store geometry of an object, which
 	includes vertex positions, colors, texture coordinate sets
@@ -22,9 +23,17 @@ NEPHILIM_NS_BEGIN
 
 	Meshes can be indexed or not (having arrays of indices to identify its faces)
 */
-class NEPHILIM_API Mesh
+class NEPHILIM_API StaticMesh
 {
 public:
+
+	/// Load the static mesh data from a file directly
+	bool load(const String& filename);
+
+	GeometryData geom;
+
+	void test();
+	void test2();
 
 };
 

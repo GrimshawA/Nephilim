@@ -53,18 +53,18 @@ public:
 	virtual std::size_t getInstanceCount();
 
 	/// Get a component from the entity
-	virtual Component* getComponentFromEntity(TEntity e);
+	virtual Component* getComponentFromEntity(Entity e);
 
 	/// Creates a new component mapped to an entity
-	virtual Component* createComponentForEntity(TEntity e);
+	virtual Component* createComponentForEntity(Entity e);
 
-	virtual void removeComponentsFromEntity(TEntity e){}
+	virtual void removeComponentsFromEntity(Entity e){}
 
 	/// Get the 'index' component in this manager
 	virtual Component* getInstance(std::size_t index);
 
 	/// Get the entity to which the instance belongs to
-	virtual TEntity getInstanceEntity(std::size_t index);
+	virtual Entity getInstanceEntity(std::size_t index);
 
 	/// All managers must ensure that all their allocations are freed upon destruction
 	virtual ~ComponentManager();

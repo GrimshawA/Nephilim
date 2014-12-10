@@ -17,8 +17,6 @@ class SkeletonSKL;
 
 NEPHILIM_NS_BEGIN
 
-namespace rzr
-{
 /**
 	\class 
 	\brief 
@@ -57,6 +55,5 @@ public:
 	Shader rigShader;
 };
 
-};
 NEPHILIM_NS_END
 #endif // NephilimRazerComponentSkinnedModel_h__

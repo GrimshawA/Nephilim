@@ -2,13 +2,11 @@
 #define NephilimRazerEntityManager_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/World/Entity.h>
 
 #include <vector>
 
 NEPHILIM_NS_BEGIN
-
-/// Define the entity type. All entities are uniquely identified by an unique value only
-typedef Int32 TEntity;
 
 /**
 	\class EntityManager
@@ -23,14 +21,19 @@ typedef Int32 TEntity;
 class NEPHILIM_API EntityManager
 {
 public:
-	std::vector<TEntity> entities;
+	std::vector<Entity> entities;
 
-	TEntity nextAssignment = 1;
+	Entity nextAssignment;
 
 public:
 
+	EntityManager()
+	{
+		nextAssignment.id = 1;
+	}
+
 	/// Destroy this entity
-	void destroy(TEntity entity);
+	void destroy(Entity entity);
 };
 
 NEPHILIM_NS_END

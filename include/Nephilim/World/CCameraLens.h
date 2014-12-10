@@ -13,10 +13,10 @@ NEPHILIM_NS_BEGIN
 	\class CCamera
 	\brief 
 */
-class NEPHILIM_API CCamera : public Component
+class NEPHILIM_API CCameraLens : public Component
 {
 public:
-	CCamera();
+	CCameraLens();
 
 	void setSize(float width, float height);
 

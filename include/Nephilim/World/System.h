@@ -1,5 +1,5 @@
-#ifndef NephilimRazerSystem_h__
-#define NephilimRazerSystem_h__
+#ifndef NephilimWorldSystem_h__
+#define NephilimWorldSystem_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Time.h>
@@ -13,21 +13,28 @@ NEPHILIM_NS_BEGIN
 
 class World;
 
-namespace rzr
-{
-class Entity;
-
 /**
 	\class System
-	\brief Game system manager
+	\brief Traverse the world data to perform many functions
+
+	Systems are serial processors of the world data. Each system
+	shall be designed to have a very specific responsability, 
+	and it will then periodically iterate the world data and do an operation on it.
+
+	Usual systems are:
+	- Animation system ( updates all animations )
+	- Physics system ( simulates all physics )
+	- AI system ( simulates all intelligent based movement )
+	- Input system ( send out input orders to components )
+	- Render system ( produce an image from the world data )
+	- Audio system ( keep the audio playing )
+	- Script system ( call methods on scripts and fetch data from them )
 */
 class NEPHILIM_API System
 {
 public:
 
 	virtual ~System();
-
-	virtual void onComponentAdded(std::type_index type_index, void* cdata, Entity* entity){}
 
 	virtual void update(const Time& deltaTime){}
 
@@ -36,6 +43,5 @@ public:
 	World* mScene;
 };
 
-};
 NEPHILIM_NS_END
-#endif // NephilimRazerSystem_h__
+#endif // NephilimWorldSystem_h__

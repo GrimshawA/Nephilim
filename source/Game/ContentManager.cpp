@@ -27,10 +27,12 @@ ContentManager::~ContentManager()
 	}
 }
 
-/// Order the content manager to create a new mesh with a given resource id
-MeshResource* ContentManager::createMesh(const String& resource_id)
+/// Find a mesh in our storage, so it can be used somewhere
+Resource<StaticMesh> ContentManager::findMesh(const String& name)
 {
-	return new MeshResource();
+	//auto i = std::find(staticMeshContainer.begin(), staticMeshContainer.end(), name);
+
+	return MakeNullResource<StaticMesh>();
 }
 
 ContentGroup* ContentManager::createGroup(const String& name)

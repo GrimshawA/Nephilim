@@ -27,5 +27,13 @@ public:
 	T* ptr = nullptr;
 };
 
+template<typename RT>
+static Resource<RT> MakeNullResource()
+{
+	Resource<RT> res;
+	res.ptr = nullptr;
+	return res;
+}
+
 NEPHILIM_NS_END
 #endif //NephilimResource_h__

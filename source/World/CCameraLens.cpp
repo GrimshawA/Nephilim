@@ -1,8 +1,8 @@
-#include <Nephilim/World/CCamera.h>
+#include <Nephilim/World/CCameraLens.h>
 
 NEPHILIM_NS_BEGIN
 
-CCamera::CCamera()
+CCameraLens::CCameraLens()
 : up(0.f, 1.f, 0.f)
 , eye(0.f, 20.f, 20.f)
 , position(0.f, 0.f, 0.f)
@@ -18,14 +18,14 @@ CCamera::CCamera()
 	
 }
 
-void CCamera::setSize(float width, float height)
+void CCameraLens::setSize(float width, float height)
 {
 	size.x = width;
 	size.y = height;
 }
 
 /// Returns a ready projection matrix for these configs
-mat4 CCamera::getProjection()
+mat4 CCameraLens::getProjection()
 {
 	if (mOrtho)
 	{
@@ -41,7 +41,7 @@ mat4 CCamera::getProjection()
 /// (This function may move. An helper function to save boilerplate code)
 /// Outputs a ray with origin at the NEAR plane, at mouse coordinate, and direction towards where camera is looking
 /// mouse input must be already normalized (-1 to 1) on both dimensions
-Ray CCamera::UnProjectPoint(const mat4& projection, const mat4& view, Vector2D mouse)
+Ray CCameraLens::UnProjectPoint(const mat4& projection, const mat4& view, Vector2D mouse)
 {
 	vec4 camera_near(mouse.x, mouse.y, -1.f, 1.f);
 	vec4 camera_far(mouse.x, mouse.y, 0.f, 1.f);

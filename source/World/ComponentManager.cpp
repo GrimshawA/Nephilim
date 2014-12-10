@@ -7,13 +7,13 @@ ComponentManager::~ComponentManager()
 }
 
 /// Get a component from the entity
-Component* ComponentManager::getComponentFromEntity(TEntity e)
+Component* ComponentManager::getComponentFromEntity(Entity e)
 {
 	return nullptr;
 }
 
 /// Creates a new component mapped to an entity
-Component* ComponentManager::createComponentForEntity(TEntity e)
+Component* ComponentManager::createComponentForEntity(Entity e)
 {
 	return nullptr;
 }
@@ -25,9 +25,11 @@ Component* ComponentManager::getInstance(std::size_t index)
 }
 
 /// Get the entity to which the instance belongs to
-TEntity ComponentManager::getInstanceEntity(std::size_t index)
+Entity ComponentManager::getInstanceEntity(std::size_t index)
 {
-	return 0;
+	Entity e;
+	e.id = 0;
+	return e;
 }
 
 /// Get the number of components being used (not the amount allocated by the pool)

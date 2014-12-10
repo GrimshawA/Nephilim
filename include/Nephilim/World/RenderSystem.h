@@ -17,13 +17,13 @@ class ContentManager;
 	it is a RenderSystem that goes through the scene, 2D or 3D,
 	and renders it into a final image.
 
-	Custom renderers can also be built under plugins easily.	
+	Custom renderers can also be built under plugins easily.
 */
-class NEPHILIM_API RenderSystem : public rzr::System
+class NEPHILIM_API RenderSystem : public System
 {
 public:
 	bool mWireframe = false;     ///< Render in wireframe mode?
-	bool mAllowLighting = true;  ///< Render lights?
+	bool mAllowLighting = true;  ///< Render lights
 
 	GraphicsDevice*        mRenderer = nullptr;
 	ContentManager*  mContentManager = nullptr;

@@ -5,6 +5,7 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
+#include <Nephilim/World/Entity.h>
 #include <Nephilim/World/Prefab.h>
 #include <Nephilim/World/EntityManager.h>
 #include <Nephilim/World/ComponentManager.h>
@@ -17,7 +18,6 @@
 #include <map>
 
 NEPHILIM_NS_BEGIN
-using namespace rzr;
 
 class GraphicsDevice;
 class ContentManager;
@@ -109,15 +109,15 @@ public:
 	ComponentManager* getComponentManager();
 
 	/// Create and return a new entity
-	TEntity createEntity();
+	Entity createEntity();
 
 	/// Removes the entity if it is in the scene
-	void removeEntity(Int32 id);
+	void removeEntity(Entity entity);
 
-	TEntity getEntityByIndex(std::size_t index);
+	Entity getEntityByIndex(std::size_t index);
 
 	template<typename T>
-	void createComponent(T c, TEntity e);
+	void createComponent(T c, Entity e);
 
 
 };

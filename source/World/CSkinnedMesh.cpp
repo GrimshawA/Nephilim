@@ -8,9 +8,6 @@
 #include "ANMLoader.h"
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
-
 
 /*
 void ComponentSkinnedModel::getBoneTransforms(mat4* transforms, AnimationANM& animation, SkeletonSKL& skeleton)
@@ -237,5 +234,4 @@ void ComponentSkinnedModel::render(GraphicsDevice* mRenderer)
 	mRenderer->setDefaultShader();
 }
 
-};
 NEPHILIM_NS_END

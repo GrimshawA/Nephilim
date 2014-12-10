@@ -1,9 +1,9 @@
 #include <Nephilim/World/World.h>
 #include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CMesh.h>
+#include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CSprite.h>
-#include <Nephilim/World/CCamera.h>
+#include <Nephilim/World/CCameraLens.h>
 #include <Nephilim/World/CSkinnedMesh.h>
 
 #include <Nephilim/NxMath.h>
@@ -14,10 +14,10 @@ World::World()
 {
 	// Init some component managers
 	createDefaultComponentManager<CTransform>();
-	createDefaultComponentManager<CMesh>();
+	createDefaultComponentManager<CStaticMesh>();
 	createDefaultComponentManager<CSprite>();
-	createDefaultComponentManager<CCamera>();
-	createDefaultComponentManager<ComponentSkinnedModel>();
+	createDefaultComponentManager<CCameraLens>();
+//	createDefaultComponentManager<ComponentSkinnedModel>();
 
 	Level* defaultLevel = new Level();
 	levels.push_back(defaultLevel);
@@ -102,27 +102,28 @@ void World::registerSystem(System* system)
 }
 
 /// Create and return a new entity
-TEntity World::createEntity()
+Entity World::createEntity()
 {
 	// Create new entity
-	TEntity entity = 0;
-	entity = entityManager.nextAssignment++;
+	Entity entity;
+	entity.id = 0;
+	entity.id = entityManager.nextAssignment.id++;
 	entityManager.entities.push_back(entity);
 	return entity;
 }
 
 /// Removes the entity if it is in the scene
-void World::removeEntity(Int32 id)
+void World::removeEntity(Entity entity)
 {
-	entityManager.destroy(id);
+	entityManager.destroy(entity);
 
 	for (auto it = componentManagers.begin(); it != componentManagers.end(); ++it)
 	{
-		it->second->removeComponentsFromEntity(id);
+		it->second->removeComponentsFromEntity(entity);
 	}
 }
 
-TEntity World::getEntityByIndex(std::size_t index)
+Entity World::getEntityByIndex(std::size_t index)
 {
 	return entityManager.entities[index];
 }

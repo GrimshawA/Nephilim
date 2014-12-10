@@ -10,9 +10,6 @@
 NEPHILIM_NS_BEGIN
 class GraphicsDevice;
 
-namespace rzr
-{
-
 class NEPHILIM_API PostEffectBloom : public PostEffect
 {
 public:
@@ -31,6 +28,6 @@ public:
 	Shader mBrightnessShader;
 };
 
-}
+
 NEPHILIM_NS_END
 #endif // NephilimRazerPostEffectBloom_h__

@@ -1,51 +1,34 @@
-#ifndef NephilimRazerEntity_h__
-#define NephilimRazerEntity_h__
+#ifndef NephilimWorldEntity_h__
+#define NephilimWorldEntity_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/World/Component.h>
-#include <Nephilim/World/World.h>
-
-#include <vector>
+#include <stdint.h>
 
 NEPHILIM_NS_BEGIN
 
-namespace rzr {
-
 /**
 	\class Entity
-	\brief Utility class to manipulate entities in a scene
+	\brief A raw entity ID from the ECS
 
-	The scene object works independently without a Entity class.
-	TEntity is the base type of entities, and that's just an integer.
+	An entity is _not_ an object. It is just an integer ID
+	to glue components together within the component managers.
 
-	This class is a utility wrapper only for doing operations with entities quicker
+	As such, Entity is not meant to be stored in random code
+	as if it was an object. It has no methods and is just a POD.
+
+	It is only a class by personal preference. It has no difference from
+	a raw integer instead. It just feels safer to use it instead of a typedef only.
 */
-class NEPHILIM_API Entity
+class Entity
 {
 public:
-	Entity();
-
-	Entity(TEntity e, World& s);
-
-
-	/// Add a new component to this entity
-	template<class CType>
-	void addComponent();
-
-	/// Get a component 
-	template<class CType>
-	CType& getComponent() const;
-
-	template<class CType>
-	bool hasComponent() const;
-
-	TEntity id;
-
-	World* mScene;
+	uint32_t id;
 };
 
-#include <Nephilim/World/Entity.inl>
+// Utilities
+bool operator==(Entity& e1, Entity& e2);
 
-};
+bool operator<(const Entity e1, const Entity e2);
+
 NEPHILIM_NS_END
-#endif // NephilimRazerEntity_h__
+#endif // NephilimWorldEntity_h__

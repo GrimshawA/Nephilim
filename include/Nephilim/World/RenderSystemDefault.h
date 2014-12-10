@@ -15,8 +15,6 @@
 #include <Nephilim/World/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 
 class Entity;
 
@@ -81,6 +79,5 @@ public:
 	std::vector<PostEffect*> mPostEffects;
 };
 
-};
 NEPHILIM_NS_END
 #endif // NephilimRazerSystemRenderer_h__

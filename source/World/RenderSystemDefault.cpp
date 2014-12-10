@@ -8,12 +8,12 @@
 #include <Nephilim/World/Entity.inl>
 #include <Nephilim/World/ComponentTilemap2D.h>
 #include <Nephilim/World/CHeightmapTerrain.h>
-#include <Nephilim/World/CCamera.h>
+#include <Nephilim/World/CCameraLens.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CEmitter.h>
 #include <Nephilim/World/ComponentModel.h>
-#include <Nephilim/World/CMesh.h>
+#include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CInput.h>
 #include <Nephilim/World/CSkinnedMesh.h>
 #include <Nephilim/World/ComponentWater.h>
@@ -29,8 +29,6 @@
 #include <Nephilim/World/PostEffectBloom.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
 	
 RenderSystemDefault::RenderSystemDefault()
 : RenderSystem()
@@ -187,14 +185,12 @@ void RenderSystemDefault::renderScene()
 			mRenderer->setDepthTestEnabled(true);
 			mRenderer->setModelMatrix(level->landscapes[j]->rootTransform.getMatrix());
 			mRenderer->draw(level->landscapes[j]->terrain.geometry);
-		
-
-			
 		}
 	}
 
 
-	ComponentManager* meshComponentManager = mScene->getComponentManager<CMesh>();
+	ComponentManager* meshComponentManager = mScene->getComponentManager<CStaticMesh>();
+	ComponentManager* transformComponentManager = mScene->getComponentManager<CTransform>();
 	//ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
 	
 	//Log("Num meshes: %d", meshComponentManager->getInstanceCount());
@@ -202,12 +198,36 @@ void RenderSystemDefault::renderScene()
 	// -- We have N meshes, we need to render all of them, but take into account the lights in the scene
 	for (std::size_t i = 0; i < meshComponentManager->getInstanceCount(); ++i)
 	{
+		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(meshComponentManager->getInstanceEntity(i));
+		CStaticMesh* mesh = (CStaticMesh*)meshComponentManager->getInstance(i);
 
+		if (mesh->materials.size() > 0)
+		{
+			for (std::size_t i = 0; i < mesh->materials.size(); ++i)
+			{
+				Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
+				if (diff_texture)
+					diff_texture->bind();
+				else
+				{
+					mContentManager->load(mesh->materials[i].diffuse);
+					Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
+					diff_texture->setRepeated(true);
+				}
+			}			
+
+			mRenderer->setModelMatrix(transform->getMatrix());
+			mRenderer->draw(mesh->staticMesh.ptr->geom);
+		}
+		else
+		{
+			mRenderer->setDefaultTexture();
+			mRenderer->setModelMatrix(transform->getMatrix());
+			mRenderer->draw(mesh->staticMesh.ptr->geom);
+		}		
 	}
 
 	renderAllSprites();
-
-
 
 	// Don't have actors caching their components by type, need to go get them directly in the actor
 	for (std::size_t i = 0; i < mScene->actors.size(); ++i)
@@ -222,207 +242,10 @@ void RenderSystemDefault::renderScene()
 			}
 		}
 	}
-
-/*	mat4 viewMatrix;
-	mat4 projectionMatrix;
-	vec3 cameraPosition;
-	Quaternion cameraRotation;
-	vec3 cameraForward;
-
-	// Find a camera
-	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
-	{
-		Entity ent = mScene->getEntityByIndex(i);
-		if(ent.hasComponent<ComponentCamera>())
-		{
-			ComponentCamera& camera = ent.getComponent<ComponentCamera>();
-			ComponentTransform& transform = ent.getComponent<ComponentTransform>();
-
-			// Let's compute this camera transform
-			camera.cameraTransform = mat4::identity;
-			camera.cameraTransform = transform.rotation.toMatrix() * mat4::translate(-transform.position.x, -transform.position.y, -transform.position.z);
-
-			if(camera.mOrtho)
-			{
-				mRenderer->setProjectionMatrix(mat4::ortho(-camera.size.x / 2.f, camera.size.x / 2.f, -camera.size.y / 2.f, camera.size.y / 2.f, camera.zNear, camera.zFar));
-			}
-			else
-			{
-				mRenderer->setProjectionMatrix(mat4::perspective(camera.fieldOfView, 1700.f / 713.f, camera.zNear, camera.zFar));
-			}
-			mRenderer->setViewMatrix(camera.cameraTransform);
-			mRenderer->clearDepthBuffer();
-			mRenderer->setDepthTestEnabled(false);
-			mRenderer->clearColorBuffer();
-			mRenderer->setBlendingEnabled(true);
-			mRenderer->setBlendMode(Render::Blend::Alpha);
-
-			//Log("FOUND CAMERA");
-
-			viewMatrix = camera.cameraTransform;
-			projectionMatrix = mRenderer->getProjectionMatrix();
-			cameraPosition = transform.position;
-			cameraRotation = transform.rotation;
-			cameraForward  = transform.getForwardVector();
-		}
-	}
-
-	// Render each entity
-	for(std::size_t i = 0; i < mScene->mEntities.size(); ++i)
-	{
-		Entity ent = mScene->getEntityByIndex(i);
-		if(ent.hasComponent<ComponentTilemap2D>())
-		{
-			renderTilemap(ent);
-		}
-		if(ent.hasComponent<ComponentSkinnedModel>())
-		{
-			ComponentSkinnedModel& skinnedModel = ent.getComponent<ComponentSkinnedModel>();
-			ComponentTransform& transform = ent.getComponent<ComponentTransform>();
-			mRenderer->setModelMatrix(transform.getMatrix() * skinnedModel.baseTransform);
-
-			skinnedModel.render(mRenderer);
-		}
-		if(ent.hasComponent<ComponentVehicle>())
-		{
-			ComponentVehicle& v = ent.getComponent<ComponentVehicle>();
-
-			// Draw the debug vehicle
-
-			mRenderer->setDefaultTexture();
-
-			btTransform trans;
-			static_cast<btRigidBody*>(v.vehicle->m_carChassis)->getMotionState()->getWorldTransform(trans);
-			btScalar mt[16];
-			trans.getOpenGLMatrix(mt);
-			mRenderer->setModelMatrix(mat4(mt) * v.testModelMatrix);
-			//mRenderer->draw(v.vehicleChassis);
-
-			// draw our test model
-			v.testTexture.bind();
-			mRenderer->draw(v.testModel);
-			*/
-			// Draw wheels
-			/*v.vehicle->vehicle->getWheelInfo(0).m_worldTransform.getOpenGLMatrix(mt);
-			mRenderer->setModelMatrix(mat4(mt));
-			mRenderer->draw(v.vehicleWheel);
-			v.vehicle->vehicle->getWheelInfo(1).m_worldTransform.getOpenGLMatrix(mt);
-			mRenderer->setModelMatrix(mat4(mt));
-			mRenderer->draw(v.vehicleWheel);
-			v.vehicle->vehicle->getWheelInfo(2).m_worldTransform.getOpenGLMatrix(mt);
-			mRenderer->setModelMatrix(mat4(mt));
-			mRenderer->draw(v.vehicleWheel);
-			v.vehicle->vehicle->getWheelInfo(3).m_worldTransform.getOpenGLMatrix(mt);
-			mRenderer->setModelMatrix(mat4(mt));
-			mRenderer->draw(v.vehicleWheel);*/
-		/*}
-		if(ent.hasComponent<ComponentTerrain>())
-		{
-			ent.getComponent<ComponentTerrain>().surfaceTex.bind();
-			mRenderer->setDepthTestEnabled(true);
-			mRenderer->setModelMatrix(ent.getComponent<ComponentTransform>().getMatrix());
-			mRenderer->draw(ent.getComponent<ComponentTerrain>().geometry);
-		}
-		if(ent.hasComponent<ComponentModel>())
-		{
-			renderModel(ent);
-		}
-		if(ent.hasComponent<ComponentMesh>()) 
-		{
-			mRenderer->setDepthTestEnabled(true);
-			renderMesh(ent);
-		}
-		if(ent.hasComponent<ComponentWater>()) 
-		{
-			mRenderer->setBlendingEnabled(false);
-			//mRenderer->clearAllBuffers();
-			mRenderer->setDefaultTexture();
-
-			ComponentWater& waterBody = ent.getComponent<ComponentWater>();
-			waterBody.viewMatrix = viewMatrix;
-			waterBody.projMatrix = projectionMatrix;
-			waterBody.cameraPosition = cameraPosition;
-			vec3 eulerAngles = cameraRotation.eulerAngles();
-
-			cameraRotation.normalize();
-
-			vec3 z_vector(0.f, 0.f, -1.f);
-			vec3 camera_vector = (cameraRotation.toMatrix() * vec4(z_vector, 0.f)).xyz();
-			cameraForward.normalize();
-
-			float x_angle = atan2(cameraForward.z, cameraForward.x);
-			float y_angle = atan2(-cameraForward.z, cameraForward.y);
-			//Log("x_angle %f", x_angle);
-
-			//float camera_angle_x = atan2()
-
-			waterBody.mCameraPhi = math::radianToDegree( x_angle);
-			waterBody.mCameraTheta = math::radianToDegree( y_angle);
-
-
-			if(!waterBody.ready)
-				waterBody.init();
-
-			waterBody.render2(mRenderer);
-
-			mRenderer->setDefaultShader();
-			mRenderer->setViewMatrix(mRenderer->getViewMatrix());
-			mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
-		}
-		if(ent.hasComponent<ComponentSprite>()) 
-		{
-			mRenderer->setDepthTestEnabled(false);
-
-			ComponentTransform& transform = ent.getComponent<ComponentTransform>();
-			ComponentSprite& sprite = ent.getComponent<ComponentSprite>();
-
-
-			RectangleShape spr;
-			spr.setPosition(transform.position.x, transform.position.y);
-			spr.setSize(sprite.width, sprite.height);
-			spr.setOrigin(spr.getSize() / 2.f);
-			spr.setScale(sprite.scale.x, -sprite.scale.y);
-			spr.setColor(sprite.color);
-			spr.setRotation(math::radianToDegree(sprite.rot));
-			if(!sprite.tex.empty())
-			{
-				//Log("Rendering ship sprite: %s", sprite.tex.c_str());
-
-				spr.setTexture(mContentManager->getTexture(sprite.tex));
-				if(sprite.tex_rect_size.x > 0 && sprite.tex_rect_size.y > 0)
-				{
-					//Log("Texture coords: %f, %f, %f, %f", sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
-					spr.setTextureRect(sprite.tex_rect_pos.x, sprite.tex_rect_pos.y, sprite.tex_rect_size.x, sprite.tex_rect_size.y);
-				}
-				//spr.invertTextureCoordinates();
-			}
-			mRenderer->draw(spr);
-			//Log("RENDERING");
-			mRenderer->setDefaultTexture();
-			mRenderer->setModelMatrix(mat4::identity);
-		}
-		if(ent.hasComponent<ComponentParticleEmitter>()) 
-		{
-			mRenderer->setDepthTestEnabled(false);
-			ComponentParticleEmitter& emitter = ent.getComponent<ComponentParticleEmitter>();
-
-			mRenderer->setBlendingEnabled(true);
-			mRenderer->setBlendMode(Render::Blend::AddAlpha);
-			mRenderer->setDepthTestEnabled(false);
-			for(std::size_t j = 0; j < emitter.particles.size(); ++j)
-			{
-				mRenderer->draw(emitter.particles[j].mSprite);
-			}
-			mRenderer->setBlendMode(Render::Blend::Alpha);
-			//Log("rendering particles");
-		}
-	}*/
 }
 
 void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 {
-
-
 	mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
 
 	Texture* t = mContentManager->getTexture(sprite->tex);
@@ -690,5 +513,4 @@ void RenderSystemDefault::renderTilemap(Entity& entity)
 }
 
 
-};
 NEPHILIM_NS_END
