@@ -40,7 +40,7 @@ public:
 
 	virtual void render(){}
 
-	World* mScene;
+	World* mWorld;
 };
 
 NEPHILIM_NS_END

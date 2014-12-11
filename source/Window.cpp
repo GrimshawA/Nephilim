@@ -60,7 +60,7 @@ void Window::move(int x, int y)
 void Window::create(int screenWidth, int screenHeight)
 {
 #ifdef NEPHILIM_DESKTOP
-	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::None, sf::ContextSettings(32, 8 , 8));
+	myWindowImpl->create(sf::VideoMode(screenWidth,screenHeight), "Nephilim SDK", sf::Style::Default, sf::ContextSettings(32, 8 , 8));
 	m_fullscreen = false;
 	myWindowImpl->setVerticalSyncEnabled(true);
 	//myWindowImpl->setFramerateLimit(60);

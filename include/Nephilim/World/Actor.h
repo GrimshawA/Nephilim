@@ -4,7 +4,10 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/CInput.h>
+#include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CSprite.h>
+#include <Nephilim/World/CColliderBox.h>
 #include <Nephilim/Math/BBox.h>
 
 NEPHILIM_NS_BEGIN
@@ -15,13 +18,32 @@ public:
 	virtual void damn(){}
 };
 
+class AInputComponent : public ActorComponent, public CInput
+{
+public:
+
+};
+
 class SceneComponent : public ActorComponent
 {
 public:
+	mat4 absoluteTransform;
+
 	CTransform t;
 
 	std::vector<SceneComponent*> attachedComponents;
 
+public:
+	/// Update the subtree of transforms
+	void updateTransforms()
+	{
+		absoluteTransform = t.getMatrix();
+
+		for (std::size_t i = 0; i < attachedComponents.size(); ++i)
+		{
+			attachedComponents[i]->absoluteTransform = this->absoluteTransform * attachedComponents[i]->t.getMatrix();
+		}
+	}
 };
 
 class SpriteComponent : public SceneComponent
@@ -33,6 +55,21 @@ public:
 	}
 
 	CSprite s;
+};
+
+class SCStaticMesh : public SceneComponent, public CStaticMesh
+{
+public:
+	SCStaticMesh()
+	{
+
+	}
+};
+
+class SCColliderBox : public SceneComponent, public CColliderBox
+{
+public:
+	
 };
 
 class World;
@@ -68,11 +105,21 @@ public:
 	std::vector<ActorComponent*> components;
 
 public:
+
 	/// Get the world instance that created this actor
 	World* getWorld();
 
 	/// Get the bounding box of this actor and its contents
 	BBox getActorBounds();
+
+	/// Get the root component
+	SceneComponent* getRootComponent();
+
+	/// Set a new root component to this hierarchy
+	void setRootComponent(SceneComponent* component);
+
+	/// Update the local components to make sure they are positioned relative
+	void computeTransformHierarchy();
 
 	/// Get the transform of this Actor
 	/// This is the transform that converts anything in actor space to world space
@@ -101,10 +148,10 @@ T* Actor::createComponent()
 	T* component = new T();
 	components.push_back(component);
 
-	if (root == nullptr)
+	/*if (root == nullptr)
 	{
 		root = component;
-	}
+	}*/
 
 	return component;
 }

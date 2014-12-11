@@ -3,8 +3,10 @@
 #include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CSprite.h>
+#include <Nephilim/World/CInput.h>
 #include <Nephilim/World/CCameraLens.h>
 #include <Nephilim/World/CSkinnedMesh.h>
+#include <Nephilim/World/CColliderBox.h>
 
 #include <Nephilim/NxMath.h>
 
@@ -16,7 +18,9 @@ World::World()
 	createDefaultComponentManager<CTransform>();
 	createDefaultComponentManager<CStaticMesh>();
 	createDefaultComponentManager<CSprite>();
+	createDefaultComponentManager<CColliderBox>();
 	createDefaultComponentManager<CCameraLens>();
+	createDefaultComponentManager<CInput>();
 //	createDefaultComponentManager<ComponentSkinnedModel>();
 
 	Level* defaultLevel = new Level();
@@ -97,7 +101,7 @@ void World::updateTransformHierarchy()
 /// Registers a system to this scene
 void World::registerSystem(System* system)
 {
-	system->mScene = this;
+	system->mWorld = this;
 	mRegisteredSystems.push_back(system);
 }
 

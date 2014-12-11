@@ -13,7 +13,7 @@ bool StaticMesh::load(const String& filename)
 
 void StaticMesh::test()
 {
-	geom.addBox(40.f, 40.f, 40.f);
+	geom.addBox(20.f, 20.f, 20.f);
 	geom.setAllColors(Color::White);
 }
 

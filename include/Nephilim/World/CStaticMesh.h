@@ -51,6 +51,9 @@ public:
 
 	/// Set a new static mesh to this instance
 	void setStaticMesh(StaticMesh* mesh);
+
+	/// Add a new material to this mesh instance
+	void addMaterial(const String& material);
 };
 
 NEPHILIM_NS_END

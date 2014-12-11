@@ -28,6 +28,27 @@ BBox Actor::getActorBounds()
 	return box;
 }
 
+/// Get the root component
+SceneComponent* Actor::getRootComponent()
+{
+	return root;
+}
+
+/// Set a new root component to this hierarchy
+void Actor::setRootComponent(SceneComponent* component)
+{
+	root = component;
+}
+
+/// Update the local components to make sure they are positioned relative
+void Actor::computeTransformHierarchy()
+{
+	if (root)
+	{
+		root->updateTransforms();
+	}
+}
+
 /// Destroy this actor
 /// As soon as this function is called, the Actor object may not be used anymore
 void Actor::destroy()

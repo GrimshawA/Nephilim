@@ -22,6 +22,9 @@ NEPHILIM_NS_BEGIN
 	they simply represent a surface. 
 
 	Meshes can be indexed or not (having arrays of indices to identify its faces)
+
+	Supports multiple level of detail meshes. The renderer will pick a LOD level depending on the distance
+	from the camera to the instance.
 */
 class NEPHILIM_API StaticMesh
 {
@@ -34,7 +37,6 @@ public:
 
 	void test();
 	void test2();
-
 };
 
 NEPHILIM_NS_END

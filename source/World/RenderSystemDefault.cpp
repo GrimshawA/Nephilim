@@ -174,9 +174,9 @@ void RenderSystemDefault::renderScene()
 	mRenderer->clearDepthBuffer();
 
 	// Draw level terrains if applicable
-	for (std::size_t i = 0; i < mScene->levels.size(); ++i)
+	for (std::size_t i = 0; i < mWorld->levels.size(); ++i)
 	{
-		Level* level = mScene->getLevel(i);
+		Level* level = mWorld->getLevel(i);
 
 		for (std::size_t j = 0; j < level->landscapes.size(); ++j)
 		{
@@ -189,8 +189,8 @@ void RenderSystemDefault::renderScene()
 	}
 
 
-	ComponentManager* meshComponentManager = mScene->getComponentManager<CStaticMesh>();
-	ComponentManager* transformComponentManager = mScene->getComponentManager<CTransform>();
+	ComponentManager* meshComponentManager = mWorld->getComponentManager<CStaticMesh>();
+	ComponentManager* transformComponentManager = mWorld->getComponentManager<CTransform>();
 	//ComponentManager* pLightComponentManager = mScene->getComponentManager<CPointLight>();
 	
 	//Log("Num meshes: %d", meshComponentManager->getInstanceCount());
@@ -230,15 +230,47 @@ void RenderSystemDefault::renderScene()
 	renderAllSprites();
 
 	// Don't have actors caching their components by type, need to go get them directly in the actor
-	for (std::size_t i = 0; i < mScene->actors.size(); ++i)
+	for (std::size_t i = 0; i < mWorld->actors.size(); ++i)
 	{
-		Actor* actor = mScene->actors[i];
+		Actor* actor = mWorld->actors[i];
 		for (std::size_t j = 0; j < actor->components.size(); ++j)
 		{
 			SpriteComponent* spriteComponent = dynamic_cast<SpriteComponent*>(actor->components[j]);
 			if (spriteComponent)
 			{
 				renderSprite(&spriteComponent->t, &spriteComponent->s);
+			}
+
+			SCStaticMesh* staticMeshComponent = dynamic_cast<SCStaticMesh*>(actor->components[j]);
+			if (staticMeshComponent)
+			{
+				mat4 modelPose = staticMeshComponent->absoluteTransform;
+				CStaticMesh* mesh = staticMeshComponent;
+
+				if (mesh->materials.size() > 0)
+				{
+					for (std::size_t i = 0; i < mesh->materials.size(); ++i)
+					{
+						Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
+						if (diff_texture)
+							diff_texture->bind();
+						else
+						{
+							mContentManager->load(mesh->materials[i].diffuse);
+							Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
+							diff_texture->setRepeated(true);
+						}
+					}
+
+					mRenderer->setModelMatrix(modelPose);
+					mRenderer->draw(mesh->staticMesh.ptr->geom);
+				}
+				else
+				{
+					mRenderer->setDefaultTexture();
+					mRenderer->setModelMatrix(modelPose);
+					mRenderer->draw(mesh->staticMesh.ptr->geom);
+				}
 			}
 		}
 	}
@@ -340,8 +372,8 @@ void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 void RenderSystemDefault::renderAllSprites()
 {
 	// Let's dirty draw all sprites
-	ComponentManager* spriteComponentManager = mScene->getComponentManager<CSprite>();
-	ComponentManager* transformComponentManager = mScene->getComponentManager<CTransform>();
+	ComponentManager* spriteComponentManager = mWorld->getComponentManager<CSprite>();
+	ComponentManager* transformComponentManager = mWorld->getComponentManager<CTransform>();
 
 	// Iterate all sprites we have spawned
 	for (std::size_t i = 0; i < spriteComponentManager->getInstanceCount(); ++i)
