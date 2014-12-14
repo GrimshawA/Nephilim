@@ -59,6 +59,12 @@ public:
 	/// Default initialization
 	VertexArray();
 
+	/// Get the stride between vertices
+	std::size_t stride() const;
+
+	/// Get the raw pointer to the vertex data
+	const void* data() const;
+
 	void addAttribute(Int32 componentByteSize, Int32 numComponents, VertexFormat::AttributeHint hint);
 
 	void removeLast();
@@ -73,8 +79,8 @@ public:
 	/// Get the pointer to the attribute data of a given vertex
 	char* getAttribute(Int32 attributeIndex, Int32 vertexIndex);
 
-	Int32 getAttributeOffset(Int32 attributeIndex);
-	Int32 getAttributeSize(Int32 attributeIndex);
+	Int32 getAttributeOffset(Int32 attributeIndex) const;
+	Int32 getAttributeSize(Int32 attributeIndex) const;
 
 	bool isVertexEqual(Int32 index1, Int32 index2);
 
@@ -85,7 +91,7 @@ public:
 	static void removeDuplicateVertices(VertexArray& varray, IndexArray& iarray);
 
 	VertexFormat       format; ///< Format of the vertex data
-	std::vector<char>  data;   ///< The vertex raw data
+	std::vector<char>  _data;   ///< The vertex raw data
 	std::size_t             count;  ///< Number of allocated vertices
 };
 

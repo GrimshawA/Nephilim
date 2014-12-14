@@ -11,9 +11,16 @@ bool StaticMesh::load(const String& filename)
 	return geom.loadFromFile(filename);
 }
 
+void StaticMesh::makeDebugBox(float w, float h, float d)
+{
+	geom.addBox(w, h, d);
+	geom.setAllColors(Color::White);
+}
+
+
 void StaticMesh::test()
 {
-	geom.addBox(20.f, 20.f, 20.f);
+	geom.addBox(1.f, 1.f, 1.f);
 	geom.setAllColors(Color::White);
 }
 

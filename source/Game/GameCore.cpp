@@ -29,6 +29,12 @@ World* GameCore::createWorld(const String& name)
 	return world;
 }
 
+/// Create a new UICanvas for the game to use
+UICanvas* GameCore::createCanvas(const String& name)
+{
+	return userInterfaceManager.createCanvas(name);
+}
+
 /// Get a pointer to the engine
 Engine* GameCore::getEngine()
 {

@@ -84,7 +84,7 @@ void VertexBuffer::upload(const VertexArray& vertexArray, StorageMode mode)
 	{
 		GLenum usageMode = getGLUsageMode(mode);		
 
-		glBufferData(GL_ARRAY_BUFFER, vertexArray.getMemorySize(), &vertexArray.data[0], usageMode);
+		glBufferData(GL_ARRAY_BUFFER, vertexArray.getMemorySize(), &vertexArray._data[0], usageMode);
 	}
 }
 

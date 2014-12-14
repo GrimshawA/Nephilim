@@ -8,20 +8,70 @@
 
 #include <vector>
 #include <map>
+#include <stdint.h>
 
 NEPHILIM_NS_BEGIN
 
 class String;
 
+struct Tile
+{
+	uint16_t id;
+};
+
+struct TilemapLayer
+{
+
+};
+
 /**
 	\class Tilemap
-	\brief Can load tilemap data from different formats
+	\brief Stores tile data to be fed into any tile-based component
 
-	Supports multiple layers, multiple tilesets, multiple formats, properties and object layers.
+	The tilemaps are pretty abstract and just define a grid of cells and the type of each cell.
+	It is lightweight yet versatile for multiple uses like different tile based terrain types,
+	isometric and whatnot.
+
+	Tilemaps are also not tied to a given orientation, each layer can be considered a slice with no particular orientation.
+
+	Tilemaps are a bit like heightmaps, they can be chunky in memory and should only be kept if needed. 
+	Usually, a huge tilemap can be loaded for an entire map, and portions of it will be fetched as needed to make render data.
+
+	This can also be used for chunks of voxels quite easily, the lookups are really efficient to get the tile ID.
 */
 class NEPHILIM_API Tilemap
 {
 public:
+
+	struct MapSlice
+	{
+		std::vector<Tile> tileData; ///< The actual tile data of this slice
+	};
+
+	/// The slices in this tile data
+	/// Usually assumed to be ordered from back-to-front or bottom-to-top depending on the context
+	std::vector<MapSlice> slices;
+
+	int32_t width; ///< The number of horizontal tiles
+	int32_t height; ///< The number of vertical tiles
+
+public:
+	enum FileFormat
+	{
+		Binary,
+		XML,
+		TMX
+	};
+
+	/// This will save the data into a file
+	bool saveToFile(const String& filename, FileFormat format);
+
+	/// Fill the tilemap with a new size and slice count
+	void fill(int32_t w, int32_t h, int32_t sliceCount, uint16_t fillID);
+
+	/// Get a tile anywhere in the tilemap, no bound checking
+	Tile getTile(std::size_t slice_index, std::size_t x, std::size_t y);
+
 	bool loadTMX(const String& filename);
 
 	int getLayerCount();

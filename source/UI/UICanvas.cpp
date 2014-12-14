@@ -246,18 +246,28 @@ UIWindow* UICanvas::addSurface(const String& name)
 	return surface;
 };
 
+/// Create a window for this canvas
+UIWindow* UICanvas::createWindow(const String& name)
+{
+	UIWindow* window = getLayer(name);
+	if (!window)
+	{
+		addLayer2D(name);
+	}
+	return getLayer(name);
+}
 
 /// Draw the UI
-void UICanvas::draw(GraphicsDevice* renderer){
-	//renderer->drawDebugQuad(m_bounds.left + m_bounds.width/2, m_bounds.top + m_bounds.height/2, 0, m_bounds.width, m_bounds.height, m_backgroundColor);
-	//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), m_topBorderColor);
-	//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_bottomBorderColor);
-	//renderer->drawDebugLine(Vec2f(m_bounds.left, m_bounds.top), Vec2f(m_bounds.left, m_bounds.top + m_bounds.height), m_leftBorderColor);
-	//renderer->drawDebugLine(Vec2f(m_bounds.left + m_bounds.width, m_bounds.top), Vec2f(m_bounds.left + m_bounds.width, m_bounds.top + m_bounds.height), m_rightBorderColor);
-
+void UICanvas::draw(GraphicsDevice* renderer)
+{
 	/// Draw surfaces bottom to top
-	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		(*it)->draw(renderer);
+	for(std::vector<UIWindow*>::iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
+	{
+		if ((*it)->m_visible)
+		{
+			//Log("Drawing window: %s", (*it)->getName().c_str());
+			(*it)->draw(renderer);
+		}
 	}
 
 

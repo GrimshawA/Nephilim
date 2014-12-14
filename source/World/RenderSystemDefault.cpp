@@ -245,7 +245,7 @@ void RenderSystemDefault::renderScene()
 			if (staticMeshComponent)
 			{
 				mat4 modelPose = staticMeshComponent->absoluteTransform;
-				CStaticMesh* mesh = staticMeshComponent;
+				CStaticMesh* mesh = staticMeshComponent;					
 
 				if (mesh->materials.size() > 0)
 				{
@@ -253,23 +253,38 @@ void RenderSystemDefault::renderScene()
 					{
 						Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
 						if (diff_texture)
+						{
 							diff_texture->bind();
+							//Log("Binding texture %s", mesh->materials[i].diffuse.c_str());
+						}
 						else
 						{
-							mContentManager->load(mesh->materials[i].diffuse);
+							if (!mContentManager->load(mesh->materials[i].diffuse))
+							{
+								Log("Failed to load a texture");
+							}
 							Texture* diff_texture = mContentManager->getTexture(mesh->materials[i].diffuse);
 							diff_texture->setRepeated(true);
 						}
 					}
 
+					// let's draw the actual thing		
 					mRenderer->setModelMatrix(modelPose);
-					mRenderer->draw(mesh->staticMesh.ptr->geom);
+					mRenderer->draw(mesh->staticMesh->_vertexArray, mesh->staticMesh->_indexArray);
+
+					mRenderer->setModelMatrix(modelPose);
+					mRenderer->draw(mesh->staticMesh.ptr->geom);			
 				}
 				else
 				{
 					mRenderer->setDefaultTexture();
 					mRenderer->setModelMatrix(modelPose);
 					mRenderer->draw(mesh->staticMesh.ptr->geom);
+
+					// let's draw the actual thing
+					mRenderer->setDefaultTexture();
+					mRenderer->setModelMatrix(modelPose);
+					mRenderer->draw(mesh->staticMesh->_vertexArray, mesh->staticMesh->_indexArray);
 				}
 			}
 		}
@@ -303,7 +318,7 @@ void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 		//			Log("Rendering sprite %f %f", sprite->width, sprite->height);
 
 
-		vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va.data[0]);
+		vertex_f* va_raw = reinterpret_cast<vertex_f*>(&va._data[0]);
 
 		va_raw[0].p = vec2(sprite->width, 0.f);
 		va_raw[1].p = vec2(sprite->width, sprite->height);
@@ -349,9 +364,9 @@ void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 		mRenderer->enableVertexAttribArray(1);
 		mRenderer->enableVertexAttribArray(2);
 
-		mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(0));
-		mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(1));
-		mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va.data[0] + va.getAttributeOffset(2));
+		mRenderer->setVertexAttribPointer(0, 2, GL_FLOAT, false, va.getVertexSize(), &va._data[0] + va.getAttributeOffset(0));
+		mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va._data[0] + va.getAttributeOffset(1));
+		mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va._data[0] + va.getAttributeOffset(2));
 
 		mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
 

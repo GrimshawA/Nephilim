@@ -1,4 +1,7 @@
 #include <Nephilim/ContentManager.h>
+#include <Nephilim/Graphics/StaticMesh.h>
+#include <Nephilim/Model/ModelLoader.h>
+
 #include <Nephilim/Path.h>
 #include <Nephilim/Clock.h>
 #include <Nephilim/Logger.h>
@@ -27,10 +30,63 @@ ContentManager::~ContentManager()
 	}
 }
 
+/// Create a new static mesh with a given resource name
+StaticMesh* ContentManager::createStaticMesh(const String& urn)
+{
+	StaticMesh* m = new StaticMesh;
+
+	staticMeshContainer.push_back(m);
+	staticMeshNames.push_back(urn);
+
+	return m;
+}
+
+/// This will cause a static mesh to be loaded from a file with native loader or an importer
+bool ContentManager::loadStaticMesh(const String& urn, const String& filename)
+{
+	StaticMesh* m = findMesh(urn).ptr;
+
+	Path path(filename);
+	String extension = path.getExtension();
+
+	if (extension == "psk")
+	{
+
+	}
+	else
+	{
+		for (std::size_t i = 0; i < modelLoaders.size(); ++i)
+		{
+			if (modelLoaders[i]->supportsFormat(extension))
+			{
+				// We found the right loader for this format, let's load
+				ModelLoaderParams params;
+				params.mesh = m;
+				params.filename = filename;
+				ModelLoaderResult r = modelLoaders[i]->load(params);
+
+				return true;
+			}
+		}
+
+		Log("Sorry. Could not load the format: %s", extension.c_str());
+	}
+
+	return true;
+}
+
 /// Find a mesh in our storage, so it can be used somewhere
 Resource<StaticMesh> ContentManager::findMesh(const String& name)
 {
 	//auto i = std::find(staticMeshContainer.begin(), staticMeshContainer.end(), name);
+
+	for (std::size_t i = 0; i < staticMeshContainer.size(); ++i)
+	{
+		if (staticMeshNames[i] == name)
+		{
+			return Resource<StaticMesh>(staticMeshContainer[i]);
+		}
+	}
 
 	return MakeNullResource<StaticMesh>();
 }

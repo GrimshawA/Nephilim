@@ -3,6 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Geometry.h>
+#include <Nephilim/VertexArray.h>
+#include <Nephilim/IndexArray.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -30,8 +32,16 @@ class NEPHILIM_API StaticMesh
 {
 public:
 
+	VertexArray _vertexArray;
+	IndexArray _indexArray;
+
+public:
+
+
 	/// Load the static mesh data from a file directly
 	bool load(const String& filename);
+
+	void makeDebugBox(float w, float h, float d);
 
 	GeometryData geom;
 

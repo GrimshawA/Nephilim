@@ -72,6 +72,9 @@ public:
 	/// Create a new scene or return if already exists
 	World* createWorld(const String& name);
 
+	/// Create a new UICanvas for the game to use
+	UICanvas* createCanvas(const String& name);
+
 	/// Get a pointer to the engine
 	Engine* getEngine();
 

@@ -2,6 +2,12 @@
 
 NEPHILIM_NS_BEGIN
 
+/// Get the raw pointer to the indices
+const void* IndexArray::data() const
+{
+	return reinterpret_cast<const void*>(&indices[0]);
+}
+
 void IndexArray::redirectFromTo(Int32 searchElement, Int32 becomes)
 {
 	for(std::size_t i = 0; i < indices.size(); ++i)
@@ -29,7 +35,7 @@ void IndexArray::swapIndices(Int32 index1, Int32 index2)
 	}
 }
 
-std::size_t IndexArray::size()
+std::size_t IndexArray::size() const
 {
 	return indices.size();
 }

@@ -19,13 +19,23 @@ class NEPHILIM_API IndexArray
 {
 public:
 
+	std::vector<Uint16> indices;
+
+public:
+
+	/// Get the raw pointer to the indices
+	const void* data() const;
+
+	/// Get the number of indices
+	std::size_t size() const;
+
+
 	void redirectFromTo(Int32 searchElement, Int32 becomes);
 	/// Whatever pointed at index1, now points at index 2, and vice versa
 	void swapIndices(Int32 index1, Int32 index2);
 
-	std::size_t size();
+	
 
-	std::vector<Uint16> indices;
 };
 
 NEPHILIM_NS_END

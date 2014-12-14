@@ -24,6 +24,21 @@ template<typename T>
 class NEPHILIM_API Resource
 {
 public:
+	Resource(T* pt)
+	{
+		ptr = pt;
+	}
+
+	Resource()
+	{
+
+	}
+
+	T* operator->()
+	{
+		return ptr;
+	}
+
 	T* ptr = nullptr;
 };
 

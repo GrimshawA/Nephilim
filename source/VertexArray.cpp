@@ -22,6 +22,18 @@ VertexArray::VertexArray()
 {
 }
 
+/// Get the stride between vertices
+std::size_t VertexArray::stride() const
+{
+	return getVertexSize();
+}
+
+/// Get the raw pointer to the vertex data
+const void* VertexArray::data() const
+{
+	return reinterpret_cast<const void*>(&this->_data[0]);
+}
+
 void VertexArray::addAttribute(Int32 componentByteSize, Int32 numComponents, VertexFormat::AttributeHint hint)
 {
 	format.attributes.push_back(VertexFormat::Attribute(componentByteSize, numComponents, hint));
@@ -36,7 +48,7 @@ void VertexArray::setVertexAttribute(Int32 vertexIndex, Int32 attributeIndex, vo
 	memcpy(addressOfTarget, data, format.attributes[attributeIndex].size * format.attributes[attributeIndex].numComponents);
 }
 
-Int32 VertexArray::getAttributeOffset(Int32 attributeIndex)
+Int32 VertexArray::getAttributeOffset(Int32 attributeIndex) const
 {
 	Int32 localOffset = 0;
 	for(std::size_t i = 0; i < format.attributes.size(); ++i)
@@ -51,7 +63,7 @@ Int32 VertexArray::getAttributeOffset(Int32 attributeIndex)
 	return localOffset;
 }
 
-Int32 VertexArray::getAttributeSize(Int32 attributeIndex)
+Int32 VertexArray::getAttributeSize(Int32 attributeIndex) const
 {
 	return format.attributes[attributeIndex].size * format.attributes[attributeIndex].numComponents;
 }
@@ -70,15 +82,15 @@ void VertexArray::allocateData(Int32 vertexCount)
 {
 	Int32 bytesPerVertex = getVertexSize();
 
-	data.resize(bytesPerVertex * vertexCount);
+	_data.resize(bytesPerVertex * vertexCount);
 
 	count = vertexCount;
 }
 
 bool VertexArray::isVertexEqual(Int32 index1, Int32 index2)
 {
-	char* v1 = &data[0] + getVertexSize() * index1;
-	char* v2 = &data[0] + getVertexSize() * index2;
+	char* v1 = &_data[0] + getVertexSize() * index1;
+	char* v2 = &_data[0] + getVertexSize() * index2;
 
 	if(memcmp(v1,v2, getVertexSize()) == 0)
 	{
@@ -91,19 +103,19 @@ bool VertexArray::isVertexEqual(Int32 index1, Int32 index2)
 /// Get the pointer to the attribute data of a given vertex
 char* VertexArray::getAttribute(Int32 attributeIndex, Int32 vertexIndex)
 {
-	return &data[0] + (getVertexSize() * vertexIndex) + getAttributeOffset(attributeIndex);
+	return &_data[0] + (getVertexSize() * vertexIndex) + getAttributeOffset(attributeIndex);
 }
 
 void VertexArray::removeLast()
 {
-	data.resize(data.size() - getVertexSize());
+	_data.resize(_data.size() - getVertexSize());
 	count--;
 }
 
 /// Get the byte size of the current buffer
 Int32 VertexArray::getMemorySize() const
 {
-	return data.size();
+	return _data.size();
 }
 
 void VertexArray::swapVertices(Int32 index, Int32 goesTo)
@@ -111,13 +123,13 @@ void VertexArray::swapVertices(Int32 index, Int32 goesTo)
 	char* tbuffer = new char[getVertexSize()];
 
 	// get the temp buffer from the index vertex
-	memcpy(tbuffer, &data[0] + getVertexSize() * index, getVertexSize());
+	memcpy(tbuffer, &_data[0] + getVertexSize() * index, getVertexSize());
 
 	// copy goesTo to the index vertex
-	memcpy(&data[0] + getVertexSize() * index, &data[0] + getVertexSize() * goesTo, getVertexSize());
+	memcpy(&_data[0] + getVertexSize() * index, &_data[0] + getVertexSize() * goesTo, getVertexSize());
 	
 	// copy temp buffer to goesTo now
-	memcpy(&data[0] + getVertexSize() * goesTo, tbuffer, getVertexSize());
+	memcpy(&_data[0] + getVertexSize() * goesTo, tbuffer, getVertexSize());
 
 	delete[] tbuffer;
 }

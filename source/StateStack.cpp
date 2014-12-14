@@ -14,6 +14,7 @@ StateStack::StateStack()
 : m_stackLock(false)
 , m_transition(NULL)
 , mLocked(false)
+, batchPending(false)
 {
 }
 StateStack::~StateStack()
@@ -50,23 +51,16 @@ bool StateStack::isTransitionActive()
 	return (m_transition != NULL);
 }
 
+/// Push a state batch down the stack
+void StateStack::triggerBatch(const GameStateBatch& batch)
+{
+	nextBatch = batch;
+	batchPending = true;
+}
+
 void StateStack::clear()
 {
-	// If the transition is active, alter the future list instead
-	if(isTransitionActive())
-	{
-		for(std::size_t i = 0; i < mFutureList.size(); ++i)
-		{
-			mFutureList[i]->finish();
-		}
-	}
-	else
-	{
-		for(std::size_t i = 0; i < mCurrentList.size(); ++i)
-		{
-			mCurrentList[i]->finish();
-		}
-	}
+
 }
 
 /// Remove the top state from the stack
@@ -400,6 +394,33 @@ void StateStack::drawStates(GraphicsDevice *renderer){
 
 void StateStack::update(Time &time)
 {		
+	// Handle the pending batch, by building a new list
+	if (batchPending)
+	{
+		GameStateList list;
+		for (auto i = 0; i < nextBatch.orderedGameStates.size(); ++i)
+		{
+			if (nextBatch.orderedGameStates[i].nameBased)
+			{
+				list.push_back(getBinding(nextBatch.orderedGameStates[i].name));
+			}
+		}
+
+		// Set our newly built list as the current one (needs work to support transitions)
+		for (auto& gs : mCurrentList)
+		{
+			gs->onDeactivate();
+		}
+		mCurrentList = list; 
+		for (auto& gs : mCurrentList)
+		{
+			gs->onActivate();
+		}
+
+		batchPending = false;
+	}
+
+
 	// Did a transition just finish?
 	if(m_transition && m_transition->m_finished)
 	{
@@ -441,7 +462,7 @@ void StateStack::update(Time &time)
 	}
 };
 
-void StateStack::updateList(std::vector<GameState*>& list, const Time& time)
+void StateStack::updateList(GameStateList& list, const Time& time)
 {
 	if(list.size() == 0)
 	{

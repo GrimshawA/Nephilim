@@ -44,27 +44,19 @@ void GameState::onRender(GraphicsDevice* renderer)
 
 }
 
-/// Starts a random transition among the built-in ones
-void GameState::useRandomTransition()
-{
-	int id = math::randomInt(0, 2);
-
-	switch (id)
-	{
-	case 0: useTransition(new StateTransitionBlocks()); break;
-	case 1: useTransition(new StateTransitionSlider()); break;
-	case 2: useTransition(new StateTransitionFade()); break;
-	}
-}
-
-/// Tells the parent machine to do a transition animation
-void GameState::useTransition(StateStackTransition* transition)
+/// Push a state batch down the stack
+void GameState::triggerBatch(const GameStateBatch& batch)
 {
 	if (m_parent)
 	{
-		m_parent->performTransition(transition);
+		m_parent->triggerBatch(batch);
 	}
 }
+
+/// Callback when the state is live and has all ownership of the application flow
+void GameState::onLive()
+{}
+
 void GameState::onActivate()
 {}
 
@@ -92,26 +84,6 @@ StateStack* GameState::parentMachine(){
 	return m_parent;
 };
 
-
-
-/// Finish will inform the state stack this state is done, and should be removed
-void GameState::finish()
-{
-	if (m_scheduledRemoval)
-	{
-		return;
-	}
-	else
-	{
-		if (m_parent)
-		{
-			// schedule this state for erasing
-			m_parent->erase(this);
-			m_scheduledRemoval = true;
-		}
-	}
-};
-
 /// Sends a simple message to the binded state
 void GameState::sendMessage(const String& bindName, const String& message)
 {
@@ -124,17 +96,6 @@ void GameState::sendMessage(const String& bindName, const String& message)
 		}
 	}
 };
-
-/// Attempts to launch a state from the bind list
-bool GameState::launchBindedState(const String& stateName)
-{
-	if (m_parent)
-	{
-		m_parent->add(stateName);
-	}
-	else return false;
-};
-
 
 /// Draws the state with the current renderer
 /// If returns true, other states in the stack will be rendered

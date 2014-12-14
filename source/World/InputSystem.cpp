@@ -7,12 +7,52 @@
 
 NEPHILIM_NS_BEGIN
 
+/// Check if any given keyboard key is pressed
+bool InputSystem::isKeyPressed(Keyboard::Key key)
+{
+	return keyboardState[key];
+}
+
+/// Update the continuous input detection
+void InputSystem::update(const Time& time)
+{
+	for (auto it = bindings.axisMappings.begin(); it != bindings.axisMappings.end(); ++it)
+	{
+		if (isKeyPressed(it->second.key))
+		{
+			emitAxisAction(it->first, 1.f);
+		}
+	}
+}
+
+/// Emit an axis action into the world
+void InputSystem::emitAxisAction(const String& name, float scale)
+{
+	Log("Emitting axis %s", name.c_str());
+
+	// Actors
+	for (std::size_t i = 0; i < mWorld->actors.size(); ++i)
+	{
+		Actor* actor = mWorld->actors[i];
+		for (std::size_t j = 0; j < actor->components.size(); ++j)
+		{
+			if (dynamic_cast<AInputComponent*>(actor->components[j]))
+			{
+				AInputComponent* inputComponent = dynamic_cast<AInputComponent*>(actor->components[j]);
+				inputComponent->fireAxis(name);
+			}
+		}
+	}
+}
+
 /// Push an event into the input system
 void InputSystem::updateWithEvent(const Event& event)
 {
 	// A key was pressed, let's check if it casts an action
 	if (event.type == Event::KeyPressed)
 	{
+		keyboardState[event.key.code] = true;
+
 		for (std::size_t i = 0; i < bindings.actionMappings.size(); ++i)
 		{
 			if (bindings.actionMappings[i].isTriggeredBy(event.key.code))
@@ -20,6 +60,10 @@ void InputSystem::updateWithEvent(const Event& event)
 				emitAction(bindings.actionMappings[i].actionName, CInput::Pressed);
 			}
 		}
+	}
+	else if (event.type == Event::KeyReleased)
+	{
+		keyboardState[event.key.code] = false;
 	}
 }
 

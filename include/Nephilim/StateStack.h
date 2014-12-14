@@ -17,6 +17,38 @@ class Event;
 class GameCore;
 
 /**
+	\class GameStateBatch
+	\brief Configuration of the stack state, for transitioning
+
+	By configuring a state batch structure and pushing it to the stack,
+	it will activate the exact states ordered and do this with an animated transition if needed.
+*/
+class GameStateBatch
+{
+public:
+
+	struct StateUnit
+	{
+		bool       nameBased; ///< otherwise its object based
+		GameState* object;    ///<
+		String     name;      ///<
+	};
+
+	std::vector<StateUnit> orderedGameStates;
+
+public:
+
+	/// Push a state by name instead of object
+	void push(const String& state)
+	{
+		StateUnit unit;
+		unit.nameBased = true;
+		unit.name = state;
+		orderedGameStates.push_back(unit);
+	}
+};
+
+/**
 	\ingroup Core
 	\class StateStack
 	\brief Mechanism to control game states like the pause screen, main menu, etc
@@ -55,6 +87,9 @@ public:
 
 	/// Check if the stack is currently locked
 	bool isLocked();
+
+	/// Push a state batch down the stack
+	void triggerBatch(const GameStateBatch& batch);
 
 	/// Clear all active states
 	void clear();
@@ -137,8 +172,12 @@ public:
 	};
 
 //private:
-	std::vector<GameState*> mCurrentList; ///< The currently active stack
-	std::vector<GameState*> mFutureList;  ///< The stack that will be active after the transition
+
+	/// This container represents an actual stack of states on top of each other
+	typedef std::vector<GameState*> GameStateList;
+
+	GameStateList mCurrentList; ///< The currently active stack
+	GameStateList mFutureList;  ///< The stack that will be active after the transition
 
 	friend class StateStackTransition;
 
@@ -147,6 +186,9 @@ public:
 	std::vector<StateStackOperation> m_pendingOperations; ///< The list of pending operations
 
 	StateStackTransition* m_transition; ///< The active transition
+
+	bool batchPending;
+	GameStateBatch nextBatch;
 
 	bool m_stackLock;
 

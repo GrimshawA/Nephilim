@@ -31,6 +31,7 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 				int tileIndex1D = 0;
 
 				vec2i chunkIndex2D = vec2i(i % mNumChunks.x, i / mNumChunks.x);
+
 				vec2i chunkFirstTileIndex2D(chunkIndex2D.x * mChunkSize.x, chunkIndex2D.y * mChunkSize.y);
 				vec2i globalTileIndex2D = chunkFirstTileIndex2D + vec2i(tx,ty);
 				tileIndex1D = globalTileIndex2D.y * (mLevelSizeInTiles.x) + globalTileIndex2D.x;
@@ -73,7 +74,7 @@ void ComponentTilemap2D::generateTiles(Tilemap::Layer* tileLayer, const String& 
 					vec2 uv;
 				};
 
-				v_format* vbuff = reinterpret_cast<v_format*>(&dl.mVertexSets[j].data[0]);
+				v_format* vbuff = reinterpret_cast<v_format*>(&dl.mVertexSets[j]._data[0]);
 
 				int tc = 0;
 

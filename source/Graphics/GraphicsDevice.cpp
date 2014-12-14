@@ -5,6 +5,9 @@
 #include <Nephilim/Drawable.h>
 #include <Nephilim/Image.h>
 
+#include <Nephilim/IndexArray.h>
+#include <Nephilim/VertexArray.h>
+
 #include <iostream>
 using namespace std;
 
@@ -435,6 +438,29 @@ void GraphicsDevice::setVertexAttribPointer(unsigned int index, int numComponent
 void GraphicsDevice::draw(const VertexArray2D& varray, const RenderState& state)
 {
 	Log("Why are you calling draw on an abstract base class?");
+}
+
+/// Draw a client-side vertex array with a index array
+void GraphicsDevice::draw(const VertexArray& vertexArray, const IndexArray& indexArray)
+{
+	if (vertexArray._data.size())
+	{
+		//Log("Drawing a vertex array %d triangles!!!", indexArray.size() / 3);
+
+		enableVertexAttribArray(0);
+		enableVertexAttribArray(1);
+		enableVertexAttribArray(2);
+
+		setVertexAttribPointer(0, 3, GL_FLOAT, false, vertexArray.stride(), vertexArray.data());
+		setVertexAttribPointer(1, 4, GL_FLOAT, false, vertexArray.stride(), &vertexArray._data[0] + vertexArray.getAttributeOffset(1));
+		setVertexAttribPointer(2, 2, GL_FLOAT, false, vertexArray.stride(), &vertexArray._data[0] + vertexArray.getAttributeOffset(2));
+
+		glDrawElements(GL_TRIANGLES, indexArray.size(), GL_UNSIGNED_SHORT, indexArray.data());
+
+		disableVertexAttribArray(0);
+		disableVertexAttribArray(1);
+		disableVertexAttribArray(2);
+	}
 }
 
 /// Allows a drawable to draw itself

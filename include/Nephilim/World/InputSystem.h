@@ -43,10 +43,12 @@ public:
 
 	struct AxisMapping
 	{
-
+		Keyboard::Key key;
 	};
 
 	std::vector<ActionMapping> actionMappings;
+
+	std::map<String, AxisMapping> axisMappings;
 
 public:
 
@@ -65,15 +67,30 @@ public:
 class NEPHILIM_API InputSystem : public System
 {
 public:
+	/// Our key binding sheet to translate real input into action based input
+	InputBindingSheet bindings;
+
+	/// Current state of keyboard activation
+	std::map<Keyboard::Key, bool> keyboardState;
+
+public:
+
+	/// Check if any given keyboard key is pressed
+	bool isKeyPressed(Keyboard::Key key);
 
 	/// Emit an action into the world
 	void emitAction(const String& name, CInput::ActionModes mode);
 
+	/// Emit an axis action into the world
+	void emitAxisAction(const String& name, float scale);
+
 	/// Push an event into the input system
 	void updateWithEvent(const Event& event);
 
-	/// Our key binding sheet to translate real input into action based input
-	InputBindingSheet bindings;
+	/// Update the continuous input detection
+	void update(const Time& time);
+
+
 };
 
 NEPHILIM_NS_END

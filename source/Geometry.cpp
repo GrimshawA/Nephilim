@@ -47,7 +47,7 @@ void GeometryData::toVertexArray(VertexArray& varray)
 		vec4 c;
 	};
 
-	vertex_format_struct* vertex_data = reinterpret_cast<vertex_format_struct*>(&varray.data[0]);
+	vertex_format_struct* vertex_data = reinterpret_cast<vertex_format_struct*>(&varray._data[0]);
 
 	for(std::size_t i = 0; i < m_vertices.size(); ++i)
 	{
@@ -62,6 +62,9 @@ void GeometryData::toVertexArray(VertexArray& varray)
 
 void GeometryData::onDraw(GraphicsDevice* renderer)
 {
+	if (m_vertices.size() == 0)
+		return;
+
 	renderer->enableVertexAttribArray(0);
 	if(m_useColors && m_colors.size() > 0) renderer->enableVertexAttribArray(1);
 	if(m_useTexCoords && m_texCoords.size() > 0) renderer->enableVertexAttribArray(2);

@@ -1,4 +1,6 @@
 #include <Nephilim/Tilemap.h>
+#include <Nephilim/File.h>
+#include <Nephilim/DataStream.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/StringList.h>
 
@@ -20,6 +22,56 @@ namespace
 		return false;
 	}
 };
+
+/// This will save the
+bool Tilemap::saveToFile(const String& filename, FileFormat format)
+{
+	if (format == Binary)
+	{
+		File file(filename, IODevice::BinaryWrite);
+		if (file)
+		{
+			DataStream stream(file);
+			stream << width;
+			stream << height;
+			stream << slices.size();
+
+			for (MapSlice& s : slices)
+			{
+				file.write(reinterpret_cast<char*>(&s.tileData[0]), sizeof(Tile)* s.tileData.size());
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/// Get a tile anywhere in the tilemap, no bound checking
+Tile Tilemap::getTile(std::size_t slice_index, std::size_t x, std::size_t y)
+{
+	return slices[slice_index].tileData[y * width + x];
+}
+
+void Tilemap::fill(int32_t w, int32_t h, int32_t sliceCount, uint16_t fillID)
+{
+	width = w;
+	height = h;
+
+	slices.resize(sliceCount);
+
+	Tile fillTile;
+	fillTile.id = fillID;
+
+	for (MapSlice& s : slices)
+	{
+		s.tileData.resize(w*h);
+		s.tileData.assign(w*h, fillTile);
+	}
+}
+
+
 
 bool Tilemap::loadTMX(const String& filename)
 {

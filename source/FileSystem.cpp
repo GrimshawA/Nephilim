@@ -233,10 +233,9 @@ String FileSystem::getExecutableDirectory(){
 	return path;
 };
 
-	StringList FileSystem::scanDirectory(const String &Directory, const String &Extension, bool Recursive){
-		//std::vector<String> Files;
-
-		StringList Files;
+StringList FileSystem::scanDirectory(const String &Directory, const String &Extension, bool Recursive)
+{
+	StringList Files;
 		{
 		#ifdef NEPHILIM_WINDOWS ////////////////////////////////////////////////////WINDOWS CONFIG
 			String Query = Directory + String("\\*.") + Extension;
@@ -244,6 +243,23 @@ String FileSystem::getExecutableDirectory(){
 			HANDLE hFindHandle = INVALID_HANDLE_VALUE;
 			hFindHandle = FindFirstFileA(Query.c_str(), &FileData);
 
+			// Let's get in the sub directories
+			if (Recursive)
+			{
+				// Let's get the directory listing
+				StringList DirectoryList = directoryList(Directory, true);
+				Log("Found %d dirs", DirectoryList.size());
+
+				for (std::size_t i = 0; i < DirectoryList.size(); ++i)
+				{
+					//Log("Searching in subdir %s", DirectoryList[i].c_str());
+
+					StringList SubDirectoryResults = scanDirectory(DirectoryList[i], Extension, Recursive);
+					Files.insert(Files.end(), SubDirectoryResults.begin(), SubDirectoryResults.end());
+				}
+			}
+
+			// Are there any files here?
 			if(hFindHandle == INVALID_HANDLE_VALUE)
 				return Files;
 
@@ -255,7 +271,11 @@ String FileSystem::getExecutableDirectory(){
 				{
 					if(Recursive)
 					{
-						StringList t(scanDirectory(Directory + String("/") +
+
+						String SubDirectoryFull = Directory + String("\\") + String(FileData.cFileName);
+						Log("Scanning subdir %s", SubDirectoryFull.c_str());
+
+						StringList t(scanDirectory(Directory + String("\\") +
 							String(FileData.cFileName), Extension, Recursive));
 
 						Files.insert(Files.end(), t.begin(), t.end());
@@ -268,6 +288,8 @@ String FileSystem::getExecutableDirectory(){
 				};
 			};
 
+
+
 			while(FindNextFileA(hFindHandle, &FileData))
 			{
 				FileName = FileData.cFileName;
@@ -276,9 +298,13 @@ String FileSystem::getExecutableDirectory(){
 				{
 					if(FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 					{
+						Log("Found a dir");
 						if(Recursive)
 						{
-							StringList t(scanDirectory(Directory + String("/") +
+							String SubDirectoryFull = Directory + String("\\") + String(FileData.cFileName);
+							Log("Scanning subdir %s", SubDirectoryFull.c_str());
+
+							StringList t(scanDirectory(Directory + String("\\") +
 								String(FileData.cFileName), Extension, Recursive));
 
 							Files.insert(Files.end(), t.begin(), t.end());
@@ -291,7 +317,12 @@ String FileSystem::getExecutableDirectory(){
 				}
 			};
 
-			FindClose(hFindHandle);
+	
+		
+		// Close
+		FindClose(hFindHandle);
+
+
 		#elif defined(PARABOLA_PLATFORM_LINUX) || defined(PARABOLA_PLATFORM_MAC)///////////////////////MAC|LINUX
 			DIR *Root = opendir (Directory);
 

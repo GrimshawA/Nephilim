@@ -41,6 +41,9 @@ public:
 
 	/// Enable or disable rigid body rotation
 	virtual void setFixedRotation(bool enable){}
+
+	/// Check if the rigid body is sleeping, if supported
+	virtual bool isAwake(){ return true; }
 };
 
 NEPHILIM_NS_END

@@ -24,6 +24,7 @@ class RenderTarget;
 class Window;
 class Image;
 class VertexArray;
+class IndexArray;
 
 /**
 	\ingroup Graphics
@@ -77,6 +78,9 @@ public:
 	/// Push client-side geometry to the GPU
 	/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
 	virtual void draw(const VertexArray& vertexData);
+
+	/// Draw a client-side vertex array with a index array
+	virtual void draw(const VertexArray& vertexArray, const IndexArray& indexArray);
 
 	/// Draw a vertex array
 	virtual void draw(const VertexArray2D& varray, const RenderState& state = RenderState());

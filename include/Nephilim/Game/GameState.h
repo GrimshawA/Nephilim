@@ -10,6 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class IScript;
 class Event;
+class GameStateBatch;
 class StateStack;
 class StateStackTransition;
 class Time;
@@ -36,6 +37,12 @@ public:
 
 public:
 
+	/// Creates a default state
+	GameState();
+
+	/// Push a state batch down the stack
+	void triggerBatch(const GameStateBatch& batch);
+
 	/// Simplest way to call a function in all the attached scripts
 	/// No error handling or checking
 	void callScriptFunction(const String& name);
@@ -43,8 +50,7 @@ public:
 	/// Check how many scripts are attached to this state
 	std::size_t getNumAttachedScripts();
 
-	/// Creates a default state
-	GameState();
+
 
 	/// Called when there is an event to handle
 	virtual void onEvent(const Event &event);
@@ -52,8 +58,12 @@ public:
 	/// Callback when the state enters the bind list or the stack
 	virtual void onAttach();
 
-	/// Callback when the node is activated
+	/// Callback when the state came into activation (may have animation running for some time still)
+	/// But should be prepared for rendering frames from here on.
 	virtual void onActivate();
+
+	/// Callback when the state is live and has all ownership of the application flow
+	virtual void onLive();
 
 	/// Callback when the node is deactivated
 	virtual void onDeactivate();
@@ -67,12 +77,6 @@ public:
 	/// Get the parent machine of this state
 	StateStack* parentMachine();
 
-	/// Tells the parent machine to do a transition animation
-	void useTransition(StateStackTransition* transition);
-
-	/// Starts a random transition among the built-in ones
-	void useRandomTransition();
-
 	/// Sends a simple message to the binded state
 	void sendMessage(const String& bindName, const String& message);
 
@@ -83,12 +87,6 @@ public:
 	{
 		return true;
 	}
-
-	/// Attempts to launch a state from the bind list
-	bool launchBindedState(const String& stateName);
-
-	/// Finish will inform the state stack this state is done, and should be removed
-	void finish();
 
 	/// Tells the state how much time it should update itself
 	/// Must return false if updating lesser states is not wanted
