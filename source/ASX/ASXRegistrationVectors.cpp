@@ -1,5 +1,5 @@
 #include <Nephilim/ASX/ASXRegistrationVectors.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 #include <Nephilim/Vectors.h>
 
 #include <angelscript.h>

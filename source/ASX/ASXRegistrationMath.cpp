@@ -1,6 +1,6 @@
 #include <Nephilim/ASX/ASXRegistrationMath.h>
-#include <Nephilim/ASXEngine.h>
-#include <Nephilim/Quaternion.h>
+#include <Nephilim/ASX/ASXEngine.h>
+#include <Nephilim/Math/Quaternion.h>
 
 #include <angelscript.h>
 

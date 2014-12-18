@@ -1,10 +1,10 @@
 #include <Nephilim/ASX/ASXRegistrationTilemaps.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 
 #include <Nephilim/Tilemap.h>
 
 #include <angelscript.h>
-
+/*
 namespace
 {
 	void dummy()
@@ -79,4 +79,4 @@ void registerTilemapsASX(ASXEngine& engine)
 	//engine.get()->RegisterObjectMethod("Tilemap", "bool atEnd()", asMETHOD(ScriptFile, atEnd), asCALL_THISCALL);
 }
 
-NEPHILIM_NS_END
+NEPHILIM_NS_END*/

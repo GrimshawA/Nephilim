@@ -1,5 +1,5 @@
-#include <Nephilim/ASXModule.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXModule.h>
+#include <Nephilim/ASX/ASXEngine.h>
 
 NEPHILIM_NS_BEGIN
 

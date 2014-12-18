@@ -13,6 +13,75 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
+/// Generate a plane with center in origin, facing its normal direction, with given dimensions
+Geometry Geometry::GeneratePlane(Vector3D origin, Vector3D normal, Vector2D dimensions)
+{
+	Geometry geom;
+
+	geom._positions.resize(4);
+	geom._positions[0] = Vector3D(10.f, 10.f, -10.f);
+	geom._positions[1] = Vector3D(10.f, 10.f, 10.f);
+	geom._positions[2] = Vector3D(-10.f, 10.f, 10.f);
+	geom._positions[3] = Vector3D(-10.f, 10.f, -10.f);
+
+	geom._colors.resize(4);
+	geom._colors[0] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[1] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[2] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[3] = vec4(1.f, 1.f, 1.f, 1.f);
+
+	geom._texcoord.resize(4);
+	geom._texcoord[0] = vec2(1.f, 1.f);
+	geom._texcoord[1] = vec2(0.f, 1.f);
+	geom._texcoord[2] = vec2(0.f, 0.f);
+	geom._texcoord[3] = vec2(1.f, 0.f);
+
+	geom._faces.resize(2);
+	geom._faces[0].v1 = 0;
+	geom._faces[0].v2 = 1;
+	geom._faces[0].v3 = 2;
+	geom._faces[1].v1 = 0;
+	geom._faces[1].v2 = 2;
+	geom._faces[1].v3 = 3;
+	
+	return geom;
+}
+
+/// Generate a sky box mesh
+Geometry Geometry::GenerateSkyBox()
+{
+	Geometry geom;
+
+	geom._positions.resize(4);
+	geom._faces.resize(2);
+	geom._colors.resize(4);
+	geom._texcoord.resize(4);
+
+	geom._positions[0] = Vector3D(10.f, 10.f, -10.f);
+	geom._positions[1] = Vector3D(10.f, 10.f, 10.f);
+	geom._positions[2] = Vector3D(-10.f, 10.f, 10.f);
+	geom._positions[3] = Vector3D(-10.f, 10.f, -10.f);
+
+	geom._colors[0] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[1] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[2] = vec4(1.f, 1.f, 1.f, 1.f);
+	geom._colors[3] = vec4(1.f, 1.f, 1.f, 1.f);
+
+	geom._texcoord[0] = vec2(1.f, 1.f);
+	geom._texcoord[1] = vec2(0.f, 1.f);
+	geom._texcoord[2] = vec2(0.f, 0.f);
+	geom._texcoord[3] = vec2(1.f, 0.f);
+
+	geom._faces[0].v1 = 0;
+	geom._faces[0].v2 = 1;
+	geom._faces[0].v3 = 2;
+	geom._faces[1].v1 = 0;
+	geom._faces[1].v2 = 2;
+	geom._faces[1].v3 = 3;
+
+	return geom;
+}
+
 GeometryData::GeometryData()
 : m_useColors(true)
 , m_useNormals(true)

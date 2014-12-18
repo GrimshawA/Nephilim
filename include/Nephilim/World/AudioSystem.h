@@ -5,8 +5,7 @@
 #include <Nephilim/World/System.h>
 
 NEPHILIM_NS_BEGIN
-namespace rzr
-{
+
 
 /**
 	\class AudioSystem
@@ -18,6 +17,5 @@ public:
 
 };
 
-};
 NEPHILIM_NS_END
 #endif // NephilimRenderSystem_h__

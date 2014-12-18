@@ -2,7 +2,7 @@
 #define NephilimASXModuleBuilder_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
 

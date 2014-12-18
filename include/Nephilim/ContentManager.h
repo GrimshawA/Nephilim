@@ -20,6 +20,8 @@
 NEPHILIM_NS_BEGIN
 
 class StaticMesh;
+class SkeletalMesh;
+
 class ModelLoader;
 
 class ContentGroupFonts
@@ -60,6 +62,9 @@ public:
 	std::vector<StaticMesh*> staticMeshContainer;
 	std::vector<String>      staticMeshNames;
 
+	std::vector<SkeletalMesh*> skeletalMeshContainer;
+	std::vector<String>      skeletalMeshNames;
+
 public:
 
 	/// Creates the default group - no name ""
@@ -70,6 +75,9 @@ public:
 
 	/// Create a new static mesh with a given resource name
 	StaticMesh* createStaticMesh(const String& urn);
+
+	/// Create a new static mesh with a given resource name
+	SkeletalMesh* createSkeletalMesh(const String& urn);
 
 	/// This will cause a static mesh to be loaded from a file with native loader or an importer
 	bool loadStaticMesh(const String& urn, const String& filename);

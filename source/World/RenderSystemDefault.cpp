@@ -23,6 +23,7 @@
 #include <Nephilim/NxMath.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/RectangleShape.h>
+#include <Nephilim/Graphics/GLTextureCube.h>
 #include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
 
@@ -168,9 +169,78 @@ void RenderSystemDefault::update(const Time& deltaTime)
 	}*/
 }
 
+Texture* skyBoxTexture;
+
+TextureCube* cubeMap;
+
+void DrawGeometry(GraphicsDevice* graphics, const Geometry& geom)
+{
+	graphics->enableVertexAttribArray(0);
+	graphics->enableVertexAttribArray(1);
+	graphics->enableVertexAttribArray(2);
+	graphics->setDefaultTexture();
+
+	if (skyBoxTexture)
+		skyBoxTexture->bind();
+
+	graphics->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &geom._positions[0]);
+	graphics->setVertexAttribPointer(1, 4, GL_FLOAT, false, 0, &geom._colors[0]);
+	graphics->setVertexAttribPointer(2, 2, GL_FLOAT, false, 0, &geom._texcoord[0]);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, &geom._faces[0]);
+
+	graphics->disableVertexAttribArray(0);
+	graphics->disableVertexAttribArray(1);
+	graphics->disableVertexAttribArray(2);
+}
+
+
+
+/// Render a sky box into the map
+void RenderSystemDefault::renderSkyBox()
+{
+	static bool loaded = false;
+	if (!loaded)
+	{
+		skyBoxTexture = new Texture();
+		if (skyBoxTexture->loadFromFile("Textures/skyboxsun25degtest.png"))
+		{
+			Log("SKYBOX IS LOADED");
+		}
+
+		cubeMap = new GLTextureCube();
+		cubeMap->test();
+
+		loaded = true;
+	}
+
+	Log("Rendering BOX");
+
+	Geometry top_plane = Geometry::GeneratePlane(Vector3D(), Vector3D(), Vector2D());
+	
+	mat4 proj = mRenderer->getProjectionMatrix();
+	mat4 view = mRenderer->getViewMatrix();
+
+	// The sky box doesn't respond to camera transforms (we're at 0,0,0 all the time and the skybox is around us)
+	mRenderer->setViewMatrix(camRot);
+
+	top_plane._texcoord[0] = vec2(0.5f, 0.f);
+	top_plane._texcoord[1] = vec2(0.5f, 0.25f);
+	top_plane._texcoord[2] = vec2(0.25f, 0.25f);
+	top_plane._texcoord[3] = vec2(0.25f, 0.f);
+
+
+	DrawGeometry(mRenderer, top_plane);
+
+	mRenderer->setProjectionMatrix(proj);
+	mRenderer->setViewMatrix(view);
+}
+
 /// Render scene gets all scene render data and outputs it to the active target
 void RenderSystemDefault::renderScene()
 {
+	//renderSkyBox();
+
 	mRenderer->clearDepthBuffer();
 
 	// Draw level terrains if applicable
@@ -286,6 +356,39 @@ void RenderSystemDefault::renderScene()
 					mRenderer->setModelMatrix(modelPose);
 					mRenderer->draw(mesh->staticMesh->_vertexArray, mesh->staticMesh->_indexArray);
 				}
+			}
+
+			// Check for skeletal meshes
+			ASkeletalMeshComponent* skeletalMeshComponent = dynamic_cast<ASkeletalMeshComponent*>(actor->components[j]);
+			if (skeletalMeshComponent)
+			{
+				// Prepare the model matrices
+				mRenderer->setModelMatrix(actor->getTransform().getMatrix() * mat4::rotatey(math::pi));
+			
+				// Now activate the right shader and uniforms
+				mRenderer->setShader(skeletalMeshComponent->model->rigShader);
+				mRenderer->setModelMatrix(mRenderer->getModelMatrix());
+				mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
+				mRenderer->setViewMatrix(mRenderer->getViewMatrix());
+				skeletalMeshComponent->model->championTexture.bind();
+
+				for (auto& m : skeletalMeshComponent->model->boneTransforms)
+				{
+					//m = mat4::identity;
+				}
+
+				int location = glGetUniformLocation(skeletalMeshComponent->model->rigShader.m_id, "u_BoneTransform");
+				glUniformMatrix4fv(location, 128, false, reinterpret_cast<float*>(&skeletalMeshComponent->model->boneTransforms[0]));
+
+				//skeletalMeshComponent->model->render(mRenderer);
+				
+				if (skeletalMeshComponent->skeletalMeshAsset)
+				{
+					skeletalMeshComponent->myT.bind();
+					mRenderer->draw(skeletalMeshComponent->skeletalMeshAsset->_vertexArray, skeletalMeshComponent->skeletalMeshAsset->_indexArray);
+				}
+
+				mRenderer->setDefaultShader();
 			}
 		}
 	}

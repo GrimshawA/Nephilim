@@ -10,7 +10,7 @@
 #include <Nephilim/Event.h>
 #include <Nephilim/StringList.h>
 
-#include <Nephilim/StateStack.h>
+#include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Localization.h>
 #include <Nephilim/Audio/AudioManager.h>
@@ -46,7 +46,7 @@ public:
 	std::vector<IScriptEngine*> scriptEngines;
 
 	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
-	StateStack stateManager;
+	GameStateMachine stateManager;
 
 	/// The game is prepared to own an arbitrary number of scenes, stored in this object
 	BaseSceneManager sceneManager;

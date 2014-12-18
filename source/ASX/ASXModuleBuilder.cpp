@@ -1,5 +1,5 @@
-#include <Nephilim/ASXModuleBuilder.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXModuleBuilder.h>
+#include <Nephilim/ASX/ASXEngine.h>
 #include <Nephilim/Logger.h>
 
 #include <AS/add_on/scriptbuilder/scriptbuilder.h>

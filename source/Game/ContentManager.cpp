@@ -1,5 +1,7 @@
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Graphics/StaticMesh.h>
+#include <Nephilim/Graphics/SkeletalMesh.h>
+
 #include <Nephilim/Model/ModelLoader.h>
 
 #include <Nephilim/Path.h>
@@ -37,6 +39,17 @@ StaticMesh* ContentManager::createStaticMesh(const String& urn)
 
 	staticMeshContainer.push_back(m);
 	staticMeshNames.push_back(urn);
+
+	return m;
+}
+
+/// Create a new static mesh with a given resource name
+SkeletalMesh* ContentManager::createSkeletalMesh(const String& urn)
+{
+	SkeletalMesh* m = new SkeletalMesh;
+
+	skeletalMeshContainer.push_back(m);
+	skeletalMeshNames.push_back(urn);
 
 	return m;
 }

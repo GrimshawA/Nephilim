@@ -1,6 +1,6 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/StateTransition.h>
-#include <Nephilim/StateStack.h>
+#include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/Game/GameState.h>
 #include <Nephilim/Logger.h>
 
@@ -68,6 +68,16 @@ void StateStackTransition::drawNextFrame(GraphicsDevice* renderer)
 {
 	if(m_stack)
 	{
+		for (auto& gs : m_stack->mFutureList)
+		{
+			gs->onActivate();
+		}
+
+		for (auto& gs : m_stack->mCurrentList)
+		{
+			gs->onDeactivate();
+		}
+
 		m_stack->drawList(m_stack->mFutureList, renderer);
 	}
 }
@@ -75,10 +85,6 @@ void StateStackTransition::drawNextFrame(GraphicsDevice* renderer)
 void StateStackTransition::finish()
 {
 	m_finished = true;
-
-	// When the transition is finished, it commits the future list as the current
-	m_stack->mCurrentList = m_stack->mFutureList;
-	m_stack->mFutureList.clear();
 }
 
 void StateStackTransition::draw(GraphicsDevice* renderer)

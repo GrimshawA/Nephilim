@@ -66,6 +66,10 @@ public:
 	/// To instance context menus
 	UIView* contextMenuElement = nullptr;
 
+	/// Menus (drop down boxes, menus in the bars etc)
+	/// Its a stack because menus can cast other menus
+	std::vector<UIView*> menuElementStack;
+
 	/// \ingroup UI
 	/// \class FontResource
 	/// \brief A font resource used by the UI system

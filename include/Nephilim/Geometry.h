@@ -40,6 +40,37 @@ struct TorusDef
 };
 
 /**
+	\class Geometry
+	\brief Utility class to generate geometry, procedurally manipulate it and render it
+*/
+class NEPHILIM_API Geometry
+{
+public:
+
+	/// Generate a plane with center in origin, facing its normal direction, with given dimensions
+	static Geometry GeneratePlane(Vector3D origin, Vector3D normal, Vector2D dimensions);
+
+	/// Generate a sky box mesh
+	static Geometry GenerateSkyBox();
+
+
+	/// Triangle
+	struct Face
+	{
+		uint16_t v1;
+		uint16_t v2;
+		uint16_t v3;
+	};
+
+	/// Triangle list
+	std::vector<Face>     _faces;
+	std::vector<Vector3D> _positions;
+	std::vector<vec4>     _colors;
+	std::vector<vec2>     _texcoord;
+};
+
+
+/**
 	\ingroup Graphics
 	\class GeometryData
 	\brief Holds raw geometry data for processing

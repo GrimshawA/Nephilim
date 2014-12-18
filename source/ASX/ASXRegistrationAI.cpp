@@ -1,7 +1,7 @@
 #include <Nephilim/ASX/ASXRegistrationAI.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 #include <Nephilim/Logger.h>
-
+/*
 #include <Nephilim/AI/WaypointPath.h>
 
 #include <angelscript.h>
@@ -21,4 +21,4 @@ void registerAIASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("WaypointPath", "uint size()", asMETHOD(WaypointPath, size), asCALL_THISCALL);
 }
 
-NEPHILIM_NS_END
+NEPHILIM_NS_END*/

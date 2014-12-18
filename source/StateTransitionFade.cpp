@@ -16,7 +16,7 @@ StateTransitionFade::StateTransitionFade()
 
 	m_stack = NULL;
 
-	this->allowUpdatesA = true;
+	this->allowUpdatesA = false;
 
 	m_rect.setColor(Color(0,0,0,0));
 	m_rect.setSize(1.f,1.f);

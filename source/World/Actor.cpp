@@ -86,4 +86,13 @@ vec3 Actor::getActorLocation()
 	return getTransform().position;
 }
 
+/// Set the location of this Actor directly
+void Actor::setActorLocation(Vector3D location)
+{
+	if (root)
+	{
+		root->t.position = location;
+	}
+}
+
 NEPHILIM_NS_END

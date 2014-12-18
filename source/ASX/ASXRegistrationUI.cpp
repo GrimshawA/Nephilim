@@ -1,8 +1,8 @@
 #include <Nephilim/ASX/ASXRegistrationUI.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 #include <Nephilim/AxPosition.h>
 
-#include <Nephilim/UIView.h>
+#include <Nephilim/UI/UIView.h>
 #include <Nephilim/Logger.h>
 
 #include <angelscript.h>
@@ -42,7 +42,7 @@ void animateUIViewByName(const String& name, UIView* view)
 void registerUserInterfaceASX(ASXEngine& engine)
 {
 	// Register the UIComponents enum
-	engine.get()->RegisterEnum("UIComponent");
+	/*engine.get()->RegisterEnum("UIComponent");
 	engine.get()->RegisterEnumValue("UIComponent", "Button", UIComponentList::Button);
 	engine.get()->RegisterEnumValue("UIComponent", "Background", UIComponentList::Background);
 	engine.get()->RegisterEnumValue("UIComponent", "Text", UIComponentList::Text);
@@ -80,7 +80,7 @@ void registerUserInterfaceASX(ASXEngine& engine)
 	engine.get()->RegisterObjectMethod("UIView", "void addStringProperty(const string& in,const string& in)", asMETHOD(UIView, addStringProperty), asCALL_THISCALL);
 	engine.get()->RegisterObjectMethod("UIView", "string getStringProperty(const string& in)", asMETHOD(UIView, getStringProperty), asCALL_THISCALL);
 
-	engine.get()->RegisterObjectMethod("UIView", "void animate(const string& in)", asFUNCTION(animateUIViewByName), asCALL_CDECL_OBJLAST);
+	engine.get()->RegisterObjectMethod("UIView", "void animate(const string& in)", asFUNCTION(animateUIViewByName), asCALL_CDECL_OBJLAST);*/
 }
 
 NEPHILIM_NS_END

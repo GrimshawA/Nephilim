@@ -280,6 +280,11 @@ void UICanvas::draw(GraphicsDevice* renderer)
 	{
 		getContext().contextMenuElement->drawItself(renderer, mat4::identity);
 	}
+
+	if (!getContext().menuElementStack.empty())
+	{
+		getContext().menuElementStack[0]->drawItself(renderer, mat4::identity);
+	}
 };
 
 /// Destroys a surface from its children

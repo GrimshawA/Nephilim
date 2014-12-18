@@ -1,7 +1,7 @@
 #include <Nephilim/ASX/ASXRegistrationResources.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/Texture.h>
+#include <Nephilim/Graphics/GLTexture.h>
 
 #include <angelscript.h>
 

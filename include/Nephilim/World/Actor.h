@@ -8,14 +8,60 @@
 #include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CColliderBox.h>
+#include <Nephilim/World/CSkinnedMesh.h>
 #include <Nephilim/Math/BBox.h>
 
+#include <Nephilim/Scripting/IScript.h>
+
 NEPHILIM_NS_BEGIN
+
+class IScript;
 
 class ActorComponent
 {
 public:
 	virtual void damn(){}
+};
+
+/**
+	\class AScriptComponent
+	\brief Allows to attach a scripted behavior to the actor
+
+	These behaviors are used to program gameplay logic into actors.
+	The actors are configured usually in a prefab and then spawned into the 
+	world, as the engine handles all this natively. Then, one can give behavior to the actor 
+	simply by adding a behavior to it. 
+
+	Behaviors can be pretty generic or very problem specific, but they usually 
+	focus on the more high-level logic of the game. For example, we can make an
+	enemy actor be spawned in the world many times, and they just idle around until
+	a script is added to give them behavior. The script may then give each enemy
+	the ability to move and manage all animations autonomously, move with pathfinding and so on,
+	follow the player etc.
+
+	This is really powerful as it gives life to the game world and not only makes
+	characters, vehicles and other assets interesting, but it also helps writing the game
+	rules.
+*/
+class AScriptComponent : public ActorComponent
+{
+public:
+	/// Whether the behavior is enabled
+	bool enabled = true;
+	
+	IScript* _script = nullptr;
+
+	/// This object represents the individual instance of the behavior for this component
+	void* object = nullptr;
+
+	void tickScript()
+	{
+		if (_script)
+		{
+			_script->callOnObject("void Tick()", object);
+			//_script->call("void print2()");
+		}
+	}
 };
 
 class AInputComponent : public ActorComponent, public CInput
@@ -66,6 +112,34 @@ public:
 	}
 };
 
+class NEPHILIM_API ASkeletalMeshComponent : public SceneComponent
+{
+public:
+
+	/// The skeletal mesh this component is linked to
+	SkeletalMesh* skeletalMeshAsset = nullptr;
+
+	Texture myT;
+
+	ComponentSkinnedModel* model = nullptr;
+
+public:
+
+	void testTexture(const String& name)
+	{
+		myT.loadFromFile(name);
+	}
+
+	void updateAnimation()
+	{
+		if (model)
+		{
+			model->update(Time::fromSeconds(1.f / 60.f));
+		}
+	}
+
+};
+
 class SCColliderBox : public SceneComponent, public CColliderBox
 {
 public:
@@ -106,6 +180,11 @@ public:
 
 public:
 
+	float X()
+	{
+		return getActorLocation().x;
+	}
+
 	/// Get the world instance that created this actor
 	World* getWorld();
 
@@ -130,6 +209,9 @@ public:
 
 	/// Get the position of this Actor
 	vec3 getActorLocation();
+
+	/// Set the location of this Actor directly
+	void setActorLocation(Vector3D location);
 
 	/// Destroy this actor
 	/// As soon as this function is called, the Actor object may not be used anymore

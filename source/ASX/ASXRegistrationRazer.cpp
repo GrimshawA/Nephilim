@@ -1,9 +1,9 @@
 #include <Nephilim/ASX/ASXRegistrationRazer.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXEngine.h>
 
 #include <Nephilim/Tilemap.h>
 
-
+/*
 #include <Nephilim/Razer/ComponentMesh.h>
 #include <Nephilim/Razer/ComponentTilemap2D.h>
 #include <Nephilim/Razer/ComponentTransform.h>
@@ -122,3 +122,4 @@ void registerRazerComponentsASX(ASXEngine& engine)
 }
 
 NEPHILIM_NS_END
+*/

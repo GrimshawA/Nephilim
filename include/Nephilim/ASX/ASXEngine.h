@@ -2,7 +2,7 @@
 #define ASXEngine_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 #include "ASXModule.h"
 
 #include <angelscript.h>

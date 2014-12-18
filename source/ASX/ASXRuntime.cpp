@@ -1,5 +1,5 @@
-#include <Nephilim/ASXRuntime.h>
-#include <Nephilim/ASXEngine.h>
+#include <Nephilim/ASX/ASXRuntime.h>
+#include <Nephilim/ASX/ASXEngine.h>
 
 #include <angelscript.h>
 

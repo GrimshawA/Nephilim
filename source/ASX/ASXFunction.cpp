@@ -1,6 +1,6 @@
-#include <Nephilim/ASXFunction.h>
-#include <Nephilim/ASXModule.h>
-#include <Nephilim/ASXRuntime.h>
+#include <Nephilim/ASX/ASXFunction.h>
+#include <Nephilim/ASX/ASXModule.h>
+#include <Nephilim/ASX/ASXRuntime.h>
 
 #include <angelscript.h>
 

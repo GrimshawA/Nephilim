@@ -9,34 +9,54 @@
 
 NEPHILIM_NS_BEGIN
 
-/*
-void ComponentSkinnedModel::getBoneTransforms(mat4* transforms, AnimationANM& animation, SkeletonSKL& skeleton)
+void ComponentSkinnedModel::PutLModelInSkeletal(SkeletalMesh* mesh, const String& skn_file)
 {
-	mat4 localBoneTransforms[128];
+	GeometryData champ;
+	SKNLoader::Load(champ, skn_file);
+	champ.m_useNormals = false;
 
-	for(int i = 0; i < skeleton.bones.size(); ++i)
+	// The SKN is loaded, now we put it in a nephilim skeletal mesh asset
+	mesh->_vertexArray.addAttribute(sizeof(float), 3, VertexFormat::Position);
+	mesh->_vertexArray.addAttribute(sizeof(float), 4, VertexFormat::Color);
+	mesh->_vertexArray.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
+	mesh->_vertexArray.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
+	mesh->_vertexArray.allocateData(champ.m_vertices.size());
+
+	struct vf
 	{
-		//int bone_id = skeleton.findIDByName(skeleton.bones[i].name);
+		vec3 p;
+		vec4 c;
+		vec2 uv;
+	};
 
-		// Get transformed matrix of the animation
-		mat4 absoluteBoneTransform = animation.getAbsoluteTransform(animation.NameToIndex(skeleton.bones[i].name), skeleton, currentFrame);
+	vf* varray = reinterpret_cast<vf*>(&mesh->_vertexArray._data[0]);
 
-		transforms[i] = absoluteBoneTransform * skeleton.bones[i].inverseBindPose;
+	for (auto i = 0; i < champ.m_vertices.size(); ++i)
+	{
+		varray[i].p = champ.m_vertices[i];
+		varray[i].c = vec4(1.f, 1.f, 1.f, 1.f);
+		varray[i].uv = champ.m_texCoords[i];
 	}
-	*/
+
+	mesh->_indexArray.indices.resize(champ.m_vertices.size());
+	for (int i = 0; i < mesh->_indexArray.indices.size(); ++i)
+	{
+		mesh->_indexArray.indices[i] = i;
+	}
+}
 
 ComponentSkinnedModel::ComponentSkinnedModel()
 {
 	baseTransform = mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
 
 	// Time to load the champion
-	SKNLoader::Load(champion, "VAYNE\\model.skn");
+	SKNLoader::Load(champion, "Models\\AHRI\\model.skn");
 	champion.m_useNormals = false;
 
-	championTexture.loadFromFile("VAYNE\\texture.png");
+	championTexture.loadFromFile("Models\\AHRI\\texture.png");
 
-	skeletonskl.Load("VAYNE\\skeleton.skl");
-	animations.Load("VAYNE\\Vayne_run.anm");
+	skeletonskl.Load("Models\\AHRI\\skeleton.skl");
+	animations.Load("Models\\AHRI\\Ahri_run.anm");
 
 	// remap bone indices
 	for(int i = 0; i < champion.boneIDs.size(); ++i)
@@ -47,8 +67,8 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 		champion.boneIDs[i].w = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].w];
 	}
 
-	rigShader.loadShaderFromFile(Shader::VertexUnit, String("lolmodels\\rigged.vert"));
-	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("lolmodels\\rigged.frag"));
+	rigShader.loadShaderFromFile(Shader::VertexUnit, String("Shaders\\rigged.vs"));
+	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("Shaders\\rigged.fs"));
 	rigShader.addAttributeLocation(0, "vertex");
 	rigShader.addAttributeLocation(1, "color");
 	rigShader.addAttributeLocation(2, "texCoord");

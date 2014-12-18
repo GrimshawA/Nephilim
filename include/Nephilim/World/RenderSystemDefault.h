@@ -40,6 +40,12 @@ class Entity;
 class NEPHILIM_API RenderSystemDefault : public RenderSystem
 {
 public:
+
+	mat4 camRot; // debug only
+
+public:
+
+
 	RenderSystemDefault();
 
 	void getActiveCamera(vec3& position, mat4& proj, mat4& view);
@@ -62,6 +68,9 @@ public:
 	void renderTilemap(Entity& entity);
 	void renderMesh(Entity& entity);
 	void renderModel(Entity& entity);
+
+	/// Render a sky box into the map
+	void renderSkyBox();
 
 	void renderAllSprites();
 	void renderSprite(CTransform* transform, CSprite* sprite);

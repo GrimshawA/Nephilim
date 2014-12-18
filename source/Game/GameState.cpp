@@ -1,14 +1,21 @@
 #include <Nephilim/Game/GameState.h>
+#include <Nephilim/Game/GameStateMachine.h>
 
 #include <Nephilim/NxMath.h>
-#include <Nephilim/StateStack.h>
+#include <Nephilim/Logger.h>
 #include <Nephilim/StateTransitionBlocks.h>
 #include <Nephilim/StateTransitionSlider.h>
 #include <Nephilim/StateTransitionFade.h>
 
 NEPHILIM_NS_BEGIN
 
-/// Simplest way to call a function in all the attached scripts
+GameState::GameState()
+: m_scheduledRemoval(false)
+, m_letEventsThrough(false)
+{
+	m_parent = NULL;
+}
+
 /// No error handling or checking
 void GameState::callScriptFunction(const String& name)
 {
@@ -19,14 +26,6 @@ void GameState::callScriptFunction(const String& name)
 std::size_t GameState::getNumAttachedScripts()
 {
 	return 0;
-}
-
-
-GameState::GameState()
-: m_scheduledRemoval(false)
-, m_letEventsThrough(false)
-{
-	m_parent = NULL;
 }
 
 void GameState::onEvent(const Event &event)
@@ -47,9 +46,13 @@ void GameState::onRender(GraphicsDevice* renderer)
 /// Push a state batch down the stack
 void GameState::triggerBatch(const GameStateBatch& batch)
 {
-	if (m_parent)
+	if (m_parent && m_parent->mFutureList.empty())
 	{
 		m_parent->triggerBatch(batch);
+	}
+	else
+	{
+		Log("Ignoring FSM signal. Already in transition");
 	}
 }
 
@@ -80,7 +83,7 @@ GameCore& GameState::getGame()
 	return *mGame;
 }
 
-StateStack* GameState::parentMachine(){
+GameStateMachine* GameState::parentMachine(){
 	return m_parent;
 };
 

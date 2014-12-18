@@ -482,4 +482,18 @@ void GraphicsDevice::setModelMatrix(const mat4& model)
 	m_model = model;
 }
 
+/// The renderer always has a target resolution to operate
+/// On windowed mode, its the size of the window's client area and in fullscreen the native resolution we're running at
+int GraphicsDevice::resolutionWidth()
+{
+	return getWindow()->width();
+}
+
+/// The renderer always has a target resolution to operate
+/// On windowed mode, its the size of the window's client area and in fullscreen the native resolution we're running at
+int GraphicsDevice::resolutionHeight()
+{
+	return getWindow()->height();
+}
+
 NEPHILIM_NS_END

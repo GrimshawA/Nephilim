@@ -1,4 +1,5 @@
 #include <Nephilim/UI/UIComponentMenu.h>
+#include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Logger.h>
 
@@ -16,8 +17,22 @@ void UIComponentMenuCaster::onAttach(UIView* view)
 
 void UIComponentMenuCaster::toggleMenu()
 {
-	Log("OPENING MENU");
-	mParent->getChild(0)->show();
+	UICore* core = mParent->getContext();
+	if (core && core->menuElementStack.empty())
+	{
+		Log("OPENING MENU");
+
+		UIView* menuView = new UIView();
+		menuView->setRect(mParent->getWorldPosition().x, mParent->getWorldPosition().y + mParent->height(), 100.f, 100.f);
+		menuView->addComponent(new UIComponentDebugColor(Color(17, 17, 17)));
+		core->menuElementStack.push_back(menuView);
+	}
+	else
+	{
+		Log("Closing menu");
+
+		core->menuElementStack.clear();
+	}
 }
 
 

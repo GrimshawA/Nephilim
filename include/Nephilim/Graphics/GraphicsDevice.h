@@ -208,6 +208,14 @@ public:
 	/// Mimics glVertexAttribPointer()
 	void setVertexAttribPointer(unsigned int index, int numComponents, int componentType, bool normalized, int stride, const void* ptr);
 
+	/// The renderer always has a target resolution to operate
+	/// On windowed mode, its the size of the window's client area and in fullscreen the native resolution we're running at
+	int resolutionWidth();
+
+	/// The renderer always has a target resolution to operate
+	/// On windowed mode, its the size of the window's client area and in fullscreen the native resolution we're running at
+	int resolutionHeight();
+
 protected:
 	friend class Window;
 

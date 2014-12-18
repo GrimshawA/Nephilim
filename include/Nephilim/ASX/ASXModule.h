@@ -2,7 +2,7 @@
 #define ASXModule_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 
 class CScriptBuilder;
 class asIScriptModule;

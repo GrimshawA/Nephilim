@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class StateStack;
+class GameStateMachine;
 class Time;
 class GraphicsDevice;
 class GameState;
@@ -52,8 +52,8 @@ public:
 	bool allowUpdatesB; ///< Set to true to allow the incoming state to update
 
 //private:
-	friend class StateStack;
-	StateStack* m_stack;
+	friend class GameStateMachine;
+	GameStateMachine* m_stack;
 
 	bool m_finished;
 

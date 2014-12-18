@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 class IScript;
 class Event;
 class GameStateBatch;
-class StateStack;
+class GameStateMachine;
 class StateStackTransition;
 class Time;
 class GraphicsDevice;
@@ -29,6 +29,13 @@ class NEPHILIM_API GameState
 {
 public:
 
+	/// Whether this state is currently activated (current or future)
+	bool _activated = false;
+
+	/// Whether this state is currently present in the current FSM node
+	bool _live = false;
+
+	/// Reference to the game owning this state
 	GameCore* mGame = nullptr;
 
 	/// Collection of scripts attached to this state
@@ -39,6 +46,10 @@ public:
 
 	/// Creates a default state
 	GameState();
+
+	/// Create an animation to transition between states
+	template<typename T>
+	T* createStateAnimation();
 
 	/// Push a state batch down the stack
 	void triggerBatch(const GameStateBatch& batch);
@@ -75,7 +86,7 @@ public:
 	virtual void onDataReceived(String dataID, void* data);
 
 	/// Get the parent machine of this state
-	StateStack* parentMachine();
+	GameStateMachine* parentMachine();
 
 	/// Sends a simple message to the binded state
 	void sendMessage(const String& bindName, const String& message);
@@ -101,12 +112,12 @@ public:
 	/// Draw the state
 	virtual void onRender(GraphicsDevice* renderer);
 
-	StateStack *m_parent;
+	GameStateMachine *m_parent;
 
 	String mName; /// States can have names
 
 private:
-	friend class StateStack;
+	friend class GameStateMachine;
 
 	bool m_letEventsThrough;
 
@@ -114,6 +125,13 @@ private:
 
 	bool m_scheduledRemoval;
 };
+
+/// Create an animation to transition between states
+template<typename T>
+T* GameState::createStateAnimation()
+{
+	return new T();
+}
 
 NEPHILIM_NS_END
 #endif // NephilimGameState_h__

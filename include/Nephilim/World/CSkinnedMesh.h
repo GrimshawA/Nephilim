@@ -4,6 +4,8 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Time.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
+#include <Nephilim/Graphics/SkeletalMesh.h>
+
 #include <Nephilim/AnimationClip.h>
 #include <Nephilim/Skeleton.h>
 #include <Nephilim/World/Component.h>
@@ -25,6 +27,8 @@ class NEPHILIM_API ComponentSkinnedModel : public Component
 {
 public:
 	ComponentSkinnedModel();
+
+	static void PutLModelInSkeletal(SkeletalMesh* mesh, const String& skn_file);
 
 	void update(const Time& deltaTime);
 

@@ -2,7 +2,7 @@
 #define NephilimASXFunction_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 #include "ASXRuntime.h"
 
 class asIScriptFunction;
