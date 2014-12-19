@@ -12,7 +12,8 @@ NEPHILIM_NS_BEGIN
 void ComponentSkinnedModel::PutLModelInSkeletal(SkeletalMesh* mesh, const String& skn_file)
 {
 	GeometryData champ;
-	SKNLoader::Load(champ, skn_file);
+	SKNLoader loader;
+	loader.Load(champ, skn_file);
 	champ.m_useNormals = false;
 
 	// The SKN is loaded, now we put it in a nephilim skeletal mesh asset
@@ -50,13 +51,17 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 	baseTransform = mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
 
 	// Time to load the champion
-	SKNLoader::Load(champion, "Models\\AHRI\\model.skn");
+	SKNLoader geometry;
+	geometry.Load(champion, "Models\\AHRI\\model.skn");
+
 	champion.m_useNormals = false;
 
 	championTexture.loadFromFile("Models\\AHRI\\texture.png");
 
 	skeletonskl.Load("Models\\AHRI\\skeleton.skl");
 	animations.Load("Models\\AHRI\\Ahri_run.anm");
+
+	geometry.write_ngf("Models/Ahri.ngf", &skeletonskl);
 
 	// remap bone indices
 	for(int i = 0; i < champion.boneIDs.size(); ++i)
