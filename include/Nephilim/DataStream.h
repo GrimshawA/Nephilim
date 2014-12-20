@@ -3,6 +3,8 @@
 
 #include <Nephilim/Platform.h>
 
+#include <stdint.h>
+
 NEPHILIM_NS_BEGIN
 
 class IODevice;
@@ -24,6 +26,15 @@ public:
 
 	/// Set the device of this data stream
 	void setDevice(IODevice& device);
+
+	/// Read <size> bytes from the stream
+	void read(void* destination, uint32_t size);
+
+	/// Write a memory segment to the stream as-is
+	void write(void* source, uint32_t size);
+
+	/// Write a uint32_t to the stream
+	void write_uint32(uint32_t v);
 
 	/// Reads the next byte as a char
 	char readChar();

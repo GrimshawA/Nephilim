@@ -2,6 +2,7 @@
 #include <Nephilim/IODevice.h>
 #include <Nephilim/Strings.h>
 
+#include <assert.h>
 #include <stdio.h>
 
 NEPHILIM_NS_BEGIN
@@ -24,6 +25,27 @@ DataStream::DataStream(IODevice& device)
 void DataStream::setDevice(IODevice& device)
 {
 	m_device = &device;
+}
+
+/// Read <size> bytes from the stream
+void DataStream::read(void* destination, uint32_t size)
+{
+	assert(m_device);
+	m_device->read(reinterpret_cast<char*>(destination), size);
+}
+
+/// Write a memory segment to the stream as-is
+void DataStream::write(void* source, uint32_t size)
+{
+	assert(m_device);
+	m_device->write(reinterpret_cast<char*>(source), size);
+}
+
+/// Write a uint32_t to the stream
+void DataStream::write_uint32(uint32_t v)
+{
+	assert(m_device);
+	m_device->write(reinterpret_cast<const char*>(&v), sizeof(v));
 }
 
 

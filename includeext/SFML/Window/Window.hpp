@@ -40,6 +40,9 @@
 #include <SFML/System/String.hpp>
 
 
+#include <Nephilim/StringList.h>
+#include <sigc++/sigc++.h>
+
 namespace sf
 {
 namespace priv
@@ -57,6 +60,13 @@ class Event;
 class SFML_WINDOW_API Window : GlResource, NonCopyable
 {
 public :
+
+	sigc::signal<void, int, int, const nx::StringList&> onDragDrop;
+
+	void RedirectDragDrop(int x, int y, const nx::StringList& str)
+	{
+		onDragDrop(x, y, str);
+	}
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor

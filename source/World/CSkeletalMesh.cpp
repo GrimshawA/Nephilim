@@ -1,77 +1,17 @@
-#include <Nephilim/World/CSkinnedMesh.h>
-#include <Nephilim/File.h>
+#include <Nephilim/World/CSkeletalMesh.h>
+
 #include <Nephilim/Geometry.h>
 #include <Nephilim/CGL.h>
 
-#include "SKNLoader.h"
-#include "SKLLoader.h"
-#include "ANMLoader.h"
+#include <lolimporterx/SKNLoader.h>
+#include <lolimporterx/SKLLoader.h>
+#include <lolimporterx/ANMLoader.h>
+#include <lolimporterx/FileWriter.h>
 
 NEPHILIM_NS_BEGIN
 
-void ComponentSkinnedModel::PutLModelInSkeletal(SkeletalMesh* mesh, const String& skn_file)
-{
-	GeometryData champ;
-	SKNLoader loader;
-	loader.Load(champ, skn_file);
-	champ.m_useNormals = false;
-
-	// The SKN is loaded, now we put it in a nephilim skeletal mesh asset
-	mesh->_vertexArray.addAttribute(sizeof(float), 3, VertexFormat::Position);
-	mesh->_vertexArray.addAttribute(sizeof(float), 4, VertexFormat::Color);
-	mesh->_vertexArray.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
-	mesh->_vertexArray.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
-	mesh->_vertexArray.allocateData(champ.m_vertices.size());
-
-	struct vf
-	{
-		vec3 p;
-		vec4 c;
-		vec2 uv;
-	};
-
-	vf* varray = reinterpret_cast<vf*>(&mesh->_vertexArray._data[0]);
-
-	for (auto i = 0; i < champ.m_vertices.size(); ++i)
-	{
-		varray[i].p = champ.m_vertices[i];
-		varray[i].c = vec4(1.f, 1.f, 1.f, 1.f);
-		varray[i].uv = champ.m_texCoords[i];
-	}
-
-	mesh->_indexArray.indices.resize(champ.m_vertices.size());
-	for (int i = 0; i < mesh->_indexArray.indices.size(); ++i)
-	{
-		mesh->_indexArray.indices[i] = i;
-	}
-}
-
-ComponentSkinnedModel::ComponentSkinnedModel()
-{
-	baseTransform = mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
-
-	// Time to load the champion
-	SKNLoader geometry;
-	geometry.Load(champion, "Models\\AHRI\\model.skn");
-
-	champion.m_useNormals = false;
-
-	championTexture.loadFromFile("Models\\AHRI\\texture.png");
-
-	skeletonskl.Load("Models\\AHRI\\skeleton.skl");
-	animations.Load("Models\\AHRI\\Ahri_run.anm");
-
-	geometry.write_ngf("Models/Ahri.ngf", &skeletonskl);
-
-	// remap bone indices
-	for(int i = 0; i < champion.boneIDs.size(); ++i)
-	{
-		champion.boneIDs[i].x = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].x];
-		champion.boneIDs[i].y = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].y];
-		champion.boneIDs[i].z = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].z];
-		champion.boneIDs[i].w = skeletonskl.boneIndexToActualBone[champion.boneIDs[i].w];
-	}
-
+CSkeletalMesh::CSkeletalMesh()
+{	
 	rigShader.loadShaderFromFile(Shader::VertexUnit, String("Shaders\\rigged.vs"));
 	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("Shaders\\rigged.fs"));
 	rigShader.addAttributeLocation(0, "vertex");
@@ -87,27 +27,29 @@ ComponentSkinnedModel::ComponentSkinnedModel()
 	}
 	rigShader.bind();
 
-	// Make the animation clip too
-	convertANMToClip(animations, clip);
-	convertSKLToSkeleton(skeletonskl, modelSkeleton);
-
-	mAnimationTime = 0.f;
-	mAnimationDuration = (float)animations.numFrames / animations.playbackFPS;
+	// Setup one animation
+	loadAnimation("Models\\VAYNE\\Vayne_run.anm", "Models\\VAYNE\\skeleton.skl");
 }
 
-void ComponentSkinnedModel::loadAnimation(const String& filename)
+void CSkeletalMesh::loadAnimation(const String& filename, const String& skeletonName)
 {
+	Log("CSkeletalMesh Anim: %s", filename.c_str());
+	Log("CSkeletalMesh Skel: %s", skeletonName.c_str());
+
+	// Important or animation doesn't work
+	SkeletonSKL skeletonskl;
+	skeletonskl.Load(skeletonName);
+	convertSKLToSkeleton(skeletonskl, modelSkeleton);
+
+	// Now the actual animation
+
 	clip.clear();
 
 	AnimationANM ax; ax.Load(filename);
 	convertANMToClip(ax, clip);
 
 	mAnimationTime = 0.f;
-}
-
-void ComponentSkinnedModel::setRotation(Quaternion r)
-{
-	baseTransform = r.toMatrix() * mat4::translate(0, -2.5, 0) * mat4::scale(0.019,0.019,0.019);
+	mAnimationDuration = (float)ax.numFrames / ax.playbackFPS;
 }
 
 vec3 getAbsolutePosition(AnimationClip& animationClip, Skeleton& skeleton, int frame, int bone_index)
@@ -178,7 +120,7 @@ mat4 InterpolateMatrix(mat4 a, mat4 b, float blend)
 	return r;
 }
 
-void ComponentSkinnedModel::update(const Time& deltaTime)
+void CSkeletalMesh::update(const Time& deltaTime)
 {
 	mAnimationTime += deltaTime.asSeconds() * clip.playbackFramesPerSecond;
 	if(mAnimationTime > clip.numFrames)
@@ -231,9 +173,9 @@ void ComponentSkinnedModel::update(const Time& deltaTime)
 	}
 }
 
-void ComponentSkinnedModel::render(GraphicsDevice* mRenderer)
+void CSkeletalMesh::render(GraphicsDevice* mRenderer)
 {
-	championTexture.bind();
+	//championTexture.bind();
 
 	mRenderer->setShader(rigShader);
 	mRenderer->setModelMatrix(mRenderer->getModelMatrix());

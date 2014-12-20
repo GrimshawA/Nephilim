@@ -303,7 +303,7 @@ public:
 	T w;
 };
 typedef Vec4<float> vec4;
-
+typedef Vec4<float> Vector4D;
 typedef Vec4<float> Vec4f;
 typedef Vec4<int> Vec4i;
 typedef Vec4<double> Vec4d;

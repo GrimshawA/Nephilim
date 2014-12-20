@@ -2,6 +2,8 @@
 #define NephilimGraphicsSkeletalMesh_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
+#include <Nephilim/Vectors.h>
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/IndexArray.h>
 
@@ -16,6 +18,14 @@ class NEPHILIM_API SkeletalMesh
 public:
 	VertexArray _vertexArray;
 	IndexArray _indexArray;
+
+	/// TODO, Need a way to "point" to a GPU vertex buffer so they can be rendered quickly
+	// Agnostic to whether its a big Vertex buffer or an individual one
+	//VertexBufferHandle handle;
+public:
+
+	/// Load the skeletal mesh from disk
+	bool load(const String& filename);
 };
 
 NEPHILIM_NS_END

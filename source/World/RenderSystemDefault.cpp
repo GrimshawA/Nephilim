@@ -15,7 +15,7 @@
 #include <Nephilim/World/ComponentModel.h>
 #include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CInput.h>
-#include <Nephilim/World/CSkinnedMesh.h>
+#include <Nephilim/World/CSkeletalMesh.h>
 #include <Nephilim/World/ComponentWater.h>
 #include <Nephilim/World/ComponentWater2.h>
 #include <Nephilim/World/SystemKinesis2D.h>
@@ -385,7 +385,38 @@ void RenderSystemDefault::renderScene()
 				if (skeletalMeshComponent->skeletalMeshAsset)
 				{
 					skeletalMeshComponent->myT.bind();
-					mRenderer->draw(skeletalMeshComponent->skeletalMeshAsset->_vertexArray, skeletalMeshComponent->skeletalMeshAsset->_indexArray);
+					//mRenderer->draw(skeletalMeshComponent->model->champion);
+
+					
+					mRenderer->enableVertexAttribArray(0);
+					mRenderer->enableVertexAttribArray(1);
+					mRenderer->enableVertexAttribArray(2);
+					mRenderer->enableVertexAttribArray(3);
+					mRenderer->enableVertexAttribArray(4);
+					mRenderer->enableVertexAttribArray(5);
+
+					// positions
+					mRenderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), skeletalMeshComponent->skeletalMeshAsset->_vertexArray.data());
+					
+					mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), &skeletalMeshComponent->skeletalMeshAsset->_vertexArray._data[0] + skeletalMeshComponent->skeletalMeshAsset->_vertexArray.getAttributeOffset(1));
+					
+					// 2 = uv
+					mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), &skeletalMeshComponent->skeletalMeshAsset->_vertexArray._data[0] + skeletalMeshComponent->skeletalMeshAsset->_vertexArray.getAttributeOffset(2));
+				
+					// 3 = n
+					mRenderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), &skeletalMeshComponent->skeletalMeshAsset->_vertexArray._data[0] + skeletalMeshComponent->skeletalMeshAsset->_vertexArray.getAttributeOffset(3));
+					mRenderer->setVertexAttribPointer(4, 4, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), &skeletalMeshComponent->skeletalMeshAsset->_vertexArray._data[0] + skeletalMeshComponent->skeletalMeshAsset->_vertexArray.getAttributeOffset(4));
+					mRenderer->setVertexAttribPointer(5, 4, GL_FLOAT, false, skeletalMeshComponent->skeletalMeshAsset->_vertexArray.stride(), &skeletalMeshComponent->skeletalMeshAsset->_vertexArray._data[0] + skeletalMeshComponent->skeletalMeshAsset->_vertexArray.getAttributeOffset(5));
+
+					glDrawElements(GL_TRIANGLES, skeletalMeshComponent->skeletalMeshAsset->_indexArray.size(), GL_UNSIGNED_SHORT, skeletalMeshComponent->skeletalMeshAsset->_indexArray.data());
+
+					mRenderer->disableVertexAttribArray(0);
+					mRenderer->disableVertexAttribArray(1);
+					mRenderer->disableVertexAttribArray(2);
+					mRenderer->disableVertexAttribArray(3);
+					mRenderer->disableVertexAttribArray(4);
+					mRenderer->disableVertexAttribArray(5);
+
 				}
 
 				mRenderer->setDefaultShader();

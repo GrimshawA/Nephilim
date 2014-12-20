@@ -5,9 +5,10 @@
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CInput.h>
 #include <Nephilim/World/CCameraLens.h>
-#include <Nephilim/World/CSkinnedMesh.h>
+#include <Nephilim/World/CSkeletalMesh.h>
 #include <Nephilim/World/CColliderBox.h>
 
+#include <Nephilim/Logger.h>
 #include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN

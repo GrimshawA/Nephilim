@@ -1,4 +1,4 @@
-#include <Nephilim/Skeleton.h>
+#include <Nephilim/Graphics/Skeleton.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,80 +1,135 @@
-#include <Nephilim/Graphics/Framebuffer.h>
+#include <Nephilim/Graphics/SkeletalMesh.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/Graphics/GLTexture.h>
+
+#include <Nephilim/File.h>
+#include <Nephilim/DataStream.h>
+
+#include <stdint.h>
 
 NEPHILIM_NS_BEGIN
 
-/// Constructs a uninitialized framebuffer
-Framebuffer::Framebuffer()
-: RenderTarget() 
-, m_id(0)
+struct AssetFileHeader
 {
+	uint32_t id;
+	uint8_t version;
+};
 
-}
-
-/// Releases the framebuffer
-Framebuffer::~Framebuffer()
+struct GeometryFileHeader
 {
+	uint32_t num_meshes;
+	uint32_t flags;
+};
 
-}
-
-/// Get the size of the target
-Vec2i Framebuffer::getSize() const
+// nothing in the format is mandatory, instead of forcing an order, we use header + data chunks, supporting additional user data easily.
+struct DataChunkHeader
 {
-	return m_size;
-}
+	char id[20];
+	uint32_t DataCount;
+	uint32_t DataSize;
+};
 
-/// Bind the framebuffer as the current one
-void Framebuffer::activate()
+/// Load the skeletal mesh from disk
+bool SkeletalMesh::load(const String& filename)
 {
-	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
-}
-
-/// Attaches a texture to the color attachment 0
-void Framebuffer::attachTexture(const Texture& texture)
-{
-	if(m_id == 0)
+	File file(filename, IODevice::BinaryRead);
+	if (file)
 	{
-		//Log("This is the default framebuffer");
-		return;
-	}
+		DataStream str(file);
 
-	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
-	glFramebufferTexture2DCGL(GL_FRAMEBUFFER_CGL, GL_COLOR_ATTACHMENT0_CGL, GL_TEXTURE_2D, texture.getIdentifier(), 0);
+		// Read header
+		AssetFileHeader fileHeader;
+		str.read(&fileHeader, sizeof(fileHeader));
 
-	if(glCheckFramebufferStatusCGL(GL_FRAMEBUFFER_CGL) == GL_FRAMEBUFFER_COMPLETE_CGL)
-	{
-		//Log("Created a complete framebuffer");
-	}
-}
+		// Read secondary header
+		GeometryFileHeader geometryFileHeader;
+		str.read(&geometryFileHeader, sizeof(geometryFileHeader));
 
-/// Attempts to create the framebuffer
-bool Framebuffer::create()
-{
-	bool success = false;
+		std::vector<Vector3D> _positions;
+		std::vector<Vector3D> _normals;
+		std::vector<Vector2D> _texcoord0;
+		std::vector<Vector4D> _boneID;
+		std::vector<Vector4D> _boneWeight;
 
-	GLuint tid = 0;
-	glGenFramebuffersCGL(1, static_cast<GLuint*>(&tid));
-	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, tid);
+		while (!file.atEnd())
+		{
+			// Read a chunk and extract it until EOF is reached
+			DataChunkHeader dataChunkHeader;
+			str.read(&dataChunkHeader, sizeof(dataChunkHeader));
 
-	m_id = tid;
-	if(m_id)
-	{
-		success = true;
+			char* buffer = new char[dataChunkHeader.DataCount * dataChunkHeader.DataSize];
+			
+			Log("CHUNK %s", dataChunkHeader.id);
+
+			if (strcmp(dataChunkHeader.id, "POSITIONS") == 0)
+			{
+				_positions.resize(dataChunkHeader.DataCount);
+				_normals.resize(dataChunkHeader.DataCount);
+				_texcoord0.resize(dataChunkHeader.DataCount);
+				_boneWeight.resize(dataChunkHeader.DataCount);
+				_boneID.resize(dataChunkHeader.DataCount);
+
+				str.read(_positions.data(), dataChunkHeader.DataCount * dataChunkHeader.DataSize);
+			}
+			else if (strcmp(dataChunkHeader.id, "FACES") == 0)
+			{
+				_indexArray.indices.resize(dataChunkHeader.DataCount);
+				str.read(_indexArray.indices.data(), dataChunkHeader.DataCount * dataChunkHeader.DataSize);
+			}
+			else if (strcmp(dataChunkHeader.id, "NORMALS") == 0)
+			{
+				str.read(_normals.data(), dataChunkHeader.DataCount * dataChunkHeader.DataSize);
+			}
+			else if (strcmp(dataChunkHeader.id, "TEXCOORD0") == 0)
+			{
+				str.read(_texcoord0.data(), dataChunkHeader.DataCount * dataChunkHeader.DataSize);
+			}
+			else if (strcmp(dataChunkHeader.id, "BONEINFLUENCES") == 0)
+			{
+				str.read(_boneID.data(), dataChunkHeader.DataCount * (dataChunkHeader.DataSize / 2));
+				str.read(_boneWeight.data(), dataChunkHeader.DataCount * (dataChunkHeader.DataSize / 2));
+			}
+		}
+
+		// Assemble the vertex array
+		_vertexArray.addAttribute(sizeof(float), 3, VertexFormat::Position);
+		_vertexArray.addAttribute(sizeof(float), 4, VertexFormat::Color);
+		_vertexArray.addAttribute(sizeof(float), 2, VertexFormat::TexCoord);
+		_vertexArray.addAttribute(sizeof(float), 3, VertexFormat::Position);
+		_vertexArray.addAttribute(sizeof(float), 4, VertexFormat::Position);
+		_vertexArray.addAttribute(sizeof(float), 4, VertexFormat::Position);
+		_vertexArray.allocateData(_positions.size());
+
+		struct vformat
+		{
+			Vector3D p;
+			Vector4D c;
+			Vector2D tex0;
+			Vector3D n;
+			Vector4D bid;
+			Vector4D bweight;
+		};
+
+		vformat* varray = reinterpret_cast<vformat*>(&_vertexArray._data[0]);
+
+		for (std::size_t i = 0; i < _positions.size(); ++i)
+		{
+			varray[i].p = _positions[i];
+			varray[i].c = Vector4D(1.f, 1.f, 1.f, 1.f);
+			varray[i].tex0 = _texcoord0[i];
+			varray[i].n = _normals[i];
+			varray[i].bid = _boneID[i];
+			varray[i].bweight = _boneWeight[i];
+		}
+
+		Log("Read the NGF");
+
+		return true;
 	}
 	else
-		m_id = 0;
-
-	return success;
-}
-
-/// Returns the internal id of the currently in-use program by OpenGL
-unsigned int Framebuffer::getCurrentActiveFramebuffer()
-{
-	GLint id = 0;
-//	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_EXT, &id);
-	return static_cast<unsigned int>(id);
+	{
+		return false;
+	}
 }
 
 NEPHILIM_NS_END
