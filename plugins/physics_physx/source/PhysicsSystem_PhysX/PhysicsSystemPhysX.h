@@ -1,15 +1,19 @@
 #ifndef NephilimPluginPhysicsPhysX_h__
 #define NephilimPluginPhysicsPhysX_h__
 
-#include <Nephilim/Razer/PhysicsSystem.h>
+#include <Nephilim/World/PhysicsSystem.h>
 
 #include <Nephilim/Logger.h>
 #include <Nephilim/Vectors.h>
 #include <Nephilim/VertexArray.h>
 #include <Nephilim/IndexArray.h>
 using namespace nx;
-using namespace rzr;
 
+namespace physx
+{
+	class PxPhysics;
+	class PxScene;
+}
 
 /**
 	\class PhysicsSystemPhysX
@@ -24,7 +28,21 @@ using namespace rzr;
 class PhysicsSystemPhysX : public PhysicsSystem
 {
 public:
+
+
+	physx::PxPhysics* mPhysics;
+	physx::PxScene* mScene;
+
+public:
+
+	/// Initialize the scene already
 	PhysicsSystemPhysX();
+
+	/// Get the name of this implementation (PhysX)
+	virtual String getName();
+
+	/// Step the simulation forward
+	virtual void update(const Time& deltaTime);
 };
 
 #endif // NephilimPluginPhysicsPhysX_h__

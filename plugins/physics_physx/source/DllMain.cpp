@@ -1,5 +1,5 @@
 // The actual worker
-#include "PhysicsSystemPhysX.h"
+#include "PhysicsSystem_PhysX/PhysicsSystemPhysX.h"
 
 #include <stdio.h>
 
@@ -7,9 +7,9 @@ extern "C"
 {
 	
 
-void __declspec(dllexport) doStuff()
+PhysicsSystem __declspec(dllexport) *createPhysicsSystem()
 {
-		
+	return new PhysicsSystemPhysX();
 }
 
 };
