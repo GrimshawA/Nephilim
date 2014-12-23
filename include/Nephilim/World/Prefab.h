@@ -51,11 +51,14 @@ public:
 	/// Lists of things that need to be instanced as children
 	std::vector<SubObject> subObjectData;
 
+	/// This specifies the prefab root (what it spawns)
+	String rootClassName;
+
 public:
 
 	String getRootClassName() const
 	{
-		return "Actor";
+		return rootClassName;
 	}
 
 	bool load(const String& filename);

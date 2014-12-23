@@ -15,6 +15,7 @@
 
 NEPHILIM_NS_BEGIN
 
+class Actor;
 class IScript;
 
 class ActorComponent
@@ -112,16 +113,13 @@ public:
 	}
 };
 
-class NEPHILIM_API ASkeletalMeshComponent : public SceneComponent
+class NEPHILIM_API ASkeletalMeshComponent : public SceneComponent, public CSkeletalMesh
 {
 public:
 
-	/// The skeletal mesh this component is linked to
-	SkeletalMesh* skeletalMeshAsset = nullptr;
+	
 
 	Texture myT;
-
-	CSkeletalMesh* model = nullptr;
 
 public:
 
@@ -132,10 +130,7 @@ public:
 
 	void updateAnimation()
 	{
-		if (model)
-		{
-			model->update(Time::fromSeconds(1.f / 60.f));
-		}
+		update(Time::fromSeconds(1.f / 60.f));
 	}
 
 };
@@ -143,8 +138,36 @@ public:
 class SCColliderBox : public SceneComponent, public CColliderBox
 {
 public:
-	
+
 };
+
+/**
+	\class ACharacterComponent
+	\brief (Actor) Represents a character's position and orientation, a bounding volume and behavior
+
+	Usually, all characters in a game will be instances of the Actor class,
+	with a ACharacterComponent as the root component. The physics system will ensure
+	validity of this character controller, if there is any.
+
+	It will also conveniently hide networking so the engine takes care of syncing all characters in the simulation.
+	Its children components will have their transforms automatically handled to stay relative to the character controller, so
+	a character can be easily made to walk around terrain etc, even before we add any final mesh.
+*/
+class ACharacterComponent : public SceneComponent
+{
+public:
+	void* userData = nullptr;
+
+	sigc::signal<void, Vector3D, Actor*> moving;
+
+public:
+
+	void moveTest(Vector3D displacement, Actor* a)
+	{
+		moving(displacement, a);
+	}
+};
+
 
 class World;
 

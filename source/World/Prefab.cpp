@@ -15,6 +15,8 @@ bool Prefab::load(const String& filename)
 		pugi::xml_node root_node = document.first_child();
 		if (root_node)
 		{
+			rootClassName = root_node.name();
+
 			auto sprite_components = root_node.children("Sprite");
 			for (auto it = sprite_components.begin(); it != sprite_components.end(); ++it)
 			{

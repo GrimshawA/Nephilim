@@ -366,19 +366,18 @@ void RenderSystemDefault::renderScene()
 				mRenderer->setModelMatrix(actor->getTransform().getMatrix() * mat4::rotatey(math::pi));
 			
 				// Now activate the right shader and uniforms
-				mRenderer->setShader(skeletalMeshComponent->model->rigShader);
+				mRenderer->setShader(skeletalMeshComponent->rigShader);
 				mRenderer->setModelMatrix(mRenderer->getModelMatrix());
 				mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
 				mRenderer->setViewMatrix(mRenderer->getViewMatrix());
-				skeletalMeshComponent->model->championTexture.bind();
-
-				for (auto& m : skeletalMeshComponent->model->boneTransforms)
+				
+				for (auto& m : skeletalMeshComponent->boneTransforms)
 				{
 					//m = mat4::identity;
 				}
 
-				int location = glGetUniformLocation(skeletalMeshComponent->model->rigShader.m_id, "u_BoneTransform");
-				glUniformMatrix4fv(location, 128, false, reinterpret_cast<float*>(&skeletalMeshComponent->model->boneTransforms[0]));
+				int location = glGetUniformLocation(skeletalMeshComponent->rigShader.m_id, "u_BoneTransform");
+				glUniformMatrix4fv(location, 128, false, reinterpret_cast<float*>(&skeletalMeshComponent->boneTransforms[0]));
 
 				//skeletalMeshComponent->model->render(mRenderer);
 				

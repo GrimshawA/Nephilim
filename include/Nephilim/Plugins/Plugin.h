@@ -29,6 +29,12 @@ public:
 
 	/// Check if this is a live instance of the plugin
 	bool isLoaded();
+
+	/// Shorthand to check if its a loaded instance
+	operator bool();
+
+	/// Get the address of the function
+	void* getFunctionAddress(const String& func_name);
 };
 
 NEPHILIM_NS_END

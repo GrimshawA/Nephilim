@@ -14,7 +14,7 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API AudioSystem : public System
 {
 public:
-
+	virtual void play(const String& filename) = 0;
 };
 
 NEPHILIM_NS_END

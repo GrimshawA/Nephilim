@@ -21,6 +21,8 @@ NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
 class ContentManager;
+class PhysicsSystem;
+class AudioSystem;
 
 /**
 	\class World
@@ -81,6 +83,9 @@ public:
 	/// This is only for convenience, for quickly spawning some objects from a quickly hacked together definition.
 	GameObject* spawnPrefab(const Prefab& prefab);
 
+	/// Variant that allows to spawn the entity/actor/etc in a given location and orientation directly
+	GameObject* spawnPrefab(const Prefab& prefab, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quaternion orientation = Quaternion::identity);
+
 	/// Spawns an actor with type T (must be a subclass of Actor)
 	template<typename T>
 	T* spawnActor();
@@ -103,6 +108,14 @@ public:
 	/// T must be a derived type of RenderSystem
 	template<typename T>
 	T* createRenderSystem();
+
+	/// Create a PhysicsSystem from its name
+	/// This means the physics system will be instanced via factory (plugin or not)
+	/// Returns nullptr if it fails
+	PhysicsSystem* createPhysicsSystem(const String& name);
+
+	/// Create a audio system from a plugin or factory
+	AudioSystem* createAudioSystem(const String& name);
 
 	/// Get the current component manager handling the type T
 	template<typename T>

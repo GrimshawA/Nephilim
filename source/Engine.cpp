@@ -48,7 +48,7 @@ void Engine::execute(GameCore* app)
 	if(m_currentApp)
 	{
 		m_currentApp->m_creator = this;
-		m_currentApp->onCreate();
+		m_currentApp->PrimaryCreate();
 	}
 }
 

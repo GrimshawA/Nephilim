@@ -1,4 +1,8 @@
 #include <Nephilim/World/World.h>
+
+#include <Nephilim/World/PhysicsSystem.h>
+#include <Nephilim/World/AudioSystem.h>
+
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CStaticMesh.h>
 #include <Nephilim/World/CTransform.h>
@@ -9,6 +13,7 @@
 #include <Nephilim/World/CColliderBox.h>
 
 #include <Nephilim/Logger.h>
+#include <Nephilim/Plugins/Plugin.h>
 #include <Nephilim/NxMath.h>
 
 NEPHILIM_NS_BEGIN
@@ -41,35 +46,54 @@ bool World::loadLevel(Level* level)
 	return false;
 }
 
-/// This is the most basic prefab instancing class
-/// Returns a pointer to the allocated object if applicable
-GameObject* World::spawnPrefab(const Prefab& prefab)
+
+/// Create a PhysicsSystem from its name
+/// This means the physics system will be instanced via factory (plugin or not)
+PhysicsSystem* World::createPhysicsSystem(const String& name)
 {
-	GameObject* GeneratedObject = nullptr;
+	PhysicsSystem* physicsSystem = nullptr;
 
-	String ClassName = prefab.getRootClassName();
+	// Prepare the angel script behavior, the dirty way
+	typedef PhysicsSystem* (*InstanceLoader_Fn2)();
 
-	// We're spawning an actor directly
-	if (ClassName == "Actor")
+	// FIX THE LEAK, PLUGINS ARE GAME WIDE
+	Plugin* physicsPlugin = new Plugin(name);
+	if (physicsPlugin->isLoaded())
 	{
-		Actor* actor = spawnActor();
-
-		for (auto it = prefab.objectData.cbegin(); it != prefab.objectData.cend(); ++it)
+		InstanceLoader_Fn2 f = (InstanceLoader_Fn2)physicsPlugin->getFunctionAddress("createPhysicsSystem");
+		if (f)
 		{
-			if (it->tag == "Sprite")
-			{
-				SpriteComponent* spriteComponent = actor->createComponent<SpriteComponent>();
-				spriteComponent->s.setSize(it->get("width").toFloat(), it->get("height").toFloat());
-				spriteComponent->s.tex = it->get("asset");
-			}
+			physicsSystem = f();
+			registerSystem(physicsSystem);
+			Log("GOT PHYSICS!");
 		}
-
-		GeneratedObject = actor;	
-
-		Log("Actor spawned from a prefab");
 	}
 
-	return GeneratedObject;
+	return physicsSystem;
+}
+
+/// Create a audio system from a plugin or factory
+AudioSystem* World::createAudioSystem(const String& name)
+{
+	AudioSystem* audioSystem = nullptr;
+
+	// Prepare the angel script behavior, the dirty way
+	typedef AudioSystem* (*InstanceLoader_Fn2)();
+
+	// FIX THE LEAK, PLUGINS ARE GAME WIDE
+	Plugin* audioPlugin = new Plugin(name);
+	if (audioPlugin->isLoaded())
+	{
+		InstanceLoader_Fn2 f = (InstanceLoader_Fn2)audioPlugin->getFunctionAddress("createAudioSystem");
+		if (f)
+		{
+			audioSystem = f();
+			registerSystem(audioSystem);
+			Log("GOT AUDIO!");
+		}
+	}
+
+	return audioSystem;
 }
 
 /// Get one of the currently loaded levels

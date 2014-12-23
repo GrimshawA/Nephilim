@@ -132,22 +132,6 @@ void CSkeletalMesh::update(const Time& deltaTime)
 	int nextFrame = (currentFrame + 1) % clip.numFrames;
 	float blend = mAnimationTime - currentFrame;
 
-	//Log("frames %d, frame time %f\nCurrent: %d\nNext: %d\nBlend %f", clip.numFrames, mAnimationTime, currentFrame, nextFrame, blend);
-
-	// For each bone of the skeleton, get its final matrix
-	/*for(std::size_t i = 0; i < modelSkeleton.bones.size(); ++i)
-	{
-		vec3 position = vec3::lerp(getAbsolutePosition(clip, modelSkeleton, currentFrame, i), getAbsolutePosition(clip, modelSkeleton, nextFrame, i), blend);
-		Quaternion rotation = Quaternion::slerp(getAbsoluteRotation(clip, modelSkeleton, currentFrame, i), getAbsoluteRotation(clip, modelSkeleton, nextFrame, i), blend);
-
-		mat4 currentTransform = getAbsoluteTransform(clip, modelSkeleton, currentFrame, i);
-		mat4 nextTransform = getAbsoluteTransform(clip, modelSkeleton, nextFrame, i);
-
-		mat4 boneMatrix = InterpolateMatrix(currentTransform, nextTransform, blend);
-
-		boneTransforms[i] = boneMatrix * modelSkeleton.bones[i].bindPoseMatrix;
-	}*/
-
 	// I have all the local transforms, interpolated for all bones, just need the absolutes now
 	std::vector<mat4> bone_transforms(128);
 
@@ -171,34 +155,6 @@ void CSkeletalMesh::update(const Time& deltaTime)
 		int index = clip.getTrackIndexByName(modelSkeleton.bones[i].name);
 		boneTransforms[i] = bone_transforms[index];
 	}
-}
-
-void CSkeletalMesh::render(GraphicsDevice* mRenderer)
-{
-	//championTexture.bind();
-
-	mRenderer->setShader(rigShader);
-	mRenderer->setModelMatrix(mRenderer->getModelMatrix());
-	mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
-	mRenderer->setViewMatrix(mRenderer->getViewMatrix());
-
-	/*mat4 boneTransforms[128];
-	for(int i = 0; i < 128; ++i)
-		boneTransforms[i] = mat4::identity;
-
-	// update the transforms with the animation
-	getBoneTransforms(boneTransforms, animations, skeletonskl);
-	*/
-	int location = glGetUniformLocation(rigShader.m_id, "u_BoneTransform");
-	glUniformMatrix4fv(location, 128, false, reinterpret_cast<float*>(&boneTransforms[0]));
-
-	if(location == -1)
-	{
-		//Log("Invalid uniform array");
-	}
-
-	mRenderer->draw(champion);
-	mRenderer->setDefaultShader();
 }
 
 NEPHILIM_NS_END

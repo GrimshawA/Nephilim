@@ -1,9 +1,9 @@
 #include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Engine.h>
 #include <Nephilim/CGL.h>
-
-#include <iostream>
-using namespace std;
+#include <Nephilim/StringList.h>
+#include <Nephilim/FileSystem.h>
+#include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -15,6 +15,24 @@ GameCore::GameCore()
 , mCloseRequested(false)
 {
 	stateManager.mGame = this;
+}
+
+/// Called before the game initializes, to set some properties
+/// For example, useful to allow or disallow automatic plugin loading
+/// or boot script running or not. Useful to cancel out some default behaviors the game does
+void GameCore::onPreSetup()
+{
+
+}
+
+/// Indexes all plugins found in /Plugins
+void GameCore::loadPlugins()
+{
+	StringList dll_list = FileSystem::scanDirectory("Plugins", "dll", false);
+	for (auto& dll_name : dll_list)
+	{
+		Log("Plugin: %s", dll_name.c_str());
+	}
 }
 
 /// Create a new scene or return if already exists
@@ -169,6 +187,17 @@ void GameCore::innerUpdate(Time time)
 void GameCore::innerRender()
 {
 	onRender();
+}
+
+////////////////////////////////////////////////////////////////////////// INTERNAL
+
+/// This will initialize the game effectively and then call onCreate()
+void GameCore::PrimaryCreate()
+{
+	// Plugins are ready when the game starts to construct
+	loadPlugins();
+
+	onCreate();
 }
 
 NEPHILIM_NS_END

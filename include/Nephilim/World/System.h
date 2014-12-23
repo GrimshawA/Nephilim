@@ -33,14 +33,22 @@ class World;
 class NEPHILIM_API System
 {
 public:
+	/// Reference to the world that owns this system
+	World* mWorld;
 
+public:
+
+	/// Ensure systems get destroyed correctly
 	virtual ~System();
 
 	virtual void update(const Time& deltaTime){}
 
 	virtual void render(){}
 
-	World* mWorld;
+	World* getWorld()
+	{
+		return mWorld;
+	}
 };
 
 NEPHILIM_NS_END

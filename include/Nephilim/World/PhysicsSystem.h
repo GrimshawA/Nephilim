@@ -2,6 +2,7 @@
 #define NephilimPhysicsSystem_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Strings.h>
 #include <Nephilim/World/System.h>
 
 NEPHILIM_NS_BEGIN
@@ -15,6 +16,9 @@ class NEPHILIM_API PhysicsSystem : public System
 {
 public:
 
+	/// Get the name of this PhysicsSystem
+	/// Used by implementations to name themselves, as they can be fully abstracted in plugins
+	virtual String getName();
 };
 
 NEPHILIM_NS_END

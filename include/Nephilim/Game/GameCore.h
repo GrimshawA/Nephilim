@@ -69,11 +69,19 @@ public:
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();
 
+	/// Called before the game initializes, to set some properties
+	/// For example, useful to allow or disallow automatic plugin loading
+	/// or boot script running or not. Useful to cancel out some default behaviors the game does
+	virtual void onPreSetup();
+
 	/// Create a new scene or return if already exists
 	World* createWorld(const String& name);
 
 	/// Create a new UICanvas for the game to use
 	UICanvas* createCanvas(const String& name);
+
+	/// Indexes all plugins found in /Plugins
+	void loadPlugins();
 
 	/// Get a pointer to the engine
 	Engine* getEngine();
@@ -166,7 +174,14 @@ private:
 	String m_windowTitle;
 
 
+
 	bool mCloseRequested;
+
+// Private managing Methods
+private:
+	
+	/// This will initialize the game effectively and then call onCreate()
+	void PrimaryCreate();
 };
 
 NEPHILIM_NS_END
