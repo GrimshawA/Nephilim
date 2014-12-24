@@ -590,12 +590,15 @@ mat4 mat4::lookAt(Vec3f eye, Vec3f center, Vec3f up)
 	m[0] = XAxis.x;
 	m[1] = YAxis.x;
 	m[2] = ZAxis.x;
+
 	m[4] = XAxis.y;
 	m[5] = YAxis.y;
 	m[6] = ZAxis.y;
+
 	m[8] = XAxis.z;
 	m[9] = YAxis.z;
 	m[10] = ZAxis.z;
+
 	m[12] = -XAxis.dot(eye);
 	m[13] = -YAxis.dot(eye);
 	m[14] = -ZAxis.dot(eye);

@@ -1,4 +1,6 @@
 #include <Nephilim/World/World.h>
+#include <Nephilim/World/PlayerController.h>
+#include <Nephilim/World/Landscape.h>
 
 #include <Nephilim/World/PhysicsSystem.h>
 #include <Nephilim/World/AudioSystem.h>
@@ -30,12 +32,24 @@ World::World()
 //	createDefaultComponentManager<ComponentSkinnedModel>();
 
 	Level* defaultLevel = new Level();
+	_currentLevel = defaultLevel;
 	levels.push_back(defaultLevel);
+
+	WorldViewport mainViewport;
+	_viewports.push_back(mainViewport);
+}
+
+/// Set the player controller for this world if applicable (clients only)
+/// The World _owns_ the object and destroys it when releasing
+void World::setPlayerController(PlayerController* playerController)
+{
+	_playerController.reset(playerController);
+	_playerController->_world = this;
 }
 
 /// Load a level into memory by its name
 /// This requires that the level is previously indexed into this world
-bool World::loadLevel(const String& name)
+bool World::loadLevel(const String& name, bool async)
 {
 	return false;
 }
@@ -109,6 +123,20 @@ Actor* World::spawnActor()
 	actor->mWorld = this;
 	actors.push_back(actor);
 	return actor;
+}
+
+/// Spawn a vanilla Landscape (not subclassed)
+Landscape* World::spawnLandscape()
+{
+	// Landscapes need to belong to their own levels, they are heavier map objects and need to be culled more efficiently
+	if (_currentLevel)
+	{
+		Landscape* land = new Landscape();
+		_currentLevel->landscapes.push_back(land);
+		return land;
+	}
+
+	return nullptr;
 }
 
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering

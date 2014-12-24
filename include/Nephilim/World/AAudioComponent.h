@@ -16,6 +16,8 @@
 
 NEPHILIM_NS_BEGIN
 
+class AudioSystem;
+
 /**
 	\class AAudioComponent
 	\brief Allows the actor to play sounds
@@ -32,6 +34,9 @@ public:
 
 	/// Attempt to play a sound (can fail)
 	void play(const String& filename);
+
+
+	AudioSystem* _audioSystem = nullptr;
 };
 
 NEPHILIM_NS_END

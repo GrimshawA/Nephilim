@@ -37,6 +37,9 @@ public:
 	/// Get the position of this transform
 	vec3 getPosition();
 
+	/// Makes this transform orient itself to the target
+	void setLookAt(Vector3D target);
+
 	void rotateByEulerAngles(float x_axis, float y_axis, float z_axis);
 	void rotateByAxisAngle(float angle, float x_axis, float y_axis, float z_axis);
 

@@ -36,6 +36,52 @@ void CTransform::setPosition(float px, float py)
 	position.y = py;
 }
 
+/// Makes this transform orient itself to the target
+void CTransform::setLookAt(Vector3D target)
+{
+	Vector3D D = target - position;
+	D.normalize();
+
+	Vector3D U(0.f, 1.f, 0.f);
+
+	Vector3D S = D.cross(U);
+	S.normalize();
+
+	Vector3D Un = S.cross(D);
+	Un.normalize();
+
+	mat4 rmat = mat4::identity;
+
+	rmat[0] = D.x;
+	rmat[1] = D.y;
+	rmat[2] = D.z;
+
+	rmat[4] = Un.x;
+	rmat[5] = Un.y;
+	rmat[6] = Un.z;
+
+	rmat[8] = S.x;
+	rmat[9] = S.y;
+	rmat[10] = S.z;
+
+	rmat[0] = S.x;
+	rmat[1] = Un.x;
+	rmat[2] = D.x;
+
+	rmat[4] = S.y;
+	rmat[5] = Un.y;
+	rmat[6] = D.y;
+
+	rmat[8] = S.z;
+	rmat[9] = Un.z;
+	rmat[10] = D.z;
+
+	rotation = Quaternion::fromMatrix(rmat);
+
+	mat4 m = mat4::lookAt(Vector3D(0.f, 0.f, 0.f), D, U).inverse();
+	rotation = Quaternion::fromMatrix(m);
+}
+
 /// Set the position from 3 floats
 void CTransform::setPosition(float px, float py, float pz)
 {

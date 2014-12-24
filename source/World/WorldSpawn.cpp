@@ -54,7 +54,23 @@ GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quaterni
 		csm.setStaticMesh(SM);
 		createComponent(csm, entity);
 	}
+	else if (prefab.getRootClassName() == "Actor")
+	{
+
+	}
 
 	return nullptr;
 }
+
+/// Spawn a prefab definition directly into the world
+GameObject* World::spawnPrefab(const String& prefabAsset, Vector3D location, Quaternion orientation)
+{
+	Prefab prefabDef;
+	if (prefabDef.load("./" + prefabAsset + ".prefab"))
+	{
+		Log("Prefab %s loaded for spawning", prefabAsset.c_str());
+	}
+	return spawnPrefab(prefabDef, location, orientation);
+}
+
 NEPHILIM_NS_END

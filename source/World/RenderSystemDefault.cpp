@@ -537,10 +537,15 @@ void RenderSystemDefault::renderAllSprites()
 
 void RenderSystemDefault::render()
 {
+	// Let's activate the proper camera
+	if (mWorld->_viewports.empty())
+		return;
+
+	mRenderer->setProjectionMatrix(mWorld->_viewports[0]._camera.lens.getProjection());
+	mRenderer->setViewMatrix(mWorld->_viewports[0]._camera.transform.getMatrix().inverse());
+
 	startFrame();
 	renderScene();
-//	endFrame();
-	//drawToBackBuffer();
 }
 
 void RenderSystemDefault::renderModel(Entity& entity)

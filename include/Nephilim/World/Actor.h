@@ -244,6 +244,10 @@ public:
 	template<typename T>
 	T* createComponent();
 
+	/// Find a component of type T
+	/// Returns nullptr if there isn't any
+	template<typename T>
+	T* searchComponent();
 };
 
 /// Create a new instance of component type T
@@ -259,6 +263,21 @@ T* Actor::createComponent()
 	}*/
 
 	return component;
+}
+
+/// Find a component of type T
+/// Returns nullptr if there isn't any
+template<typename T>
+T* Actor::searchComponent()
+{
+	for (std::size_t i = 0; i < components.size(); ++i)
+	{
+		if (dynamic_cast<T*>(components[i]))
+		{
+			return static_cast<T*>(components[i]);
+		}
+	}
+	return nullptr;
 }
 
 NEPHILIM_NS_END

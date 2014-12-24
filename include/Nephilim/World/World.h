@@ -13,9 +13,11 @@
 #include <Nephilim/World/Component.h>
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/Level.h>
+#include <Nephilim/World/WorldViewport.h>
 
 #include <vector>
 #include <map>
+#include <memory>
 
 NEPHILIM_NS_BEGIN
 
@@ -23,6 +25,7 @@ class GraphicsDevice;
 class ContentManager;
 class PhysicsSystem;
 class AudioSystem;
+class PlayerController;
 
 /**
 	\class World
@@ -31,6 +34,12 @@ class AudioSystem;
 class NEPHILIM_API World
 {
 public:
+
+	/// The player controller bound to this world at the moment
+	std::unique_ptr<PlayerController> _playerController = nullptr;
+
+	/// Currently assigned viewports, usually there is only one except for split screen cases
+	std::vector<WorldViewport> _viewports;
 
 	/// Name of this world
 	String name;
@@ -61,12 +70,23 @@ public:
 	/// Array of levels in this world
 	std::vector<Level*> levels;
 
+	/// Current level we have loaded
+	/// Unless we are on the multi-level streaming mode, there is only one active level ever
+	Level* _currentLevel;
+
 public:
+	/// Just prepare the world
 	World();
+
+	/// Set the player controller for this world if applicable (clients only)
+	/// The World _owns_ the object and destroys it when releasing
+	void setPlayerController(PlayerController* playerController);
 
 	/// Load a level into memory by its name
 	/// This requires that the level is previously indexed into this world
-	bool loadLevel(const String& name);
+	/// In async mode, the level will load in parallel and notify when its finished
+	/// Otherwise the call will block until the new level is fully ready
+	bool loadLevel(const String& name, bool async);
 
 	/// Load directly the new level into this world, and index it too
 	bool loadLevel(Level* level);
@@ -74,8 +94,11 @@ public:
 	/// Get one of the currently loaded levels
 	Level* getLevel(std::size_t index = 0);
 
-	/// Spawns an actor
+	/// Spawns a vanilla Actor (not subclassed)
 	Actor* spawnActor();
+
+	/// Spawn a vanilla Landscape (not subclassed)
+	Landscape* spawnLandscape();
 
 	/// This function will produce an object in the world from a prefab definition
 	/// Returns a pointer to the allocated object if applicable, its up to the user to determine its actual type and manage that
@@ -85,6 +108,9 @@ public:
 
 	/// Variant that allows to spawn the entity/actor/etc in a given location and orientation directly
 	GameObject* spawnPrefab(const Prefab& prefab, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quaternion orientation = Quaternion::identity);
+
+	/// Spawn a prefab definition directly into the world
+	GameObject* spawnPrefab(const String& prefabAsset, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quaternion orientation = Quaternion::identity);
 
 	/// Spawns an actor with type T (must be a subclass of Actor)
 	template<typename T>
