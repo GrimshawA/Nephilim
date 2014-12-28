@@ -14,11 +14,11 @@ BBox Actor::getActorBounds()
 {
 	Vector3D extents;
 
-	if (dynamic_cast<SpriteComponent*>(root))
+	if (dynamic_cast<ASpriteComponent*>(root))
 	{
 		extents.z = 0.f;
-		extents.x = static_cast<SpriteComponent*>(root)->s.getSize().x;
-		extents.y = static_cast<SpriteComponent*>(root)->s.getSize().y;
+		extents.x = static_cast<ASpriteComponent*>(root)->getSize().x;
+		extents.y = static_cast<ASpriteComponent*>(root)->getSize().y;
 	}
 
 

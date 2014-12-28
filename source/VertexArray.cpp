@@ -1,5 +1,5 @@
-#include <Nephilim/VertexArray.h>
-#include <Nephilim/IndexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
 #include <Nephilim/Logger.h>
 
 NEPHILIM_NS_BEGIN

@@ -188,7 +188,7 @@ public:
 	asILockableSharedBool     *GetWeakRefFlagOfScriptObject(void *obj, const asIObjectType *type) const;
 
 	// String interpretation
-	virtual asETokenClass ParseToken(const char *string, size_t stringLength = 0, int *tokenLength = 0) const;
+	virtual asETokenClass ParseToken(const char *string, std::size_t stringLength = 0, int *tokenLength = 0) const;
 
 	// Garbage collection
 	virtual int  GarbageCollect(asDWORD flags);
@@ -307,7 +307,7 @@ public:
 
 	// String constants
 	// TODO: Must free unused string constants, thus the ref count for each must be tracked
-	int              AddConstantString(const char *str, size_t length);
+	int              AddConstantString(const char *str, std::size_t length);
 	const asCString &GetConstantString(int id);
 
 	// Global property management

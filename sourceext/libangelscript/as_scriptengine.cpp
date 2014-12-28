@@ -848,9 +848,9 @@ int asCScriptEngine::SetDefaultNamespace(const char *nameSpace)
 	if( ns != "" )
 	{
 		// Make sure the namespace is composed of alternating identifier and ::
-		size_t pos = 0;
+		std::size_t pos = 0;
 		bool expectIdentifier = true;
-		size_t len;
+		std::size_t len;
 		eTokenType t = ttIdentifier;
 
 		for( ; pos < ns.GetLength(); pos += len)
@@ -996,12 +996,12 @@ asIJITCompiler *asCScriptEngine::GetJITCompiler() const
 
 // interface
 // TODO: interface: tokenLength should be asUINT
-asETokenClass asCScriptEngine::ParseToken(const char *string, size_t stringLength, int *tokenLength) const
+asETokenClass asCScriptEngine::ParseToken(const char *string, std::size_t stringLength, int *tokenLength) const
 {
 	if( stringLength == 0 )
 		stringLength = strlen(string);
 
-	size_t len;
+	std::size_t len;
 	asETokenClass tc;
 	tok.GetToken(string, stringLength, &len, &tc);
 
@@ -1241,7 +1241,7 @@ int asCScriptEngine::GetFactoryIdByDecl(const asCObjectType *ot, const char *dec
 
 	// Search for matching factory function
 	int id = -1;
-	for( size_t n = 0; n < ot->beh.factories.GetLength(); n++ )
+	for( std::size_t n = 0; n < ot->beh.factories.GetLength(); n++ )
 	{
 		asCScriptFunction *f = scriptFunctions[ot->beh.factories[n]];
 		if( f->IsSignatureEqual(&func) )
@@ -1277,7 +1277,7 @@ int asCScriptEngine::GetMethodIdByDecl(const asCObjectType *ot, const char *decl
 
 	// Search script functions for matching interface
 	int id = -1;
-	for( size_t n = 0; n < ot->methods.GetLength(); ++n )
+	for( std::size_t n = 0; n < ot->methods.GetLength(); ++n )
 	{
 		if( func.IsSignatureEqual(scriptFunctions[ot->methods[n]]) )
 		{
@@ -1415,7 +1415,7 @@ int asCScriptEngine::RegisterInterface(const char *name)
 	if( r >= 0 ) return ConfigError(asERROR, "RegisterInterface", name, 0);
 
 	// Make sure the name is not a reserved keyword
-	size_t tokenLen;
+	std::size_t tokenLen;
 	int token = tok.GetToken(name, strlen(name), &tokenLen);
 	if( token != ttIdentifier || strlen(name) != tokenLen )
 		return ConfigError(asINVALID_NAME, "RegisterInterface", name, 0);
@@ -1713,7 +1713,7 @@ int asCScriptEngine::RegisterObjectType(const char *name, int byteSize, asDWORD 
 		if( r < 0 || dt.GetObjectType()->nameSpace != defaultNamespace )
 		{
 			// Make sure the name is not a reserved keyword
-			size_t tokenLen;
+			std::size_t tokenLen;
 			int token = tok.GetToken(name, typeName.GetLength(), &tokenLen);
 			if( token != ttIdentifier || typeName.GetLength() != tokenLen )
 				return ConfigError(asINVALID_NAME, "RegisterObjectType", name, 0);
@@ -2909,7 +2909,7 @@ asIScriptFunction *asCScriptEngine::GetGlobalFunctionByDecl(const char *decl) co
 			)
 		{
 			bool match = true;
-			for( size_t p = 0; p < func.parameterTypes.GetLength(); ++p )
+			for( std::size_t p = 0; p < func.parameterTypes.GetLength(); ++p )
 			{
 				if( func.parameterTypes[p] != funcPtr->parameterTypes[p] )
 				{
@@ -5048,7 +5048,7 @@ int asCScriptEngine::RegisterTypedef(const char *type, const char *decl)
 		return asALREADY_REGISTERED;
 
 	// Grab the data type
-	size_t tokenLen;
+	std::size_t tokenLen;
 	eTokenType token;
 	asCDataType dataType;
 
@@ -5166,7 +5166,7 @@ int asCScriptEngine::RegisterEnum(const char *name)
 		return ConfigError(asERROR, "RegisterEnum", name, 0);
 
 	// Make sure the name is not a reserved keyword
-	size_t tokenLen;
+	std::size_t tokenLen;
 	int token = tok.GetToken(name, strlen(name), &tokenLen);
 	if( token != ttIdentifier || strlen(name) != tokenLen )
 		return ConfigError(asINVALID_NAME, "RegisterEnum", name, 0);
@@ -5382,7 +5382,7 @@ bool asCScriptEngine::IsTemplateType(const char *name) const
 }
 
 // internal
-int asCScriptEngine::AddConstantString(const char *str, size_t len)
+int asCScriptEngine::AddConstantString(const char *str, std::size_t len)
 {
 	// This is only called when build a script module, so it is
 	// known that only one thread can enter the function at a time.

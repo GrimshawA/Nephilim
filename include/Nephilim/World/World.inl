@@ -54,3 +54,12 @@ T* World::spawnActor()
 
 	return myObj;
 }
+
+/// Spawns an actor with type T (must be a subclass of Actor)
+template<typename T>
+T* World::spawnActor(Vector3D location, Quaternion orientation)
+{
+	T* actor = spawnActor<T>();
+	actor->setActorLocation(location);
+	return actor;
+}

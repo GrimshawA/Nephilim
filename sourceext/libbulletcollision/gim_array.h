@@ -151,11 +151,11 @@ public:
         return m_allocated_size;
     }
 
-    inline T & operator[](size_t i)
+    inline T & operator[](std::size_t i)
 	{
 		return m_data[i];
 	}
-	inline  const T & operator[](size_t i) const
+	inline  const T & operator[](std::size_t i) const
 	{
 		return m_data[i];
 	}

@@ -4,7 +4,7 @@
 #include <Nephilim/Logger.h>
 #include <Nephilim/File.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/VertexArray2D.h>
+#include <Nephilim/Graphics/VertexArray2D.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -33,7 +33,6 @@
 #include <SFML/System/String.hpp>
 #include <windows.h>
 
-
 namespace sf
 {
 namespace priv

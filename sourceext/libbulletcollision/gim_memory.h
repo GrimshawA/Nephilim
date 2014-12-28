@@ -35,6 +35,7 @@ email: projectileman@yahoo.com
 
 #include "gim_math.h"
 #include <string.h>
+#include <cstring>
 
 #ifdef PREFETCH
 #include <xmmintrin.h>	// for prefetch
@@ -88,9 +89,9 @@ email: projectileman@yahoo.com
 
 
 ///Function prototypes to allocate and free memory.
-typedef void * gim_alloc_function (size_t size);
-typedef void * gim_alloca_function (size_t size);//Allocs on the heap
-typedef void * gim_realloc_function (void *ptr, size_t oldsize, size_t newsize);
+typedef void * gim_alloc_function (std::size_t size);
+typedef void * gim_alloca_function (std::size_t size);//Allocs on the heap
+typedef void * gim_realloc_function (void *ptr, std::size_t oldsize, std::size_t newsize);
 typedef void gim_free_function (void *ptr);
 
 
@@ -110,9 +111,9 @@ gim_free_function  *gim_get_free_handler (void);
 
 
 ///Standar Memory functions
-void * gim_alloc(size_t size);
-void * gim_alloca(size_t size);
-void * gim_realloc(void *ptr, size_t oldsize, size_t newsize);
+void * gim_alloc(std::size_t size);
+void * gim_alloca(std::size_t size);
+void * gim_realloc(void *ptr, std::size_t oldsize, std::size_t newsize);
 void gim_free(void *ptr);
 
 
@@ -127,7 +128,7 @@ void gim_free(void *ptr);
 #define SIMD_T_SIZE sizeof(SIMD_T)
 
 
-inline void gim_simd_memcpy(void * dst, const void * src, size_t copysize)
+inline void gim_simd_memcpy(void * dst, const void * src, std::size_t copysize)
 {
 #ifdef GIM_SIMD_MEMORY
 /*
@@ -159,7 +160,7 @@ inline void gim_simd_memcpy(void * dst, const void * src, size_t copysize)
 
 
 template<class T>
-inline void gim_swap_elements(T* _array,size_t _i,size_t _j)
+inline void gim_swap_elements(T* _array,std::size_t _i,std::size_t _j)
 {
 	T _e_tmp_ = _array[_i];
 	_array[_i] = _array[_j];
@@ -168,7 +169,7 @@ inline void gim_swap_elements(T* _array,size_t _i,size_t _j)
 
 
 template<class T>
-inline void gim_swap_elements_memcpy(T* _array,size_t _i,size_t _j)
+inline void gim_swap_elements_memcpy(T* _array,std::size_t _i,std::size_t _j)
 {
 	char _e_tmp_[sizeof(T)];
 	gim_simd_memcpy(_e_tmp_,&_array[_i],sizeof(T));
@@ -177,7 +178,7 @@ inline void gim_swap_elements_memcpy(T* _array,size_t _i,size_t _j)
 }
 
 template <int SIZE>
-inline void gim_swap_elements_ptr(char * _array,size_t _i,size_t _j)
+inline void gim_swap_elements_ptr(char * _array,std::size_t _i,std::size_t _j)
 {
 	char _e_tmp_[SIZE];
 	_i*=SIZE;

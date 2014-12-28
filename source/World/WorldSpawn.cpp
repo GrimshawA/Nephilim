@@ -23,9 +23,9 @@ GameObject* World::spawnPrefab(const Prefab& prefab)
 		{
 			if (it->tag == "Sprite")
 			{
-				SpriteComponent* spriteComponent = actor->createComponent<SpriteComponent>();
-				spriteComponent->s.setSize(it->get("width").toFloat(), it->get("height").toFloat());
-				spriteComponent->s.tex = it->get("asset");
+				ASpriteComponent* spriteComponent = actor->createComponent<ASpriteComponent>();
+				spriteComponent->setSize(it->get("width").toFloat(), it->get("height").toFloat());
+				spriteComponent->tex = it->get("asset");
 			}
 		}
 

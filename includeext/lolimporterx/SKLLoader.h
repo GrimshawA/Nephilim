@@ -4,7 +4,7 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/File.h>
 #include <Nephilim/DataStream.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Math/Quaternion.h>
 using namespace nx;

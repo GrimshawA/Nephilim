@@ -39,6 +39,9 @@
 #include <queue>
 #include <set>
 
+#include <Nephilim/StringList.h>
+#include <sigc++/sigc++.h>
+
 namespace sf
 {
 class WindowListener;
@@ -52,6 +55,9 @@ namespace priv
 class WindowImpl : NonCopyable
 {
 public :
+
+	/// Emitted whenever external files are dropped into this window
+	sigc::signal<void, int, int, const nx::StringList&> onDragDrop;
 
     ////////////////////////////////////////////////////////////
     /// \brief Create a new window depending on the current OS

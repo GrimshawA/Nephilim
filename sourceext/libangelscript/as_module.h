@@ -102,7 +102,7 @@ public:
 	virtual void             Discard();
 
 	// Compilation
-	virtual int         AddScriptSection(const char *name, const char *code, size_t codeLength, int lineOffset);
+	virtual int         AddScriptSection(const char *name, const char *code, std::size_t codeLength, int lineOffset);
 	virtual int         Build();
 	virtual int         CompileFunction(const char *sectionName, const char *code, int lineOffset, asDWORD reserved, asIScriptFunction **outFunc);
 	virtual int         CompileGlobalVar(const char *sectionName, const char *code, int lineOffset);

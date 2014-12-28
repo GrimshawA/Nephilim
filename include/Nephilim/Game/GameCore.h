@@ -43,6 +43,9 @@ class NEPHILIM_API GameCore
 {
 public:
 
+	/// The game instance can have N parallel realms
+	std::vector<World*> gameWorlds;
+
 	std::vector<IScriptEngine*> scriptEngines;
 
 	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
@@ -64,18 +67,25 @@ public:
 	AudioManager audioManager;
 
 
-public:
-	
-	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
-	GameCore();
+public: 
+// Interface API
 
 	/// Called before the game initializes, to set some properties
 	/// For example, useful to allow or disallow automatic plugin loading
 	/// or boot script running or not. Useful to cancel out some default behaviors the game does
 	virtual void onPreSetup();
+	
+public:
 
+	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
+	GameCore();
+	
 	/// Create a new scene or return if already exists
 	World* createWorld(const String& name);
+
+	/// Get the main world of this game
+	/// If there are no spawned worlds, one will be created, otherwise the world 0 is always the main one
+	World* getWorld();
 
 	/// Create a new UICanvas for the game to use
 	UICanvas* createCanvas(const String& name);
@@ -145,7 +155,7 @@ protected:
 	virtual void onCreate(); 
 
 	/// Callback when an event happens
-	virtual void onEvent(Event &event);
+	virtual void onEvent(const Event &event);
 
 	/// Can only use relative path resources from this directory
 	/// The only alternative otherwise is to use absolute paths - which may be blocked in sandbox modes
@@ -182,6 +192,9 @@ private:
 	
 	/// This will initialize the game effectively and then call onCreate()
 	void PrimaryCreate();
+
+	/// This will handle the OS event and deliver it down the game structures
+	void PrimaryEventHandling(const Event& event);
 };
 
 NEPHILIM_NS_END

@@ -77,7 +77,7 @@ public:
 
 	virtual	int		getCurrentBufferSize() const = 0;
 
-	virtual	btChunk*	allocate(size_t size, int numElements) = 0;
+	virtual	btChunk*	allocate(std::size_t size, int numElements) = 0;
 
 	virtual	void	finalizeChunk(btChunk* chunk, const char* structType, int chunkCode,void* oldPtr)= 0;
 
@@ -542,7 +542,7 @@ public:
 		}
 
 		
-		virtual unsigned char* internalAlloc(size_t size)
+		virtual unsigned char* internalAlloc(std::size_t size)
 		{
 			unsigned char* ptr = 0;
 
@@ -561,7 +561,7 @@ public:
 
 		
 
-		virtual	btChunk*	allocate(size_t size, int numElements)
+		virtual	btChunk*	allocate(std::size_t size, int numElements)
 		{
 
 			unsigned char* ptr = internalAlloc(int(size)*numElements+sizeof(btChunk));

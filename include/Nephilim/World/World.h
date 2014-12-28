@@ -94,9 +94,6 @@ public:
 	/// Get one of the currently loaded levels
 	Level* getLevel(std::size_t index = 0);
 
-	/// Spawns a vanilla Actor (not subclassed)
-	Actor* spawnActor();
-
 	/// Spawn a vanilla Landscape (not subclassed)
 	Landscape* spawnLandscape();
 
@@ -116,9 +113,15 @@ public:
 	template<typename T>
 	T* spawnActor();
 
+	/// Spawns an actor with type T (must be a subclass of Actor)
+	template<typename T>
+	T* spawnActor(Vector3D location, Quaternion orientation = Quaternion::identity);
+
+	/// Spawns a vanilla Actor (not subclassed)
+	Actor* spawnActor();
+
 	/// Destroys an actor
 	void destroyActor(Actor* actor);
-
 
 	/// Allocate a component manager to type T as a ComponentArray<T>
 	template<typename T>

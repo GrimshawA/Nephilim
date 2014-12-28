@@ -2,12 +2,13 @@
 #define NephilimGeometry_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Graphics/VertexArray.h>
+#include <Nephilim/Math/Vectors.h>
+
 #include "Drawable.h"
-#include "Matrix.h"
+#include <Nephilim/Math/Matrix.h>
 #include "Color.h"
 #include <Nephilim/Graphics/RenderModes.h>
-#include "VertexArray.h"
 #include "Strings.h"
 
 #include <vector>

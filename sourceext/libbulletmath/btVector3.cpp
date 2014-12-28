@@ -52,14 +52,14 @@ long _maxdot_large( const float *vv, const float *vec, unsigned long count, floa
     
     long maxIndex = -1L;
     
-    size_t segment = 0;
+    std::size_t segment = 0;
     float4 stack_array[ STACK_ARRAY_COUNT ];
     
 #if DEBUG
     memset( stack_array, -1, STACK_ARRAY_COUNT * sizeof(stack_array[0]) );
 #endif
     
-    size_t index;
+    std::size_t index;
     float4 max;
     // Faster loop without cleanup code for full tiles
     for ( segment = 0; segment + STACK_ARRAY_COUNT*4 <= count; segment += STACK_ARRAY_COUNT*4 ) 
@@ -165,7 +165,7 @@ long _maxdot_large( const float *vv, const float *vec, unsigned long count, floa
             dotMax = max;
             
             // find first occurrence of that max  
-            size_t test;
+            std::size_t test;
             for( index = 0; 0 == (test=_mm_movemask_ps( _mm_cmpeq_ps( stack_array[index], max))); index++ )   // local_count must be a multiple of 4
             {}
             // record where it is.
@@ -273,14 +273,14 @@ long _maxdot_large( const float *vv, const float *vec, unsigned long count, floa
         }
     }
     
-    size_t localCount = (count & -4L) - 4*index;
+    std::size_t localCount = (count & -4L) - 4*index;
     if( localCount )
     {
 #ifdef __APPLE__
         float4 t0, t1, t2, t3, t4;
         float4 * sap = &stack_array[index + localCount / 4];
           vertices += localCount;      // counter the offset
-         size_t byteIndex = -(localCount) * sizeof(float);
+         std::size_t byteIndex = -(localCount) * sizeof(float);
         //AT&T Code style assembly
         asm volatile
         (   ".align 4                                                                   \n\
@@ -414,7 +414,7 @@ long _maxdot_large( const float *vv, const float *vec, unsigned long count, floa
         dotMax = max;
         
         // scan for the first occurence of max in the array  
-        size_t test;
+        std::size_t test;
         for( index = 0; 0 == (test=_mm_movemask_ps( _mm_cmpeq_ps( stack_array[index], max))); index++ )   // local_count must be a multiple of 4
         {}
         maxIndex = 4*index + segment + indexTable[test];
@@ -437,14 +437,14 @@ long _mindot_large( const float *vv, const float *vec, unsigned long count, floa
     
     long minIndex = -1L;
 
-    size_t segment = 0;
+    std::size_t segment = 0;
     float4 stack_array[ STACK_ARRAY_COUNT ];
     
 #if DEBUG
     memset( stack_array, -1, STACK_ARRAY_COUNT * sizeof(stack_array[0]) );
 #endif
     
-    size_t index;
+    std::size_t index;
     float4 min;
     // Faster loop without cleanup code for full tiles
     for ( segment = 0; segment + STACK_ARRAY_COUNT*4 <= count; segment += STACK_ARRAY_COUNT*4 ) 
@@ -550,7 +550,7 @@ long _mindot_large( const float *vv, const float *vec, unsigned long count, floa
             dotmin = min;
             
             // find first occurrence of that min  
-            size_t test;
+            std::size_t test;
             for( index = 0; 0 == (test=_mm_movemask_ps( _mm_cmpeq_ps( stack_array[index], min))); index++ )   // local_count must be a multiple of 4
             {}
             // record where it is.
@@ -658,7 +658,7 @@ long _mindot_large( const float *vv, const float *vec, unsigned long count, floa
         }
     }
     
-    size_t localCount = (count & -4L) - 4*index;
+    std::size_t localCount = (count & -4L) - 4*index;
     if( localCount )
     {
         
@@ -666,7 +666,7 @@ long _mindot_large( const float *vv, const float *vec, unsigned long count, floa
 #ifdef __APPLE__
         vertices += localCount;      // counter the offset
         float4 t0, t1, t2, t3, t4;
-        size_t byteIndex = -(localCount) * sizeof(float);
+        std::size_t byteIndex = -(localCount) * sizeof(float);
         float4 * sap = &stack_array[index + localCount / 4];
         
         asm volatile
@@ -802,7 +802,7 @@ long _mindot_large( const float *vv, const float *vec, unsigned long count, floa
         dotmin = min;
         
         // scan for the first occurence of min in the array  
-        size_t test;
+        std::size_t test;
         for( index = 0; 0 == (test=_mm_movemask_ps( _mm_cmpeq_ps( stack_array[index], min))); index++ )   // local_count must be a multiple of 4
         {}
         minIndex = 4*index + segment + indexTable[test];

@@ -2,7 +2,7 @@
 #define NephilimRazerComponentMesh_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Graphics/StaticMesh.h>
 #include <Nephilim/Game/Resource.h>
 #include <Nephilim/World/Component.h>

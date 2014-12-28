@@ -172,7 +172,7 @@ public:
 	asCScriptFunction *m_callingSystemFunction;
 
 	// The call stack holds program pointer, stack pointer, etc for caller functions
-	asCArray<size_t>    m_callStack;
+	asCArray<std::size_t>    m_callStack;
 
 	// Dynamically growing local stack
 	asCArray<asDWORD *> m_stackBlocks;

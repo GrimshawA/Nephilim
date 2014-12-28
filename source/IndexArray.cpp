@@ -1,4 +1,4 @@
-#include <Nephilim/IndexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
 
 NEPHILIM_NS_BEGIN
 

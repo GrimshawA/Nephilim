@@ -1,10 +1,10 @@
 #include <Nephilim/World/ComponentTilemap2D.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Tilemap.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Path.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 #include <pugixml/pugixml.hpp>
 

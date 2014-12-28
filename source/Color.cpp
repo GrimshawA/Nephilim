@@ -1,5 +1,5 @@
 #include <Nephilim/Color.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 #include <Nephilim/Logger.h>
 #include <algorithm>
 

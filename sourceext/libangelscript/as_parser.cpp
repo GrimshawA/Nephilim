@@ -83,7 +83,7 @@ void asCParser::Reset()
 
 	script = 0;
 
-	lastToken.pos = size_t(-1);
+	lastToken.pos = std::size_t(-1);
 }
 
 asCScriptNode *asCParser::GetScriptNode()
@@ -791,7 +791,7 @@ void asCParser::GetToken(sToken *token)
 	}
 
 	// Parse new token
-	size_t sourceLength = script->codeLength;
+	std::size_t sourceLength = script->codeLength;
 	do
 	{
 		if( sourcePos >= sourceLength )
@@ -813,9 +813,9 @@ void asCParser::GetToken(sToken *token)
 	       token->type == ttMultilineComment );
 }
 
-void asCParser::SetPos(size_t pos)
+void asCParser::SetPos(std::size_t pos)
 {
-	lastToken.pos = size_t(-1);
+	lastToken.pos = std::size_t(-1);
 	sourcePos = pos;
 }
 

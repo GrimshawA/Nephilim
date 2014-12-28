@@ -94,8 +94,8 @@ enum eScriptNode
 struct sToken
 {
 	eTokenType type;
-	size_t pos;
-	size_t length;
+	std::size_t pos;
+	std::size_t length;
 };
 
 class asCScriptEngine;
@@ -112,12 +112,12 @@ public:
 	void AddChildLast(asCScriptNode *node);
 	void DisconnectParent();
 
-	void UpdateSourcePos(size_t pos, size_t length);
+	void UpdateSourcePos(std::size_t pos, std::size_t length);
 
 	eScriptNode nodeType;
 	eTokenType tokenType;
-	size_t tokenPos;
-	size_t tokenLength;
+	std::size_t tokenPos;
+	std::size_t tokenLength;
 
 	asCScriptNode *parent;
 	asCScriptNode *next;

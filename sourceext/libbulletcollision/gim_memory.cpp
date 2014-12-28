@@ -83,7 +83,7 @@ gim_free_function  *gim_get_free_handler ()
 }
 
 
-void * gim_alloc(size_t size)
+void * gim_alloc(std::size_t size)
 {
 	void * ptr;
 	if (g_allocfn)
@@ -101,16 +101,16 @@ void * gim_alloc(size_t size)
   	return ptr;
 }
 
-void * gim_alloca(size_t size)
+void * gim_alloca(std::size_t size)
 {
   if (g_allocafn) return g_allocafn(size); else return gim_alloc(size);
 }
 
 
-void * gim_realloc(void *ptr, size_t oldsize, size_t newsize)
+void * gim_realloc(void *ptr, std::size_t oldsize, std::size_t newsize)
 {
  	void * newptr = gim_alloc(newsize);
-    size_t copysize = oldsize<newsize?oldsize:newsize;
+    std::size_t copysize = oldsize<newsize?oldsize:newsize;
     gim_simd_memcpy(newptr,ptr,copysize);
     gim_free(ptr);
     return newptr;

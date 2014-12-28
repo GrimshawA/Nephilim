@@ -16,7 +16,7 @@ subject to the following restrictions:
 
 #ifndef BT_VECTOR3_H
 #define BT_VECTOR3_H
-
+#include <cstring>
 //#include <stdint.h>
 #include "btScalar.h"
 #include "btMinMax.h"

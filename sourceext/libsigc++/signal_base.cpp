@@ -28,7 +28,7 @@ signal_impl::signal_impl()
 
 // only MSVC needs this to guarantee that all new/delete are executed from the DLL module
 #ifdef SIGC_NEW_DELETE_IN_LIBRARY_ONLY
-void* signal_impl::operator new(size_t size_)
+void* signal_impl::operator new(std::size_t size_)
 {
   return malloc(size_);
 }

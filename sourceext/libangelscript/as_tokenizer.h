@@ -50,7 +50,7 @@ BEGIN_AS_NAMESPACE
 class asCTokenizer
 {
 public:
-	eTokenType GetToken(const char *source, size_t sourceLength, size_t *tokenLength, asETokenClass *tc = 0) const;
+	eTokenType GetToken(const char *source, std::size_t sourceLength, std::size_t *tokenLength, asETokenClass *tc = 0) const;
 	
 	static const char *GetDefinition(int tokenType);
 
@@ -60,12 +60,12 @@ protected:
 	asCTokenizer();
 	~asCTokenizer();
 
-	asETokenClass ParseToken(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
-	bool IsWhiteSpace(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
-	bool IsComment(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
-	bool IsConstant(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
-	bool IsKeyWord(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
-	bool IsIdentifier(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const;
+	asETokenClass ParseToken(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
+	bool IsWhiteSpace(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
+	bool IsComment(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
+	bool IsConstant(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
+	bool IsKeyWord(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
+	bool IsIdentifier(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const;
 	bool IsDigitInRadix(char ch, int radix) const;
 
 	const asCScriptEngine *engine;

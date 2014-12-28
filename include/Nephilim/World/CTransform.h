@@ -2,7 +2,7 @@
 #define NephilimRazerComponentTransform_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Matrix.h>
+#include <Nephilim/Math/Matrix.h>
 #include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/World/Component.h>
 

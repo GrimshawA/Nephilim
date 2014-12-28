@@ -2,12 +2,13 @@
 #define NephilimText_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Graphics/VertexArray2D.h>
+
 #include "Strings.h"
 #include "Drawable.h"
 #include "Transformable.h"
 #include "Font.h"
 #include "Color.h"
-#include "VertexArray2D.h"
 #include "Rect.h"
 #include "Logger.h"
 

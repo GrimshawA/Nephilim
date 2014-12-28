@@ -19,7 +19,7 @@ int gNumAlignedAllocs = 0;
 int gNumAlignedFree = 0;
 int gTotalBytesAlignedAllocs = 0;//detect memory leaks
 
-static void *btAllocDefault(size_t size)
+static void *btAllocDefault(std::size_t size)
 {
 	return malloc(size);
 }
@@ -36,9 +36,9 @@ static btFreeFunc *sFreeFunc = btFreeDefault;
 
 #if defined (BT_HAS_ALIGNED_ALLOCATOR)
 #include <malloc.h>
-static void *btAlignedAllocDefault(size_t size, int alignment)
+static void *btAlignedAllocDefault(std::size_t size, int alignment)
 {
-	return _aligned_malloc(size, (size_t)alignment);
+	return _aligned_malloc(size, (std::size_t)alignment);
 }
 
 static void btAlignedFreeDefault(void *ptr)
@@ -48,7 +48,7 @@ static void btAlignedFreeDefault(void *ptr)
 #elif defined(__CELLOS_LV2__)
 #include <stdlib.h>
 
-static inline void *btAlignedAllocDefault(size_t size, int alignment)
+static inline void *btAlignedAllocDefault(std::size_t size, int alignment)
 {
 	return memalign(alignment, size);
 }
@@ -63,7 +63,7 @@ static inline void btAlignedFreeDefault(void *ptr)
 
 
 
-static inline void *btAlignedAllocDefault(size_t size, int alignment)
+static inline void *btAlignedAllocDefault(std::size_t size, int alignment)
 {
   void *ret;
   char *real;
@@ -108,7 +108,7 @@ void btAlignedAllocSetCustom(btAllocFunc *allocFunc, btFreeFunc *freeFunc)
 //this generic allocator provides the total allocated number of bytes
 #include <stdio.h>
 
-void*   btAlignedAllocInternal  (size_t size, int alignment,int line,char* filename)
+void*   btAlignedAllocInternal  (std::size_t size, int alignment,int line,char* filename)
 {
  void *ret;
  char *real;
@@ -156,7 +156,7 @@ void    btAlignedFreeInternal   (void* ptr,int line,char* filename)
 
 #else //BT_DEBUG_MEMORY_ALLOCATIONS
 
-void*	btAlignedAllocInternal	(size_t size, int alignment)
+void*	btAlignedAllocInternal	(std::size_t size, int alignment)
 {
 	gNumAlignedAllocs++;
 	void* ptr;

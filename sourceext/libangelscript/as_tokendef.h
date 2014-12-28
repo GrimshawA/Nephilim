@@ -178,7 +178,7 @@ enum eTokenType
 struct sTokenWord
 {
 	const char *word;
-	size_t      wordLength;
+	std::size_t      wordLength;
 	eTokenType  tokenType;
 };
 

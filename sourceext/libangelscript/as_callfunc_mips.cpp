@@ -244,7 +244,7 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 	int argBit = 1;
 	int hostFlags = 0;
 	int intArgs = 0;
-	for( size_t a = 0; a < descr->parameterTypes.GetLength(); a++ )
+	for( std::size_t a = 0; a < descr->parameterTypes.GetLength(); a++ )
 	{
 		if (descr->parameterTypes[a].IsFloatType()) 
 			hostFlags |= argBit;

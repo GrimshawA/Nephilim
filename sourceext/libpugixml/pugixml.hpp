@@ -22,7 +22,7 @@
 #ifndef HEADER_PUGIXML_HPP
 #define HEADER_PUGIXML_HPP
 
-// Include stddef.h for size_t and ptrdiff_t
+// Include stddef.h for std::size_t and ptrdiff_t
 #include <stddef.h>
 
 // Include exception header for XPath
@@ -236,7 +236,7 @@ namespace pugi
 		virtual ~xml_writer() {}
 
 		// Write memory chunk into stream/file/whatever
-		virtual void write(const void* data, size_t size) = 0;
+		virtual void write(const void* data, std::size_t size) = 0;
 	};
 
 	// xml_writer implementation for FILE*
@@ -246,7 +246,7 @@ namespace pugi
 		// Construct writer from a FILE* object; void* is used to avoid header dependencies on stdio
 		xml_writer_file(void* file);
 
-		virtual void write(const void* data, size_t size);
+		virtual void write(const void* data, std::size_t size);
 
 	private:
 		void* file;
@@ -261,7 +261,7 @@ namespace pugi
 		xml_writer_stream(std::basic_ostream<char, std::char_traits<char> >& stream);
 		xml_writer_stream(std::basic_ostream<wchar_t, std::char_traits<wchar_t> >& stream);
 
-		virtual void write(const void* data, size_t size);
+		virtual void write(const void* data, std::size_t size);
 
 	private:
 		std::basic_ostream<char, std::char_traits<char> >* narrow_stream;
@@ -342,7 +342,7 @@ namespace pugi
 		xml_attribute previous_attribute() const;
 
 		// Get hash value (unique for handles to the same object)
-		size_t hash_value() const;
+		std::size_t hash_value() const;
 
 		// Get internal pointer
 		xml_attribute_struct* internal_object() const;
@@ -575,7 +575,7 @@ namespace pugi
 		ptrdiff_t offset_debug() const;
 
 		// Get hash value (unique for handles to the same object)
-		size_t hash_value() const;
+		std::size_t hash_value() const;
 
 		// Get internal pointer
 		xml_node_struct* internal_object() const;
@@ -860,7 +860,7 @@ namespace pugi
 		void create();
 		void destroy();
 
-		xml_parse_result load_buffer_impl(void* contents, size_t size, unsigned int options, xml_encoding encoding, bool is_mutable, bool own);
+		xml_parse_result load_buffer_impl(void* contents, std::size_t size, unsigned int options, xml_encoding encoding, bool is_mutable, bool own);
 
 	public:
 		// Default constructor, makes empty document
@@ -889,15 +889,15 @@ namespace pugi
 		xml_parse_result load_file(const wchar_t* path, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
 
 		// Load document from buffer. Copies/converts the buffer, so it may be deleted or changed after the function returns.
-		xml_parse_result load_buffer(const void* contents, size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
+		xml_parse_result load_buffer(const void* contents, std::size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
 
 		// Load document from buffer, using the buffer for in-place parsing (the buffer is modified and used for storage of document data).
 		// You should ensure that buffer data will persist throughout the document's lifetime, and free the buffer memory manually once document is destroyed.
-		xml_parse_result load_buffer_inplace(void* contents, size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
+		xml_parse_result load_buffer_inplace(void* contents, std::size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
 
 		// Load document from buffer, using the buffer for in-place parsing (the buffer is modified and used for storage of document data).
 		// You should allocate the buffer with pugixml allocation function; document will free the buffer when it is no longer needed (you can't use it anymore).
-		xml_parse_result load_buffer_inplace_own(void* contents, size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
+		xml_parse_result load_buffer_inplace_own(void* contents, std::size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
 
 		// Save XML document to writer (semantics is slightly different from xml_node::print, see documentation for details).
 		void save(xml_writer& writer, const char_t* indent = PUGIXML_TEXT("\t"), unsigned int flags = format_default, xml_encoding encoding = encoding_auto) const;
@@ -1054,7 +1054,7 @@ namespace pugi
 		// At most capacity characters are written to the destination buffer, full result size is returned (includes terminating zero).
 		// If PUGIXML_NO_EXCEPTIONS is not defined, throws std::bad_alloc on out of memory errors.
 		// If PUGIXML_NO_EXCEPTIONS is defined, returns empty  set instead.
-		size_t evaluate_string(char_t* buffer, size_t capacity, const xpath_node& n) const;
+		std::size_t evaluate_string(char_t* buffer, std::size_t capacity, const xpath_node& n) const;
 
 		// Evaluate expression as node set in the specified context.
 		// If PUGIXML_NO_EXCEPTIONS is not defined, throws xpath_exception on type mismatch and std::bad_alloc on out of memory errors.
@@ -1163,10 +1163,10 @@ namespace pugi
 		type_t type() const;
 		
 		// Get collection size
-		size_t size() const;
+		std::size_t size() const;
 
 		// Indexing operator
-		const xpath_node& operator[](size_t index) const;
+		const xpath_node& operator[](std::size_t index) const;
 		
 		// Collection iterators
 		const_iterator begin() const;
@@ -1204,7 +1204,7 @@ namespace pugi
 #endif
 
 	// Memory allocation function interface; returns pointer to allocated memory or NULL on failure
-	typedef void* (*allocation_function)(size_t size);
+	typedef void* (*allocation_function)(std::size_t size);
 	
 	// Memory deallocation function interface
 	typedef void (*deallocation_function)(void* ptr);

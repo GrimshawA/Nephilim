@@ -5,7 +5,7 @@
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentText.h>
 
-#include <Nephilim/VertexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/CGL.h>
 
 #include <Nephilim/UI/UIComponent.h>

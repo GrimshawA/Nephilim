@@ -2,9 +2,11 @@
 #define NephilimLevel_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Vectors.h>
-#include <Nephilim/World/Actor.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Strings.h>
+
+#include <Nephilim/World/Actor.h>
+#include <Nephilim/World/ASpriteComponent.h>
 
 #include <vector>
 
@@ -68,7 +70,7 @@ public:
 
 public: // TEMP STUFF; FOR PROTOTYPING World MODULE
 
-	std::vector<SpriteComponent> sprites;
+	std::vector<ASpriteComponent> sprites;
 
 public:
 	/// Default construction of a level object

@@ -5,8 +5,8 @@
 #include <Nephilim/Drawable.h>
 #include <Nephilim/Image.h>
 
-#include <Nephilim/IndexArray.h>
-#include <Nephilim/VertexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
 
 #include <iostream>
 using namespace std;

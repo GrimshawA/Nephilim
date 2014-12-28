@@ -3,10 +3,10 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Tilemap.h>
-#include <Nephilim/VertexArray.h>
-#include <Nephilim/IndexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
 #include <Nephilim/CollisionData.h>
 #include <Nephilim/World/Component.h>
 

@@ -1,6 +1,6 @@
 #include <Nephilim/StateTransitionFade.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 #include <Nephilim/Time.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 

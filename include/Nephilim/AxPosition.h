@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include "AxBase.h"
 #include "AxEasing.h"
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN
 

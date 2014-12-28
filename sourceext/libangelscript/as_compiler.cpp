@@ -1088,7 +1088,7 @@ void asCCompiler::CallDestructor(asCDataType &type, int offset, bool isObjectOnH
 	}
 }
 
-void asCCompiler::LineInstr(asCByteCode *bc, size_t pos)
+void asCCompiler::LineInstr(asCByteCode *bc, std::size_t pos)
 {
 	int r, c;
 	script->ConvertPosToRowCol(pos, &r, &c);
@@ -1210,7 +1210,7 @@ int asCCompiler::CompileGlobalVariable(asCBuilder *builder, asCScriptCode *scrip
 	int varSize = GetVariableOffset((int)variableAllocations.GetLength()) - 1;
 
 	// Add information on the line number for the global variable
-	size_t pos = 0;
+	std::size_t pos = 0;
 	if( gvar->declaredAtNode )
 		pos = gvar->declaredAtNode->tokenPos;
 	else if( gvar->initializationNode )
@@ -2079,7 +2079,7 @@ int asCCompiler::CompileDefaultArgs(asCScriptNode *node, asCArray<asSExprContext
 				// Reserve all variables already used in the expression so none of them will be used
 				asCArray<int> used;
 				args[n]->bc.GetVarsUsed(used);
-				size_t prevReserved = reservedVariables.GetLength();
+				std::size_t prevReserved = reservedVariables.GetLength();
 				reservedVariables.Concatenate(used);
 
 				int newOffset = AllocateVariable(dt, true, IsVariableOnHeap(offset));
@@ -8090,7 +8090,7 @@ int asCCompiler::CompileExpressionValue(asCScriptNode *node, asSExprContext *ctx
 
 			// TODO: Check for overflow
 
-			size_t numScanned;
+			std::size_t numScanned;
 			float v = float(asStringScanDouble(value.AddressOf(), &numScanned));
 			ctx->type.SetConstantF(asCDataType::CreatePrimitive(ttFloat, true), v);
 #ifndef AS_USE_DOUBLE_AS_FLOAT
@@ -8104,7 +8104,7 @@ int asCCompiler::CompileExpressionValue(asCScriptNode *node, asSExprContext *ctx
 
 			// TODO: Check for overflow
 
-			size_t numScanned;
+			std::size_t numScanned;
 			double v = asStringScanDouble(value.AddressOf(), &numScanned);
 			ctx->type.SetConstantD(asCDataType::CreatePrimitive(ttDouble, true), v);
 			asASSERT(numScanned == vnode->tokenLength);

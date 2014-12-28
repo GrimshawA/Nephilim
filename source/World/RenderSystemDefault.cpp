@@ -20,7 +20,10 @@
 #include <Nephilim/World/ComponentWater2.h>
 #include <Nephilim/World/SystemKinesis2D.h>
 
-#include <Nephilim/NxMath.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/ASkeletalMeshComponent.h>
+
+#include <Nephilim/Math/Math.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GLTextureCube.h>
@@ -305,10 +308,10 @@ void RenderSystemDefault::renderScene()
 		Actor* actor = mWorld->actors[i];
 		for (std::size_t j = 0; j < actor->components.size(); ++j)
 		{
-			SpriteComponent* spriteComponent = dynamic_cast<SpriteComponent*>(actor->components[j]);
+			ASpriteComponent* spriteComponent = dynamic_cast<ASpriteComponent*>(actor->components[j]);
 			if (spriteComponent)
 			{
-				renderSprite(&spriteComponent->t, &spriteComponent->s);
+				renderSprite(&spriteComponent->t, spriteComponent);
 			}
 
 			SCStaticMesh* staticMeshComponent = dynamic_cast<SCStaticMesh*>(actor->components[j]);
@@ -426,6 +429,8 @@ void RenderSystemDefault::renderScene()
 
 void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 {
+	//Log("ACTOR SPRITE");
+
 	mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
 
 	Texture* t = mContentManager->getTexture(sprite->tex);
@@ -512,6 +517,8 @@ void RenderSystemDefault::renderSprite(CTransform* transform, CSprite* sprite)
 
 		mRenderer->setModelMatrix(mat4::identity);
 		mRenderer->setDefaultTexture();
+
+		//Log("RENDERING SPRITE");
 
 	}
 }

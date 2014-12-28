@@ -24,7 +24,7 @@ subject to the following restrictions:
 
 
 #include <math.h>
-#include <stdlib.h>//size_t for MSVC 6.0
+#include <stdlib.h>//std::size_t for MSVC 6.0
 #include <float.h>
 
 /* SVN $Revision$ on $Date$ from http://bullet.googlecode.com*/
@@ -327,13 +327,13 @@ typedef float32x4_t btSimdFloat4;
 
 
 #define BT_DECLARE_ALIGNED_ALLOCATOR() \
-   SIMD_FORCE_INLINE void* operator new(size_t sizeInBytes)   { return btAlignedAlloc(sizeInBytes,16); }   \
+   SIMD_FORCE_INLINE void* operator new(std::size_t sizeInBytes)   { return btAlignedAlloc(sizeInBytes,16); }   \
    SIMD_FORCE_INLINE void  operator delete(void* ptr)         { btAlignedFree(ptr); }   \
-   SIMD_FORCE_INLINE void* operator new(size_t, void* ptr)   { return ptr; }   \
+   SIMD_FORCE_INLINE void* operator new(std::size_t, void* ptr)   { return ptr; }   \
    SIMD_FORCE_INLINE void  operator delete(void*, void*)      { }   \
-   SIMD_FORCE_INLINE void* operator new[](size_t sizeInBytes)   { return btAlignedAlloc(sizeInBytes,16); }   \
+   SIMD_FORCE_INLINE void* operator new[](std::size_t sizeInBytes)   { return btAlignedAlloc(sizeInBytes,16); }   \
    SIMD_FORCE_INLINE void  operator delete[](void* ptr)         { btAlignedFree(ptr); }   \
-   SIMD_FORCE_INLINE void* operator new[](size_t, void* ptr)   { return ptr; }   \
+   SIMD_FORCE_INLINE void* operator new[](std::size_t, void* ptr)   { return ptr; }   \
    SIMD_FORCE_INLINE void  operator delete[](void*, void*)      { }   \
 
 
@@ -637,7 +637,7 @@ struct btTypedObject
 
   
 ///align a pointer to the provided alignment, upwards
-template <typename T>T* btAlignPointer(T* unalignedPtr, size_t alignment)
+template <typename T>T* btAlignPointer(T* unalignedPtr, std::size_t alignment)
 {
 		
 	struct btConvertPointerSizeT
@@ -645,13 +645,13 @@ template <typename T>T* btAlignPointer(T* unalignedPtr, size_t alignment)
 		union 
 		{
 				T* ptr;
-				size_t integer;
+				std::size_t integer;
 		};
 	};
     btConvertPointerSizeT converter;
     
     
-	const size_t bit_mask = ~(alignment - 1);
+	const std::size_t bit_mask = ~(alignment - 1);
     converter.ptr = unalignedPtr;
 	converter.integer += alignment-1;
 	converter.integer &= bit_mask;

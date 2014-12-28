@@ -89,12 +89,12 @@ void Engine::update()
 		Event event;
 		while(m_window->pollEvent(event))
 		{
-			m_currentApp->onEvent(event);
+			m_currentApp->PrimaryEventHandling(event);
 		}
 
 		while(!m_events.empty())
 		{
-			m_currentApp->onEvent(m_events[0]);
+			m_currentApp->PrimaryEventHandling(m_events[0]);
 			m_events.erase(m_events.begin());
 		}
 

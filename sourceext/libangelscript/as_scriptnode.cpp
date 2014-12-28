@@ -104,7 +104,7 @@ void asCScriptNode::SetToken(sToken *token)
 	tokenType   = token->type;
 }
 
-void asCScriptNode::UpdateSourcePos(size_t pos, size_t length)
+void asCScriptNode::UpdateSourcePos(std::size_t pos, std::size_t length)
 {
 	if( pos == 0 && length == 0 ) return;
 

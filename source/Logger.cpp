@@ -10,6 +10,8 @@
 
 NEPHILIM_NS_BEGIN
 
+Logger NLog;
+
 String Logger::m_tag = "Nephilim";
 
 void Log(const char * format, ...)
@@ -25,6 +27,12 @@ void Log(const char * format, ...)
 #else
 	printf("[%s] %s\n", Logger::m_tag.c_str(), buffer);
 #endif
+}
+
+Logger& Logger::operator<<(const String& s)
+{
+	printf("%s", s.c_str());
+	return *this;
 }
 
 NEPHILIM_NS_END

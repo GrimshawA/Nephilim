@@ -2,7 +2,7 @@
 #define PARABOLA_INPUTEVENT_H
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN
 

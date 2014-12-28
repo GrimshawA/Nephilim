@@ -3,9 +3,9 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/Vectors.h>
-#include <Nephilim/VertexArray.h>
-#include <Nephilim/IndexArray.h>
+#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Graphics/VertexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
 
 NEPHILIM_NS_BEGIN
 

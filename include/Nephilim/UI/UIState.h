@@ -2,7 +2,7 @@
 #define UIStateContext_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 #include "Font.h"
 #include "Localization.h"
 

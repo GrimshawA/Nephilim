@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Color.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN
 

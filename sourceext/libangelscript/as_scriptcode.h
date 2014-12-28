@@ -52,19 +52,19 @@ public:
 	~asCScriptCode();
 
 	int SetCode(const char *name, const char *code, bool makeCopy);
-	int SetCode(const char *name, const char *code, size_t length, bool makeCopy);
+	int SetCode(const char *name, const char *code, std::size_t length, bool makeCopy);
 
-	void ConvertPosToRowCol(size_t pos, int *row, int *col);
+	void ConvertPosToRowCol(std::size_t pos, int *row, int *col);
 
-	bool TokenEquals(size_t pos, size_t len, const char *str);
+	bool TokenEquals(std::size_t pos, std::size_t len, const char *str);
 
 	asCString        name;
 	char            *code;
-	size_t           codeLength;
+	std::size_t           codeLength;
 	bool             sharedCode;
 	int              idx;
 	int              lineOffset;
-	asCArray<size_t> linePositions;
+	asCArray<std::size_t> linePositions;
 };
 
 END_AS_NAMESPACE

@@ -2,7 +2,7 @@
 #define NephilimRazerComponentGizmo_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN

@@ -1,7 +1,8 @@
 #include <Nephilim/Game/GameState.h>
+#include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Game/GameStateMachine.h>
 
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/StateTransitionBlocks.h>
 #include <Nephilim/StateTransitionSlider.h>
@@ -14,6 +15,19 @@ GameState::GameState()
 , m_letEventsThrough(false)
 {
 	m_parent = NULL;
+}
+
+/// Get the main world
+World* GameState::getWorld()
+{
+	return getGame().getWorld();
+}
+
+/// Create a new behavior for this state
+void GameState::createBehavior(const String& scriptFile)
+{
+	GameBehavior behavior;
+	behaviors.push_back(behavior);
 }
 
 /// No error handling or checking

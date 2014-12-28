@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include "Strings.h"
 #include <vector>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN
 

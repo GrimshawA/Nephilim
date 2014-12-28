@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include "Strings.h"
 #include "Color.h"
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 
 #include <vector>
 

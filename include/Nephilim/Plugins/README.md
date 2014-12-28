@@ -7,3 +7,4 @@ and start using right away.
 
 ============================================
 
+Plugin code must include PluginSDK.h which provides the basic functionality to implement a proper plugin interface.

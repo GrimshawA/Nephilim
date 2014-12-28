@@ -2,10 +2,10 @@
 #define View_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 #include "Rect.h"
 #include "Transform.h"
-#include "Matrix.h"
+#include <Nephilim/Math/Matrix.h>
 #include "ReferenceCountable.h"
 
 NEPHILIM_NS_BEGIN

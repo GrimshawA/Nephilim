@@ -76,7 +76,7 @@ asCString::asCString(asCString &&str)
 }
 #endif // c++11
 
-asCString::asCString(const char *str, size_t len)
+asCString::asCString(const char *str, std::size_t len)
 {
 	length = 0;
 	local[0] = 0;
@@ -89,7 +89,7 @@ asCString::asCString(const char *str)
 	length = 0;
 	local[0] = 0;
 
-	size_t len = strlen(str);
+	std::size_t len = strlen(str);
 	Assign(str, len);
 }
 
@@ -125,12 +125,12 @@ const char *asCString::AddressOf() const
 		return dynamic;
 }
 
-void asCString::SetLength(size_t len)
+void asCString::SetLength(std::size_t len)
 {
 	Allocate(len, true);
 }
 
-void asCString::Allocate(size_t len, bool keepData)
+void asCString::Allocate(std::size_t len, bool keepData)
 {
 	// If we stored the capacity of the dynamically allocated buffer it would be possible
 	// to save some memory allocations if a string decreases in size then increases again,
@@ -179,7 +179,7 @@ void asCString::Allocate(size_t len, bool keepData)
 	AddressOf()[length] = 0;
 }
 
-void asCString::Assign(const char *str, size_t len)
+void asCString::Assign(const char *str, std::size_t len)
 {
 	Allocate(len, false);
 
@@ -190,7 +190,7 @@ void asCString::Assign(const char *str, size_t len)
 
 asCString &asCString::operator =(const char *str)
 {
-	size_t len = str ? strlen(str) : 0;
+	std::size_t len = str ? strlen(str) : 0;
 	Assign(str, len);
 
 	return *this;
@@ -241,7 +241,7 @@ asCString &asCString::operator =(char ch)
 	return *this;
 }
 
-void asCString::Concatenate(const char *str, size_t len)
+void asCString::Concatenate(const char *str, std::size_t len)
 {
 	asUINT oldLength = length;
 	SetLength(length + len);
@@ -252,7 +252,7 @@ void asCString::Concatenate(const char *str, size_t len)
 
 asCString &asCString::operator +=(const char *str)
 {
-	size_t len = strlen(str);
+	std::size_t len = strlen(str);
 	Concatenate(str, len);
 
 	return *this;
@@ -272,13 +272,13 @@ asCString &asCString::operator +=(char ch)
 	return *this;
 }
 
-size_t asCString::GetLength() const
+std::size_t asCString::GetLength() const
 {
 	return length;
 }
 
 // Returns the length
-size_t asCString::Format(const char *format, ...)
+std::size_t asCString::Format(const char *format, ...)
 {
 	va_list args;
 	va_start(args, format);
@@ -292,7 +292,7 @@ size_t asCString::Format(const char *format, ...)
 	}
 	else
 	{
-		size_t n = 512;
+		std::size_t n = 512;
 		asCString str; // Use temporary string in case the current buffer is a parameter
 		str.Allocate(n, false);
 
@@ -310,26 +310,26 @@ size_t asCString::Format(const char *format, ...)
 	return length;
 }
 
-char &asCString::operator [](size_t index) 
+char &asCString::operator [](std::size_t index) 
 {
 	asASSERT(index < length);
 
 	return AddressOf()[index];
 }
 
-const char &asCString::operator [](size_t index) const
+const char &asCString::operator [](std::size_t index) const
 {
 	asASSERT(index < length);
 
 	return AddressOf()[index];
 }
 
-asCString asCString::SubString(size_t start, size_t length) const
+asCString asCString::SubString(std::size_t start, std::size_t length) const
 {
 	if( start >= GetLength() || length == 0 )
 		return asCString("");
 
-	if( length == (size_t)(-1) ) length = GetLength() - start;
+	if( length == (std::size_t)(-1) ) length = GetLength() - start;
 
 	asCString tmp;
 	tmp.Assign(AddressOf() + start, length);
@@ -347,12 +347,12 @@ int asCString::Compare(const asCString &str) const
 	return asCompareStrings(AddressOf(), length, str.AddressOf(), str.GetLength());
 }
 
-int asCString::Compare(const char *str, size_t len) const
+int asCString::Compare(const char *str, std::size_t len) const
 {
 	return asCompareStrings(AddressOf(), length, str, len);
 }
 
-size_t asCString::RecalculateLength()
+std::size_t asCString::RecalculateLength()
 {
 	SetLength(strlen(AddressOf()));
 
@@ -452,7 +452,7 @@ asCStringPointer::asCStringPointer()
 {
 }
 
-asCStringPointer::asCStringPointer(const char *str, size_t len)
+asCStringPointer::asCStringPointer(const char *str, std::size_t len)
 	: string(str), length(len), cstring(0)
 {
 }
@@ -467,7 +467,7 @@ const char *asCStringPointer::AddressOf() const
 	return string ? string : cstring->AddressOf();
 }
 
-size_t asCStringPointer::GetLength() const
+std::size_t asCStringPointer::GetLength() const
 {
 	return string ? length : cstring->GetLength();
 }

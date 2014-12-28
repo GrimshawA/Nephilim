@@ -2,7 +2,7 @@
 #define NephilimUI_UIPainter_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Matrix.h>
+#include <Nephilim/Math/Matrix.h>
 #include <Nephilim/Rect.h>
 #include <Nephilim/Color.h>
 

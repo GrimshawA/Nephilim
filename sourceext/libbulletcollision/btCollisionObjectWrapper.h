@@ -10,7 +10,7 @@ class btTransform;
 
 #define BT_DECLARE_STACK_ONLY_OBJECT \
 	private: \
-		void* operator new(size_t size); \
+		void* operator new(std::size_t size); \
 		void operator delete(void*);
 
 struct btCollisionObjectWrapper;

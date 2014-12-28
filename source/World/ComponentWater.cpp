@@ -1,8 +1,8 @@
 #include <Nephilim/World/ComponentWater.h>
 #include <Nephilim/Graphics/Shader.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/CGL.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 #include <Nephilim/Logger.h>
 
 #include <algorithm>

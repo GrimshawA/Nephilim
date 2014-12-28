@@ -94,7 +94,7 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 		{
 			internal->callConv = ICC_THISCALL;
 #ifdef GNU_STYLE_VIRTUAL_METHOD
-			if( (size_t(ptr.ptr.f.func) & 1) )
+			if( (std::size_t(ptr.ptr.f.func) & 1) )
 				internal->callConv = ICC_VIRTUAL_THISCALL;
 #endif
 			internal->baseOffset = ( int )MULTI_BASE_OFFSET(ptr);
@@ -102,7 +102,7 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 			// As the least significant bit in func is used to switch to THUMB mode
 			// on ARM processors, the LSB in the __delta variable is used instead of
 			// the one in __pfn on ARM processors.
-			if( (size_t(internal->baseOffset) & 1) )
+			if( (std::size_t(internal->baseOffset) & 1) )
 				internal->callConv = ICC_VIRTUAL_THISCALL;
 #endif
 

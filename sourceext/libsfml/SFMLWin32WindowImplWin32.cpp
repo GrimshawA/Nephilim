@@ -22,6 +22,9 @@
 //
 ////////////////////////////////////////////////////////////
 #include <Nephilim/Platform.h>
+#include <Nephilim/Logger.h>
+#include <Nephilim/StringList.h>
+
 #ifndef NEPHILIM_ANDROID
 #if defined NEPHILIM_WINDOWS
 ////////////////////////////////////////////////////////////
@@ -135,11 +138,13 @@ m_resizing        (false)
     // Create the window
     if (hasUnicodeSupport())
     {
-        m_handle = CreateWindowW(classNameW, title.toWideString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
+		//m_handle = CreateWindowW(classNameW, title.toWideString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
+		m_handle = CreateWindowExW(WS_EX_ACCEPTFILES, classNameW, title.toWideString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
     }
     else
     {
-        m_handle = CreateWindowA(classNameA, title.toAnsiString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
+		//m_handle = CreateWindowA(classNameA, title.toAnsiString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
+		m_handle = CreateWindowExA(WS_EX_ACCEPTFILES, classNameA, title.toAnsiString().c_str(), win32Style, left, top, width, height, NULL, NULL, GetModuleHandle(NULL), this);
     }
 
     // Switch to fullscreen if requested
@@ -346,7 +351,7 @@ void WindowImplWin32::registerWindowClass()
     else
     {
         WNDCLASSA windowClass;
-        windowClass.style         = 0;
+		windowClass.style = 0;
         windowClass.lpfnWndProc   = &WindowImplWin32::globalOnEvent;
         windowClass.cbClsExtra    = 0;
         windowClass.cbWndExtra    = 0;
@@ -415,6 +420,33 @@ void WindowImplWin32::processEvent(UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+		case WM_DROPFILES:
+		{
+
+			POINT p;
+
+			nx::StringList fileList;
+
+			DragQueryPoint((HDROP)wParam, &p);
+			WORD nFiles = DragQueryFile((HDROP)wParam, 0xFFFFFFFF, (LPSTR)NULL, 0);
+			for (auto i = 0; i < nFiles; ++i)
+			{
+				char lpszFile[120];
+				DragQueryFile((HDROP)wParam, i, lpszFile, sizeof(lpszFile));
+				fileList.append(lpszFile);
+
+				//nx::Log("File %s", lpszFile);
+			}
+
+			//nx::Log("%u files dropped at %d %d", nFiles, p.x, p.y);
+
+			// Send through callback instead of event
+			onDragDrop(p.x, p.y, fileList);
+
+			DragFinish((HDROP)wParam);
+			break;
+		}
+
         // Destroy event
         case WM_DESTROY :
         {
@@ -832,7 +864,7 @@ Keyboard::Key WindowImplWin32::virtualKeyCodeToSF(WPARAM key, LPARAM flags)
 ////////////////////////////////////////////////////////////
 bool WindowImplWin32::hasUnicodeSupport()
 {
-    OSVERSIONINFO version;
+   /* OSVERSIONINFO version;
     ZeroMemory(&version, sizeof(version));
     version.dwOSVersionInfoSize = sizeof(version);
 
@@ -843,7 +875,10 @@ bool WindowImplWin32::hasUnicodeSupport()
     else
     {
         return false;
-    }
+    }*/
+
+	// nasty hack for now, GetVersionEx deprecated
+	return true;
 }
 
 

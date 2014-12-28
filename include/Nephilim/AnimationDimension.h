@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATIONDIMENSION_H
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 #include "AnimationInterface.h"
 
 NEPHILIM_NS_BEGIN

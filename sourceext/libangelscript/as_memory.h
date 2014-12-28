@@ -60,7 +60,7 @@ extern asFREEFUNC_t  userFree;
 
 #else
 
-	typedef void *(*asALLOCFUNCDEBUG_t)(size_t, const char *, unsigned int);
+	typedef void *(*asALLOCFUNCDEBUG_t)(std::size_t, const char *, unsigned int);
 
 	#define asNEW(x)        new(((asALLOCFUNCDEBUG_t)(userAlloc))(sizeof(x), __FILE__, __LINE__)) x
 	#define asDELETE(ptr,x) {void *tmp = ptr; (ptr)->~x(); userFree(tmp);}

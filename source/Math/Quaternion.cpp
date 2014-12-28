@@ -1,6 +1,6 @@
 #include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 
 NEPHILIM_NS_BEGIN

@@ -12,7 +12,7 @@
 #include <Nephilim/Event.h>
 #include <Nephilim/AxList.h>
 #include <Nephilim/AxTarget.h>
-#include <Nephilim/Matrix.h>
+#include <Nephilim/Math/Matrix.h>
 
 
 #include <vector>

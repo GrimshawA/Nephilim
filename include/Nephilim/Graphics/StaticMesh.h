@@ -3,8 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Geometry.h>
-#include <Nephilim/VertexArray.h>
-#include <Nephilim/IndexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
+#include <Nephilim/Graphics/IndexArray.h>
 
 NEPHILIM_NS_BEGIN
 

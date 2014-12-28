@@ -16,6 +16,14 @@ class StateStackTransition;
 class Time;
 class GraphicsDevice;
 class GameCore;
+class World;
+
+class GameBehavior
+{
+public:
+	IScript* script = nullptr;
+	void*    scriptObject = nullptr;
+};
 
 /**
 	\class GameState
@@ -38,14 +46,17 @@ public:
 	/// Reference to the game owning this state
 	GameCore* mGame = nullptr;
 
-	/// Collection of scripts attached to this state
-	std::vector<IScript*> attachedScripts;
+	/// Collection of dynamically attached behaviors to the state, used to make gameplay logic usually
+	std::vector<GameBehavior> behaviors;
 
 
 public:
 
 	/// Creates a default state
 	GameState();
+
+	/// Get the main world
+	World* getWorld();
 
 	/// Create an animation to transition between states
 	template<typename T>
@@ -61,7 +72,8 @@ public:
 	/// Check how many scripts are attached to this state
 	std::size_t getNumAttachedScripts();
 
-
+	/// Create a new behavior for this state
+	void createBehavior(const String& scriptFile);
 
 	/// Called when there is an event to handle
 	virtual void onEvent(const Event &event);

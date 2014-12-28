@@ -2,7 +2,7 @@
 #define NephilimUICore_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Font.h>
 #include <Nephilim/Localization.h>
 

@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Transformable.h>
 #include <Nephilim/Drawable.h>
-#include <Nephilim/VertexArray2D.h>
+#include <Nephilim/Graphics/VertexArray2D.h>
 #include <Nephilim/Color.h>
 #include <Nephilim/Graphics/GLTexture.h>
 

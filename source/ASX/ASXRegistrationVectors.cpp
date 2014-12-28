@@ -1,6 +1,9 @@
+#include <Nephilim/Plugins/PluginSDK.h>
+
+
 #include <Nephilim/ASX/ASXRegistrationVectors.h>
 #include <Nephilim/ASX/ASXEngine.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 
 #include <angelscript.h>
 

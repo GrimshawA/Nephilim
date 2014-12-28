@@ -170,7 +170,7 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 		// Push the return pointer on the stack
 		paramSize++;
 		args--;
-		*(asPWORD*)args = (size_t)retPointer;
+		*(asPWORD*)args = (std::size_t)retPointer;
 
 		retQW = CallSTDCallFunction(args, paramSize<<2, func);
 		break;

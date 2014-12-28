@@ -140,9 +140,9 @@ int asCModule::SetDefaultNamespace(const char *nameSpace)
 	if( ns != "" )
 	{
 		// Make sure the namespace is composed of alternating identifier and ::
-		size_t pos = 0;
+		std::size_t pos = 0;
 		bool expectIdentifier = true;
-		size_t len;
+		std::size_t len;
 		eTokenType t = ttIdentifier;
 
 		for( ; pos < ns.GetLength(); pos += len )
@@ -165,7 +165,7 @@ int asCModule::SetDefaultNamespace(const char *nameSpace)
 }
 
 // interface
-int asCModule::AddScriptSection(const char *name, const char *code, size_t codeLength, int lineOffset)
+int asCModule::AddScriptSection(const char *name, const char *code, std::size_t codeLength, int lineOffset)
 {
 #ifdef AS_NO_COMPILER
 	UNUSED_VAR(name);
@@ -406,7 +406,7 @@ void asCModule::InternalReset()
 {
 	CallExit();
 
-	size_t n;
+	std::size_t n;
 
 	// Release all global functions
 	asCSymbolTable<asCScriptFunction>::iterator funcIt = globalFunctions.List();
@@ -573,7 +573,7 @@ asIScriptFunction *asCModule::GetFunctionByDecl(const char *decl) const
 			)
 		{
 			bool match = true;
-			for( size_t p = 0; p < func.parameterTypes.GetLength(); ++p )
+			for( std::size_t p = 0; p < func.parameterTypes.GetLength(); ++p )
 			{
 				if( func.parameterTypes[p] != funcPtr->parameterTypes[p] )
 				{
@@ -982,7 +982,7 @@ int asCModule::BindImportedFunction(asUINT index, asIScriptFunction *func)
 	if( dst->parameterTypes.GetLength() != src->parameterTypes.GetLength() )
 		return asINVALID_INTERFACE;
 
-	for( size_t n = 0; n < dst->parameterTypes.GetLength(); ++n )
+	for( std::size_t n = 0; n < dst->parameterTypes.GetLength(); ++n )
 	{
 		if( dst->parameterTypes[n] != src->parameterTypes[n] )
 			return asINVALID_INTERFACE;
@@ -1086,7 +1086,7 @@ int asCModule::UnbindAllImportedFunctions()
 // internal
 asCObjectType *asCModule::GetObjectType(const char *type, asSNameSpace *ns)
 {
-	size_t n;
+	std::size_t n;
 
 	// TODO: optimize: Improve linear search
 	for( n = 0; n < classTypes.GetLength(); n++ )

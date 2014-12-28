@@ -5,7 +5,7 @@
 #include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Graphics/TextureCube.h>
 
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Color.h>
 

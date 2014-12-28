@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include "Strings.h"
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 #include "Rect.h"
 
 #include <vector>

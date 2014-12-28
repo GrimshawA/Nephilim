@@ -93,16 +93,7 @@ public:
 	}
 };
 
-class SpriteComponent : public SceneComponent
-{
-public:
-	SpriteComponent()
-	{
 
-	}
-
-	CSprite s;
-};
 
 class SCStaticMesh : public SceneComponent, public CStaticMesh
 {
@@ -113,27 +104,7 @@ public:
 	}
 };
 
-class NEPHILIM_API ASkeletalMeshComponent : public SceneComponent, public CSkeletalMesh
-{
-public:
 
-	
-
-	Texture myT;
-
-public:
-
-	void testTexture(const String& name)
-	{
-		myT.loadFromFile(name);
-	}
-
-	void updateAnimation()
-	{
-		update(Time::fromSeconds(1.f / 60.f));
-	}
-
-};
 
 class SCColliderBox : public SceneComponent, public CColliderBox
 {

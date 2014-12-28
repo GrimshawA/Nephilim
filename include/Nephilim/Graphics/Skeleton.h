@@ -2,7 +2,7 @@
 #define NephilimGraphicsSkeleton_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Matrix.h>
+#include <Nephilim/Math/Matrix.h>
 #include <Nephilim/Strings.h>
 
 #include <vector>

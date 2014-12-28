@@ -3,7 +3,7 @@
 #include <Nephilim/CGL.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Geometry.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN
 

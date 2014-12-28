@@ -2,9 +2,9 @@
 #define VertexArray_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
-#include "Rect.h"
-#include "Color.h"
+#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Rect.h>
+#include <Nephilim/Color.h>
 #include <Nephilim/Graphics/RenderModes.h>
 
 #include <vector>

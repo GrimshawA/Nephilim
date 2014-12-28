@@ -51,38 +51,38 @@ public:
 
 	asCString(const asCString &);
 	asCString(const char *);
-	asCString(const char *, size_t length);
+	asCString(const char *, std::size_t length);
 	explicit asCString(char);
 
-	void   Allocate(size_t len, bool keepData);
-	void   SetLength(size_t len);
-	size_t GetLength() const;
+	void   Allocate(std::size_t len, bool keepData);
+	void   SetLength(std::size_t len);
+	std::size_t GetLength() const;
 
-	void Concatenate(const char *str, size_t length);
+	void Concatenate(const char *str, std::size_t length);
 	asCString &operator +=(const asCString &);
 	asCString &operator +=(const char *);
 	asCString &operator +=(char);
 
-	void Assign(const char *str, size_t length);
+	void Assign(const char *str, std::size_t length);
 	asCString &operator =(const asCString &);
 	asCString &operator =(const char *);
 	asCString &operator =(char);
 
-	asCString SubString(size_t start, size_t length = (size_t)(-1)) const;
+	asCString SubString(std::size_t start, std::size_t length = (std::size_t)(-1)) const;
 
 	int FindLast(const char *str, int *count = 0) const;
 
-	size_t Format(const char *fmt, ...);
+	std::size_t Format(const char *fmt, ...);
 
 	int Compare(const char *str) const;
 	int Compare(const asCString &str) const;
-	int Compare(const char *str, size_t length) const;
+	int Compare(const char *str, std::size_t length) const;
 
 	char *AddressOf();
 	const char *AddressOf() const;
-	char &operator [](size_t index);
-	const char &operator[](size_t index) const;
-	size_t RecalculateLength();
+	char &operator [](std::size_t index);
+	const char &operator[](std::size_t index) const;
+	std::size_t RecalculateLength();
 
 protected:
 	unsigned int length;
@@ -115,11 +115,11 @@ class asCStringPointer
 {
 public:
 	asCStringPointer();
-	asCStringPointer(const char *str, size_t len);
+	asCStringPointer(const char *str, std::size_t len);
 	asCStringPointer(asCString *cstr);
 
 	const char *AddressOf() const;
-	size_t GetLength() const;
+	std::size_t GetLength() const;
 
 	bool operator==(const asCStringPointer& other) const;
 	bool operator<(const asCStringPointer& other) const;
@@ -127,7 +127,7 @@ public:
 private:
 	// Either string/length or cstring is stored
 	const char *string;
-	size_t      length;
+	std::size_t      length;
 	asCString  *cstring;
 };
 

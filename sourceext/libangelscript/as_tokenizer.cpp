@@ -131,13 +131,13 @@ bool asCTokenizer::IsDigitInRadix(char ch, int radix) const
 	return false;
 }
 
-eTokenType asCTokenizer::GetToken(const char *source, size_t sourceLength, size_t *tokenLength, asETokenClass *tc) const
+eTokenType asCTokenizer::GetToken(const char *source, std::size_t sourceLength, std::size_t *tokenLength, asETokenClass *tc) const
 {
 	asASSERT(source != 0);
 	asASSERT(tokenLength != 0);
 
 	eTokenType tokenType;
-	size_t     tlen;
+	std::size_t     tlen;
 	asETokenClass t = ParseToken(source, sourceLength, tlen, tokenType);
 	if( tc          ) *tc          = t;
 	if( tokenLength ) *tokenLength = tlen;
@@ -145,7 +145,7 @@ eTokenType asCTokenizer::GetToken(const char *source, size_t sourceLength, size_
 	return tokenType;
 }
 
-asETokenClass asCTokenizer::ParseToken(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+asETokenClass asCTokenizer::ParseToken(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	if( IsWhiteSpace(source, sourceLength, tokenLength, tokenType) ) return asTC_WHITESPACE;
 	if( IsComment(source, sourceLength, tokenLength, tokenType)    ) return asTC_COMMENT;
@@ -162,7 +162,7 @@ asETokenClass asCTokenizer::ParseToken(const char *source, size_t sourceLength, 
 	return asTC_UNKNOWN;
 }
 
-bool asCTokenizer::IsWhiteSpace(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+bool asCTokenizer::IsWhiteSpace(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	// Treat UTF8 byte-order-mark (EF BB BF) as whitespace
 	if( sourceLength >= 3 && 
@@ -176,7 +176,7 @@ bool asCTokenizer::IsWhiteSpace(const char *source, size_t sourceLength, size_t 
 	}
 
 	// Group all other white space characters into one
-	size_t n;
+	std::size_t n;
 	int numWsChars = (int)strlen(whiteSpace);
 	for( n = 0; n < sourceLength; n++ )
 	{
@@ -202,7 +202,7 @@ bool asCTokenizer::IsWhiteSpace(const char *source, size_t sourceLength, size_t 
 	return false;
 }
 
-bool asCTokenizer::IsComment(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+bool asCTokenizer::IsComment(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	if( sourceLength < 2 )
 		return false;
@@ -215,7 +215,7 @@ bool asCTokenizer::IsComment(const char *source, size_t sourceLength, size_t &to
 		// One-line comment
 
 		// Find the length
-		size_t n;
+		std::size_t n;
 		for( n = 2; n < sourceLength; n++ )
 		{
 			if( source[n] == '\n' )
@@ -233,7 +233,7 @@ bool asCTokenizer::IsComment(const char *source, size_t sourceLength, size_t &to
 		// Multi-line comment
 
 		// Find the length
-		size_t n;
+		std::size_t n;
 		for( n = 2; n < sourceLength-1; )
 		{
 			if( source[n++] == '*' && source[n] == '/' )
@@ -249,7 +249,7 @@ bool asCTokenizer::IsComment(const char *source, size_t sourceLength, size_t &to
 	return false;
 }
 
-bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+bool asCTokenizer::IsConstant(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	// Starting with number
 	if( (source[0] >= '0' && source[0] <= '9') || (source[0] == '.' && sourceLength > 1 && source[1] >= '0' && source[1] <= '9') )
@@ -269,7 +269,7 @@ bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &t
 
 			if( radix )
 			{
-				size_t n;
+				std::size_t n;
 				for( n = 2; n < sourceLength; n++ )
 					if( !IsDigitInRadix(source[n], radix) )
 						break;
@@ -280,7 +280,7 @@ bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &t
 			}
 		}
 
-		size_t n;
+		std::size_t n;
 		for( n = 0; n < sourceLength; n++ )
 		{
 			if( source[n] < '0' || source[n] > '9' )
@@ -343,7 +343,7 @@ bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &t
 			// Heredoc string constant (spans multiple lines, no escape sequences)
 
 			// Find the length
-			size_t n;
+			std::size_t n;
 			for( n = 3; n < sourceLength-2; n++ )
 			{
 				if( source[n] == '"' && source[n+1] == '"' && source[n+2] == '"' )
@@ -359,7 +359,7 @@ bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &t
 			tokenType = ttStringConstant;
 			char quote = source[0];
 			bool evenSlashes = true;
-			size_t n;
+			std::size_t n;
 			for( n = 1; n < sourceLength; n++ )
 			{
 #ifdef AS_DOUBLEBYTE_CHARSET
@@ -393,7 +393,7 @@ bool asCTokenizer::IsConstant(const char *source, size_t sourceLength, size_t &t
 	return false;
 }
 
-bool asCTokenizer::IsIdentifier(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+bool asCTokenizer::IsIdentifier(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	// Starting with letter or underscore
 	if( (source[0] >= 'a' && source[0] <= 'z') ||
@@ -403,7 +403,7 @@ bool asCTokenizer::IsIdentifier(const char *source, size_t sourceLength, size_t 
 		tokenType   = ttIdentifier;
 		tokenLength = 1;
 
-		for( size_t n = 1; n < sourceLength; n++ )
+		for( std::size_t n = 1; n < sourceLength; n++ )
 		{
 			if( (source[n] >= 'a' && source[n] <= 'z') ||
 				(source[n] >= 'A' && source[n] <= 'Z') ||
@@ -424,7 +424,7 @@ bool asCTokenizer::IsIdentifier(const char *source, size_t sourceLength, size_t 
 	return false;
 }
 
-bool asCTokenizer::IsKeyWord(const char *source, size_t sourceLength, size_t &tokenLength, eTokenType &tokenType) const
+bool asCTokenizer::IsKeyWord(const char *source, std::size_t sourceLength, std::size_t &tokenLength, eTokenType &tokenType) const
 {
 	unsigned char start = source[0];
 	const sTokenWord **ptr = keywordTable[start];
@@ -434,7 +434,7 @@ bool asCTokenizer::IsKeyWord(const char *source, size_t sourceLength, size_t &to
 
 	for( ; *ptr; ++ptr )
 	{
-		size_t wlen = (*ptr)->wordLength;
+		std::size_t wlen = (*ptr)->wordLength;
 		if( sourceLength >= wlen && strncmp(source, (*ptr)->word, wlen) == 0 )
 		{
 			// Tokens that end with a character that can be part of an 

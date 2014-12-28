@@ -74,7 +74,7 @@ protected:
 
 	void GetToken(sToken *token);
 	void RewindTo(const sToken *token);
-	void SetPos(size_t pos);
+	void SetPos(std::size_t pos);
 	void Error(const asCString &text, sToken *token);
 	void Info(const asCString &text, sToken *token);
 
@@ -183,7 +183,7 @@ protected:
 	asCString tempString; // Used for reduzing amount of dynamic allocations
 
 	sToken       lastToken;
-	size_t       sourcePos;
+	std::size_t       sourcePos;
 };
 
 END_AS_NAMESPACE

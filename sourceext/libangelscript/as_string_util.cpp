@@ -43,7 +43,7 @@
 
 BEGIN_AS_NAMESPACE
 
-int asCompareStrings(const char *str1, size_t len1, const char *str2, size_t len2)
+int asCompareStrings(const char *str1, std::size_t len1, const char *str2, std::size_t len2)
 {
 	if( len1 == 0 ) 
 	{
@@ -74,7 +74,7 @@ int asCompareStrings(const char *str1, size_t len1, const char *str2, size_t len
 	return result;
 }
 
-double asStringScanDouble(const char *string, size_t *numScanned)
+double asStringScanDouble(const char *string, std::size_t *numScanned)
 {
 	// I decided to do my own implementation of strtod() because this function
 	// doesn't seem to be present on all systems. iOS 5 for example doesn't appear 
@@ -171,7 +171,7 @@ static int asCharToNbr(char ch, int radix)
 }
 
 // If base is 0 the string should be prefixed by 0x, 0d, 0o, or 0b to allow the function to automatically determine the radix
-asQWORD asStringScanUInt64(const char *string, int base, size_t *numScanned)
+asQWORD asStringScanUInt64(const char *string, int base, std::size_t *numScanned)
 {
 	asASSERT(base == 10 || base == 16 || base == 0);
 

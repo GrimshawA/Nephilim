@@ -337,7 +337,7 @@ int asCReader::ReadInner()
 	count = ReadEncodedUInt();
 	for( i = 0; i < count && !error; ++i ) 
 	{
-		size_t len = module->scriptFunctions.GetLength();
+		std::size_t len = module->scriptFunctions.GetLength();
 		bool isNew;
 		func = ReadFunction(isNew);
 		if( func == 0 )
@@ -1527,7 +1527,7 @@ void asCReader::ReadDataType(asCDataType *dt)
 	eTokenType tokenType = (eTokenType)ReadEncodedUInt();
 
 	// Reserve a spot in the savedDataTypes
-	size_t saveSlot = savedDataTypes.GetLength();
+	std::size_t saveSlot = savedDataTypes.GetLength();
 	savedDataTypes.PushLast(asCDataType());
 
 	// Read the datatype for the first time
@@ -3909,7 +3909,7 @@ void asCWriter::CalculateAdjustmentByPos(asCScriptFunction *func)
 	}
 
 	// Compute the sequence number of each bytecode instruction in order to update the jump offsets
-	size_t length = func->scriptData->byteCode.GetLength();
+	std::size_t length = func->scriptData->byteCode.GetLength();
 	asDWORD *bc = func->scriptData->byteCode.AddressOf();
 	bytecodeNbrByPos.SetLength(length);
 	asUINT num;
@@ -4072,7 +4072,7 @@ int asCWriter::AdjustGetOffset(int offset, asCScriptFunction *func, asDWORD prog
 void asCWriter::WriteByteCode(asCScriptFunction *func)
 {
 	asDWORD *bc   = func->scriptData->byteCode.AddressOf();
-	size_t length = func->scriptData->byteCode.GetLength();
+	std::size_t length = func->scriptData->byteCode.GetLength();
 
 	// The length cannot be stored, because it is platform dependent, 
 	// instead we store the number of instructions

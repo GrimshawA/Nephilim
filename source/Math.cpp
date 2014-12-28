@@ -1,5 +1,5 @@
-#include <Nephilim/NxMath.h>
-#include <Nephilim/Matrix.h>
+#include <Nephilim/Math/Math.h>
+#include <Nephilim/Math/Matrix.h>
 #include <stdlib.h>
 #include <cmath>
 

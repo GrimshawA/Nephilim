@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 NEPHILIM_NS_BEGIN
 
 UIComponentText::UIComponentText()

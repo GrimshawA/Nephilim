@@ -16,7 +16,7 @@
 
 #include <Nephilim/Logger.h>
 #include <Nephilim/Plugins/Plugin.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN
 

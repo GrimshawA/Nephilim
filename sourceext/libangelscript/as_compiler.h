@@ -278,7 +278,7 @@ protected:
 	void   ImplicitConversionConstant(asSExprContext *ctx, const asCDataType &to, asCScriptNode *node, EImplicitConv convType);
 	void   ImplicitConvObjectToBestMathType(asSExprContext *ctx, asCScriptNode *node);
 
-	void LineInstr(asCByteCode *bc, size_t pos);
+	void LineInstr(asCByteCode *bc, std::size_t pos);
 
 	asUINT ProcessStringConstant(asCString &str, asCScriptNode *node, bool processEscapeSequences = true);
 	void ProcessHeredocStringConstant(asCString &str, asCScriptNode *node);

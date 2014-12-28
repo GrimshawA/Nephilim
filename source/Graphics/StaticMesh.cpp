@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/StaticMesh.h>
-#include <Nephilim/VertexArray.h>
+#include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/CGL.h>
 
 

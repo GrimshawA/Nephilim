@@ -63,7 +63,7 @@ int asCScriptCode::SetCode(const char *name, const char *code, bool makeCopy)
 	return SetCode(name, code, 0, makeCopy);
 }
 
-int asCScriptCode::SetCode(const char *name, const char *code, size_t length, bool makeCopy)
+int asCScriptCode::SetCode(const char *name, const char *code, std::size_t length, bool makeCopy)
 {
 	if( !code ) return asINVALID_ARG;
 	this->name = name ? name : "";
@@ -90,14 +90,14 @@ int asCScriptCode::SetCode(const char *name, const char *code, size_t length, bo
 
 	// Find the positions of each line
 	linePositions.PushLast(0);
-	for( size_t n = 0; n < length; n++ )
+	for( std::size_t n = 0; n < length; n++ )
 		if( code[n] == '\n' ) linePositions.PushLast(n+1);
 	linePositions.PushLast(length);
 
 	return asSUCCESS;
 }
 
-void asCScriptCode::ConvertPosToRowCol(size_t pos, int *row, int *col)
+void asCScriptCode::ConvertPosToRowCol(std::size_t pos, int *row, int *col)
 {
 	if( linePositions.GetLength() == 0 ) 
 	{
@@ -140,7 +140,7 @@ void asCScriptCode::ConvertPosToRowCol(size_t pos, int *row, int *col)
 	if( col ) *col = (int)(pos - linePositions[i]) + 1;
 }
 
-bool asCScriptCode::TokenEquals(size_t pos, size_t len, const char *str)
+bool asCScriptCode::TokenEquals(std::size_t pos, std::size_t len, const char *str)
 {
 	if( pos + len > codeLength ) return false;
 	if( strncmp(code + pos, str, len) == 0 && strlen(str) == len )

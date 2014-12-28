@@ -2,7 +2,7 @@
 #define NephilimNxMath_h__
 
 #include <Nephilim/Platform.h>
-#include "Vectors.h"
+#include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN
 

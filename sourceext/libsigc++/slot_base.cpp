@@ -27,7 +27,7 @@ namespace internal {
 
 // only MSVC needs this to guarantee that all new/delete are executed from the DLL module
 #ifdef SIGC_NEW_DELETE_IN_LIBRARY_ONLY
-void* slot_rep::operator new(size_t size_)
+void* slot_rep::operator new(std::size_t size_)
 {
   return malloc(size_);
 }

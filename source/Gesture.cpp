@@ -1,7 +1,7 @@
 #include <Nephilim/Gesture.h>
 #include <Nephilim/Event.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -47,6 +47,20 @@ World* GameCore::createWorld(const String& name)
 	return world;
 }
 
+/// Get the main world of this game
+/// If there are no spawned worlds, one will be created, otherwise the world 0 is always the main one
+World* GameCore::getWorld()
+{
+	if (sceneManager.mScenes.empty())
+	{
+		return createWorld("main");
+	}
+	else
+	{
+		return sceneManager.mScenes[0];
+	}
+}
+
 /// Create a new UICanvas for the game to use
 UICanvas* GameCore::createCanvas(const String& name)
 {
@@ -134,29 +148,22 @@ void GameCore::setUpdateStep(float step){
 };
 
 /// Callback for updating the game
-void GameCore::onUpdate(Time time){
-
-};
+void GameCore::onUpdate(Time time){}
 
 /// Callback for rendering a frame
-void GameCore::onRender(){
-
-};
+void GameCore::onRender(){}
 
 /// Callback when starting to execute the game
-void GameCore::onCreate(){
-
-};
+void GameCore::onCreate(){}
 
 /// Callback when an event happens
-void GameCore::onEvent(Event &event){
-
-};
+void GameCore::onEvent(const Event &event){}
 
 /// Get the game window title
-String GameCore::getWindowTitle(){
+String GameCore::getWindowTitle()
+{
 	return m_windowTitle;
-};
+}
 
 /// Set the title of the window while the game is active
 void GameCore::setWindowTitle(const String &title){
@@ -198,6 +205,13 @@ void GameCore::PrimaryCreate()
 	loadPlugins();
 
 	onCreate();
+}
+
+/// This will handle the OS event and deliver it down the game structures
+void GameCore::PrimaryEventHandling(const Event& event)
+{
+
+	onEvent(event);
 }
 
 NEPHILIM_NS_END
