@@ -2,7 +2,9 @@
 #define NephilimGameBaseSceneManager_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Time.h>
 #include <Nephilim/World/World.h>
+
 
 NEPHILIM_NS_BEGIN
 

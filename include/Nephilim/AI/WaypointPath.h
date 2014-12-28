@@ -2,7 +2,7 @@
 #define NephilimAIWaypointPath_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Vectors.h>
+#include <Nephilim/Math/Vectors.h>
 #include <Nephilim/ASX/ASXRefCount.h>
 
 #include <vector>

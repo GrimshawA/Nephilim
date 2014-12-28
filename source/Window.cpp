@@ -316,13 +316,20 @@ void Window::swapBuffers(){
 /// Get the width of the desktop
 int Desktop::width()
 {
+#ifdef NEPHILIM_WINDOWS	
 	return GetSystemMetrics(SM_CXSCREEN);
+#endif
+	return 0;
 }
 
 /// Get the width of the desktop
 int Desktop::height()
 {
+	#ifdef NEPHILIM_WINDOWS
 	return GetSystemMetrics(SM_CYSCREEN);
+#endif
+	
+	return 0;
 }
 
 NEPHILIM_NS_END

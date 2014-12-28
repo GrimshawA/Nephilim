@@ -2,6 +2,7 @@
 #define NephilimRazerComponentHandle_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/World/ComponentManager.h>
 
 #include <vector>
 #include <map>

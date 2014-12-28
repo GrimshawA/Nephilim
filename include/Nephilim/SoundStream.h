@@ -28,7 +28,7 @@
 
 #include <Nephilim/Platform.h>
 #include "SoundSourceSF.h"
-#include "Time.h"
+#include <Nephilim/Time.h>
 #include "Thread.h"
 
 #include <cstdlib>

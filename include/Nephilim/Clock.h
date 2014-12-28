@@ -2,7 +2,7 @@
 #define NephilimClock_h__
 
 #include <Nephilim/Platform.h>
-#include "Time.h"
+#include <Nephilim/Time.h>
 
 NEPHILIM_NS_BEGIN
 /**
@@ -13,7 +13,8 @@ NEPHILIM_NS_BEGIN
 	Disclaimer: This class is heavily under the influence of the equivalent sf::Time, in the SFML2 library.
 	Credits to Laurent Gomila, the original author.
 */
-class NEPHILIM_API Clock{
+class NEPHILIM_API Clock
+{
 public:
 	Clock();
 

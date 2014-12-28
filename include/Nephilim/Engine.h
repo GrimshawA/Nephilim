@@ -27,6 +27,7 @@ freely, subject to the following restrictions:
 #include <Nephilim/Window.h>
 
 #include <vector>
+#include <memory>
 
 NEPHILIM_NS_BEGIN
 

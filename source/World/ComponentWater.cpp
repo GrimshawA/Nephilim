@@ -536,7 +536,7 @@ float getSlopeVariance(float kx, float ky, float *spectrumSample)
 }
 
 // precomputes filtered slope variances in a 3d texture, based on the wave spectrum
-void _stdcall computeSlopeVarianceTex(void *unused)
+void computeSlopeVarianceTex(void *unused)
 {
 	// slope variance due to all waves, by integrating over the full spectrum
 	float theoreticSlopeVariance = 0.0;

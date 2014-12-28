@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 
-#include <math.h>
+#include <cmath>
 
 NEPHILIM_NS_BEGIN
 

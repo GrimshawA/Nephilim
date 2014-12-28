@@ -34,7 +34,7 @@ bool Tilemap::saveToFile(const String& filename, FileFormat format)
 			DataStream stream(file);
 			stream << width;
 			stream << height;
-			stream << slices.size();
+			stream << uint32_t(slices.size());
 
 			for (MapSlice& s : slices)
 			{

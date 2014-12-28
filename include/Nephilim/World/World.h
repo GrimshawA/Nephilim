@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
+#include <Nephilim/Time.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/Entity.h>
@@ -14,6 +15,8 @@
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/Level.h>
 #include <Nephilim/World/WorldViewport.h>
+#include <Nephilim/World/PlayerController.h>
+#include <nephilim/World/RenderSystemDefault.h>
 
 #include <vector>
 #include <map>
@@ -25,7 +28,6 @@ class GraphicsDevice;
 class ContentManager;
 class PhysicsSystem;
 class AudioSystem;
-class PlayerController;
 
 /**
 	\class World

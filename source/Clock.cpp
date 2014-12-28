@@ -2,11 +2,12 @@
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>
+
 #elif defined NEPHILIM_APPLE
 #include <mach/mach_time.h>
+
 #elif defined NEPHILIM_UNIX
 #include <time.h>
-
 #endif
 
 namespace

@@ -2,13 +2,15 @@
 #define NephilimRazerComponentManager_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/World/Component.h>
 #include <Nephilim/World/EntityManager.h>
 
 #include <vector>
 #include <map>
 
 NEPHILIM_NS_BEGIN
+
+class CHandle;
+class Component;
 
 /**
 	\class ComponentManager

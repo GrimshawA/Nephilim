@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		754E0E43191BC5570086646A /* libNephilim.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libNephilim.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		758E37B11A508D7900750E4A /* libNephilim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNephilim.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		754E0E40191BC5570086646A /* Frameworks */ = {
+		758E37AE1A508D7900750E4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -21,17 +21,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		754E0E38191BC5570086646A = {
+		758E37A61A508D7900750E4A = {
 			isa = PBXGroup;
 			children = (
-				754E0E44191BC5570086646A /* Products */,
+				758E37B21A508D7900750E4A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		754E0E44191BC5570086646A /* Products */ = {
+		758E37B21A508D7900750E4A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				754E0E43191BC5570086646A /* libNephilim.dylib */,
+				758E37B11A508D7900750E4A /* libNephilim.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -39,7 +39,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		754E0E41191BC5570086646A /* Headers */ = {
+		758E37AF1A508D7900750E4A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -49,13 +49,13 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		754E0E42191BC5570086646A /* Nephilim */ = {
+		758E37B01A508D7900750E4A /* Nephilim */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 754E0E47191BC5570086646A /* Build configuration list for PBXNativeTarget "Nephilim" */;
+			buildConfigurationList = 758E37B51A508D7900750E4A /* Build configuration list for PBXNativeTarget "Nephilim" */;
 			buildPhases = (
-				754E0E3F191BC5570086646A /* Sources */,
-				754E0E40191BC5570086646A /* Frameworks */,
-				754E0E41191BC5570086646A /* Headers */,
+				758E37AD1A508D7900750E4A /* Sources */,
+				758E37AE1A508D7900750E4A /* Frameworks */,
+				758E37AF1A508D7900750E4A /* Headers */,
 			);
 			buildRules = (
 			);
@@ -63,37 +63,37 @@
 			);
 			name = Nephilim;
 			productName = Nephilim;
-			productReference = 754E0E43191BC5570086646A /* libNephilim.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
+			productReference = 758E37B11A508D7900750E4A /* libNephilim.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		754E0E3A191BC5570086646A /* Project object */ = {
+		758E37A81A508D7900750E4A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Daeva Theory Studios";
 			};
-			buildConfigurationList = 754E0E3D191BC5570086646A /* Build configuration list for PBXProject "Nephilim" */;
+			buildConfigurationList = 758E37AB1A508D7900750E4A /* Build configuration list for PBXProject "Nephilim" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 754E0E38191BC5570086646A;
-			productRefGroup = 754E0E44191BC5570086646A /* Products */;
+			mainGroup = 758E37A61A508D7900750E4A;
+			productRefGroup = 758E37B21A508D7900750E4A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				754E0E42191BC5570086646A /* Nephilim */,
+				758E37B01A508D7900750E4A /* Nephilim */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		754E0E3F191BC5570086646A /* Sources */ = {
+		758E37AD1A508D7900750E4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -103,7 +103,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		754E0E45191BC5570086646A /* Debug */ = {
+		758E37B31A508D7900750E4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -130,7 +130,7 @@
 			};
 			name = Debug;
 		};
-		754E0E46191BC5570086646A /* Release */ = {
+		758E37B41A508D7900750E4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -150,7 +150,7 @@
 			};
 			name = Release;
 		};
-		754E0E48191BC5570086646A /* Debug */ = {
+		758E37B61A508D7900750E4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
@@ -158,7 +158,7 @@
 			};
 			name = Debug;
 		};
-		754E0E49191BC5570086646A /* Release */ = {
+		758E37B71A508D7900750E4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
@@ -169,24 +169,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		754E0E3D191BC5570086646A /* Build configuration list for PBXProject "Nephilim" */ = {
+		758E37AB1A508D7900750E4A /* Build configuration list for PBXProject "Nephilim" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				754E0E45191BC5570086646A /* Debug */,
-				754E0E46191BC5570086646A /* Release */,
+				758E37B31A508D7900750E4A /* Debug */,
+				758E37B41A508D7900750E4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		754E0E47191BC5570086646A /* Build configuration list for PBXNativeTarget "Nephilim" */ = {
+		758E37B51A508D7900750E4A /* Build configuration list for PBXNativeTarget "Nephilim" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				754E0E48191BC5570086646A /* Debug */,
-				754E0E49191BC5570086646A /* Release */,
+				758E37B61A508D7900750E4A /* Debug */,
+				758E37B71A508D7900750E4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 754E0E3A191BC5570086646A /* Project object */;
+	rootObject = 758E37A81A508D7900750E4A /* Project object */;
 }

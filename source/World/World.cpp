@@ -1,5 +1,4 @@
 #include <Nephilim/World/World.h>
-#include <Nephilim/World/PlayerController.h>
 #include <Nephilim/World/Landscape.h>
 
 #include <Nephilim/World/PhysicsSystem.h>
