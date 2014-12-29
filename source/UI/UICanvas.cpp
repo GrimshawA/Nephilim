@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/UI/UIWindow.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 #include <Nephilim/UI/UILabel.h>
 
 #include <algorithm>

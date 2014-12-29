@@ -1,4 +1,4 @@
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/RectangleShape.h>

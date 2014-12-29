@@ -1,5 +1,5 @@
-#ifndef Shader_h__
-#define Shader_h__
+#ifndef NephilimGraphicsShader_h__
+#define NephilimGraphicsShader_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
@@ -11,20 +11,16 @@ NEPHILIM_NS_BEGIN
 /**
 	\ingroup Graphics
 	\class Shader
-	\brief Controls one GLSL shader program
+	\brief Single shader program (abstract)
 
-	This class is GLSL version agnostic but it does not any automatic conversion for you.
-	Since different GLSL versions have different syntax and usage, you need to account for this in your program.
+	Shader objects correspond to one GLSL/HLSL/Other shader program, usually located in the GPU
+	for rendering geometry.
 
-	It is only possible to activate one shader program at a time.
-	Nevertheless, you can compose a shader in many different ways to fullfill different purposes.
+	This class controls the lifecyle of the shader programs too. Each shader is specific to its
+	rendering API, and is destroyed when the shader goes out of scope.
 
-	Usually, a shader contains:
-	1..n vertex processors (Vertex Shader)
-	1..n fragment processors (Pixel Shader)
-	others (unused for now - Tesselation,Geometry,etc)
-
-	A shader program can only define one main function per processor type.
+	Its ideal to have one shader per different material, usually also an additional one per light type.
+	Its up to the implementation to manage shader source and management, this is just a resource handler.
 */
 class NEPHILIM_API Shader
 {
@@ -94,4 +90,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // Shader_h__
+#endif // NephilimGraphicsShader_h__

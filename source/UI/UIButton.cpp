@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIButton.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 
 #include <iostream>

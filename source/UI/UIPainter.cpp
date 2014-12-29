@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIPainter.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,8 +1,8 @@
-#ifndef NephilimFont_h__
-#define NephilimFont_h__
+#ifndef NephilimGraphicsFont_h__
+#define NephilimGraphicsFont_h__
 
 #include <Nephilim/Platform.h>
-#include "Glyph.h"
+#include <Nephilim/Graphics/Glyph.h>
 #include <Nephilim/Graphics/GLTexture.h>
 
 #include <map>
@@ -277,4 +277,4 @@ private :
 };
 
 NEPHILIM_NS_END
-#endif // NephilimFont_h__
+#endif // NephilimGraphicsFont_h__

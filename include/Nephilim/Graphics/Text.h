@@ -1,16 +1,16 @@
-#ifndef NephilimText_h__
-#define NephilimText_h__
+#ifndef NephilimGraphicsText_h__
+#define NephilimGraphicsText_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
 
-#include "Strings.h"
-#include "Drawable.h"
-#include "Transformable.h"
-#include "Font.h"
-#include "Color.h"
-#include "Rect.h"
-#include "Logger.h"
+#include <Nephilim/Strings.h>
+#include <Nephilim/Drawable.h>
+#include <Nephilim/Transformable.h>
+#include <Nephilim/Color.h>
+#include <Nephilim/Rect.h>
+#include <Nephilim/Logger.h>
+#include <Nephilim/Graphics/Font.h>
 
 #include <utf8.h>
 
@@ -143,4 +143,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimText_h__
+#endif // NephilimGraphicsText_h__

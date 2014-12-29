@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UILabel.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 
 #include <iostream>
 using namespace std;

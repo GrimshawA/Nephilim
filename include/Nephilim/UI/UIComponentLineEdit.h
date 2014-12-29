@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIComponent.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 
 #include <sigc++/sigc++.h>
 

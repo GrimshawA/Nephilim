@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UI/UIView.h>
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Math/Math.h>

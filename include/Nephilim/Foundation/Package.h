@@ -1,8 +1,8 @@
-#ifndef Package_h__
-#define Package_h__
+#ifndef NephilimFoundationPackage_h__
+#define NephilimFoundationPackage_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 
 #include <vector>
 
@@ -10,9 +10,8 @@ NEPHILIM_NS_BEGIN
 
 class PackageBuilder;
 /**
-	\ingroup Core
 	\class Package
-	\brief This class is able to browse and extract contents from a packaged file
+	\brief This class allows to open a package, inspect its contents and load assets out of it
 */
 class NEPHILIM_API Package
 {
@@ -67,4 +66,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // Package_h__
+#endif // NephilimFoundationPackage_h__

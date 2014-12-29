@@ -9,7 +9,7 @@
 #include "ContentList.h"
 #include "ContentLoader.h"
 #include <Nephilim/Graphics/GLTexture.h>
-#include "Font.h"
+#include <Nephilim/Graphics/Font.h>
 #include "File.h"
 
 #include <Nephilim/Plugins/Plugin.h>

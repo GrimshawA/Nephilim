@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Font.h>
+#include <Nephilim/Graphics/Font.h>
 #include <Nephilim/Localization.h>
 
 NEPHILIM_NS_BEGIN

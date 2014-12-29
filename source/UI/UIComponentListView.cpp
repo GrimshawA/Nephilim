@@ -5,7 +5,7 @@
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentText.h>
 
-#include <Nephilim/Text.h>
+#include <Nephilim/Graphics/Text.h>
 
 NEPHILIM_NS_BEGIN
 

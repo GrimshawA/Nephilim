@@ -1,14 +1,12 @@
-////////////////////////////////////////////////////////////
-#ifndef NEPHILIM_GLYPH_H
-#define NEPHILIM_GLYPH_H
+#ifndef NephilimGraphicsGlyph_h__
+#define NephilimGraphicsGlyph_h__
 
 ////////////////////////////////////////////////////////////
-// Headers
+// SEE SFML 2.0 LICENSE. MODIFIED VERSION OF SFML'S SOURCE
 ////////////////////////////////////////////////////////////
 
 #include <Nephilim/Platform.h>
-#include "Rect.h"
-
+#include <Nephilim/Rect.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -35,23 +33,4 @@ public :
 };
 
 NEPHILIM_NS_END
-
-
-#endif // SFML_GLYPH_HPP
-
-
-////////////////////////////////////////////////////////////
-/// \class sf::Glyph
-/// \ingroup graphics
-///
-/// A glyph is the visual representation of a character.
-///
-/// The sf::Glyph structure provides the information needed
-/// to handle the glyph:
-/// \li its coordinates in the font's texture
-/// \li its bounding rectangle
-/// \li the offset to apply to get the starting position of the next glyph
-///
-/// \see sf::Font
-///
-////////////////////////////////////////////////////////////
+#endif // NephilimGraphicsGlyph_h__
