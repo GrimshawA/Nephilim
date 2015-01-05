@@ -12,7 +12,7 @@
 #include <Nephilim/StringList.h>
 #include <Nephilim/Logger.h>
 
-#include <Nephilim/UI/UILoader.h>
+#include <Nephilim/UI/UILoaderXML.h>
 
 #include <algorithm>
 
@@ -130,9 +130,9 @@ float UIView::height()
 /// Load the hierarchy of this view from a file and configure itself
 void UIView::load(const String& filename)
 {
-	Log("=> Loading UI file to a container");
-	UILoader uiLoader;
-	uiLoader.configure(this, filename);
+	Log("=> LOADING XML FILE INTO THE UI");
+	UILoaderXML uiLoader;
+	uiLoader.loadFromFile(filename, this);
 }
 
 void UIView::setProperty(const String& str)

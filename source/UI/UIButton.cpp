@@ -136,8 +136,11 @@ UIButton::TextureInfo& UIButton::getStateTextureInfo(UIButtonState state)
 }
 
 
-void UIButton::draw(GraphicsDevice* renderer)
+/// Called on the subclass to have it paint its contents
+void UIButton::onPaint(UIPainter& painter)
 {
+	GraphicsDevice* renderer = painter.graphicsDevice;
+
 	if(mCore->m_defaultFont && !mCore->m_defaultFont->isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");

@@ -3,52 +3,24 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/UI/UIView.h>
-
-#include "pugixml/pugixml.hpp"
-
-#include "UIComponent.h"
 
 NEPHILIM_NS_BEGIN
 
 class UIView;
 
 /**
-	\class UILoaderXML
-	\brief Loads and accesses the XML file with the UI
+	\class UILoader
+	\brief Interface for UI loaders. Each loader implements its own serialization of UI layouts and settings to files
 */
-class NEPHILIM_API UILoaderXML
-{
-public:
-	bool loadFromFile(const String& filename);
-
-	pugi::xml_document document; ///< Contains all the UI file data (xml)
-};
-
 class NEPHILIM_API UILoader
 {
 public:
-
-	void configure(UIView* view, const String& filename); // v1 test
-};
-
-/**
-	\ingroup UI
-	\class UIReloadComponent
-	\brief UI attachment for reloading itself from a file
-*/
-class NEPHILIM_API UIReloadComponent : public UIComponent
-{
-public:
-	UIReloadComponent(const String& file);
-
-	void onAttach(UIView* view)
+	virtual bool loadFromFile(const String& filename, UIView* root_view)
 	{
-
+		return false;
 	}
-
-	String filename; ///< Where to load the UI from
 };
+
 
 NEPHILIM_NS_END
 #endif // NephilimUILoader_h__

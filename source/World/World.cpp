@@ -50,6 +50,8 @@ void World::setPlayerController(PlayerController* playerController)
 /// This requires that the level is previously indexed into this world
 bool World::loadLevel(const String& name, bool async)
 {
+	_currentLevel = new Level();
+	_currentLevel->name = name;
 	return false;
 }
 
@@ -57,6 +59,20 @@ bool World::loadLevel(const String& name, bool async)
 bool World::loadLevel(Level* level)
 {
 	return false;
+}
+
+
+/// Unload every level currently active
+/// If this world isn't multi level, it will only destroy the current level, if applicable
+/// The main use of the function is to revert the world to an empty state before loading the next level
+void World::unloadLevels()
+{
+	// TODO; support multi level
+	if (_currentLevel)
+	{
+		delete _currentLevel;
+		_currentLevel = nullptr;
+	}
 }
 
 

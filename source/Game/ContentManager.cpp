@@ -138,12 +138,12 @@ bool ContentManager::load(const String& filename)
 
 		String realPath = filesystems->translate(filename);
 
-		if(filesystems->exists(filename))
+		if(1/*filesystems->exists(filename)*/)
 		{
 			Log("Going to load texture %s at real path: %s", filename.c_str(), realPath.c_str());
 
 			targetGroup->mTextures[filename] = new Texture();
-			r = targetGroup->mTextures[filename]->loadFromFile(realPath);
+			r = targetGroup->mTextures[filename]->loadFromFile(filename);
 			targetGroup->mTextures[filename]->setSmooth(false);
 			targetGroup->mTextures[filename]->setRepeated(false);
 		}

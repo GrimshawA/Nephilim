@@ -83,7 +83,9 @@ void Window::handleInternalDragDrop(int x, int y, const StringList& fileNames)
 /// Sets a new title to the window
 void Window::setTitle(const String &title)
 {
-
+#ifdef NEPHILIM_DESKTOP
+	myWindowImpl->setTitle(title);
+#endif
 }
 
 /// Activate the surface as the active frame buffer

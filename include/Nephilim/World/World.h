@@ -47,7 +47,7 @@ public:
 	String name;
 
 	/// With this flag set to true, the world can load many levels at once
-	bool multiLevel = true;
+	bool multiLevel = false;
 
 	/// This class is responsible for managing the entities alive
 	EntityManager entityManager;
@@ -92,6 +92,11 @@ public:
 
 	/// Load directly the new level into this world, and index it too
 	bool loadLevel(Level* level);
+
+	/// Unload every level currently active
+	/// If this world isn't multi level, it will only destroy the current level, if applicable
+	/// The main use of the function is to revert the world to an empty state before loading the next level
+	void unloadLevels();
 
 	/// Get one of the currently loaded levels
 	Level* getLevel(std::size_t index = 0);

@@ -44,8 +44,8 @@ public:
 
 	void innerLanguageSwitch();
 
-	/// Callback to render itself, renders children
-	virtual void draw(GraphicsDevice* renderer);
+	/// Called on the subclass to have it paint its contents
+	virtual void onPaint(UIPainter& painter);
 
 	virtual UIView* clone();
 
@@ -61,7 +61,7 @@ public:
 	{
 		Texture* texture;
 		FloatRect rect;
-	};
+	}; 
 
 	std::map<UIButtonState, TextureInfo> stateTextures;
 

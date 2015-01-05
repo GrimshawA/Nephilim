@@ -4,9 +4,13 @@
 
 #include <Nephilim/Math/Math.h>
 #include <Nephilim/Logger.h>
+#include <Nephilim/Window.h>
 #include <Nephilim/StateTransitionBlocks.h>
 #include <Nephilim/StateTransitionSlider.h>
 #include <Nephilim/StateTransitionFade.h>
+
+#include <Nephilim/UI/UICanvas.h>
+#include <Nephilim/UI/UIWindow.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -54,7 +58,14 @@ void GameState::onUpdate(const Time &time)
 
 void GameState::onRender(GraphicsDevice* renderer)
 {
-
+	// Default will put the UI on screen
+	for (std::size_t i = 0; i < getGame().userInterfaceManager.canvasList.size(); ++i)
+	{
+		UICanvas* c = getGame().userInterfaceManager.canvasList[i];
+		
+		renderer->setProjectionMatrix(mat4::ortho(0.f, getGame().getWindow()->width(), getGame().getWindow()->height(), 0.f, 1.f, 5000.f));
+		c->draw(renderer);
+	}
 }
 
 /// Push a state batch down the stack
@@ -120,5 +131,19 @@ void GameState::sendMessage(const String& bindName, const String& message)
 bool GameState::onDraw(GraphicsDevice *renderer){
 	return true;
 };
+
+/// Handles the events automatically
+void GameState::PrimaryEventHandler(const Event& event)
+{
+	// Pass events to the UI
+	for (std::size_t i = 0; i < getGame().userInterfaceManager.canvasList.size(); ++i)
+	{
+		UICanvas* c = getGame().userInterfaceManager.canvasList[i];
+
+		c->pushEvent(event);
+	}
+
+	onEvent(event);
+}
 
 NEPHILIM_NS_END

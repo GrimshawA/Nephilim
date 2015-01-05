@@ -128,7 +128,7 @@ public:
 	void updateList(std::vector<GameState*>& list, const Time& time);
 
 	/// Delivers the event to the right events
-	void pushEvent(Event &event);
+	void pushEvent(const Event &event);
 
 	/// Draws the right states
 	void drawStates(GraphicsDevice *renderer);

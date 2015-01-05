@@ -136,7 +136,7 @@ int GameStateMachine::getActiveStateCount()
 }
 
 	
-void GameStateMachine::pushEvent(Event &event)
+void GameStateMachine::pushEvent(const Event &event)
 {
 	if(mAnimation)
 	{
@@ -152,7 +152,7 @@ void GameStateMachine::pushEvent(Event &event)
 		bool stop = false;
 
 		while(index != -1 && stop == false){
-			mCurrentList[index]->onEvent(event);
+			mCurrentList[index]->PrimaryEventHandler(event);
 			stop = !mCurrentList[index]->m_letEventsThrough;
 			index--;
 		}

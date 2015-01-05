@@ -136,6 +136,12 @@ private:
 	int RefCount;
 
 	bool m_scheduledRemoval;
+
+// Private methods for internal behavior
+private:
+
+	/// Handles the events automatically
+	void PrimaryEventHandler(const Event& event);
 };
 
 /// Create an animation to transition between states
