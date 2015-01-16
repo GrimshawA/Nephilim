@@ -61,8 +61,9 @@ public:
 	/// Invert the vertical coordinates of the texture - hacky
 	void invertTextureCoordinates();
 
-protected:
+	bool useOwnTransform = true;
 
+protected:
 	float m_width;
 	float m_height;
 

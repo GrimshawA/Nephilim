@@ -194,6 +194,12 @@ public:
 	/// Get the current height of this widget
 	float height();
 
+	/// Refresh the visual styles on this view
+	void updateStyles();
+
+	/// Set styles directly to the view
+	void setStyleSheet(const String& stylesheet);
+
 	/// Get the bounding box of the children
 	/// Coordinates in local space, relative to this view
 	FloatRect childrenRect();

@@ -32,10 +32,13 @@ public:
 
 	/// Called when the component is attached to a view
 	/// view is guaranteed to be valid until onRelease is called
-	virtual void onAttach(UIView* view){ };
+	virtual void onAttach(UIView* view);
 
 	/// Called when the parent view is being destroyed or the component is about to be removed
-	virtual void onRelease(UIView* view){}
+	virtual void onRelease(UIView* view);
+
+	/// Called to refresh the component
+	virtual void updateStyles(){}
 
 	/// Called on the component when the UIView it is attached to has a new child
 	virtual void onChildAttached(UIView* child){};

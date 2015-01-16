@@ -4,8 +4,21 @@
 #include <cmath>
 
 NEPHILIM_NS_BEGIN
-namespace math{
-		double pi = 3.1415926;/* = atan(1.0)*4*/;
+namespace math
+{
+	double pi = 3.1415926;/* = atan(1.0)*4*/;
+
+/// Returns v if it is within a and b, otherwise one of the ranges
+float clamp(float a, float b, float v)
+{
+	if (v < a)
+		return a;
+	else if (v > b)
+		return b;
+	else
+		return v;
+}
+
 
 		float distance(const Vec2f &a, const Vec2f &b){
 			return ( (float)sqrt(((b.x-a.x)*(b.x-a.x))+((b.y-a.y)*(b.y-a.y))  ) );

@@ -1,22 +1,22 @@
-#ifndef PARABOLA_TEXTFILESTREAM_H
-#define PARABOLA_TEXTFILESTREAM_H
+#ifndef NephilimTextStream_h__
+#define NephilimTextStream_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Strings.h>
 
 NEPHILIM_NS_BEGIN
 
 class IODevice; //forward decl
 
 /**
-	\ingroup Foundation
 	\class TextStream
 	\brief A stream that can read from IODevices with text parsing functions
 
 	This class provides methods to make it easy to load/write text files. 
 	It is naturally able to parse files, even under different "virtual languages" you can create.
 */
-class NEPHILIM_API TextStream{
+class NEPHILIM_API TextStream
+{
 public:
 	/// An yet empty stream, needs future association with a IODevice
 	TextStream();
@@ -30,6 +30,9 @@ public:
 
 	/// Allow for querying if the stream is ready
 	operator bool() const;
+
+	/// Read ahead without changing the reading marker
+	char peek(std::size_t offset = 0);
 
 	/// Check if this stream reached the end of device / no more to read
 	bool atEnd();
@@ -115,4 +118,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimTextStream_h__

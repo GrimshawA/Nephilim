@@ -19,6 +19,9 @@ public:
 
 	void onAttach(UIView* view);
 
+	/// Called to refresh the component
+	virtual void updateStyles();
+
 	void onEvent(Event event, UIView* view);
 
 	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);

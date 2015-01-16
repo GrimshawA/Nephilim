@@ -210,6 +210,9 @@ void GameCore::PrimaryCreate()
 /// This will handle the OS event and deliver it down the game structures
 void GameCore::PrimaryEventHandling(const Event& event)
 {
+
+	gameInput.update(event);
+
 	stateManager.pushEvent(event);
 
 	onEvent(event);

@@ -80,7 +80,10 @@ class Font;
 */
 class NEPHILIM_API Text : public Drawable, public Transformable
 {
-public:		
+public:	
+
+	bool useOwnTransform = true;
+
 	/// Creates a Text object with the default font, but no text string yet
 	Text();
 	/// Creates a text with default font and content text positioned at (x,y) as top-left coordinate

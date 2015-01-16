@@ -34,6 +34,9 @@ public:
 	/// Create a window for this canvas
 	UIWindow* createWindow(const String& name);
 
+	/// Load a stylesheet file into the canvas
+	bool loadStylesheet(const String& filename);
+
 	/// Update the window size of the UI canvas
 	/// This will effectively change the size of all subwindows to match the new canvas size, if they are fullscreen
 	void setWindowSize(int w, int h);

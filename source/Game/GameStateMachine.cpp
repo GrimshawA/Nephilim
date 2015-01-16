@@ -28,6 +28,16 @@ void GameStateMachine::triggerBatch(const GameStateBatch& batch)
 	batchPending = true;
 }
 
+/// Automaticaly change the state machine status
+/// This uses a data-oriented FSM definition of the game screens
+/// with well defined transitions and connections between nodes
+/// for example, if all states in the FSM associate the BACK signal
+/// with going to the previous state. its easy to go backwards without knowing what states to go to.
+void GameStateMachine::triggerSignal(const String& sig)
+{
+
+}
+
 void GameStateMachine::clear()
 {
 

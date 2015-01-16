@@ -17,6 +17,8 @@
 #include <Nephilim/UI/UIManager.h>
 
 #include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Game/GameInput.h>
+
 #include <Nephilim/World/World.h>
 
 
@@ -65,6 +67,9 @@ public:
 
 	/// The game has audio playback support built in, along with sound groups managing
 	AudioManager audioManager;
+
+	/// The central game input manager, used to query at any time for key state etc
+	GameInput gameInput;
 
 
 public: 

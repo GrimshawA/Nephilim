@@ -43,6 +43,10 @@ namespace
 		{
 			String attributeName = it->name();
 
+			if (attributeName == "id")
+			{
+				view->setName(it->as_string());
+			}
 			if (attributeName == "size")
 			{
 				// Its a tuple for width and height
@@ -172,7 +176,7 @@ namespace
 			v = parent->createChild("1");
 			v->setSize(500.f, 300.f);
 
-			v->addComponent(new UIComponentButton("hello"));
+			v->addComponent(new UIComponentButton(node.attribute("label").as_string("none")));
 		}
 		else if (String(node.name()) == "text")
 		{
@@ -190,6 +194,12 @@ namespace
 		if (v)
 		{
 			process_general_params(node, v);
+		}
+
+		// 3. Style the view with the stylesheet
+		if (v)
+		{
+			v->updateStyles();
 		}
 
 		return v;

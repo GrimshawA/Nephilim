@@ -42,7 +42,8 @@ void Text::onDraw(GraphicsDevice* renderer)
 	m_font->getTexture(m_characterSize).bind();
 	renderer->setBlendingEnabled(true);
 	renderer->setBlendMode(Render::Blend::Alpha);
-	renderer->setModelMatrix(mat4(getTransform().getMatrix()));
+	if (useOwnTransform)
+		renderer->setModelMatrix(mat4(getTransform().getMatrix()));
 	renderer->draw(m_vertices);
 	renderer->setModelMatrix(mat4());
 };

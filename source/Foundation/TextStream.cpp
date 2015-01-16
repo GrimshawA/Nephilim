@@ -1,4 +1,5 @@
-#include "Nephilim/TextStream.h"
+#include <Nephilim/Foundation/TextStream.h>
+
 #include "Nephilim/IODevice.h"
 #include <iostream>
 using namespace std;
@@ -41,6 +42,21 @@ TextStream::operator bool() const{
 char TextStream::readChar(){
 	return m_device->getChar();
 };
+
+/// Read ahead without changing the reading marker
+char TextStream::peek(std::size_t offset)
+{
+	// go forward in the stream
+	seekByOffset(offset);
+
+	// read the char in there
+	char c = readChar();
+
+	// seek back to the original place
+	seekByOffset(-(int(offset) + 1));
+
+	return c;
+}
 
 /// Dislocating the reading pointer by offset bytes.
 bool TextStream::seekByOffset(Int64 offset){

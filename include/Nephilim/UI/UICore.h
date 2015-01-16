@@ -5,6 +5,7 @@
 #include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Graphics/Font.h>
 #include <Nephilim/Localization.h>
+#include <Nephilim/UI/Stylesheet.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -69,6 +70,9 @@ public:
 	/// Menus (drop down boxes, menus in the bars etc)
 	/// Its a stack because menus can cast other menus
 	std::vector<UIView*> menuElementStack;
+
+	/// Every UICore has a global stylesheet
+	StyleSheet stylesheet;
 
 	/// \ingroup UI
 	/// \class FontResource

@@ -111,6 +111,9 @@ namespace math
 	private:
 		float value; ///< The internal representation of the angle
 	};
+
+	/// Returns v if it is within a and b, otherwise one of the ranges
+	float clamp(float a, float b, float v);
 };
 
 /**

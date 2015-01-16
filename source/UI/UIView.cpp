@@ -127,6 +127,21 @@ float UIView::height()
 	return size.y;
 }
 
+/// Refresh the visual styles on this view
+void UIView::updateStyles()
+{
+	for (auto it = components.begin(); it != components.end(); ++it)
+	{
+		(*it)->updateStyles();
+	}
+}
+
+/// Set styles directly to the view
+void UIView::setStyleSheet(const String& stylesheet)
+{
+
+}
+
 /// Load the hierarchy of this view from a file and configure itself
 void UIView::load(const String& filename)
 {

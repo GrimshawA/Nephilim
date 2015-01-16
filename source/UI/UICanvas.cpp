@@ -2,6 +2,7 @@
 #include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/UI/UILabel.h>
+#include <Nephilim/UI/CSSLoader.h>
 
 #include <algorithm>
 
@@ -24,6 +25,13 @@ void UICanvas::addLayer2D(const String& name)
 void UICanvas::addLayer3D(const String& name)
 {
 	addSurface(name);
+}
+
+/// Load a stylesheet file into the canvas
+bool UICanvas::loadStylesheet(const String& filename)
+{
+	CSSLoader css_loader;
+	return css_loader.load(filename, getContext().stylesheet);
 }
 
 /// Update the window size of the UI canvas

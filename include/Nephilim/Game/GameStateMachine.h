@@ -105,8 +105,15 @@ public:
 	/// Safely destroys all states by sending them a destroy callback
 	~GameStateMachine();
 
-	/// Push a state batch down the stack
+	/// Manually change the state machine status
 	void triggerBatch(const GameStateBatch& batch);
+
+	/// Automaticaly change the state machine status
+	/// This uses a data-oriented FSM definition of the game screens
+	/// with well defined transitions and connections between nodes
+	/// for example, if all states in the FSM associate the BACK signal
+	/// with going to the previous state. its easy to go backwards without knowing what states to go to.
+	void triggerSignal(const String& sig);
 
 	/// Clear all active states
 	void clear();

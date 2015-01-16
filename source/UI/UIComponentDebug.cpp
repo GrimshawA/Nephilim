@@ -53,6 +53,7 @@ void UIComponentDebugColor::onRender(GraphicsDevice* renderer, UIView* view, con
 {
 	renderer->setModelMatrix(parentTransform);
 	RectangleShape backRect(FloatRect(0.f, 0.f, view->size.x, view->size.y), mColor);
+	backRect.useOwnTransform = false;
 	renderer->draw(backRect);
 }
 

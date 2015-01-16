@@ -30,6 +30,19 @@ UIComponentButton::UIComponentButton(const String& text)
 
 }
 
+/// Called to refresh the component
+void UIComponentButton::updateStyles()
+{
+	Log("BUTTON UPDATING STYLES!!!!!!!!!!!!!!!!");
+
+	StyleSheet& stylesheet = mParent->getContext()->stylesheet;
+
+	StyleSheet::StyleArray& styles = stylesheet.getRule("button");
+	StyleSheet::StyleArray& hstyles = stylesheet.getRule("button:hover");
+	mNormalColor = styles.getEntry("background").toColor();
+	mHoverColor = hstyles.getEntry("background").toColor();
+}
+
 void UIComponentButton::onPropertySet(const StringList& targetObject, const String& value)
 {
 	if(targetObject.size() == 2 && targetObject[0] == "button" && targetObject[1] == "caption")
@@ -119,7 +132,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 			hoverRect.setTexture(mHoverTexture);
 
 		}
-		
+		hoverRect.useOwnTransform = false;
 		renderer->draw(hoverRect);
 	}
 	else
@@ -141,6 +154,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 			hoverRect.setTexture(mTexture);
 
 		}
+		hoverRect.useOwnTransform = false;
 		renderer->draw(hoverRect);
 	}
 
@@ -154,6 +168,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
 	buttonLabel.setPosition(static_cast<int>((view->mRect.left + view->mRect.width / 2.f ) + 0.5f), static_cast<int>((view->mRect.top +  view->mRect.height / 2.f) + 0.5f));
 	buttonLabel.setColor(Color::White);
+	buttonLabel.useOwnTransform = false;
 	if(buttonLabel.getLocalBounds().width > view->getSize().x * 0.9f)
 	{
 		// The text is too big and passes the 90% of the button's width
