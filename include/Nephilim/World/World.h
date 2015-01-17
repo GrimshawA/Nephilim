@@ -127,8 +127,14 @@ public:
 	/// Spawns a vanilla Actor (not subclassed)
 	Actor* spawnActor();
 
+	/// Returns the first actor it finds with that name or nullptr
+	Actor* getActorByName(const String& _name);
+
 	/// Destroys an actor
 	void destroyActor(Actor* actor);
+
+	/// Get the total numbers of spawned actors
+	int getActorCount();
 
 	/// Allocate a component manager to type T as a ComponentArray<T>
 	template<typename T>

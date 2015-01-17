@@ -140,6 +140,26 @@ Actor* World::spawnActor()
 	return actor;
 }
 
+/// Returns the first actor it finds with that name or nullptr
+Actor* World::getActorByName(const String& _name)
+{
+	for (auto actor : actors)
+	{
+		if (actor->mName == _name)
+		{
+			//Log("Compare %s with %s", actor->mName.c_str(), _na)
+			return actor;
+		}
+	}
+	return nullptr;
+}
+
+/// Get the total numbers of spawned actors
+int World::getActorCount()
+{
+	return actors.size();
+}
+
 /// Spawn a vanilla Landscape (not subclassed)
 Landscape* World::spawnLandscape()
 {

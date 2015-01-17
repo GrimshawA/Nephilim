@@ -162,8 +162,7 @@ private:
 	/// Pointer to the World instance that created this actor
 	World* mWorld = nullptr;
 
-	/// Name of this actor, it doesn't have to be unique
-	String mName;
+
 
 	/// The root component of this Actor
 	SceneComponent* root = nullptr;
@@ -172,12 +171,10 @@ public:
 	/// The array of components on this Actor
 	std::vector<ActorComponent*> components;
 
-public:
+	/// Name of this actor, it doesn't have to be unique
+	String mName;
 
-	float X()
-	{
-		return getActorLocation().x;
-	}
+public:
 
 	/// Get the world instance that created this actor
 	World* getWorld();

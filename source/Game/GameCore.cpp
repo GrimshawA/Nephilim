@@ -1,9 +1,13 @@
 #include <Nephilim/Game/GameCore.h>
+#include <Nephilim/Plugins/PluginSDK.h>
 #include <Nephilim/Engine.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/StringList.h>
 #include <Nephilim/FileSystem.h>
 #include <Nephilim/Logger.h>
+
+// Scripting of the GameCore
+#include <Nephilim/Scripting/ScriptingEnvironment.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -28,10 +32,43 @@ void GameCore::onPreSetup()
 /// Indexes all plugins found in /Plugins
 void GameCore::loadPlugins()
 {
+	typedef PluginSDK::Types(*getPluginTypeFunc)();
+	typedef ScriptingEnvironment*(*createScriptEnvironmentFunc)(GameCore*);
+
 	StringList dll_list = FileSystem::scanDirectory("Plugins", "dll", false);
 	for (auto& dll_name : dll_list)
 	{
-		Log("Plugin: %s", dll_name.c_str());
+		// Let's check what the plugin is and load immediately
+		Plugin* plugin = new Plugin(dll_name);
+		if (plugin)
+		{
+			Log("Plugin loaded: %s", dll_name.c_str());
+
+			getPluginTypeFunc funptr = (getPluginTypeFunc)plugin->getFunctionAddress("getPluginType");
+			if (funptr)
+			{
+				PluginSDK::Types pluginType = funptr();
+
+				switch (pluginType)
+				{
+				case PluginSDK::Scripting: 
+					Log("THIS IS A SCRIPTING PLUGIN");
+					createScriptEnvironmentFunc funptr = (createScriptEnvironmentFunc)plugin->getFunctionAddress("createScriptingEnvironment");
+					if (funptr)
+					{
+						ScriptingEnvironment* scriptingEnvironment = funptr(this);
+						if (scriptingEnvironment)
+						{
+							Log("Got the scripting environment, Registered.");
+							scriptingEnvironments.push_back(scriptingEnvironment);
+						}
+					}
+					break;
+
+
+				}
+			}
+		}
 	}
 }
 
@@ -45,6 +82,28 @@ World* GameCore::createWorld(const String& name)
 	world->contentManager = &contentManager;
 
 	return world;
+}
+
+/// Finds a registered scripting environment or returns nullptr
+ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
+{
+	for (auto s : scriptingEnvironments)
+	{
+		if (s->name == name)
+		{
+			return s;
+		}
+	}
+	return nullptr;
+}
+
+/// Broadcast a message to every script
+void GameCore::broadcastMessage(const GameMessage &gameMessage)
+{
+	for (auto s : scriptingEnvironments)
+	{
+		s->dispatchToAll(gameMessage);
+	}
 }
 
 /// Get the main world of this game
@@ -184,7 +243,7 @@ void GameCore::innerUpdate(Time time)
 	m_stackedTime += time.asSeconds();
 	while(m_stackedTime >= m_updateStep)
 	{
-		onUpdate(Time::fromSeconds(m_updateStep));
+		PrimaryUpdate(Time::fromSeconds(m_updateStep));
 		m_stackedTime -= m_updateStep;
 	}
 }
@@ -205,6 +264,18 @@ void GameCore::PrimaryCreate()
 	loadPlugins();
 
 	onCreate();
+}
+
+/// Internal update handling
+void GameCore::PrimaryUpdate(Time time)
+{
+	onUpdate(time);
+
+	// Now let's keep our scripts fresh
+	for (auto s : scriptingEnvironments)
+	{
+		s->update(time);
+	}
 }
 
 /// This will handle the OS event and deliver it down the game structures

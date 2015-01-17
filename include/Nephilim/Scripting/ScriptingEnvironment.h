@@ -3,10 +3,14 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
+#include <Nephilim/Time.h>
+#include <Nephilim/Game/GameMessage.h>
 
 NEPHILIM_NS_BEGIN
 
+class GameCore;
 class IScript;
+class ScriptSystem;
 
 /**
 	\class ScriptingEnvironment
@@ -19,13 +23,29 @@ class IScript;
 class NEPHILIM_API ScriptingEnvironment
 {
 public:
-	virtual void testFunction() = 0;
 
-	virtual IScript* compile(const String& filename){ return nullptr; }
+	/// All scripting environments have a name to be retrieved easily
+	String name;
 
-	virtual void execute(const String& source){}
+	/// This is the game the scripting environment is linked to
+	GameCore* _game;
 
-	virtual void registerFunction(const String& signature, void* funcPtr){}
+public:
+
+	/// Ensure safe destruction
+	virtual ~ScriptingEnvironment();
+
+	/// Creates a new script system to pair up with a game world
+	virtual ScriptSystem* createScriptSystem(){ return nullptr; }
+
+	/// This creates a scripting environment wide script
+	virtual void createGameBehavior(const String& filename){}
+
+	/// Update the game behaviors
+	virtual void update(const Time& time){}
+
+	/// Dispatch a GameMessage to all scripts
+	virtual void dispatchToAll(const GameMessage& gameMessage){}
 };
 
 NEPHILIM_NS_END

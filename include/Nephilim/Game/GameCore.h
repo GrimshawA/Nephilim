@@ -11,13 +11,17 @@
 #include <Nephilim/StringList.h>
 
 #include <Nephilim/Game/GameStateMachine.h>
+#include <Nephilim/Game/GameMessage.h>
+#include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Game/GameInput.h>
+
+
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Localization.h>
 #include <Nephilim/Audio/AudioManager.h>
 #include <Nephilim/UI/UIManager.h>
 
-#include <Nephilim/Game/BaseSceneManager.h>
-#include <Nephilim/Game/GameInput.h>
+
 
 #include <Nephilim/World/World.h>
 
@@ -27,6 +31,7 @@ NEPHILIM_NS_BEGIN
 class Engine;
 class Window;
 class IScriptEngine;
+class ScriptingEnvironment;
 
 /**
 	\ingroup Core
@@ -44,6 +49,8 @@ class IScriptEngine;
 class NEPHILIM_API GameCore
 {
 public:
+
+	std::vector<ScriptingEnvironment*> scriptingEnvironments;
 
 	/// The game instance can have N parallel realms
 	std::vector<World*> gameWorlds;
@@ -92,11 +99,17 @@ public:
 	/// If there are no spawned worlds, one will be created, otherwise the world 0 is always the main one
 	World* getWorld();
 
+	/// Finds a registered scripting environment or returns nullptr
+	ScriptingEnvironment* getScriptingEnvironment(const String& name);
+
 	/// Create a new UICanvas for the game to use
 	UICanvas* createCanvas(const String& name);
 
 	/// Indexes all plugins found in /Plugins
 	void loadPlugins();
+
+	/// Broadcast a message to every script
+	void broadcastMessage(const GameMessage &gameMessage);
 
 	/// Get a pointer to the engine
 	Engine* getEngine();
@@ -200,6 +213,9 @@ private:
 
 	/// This will handle the OS event and deliver it down the game structures
 	void PrimaryEventHandling(const Event& event);
+
+	/// Internal update handling
+	void PrimaryUpdate(Time time);
 };
 
 NEPHILIM_NS_END
