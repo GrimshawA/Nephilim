@@ -5,7 +5,7 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/NxMath.h>
+#include <Nephilim/Math/Math.h>
 
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/CColliderBox.h>
@@ -62,6 +62,12 @@ public:
 	{
 		_body->SetFixedRotation(enable);
 	}
+
+	/// Check if the rigid body is sleeping, if supported
+	virtual bool isAwake()
+	{ 
+		return _body->IsAwake();
+	}
 };
 
 /// Initialize the physics world right away
@@ -71,7 +77,7 @@ Box2DSystem::Box2DSystem()
 	mSimulation = new b2World(b2Vec2(0.f, -9.8));
 
 	// lets add a ground for now
-	b2BodyDef groundBodyDef;
+/*	b2BodyDef groundBodyDef;
 	groundBodyDef.type = b2_staticBody;
 	groundBodyDef.position = b2Vec2(0.f, 0.f);
 	b2Body* groundBody = mSimulation->CreateBody(&groundBodyDef);
@@ -83,7 +89,7 @@ Box2DSystem::Box2DSystem()
 	for (std::size_t i = 0; i < 10; ++i)
 	{
 		spawnTestBox(Vector2D(i * 20.f - 50.f, math::random(20.f, 60.f)), Vector2D(10.f, 10.f));
-	}
+	}*/
 
 }
 
@@ -115,7 +121,7 @@ void Box2DSystem::update(const Time& deltaTime)
 		if (!boxCollider->userData)
 		{
 			b2BodyDef groundBodyDef2;
-			groundBodyDef2.type = b2_dynamicBody;
+			groundBodyDef2.type = boxCollider->_isDynamic ? b2_dynamicBody : b2_staticBody;
 			groundBodyDef2.position = b2Vec2(transform->getPosition().x, transform->getPosition().y);
 			b2Body* groundBody2 = mSimulation->CreateBody(&groundBodyDef2);
 
@@ -145,7 +151,7 @@ void Box2DSystem::update(const Time& deltaTime)
 			if (!box->userData)
 			{
 				b2BodyDef groundBodyDef2;
-				groundBodyDef2.type = b2_dynamicBody;
+				groundBodyDef2.type = box->_isDynamic ? b2_dynamicBody : b2_staticBody;
 				groundBodyDef2.position = b2Vec2(actor->getActorLocation().x, actor->getActorLocation().y);
 				b2Body* groundBody2 = mSimulation->CreateBody(&groundBodyDef2);
 

@@ -1,3 +1,6 @@
+#include <Nephilim/World/World.h>
+#include <Nephilim/World/CColliderBox.h>
+
 #include "PhysicsSystemPhysX.h"
 
 #include <Nephilim/Logger.h>
@@ -39,6 +42,7 @@ PhysicsSystemPhysX::PhysicsSystemPhysX()
 
 	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -19.81f, 0.0f);
 	//sceneDesc.
 	//customizeSceneDesc(sceneDesc);
 
@@ -77,6 +81,12 @@ PhysicsSystemPhysX::PhysicsSystemPhysX()
 
 	mScene->addActor(*aSphereActor);
 	aSphereActor->setLinearVelocity(PxVec3(1, 1, 1));
+
+	PxRigidStatic* groundPlaneActor = mPhysics->createRigidStatic(PxTransform(0.f, -10.f, 0.f));
+	PxShape* groundShape = groundPlaneActor->createShape(PxBoxGeometry(150.f, 5.f, 150.f), *mMaterial);
+	mScene->addActor(*groundPlaneActor);
+	 
+	manager = PxCreateControllerManager(*mScene);
 }
 
 String PhysicsSystemPhysX::getName()
@@ -85,16 +95,121 @@ String PhysicsSystemPhysX::getName()
 }
 
 void PhysicsSystemPhysX::update(const Time& deltaTime)
-{
-	Log("Hey Dude");
-
+{	
+	// Step the simulation forward
 	mScene->simulate(deltaTime.asSeconds());
 
-	if (aSphereActor)
+	if (mScene->fetchResults())
 	{
-		if (mScene->fetchResults())
+
+		// Now let's push back the transforms into the World
+		ComponentManager* colliderBoxManager = getWorld()->getComponentManager<CColliderBox>();
+		ComponentManager* transformManager = getWorld()->getComponentManager<CTransform>();
+		for (std::size_t i = 0; i < colliderBoxManager->getInstanceCount(); ++i)
 		{
-			Log("SIMULATING SPHERE at %f %f %f", aSphereActor->getGlobalPose().p.x, aSphereActor->getGlobalPose().p.y, aSphereActor->getGlobalPose().p.z);
+			Entity E = colliderBoxManager->getInstanceEntity(i);
+			CColliderBox* box = (CColliderBox*)colliderBoxManager->getInstance(i);
+			CTransform* transform = (CTransform*)transformManager->getComponentFromEntity(E);
+
+			// Create
+			if (box->userData == nullptr)
+			{
+				PxMaterial* boxMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.1f);
+
+				PxRigidDynamic* boxActor = mPhysics->createRigidDynamic(PxTransform(transform->position.x, transform->position.y, transform->position.z));
+				boxActor->createShape(PxBoxGeometry(10.f, 10.f, 10.f), *boxMaterial);
+				PxRigidBodyExt::updateMassAndInertia(*boxActor, 30);
+				//boxActor->setLinearVelocity(PxVec3(0, -50, 0));
+
+				mScene->addActor(*boxActor);
+				box->userData = boxActor;
+			}
+			// Update
+			else
+			{
+				PxRigidDynamic* boxActor = (PxRigidDynamic*)box->userData;
+				PxTransform pxTransform = boxActor->getGlobalPose();
+
+				transform->position.x = pxTransform.p.x;
+				transform->position.y = pxTransform.p.y;
+				transform->position.z = pxTransform.p.z;
+
+				transform->rotation.x = pxTransform.q.x;
+				transform->rotation.y = pxTransform.q.y;
+				transform->rotation.z = pxTransform.q.z;
+				transform->rotation.w = pxTransform.q.w;
+			}
+		}
+
+		syncActors();
+	}
+}
+
+/// Let's check if actors are okay
+void PhysicsSystemPhysX::syncActors()
+{
+	for (std::size_t i = 0; i < mWorld->actors.size(); ++i)
+	{
+		Actor* actor = mWorld->actors[i];
+
+		for (std::size_t j = 0; j < actor->components.size(); ++j)
+		{
+			ACharacterComponent* chr = dynamic_cast<ACharacterComponent*>(actor->components[j]);
+			if (chr)
+			{
+				// We have a character controller in this actor, needs to be handled
+				if (chr->userData)
+				{
+					PxController* cc = (PxController*)chr->userData;
+					
+
+					chr->t.position.x = cc->getPosition().x;
+					chr->t.position.y = cc->getPosition().y;
+					chr->t.position.z = cc->getPosition().z;
+
+					//Log("Updated actor");
+				}
+				else
+				{
+					PxMaterial* mat = mPhysics->createMaterial(0.1, 0.1, 0.1);
+ 					PxCapsuleControllerDesc* desc = new PxCapsuleControllerDesc;
+					desc->height = 5;
+					desc->radius = 5;
+					desc->position = PxExtendedVec3(0, 0, 0);
+					desc->material = mat;
+					Log("BOX VALID: %d", desc->isValid());
+
+					PxController* c = manager->createController(*desc);
+					if (!c)
+					{
+						Log("Failed to instance a controller");
+					}
+
+					if (c)
+					{	
+						
+						chr->userData = c;
+						chr->moving.connect(sigc::mem_fun(this, &PhysicsSystemPhysX::TestCharacterMove));
+						Log("PhysX validated an actor's character controller");
+					}
+				}
+			}
+		}
+	}
+}
+
+void PhysicsSystemPhysX::TestCharacterMove(Vector3D displacement, Actor* a)
+{
+	ACharacterComponent* chr = dynamic_cast<ACharacterComponent*>(a->getRootComponent());
+	if (chr)
+	{
+		if (chr->userData)
+		{
+			PxController* cc = (PxController*)chr->userData;
+			PxControllerFilters filters;
+			cc->move(PxVec3(displacement.x, displacement.y, displacement.z), 0.01f, 1.f / 60.f, filters);
+
+			//Log("Moving..");
 		}
 	}
 }

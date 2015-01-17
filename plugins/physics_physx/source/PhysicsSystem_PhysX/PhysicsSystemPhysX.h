@@ -2,6 +2,7 @@
 #define NephilimPluginPhysicsPhysX_h__
 
 #include <Nephilim/World/PhysicsSystem.h>
+#include <Nephilim/World/Actor.h>
 
 #include <Nephilim/Logger.h>
 #include <Nephilim/Vectors.h>
@@ -13,6 +14,7 @@ namespace physx
 {
 	class PxPhysics;
 	class PxScene;
+	class PxControllerManager;
 }
 
 /**
@@ -32,11 +34,16 @@ public:
 
 	physx::PxPhysics* mPhysics;
 	physx::PxScene* mScene;
-
+	physx::PxControllerManager* manager;
 public:
 
 	/// Initialize the scene already
 	PhysicsSystemPhysX();
+
+	/// Let's check if actors are okay
+	void syncActors();
+
+	void TestCharacterMove(Vector3D displacement, Actor* a);
 
 	/// Get the name of this implementation (PhysX)
 	virtual String getName();

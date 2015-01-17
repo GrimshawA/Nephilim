@@ -1,1 +1,1 @@
-# Official Plugin: Model importer / exporter using the official FBX SDK
+# Library / Plugin for using Box2D with Nephilim

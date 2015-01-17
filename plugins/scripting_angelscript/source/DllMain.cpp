@@ -1,34 +1,18 @@
-// The actual worker
-#include "AssimpModelLoader.h"
+// For the nephilim plugin interface
+#include <Nephilim/Plugins/PluginSDK.h>
 
-// Engine interfaces
-#include <Nephilim/VertexArray.h>
-#include <Nephilim/IndexArray.h>
-using namespace nx;
-
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
-
-#include <stdio.h>
+// For the actual plugin implementation
+#include "ScriptingEnvironment_AS.h"
 
 extern "C"
 {
-	void __declspec(dllexport) dll_hello()
+	__declspec(dllexport) ScriptingEnvironment *createScriptingEnvironment(GameCore* game)
 	{
-		printf("Hello world\n\n\n");
+		return new ScriptingEnvironment_AS(game);
 	}
 
-	void __declspec(dllexport) sup()
+	__declspec(dllexport) PluginSDK::Types getPluginType()
 	{
-
+		return PluginSDK::Scripting;
 	}
-
-void __declspec(dllexport) loadModel(const char* filename, VertexArray& vertexArray, IndexArray& indexArray)
-{
-
-	AssimpModelLoader loader;
-	loader.open(filename,vertexArray, indexArray);
-}
-
 }
