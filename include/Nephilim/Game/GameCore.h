@@ -18,7 +18,6 @@
 
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Localization.h>
-#include <Nephilim/Audio/AudioManager.h>
 #include <Nephilim/UI/UIManager.h>
 
 
@@ -31,7 +30,9 @@ NEPHILIM_NS_BEGIN
 class Engine;
 class Window;
 class IScriptEngine;
+
 class ScriptingEnvironment;
+class AudioEnvironment;
 
 /**
 	\ingroup Core
@@ -50,7 +51,11 @@ class NEPHILIM_API GameCore
 {
 public:
 
+	/// List of currently setup scripting solutions
 	std::vector<ScriptingEnvironment*> scriptingEnvironments;
+
+	/// List of currently setup audio solutions
+	std::vector<AudioEnvironment*> audioEnvironments;
 
 	/// The game instance can have N parallel realms
 	std::vector<World*> gameWorlds;
@@ -71,9 +76,6 @@ public:
 
 	/// The game has multi language support natively, its lightweight and avoids boilerplate code
 	LocalizationManager languageManager;
-
-	/// The game has audio playback support built in, along with sound groups managing
-	AudioManager audioManager;
 
 	/// The central game input manager, used to query at any time for key state etc
 	GameInput gameInput;
@@ -102,8 +104,14 @@ public:
 	/// Finds a registered scripting environment or returns nullptr
 	ScriptingEnvironment* getScriptingEnvironment(const String& name);
 
+	/// Finds a registered audio environment to play sounds with or returns nullptr
+	AudioEnvironment* getAudioEnvironment(const String& name);
+
 	/// Create a new UICanvas for the game to use
 	UICanvas* createCanvas(const String& name);
+
+	/// Get a UI canvas 
+	UICanvas* getCanvas(const String& name);
 
 	/// Indexes all plugins found in /Plugins
 	void loadPlugins();

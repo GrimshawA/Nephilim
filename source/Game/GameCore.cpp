@@ -6,8 +6,14 @@
 #include <Nephilim/FileSystem.h>
 #include <Nephilim/Logger.h>
 
+// UI integration
+#include <Nephilim/UI/UIManager.h>
+#include <Nephilim/UI/UICanvas.h>
+
 // Scripting of the GameCore
 #include <Nephilim/Scripting/ScriptingEnvironment.h>
+
+#include <Nephilim/Audio/AudioEnvironment.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -34,6 +40,7 @@ void GameCore::loadPlugins()
 {
 	typedef PluginSDK::Types(*getPluginTypeFunc)();
 	typedef ScriptingEnvironment*(*createScriptEnvironmentFunc)(GameCore*);
+	typedef AudioEnvironment*(*createAudioEnvironmentFunc)(GameCore*);
 
 	StringList dll_list = FileSystem::scanDirectory("Plugins", "dll", false);
 	for (auto& dll_name : dll_list)
@@ -51,17 +58,34 @@ void GameCore::loadPlugins()
 
 				switch (pluginType)
 				{
-				case PluginSDK::Scripting: 
-					Log("THIS IS A SCRIPTING PLUGIN");
-					createScriptEnvironmentFunc funptr = (createScriptEnvironmentFunc)plugin->getFunctionAddress("createScriptingEnvironment");
-					if (funptr)
+				case PluginSDK::Scripting:
 					{
-						ScriptingEnvironment* scriptingEnvironment = funptr(this);
-						if (scriptingEnvironment)
-						{
-							Log("Got the scripting environment, Registered.");
-							scriptingEnvironments.push_back(scriptingEnvironment);
-						}
+						 Log("THIS IS A SCRIPTING PLUGIN");
+						 createScriptEnvironmentFunc funptr = (createScriptEnvironmentFunc)plugin->getFunctionAddress("createScriptingEnvironment");
+						 if (funptr)
+						 {
+							 ScriptingEnvironment* scriptingEnvironment = funptr(this);
+							 if (scriptingEnvironment)
+							 {
+								 Log("Got the scripting environment, Registered.");
+								 scriptingEnvironments.push_back(scriptingEnvironment);
+							 }
+						 }
+					}
+					break;
+				case PluginSDK::Audio:
+					{
+						 Log("THIS IS A AUDIO PLUGIN");
+						 createAudioEnvironmentFunc funptr = (createAudioEnvironmentFunc)plugin->getFunctionAddress("createAudioEnvironment");
+						 if (funptr)
+						 {
+							 AudioEnvironment* audioEnvironment = funptr(this);
+							 if (audioEnvironment)
+							 {
+								 Log("Got the audio environment, Registered.");
+								 audioEnvironments.push_back(audioEnvironment);
+							 }
+						 }
 					}
 					break;
 
@@ -88,6 +112,19 @@ World* GameCore::createWorld(const String& name)
 ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
 {
 	for (auto s : scriptingEnvironments)
+	{
+		if (s->name == name)
+		{
+			return s;
+		}
+	}
+	return nullptr;
+}
+
+/// Finds a registered audio environment to play sounds with or returns nullptr
+AudioEnvironment* GameCore::getAudioEnvironment(const String& name)
+{
+	for (auto s : audioEnvironments)
 	{
 		if (s->name == name)
 		{
@@ -124,6 +161,20 @@ World* GameCore::getWorld()
 UICanvas* GameCore::createCanvas(const String& name)
 {
 	return userInterfaceManager.createCanvas(name);
+}
+
+/// Get a UI canvas 
+UICanvas* GameCore::getCanvas(const String& name)
+{
+	for (auto c : userInterfaceManager.canvasList)
+	{
+		if (c->m_name == name)
+		{
+			return c;
+		}
+	}
+	
+	return nullptr;
 }
 
 /// Get a pointer to the engine
