@@ -1,5 +1,5 @@
 #include <Nephilim/Packet.h>
-#include "../SocketImpl.hpp"
+#include "../Network/SocketImpl.hpp"
 
 #include <iostream>
 #include <string.h>

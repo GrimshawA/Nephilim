@@ -23,43 +23,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/ThreadLocal.h>
+////////////////////////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////////////////////////
+#include <Nephilim/Mutex.h>
 
 #if defined(NEPHILIM_WINDOWS)
-    #include "win32_ThreadLocalImpl.h"
+    #include "Impl/win32_MutexImpl.h"
 #else
-    #include "unix_ThreadLocalImpl.h"
-
+    #include "Impl/unix_MutexImpl.h"
 #endif
 
 NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////////////////////
-ThreadLocal::ThreadLocal(void* value)
+Mutex::Mutex()
 {
-    m_impl = new priv::ThreadLocalImpl;
-    setValue(value);
+    m_mutexImpl = new priv::MutexImpl;
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-ThreadLocal::~ThreadLocal()
+Mutex::~Mutex()
 {
-    delete m_impl;
+    delete m_mutexImpl;
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void ThreadLocal::setValue(void* value)
+void Mutex::lock()
 {
-    m_impl->setValue(value);
+    m_mutexImpl->lock();
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-void* ThreadLocal::getValue() const
+void Mutex::unlock()
 {
-    return m_impl->getValue();
+    m_mutexImpl->unlock();
 }
 
 NEPHILIM_NS_END

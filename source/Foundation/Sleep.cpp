@@ -23,60 +23,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/Thread.h>
+#include <Nephilim/Sleep.h>
 
 #if defined(NEPHILIM_WINDOWS)
-    #include "win32_ThreadImpl.h"
+    #include "Impl/win32_sleepImpl.h"
 #else
-    #include "unix_ThreadImpl.h"
+    #include "Impl/unix_SleepImpl.h"
 #endif
 
 NEPHILIM_NS_BEGIN
 
 ////////////////////////////////////////////////////////////////////////////////
-Thread::~Thread()
+void sleep(Time duration)
 {
-    wait();
-    delete m_entryPoint;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-void Thread::launch()
-{
-    wait();
-    m_impl = new priv::ThreadImpl(this);
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-void Thread::wait()
-{
-    if (m_impl)
-    {
-        m_impl->wait();
-        delete m_impl;
-        m_impl = NULL;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-void Thread::terminate()
-{
-    if (m_impl)
-    {
-        m_impl->terminate();
-        delete m_impl;
-        m_impl = NULL;
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-void Thread::run()
-{
-    m_entryPoint->run();
+    if (duration >= Time::Zero)
+        priv::sleepImpl(duration);
 }
 
 NEPHILIM_NS_END
