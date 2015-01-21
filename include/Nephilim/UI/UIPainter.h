@@ -3,8 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Matrix.h>
-#include <Nephilim/Rect.h>
-#include <Nephilim/Color.h>
+#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Color.h>
 
 NEPHILIM_NS_BEGIN
 class GraphicsDevice;

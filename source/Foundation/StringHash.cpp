@@ -1,4 +1,4 @@
-#include "Nephilim/StringID.h"
+#include <Nephilim/Foundation/StringHash.h>
 #include <Nephilim/Foundation/CRC32.h>
 #include <map>
 

@@ -1,7 +1,7 @@
 #include <Nephilim/World/CSkeletalMesh.h>
 
-#include <Nephilim/Geometry.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/Geometry.h>
+#include <Nephilim/Graphics/CGL.h>
 
 #include <lolimporterx/SKNLoader.h>
 #include <lolimporterx/SKLLoader.h>

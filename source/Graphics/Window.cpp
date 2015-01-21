@@ -5,7 +5,7 @@
 
 #include <Nephilim/Foundation/Logging.h>
 
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>

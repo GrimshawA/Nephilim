@@ -2,9 +2,11 @@
 #define NephilimRazerComponentTerrain_h__
 
 #include <Nephilim/Platform.h>
+
 #include <Nephilim/Graphics/GLTexture.h>
-#include <Nephilim/Image.h>
-#include <Nephilim/Geometry.h>
+#include <Nephilim/Graphics/Geometry.h>
+
+#include <Nephilim/Foundation/Image.h>
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN

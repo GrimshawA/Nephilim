@@ -1,11 +1,12 @@
-#ifndef PARABOLA_STRINGID_H
-#define PARABOLA_STRINGID_H
+#ifndef NephilimFoundationStringHash_h__
+#define NephilimFoundationStringHash_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
-	typedef unsigned long StringID;
+	
+typedef unsigned long StringID;
 
 		/**
 			\function makeStringID
@@ -32,5 +33,4 @@ NEPHILIM_NS_BEGIN
 
 	
 NEPHILIM_NS_END
-
-#endif
+#endif // NephilimFoundationStringHash_h__

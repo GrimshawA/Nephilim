@@ -1,7 +1,7 @@
 #include <Nephilim/UI/CSSLoader.h>
 #include <Nephilim/UI/Stylesheet.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/TextStream.h>

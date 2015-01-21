@@ -1,7 +1,7 @@
 #include <Nephilim/Game/GameStateMachine.h>
 
-#include <Nephilim/Strings.h>
-#include <Nephilim/StateTransition.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Animation/StateTransition.h>
 #include <Nephilim/Game/GameState.h>
 #include <Nephilim/Foundation/Time.h>
 

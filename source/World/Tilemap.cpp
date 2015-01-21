@@ -1,8 +1,8 @@
-#include <Nephilim/Tilemap.h>
+#include <Nephilim/World/Tilemap.h>
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 #include <pugixml/pugixml.hpp>
 

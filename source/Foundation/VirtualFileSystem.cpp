@@ -1,4 +1,4 @@
-#include <Nephilim/VirtualFS.h>
+#include <Nephilim/Foundation/VirtualFileSystem.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/FileSystem.h>

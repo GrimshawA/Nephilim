@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Quaternion.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 
 #include <vector>
 

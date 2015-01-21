@@ -1,9 +1,8 @@
-#ifndef DATETIME_H
-#define DATETIME_H
+#ifndef NephilimDateTime_h__
+#define NephilimDateTime_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-
+#include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
 	/**
@@ -43,4 +42,4 @@ NEPHILIM_NS_BEGIN
 
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimDateTime_h__

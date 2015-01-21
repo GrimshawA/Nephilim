@@ -2,8 +2,8 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/CGL.h>
-#include <Nephilim/Image.h>
+#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Foundation/Image.h>
 #include <cassert>
 
 #include <iostream>

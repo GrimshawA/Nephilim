@@ -9,7 +9,7 @@
 #include <Nephilim/Math/Matrix.h>
 #include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/RenderModes.h>
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
 
 #include <vector>
 #include <stdint.h>

@@ -2,7 +2,7 @@
 #define NephilimFoundationFileSystem_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 NEPHILIM_NS_BEGIN
 

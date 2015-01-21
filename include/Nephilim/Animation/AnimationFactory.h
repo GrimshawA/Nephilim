@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include "AnimationInterface.h"
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
 #include "Signals.h"
 #include "ReferenceCountable.h"
 #include <map>

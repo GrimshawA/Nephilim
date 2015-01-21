@@ -2,9 +2,10 @@
 #define NephilimPacket_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include <vector>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
+
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 

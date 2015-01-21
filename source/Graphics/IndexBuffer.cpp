@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/IndexBuffer.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 NEPHILIM_NS_BEGIN
 

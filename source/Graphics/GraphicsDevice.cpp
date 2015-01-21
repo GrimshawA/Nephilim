@@ -1,9 +1,9 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/Window.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Drawable.h>
-#include <Nephilim/Image.h>
+#include <Nephilim/Graphics/Drawable.h>
+#include <Nephilim/Foundation/Image.h>
 
 #include <Nephilim/Graphics/IndexArray.h>
 #include <Nephilim/Graphics/VertexArray.h>

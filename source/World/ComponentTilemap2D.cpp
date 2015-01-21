@@ -1,7 +1,7 @@
 #include <Nephilim/World/ComponentTilemap2D.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Tilemap.h>
+#include <Nephilim/World/Tilemap.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Path.h>
 
@@ -116,7 +116,7 @@ void ComponentTilemap2D::setSideView(bool enabled)
 
 }
 
-void ComponentTilemap2D::generateCollisionData(const String& layerName, CollisionData& cd)
+/*void ComponentTilemap2D::generateCollisionData(const String& layerName, CollisionData& cd)
 {
 	Tilemap::Layer* tileLayer = mTilemapData.getLayerByName(layerName);
 	if(tileLayer)
@@ -132,7 +132,7 @@ void ComponentTilemap2D::generateCollisionData(const String& layerName, Collisio
 			}
 		}
 	}
-}
+}*/
 
 bool ComponentTilemap2D::load(const String& filename)
 {

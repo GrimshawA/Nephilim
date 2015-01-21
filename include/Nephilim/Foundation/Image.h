@@ -1,9 +1,9 @@
-#ifndef Image_h__
-#define Image_h__
+#ifndef NephilimFoundationImage_h__
+#define NephilimFoundationImage_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include "Color.h"
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Math/Vectors.h>
 
 #include <vector>
@@ -71,4 +71,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // Image_h__
+#endif // NephilimFoundationImage_h__

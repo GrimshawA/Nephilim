@@ -1,5 +1,5 @@
-#include <Nephilim/Strings.h>
-#include "Nephilim/StringList.h"
+#include <Nephilim/Foundation/String.h>
+#include "Nephilim/Foundation/StringList.h"
 #include <sstream>
 #include <stdlib.h>
 

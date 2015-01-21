@@ -3,7 +3,7 @@
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>

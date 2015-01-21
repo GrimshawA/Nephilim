@@ -28,7 +28,7 @@
 
 #include "win32_ThreadImpl.h"
 
-#include <Nephilim/Thread.h>
+#include <Nephilim/Foundation/Thread.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #include <cassert>

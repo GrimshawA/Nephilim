@@ -1,7 +1,7 @@
 #include <Nephilim/World/ComponentTilemap2D.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Tilemap.h>
+#include <Nephilim/World/Tilemap.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Path.h>
 #include <Nephilim/Math/Math.h>

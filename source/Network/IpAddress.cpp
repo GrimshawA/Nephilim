@@ -1,4 +1,4 @@
-#include <Nephilim/IpAddress.h>
+#include <Nephilim/Network/IpAddress.h>
 //#include <SFML/Network/Http.hpp>
 #include "SocketImpl.hpp"
 #include <cstring>

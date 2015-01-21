@@ -1,8 +1,8 @@
-#include <Nephilim/ContentManager.h>
+#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/Graphics/StaticMesh.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
 
-#include <Nephilim/Model/ModelLoader.h>
+#include <Nephilim/Graphics/ModelLoader.h>
 
 #include <Nephilim/Foundation/Path.h>
 #include <Nephilim/Foundation/Clock.h>

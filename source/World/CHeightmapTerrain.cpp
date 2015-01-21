@@ -1,6 +1,6 @@
 #include <Nephilim/World/CHeightmapTerrain.h>
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Image.h>
+#include <Nephilim/Foundation/Image.h>
 
 NEPHILIM_NS_BEGIN
 

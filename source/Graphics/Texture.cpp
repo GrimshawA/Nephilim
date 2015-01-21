@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/GLTexture.h>
-#include <Nephilim/Image.h>
+#include <Nephilim/Foundation/Image.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 #include <string.h>
 

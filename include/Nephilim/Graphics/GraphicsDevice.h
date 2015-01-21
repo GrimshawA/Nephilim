@@ -2,13 +2,13 @@
 #define NephilimRenderer_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Strings.h>
-#include <Nephilim/Color.h>
-#include <Nephilim/Drawable.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Color.h>
+#include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
-#include <Nephilim/View.h>
+#include <Nephilim/Graphics/View.h>
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/RenderModes.h>
 #include <Nephilim/Graphics/RenderState.h>

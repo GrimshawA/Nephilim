@@ -2,8 +2,8 @@
 #define NephilimImageTable_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include "Rect.h"
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Math/Rect.h>
 
 #include <map>
 

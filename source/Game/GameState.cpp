@@ -5,9 +5,9 @@
 #include <Nephilim/Math/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Window.h>
-#include <Nephilim/StateTransitionBlocks.h>
-#include <Nephilim/StateTransitionSlider.h>
-#include <Nephilim/StateTransitionFade.h>
+#include <Nephilim/Animation/StateTransitionBlocks.h>
+#include <Nephilim/Animation/StateTransitionSlider.h>
+#include <Nephilim/Animation/StateTransitionFade.h>
 
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/UI/UIWindow.h>

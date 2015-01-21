@@ -6,10 +6,10 @@
 #include <Nephilim/UI/UIComponentText.h>
 
 #include <Nephilim/Graphics/VertexArray.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 #include <Nephilim/UI/UIComponent.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #include <Nephilim/UI/UILoaderXML.h>

@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/Font.h>
-#include <Nephilim/Image.h>
+#include <Nephilim/Foundation/Image.h>
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/Logging.h>
 

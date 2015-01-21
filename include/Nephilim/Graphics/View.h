@@ -1,12 +1,12 @@
-#ifndef View_h__
-#define View_h__
+#ifndef NephilimGraphicsView_h__
+#define NephilimGraphicsView_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
-#include "Rect.h"
-#include "Transform.h"
+#include <Nephilim/Math/Rect.h>
 #include <Nephilim/Math/Matrix.h>
-#include "ReferenceCountable.h"
+#include <Nephilim/Graphics/Transform.h>
+#include <Nephilim/Foundation/ReferenceCountable.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -21,7 +21,7 @@ enum ViewportPreset{
 	BottomHalf,
 	WideScreen
 };
-class ASEngine;
+
 /**
 		\ingroup Graphics
 		\class View
@@ -103,4 +103,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // View_h__
+#endif // NephilimGraphicsView_h__

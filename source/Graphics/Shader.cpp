@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/Shader.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/File.h>
 

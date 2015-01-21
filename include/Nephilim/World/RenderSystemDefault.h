@@ -11,7 +11,7 @@
 
 #include <Nephilim/Graphics/Framebuffer.h>
 #include <Nephilim/Graphics/GLTexture.h>
-#include <Nephilim/ContentManager.h>
+#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/World/PostEffect.h>
 
 NEPHILIM_NS_BEGIN

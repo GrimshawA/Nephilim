@@ -30,7 +30,7 @@
 
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GLTextureCube.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 #include <Nephilim/World/PostEffectBloom.h>
 

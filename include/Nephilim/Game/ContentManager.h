@@ -4,14 +4,12 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Game/Resource.h>
 
-#include <Nephilim/VirtualFS.h>
-#include "StringID.h"
-#include "ContentList.h"
-#include "ContentLoader.h"
+#include <Nephilim/Foundation/VirtualFileSystem.h>
+#include <Nephilim/Foundation/StringHash.h>
+#include <Nephilim/Foundation/File.h>
+
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
-
-#include <Nephilim/Foundation/File.h>
 
 #include <Nephilim/Plugins/Plugin.h>
 

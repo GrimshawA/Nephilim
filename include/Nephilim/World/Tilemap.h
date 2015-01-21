@@ -2,9 +2,9 @@
 #define NephilimTilemap_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include "Rect.h"
+#include <Nephilim/Math/Rect.h>
 
 #include <vector>
 #include <map>

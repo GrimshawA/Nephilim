@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATIONTEXTWRITER_H
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
 #include "AnimationInterface.h"
 
 NEPHILIM_NS_BEGIN

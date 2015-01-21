@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/GLTextureCube.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/GLTexture.h>
 

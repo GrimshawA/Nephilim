@@ -29,7 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <Nephilim/Platform.h>
-#include "Rect.h"
+#include <Nephilim/Math/Rect.h>
 #include <Nephilim/Math/Vectors.h>
 
 NEPHILIM_NS_BEGIN

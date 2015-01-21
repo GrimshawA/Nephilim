@@ -2,7 +2,7 @@
 #define NephilimScriptingEnvironment_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Time.h>
 #include <Nephilim/Game/GameMessage.h>
 

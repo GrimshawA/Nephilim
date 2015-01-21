@@ -23,8 +23,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/Lock.h>
-#include <Nephilim/Mutex.h>
+#include <Nephilim/Foundation/Lock.h>
+#include <Nephilim/Foundation/Mutex.h>
 
 NEPHILIM_NS_BEGIN
 

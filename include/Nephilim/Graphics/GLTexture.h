@@ -6,8 +6,8 @@
 #include <Nephilim/Graphics/TextureCube.h>
 
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Strings.h>
-#include <Nephilim/Color.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Color.h>
 
 NEPHILIM_NS_BEGIN
 

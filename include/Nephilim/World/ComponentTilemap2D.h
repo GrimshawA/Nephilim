@@ -2,12 +2,11 @@
 #define NephilimRazerComponentTilemap2D_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Tilemap.h>
+#include <Nephilim/World/Tilemap.h>
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Graphics/IndexArray.h>
-#include <Nephilim/CollisionData.h>
 #include <Nephilim/World/Component.h>
 
 #include <vector>
@@ -82,7 +81,7 @@ public:
 	/// Converts the in memory tile data from a single layer to renderizable chunk data
 	void prepareLayer(const String& layerName);
 	
-	void generateCollisionData(const String& layerName, CollisionData& cd);
+	//void generateCollisionData(const String& layerName, CollisionData& cd);
 
 	/// Takes the input data from tileLayer and generates the geometry for rendering as cubes
 	void generateCubes(Tilemap::Layer* tileLayer, const String& destLayer);

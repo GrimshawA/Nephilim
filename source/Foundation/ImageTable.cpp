@@ -1,7 +1,7 @@
-#include <Nephilim/ImageTable.h>
+#include <Nephilim/Foundation/ImageTable.h>
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,4 +1,4 @@
-#include <Nephilim/ShaderGen.h>
+#include <Nephilim/Graphics/ShaderGen.h>
 #include <Nephilim/Graphics/Shader.h>
 
 static const char gVertexShader2[] =

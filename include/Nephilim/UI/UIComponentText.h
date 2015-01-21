@@ -2,7 +2,7 @@
 #define NephilimUIComponentLabel_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/UI/UIComponent.h>
 

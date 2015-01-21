@@ -1,4 +1,4 @@
-#include <Nephilim/StateTransitionBlocks.h>
+#include <Nephilim/Animation/StateTransitionBlocks.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Time.h>

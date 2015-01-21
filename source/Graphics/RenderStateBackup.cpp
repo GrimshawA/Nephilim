@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/RenderStateBackup.h>
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 NEPHILIM_NS_BEGIN
 

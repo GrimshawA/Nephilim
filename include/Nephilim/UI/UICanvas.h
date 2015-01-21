@@ -2,7 +2,7 @@
 #define NephilimUICanvas_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Drawable.h>
+#include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/UI/UICore.h>
 

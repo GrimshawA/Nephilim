@@ -23,7 +23,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/Thread.h>
+#include <Nephilim/Foundation/Thread.h>
 
 #if defined(NEPHILIM_WINDOWS)
     #include "Impl/win32_ThreadImpl.h"

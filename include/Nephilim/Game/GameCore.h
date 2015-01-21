@@ -2,13 +2,13 @@
 #define Nephillim_GameCore_h
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/VirtualFS.h>
-#include <Nephilim/ContentManager.h>
+#include <Nephilim/Foundation/VirtualFileSystem.h>
+#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/Foundation/Clock.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Event.h>
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 
 #include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/Game/GameMessage.h>
@@ -17,8 +17,8 @@
 #include <Nephilim/Game/GameServer.h>
 
 
-#include <Nephilim/ContentManager.h>
-#include <Nephilim/Localization.h>
+#include <Nephilim/Game/ContentManager.h>
+#include <Nephilim/Foundation/Localization.h>
 #include <Nephilim/UI/UIManager.h>
 
 #include <Nephilim/World/World.h>

@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/StaticMesh.h>
 #include <Nephilim/Graphics/VertexArray.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 
 NEPHILIM_NS_BEGIN

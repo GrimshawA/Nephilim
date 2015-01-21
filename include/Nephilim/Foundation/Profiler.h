@@ -2,7 +2,7 @@
 #define NephilimFoundationProfiler_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Clock.h>
 
 #include <map>

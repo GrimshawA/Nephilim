@@ -1,5 +1,5 @@
 #include <Nephilim/Network/ConnectionENET.h>
-#include <Nephilim/Packet.h>
+#include <Nephilim/Foundation/Packet.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #include <stdio.h>

@@ -1,8 +1,9 @@
-#ifndef PARABOLA_STRINGLISTS_H
-#define PARABOLA_STRINGLISTS_H
+#ifndef NephilimFoundationStringList_h__
+#define NephilimFoundationStringList_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
+#include <Nephilim/Foundation/String.h>
+
 #include <vector>
 
 NEPHILIM_NS_BEGIN
@@ -34,4 +35,4 @@ NEPHILIM_NS_BEGIN
 	};
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimFoundationStringList_h__

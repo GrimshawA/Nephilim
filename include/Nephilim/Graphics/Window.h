@@ -2,10 +2,10 @@
 #define NephilimGraphicsWindow_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Foundation/Event.h>
-#include <Nephilim/View.h>
+#include <Nephilim/Graphics/View.h>
 #include <Nephilim/Graphics/RenderTarget.h>
 
 #include <sigc++/sigc++.h>

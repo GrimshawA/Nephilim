@@ -1,4 +1,4 @@
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 
 
 void cglPrepareExtensions()

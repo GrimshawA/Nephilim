@@ -1,10 +1,11 @@
-#ifndef NephilimRazerComponentSprite_h__
-#define NephilimRazerComponentSprite_h__
+#ifndef NephilimWorldComponentSprite_h__
+#define NephilimWorldComponentSprite_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Color.h>
+
+#include <Nephilim/Foundation/Color.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Strings.h>
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN

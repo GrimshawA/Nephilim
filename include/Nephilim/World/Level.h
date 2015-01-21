@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/ASpriteComponent.h>

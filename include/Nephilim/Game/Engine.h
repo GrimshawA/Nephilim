@@ -22,7 +22,7 @@ freely, subject to the following restrictions:
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Clock.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Graphics/Window.h>
 

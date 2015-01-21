@@ -1,8 +1,8 @@
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Graphics/Text.h>
-#include <Nephilim/StringList.h>
-#include <Nephilim/ContentManager.h>
+#include <Nephilim/Foundation/StringList.h>
+#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN

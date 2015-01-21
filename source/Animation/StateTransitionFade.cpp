@@ -1,4 +1,4 @@
-#include <Nephilim/StateTransitionFade.h>
+#include <Nephilim/Animation/StateTransitionFade.h>
 #include <Nephilim/Math/Math.h>
 
 #include <Nephilim/Foundation/Logging.h>

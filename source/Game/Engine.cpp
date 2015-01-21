@@ -2,8 +2,8 @@
 #include <Nephilim/Game/GameCore.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/CGL.h>
-#include <Nephilim/View.h>
+#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/View.h>
 
 #ifdef NEPHILIM_ANDROID
 #include <Nephilim/Foundation/AndroidWrapper.h>

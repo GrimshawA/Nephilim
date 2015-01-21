@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/CircleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Math/Math.h>
 

@@ -2,9 +2,9 @@
 #define NephilimUIComponentButton_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/UI/UIComponent.h>
-#include <Nephilim/Color.h>
+#include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/GLTexture.h>
 
 NEPHILIM_NS_BEGIN

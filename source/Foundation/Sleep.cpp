@@ -23,7 +23,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <Nephilim/Sleep.h>
+#include <Nephilim/Foundation/Sleep.h>
 
 #if defined(NEPHILIM_WINDOWS)
     #include "Impl/win32_sleepImpl.h"

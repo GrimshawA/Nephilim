@@ -1,8 +1,8 @@
 #include <Nephilim/Graphics/DebugDraw.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/CGL.h>
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Geometry.h>
+#include <Nephilim/Graphics/Geometry.h>
 #include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN

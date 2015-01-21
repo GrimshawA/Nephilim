@@ -1,9 +1,9 @@
 #include <Nephilim/Platform.h>
 #ifdef NEPHILIM_DESKTOP
 #include <Nephilim/Graphics/GL3/RendererOpenGL.h>
-#include "Nephilim/View.h"
+#include <Nephilim/Graphics/View.h>
 #include <Nephilim/Math/Math.h>
-#include "Nephilim/CGL.h"
+#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Math/Matrix.h>
 
 NEPHILIM_NS_BEGIN

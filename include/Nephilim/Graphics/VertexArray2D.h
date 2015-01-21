@@ -3,8 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Rect.h>
-#include <Nephilim/Color.h>
+#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/RenderModes.h>
 
 #include <vector>

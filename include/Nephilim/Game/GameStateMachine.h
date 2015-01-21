@@ -2,7 +2,7 @@
 #define NephilimGameStateMachine_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 
 #include <vector>
 #include <map>

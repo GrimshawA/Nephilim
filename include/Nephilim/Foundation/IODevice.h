@@ -2,7 +2,7 @@
 #define NephilimFoundationIODevice_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
 

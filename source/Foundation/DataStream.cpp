@@ -1,6 +1,6 @@
 #include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/Foundation/IODevice.h>
-#include <Nephilim/Strings.h>
+#include <Nephilim/Foundation/String.h>
 
 #include <assert.h>
 #include <stdio.h>

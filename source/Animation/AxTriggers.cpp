@@ -1,4 +1,4 @@
-#include <Nephilim/AxTriggers.h>
+#include <Nephilim/Animation/AxTriggers.h>
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
