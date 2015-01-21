@@ -1,6 +1,6 @@
 #include <Nephilim/Foundation/Package.h>
-#include <Nephilim/File.h>
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/DataStream.h>
 
 #include <iostream>
 using namespace std;

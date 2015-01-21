@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Time.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 
 NEPHILIM_NS_BEGIN
 

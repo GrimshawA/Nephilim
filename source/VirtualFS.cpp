@@ -1,6 +1,6 @@
 #include <Nephilim/VirtualFS.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/File.h>
+#include <Nephilim/Foundation/File.h>
 #include <Nephilim/FileSystem.h>
 
 NEPHILIM_NS_BEGIN

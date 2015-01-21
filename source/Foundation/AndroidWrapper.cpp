@@ -1,45 +1,47 @@
-#include "Nephilim/Platform.h"
-#include "Nephilim/Logger.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Logger.h>
+
 #ifdef NEPHILIM_ANDROID
-#include "Nephilim/AndroidInterface.h"
-#include "Nephilim/File.h"
+
+#include <Nephilim/Foundation/AndroidWrapper.h>
+#include <Nephilim/Foundation/File.h>
 
 #include <assert.h>
 
 NEPHILIM_NS_BEGIN
 	 
 
-String AndroidInterface::m_AssetSuffix = ".png";
-String AndroidInterface::m_packageName = "unknown";
-String AndroidInterface::m_JNIActivityName = "unknown";
-JavaVM* AndroidInterface::m_javaVM = NULL;
-String AndroidInterface::m_externalStorageDirectory = "";
-String AndroidInterface::m_internalDataPath = "";
+String AndroidWrapper::m_AssetSuffix = ".png";
+String AndroidWrapper::m_packageName = "unknown";
+String AndroidWrapper::m_JNIActivityName = "unknown";
+JavaVM* AndroidWrapper::m_javaVM = NULL;
+String AndroidWrapper::m_externalStorageDirectory = "";
+String AndroidWrapper::m_internalDataPath = "";
 
 
 /// Sets the internal data path
-void AndroidInterface::setInternalDataPath(const String& path)
+void AndroidWrapper::setInternalDataPath(const String& path)
 {
 	m_internalDataPath = path;
 }
 
 /// Get the internal data path of the application, where the save files are stored
-String AndroidInterface::getInternalDataPath()
+String AndroidWrapper::getInternalDataPath()
 {
 	return m_internalDataPath;
 }
 
 /// Set the asset suffix to be automatically applied to paths
-void AndroidInterface::setAssetSuffix(const String &suffix){
+void AndroidWrapper::setAssetSuffix(const String &suffix){
 	m_AssetSuffix = suffix;
 };
 
 /// Get the current asset suffix
-String AndroidInterface::getAssetSuffix(){
+String AndroidWrapper::getAssetSuffix(){
 	return m_AssetSuffix;
 };
 
-bool AndroidInterface::getAssetFile(File* file, const String &path, bool binaryMode){
+bool AndroidWrapper::getAssetFile(File* file, const String &path, bool binaryMode){
 	if(path.empty() || file == NULL)return false; // No path
 
 	JNIEnv* m_JNI;
@@ -129,7 +131,7 @@ bool AndroidInterface::getAssetFile(File* file, const String &path, bool binaryM
 	return true;
 }
 
-AndroidInterface::AssetFile AndroidInterface::getAsset(const String& filename)
+AndroidWrapper::AssetFile AndroidWrapper::getAsset(const String& filename)
 {
 	AssetFile result;
 	result.success = false;
@@ -186,7 +188,7 @@ AndroidInterface::AssetFile AndroidInterface::getAsset(const String& filename)
 }
 
 /// Get a listing of files/directories within the APK assets, empty path will mean the root directory of assets
-StringList AndroidInterface::getAssetList(const String &path){
+StringList AndroidWrapper::getAssetList(const String &path){
 	StringList files;
 	
 	JNIEnv* m_JNI;
@@ -221,7 +223,7 @@ StringList AndroidInterface::getAssetList(const String &path){
 
 /// Attempts to create a directory in the Android file system
 /// Make sure you have the needed permissions in the manifest
-bool AndroidInterface::createDirectory(const String& path)
+bool AndroidWrapper::createDirectory(const String& path)
 {
 	bool result = false;
 
@@ -247,7 +249,7 @@ bool AndroidInterface::createDirectory(const String& path)
 };
 
 /// Sends a text message through the android device, please note the permissions must be requested in the manifest and the legacy java source must be in place.
-bool AndroidInterface::sendTextMessage(const String &destinationNumber, const String &content){
+bool AndroidWrapper::sendTextMessage(const String &destinationNumber, const String &content){
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
 
@@ -271,7 +273,7 @@ bool AndroidInterface::sendTextMessage(const String &destinationNumber, const St
 };
 
 /// Closes the activity, ending the application
-void AndroidInterface::closeActivity(){
+void AndroidWrapper::closeActivity(){
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
 
@@ -285,7 +287,7 @@ void AndroidInterface::closeActivity(){
 };
 
 /// Request a frame render
-void AndroidInterface::requestFrameRender()
+void AndroidWrapper::requestFrameRender()
 {
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
@@ -300,7 +302,7 @@ void AndroidInterface::requestFrameRender()
 };
 
 /// Enable multitouch support
-void AndroidInterface::enableMultiTouch()
+void AndroidWrapper::enableMultiTouch()
 {
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
@@ -315,7 +317,7 @@ void AndroidInterface::enableMultiTouch()
 }
 
 /// Disable multitouch support
-void AndroidInterface::disableMultiTouch()
+void AndroidWrapper::disableMultiTouch()
 {
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);
@@ -330,7 +332,7 @@ void AndroidInterface::disableMultiTouch()
 }
 
 /// Toggle the software keyboard
-void AndroidInterface::toggleKeyboard(){
+void AndroidWrapper::toggleKeyboard(){
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
 
@@ -344,7 +346,7 @@ void AndroidInterface::toggleKeyboard(){
 };
 
 /// Play a music in the android
-int AndroidInterface::playMusic(const String &name){
+int AndroidWrapper::playMusic(const String &name){
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	
 
@@ -361,37 +363,37 @@ int AndroidInterface::playMusic(const String &name){
 };
 
 /// Set the directory of the external storage, the sdcard in case of the android
-void AndroidInterface::setExternalStorageDirectory(const String& path){
+void AndroidWrapper::setExternalStorageDirectory(const String& path){
 	m_externalStorageDirectory = path;
 };
 
 /// Get the external storage directory, the path to the sdcard root
-String AndroidInterface::getExternalStorageDirectory(){
+String AndroidWrapper::getExternalStorageDirectory(){
 	return m_externalStorageDirectory;
 };
  
 /// Set the JNI environment the application is using
-void AndroidInterface::setJavaNativeInterfaceEnvironment(JavaVM *environment){
+void AndroidWrapper::setJavaNativeInterfaceEnvironment(JavaVM *environment){
 	m_javaVM = environment;
 };
 
 /// Get the android package name
-String AndroidInterface::getPackageName(){
+String AndroidWrapper::getPackageName(){
 	return m_packageName;
 };
 
 /// Set the android package name
-void AndroidInterface::setPackageName(const String &name){
+void AndroidWrapper::setPackageName(const String &name){
 	m_packageName = name;
 };
 
 /// Get the android activity name
-String AndroidInterface::getActivityName(){
+String AndroidWrapper::getActivityName(){
 	return m_JNIActivityName;
 };
 
 /// Set the android activity name
-void AndroidInterface::setActivityName(const String& name){
+void AndroidWrapper::setActivityName(const String& name){
 	m_JNIActivityName = name;
 	for(unsigned int i = 0; i < m_JNIActivityName.length(); i++){
 		// replace all . with / for the jni
@@ -400,7 +402,7 @@ void AndroidInterface::setActivityName(const String& name){
 };
 
 /// Vibrate the device for miliseconds
-void AndroidInterface::vibrate(int miliseconds)
+void AndroidWrapper::vibrate(int miliseconds)
 {
 	JNIEnv* m_JNI;
 	m_javaVM->AttachCurrentThread(&m_JNI, NULL);	

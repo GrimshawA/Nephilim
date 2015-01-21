@@ -1,4 +1,4 @@
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/IODevice.h>
 #include <Nephilim/Strings.h>
 

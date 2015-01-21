@@ -1,9 +1,9 @@
-#ifndef NephilimFile_h__
-#define NephilimFile_h__
+#ifndef NephilimFoundationFile_h__
+#define NephilimFoundationFile_h__
 
 #include <Nephilim/Platform.h>
-#include "Strings.h"
-#include "IODevice.h"
+#include <Nephilim/Strings.h>
+#include <Nephilim/IODevice.h>
 
 #include <stdio.h>
 
@@ -95,4 +95,4 @@ namespace FileOps
 }
 
 NEPHILIM_NS_END
-#endif // NephilimFile_h__
+#endif // NephilimFoundationFile_h__

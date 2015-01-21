@@ -10,7 +10,8 @@
 #include "ContentLoader.h"
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
-#include "File.h"
+
+#include <Nephilim/Foundation/File.h>
 
 #include <Nephilim/Plugins/Plugin.h>
 

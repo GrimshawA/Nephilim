@@ -2,7 +2,8 @@
 #include <Nephilim/UI/Stylesheet.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/File.h>
+
+#include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/TextStream.h>
 
 #include <cctype>

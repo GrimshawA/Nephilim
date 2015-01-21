@@ -166,7 +166,7 @@ void Window::pushFrame()
 {
 	swapBuffers();
 #if defined NEPHILIM_ANDROID
-	AndroidInterface::requestFrameRender();
+	AndroidWrapper::requestFrameRender();
 #endif
 }
 

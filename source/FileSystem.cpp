@@ -1,6 +1,6 @@
 #include <Nephilim/FileSystem.h>
 #include <Nephilim/Path.h>
-#include <Nephilim/File.h>
+#include <Nephilim/Foundation/File.h>
 #include <Nephilim/Logger.h>
 
 #ifdef NEPHILIM_WINDOWS
@@ -360,7 +360,7 @@ StringList FileSystem::scanDirectory(const String &Directory, const String &Exte
 
 			closedir(Root);
 	#elif defined PARABOLA_ANDROID
-		Files = AndroidInterface::getAssetList(Directory);
+		Files = AndroidWrapper::getAssetList(Directory);
 
 
 	#endif
@@ -515,7 +515,7 @@ bool FileSystem::makeDirectory(String Name)
 			return false;
 #elif defined PARABOLA_ANDROID
 		TESTLOG("makeDirectory\n");
-		return AndroidInterface::createDirectory(Name);
+		return AndroidWrapper::createDirectory(Name);
 #else
 		//TESTLOG("makeDirectory NOT android\n");
 		//_mkdir(Name.c_str());

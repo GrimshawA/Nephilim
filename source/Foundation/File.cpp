@@ -1,4 +1,4 @@
-#include <Nephilim/File.h>
+#include <Nephilim/Foundation/File.h>
 #include <Nephilim/Logger.h>
 
 #include <cmath>
@@ -53,7 +53,7 @@ File::File(const String &path, IODevice::OpenModes accessMode)
 		else
 		{
 			// Asset
-			AndroidInterface::AssetFile asset = AndroidInterface::getAsset(path);
+			AndroidWrapper::AssetFile asset = AndroidWrapper::getAsset(path);
 			if(asset.success)
 			{
 				m_handle = fdopen(asset.fd, mode.c_str());

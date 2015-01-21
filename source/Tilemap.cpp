@@ -1,6 +1,6 @@
 #include <Nephilim/Tilemap.h>
-#include <Nephilim/File.h>
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/StringList.h>
 

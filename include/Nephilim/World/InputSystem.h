@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/World/System.h>
 #include <Nephilim/World/CInput.h>
 

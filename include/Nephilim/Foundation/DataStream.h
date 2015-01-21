@@ -1,5 +1,5 @@
-#ifndef NephilimDataStream_h__
-#define NephilimDataStream_h__
+#ifndef NephilimFoundationDataStream_h__
+#define NephilimFoundationDataStream_h__
 
 #include <Nephilim/Platform.h>
 
@@ -98,4 +98,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimDataStream_h__
+#endif // NephilimFoundationDataStream_h__

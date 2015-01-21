@@ -1,8 +1,8 @@
-#ifndef PARABOLA_ANDROIDINTERFACE_H
-#define PARABOLA_ANDROIDINTERFACE_H
+#ifndef NephilimFoundationAndroidWrapper_h__
+#define NephilimFoundationAndroidWrapper_h__
 
 #include <Nephilim/Platform.h>
-#include "File.h"
+#include <Nephilim/Foundation/File.h>
 #include "StringList.h"
 
 #ifdef NEPHILIM_ANDROID
@@ -12,15 +12,16 @@
 
 NEPHILIM_NS_BEGIN
 
-///////////////////////////////////////////////////////////////////////////////
-///\ingroup Core
-///\class AndroidInterface
-///\brief Static class to interact with the android platform
-/// Please notice that this class is not meant to be used directly by the user. 
-/// It is even omitted to the user completely for true cross platform usability.
-/// For optimization it is not compiled in other platforms, as it wont be used.
-////////////////////////////////////////////////////////////////////////////////
-class NEPHILIM_API AndroidInterface{
+/**
+	\class AndroidWrapper
+	\brief Static class to interact with the android device
+
+	 Please notice that this class is not meant to be used directly by the user. 
+	 It is even omitted to the user completely for true cross platform usability.
+	 For optimization it is not compiled in other platforms, as it wont be used.
+*/
+class NEPHILIM_API AndroidWrapper
+{
 public:
 	/// \class AssetFile
 	/// \brief Points to a file within the android packaged assets
@@ -129,4 +130,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimFoundationAndroidWrapper_h__

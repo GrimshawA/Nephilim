@@ -1,8 +1,8 @@
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/File.h>
+#include <Nephilim/Foundation/File.h>
 #include <Nephilim/Logger.h>
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
 

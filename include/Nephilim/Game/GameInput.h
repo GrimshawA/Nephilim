@@ -2,7 +2,7 @@
 #define NephilimGameInput_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 
 #include <vector>
 #include <map>

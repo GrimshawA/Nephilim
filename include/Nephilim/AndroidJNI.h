@@ -67,7 +67,7 @@ extern "C"{
 JNIEXPORT jint JNI_OnLoad(JavaVM *jvm, void *reserved)
 {
 	//__android_log_print(ANDROID_LOG_INFO, "TestingFacilities", "ONLOAD CALLED\n");
-	nx::AndroidInterface::setJavaNativeInterfaceEnvironment(jvm);
+	nx::AndroidWrapper::setJavaNativeInterfaceEnvironment(jvm);
 	return JNI_VERSION_1_2;
 };
 
@@ -80,10 +80,10 @@ JNIEXPORT void
 		s4 = env->GetStringUTFChars(activityName, 0);
 
 		
-		nx::AndroidInterface::setPackageName(s3);
-		nx::AndroidInterface::setActivityName(s4);
-		nx::AndroidInterface::setExternalStorageDirectory(s2);
-		nx::AndroidInterface::setInternalDataPath(s1);
+		nx::AndroidWrapper::setPackageName(s3);
+		nx::AndroidWrapper::setActivityName(s4);
+		nx::AndroidWrapper::setExternalStorageDirectory(s2);
+		nx::AndroidWrapper::setInternalDataPath(s1);
 
 	/*myApp.myDataDirectory = s1;
 		myApp.myExternalStorageDirectory = s2; */

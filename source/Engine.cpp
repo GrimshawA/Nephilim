@@ -79,7 +79,7 @@ void Engine::update()
 
 		// In android need to kill the activity
 #ifdef NEPHILIM_ANDROID
-		AndroidInterface::closeActivity();
+		AndroidWrapper::closeActivity();
 #endif
 	}
 

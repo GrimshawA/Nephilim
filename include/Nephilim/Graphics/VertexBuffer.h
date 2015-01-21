@@ -1,5 +1,5 @@
-#ifndef NephilimVertexBuffer_h__
-#define NephilimVertexBuffer_h__
+#ifndef NephilimGraphicsVertexBuffer_h__
+#define NephilimGraphicsVertexBuffer_h__
 
 #include <Nephilim/Platform.h>
 
@@ -7,6 +7,11 @@ NEPHILIM_NS_BEGIN
 
 class VertexArray;
 
+
+/**
+	\class VertexBuffer
+	\brief Geometry buffer resource, usually stored in the GPU
+*/
 class NEPHILIM_API VertexBuffer
 {
 public:
@@ -52,4 +57,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimVertexBuffer_h__
+#endif // NephilimGraphicsVertexBuffer_h__

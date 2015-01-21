@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/View.h>
 #include <Nephilim/Graphics/RenderTarget.h>
 

@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Drawable.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/UI/UICore.h>
 
 NEPHILIM_NS_BEGIN

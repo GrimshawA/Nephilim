@@ -5,11 +5,11 @@
 #include <Nephilim/UI/UIPainter.h>
 
 #include <Nephilim/Rect.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Strings.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/AxList.h>
 #include <Nephilim/AxTarget.h>
 #include <Nephilim/Math/Matrix.h>

@@ -7,29 +7,28 @@
 #include <Nephilim/Clock.h>
 #include <Nephilim/Logger.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Event.h>
+#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/StringList.h>
 
 #include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/Game/GameMessage.h>
 #include <Nephilim/Game/BaseSceneManager.h>
 #include <Nephilim/Game/GameInput.h>
+#include <Nephilim/Game/GameServer.h>
 
 
 #include <Nephilim/ContentManager.h>
 #include <Nephilim/Localization.h>
 #include <Nephilim/UI/UIManager.h>
 
-
-
 #include <Nephilim/World/World.h>
 
+#include <memory>
 
 NEPHILIM_NS_BEGIN
 
 class Engine;
 class Window;
-class IScriptEngine;
 
 class ScriptingEnvironment;
 class AudioEnvironment;
@@ -51,6 +50,9 @@ class NEPHILIM_API GameCore
 {
 public:
 
+	/// This game's server to sync remote clients and itself
+	std::unique_ptr<GameServer> gameServer;
+
 	/// List of currently setup scripting solutions
 	std::vector<ScriptingEnvironment*> scriptingEnvironments;
 
@@ -59,8 +61,6 @@ public:
 
 	/// The game instance can have N parallel realms
 	std::vector<World*> gameWorlds;
-
-	std::vector<IScriptEngine*> scriptEngines;
 
 	/// The state manager, knows whats currently activated from the different game screens, and controls transitions nicely as well
 	GameStateMachine stateManager;
