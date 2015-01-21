@@ -5,7 +5,8 @@
 #include <Nephilim/World/Component.h>
 
 
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
+
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
 #include <Nephilim/Graphics/Skeleton.h>

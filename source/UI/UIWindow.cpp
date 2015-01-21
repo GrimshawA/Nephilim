@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 

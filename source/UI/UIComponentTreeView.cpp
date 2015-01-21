@@ -3,7 +3,7 @@
 #include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIView.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 

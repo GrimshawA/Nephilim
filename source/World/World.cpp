@@ -13,7 +13,7 @@
 #include <Nephilim/World/CSkeletalMesh.h>
 #include <Nephilim/World/CColliderBox.h>
 
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Plugins/Plugin.h>
 #include <Nephilim/Math/Math.h>
 

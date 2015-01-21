@@ -1,6 +1,6 @@
 #include <Nephilim/Gesture.h>
 #include <Nephilim/Foundation/Event.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN

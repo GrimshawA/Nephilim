@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIBoxLayout.h>
 #include <Nephilim/UI/UIView.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <iostream>
 using namespace std;
 

@@ -3,7 +3,7 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <Nephilim/Foundation/File.h>
 

@@ -27,7 +27,7 @@
 #define NephilimSleepImplWin32_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
 
 NEPHILIM_NS_BEGIN
 

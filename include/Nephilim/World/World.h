@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/Entity.h>

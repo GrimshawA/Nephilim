@@ -1,6 +1,6 @@
 #include <Nephilim/Image.h>
 #include <Nephilim/Foundation/File.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <string.h>
 

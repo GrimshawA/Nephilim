@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIImage.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 
 NEPHILIM_NS_BEGIN

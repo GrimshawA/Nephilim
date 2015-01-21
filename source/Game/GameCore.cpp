@@ -1,10 +1,10 @@
 #include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Plugins/PluginSDK.h>
-#include <Nephilim/Engine.h>
+#include <Nephilim/Game/Engine.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/FileSystem.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/FileSystem.h>
+#include <Nephilim/Foundation/Logging.h>
 
 // UI integration
 #include <Nephilim/UI/UIManager.h>

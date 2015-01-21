@@ -1,5 +1,5 @@
 #include <Nephilim/Foundation/File.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <cmath>
 #include <stdlib.h>

@@ -3,9 +3,9 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/StateTransition.h>
 #include <Nephilim/Game/GameState.h>
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
 
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <algorithm>
 

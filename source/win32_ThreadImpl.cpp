@@ -29,7 +29,7 @@
 #include "win32_ThreadImpl.h"
 
 #include <Nephilim/Thread.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <cassert>
 #include <process.h>

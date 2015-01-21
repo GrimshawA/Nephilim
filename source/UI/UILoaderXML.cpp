@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UILoaderXML.h>
 #include <Nephilim/UI/UIImage.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/StringList.h>

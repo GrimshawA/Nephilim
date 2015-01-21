@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Image.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/CGL.h>
 
 #include <string.h>

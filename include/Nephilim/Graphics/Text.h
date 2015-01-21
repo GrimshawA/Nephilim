@@ -9,7 +9,7 @@
 #include <Nephilim/Transformable.h>
 #include <Nephilim/Color.h>
 #include <Nephilim/Rect.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Font.h>
 
 #include <utf8.h>

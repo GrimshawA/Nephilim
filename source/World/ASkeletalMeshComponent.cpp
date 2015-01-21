@@ -1,7 +1,7 @@
 #include <Nephilim/World/ASkeletalMeshComponent.h>
 #include <Nephilim/World/World.h>
 
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 

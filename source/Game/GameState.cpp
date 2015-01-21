@@ -3,8 +3,8 @@
 #include <Nephilim/Game/GameStateMachine.h>
 
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Logger.h>
-#include <Nephilim/Window.h>
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Graphics/Window.h>
 #include <Nephilim/StateTransitionBlocks.h>
 #include <Nephilim/StateTransitionSlider.h>
 #include <Nephilim/StateTransitionFade.h>

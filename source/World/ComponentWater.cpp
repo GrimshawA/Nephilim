@@ -3,7 +3,7 @@
 #include <Nephilim/Math/Vectors.h>
 #include <Nephilim/CGL.h>
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <algorithm>
 #include <cstdlib>

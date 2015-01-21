@@ -1,6 +1,6 @@
 #include <Nephilim/Color.h>
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <algorithm>
 
 NEPHILIM_NS_BEGIN

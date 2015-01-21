@@ -1,5 +1,5 @@
-#ifndef Matrix_h__
-#define Matrix_h__
+#ifndef NephilimMathMatrix_h__
+#define NephilimMathMatrix_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
@@ -142,4 +142,4 @@ private:
 void debugPrint(mat4& m);
 
 NEPHILIM_NS_END
-#endif // Matrix_h__
+#endif // NephilimMathMatrix_h__

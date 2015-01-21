@@ -28,7 +28,7 @@
 #include <Nephilim/Transform.h>
 #include <cmath>
 
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 ////////////////////////////////////////////////////////////

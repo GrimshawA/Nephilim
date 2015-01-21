@@ -30,7 +30,7 @@
 
 #include "unix_ThreadImpl.h"
 #include <Nephilim/Thread.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <iostream>
 #include <cassert>

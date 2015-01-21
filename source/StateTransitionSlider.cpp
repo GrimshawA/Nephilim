@@ -1,7 +1,9 @@
 #include <Nephilim/StateTransitionSlider.h>
-#include <Nephilim/Logger.h>
+
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/Time.h>
+
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Time.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
 NEPHILIM_NS_BEGIN

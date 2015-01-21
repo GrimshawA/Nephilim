@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Strings.h>
-#include <Nephilim/IODevice.h>
+#include <Nephilim/Foundation/IODevice.h>
 
 #include <stdio.h>
 

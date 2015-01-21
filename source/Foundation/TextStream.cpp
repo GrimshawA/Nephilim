@@ -1,5 +1,5 @@
 #include <Nephilim/Foundation/TextStream.h>
-#include <Nephilim/IODevice.h>
+#include <Nephilim/Foundation/IODevice.h>
 
 #include <iostream>
 using namespace std;

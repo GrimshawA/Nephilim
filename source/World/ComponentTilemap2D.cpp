@@ -2,8 +2,8 @@
 #include <Nephilim/Strings.h>
 #include <Nephilim/Math/Vectors.h>
 #include <Nephilim/Tilemap.h>
-#include <Nephilim/Logger.h>
-#include <Nephilim/Path.h>
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/Path.h>
 
 #include <pugixml/pugixml.hpp>
 

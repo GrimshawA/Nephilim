@@ -1,5 +1,5 @@
 #include <Nephilim/Plugins/Plugin.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #ifdef NEPHILIM_WINDOWS
 #include <windows.h>

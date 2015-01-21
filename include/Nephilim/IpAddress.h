@@ -2,7 +2,7 @@
 #define IpAddress_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
 
 #include <istream>
 #include <ostream>

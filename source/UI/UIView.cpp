@@ -10,7 +10,7 @@
 
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/StringList.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <Nephilim/UI/UILoaderXML.h>
 

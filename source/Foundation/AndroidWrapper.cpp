@@ -1,5 +1,5 @@
 #include <Nephilim/Platform.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #ifdef NEPHILIM_ANDROID
 

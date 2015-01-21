@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/GLTexture.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/CGL.h>
 
 #include <cmath>

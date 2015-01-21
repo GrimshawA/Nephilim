@@ -1,5 +1,5 @@
 #include <Nephilim/Foundation/DataStream.h>
-#include <Nephilim/IODevice.h>
+#include <Nephilim/Foundation/IODevice.h>
 #include <Nephilim/Strings.h>
 
 #include <assert.h>

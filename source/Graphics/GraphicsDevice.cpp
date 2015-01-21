@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Window.h>
+#include <Nephilim/Graphics/Window.h>
 #include <Nephilim/CGL.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Drawable.h>
 #include <Nephilim/Image.h>
 

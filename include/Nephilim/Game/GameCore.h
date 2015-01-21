@@ -4,8 +4,8 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/VirtualFS.h>
 #include <Nephilim/ContentManager.h>
-#include <Nephilim/Clock.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Clock.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/StringList.h>

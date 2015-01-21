@@ -1,5 +1,5 @@
 #include <Nephilim/World/CInput.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 

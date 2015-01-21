@@ -1,6 +1,6 @@
-#include "Nephilim/Platform.h"
-#include "Nephilim/Engine.h"
-#include "Nephilim/Logger.h"
+#include <Nephilim/Platform.h>
+#include <Nephilim/Game/Engine.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <stdlib.h>
 #include <cmath>

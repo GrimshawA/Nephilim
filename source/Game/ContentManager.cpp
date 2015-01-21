@@ -4,9 +4,9 @@
 
 #include <Nephilim/Model/ModelLoader.h>
 
-#include <Nephilim/Path.h>
-#include <Nephilim/Clock.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Path.h>
+#include <Nephilim/Foundation/Clock.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <iostream>
 using namespace std;

@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/DebugDraw.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/CGL.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Geometry.h>
 #include <Nephilim/Math/Math.h>
 

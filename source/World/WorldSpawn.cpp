@@ -2,7 +2,7 @@
 // This file has the functions for spawning prefabs into the world
 
 #include <Nephilim/World/World.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -1,5 +1,5 @@
 #include <Nephilim/World/Prefab.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <pugixml/pugixml.hpp>
 

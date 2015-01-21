@@ -24,10 +24,12 @@
 #include <Nephilim/World/ASkeletalMeshComponent.h>
 
 #include <Nephilim/Math/Math.h>
-#include <Nephilim/Logger.h>
+
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/Path.h>
+
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GLTextureCube.h>
-#include <Nephilim/Path.h>
 #include <Nephilim/CGL.h>
 
 #include <Nephilim/World/PostEffectBloom.h>

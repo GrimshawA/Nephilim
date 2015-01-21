@@ -29,7 +29,7 @@
 #include <Nephilim/Platform.h>
 #include "SoundStream.h"
 #include "Mutex.h"
-#include <Nephilim/Time.h>
+#include <Nephilim/Foundation/Time.h>
 
 #include <string>
 #include <vector>

@@ -1,6 +1,6 @@
 #include <Nephilim/Network/ConnectionENET.h>
 #include <Nephilim/Packet.h>
-#include <Nephilim/Logger.h>
+#include <Nephilim/Foundation/Logging.h>
 
 #include <stdio.h>
 
