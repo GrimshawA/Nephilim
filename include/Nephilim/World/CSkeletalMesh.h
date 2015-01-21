@@ -11,8 +11,8 @@
 #include <Nephilim/Graphics/SkeletalMesh.h>
 #include <Nephilim/Graphics/Skeleton.h>
 
-#include <Nephilim/AnimationClip.h>
-#include <Nephilim/Geometry.h>
+#include <Nephilim/Animation/AnimationClip.h>
+#include <Nephilim/Graphics/Geometry.h>
 
 NEPHILIM_NS_BEGIN
 

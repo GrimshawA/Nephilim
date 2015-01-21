@@ -2,7 +2,7 @@
 #define NephilimMesh_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Geometry.h>
+#include <Nephilim/Graphics/Geometry.h>
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Graphics/IndexArray.h>
 

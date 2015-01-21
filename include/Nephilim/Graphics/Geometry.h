@@ -5,9 +5,9 @@
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Math/Vectors.h>
 
-#include "Drawable.h"
+#include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Math/Matrix.h>
-#include "Color.h"
+#include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/RenderModes.h>
 #include "Strings.h"
 
