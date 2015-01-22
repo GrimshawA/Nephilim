@@ -2,7 +2,7 @@
 #define GenericMain_h__
 
 #include <Nephilim/Platform.h>
-#include "Engine.h"
+#include <Nephilim/Game/Engine.h>
 
 using namespace NEPHILIM_NS;
 

@@ -2,6 +2,7 @@
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/World/Camera.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -35,8 +36,20 @@ void UIWindow::draw(GraphicsDevice* graphicsDevice)
 		graphicsDevice->setViewMatrix(viewMatrix);
 	}
 	
+	// If this is a 3D layer, we need to set a proper camera for it
+	if (_3d)
+	{
+		graphicsDevice->setProjectionMatrix(mat4::perspective(_fov, _aspectRatio, 1.f, 5000.f));
+		graphicsDevice->setViewMatrix(mat4::lookAt(_cameraPosition, _cameraTarget, Vector3D(0.f, -1.f, 0.f)));
+	}
+	else
+	{
+		graphicsDevice->setProjectionMatrix(mat4::ortho(0.f, 900.f, 0.f, 500.f, 1.f, 1000.f));
+		graphicsDevice->setViewMatrix(mat4::identity);
+	}
 
-	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++){
+	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
+	{
 		(*it)->drawItself(graphicsDevice);
 	}
 };
@@ -45,6 +58,15 @@ void UIWindow::draw(GraphicsDevice* graphicsDevice)
 UICanvas* UIWindow::getParentDocument()
 {
 	return m_parentDocument;
+}
+
+/// Get the mouse ray in the coordinate system of this window
+/// This is extremely helpful to convert window-space mouse coordinates into a 3D picking ray to use on this window
+Ray UIWindow::getMouseRay(int x, int y)
+{
+	Ray r; r.origin.x = 0;
+//	CCameraLens::
+	return r;
 }
 
 /// Callback when a child of the control is removed

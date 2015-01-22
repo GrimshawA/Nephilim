@@ -25,7 +25,7 @@
 NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
-class ContentManager;
+class GameContent;
 class PhysicsSystem;
 class AudioSystem;
 
@@ -64,7 +64,7 @@ public:
 	GraphicsDevice* graphicsDevice = nullptr;
 
 	/// The content manager that provides assets for this world
-	ContentManager* contentManager = nullptr;
+	GameContent* contentManager = nullptr;
 
 	/// The currently instanced list of actors
 	std::vector<Actor*> actors;

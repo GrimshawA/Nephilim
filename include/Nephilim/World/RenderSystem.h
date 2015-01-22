@@ -7,7 +7,7 @@
 NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
-class ContentManager;
+class GameContent;
 
 /**
 	\class RenderSystem
@@ -26,7 +26,7 @@ public:
 	bool mAllowLighting = true;  ///< Render lights
 
 	GraphicsDevice*        mRenderer = nullptr;
-	ContentManager*  mContentManager = nullptr;
+	GameContent*  mContentManager = nullptr;
 
 public:
 

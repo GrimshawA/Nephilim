@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 
 class UICanvas;
 class UIView;
-class ContentManager;
+class GameContent;
 class UIComponent;
 
 class NEPHILIM_API UIDragEvent
@@ -54,7 +54,7 @@ public:
 	/// Default construction
 	UICore();
 
-	ContentManager* content;
+	GameContent* content;
 
 
 	/// Drag components use this element to spawn the temporary element in drags

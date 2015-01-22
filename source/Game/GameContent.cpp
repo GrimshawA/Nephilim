@@ -1,7 +1,7 @@
-#include <Nephilim/Game/ContentManager.h>
+#include <Nephilim/Game/GameContent.h>
+
 #include <Nephilim/Graphics/StaticMesh.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
-
 #include <Nephilim/Graphics/ModelLoader.h>
 
 #include <Nephilim/Foundation/Path.h>
@@ -13,7 +13,7 @@ using namespace std;
 
 NEPHILIM_NS_BEGIN
 
-ContentManager::ContentManager()
+GameContent::GameContent()
 : mDefaultGroup("")
 {
 	// Create the anonymous group where assets are loaded to by default
@@ -24,7 +24,7 @@ ContentManager::ContentManager()
 	filesystems->indexSearchPath("./", "/");
 }
 
-ContentManager::~ContentManager()
+GameContent::~GameContent()
 {
 	while(!mGroups.empty())
 	{
@@ -32,8 +32,14 @@ ContentManager::~ContentManager()
 	}
 }
 
+/// Load a font
+void GameContent::loadFont(const String& filename)
+{
+	font.loadFromFile(filename);
+}
+
 /// Create a new static mesh with a given resource name
-StaticMesh* ContentManager::createStaticMesh(const String& urn)
+StaticMesh* GameContent::createStaticMesh(const String& urn)
 {
 	StaticMesh* m = new StaticMesh;
 
@@ -44,7 +50,7 @@ StaticMesh* ContentManager::createStaticMesh(const String& urn)
 }
 
 /// Create a new static mesh with a given resource name
-SkeletalMesh* ContentManager::createSkeletalMesh(const String& urn)
+SkeletalMesh* GameContent::createSkeletalMesh(const String& urn)
 {
 	SkeletalMesh* m = new SkeletalMesh;
 
@@ -55,7 +61,7 @@ SkeletalMesh* ContentManager::createSkeletalMesh(const String& urn)
 }
 
 /// This will cause a static mesh to be loaded from a file with native loader or an importer
-bool ContentManager::loadStaticMesh(const String& urn, const String& filename)
+bool GameContent::loadStaticMesh(const String& urn, const String& filename)
 {
 	StaticMesh* m = findMesh(urn).ptr;
 
@@ -89,7 +95,7 @@ bool ContentManager::loadStaticMesh(const String& urn, const String& filename)
 }
 
 /// Find a mesh in our storage, so it can be used somewhere
-Resource<StaticMesh> ContentManager::findMesh(const String& name)
+Resource<StaticMesh> GameContent::findMesh(const String& name)
 {
 	//auto i = std::find(staticMeshContainer.begin(), staticMeshContainer.end(), name);
 
@@ -104,13 +110,13 @@ Resource<StaticMesh> ContentManager::findMesh(const String& name)
 	return MakeNullResource<StaticMesh>();
 }
 
-ContentGroup* ContentManager::createGroup(const String& name)
+ContentGroup* GameContent::createGroup(const String& name)
 {
 	mGroups[name] = new ContentGroup();
 	return mGroups[name];
 }
 
-void ContentManager::removeGroup(const String& name)
+void GameContent::removeGroup(const String& name)
 {
 	if(mGroups.find(name) != mGroups.end())
 	{
@@ -121,7 +127,7 @@ void ContentManager::removeGroup(const String& name)
 
 /// The most elemental form of loading an asset
 /// Simply takes the filename and tries to deduce how to load it from extension
-bool ContentManager::load(const String& filename)
+bool GameContent::load(const String& filename)
 {
 	// Make sure there is a target content holder
 	if(mGroups.find(mDefaultGroup) == mGroups.end())
@@ -163,7 +169,7 @@ bool ContentManager::load(const String& filename)
 	return false;
 }
 
-Texture* ContentManager::getTexture(const String& name)
+Texture* GameContent::getTexture(const String& name)
 {
 	if(mGroups[mDefaultGroup]->mTextures.find(name) == mGroups[mDefaultGroup]->mTextures.end())
 		return NULL;

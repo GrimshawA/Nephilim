@@ -2,7 +2,7 @@
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Foundation/StringList.h>
-#include <Nephilim/Game/ContentManager.h>
+#include <Nephilim/Game/GameContent.h>
 #include <Nephilim/Math/Math.h>
 
 NEPHILIM_NS_BEGIN

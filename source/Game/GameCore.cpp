@@ -160,7 +160,9 @@ World* GameCore::getWorld()
 /// Create a new UICanvas for the game to use
 UICanvas* GameCore::createCanvas(const String& name)
 {
-	return userInterfaceManager.createCanvas(name);
+	UICanvas* c = userInterfaceManager.createCanvas(name);
+	c->getContext().m_defaultFont = &contentManager.font;
+	return c;
 }
 
 /// Get a UI canvas 

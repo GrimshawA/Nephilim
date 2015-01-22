@@ -3,13 +3,13 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/VirtualFileSystem.h>
-#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/Foundation/Clock.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Foundation/StringList.h>
 
+#include <Nephilim/Game/GameContent.h>
 #include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/Game/GameMessage.h>
 #include <Nephilim/Game/BaseSceneManager.h>
@@ -17,7 +17,6 @@
 #include <Nephilim/Game/GameServer.h>
 
 
-#include <Nephilim/Game/ContentManager.h>
 #include <Nephilim/Foundation/Localization.h>
 #include <Nephilim/UI/UIManager.h>
 
@@ -72,7 +71,7 @@ public:
 	UIManager userInterfaceManager;
 
 	/// The game can hold multiple resource groups and ensures their deallocation when closing
-	ContentManager contentManager;
+	GameContent contentManager;
 
 	/// The game has multi language support natively, its lightweight and avoids boilerplate code
 	LocalizationManager languageManager;

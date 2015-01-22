@@ -1,12 +1,12 @@
-#ifndef NephilimContentManager_h__
-#define NephilimContentManager_h__
+#ifndef NephilimGameContent_h__
+#define NephilimGameContent_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Game/Resource.h>
-
 #include <Nephilim/Foundation/VirtualFileSystem.h>
 #include <Nephilim/Foundation/StringHash.h>
 #include <Nephilim/Foundation/File.h>
+
+#include <Nephilim/Game/Resource.h>
 
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
@@ -50,9 +50,11 @@ struct ModelImportSettings
 };
 
 /// Content manager manages all content groups created
-class ContentManager
+class GameContent
 {
 public:
+
+	Font font;
 
 	/// List of custom model loaders currently plugged in
 	/// This is just for third party formats, all native binary ones are handled automatically
@@ -67,10 +69,10 @@ public:
 public:
 
 	/// Creates the default group - no name ""
-	ContentManager();
+	GameContent();
 
 	/// Ensure removal of all content groups and the resources
-	~ContentManager();
+	~GameContent();
 
 	/// Create a new static mesh with a given resource name
 	StaticMesh* createStaticMesh(const String& urn);
@@ -87,7 +89,8 @@ public:
 	/// Find a mesh in our storage, so it can be used somewhere
 	Resource<StaticMesh> findMesh(const String& name);
 
-	
+	/// Load a font
+	void loadFont(const String& filename);
 
 	void removeGroup(const String& name);
 
@@ -98,6 +101,7 @@ public:
 	Texture* getTexture(const String& name);
 
 	String mDefaultGroup; ///< The current default group
+
 	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group
 
 	std::map<String, ContentGroup*> mGroups;
@@ -108,4 +112,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimContentManager_h__
+#endif // NephilimGameContent_h__
