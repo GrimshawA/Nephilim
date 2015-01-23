@@ -8,7 +8,18 @@
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API VirtualFS
+/**
+	\class VirtualFileSystem
+	\brief An emulated file system to help manage game resources
+
+	This virtual file system is basically a database of files and directories.
+	Its job to translate virtual game resources into actual files, directories,
+	files within packages and even from network.
+
+	This is just an abstraction to hide away the real file system, for a truly
+	portable way to reference assets.
+*/
+class NEPHILIM_API VirtualFileSystem
 {
 public:
 

@@ -1,5 +1,5 @@
-#ifndef PARABOLA_INPUTEVENT_H
-#define PARABOLA_INPUTEVENT_H
+#ifndef NephilimFoundationEvent_h__
+#define NephilimFoundationEvent_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Math/Vectors.h>
@@ -7,7 +7,6 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Core
 	\class Mouse
 	\brief Holds information about mouse state
 */
@@ -515,4 +514,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimFoundationEvent_h__

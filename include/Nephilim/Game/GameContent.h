@@ -106,7 +106,7 @@ public:
 
 	std::map<String, ContentGroup*> mGroups;
 
-	VirtualFS* filesystems;
+	VirtualFileSystem* filesystems;
 
 	std::vector<std::unique_ptr<Plugin> > plugins;
 };

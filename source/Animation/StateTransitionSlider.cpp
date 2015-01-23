@@ -32,7 +32,7 @@ void StateTransitionSlider::setColor(const Color& color)
 
 void StateTransitionSlider::onUpdate(const Time& time)
 {
-	elapsedTime += time.asSeconds();
+	elapsedTime += time.seconds();
 
 	if(elapsedTime > m_duration)
 	{

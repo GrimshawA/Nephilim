@@ -5,7 +5,7 @@
 
 NEPHILIM_NS_BEGIN
 
-void VirtualFS::indexSearchPath(const String& realPath, const String& indexAt)
+void VirtualFileSystem::indexSearchPath(const String& realPath, const String& indexAt)
 {
 	// Not indexing anything anyway
 	if(realPath.size() == 0)
@@ -22,7 +22,7 @@ void VirtualFS::indexSearchPath(const String& realPath, const String& indexAt)
 }
 
 /// Check if a given file exists
-bool VirtualFS::exists(const String& filename)
+bool VirtualFileSystem::exists(const String& filename)
 {
 	String path = filename.substr(0, filename.find_last_of('/') + 1);
 	String file = filename.substr(path.size(), filename.size() - path.size());
@@ -54,7 +54,7 @@ bool VirtualFS::exists(const String& filename)
 }
 
 /// Translate a virtual to real path
-String VirtualFS::translate(const String& filename)
+String VirtualFileSystem::translate(const String& filename)
 {
 	String r;
 

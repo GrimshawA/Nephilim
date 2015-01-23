@@ -36,7 +36,7 @@ namespace priv
 ////////////////////////////////////////////////////////////////////////////////
 void sleepImpl(Time time)
 {
-    ::Sleep(time.asMilliseconds());
+    ::Sleep(time.milliseconds());
 }
 
 } // namespace priv

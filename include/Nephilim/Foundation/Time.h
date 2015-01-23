@@ -30,13 +30,13 @@ public:
 	Time(Int64 microSeconds);
 
 	/// Convert the time span to seconds, where 1 second returns 1.0
-	float asSeconds() const;
+	float seconds() const;
 
 	/// Convert the time spawn to miliseconds, where 1000 miliseconds = 1 second
-	Int64 asMilliseconds();
+	Int64 milliseconds() const;
 
 	/// Returns the time span
-	Int64 asMicroseconds();
+	Int64 microseconds() const;
 
 	/// Build a Time object from an amount of microseconds
 	static Time fromMicroseconds(Int64 microSeconds);

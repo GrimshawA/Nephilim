@@ -165,7 +165,7 @@ public:
 	/// Get the flags of the gl context
 	String getGLContextFlags();
 
-	VirtualFS mVirtualFS;
+	VirtualFileSystem mVirtualFS;
 
 protected:
 

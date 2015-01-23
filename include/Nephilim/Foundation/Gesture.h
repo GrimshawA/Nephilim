@@ -25,19 +25,7 @@ public:
 class NEPHILIM_API PinchGesture : public Gesture
 {
 public:
-	virtual void pushEvent(const Event& event);
 
-	struct PointerInfo
-	{
-		float x, y;
-		int id;
-	};
-
-	std::vector<PointerInfo> pressed_ids;
-	float initial_distance;
-	float last_distance;
-
-	sigc::signal<void, float> onPinch;
 };
 
 NEPHILIM_NS_END

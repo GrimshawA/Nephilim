@@ -20,7 +20,7 @@ GameContent::GameContent()
 	createGroup("");
 	mDefaultFonts = &mGroups[""]->mFonts;
 
-	filesystems = new VirtualFS();
+	filesystems = new VirtualFileSystem();
 	filesystems->indexSearchPath("./", "/");
 }
 

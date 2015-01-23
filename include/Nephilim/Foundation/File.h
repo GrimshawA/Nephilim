@@ -10,12 +10,18 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Foundation
 	\class File
 	\brief Provides file access functionality even for android packaged assets
 */
 class NEPHILIM_API File : public IODevice
 {
+private:
+	Int64 m_offset; ///< Beggining of the file, 0 or any other byte
+	Int64 m_length; ///< The length that is available to read
+	Int64 m_fileSize;
+	FILE* m_handle;
+	bool  m_creator; ///< Specifies whether this File instance is responsible for releasing the handle
+
 public:
 	/// Constructs an uninitialized file
 	File();
@@ -79,13 +85,6 @@ public:
 
 	/// Allows to check for a file size
 	static Int64 getFileSize(String path);
-
-private:
-	Int64 m_offset; ///< Beggining of the file, 0 or any other byte
-	Int64 m_length; ///< The length that is available to read
-	Int64 m_fileSize;
-	FILE* m_handle;
-	bool  m_creator; ///< Specifies whether this File instance is responsible for releasing the handle
 };
 
 namespace FileOps

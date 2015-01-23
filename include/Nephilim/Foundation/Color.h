@@ -7,7 +7,6 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Graphics
 	\class Color
 	\brief Describes a color in the RGB8888 format
 */
@@ -50,19 +49,40 @@ public:
 	Uint8 r,g,b,a;
 };
 
-class HSVColor
+/**
+	\class ColorHSV
+	\brief Color value encoded in a Hue, Saturation and Value
+
+	The hue goes from 0 to 360 and it wraps around seamlessly 
+	between 0 and 360. This stands for the main tone of the color,
+	the vivid hues like Blue, Red, Orange, Purple etc.
+
+	The saturation stands for how much the original hue is pure. The
+	less saturation it has, the more it fades to a grey tone. 0 to 1.
+
+	The value is the brightness of the hue, from 0 to 1. At 1 we get
+	a fully lit color, and at 0 it fades to black.
+*/
+class ColorHSV
 {
 public:
-
+	/// Hue of the color
 	float hue;
+
+	/// Saturation of the color
 	float sat;
+
+	/// Value of the color
 	float val;
 
+	/// Convert to an RGBA color
 	Color toRGB();
 
-	static HSVColor RgbToHsv(Color color);
+	/// Convert a RGBA color to an HSV color
+	static ColorHSV RgbToHsv(Color color);
 
-	static HSVColor mix(const HSVColor& c1, const HSVColor& c2);
+	/// Mix two HSV colors together, as if they were ink
+	static ColorHSV mix(const ColorHSV& c1, const ColorHSV& c2);
 };
 
 NEPHILIM_NS_END

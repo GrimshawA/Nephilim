@@ -68,7 +68,7 @@ public:
 
 	~AutoFnProfiler()
 	{
-		ProfileStatistics::trackFn(m_funcName, clock.getElapsedTime().asSeconds());
+		ProfileStatistics::trackFn(m_funcName, clock.getElapsedTime().seconds());
 	}
 
 	String m_funcName;

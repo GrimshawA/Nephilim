@@ -1,37 +1,36 @@
-#ifndef PARABOLA_CRC32_H
-#define PARABOLA_CRC32_H
+#ifndef NephilimFoundationCRCHash_h__
+#define NephilimFoundationCRCHash_h__
 
 #include <Nephilim/Platform.h>
 
 NEPHILIM_NS_BEGIN
 
-	/**
-		\ingroup Foundation
-		\class CRC32
-		\brief Utility class to make CRC32 hashes of your data.
-		\todo tidy up a bit
+/**
+	\class CRC32
+	\brief Utility class to make CRC32 hashes of your data.
 
-		Using this you can easily generate a unique hash for your data array.
-	*/
-	class NEPHILIM_API CRC32
-	{
-	private:
+	Using this you can easily generate a unique hash for your data array.
+*/
+class NEPHILIM_API CRC32
+{
+private:
 		unsigned long LookupTable[256];
 		unsigned long Reflect(unsigned long Reflect, char Char);
-	public:
-		static CRC32 Instance;
 
-		/// Constructs the default instance
-		CRC32();
+public:
+	static CRC32 Instance;
 
-		/**
-			\brief Computes the CRC32 hash of the data.
+	/// Constructs the default instance
+	CRC32();
 
-			\param Data array to get the hash from
-			\param Size of the data array
-		*/
-		unsigned long CRC(const unsigned char *Data, unsigned long DataLength);
-	};
+	/**
+		\brief Computes the CRC32 hash of the data.
+
+		\param Data array to get the hash from
+		\param Size of the data array
+	*/
+	unsigned long CRC(const unsigned char *Data, unsigned long DataLength);
+};
 
 NEPHILIM_NS_END
-#endif
+#endif // NephilimFoundationCRCHash_h__

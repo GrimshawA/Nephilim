@@ -7,11 +7,11 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Foundation
 	\class Clipboard
-	\brief Copy & Paste functionality 
+	\brief Copy and paste functionality, internal and external
 */
-class NEPHILIM_API Clipboard{
+class NEPHILIM_API Clipboard
+{
 public:
 	
 	/// Returns the current contents of the clipboard

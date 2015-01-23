@@ -66,7 +66,7 @@ Color Color::fromNormalized(const vec4& v)
 }
 
 //////////////////////////////////////////////////////////////////////////
-Color HSVColor::toRGB()
+Color ColorHSV::toRGB()
 {
 	float C = val * sat;
 
@@ -129,9 +129,9 @@ Color HSVColor::toRGB()
 	return c;
 }
 
-HSVColor HSVColor::RgbToHsv(Color color)
+ColorHSV ColorHSV::RgbToHsv(Color color)
 {
-	HSVColor  c;
+	ColorHSV  c;
 	c.hue = 0.f;
 
 	float r = (float)color.r / 255.f;
@@ -170,9 +170,9 @@ HSVColor HSVColor::RgbToHsv(Color color)
 	return c;
 }
 
-HSVColor HSVColor::mix(const HSVColor& c1, const HSVColor& c2)
+ColorHSV ColorHSV::mix(const ColorHSV& c1, const ColorHSV& c2)
 {
-	HSVColor c3;
+	ColorHSV c3;
 
 	Angle c1Hue = Angle::fromDegrees(c1.hue);
 	Angle c2Hue = Angle::fromDegrees(c2.hue);

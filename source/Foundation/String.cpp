@@ -38,9 +38,24 @@ NEPHILIM_NS_BEGIN
 	
 	};
 
-	void String::removeUntil(char c){
-		erase(0, find_first_of(c));		
-	};
+/// Remove whitespace on both ends
+void String::trim()
+{
+	while (size() > 0 && at(0) == ' ')
+	{
+		erase(begin());
+	}
+
+	while (size() > 0 && at(size()-1) == ' ')
+	{
+		erase(begin() + size() - 1);
+	}
+}
+
+void String::removeUntil(char c)
+{
+	erase(0, find_first_of(c));		
+}
 
 void String::removeUntilReverse(char c){
 	std::size_t ocurr = find_last_of(c);

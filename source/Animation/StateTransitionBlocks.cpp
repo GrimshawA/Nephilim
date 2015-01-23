@@ -42,7 +42,7 @@ void StateTransitionBlocks::onUpdate(const Time& time)
 {
 	if(!m_next)
 	{
-		remainingTime -= time.asSeconds();
+		remainingTime -= time.seconds();
 
 		if(remainingTime <= 0.f && !positions.empty())
 		{
@@ -63,7 +63,7 @@ void StateTransitionBlocks::onUpdate(const Time& time)
 	}
 	else
 	{
-		remainingTime -= time.asSeconds();
+		remainingTime -= time.seconds();
 
 		if(remainingTime <= 0.f)
 		{

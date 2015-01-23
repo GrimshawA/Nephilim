@@ -122,7 +122,7 @@ mat4 InterpolateMatrix(mat4 a, mat4 b, float blend)
 
 void CSkeletalMesh::update(const Time& deltaTime)
 {
-	mAnimationTime += deltaTime.asSeconds() * clip.playbackFramesPerSecond;
+	mAnimationTime += deltaTime.seconds() * clip.playbackFramesPerSecond;
 	if(mAnimationTime > clip.numFrames)
 	{
 		mAnimationTime -= clip.numFrames;

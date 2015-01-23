@@ -12,16 +12,18 @@ Time::Time(Int64 microSeconds){
 	m_microSeconds = microSeconds;
 }
 
-float Time::asSeconds() const
+float Time::seconds() const
 {
 	return static_cast<float>(m_microSeconds / 1000000.f);
 }
 
-Int64 Time::asMilliseconds(){
+Int64 Time::milliseconds() const
+{
 	return m_microSeconds / 10000.f;
-};
+}
 
-Int64 Time::asMicroseconds(){
+Int64 Time::microseconds() const
+{
 	return m_microSeconds;
 }
 
@@ -49,7 +51,7 @@ bool Time::operator>=(const Time& right)
 Time Time::operator -(Time right)
 {
 	Time t;
-	t.m_microSeconds = m_microSeconds - right.asMicroseconds();
+	t.m_microSeconds = m_microSeconds - right.microseconds();
 	return t;
 }
 

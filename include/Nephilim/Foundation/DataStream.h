@@ -11,7 +11,6 @@ class IODevice;
 class String;
 
 /**
-	\ingroup Foundation
 	\class DataStream
 	\brief Inputs and outputs data to any IODevice
 */

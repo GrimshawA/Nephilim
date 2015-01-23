@@ -293,7 +293,7 @@ void GameCore::innerUpdate(Time time)
 		m_stackedTime -= 0.5f;
 	}
 
-	m_stackedTime += time.asSeconds();
+	m_stackedTime += time.seconds();
 	while(m_stackedTime >= m_updateStep)
 	{
 		PrimaryUpdate(Time::fromSeconds(m_updateStep));

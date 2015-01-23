@@ -31,7 +31,7 @@ StateTransitionFade::StateTransitionFade()
 
 void StateTransitionFade::onUpdate(const Time& time)
 {
-	elapsedTime += time.asSeconds();
+	elapsedTime += time.seconds();
 
 
 	if(elapsedTime > m_duration)

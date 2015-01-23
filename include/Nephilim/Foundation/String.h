@@ -9,7 +9,6 @@ NEPHILIM_NS_BEGIN
 class StringList;
 
 /**
-	\ingroup Foundation
 	\class String
 	\brief Extension to std::string
 
@@ -39,6 +38,9 @@ public:
 	String(std::size_t n, char c);
 	/// Content is initialized from a std::string
 	String(const std::string &s);
+
+	/// Remove whitespace on both ends
+	void trim();
 
 	/// Replaces all occurrences of a character
 	void replaceCharacter(char replace, char with);

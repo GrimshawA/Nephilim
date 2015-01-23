@@ -12,14 +12,20 @@ NEPHILIM_NS_BEGIN
 */
 class NEPHILIM_API Clock
 {
+private:
+	/// The last time we registered, necessary to figure out the elapsed time
+	Time m_last;
+
 public:
+	/// Constructs the timer with current time
+	/// so getElapsedTime() starts with 0
 	Clock();
 
+	/// Restarts the timer
 	void reset();
-	Time getElapsedTime();
 
-private:
-	Time m_last;
+	/// Get the elapsed time since the last call
+	Time getElapsedTime();
 };
 
 NEPHILIM_NS_END

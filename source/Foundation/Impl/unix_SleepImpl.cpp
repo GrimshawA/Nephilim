@@ -46,7 +46,7 @@ void sleepImpl(Time time)
 
     // this implementation is inspired from Qt
 
-    Uint64 usecs = time.asMicroseconds();
+    Uint64 usecs = time.microseconds();
 
     // get the current time
     timeval tv;
