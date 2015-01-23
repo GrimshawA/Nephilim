@@ -2,8 +2,8 @@
 #define NephilimUIWindow_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Matrix.h>
-#include <Nephilim/Math/Ray.h>
+#include <Nephilim/Foundation/Matrix.h>
+#include <Nephilim/Foundation/Ray.h>
 #include <Nephilim/UI/UIView.h>
 
 NEPHILIM_NS_BEGIN

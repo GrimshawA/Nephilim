@@ -3,18 +3,18 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 
 #include <vector>
 
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Network
 	\class Packet
 	\brief Allows to pack and unpack data for network transfer
 */
-class Packet{
+class Packet
+{
 public:
 	/// Start the empty packet
 	Packet();

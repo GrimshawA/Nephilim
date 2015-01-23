@@ -46,7 +46,7 @@ void GameCore::loadPlugins()
 	for (auto& dll_name : dll_list)
 	{
 		// Let's check what the plugin is and load immediately
-		Plugin* plugin = new Plugin(dll_name);
+		PluginLoader* plugin = new PluginLoader(dll_name);
 		if (plugin)
 		{
 			Log("Plugin loaded: %s", dll_name.c_str());

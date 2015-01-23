@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/Geometry.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/DataStream.h>

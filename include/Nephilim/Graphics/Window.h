@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Graphics/View.h>
 #include <Nephilim/Graphics/RenderTarget.h>

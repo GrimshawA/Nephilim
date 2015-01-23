@@ -2,9 +2,9 @@
 #define NephilimGraphicsView_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Math/Rect.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/Rect.h>
+#include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Graphics/Transform.h>
 #include <Nephilim/Foundation/ReferenceCountable.h>
 

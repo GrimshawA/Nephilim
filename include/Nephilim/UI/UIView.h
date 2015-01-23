@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIPainter.h>
 
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Graphics/RectangleShape.h>
@@ -12,7 +12,7 @@
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Animation/AxList.h>
 #include <Nephilim/Animation/AxTarget.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 
 
 #include <vector>

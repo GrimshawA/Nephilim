@@ -2,10 +2,10 @@
 #define NephilimRazerComponentCamera_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/World/Component.h>
-#include <Nephilim/Math/Ray.h>
+#include <Nephilim/Foundation/Ray.h>
 
 NEPHILIM_NS_BEGIN
 

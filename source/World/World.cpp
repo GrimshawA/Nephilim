@@ -14,8 +14,9 @@
 #include <Nephilim/World/CColliderBox.h>
 
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Plugins/Plugin.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
+
+#include <Nephilim/Plugins/PluginLoader.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -86,7 +87,7 @@ PhysicsSystem* World::createPhysicsSystem(const String& name)
 	typedef PhysicsSystem* (*InstanceLoader_Fn2)();
 
 	// FIX THE LEAK, PLUGINS ARE GAME WIDE
-	Plugin* physicsPlugin = new Plugin(name);
+	PluginLoader* physicsPlugin = new PluginLoader(name);
 	if (physicsPlugin->isLoaded())
 	{
 		InstanceLoader_Fn2 f = (InstanceLoader_Fn2)physicsPlugin->getFunctionAddress("createPhysicsSystem");
@@ -110,7 +111,7 @@ AudioSystem* World::createAudioSystem(const String& name)
 	typedef AudioSystem* (*InstanceLoader_Fn2)();
 
 	// FIX THE LEAK, PLUGINS ARE GAME WIDE
-	Plugin* audioPlugin = new Plugin(name);
+	PluginLoader* audioPlugin = new PluginLoader(name);
 	if (audioPlugin->isLoaded())
 	{
 		InstanceLoader_Fn2 f = (InstanceLoader_Fn2)audioPlugin->getFunctionAddress("createAudioSystem");

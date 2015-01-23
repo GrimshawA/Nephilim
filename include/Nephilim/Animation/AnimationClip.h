@@ -2,8 +2,8 @@
 #define NephilimAnimationClip_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Quaternion.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Quat.h>
+#include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 
 #include <vector>

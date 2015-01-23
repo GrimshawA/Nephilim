@@ -2,7 +2,7 @@
 #define NephilimGraphicsTextureCubeOpenGL_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Graphics/TextureCube.h>
 
 NEPHILIM_NS_BEGIN

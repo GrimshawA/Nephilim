@@ -2,7 +2,7 @@
 #define NephilimWorldLanscape_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CHeightmapTerrain.h>
 

@@ -2,8 +2,8 @@
 #define NephilimRazerComponentTransform_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Matrix.h>
-#include <Nephilim/Math/Quaternion.h>
+#include <Nephilim/Foundation/Matrix.h>
+#include <Nephilim/Foundation/Quat.h>
 #include <Nephilim/World/Component.h>
 
 NEPHILIM_NS_BEGIN

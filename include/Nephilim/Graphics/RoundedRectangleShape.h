@@ -5,7 +5,7 @@
 #include <Nephilim/Graphics/Transformable.h>
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 
 NEPHILIM_NS_BEGIN
 	

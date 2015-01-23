@@ -2,7 +2,7 @@
 #define RenderState_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 
 NEPHILIM_NS_BEGIN
 

@@ -10,7 +10,7 @@
 #include <Nephilim/World/CSprite.h>
 #include <Nephilim/World/CColliderBox.h>
 #include <Nephilim/World/CSkeletalMesh.h>
-#include <Nephilim/Math/BBox.h>
+#include <Nephilim/Foundation/BBox.h>
 
 #include <Nephilim/Scripting/IScript.h>
 

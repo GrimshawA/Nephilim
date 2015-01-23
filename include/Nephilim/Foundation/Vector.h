@@ -309,7 +309,7 @@ typedef Vec4<int> Vec4i;
 typedef Vec4<double> Vec4d;
 
 /// Inline definitions
-#include "Vectors.inl"
+#include "Vector.inl"
 
 NEPHILIM_NS_END
 #endif // NephilimVectors_h__

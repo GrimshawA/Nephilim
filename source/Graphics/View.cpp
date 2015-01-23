@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/View.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 
 #include <cmath>
 

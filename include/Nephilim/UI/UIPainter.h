@@ -2,8 +2,8 @@
 #define NephilimUI_UIPainter_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Matrix.h>
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Matrix.h>
+#include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Color.h>
 
 NEPHILIM_NS_BEGIN

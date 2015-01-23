@@ -1,5 +1,5 @@
-#include <Nephilim/Math/Plane.h>
-#include <Nephilim/Math/Ray.h>
+#include <Nephilim/Foundation/Plane.h>
+#include <Nephilim/Foundation/Ray.h>
 
 NEPHILIM_NS_BEGIN
 

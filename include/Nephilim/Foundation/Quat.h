@@ -2,13 +2,16 @@
 #define NephilimQuaternion_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Math/Matrix.h>
-#include <Nephilim/Math/Spherical.h>
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/Matrix.h>
+#include <Nephilim/Foundation/Spherical.h>
 
 NEPHILIM_NS_BEGIN
 
-
+/**
+	\class Quaternion
+	\brief Represents a rotation in three dimensions without locking issues
+*/
 class Quaternion
 {
 public:

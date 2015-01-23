@@ -8,7 +8,7 @@
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/Transformable.h>
 #include <Nephilim/Foundation/Color.h>
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Font.h>
 

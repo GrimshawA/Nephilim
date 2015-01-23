@@ -1,5 +1,5 @@
 #include <Nephilim/Animation/StateTransitionFade.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Time.h>

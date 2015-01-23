@@ -2,8 +2,8 @@
 #define NephilimRay_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Math/BBox.h>
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/BBox.h>
 
 #include <algorithm>
 

@@ -1,4 +1,4 @@
-#include <Nephilim/Math/Ray.h>
+#include <Nephilim/Foundation/Ray.h>
 
 NEPHILIM_NS_BEGIN
 

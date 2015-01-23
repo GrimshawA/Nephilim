@@ -1,4 +1,4 @@
-#include <Nephilim/Plugins/Plugin.h>
+#include <Nephilim/Plugins/PluginLoader.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #ifdef NEPHILIM_WINDOWS
@@ -7,12 +7,12 @@
 
 NEPHILIM_NS_BEGIN
 
-Plugin::Plugin()
+PluginLoader::PluginLoader()
 {
 
 }
 
-Plugin::Plugin(const String& filename)
+PluginLoader::PluginLoader(const String& filename)
 {
 #ifdef NEPHILIM_WINDOWS
 	HINSTANCE hGetProcIDDLL = LoadLibraryA(filename.c_str());
@@ -29,7 +29,7 @@ Plugin::Plugin(const String& filename)
 }
 
 
-Plugin::~Plugin()
+PluginLoader::~PluginLoader()
 {
 	if (mHandle)
 	{
@@ -40,19 +40,19 @@ Plugin::~Plugin()
 }
 
 /// Shorthand to check if its a loaded instance
-Plugin::operator bool()
+PluginLoader::operator bool()
 {
 	return isLoaded();
 }
 
 /// Check if this is a live instance of the plugin
-bool Plugin::isLoaded()
+bool PluginLoader::isLoaded()
 {
 	return mHandle != nullptr;
 }
 
 /// Get the address of the function
-void* Plugin::getFunctionAddress(const String& func_name)
+void* PluginLoader::getFunctionAddress(const String& func_name)
 {
 #ifdef NEPHILIM_WINDOWS
 	return GetProcAddress((HMODULE)mHandle, func_name.c_str());

@@ -7,10 +7,10 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\class Plugin
-	\brief Handles a plugin instance for as long as it is alive
+	\class PluginLoader
+	\brief Loads a single plugin dynamically at runtime
 */
-class NEPHILIM_API Plugin
+class NEPHILIM_API PluginLoader
 {
 public:
 
@@ -19,13 +19,13 @@ public:
 public:
 
 	/// Construct the plugin without initializing
-	Plugin();
+	PluginLoader();
 
 	/// Construct the plugin from its file
-	Plugin(const String& filename);
+	PluginLoader(const String& filename);
 
 	/// Ensure destruction of the plugin instance
-	~Plugin();
+	~PluginLoader();
 
 	/// Check if this is a live instance of the plugin
 	bool isLoaded();

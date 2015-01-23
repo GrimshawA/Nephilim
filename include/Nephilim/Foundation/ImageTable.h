@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Rect.h>
 
 #include <map>
 

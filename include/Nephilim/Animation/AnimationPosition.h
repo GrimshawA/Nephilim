@@ -2,7 +2,7 @@
 #define PARABOLA_ANIMATIONPOSITION_H
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 #include "AnimationInterface.h"
 #include "AnimationEasing.h"
 #include "ReferenceCountable.h"

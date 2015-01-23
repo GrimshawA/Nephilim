@@ -4,7 +4,7 @@
 #include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/UI/UIView.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN

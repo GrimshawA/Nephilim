@@ -1,7 +1,6 @@
-#include <Nephilim/Math/Quaternion.h>
+#include <Nephilim/Foundation/Quat.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Math/Math.h>
-
+#include <Nephilim/Foundation/Math.h>
 
 NEPHILIM_NS_BEGIN
 

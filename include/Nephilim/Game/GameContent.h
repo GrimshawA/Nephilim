@@ -11,7 +11,7 @@
 #include <Nephilim/Graphics/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
 
-#include <Nephilim/Plugins/Plugin.h>
+#include <Nephilim/Plugins/PluginLoader.h>
 
 #include <map>
 #include <memory>
@@ -108,7 +108,7 @@ public:
 
 	VirtualFileSystem* filesystems;
 
-	std::vector<std::unique_ptr<Plugin> > plugins;
+	std::vector<std::unique_ptr<PluginLoader> > plugins;
 };
 
 NEPHILIM_NS_END

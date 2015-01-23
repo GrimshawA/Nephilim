@@ -2,7 +2,7 @@
 #define NephilimUIComponent_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Foundation/Time.h>
 

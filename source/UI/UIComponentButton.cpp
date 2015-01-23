@@ -3,7 +3,7 @@
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Game/GameContent.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 
 NEPHILIM_NS_BEGIN
 

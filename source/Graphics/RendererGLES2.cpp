@@ -1,7 +1,7 @@
 #include <Nephilim/Graphics/GLES2/RendererGLES2.h>
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/CGL.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Window.h>
 

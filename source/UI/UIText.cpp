@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIText.h>
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 
 NEPHILIM_NS_BEGIN
 

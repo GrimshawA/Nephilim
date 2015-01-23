@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
-#include <Nephilim/Math/Vectors.h>
+#include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/Drawable.h>
@@ -12,7 +12,7 @@
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/RenderModes.h>
 #include <Nephilim/Graphics/RenderState.h>
-#include <Nephilim/Math/Matrix.h>
+#include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Graphics/GLTexture.h>
 
 #include <map>

@@ -23,7 +23,7 @@
 #include <Nephilim/World/ASpriteComponent.h>
 #include <Nephilim/World/ASkeletalMeshComponent.h>
 
-#include <Nephilim/Math/Math.h>
+#include <Nephilim/Foundation/Math.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Path.h>

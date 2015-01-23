@@ -2,8 +2,8 @@
 #define VertexArray_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Graphics/RenderModes.h>
 
@@ -21,7 +21,8 @@ NEPHILIM_NS_BEGIN
 
 	You can draw geometry in VertexArray2D with Renderer::draw directly.
 */
-class NEPHILIM_API VertexArray2D{
+class NEPHILIM_API VertexArray2D
+{
 public:
 
 	/// \ingroup Graphics

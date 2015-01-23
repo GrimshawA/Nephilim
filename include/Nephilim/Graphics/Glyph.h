@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Math/Rect.h>
+#include <Nephilim/Foundation/Rect.h>
 
 NEPHILIM_NS_BEGIN
 
