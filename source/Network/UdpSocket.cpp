@@ -1,6 +1,6 @@
-#include <Nephilim/UdpSocket.h>
-#include <Nephilim/IpAddress.h>
-#include <Nephilim/Packet.h>
+#include <Nephilim/Network/UdpSocket.h>
+#include <Nephilim/Network/IpAddress.h>
+#include <Nephilim/Network/Packet.h>
 #include "SocketImpl.hpp"
 
 #include <algorithm>

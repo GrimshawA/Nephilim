@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 	\class ASpriteComponent
 	\brief Adds a sprite instance to the actor
 */
-class NEPHILIM_API ASpriteComponent : public SceneComponent, public CSprite
+class NEPHILIM_API ASpriteComponent : public ASceneComponent, public CSprite
 {
 public:
 	

@@ -2,6 +2,7 @@
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/CInput.h>
 #include <Nephilim/World/World.h>
+#include <Nephilim/World/AInputComponent.h>
 
 #include <Nephilim/Foundation/Logging.h>
 

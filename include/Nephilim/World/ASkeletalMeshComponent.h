@@ -20,7 +20,7 @@ NEPHILIM_NS_BEGIN
 	\class ASkeletalMeshComponent
 	\brief Adds a skeletal mesh to the actor
 */
-class NEPHILIM_API ASkeletalMeshComponent : public SceneComponent, public CSkeletalMesh
+class NEPHILIM_API ASkeletalMeshComponent : public ASceneComponent, public CSkeletalMesh
 {
 public:
 

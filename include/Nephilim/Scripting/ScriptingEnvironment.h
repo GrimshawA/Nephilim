@@ -2,6 +2,7 @@
 #define NephilimScriptingEnvironment_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/FeatureProvider.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Time.h>
 #include <Nephilim/Game/GameMessage.h>
@@ -20,7 +21,7 @@ class ScriptSystem;
 	scripting language and interfaces with it to give scripting support 
 	to the game.
 */
-class NEPHILIM_API ScriptingEnvironment
+class NEPHILIM_API ScriptingEnvironment : public FeatureProvider
 {
 public:
 

@@ -83,7 +83,7 @@ void GameCore::loadPlugins()
 							 if (audioEnvironment)
 							 {
 								 Log("Got the audio environment, Registered.");
-								 audioEnvironments.push_back(audioEnvironment);
+								 gameAudio.audioEnvironments.push_back(audioEnvironment);
 							 }
 						 }
 					}
@@ -108,6 +108,15 @@ World* GameCore::createWorld(const String& name)
 	return world;
 }
 
+/// Render a given world
+void GameCore::renderWorld(World* world)
+{
+	if (world->_renderSystem)
+	{
+		world->_renderSystem->render();
+	}
+}
+
 /// Finds a registered scripting environment or returns nullptr
 ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
 {
@@ -124,7 +133,7 @@ ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
 /// Finds a registered audio environment to play sounds with or returns nullptr
 AudioEnvironment* GameCore::getAudioEnvironment(const String& name)
 {
-	for (auto s : audioEnvironments)
+	for (auto s : gameAudio.audioEnvironments)
 	{
 		if (s->name == name)
 		{

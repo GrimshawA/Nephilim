@@ -2,6 +2,7 @@
 #define NephilimPlugin_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/FeatureProvider.h>
 #include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
@@ -13,6 +14,9 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API PluginLoader
 {
 public:
+
+	/// The feature this plugin implements
+	FeatureProvider* mInstanceProvider = nullptr;
 
 	void* mHandle = nullptr;
 
@@ -26,6 +30,10 @@ public:
 
 	/// Ensure destruction of the plugin instance
 	~PluginLoader();
+
+	/// Get the feature provided by this plugin
+	/// Returns nullptr if the plugin failed to load correctly
+	FeatureProvider* instance();
 
 	/// Check if this is a live instance of the plugin
 	bool isLoaded();

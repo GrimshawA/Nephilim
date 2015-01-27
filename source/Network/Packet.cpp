@@ -1,4 +1,4 @@
-#include <Nephilim/Foundation/Packet.h>
+#include <Nephilim/Network/Packet.h>
 #include "../Network/SocketImpl.hpp"
 
 #include <iostream>

@@ -29,13 +29,13 @@ BBox Actor::getActorBounds()
 }
 
 /// Get the root component
-SceneComponent* Actor::getRootComponent()
+ASceneComponent* Actor::getRootComponent()
 {
 	return root;
 }
 
 /// Set a new root component to this hierarchy
-void Actor::setRootComponent(SceneComponent* component)
+void Actor::setRootComponent(ASceneComponent* component)
 {
 	root = component;
 }

@@ -28,6 +28,7 @@ class GraphicsDevice;
 class GameContent;
 class PhysicsSystem;
 class AudioSystem;
+class NetworkSystem;
 
 /**
 	\class World
@@ -42,6 +43,12 @@ public:
 
 	/// Currently assigned viewports, usually there is only one except for split screen cases
 	std::vector<WorldViewport> _viewports;
+
+	/// Currently bound RenderSystem, used to push frames
+	RenderSystem* _renderSystem = nullptr;
+
+	/// Currently bound NetworkSystem, used to synchronize worlds and provide online gameplay
+	NetworkSystem* _networkSystem = nullptr;
 
 	/// Name of this world
 	String name;
@@ -79,6 +86,9 @@ public:
 public:
 	/// Just prepare the world
 	World();
+
+	/// Step the world state forward
+	void update(const Time& deltaTime);
 
 	/// Set the player controller for this world if applicable (clients only)
 	/// The World _owns_ the object and destroys it when releasing

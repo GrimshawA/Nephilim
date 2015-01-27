@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/FeatureProvider.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -20,7 +21,7 @@ NEPHILIM_NS_BEGIN
 	By dragging a audio plugin DLL to the Plugins directory, we can easily
 	have audio support in our game. 
 */
-class NEPHILIM_API AudioEnvironment
+class NEPHILIM_API AudioEnvironment : public FeatureProvider
 {
 public:
 

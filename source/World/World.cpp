@@ -3,6 +3,7 @@
 
 #include <Nephilim/World/PhysicsSystem.h>
 #include <Nephilim/World/AudioSystem.h>
+#include <Nephilim/World/NetworkSystem.h>
 
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/CStaticMesh.h>
@@ -37,6 +38,19 @@ World::World()
 
 	WorldViewport mainViewport;
 	_viewports.push_back(mainViewport);
+
+	_networkSystem = new NetworkSystem();
+	mRegisteredSystems.push_back(_networkSystem);
+
+}
+
+/// Step the world state forward
+void World::update(const Time& deltaTime)
+{
+	for (std::size_t i = 0; i < mRegisteredSystems.size(); ++i)
+	{
+		mRegisteredSystems[i]->update(deltaTime);
+	}
 }
 
 /// Set the player controller for this world if applicable (clients only)

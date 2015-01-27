@@ -1,5 +1,5 @@
-#include <Nephilim/TcpListener.h>
-#include <Nephilim/TcpSocket.h>
+#include <Nephilim/Network/TcpListener.h>
+#include <Nephilim/Network/TcpSocket.h>
 #include "SocketImpl.hpp"
 
 NEPHILIM_NS_BEGIN

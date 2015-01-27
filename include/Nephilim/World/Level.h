@@ -5,10 +5,12 @@
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 
+#include <Nephilim/World/ComponentWarehouse.h>
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/ASpriteComponent.h>
 
 #include <vector>
+#include <typeindex>
 
 NEPHILIM_NS_BEGIN
 
@@ -68,14 +70,26 @@ public:
 	/// Landscape array of this level
 	std::vector<Landscape*> landscapes;
 
+	/// List of all spawned actors in this level
+	std::vector<Actor*>     actors;
+
 public: // TEMP STUFF; FOR PROTOTYPING World MODULE
 
-	std::vector<ASpriteComponent> sprites;
+	ComponentWarehouse componentWarehouse;
 
 public:
+
 	/// Default construction of a level object
 	Level();
 
+	/// Ensure all stuff goes down when the level is destroyed
+	~Level();
+
+	/// Write this level to a binary file
+	bool write(const String& filename);
+
+	/// Read data from a binary file into this Level
+	bool read(const String& filename);
 };
 
 NEPHILIM_NS_END

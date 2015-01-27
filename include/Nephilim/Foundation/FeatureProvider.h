@@ -9,7 +9,7 @@
 NEPHILIM_NS_BEGIN
 
 /**
-	\class Provider
+	\class FeatureProvider
 	\brief Interface for implementing different services to the engine
 
 	Basically, providers are self-contained services that enable a feature in the engine.
@@ -24,7 +24,7 @@ NEPHILIM_NS_BEGIN
 	This helps provide a base class for every feature implementation, so whether the plugin implements a physics system,
 	a rendering library, a networking solution or whatever, we always know it generates a Provider.
 */
-class NEPHILIM_API Provider
+class NEPHILIM_API FeatureProvider
 {
 public:
 

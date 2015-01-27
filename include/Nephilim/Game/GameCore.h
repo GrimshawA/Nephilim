@@ -2,12 +2,13 @@
 #define Nephillim_GameCore_h
 
 #include <Nephilim/Platform.h>
+
 #include <Nephilim/Foundation/VirtualFileSystem.h>
 #include <Nephilim/Foundation/Clock.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Foundation/StringList.h>
+#include <Nephilim/Foundation/Localization.h>
 
 #include <Nephilim/Game/GameContent.h>
 #include <Nephilim/Game/GameStateMachine.h>
@@ -15,9 +16,11 @@
 #include <Nephilim/Game/BaseSceneManager.h>
 #include <Nephilim/Game/GameInput.h>
 #include <Nephilim/Game/GameServer.h>
+#include <Nephilim/Game/GameAudio.h> 
+#include <Nephilim/Game/GameNetwork.h> 
 
+#include <Nephilim/Graphics/GraphicsDevice.h>
 
-#include <Nephilim/Foundation/Localization.h>
 #include <Nephilim/UI/UIManager.h>
 
 #include <Nephilim/World/World.h>
@@ -55,8 +58,11 @@ public:
 	/// List of currently setup scripting solutions
 	std::vector<ScriptingEnvironment*> scriptingEnvironments;
 
-	/// List of currently setup audio solutions
-	std::vector<AudioEnvironment*> audioEnvironments;
+	/// Hub for dealing with audio on this game
+	GameAudio gameAudio;
+
+	/// Hub for dealing with networking on this game
+	GameNetwork gameNetwork;
 
 	/// The game instance can have N parallel realms
 	std::vector<World*> gameWorlds;
@@ -99,6 +105,9 @@ public:
 	/// Get the main world of this game
 	/// If there are no spawned worlds, one will be created, otherwise the world 0 is always the main one
 	World* getWorld();
+
+	/// Render a given world
+	void renderWorld(World* world);
 
 	/// Finds a registered scripting environment or returns nullptr
 	ScriptingEnvironment* getScriptingEnvironment(const String& name);

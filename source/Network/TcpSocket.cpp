@@ -1,6 +1,6 @@
-#include <Nephilim/TcpSocket.h>
-#include <Nephilim/IpAddress.h>
-#include <Nephilim/Packet.h>
+#include <Nephilim/Network/TcpSocket.h>
+#include <Nephilim/Network/IpAddress.h>
+#include <Nephilim/Network/Packet.h>
 #include "SocketImpl.hpp"
 
 #include <algorithm>
@@ -148,8 +148,8 @@ Socket::Status TcpSocket::connect(const IpAddress& remoteAddress, unsigned short
 
             // Setup the timeout
             timeval time;
-            time.tv_sec  = static_cast<long>(timeout.asMicroseconds() / 1000000);
-            time.tv_usec = static_cast<long>(timeout.asMicroseconds() % 1000000);
+            time.tv_sec  = static_cast<long>(timeout.microseconds() / 1000000);
+            time.tv_usec = static_cast<long>(timeout.microseconds() % 1000000);
 
             // Wait for something to write on our socket (which means that the connection request has returned)
             if (select(static_cast<int>(getHandle() + 1), NULL, &selector, NULL, &time) > 0)

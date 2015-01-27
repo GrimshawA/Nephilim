@@ -22,7 +22,7 @@ PluginLoader::PluginLoader(const String& filename)
 	}
 	else
 	{
-		Log("Plugin: load successful (%s)", filename.c_str());	
+		Log("Plugin: load successful (%s)", filename.c_str());
 		mHandle = hGetProcIDDLL;
 	}
 #endif
@@ -37,6 +37,13 @@ PluginLoader::~PluginLoader()
 		FreeLibrary(static_cast<HMODULE>(mHandle));
 		#endif
 	}
+}
+
+/// Get the feature provided by this plugin
+/// Returns nullptr if the plugin failed to load correctly
+FeatureProvider* PluginLoader::instance()
+{
+	return mInstanceProvider;
 }
 
 /// Shorthand to check if its a loaded instance
