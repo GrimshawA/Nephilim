@@ -89,8 +89,6 @@ public:
 
 	/// Update the continuous input detection
 	void update(const Time& time);
-
-
 };
 
 NEPHILIM_NS_END

@@ -26,6 +26,7 @@ NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
 class GameContent;
+class GameCore;
 class PhysicsSystem;
 class AudioSystem;
 class NetworkSystem;
@@ -37,6 +38,9 @@ class NetworkSystem;
 class NEPHILIM_API World
 {
 public:
+
+	/// Game that owns this world
+	GameCore* _game = nullptr;
 
 	/// The player controller bound to this world at the moment
 	std::unique_ptr<PlayerController> _playerController = nullptr;

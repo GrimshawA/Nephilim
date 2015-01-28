@@ -104,6 +104,7 @@ World* GameCore::createWorld(const String& name)
 	// Init this world
 	world->graphicsDevice = getRenderer();
 	world->contentManager = &contentManager;
+	world->_game = this;
 
 	return world;
 }
@@ -331,6 +332,8 @@ void GameCore::PrimaryCreate()
 /// Internal update handling
 void GameCore::PrimaryUpdate(Time time)
 {
+	gameInput.update(time);
+
 	onUpdate(time);
 
 	// Now let's keep our scripts fresh
@@ -344,7 +347,7 @@ void GameCore::PrimaryUpdate(Time time)
 void GameCore::PrimaryEventHandling(const Event& event)
 {
 
-	gameInput.update(event);
+	gameInput.updateWithEvent(event);
 
 	stateManager.pushEvent(event);
 

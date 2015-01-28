@@ -1,5 +1,8 @@
 #include <Nephilim/Game/GameInput.h>
 
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/ConfigFile.h>
+
 NEPHILIM_NS_BEGIN
 
 /// Construct to default values
@@ -7,6 +10,27 @@ GameInput::GameInput()
 {
 
 }
+
+void GameInput::loadKeyBindings(const String& filename)
+{
+	ConfigFile file;
+	file.loadFromFile(filename);
+
+	ConfigFile::ObjectData* p1 = file.getObject("P1_Joystick");
+	if (p1)
+	{
+		for (std::size_t i = 0; i < p1->members.size(); ++i)
+		{
+			Log("Action Binding: %s = %s", p1->members[i].c_str(), p1->values[i].c_str());
+
+			GameInputMapping mapping;
+			mapping.b = p1->values[i].toInt();
+			mapping.name = p1->members[i];
+			mappings[p1->members[i]] = mapping;
+		}
+	}
+}
+
 
 bool GameInput::getKey(Keyboard::Key key)
 {
@@ -35,12 +59,23 @@ bool GameInput::getMouseButton(Mouse::Button button)
 	return m_mouseButtons[button];
 }
 
+void GameInput::update(const Time& deltaTime)
+{
+	for (auto& mapping : mappings)
+	{
+		if (getJoystickButton(mapping.second.b))
+		{
+			testEmit(mapping.first);
+		}
+	}
+}
+
 Vec2i GameInput::getMousePosition()
 {
 	return m_mousePosition;
 }
 
-void GameInput::update(const Event& event)
+void GameInput::updateWithEvent(const Event& event)
 {
 	switch (event.type)
 	{
@@ -57,6 +92,7 @@ void GameInput::update(const Event& event)
 	case Event::JoystickButtonPressed:
 	{
 										 m_joystickKeys[event.joystickButton.button] = true;
+										
 	}break;
 
 	case Event::JoystickButtonReleased:
@@ -64,6 +100,12 @@ void GameInput::update(const Event& event)
 										  m_joystickKeys[event.joystickButton.button] = false;
 
 	}break;
+
+	case Event::JoystickMoved:
+	{
+		m_joystickAxisState[event.joystickMove.joystickId][event.joystickMove.axis] = event.joystickMove.position;
+	}
+	break;
 
 	case Event::MouseButtonPressed:
 	{
@@ -81,6 +123,12 @@ void GameInput::update(const Event& event)
 							  m_mousePosition = Vec2i(event.mouseMove.x, event.mouseMove.y);
 	}break;
 	}
+}
+
+/// Check the current value of a joystick axis
+float GameInput::getJoystickAxis(int joystick, int axis)
+{
+	return m_joystickAxisState[joystick][axis]; 
 }
 
 NEPHILIM_NS_END

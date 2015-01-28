@@ -44,7 +44,7 @@ void UIWindow::draw(GraphicsDevice* graphicsDevice)
 	}
 	else
 	{
-		graphicsDevice->setProjectionMatrix(mat4::ortho(0.f, 900.f, 0.f, 500.f, 1.f, 1000.f));
+		graphicsDevice->setProjectionMatrix(mat4::ortho(0.f, 1024.f, 768.f, 0.f, 1.f, 1000.f));
 		graphicsDevice->setViewMatrix(mat4::identity);
 	}
 
