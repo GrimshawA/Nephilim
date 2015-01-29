@@ -1,38 +1,39 @@
-#include <Nephilim/Graphics/Framebuffer.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLFramebuffer.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
+
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Graphics/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 
 /// Constructs a uninitialized framebuffer
-Framebuffer::Framebuffer()
-: RenderTarget() 
-, m_id(0)
+GLFramebuffer::GLFramebuffer()
+//: RenderTarget() 
+: m_id(0)
 {
 
 }
 
 /// Releases the framebuffer
-Framebuffer::~Framebuffer()
+GLFramebuffer::~GLFramebuffer()
 {
 
 }
 
 /// Get the size of the target
-Vec2i Framebuffer::getSize() const
+Vec2i GLFramebuffer::getSize() const
 {
 	return m_size;
 }
 
 /// Bind the framebuffer as the current one
-void Framebuffer::activate()
+void GLFramebuffer::activate()
 {
 	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, m_id);
 }
 
 /// Attaches a texture to the color attachment 0
-void Framebuffer::attachTexture(const Texture& texture)
+void GLFramebuffer::attachTexture(const Texture& texture)
 {
 	if(m_id == 0)
 	{
@@ -50,7 +51,7 @@ void Framebuffer::attachTexture(const Texture& texture)
 }
 
 /// Attempts to create the framebuffer
-bool Framebuffer::create()
+bool GLFramebuffer::create()
 {
 	bool success = false;
 
@@ -70,7 +71,7 @@ bool Framebuffer::create()
 }
 
 /// Returns the internal id of the currently in-use program by OpenGL
-unsigned int Framebuffer::getCurrentActiveFramebuffer()
+unsigned int GLFramebuffer::getCurrentActiveFramebuffer()
 {
 	GLint id = 0;
 //	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_EXT, &id);

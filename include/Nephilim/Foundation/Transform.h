@@ -1,42 +1,16 @@
-////////////////////////////////////////////////////////////
-//
-// SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2012 Laurent Gomila (laurent.gom@gmail.com)
-//
-// This software is provided 'as-is', without any express or implied warranty.
-// In no event will the authors be held liable for any damages arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it freely,
-// subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented;
-//    you must not claim that you wrote the original software.
-//    If you use this software in a product, an acknowledgment
-//    in the product documentation would be appreciated but is not required.
-//
-// 2. Altered source versions must be plainly marked as such,
-//    and must not be misrepresented as being the original software.
-//
-// 3. This notice may not be removed or altered from any source distribution.
-//
-////////////////////////////////////////////////////////////
+#ifndef NephilimFoundationTransform_h__
+#define NephilimFoundationTransform_h__
 
-#ifndef PARABOLA_TRANSFORM_H
-#define PARABOLA_TRANSFORM_H
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
-////////////////////////////////////////////////////////////
-/// \brief Define a 3x3 transform matrix
-///
-////////////////////////////////////////////////////////////
+
+/**
+	\class Transform
+	\brief Mathematical construct for a 3D transformation
+*/
 class NEPHILIM_API Transform
 {
 public :
@@ -402,47 +376,4 @@ NEPHILIM_API Transform& operator *=(Transform& left, const Transform& right);
 NEPHILIM_API Vec2f operator *(const Transform& left, const Vec2f& right);
 
 NEPHILIM_NS_END
-
-
-#endif // SFML_TRANSFORM_HPP
-
-
-////////////////////////////////////////////////////////////
-/// \class sf::Transform
-/// \ingroup graphics
-///
-/// A sf::Transform specifies how to translate, rotate, scale,
-/// shear, project, whatever things. In mathematical terms, it defines
-/// how to transform a coordinate system into another.
-///
-/// For example, if you apply a rotation transform to a sprite, the
-/// result will be a rotated sprite. And anything that is transformed
-/// by this rotation transform will be rotated the same way, according
-/// to its initial position.
-///
-/// Transforms are typically used for drawing. But they can also be
-/// used for any computation that requires to transform points between
-/// the local and global coordinate systems of an entity (like collision
-/// detection).
-///
-/// Example:
-/// \code
-/// // define a translation transform
-/// sf::Transform translation;
-/// translation.translate(20, 50);
-///
-/// // define a rotation transform
-/// sf::Transform rotation;
-/// rotation.rotate(45);
-///
-/// // combine them
-/// sf::Transform transform = translation * rotation;
-///
-/// // use the result to transform stuff...
-/// sf::Vec2f point = transform.transformPoint(10, 20);
-/// sf::BoundingBox rect = transform.transformRect(sf::BoundingBox(0, 0, 10, 100));
-/// \endcode
-///
-/// \see sf::Transformable, sf::RenderStates
-///
-////////////////////////////////////////////////////////////
+#endif // NephilimFoundationTransform_h__

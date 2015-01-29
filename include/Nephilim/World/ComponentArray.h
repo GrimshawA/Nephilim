@@ -23,7 +23,7 @@ public:
 	virtual Component* getComponent(const CHandle& handle);
 
 	/// Get the number of components being used (not the amount allocated by the pool)
-	virtual std::size_t getInstanceCount();
+	virtual std::size_t size();
 
 	virtual Component* getInstance(std::size_t index);
 
@@ -76,7 +76,7 @@ Component* ComponentArray<T>::getComponent(const CHandle& handle)
 }
 
 template<typename T>
-std::size_t ComponentArray<T>::getInstanceCount()
+std::size_t ComponentArray<T>::size()
 {
 	return mComponents.size();
 }

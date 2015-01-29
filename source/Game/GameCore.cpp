@@ -1,7 +1,7 @@
 #include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Plugins/PluginSDK.h>
 #include <Nephilim/Game/Engine.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Foundation/FileSystem.h>
 #include <Nephilim/Foundation/Logging.h>

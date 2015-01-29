@@ -1,7 +1,7 @@
-#include <Nephilim/Graphics/GLTextureCube.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLTextureCube.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

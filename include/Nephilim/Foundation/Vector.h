@@ -236,6 +236,8 @@ public:
 	/// Sets all values of the 4D vector as x
 	void setAll(T x);
 
+	const T* get();
+
 	/// Get the first three components of the vector
 	Vec3<T> xyz();
 

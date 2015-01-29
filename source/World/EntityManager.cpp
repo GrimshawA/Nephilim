@@ -15,4 +15,13 @@ void EntityManager::destroy(Entity entity)
 	}
 }
 
+/// Get a new entity
+Entity EntityManager::createEntity()
+{
+	Entity e;
+	e = nextAssignment;
+	nextAssignment.id++;
+	return e;
+}
+
 NEPHILIM_NS_END

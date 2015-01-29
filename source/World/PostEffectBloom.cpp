@@ -1,8 +1,10 @@
 #include <Nephilim/World/PostEffectBloom.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
+#include <Nephilim/Graphics/Shader.h>
+
 #include <Nephilim/Foundation/Logging.h>
 
 #include <Nephilim/Foundation/File.h>
@@ -79,7 +81,9 @@ void PostEffectBloom::apply(GraphicsDevice* renderer, Texture& renderTexture)
 void PostEffectBloom::brightnessPass(GraphicsDevice* mRenderer)
 {
 	// Trigger the right shader
-	mRenderer->setShader(mBrightnessShader);
+	Shader s;
+	s.shaderImpl = &mBrightnessShader;
+	mRenderer->setShader(s);
 
 	mBrightnessFramebuffer.activate(); // activate drawing to the brightness texture
 	Log("Rendering the brightness pass with shader %d", mBrightnessShader.getIdentifier());

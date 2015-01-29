@@ -34,6 +34,9 @@ public:
 
 	/// Destroy this entity
 	void destroy(Entity entity);
+
+	/// Get a new entity
+	Entity createEntity();
 };
 
 NEPHILIM_NS_END

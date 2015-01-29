@@ -6,14 +6,16 @@
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Color.h>
+#include <Nephilim/Foundation/Matrix.h>
+
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
 #include <Nephilim/Graphics/View.h>
-#include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/RenderModes.h>
 #include <Nephilim/Graphics/RenderState.h>
-#include <Nephilim/Foundation/Matrix.h>
-#include <Nephilim/Graphics/GLTexture.h>
+
+#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
 
 #include <map>
 #include <stack>
@@ -25,10 +27,10 @@ class Window;
 class Image;
 class VertexArray;
 class IndexArray;
+class Shader;
 
 /**
-	\ingroup Graphics
-	\class Renderer
+	\class GraphicsDevice
 	\brief A raw graphics renderer providing a portable way to render primitives
 
 	Drawing Vertex Array based drawable with custom shaders:
@@ -74,6 +76,14 @@ public:
 
 	/// Draw a debug line with the given color - slow
 	void drawDebugLine(Vec2f begin, Vec2f end, Color color);
+
+	/// This function will create a new shader program from the raw code
+	/// It runs a preprocessing step to identify what portions belong to what shader
+	virtual GDI_ShaderProgram* createShader(const String& code)
+	{
+		return nullptr;
+	}
+
 
 	/// Push client-side geometry to the GPU
 	/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
@@ -228,13 +238,13 @@ protected:
 	mat4                  m_projection;      ///< Current projection matrix
 	mat4                  m_view;            ///< Current view matrix
 	mat4                  m_model;           ///< Current model matrix
-	Shader*               m_activeShader;    ///< Current active shader
+	GLShader*             m_activeShader;    ///< Current active shader
 	bool		          m_shaderUsageHint; ///< Hint for the default shader usage
 	Texture		          m_defaultTexture;  ///< Full white 1x1 default texture
 	std::stack<FloatRect> m_scissorStack;    ///< Stack of scissor test regions
 
 	/// Conversion table of Render::Primitive::Type to GLenum
-	std::map<Render::Primitive::Type, int> m_primitiveTable;	
+	std::map<Render::Primitive::Type, int> m_primitiveTable;
 };
 
 NEPHILIM_NS_END

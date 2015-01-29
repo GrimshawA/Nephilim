@@ -1,7 +1,7 @@
 #include <Nephilim/World/CSkeletalMesh.h>
 
 #include <Nephilim/Graphics/Geometry.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #include <lolimporterx/SKNLoader.h>
 #include <lolimporterx/SKLLoader.h>
@@ -12,8 +12,8 @@ NEPHILIM_NS_BEGIN
 
 CSkeletalMesh::CSkeletalMesh()
 {	
-	rigShader.loadShaderFromFile(Shader::VertexUnit, String("Shaders\\rigged.vs"));
-	rigShader.loadShaderFromFile(Shader::FragmentUnit, String("Shaders\\rigged.fs"));
+	rigShader.loadShaderFromFile(GLShader::VertexUnit, String("Shaders\\rigged.vs"));
+	rigShader.loadShaderFromFile(GLShader::FragmentUnit, String("Shaders\\rigged.fs"));
 	rigShader.addAttributeLocation(0, "vertex");
 	rigShader.addAttributeLocation(1, "color");
 	rigShader.addAttributeLocation(2, "texCoord");

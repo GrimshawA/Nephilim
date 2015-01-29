@@ -29,10 +29,11 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <Nephilim/Platform.h>
-#include "Transform.h"
+#include <Nephilim/Foundation/Transform.h>
 
 
 NEPHILIM_NS_BEGIN
+
 ////////////////////////////////////////////////////////////
 /// \brief Decomposed transform defined by a position, a rotation and a scale
 ///

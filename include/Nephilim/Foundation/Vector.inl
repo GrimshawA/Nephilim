@@ -483,6 +483,12 @@ void Vec4<T>::setAll(T x){
 };
 
 template<class T>
+const T* Vec4<T>::get()
+{
+	return static_cast<T*>(&x);
+}
+
+template<class T>
 template<class N>
 Vec4<N> Vec4<T>::cast()
 {

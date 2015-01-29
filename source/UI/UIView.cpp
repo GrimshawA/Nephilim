@@ -6,7 +6,7 @@
 #include <Nephilim/UI/UIComponentText.h>
 
 #include <Nephilim/Graphics/VertexArray.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Foundation/StringList.h>

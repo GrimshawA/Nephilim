@@ -23,6 +23,15 @@ class Entity
 {
 public:
 	uint32_t id;
+
+	/// A constant zero entity, representing invalidity
+	static Entity Null;
+
+public:
+
+	Entity();
+
+	Entity(uint32_t _id);
 };
 
 // Utilities

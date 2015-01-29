@@ -76,7 +76,7 @@ void InputSystem::emitAction(const String& name, CInput::ActionModes mode)
 	ComponentManager* inputManager = mWorld->getComponentManager<CInput>();
 
 	// ECS
-	for (std::size_t i = 0; i < inputManager->getInstanceCount(); ++i)
+	for (std::size_t i = 0; i < inputManager->size(); ++i)
 	{
 		CInput* inputComponent = (CInput*)inputManager->getInstance(i);
 		inputComponent->fireAction(name);

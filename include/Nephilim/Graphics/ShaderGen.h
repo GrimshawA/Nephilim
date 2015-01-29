@@ -5,7 +5,8 @@
 #include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
-class Shader;
+
+class GLShader;
 
 /**
 	\ingroup Graphics
@@ -17,7 +18,7 @@ class NEPHILIM_API ShaderGen
 public:
 
 	/// Prepares the default shader
-	static bool	prepareDefault(Shader& shader);
+	static bool	prepareDefault(GLShader& shader);
 
 	/// Returns the source code for the default vertex shader
 	static String getDefaultVertexShader();

@@ -1,5 +1,5 @@
-#ifndef CGL_h__
-#define CGL_h__
+#ifndef NephilimGLHelpers_h__
+#define NephilimGLHelpers_h__
 
 #include <Nephilim/Platform.h>
 
@@ -52,4 +52,4 @@ void cglPrepareExtensions();
 #include <OpenGLES/ES2/gl.h>
 #endif
 
-#endif // CGL_h__
+#endif // NephilimGLHelpers_h__

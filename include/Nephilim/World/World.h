@@ -83,9 +83,9 @@ public:
 	/// Array of levels in this world
 	std::vector<Level*> levels;
 
-	/// Current level we have loaded
+	/// On construction, the persistent level is instanced and ready to go
 	/// Unless we are on the multi-level streaming mode, there is only one active level ever
-	Level* _currentLevel;
+	Level* mPersistentLevel;
 
 public:
 	/// Just prepare the world

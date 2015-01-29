@@ -2,12 +2,12 @@
 #define RenderTexture_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Graphics/Framebuffer.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLFramebuffer.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API RenderTexture : public Framebuffer
+class NEPHILIM_API RenderTexture : public GLFramebuffer
 {
 public:
 

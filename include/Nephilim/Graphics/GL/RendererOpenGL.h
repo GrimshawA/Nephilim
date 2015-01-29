@@ -3,19 +3,29 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
 
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Graphics
 	\class RendererOpenGL
 	\brief Renderer specialization for desktop platform's OpenGL
 */
 class NEPHILIM_API RendererOpenGL : public GraphicsDevice
 {
 public:
+
+	/// All functional shader programs are kept here for safe destruction
+	std::vector<GDI_ShaderProgram*> _shaderPrograms;
+
+public:
+
 	/// Initialize OpenGL renderer
 	RendererOpenGL();
+
+	/// This function will create a new shader program from the raw code
+	/// It runs a preprocessing step to identify what portions belong to what shader
+	virtual GDI_ShaderProgram* createShader(const String& code);
 
 	/// Push client-side geometry to the GPU
 	/// This is usually slower than using a VBO because the data is uploaded to the GPU every time
@@ -41,7 +51,7 @@ public:
 	virtual void setModelMatrix(const mat4& model);
 
 private:
-	Shader m_defaultShader;
+	GLShader m_defaultShader;
 };
 
 NEPHILIM_NS_END

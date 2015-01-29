@@ -4,7 +4,7 @@
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/DataStream.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #include <cstring>
 

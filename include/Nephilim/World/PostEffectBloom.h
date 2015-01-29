@@ -2,9 +2,10 @@
 #define NephilimRazerPostEffectBloom_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Graphics/Shader.h>
-#include <Nephilim/Graphics/GLTexture.h>
-#include <Nephilim/Graphics/Framebuffer.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLFramebuffer.h>
+
 #include <Nephilim/World/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
@@ -23,9 +24,9 @@ public:
 	Texture	mFirstPassTextures[2];
 	Texture	mSecondPassTextures[2];
 
-	Framebuffer mBrightnessFramebuffer;
+	GLFramebuffer mBrightnessFramebuffer;
 
-	Shader mBrightnessShader;
+	GLShader mBrightnessShader;
 };
 
 

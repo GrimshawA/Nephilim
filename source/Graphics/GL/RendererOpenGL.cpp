@@ -1,10 +1,16 @@
 #include <Nephilim/Platform.h>
+
 #ifdef NEPHILIM_DESKTOP
-#include <Nephilim/Graphics/GL3/RendererOpenGL.h>
+#include <Nephilim/Graphics/GL/RendererOpenGL.h>
 #include <Nephilim/Graphics/View.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
+#include <Nephilim/Graphics/Shader.h>
+
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Math.h>
-#include <Nephilim/Graphics/CGL.h>
 #include <Nephilim/Foundation/Matrix.h>
+
+#include <iostream>
 
 NEPHILIM_NS_BEGIN
 
@@ -42,14 +48,78 @@ RendererOpenGL::RendererOpenGL()
 	m_type = OpenGL;
 	m_name = "OpenGL";
 
-	m_defaultShader.loadShader(Shader::VertexUnit, gVertexSource);
-	m_defaultShader.loadShader(Shader::FragmentUnit, gFragmentSource);
+	m_defaultShader.loadShader(GLShader::VertexUnit, gVertexSource);
+	m_defaultShader.loadShader(GLShader::FragmentUnit, gFragmentSource);
 	m_defaultShader.addAttributeLocation(0, "vertex");
 	m_defaultShader.addAttributeLocation(1, "color");
 	m_defaultShader.addAttributeLocation(2, "texCoord");
 	m_defaultShader.create();
 	m_defaultShader.bind();
 };
+
+/// This function will create a new shader program from the raw code
+/// It runs a preprocessing step to identify what portions belong to what shader
+GDI_ShaderProgram* RendererOpenGL::createShader(const String& code)
+{
+	GLShader* shaderProgram = new GLShader;
+
+	String _vertex;
+	String _frag;
+
+	int current_type = 0;
+	std::size_t i = 0;
+	while (i < code.size())
+	{
+		if (code[i] == '#' && code.substr(i + 1, 6) == "VERTEX")
+		{
+			current_type = 1;
+			i += 7;
+		}
+		else if (code[i] == '#' && code.substr(i + 1, 5) == "PIXEL")
+		{
+			current_type = 2;
+			i += 6;
+		}
+		else if (current_type == 0)
+		{
+			++i;
+		}
+		else
+		{
+			// add the char to the sources
+			if (current_type == 1)
+			{
+				_vertex += code[i++];
+			}
+			else if (current_type == 2)
+			{
+				_frag += code[i++];
+			}
+		}
+	}
+
+
+	shaderProgram->loadShader(GLShader::VertexUnit, _vertex);
+	shaderProgram->loadShader(GLShader::FragmentUnit, _frag);
+	shaderProgram->addAttributeLocation(0, "vertex");
+	shaderProgram->addAttributeLocation(1, "color");
+	shaderProgram->addAttributeLocation(2, "texCoord");
+	shaderProgram->addAttributeLocation(3, "normal");
+	if (shaderProgram->create())
+	{
+		Log("SUCCESS CREATESHADER");
+	}
+
+	std::cout << "Vertex " << std::endl
+		<< _vertex << std::endl;
+
+	std::cout << "Pixel " << std::endl
+		<< _frag << std::endl;
+
+	_shaderPrograms.push_back(shaderProgram);
+
+	return shaderProgram;
+}
 
 /// Push client-side geometry to the GPU
 /// This is usually slower than using a VBO because the data is uploaded to the GPU every time
@@ -116,8 +186,8 @@ void RendererOpenGL::setDefaultShader()
 /// Activates the shader for the next drawing calls
 void RendererOpenGL::setShader(Shader& shader)
 {
-	m_activeShader = &shader;
-	shader.bind();
+	m_activeShader = (GLShader*)shader.shaderImpl;
+	static_cast<GLShader*>(shader.shaderImpl)->bind();
 }
 
 void RendererOpenGL::setProjectionMatrix(const mat4& projection)

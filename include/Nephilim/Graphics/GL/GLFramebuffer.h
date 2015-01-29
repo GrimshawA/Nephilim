@@ -1,13 +1,15 @@
-#ifndef Framebuffer_h__
-#define Framebuffer_h__
+#ifndef NephilimGLFramebuffer_h__
+#define NephilimGLFramebuffer_h__
 
 #include <Nephilim/Platform.h>
-#include "RenderTarget.h"
+#include <Nephilim/Graphics/GDI/GDI_Framebuffer.h>
+#include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
+
 class Texture;
+
 /**
-	\ingroup Graphics
 	\class Framebuffer
 	\brief Manages an OpenGL Framebuffer Object (FBO)
 
@@ -23,14 +25,14 @@ class Texture;
 	Please notice that mobile implementations of OpenGL do not allow to output to more than one attachment, so please make
 	sure you know what you're doing if you attempt to go around that for other ends.
 */
-class NEPHILIM_API Framebuffer : public RenderTarget
+class NEPHILIM_API GLFramebuffer : public GDI_Framebuffer
 {
 public:
 	/// Constructs a uninitialized framebuffer
-	Framebuffer();
+	GLFramebuffer();
 
 	/// Releases the framebuffer
-	~Framebuffer();
+	~GLFramebuffer();
 
 	/// Get the size of the target
 	Vec2i getSize() const;
@@ -53,4 +55,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // Framebuffer_h__
+#endif // NephilimGLFramebuffer_h__

@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/VertexBuffer.h>
 #include <Nephilim/Graphics/VertexArray.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 
 NEPHILIM_NS_BEGIN

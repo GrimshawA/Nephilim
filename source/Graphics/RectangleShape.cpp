@@ -1,8 +1,8 @@
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #include <cmath>
 

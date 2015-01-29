@@ -1,11 +1,11 @@
 #include <Nephilim/Graphics/Window.h>
-#include <Nephilim/Graphics/GL3/RendererOpenGL.h>
-#include <Nephilim/Graphics/GLES/RendererGLES.h>
-#include <Nephilim/Graphics/GLES2/RendererGLES2.h>
+#include <Nephilim/Graphics/GL/RendererOpenGL.h>
+#include <Nephilim/Graphics/GL/RendererGLES.h>
+#include <Nephilim/Graphics/GL/RendererGLES2.h>
 
 #include <Nephilim/Foundation/Logging.h>
 
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #ifdef NEPHILIM_DESKTOP
 #include <SFML/Graphics/RenderWindow.hpp>

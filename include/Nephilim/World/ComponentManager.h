@@ -52,7 +52,7 @@ public:
 	virtual Component* getComponent(const CHandle& handle) = 0;
 
 	/// Get the number of components being used (not the amount allocated by the pool)
-	virtual std::size_t getInstanceCount();
+	virtual std::size_t size() = 0;
 
 	/// Get a component from the entity
 	virtual Component* getComponentFromEntity(Entity e);

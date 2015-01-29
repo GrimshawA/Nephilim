@@ -8,85 +8,27 @@
 
 NEPHILIM_NS_BEGIN
 
+class GDI_ShaderProgram;
+
 /**
-	\ingroup Graphics
 	\class Shader
-	\brief Single shader program (abstract)
+	\brief Renderer agnostic shader program resource
 
-	Shader objects correspond to one GLSL/HLSL/Other shader program, usually located in the GPU
-	for rendering geometry.
+	A Shader object represents a program to draw geometry with.
+	It can be HLSL/GLSL or even other; the drill is to use a 
+	graphics device to activate the shader then draw geometry with it.
 
-	This class controls the lifecyle of the shader programs too. Each shader is specific to its
-	rendering API, and is destroyed when the shader goes out of scope.
-
-	Its ideal to have one shader per different material, usually also an additional one per light type.
-	Its up to the implementation to manage shader source and management, this is just a resource handler.
+	The actual platform shader implementation is defined through an interface,
+	which the Shader links to. This allows to redirect any shader object to a new
+	implementation without even reallocating space for it. Also makes possible to inherit
+	Shader for either reason to extend it, composition rocks!
 */
 class NEPHILIM_API Shader
 {
 public:
-	/// Constructs an uninitialized shader
-	/// The program identifier is initialized at 0.
-	/// This means an invalid shader, which causes, not guaranteed, that the fixed-pipeline is activated
-	Shader();
-
-	/// Safe release
-	~Shader();
-
-	/// Reverts the shader back to an unitialized state
-	void release();
-
-	/// Binds variables in the program to predefined location index
-	/// Just pass the location you want to be assigned to the variable name
-	/// Calling this function only makes sense BEFORE calling create().
-	void addAttributeLocation(unsigned int location, const String& name);
-
-	/// Creates and links the program from previously compiled unit processors
-	bool create();
-
-	enum ShaderTypes
-	{
-		VertexUnit = 0,
-		FragmentUnit = 1
-	};
-
-	/// Compiles a shader to be linked when create() is called
-	bool loadShader(ShaderTypes type, const char* source);
-
-	/// Compiles a shader to be linked when create() is called, from a source file
-	bool loadShaderFromFile(ShaderTypes type, const String& filename);
-
-	/// Binds the shader to the GPU
-	void bind() const;
-
-	/// Returns whether or not shaders can be used at the moment
-	/// The result of this function depends primarily on the machine you're running the program on
-	static bool isAvailable();
-
-	/// Returns the internal id of the currently in-use program by OpenGL
-	/// Returns 0 if none is active.
-	static unsigned int getCurrentActiveProgram();
-
-	/// Returns the string
-	static String getVersion();
-
-	void setUniformi(const String& uniform, int value);
-
-	bool setUniformMatrix(const String& uniform, const float* values);
-	bool setUniformTexture(const String& uniform, int textureUnit);
-
-	bool setUniformVec4(const String& uniform, const float* values);
-	bool setUniformVec3(const String& uniform, const float* values);
-	bool setUniformFloat(const String& uniform, float value);
-
-	void pff();
-
-	unsigned int getIdentifier();
-
-public:
-	unsigned int m_id; ///< Internal shader identifier
-	std::vector<std::pair<ShaderTypes, unsigned int> > m_shaders; ///< List of compiled shaders
-	std::vector<std::pair<unsigned int, String> > m_attribs; ///< List of pre-binded attribute locations
+	
+	/// Low-level implementation of the shader (GL; DirectX; others)
+	GDI_ShaderProgram* shaderImpl = nullptr;
 };
 
 NEPHILIM_NS_END

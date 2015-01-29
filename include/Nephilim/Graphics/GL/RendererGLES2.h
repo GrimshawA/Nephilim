@@ -3,13 +3,13 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
 
 NEPHILIM_NS_BEGIN
 
-class Shader;
+class GLShader;
 
 /**
-	\ingroup Graphics
 	\class RendererGLES2
 	\brief Renderer specialization for OpenGL ES 2.0
 */
@@ -38,7 +38,7 @@ public:
 	//void drawDebugCircle(Vec2f center, float radius, Vec2f axis, Color color);
 	void applyView(const View &view);
 
-	Shader m_defaultShader;
+	GLShader m_defaultShader;
 
 };
 

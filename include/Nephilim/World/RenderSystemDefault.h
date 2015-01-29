@@ -9,8 +9,8 @@
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
-#include <Nephilim/Graphics/Framebuffer.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLFramebuffer.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Game/GameContent.h>
 #include <Nephilim/World/PostEffect.h>
 
@@ -79,7 +79,7 @@ public:
 
 
 	Texture mRenderTexture; ///< The final scene render goes here
-	Framebuffer mFramebuffer;
+	GLFramebuffer mFramebuffer;
 
 	int mTargetWidth;
 	int mTargetHeight;

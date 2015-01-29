@@ -1,6 +1,6 @@
-#include <Nephilim/Graphics/GLES2/RendererGLES2.h>
+#include <Nephilim/Graphics/GL/RendererGLES2.h>
 #include <Nephilim/Graphics/Shader.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Window.h>
@@ -54,8 +54,8 @@ void RendererGLES2::setDefaultShader()
 void RendererGLES2::reloadDefaultShader()
 {
 	m_defaultShader.release();
-	m_defaultShader.loadShader(Shader::VertexUnit, gVertexSource);
-	m_defaultShader.loadShader(Shader::FragmentUnit, gFragmentSource);
+	m_defaultShader.loadShader(GLShader::VertexUnit, gVertexSource);
+	m_defaultShader.loadShader(GLShader::FragmentUnit, gFragmentSource);
 	m_defaultShader.addAttributeLocation(0, "vertex");
 	m_defaultShader.addAttributeLocation(1, "color");
 	m_defaultShader.addAttributeLocation(2, "texCoord");

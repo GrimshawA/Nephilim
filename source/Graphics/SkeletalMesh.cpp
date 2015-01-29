@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/SkeletalMesh.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #include <Nephilim/Foundation/File.h>

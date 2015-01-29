@@ -1,5 +1,5 @@
 #include <Nephilim/Graphics/ShaderGen.h>
-#include <Nephilim/Graphics/Shader.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
 
 static const char gVertexShader2[] =
 	"#version 330\n"
@@ -56,10 +56,10 @@ static const char gF1[] =
 NEPHILIM_NS_BEGIN
 
 /// Prepares the default shader
-bool ShaderGen::prepareDefault(Shader& shader)
+bool ShaderGen::prepareDefault(GLShader& shader)
 {
-	shader.loadShader(Shader::VertexUnit, gV1);
-	shader.loadShader(Shader::FragmentUnit, gF1);
+	shader.loadShader(GLShader::VertexUnit, gV1);
+	shader.loadShader(GLShader::FragmentUnit, gF1);
 	shader.create();
 
 	return true;

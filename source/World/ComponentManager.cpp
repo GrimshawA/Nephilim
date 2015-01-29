@@ -32,10 +32,4 @@ Entity ComponentManager::getInstanceEntity(std::size_t index)
 	return e;
 }
 
-/// Get the number of components being used (not the amount allocated by the pool)
-std::size_t ComponentManager::getInstanceCount()
-{
-	return 0;
-}
-
 NEPHILIM_NS_END

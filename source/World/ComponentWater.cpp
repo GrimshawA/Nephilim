@@ -1,7 +1,7 @@
 #include <Nephilim/World/ComponentWater.h>
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Foundation/Vector.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 

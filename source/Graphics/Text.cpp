@@ -1,9 +1,11 @@
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
+
+#include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Image.h>
+
 #include <cassert>
 
 #include <iostream>

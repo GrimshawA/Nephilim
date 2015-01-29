@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/Window.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Foundation/Image.h>
@@ -34,7 +34,9 @@ GraphicsDevice::GraphicsDevice()
 
 // -- Unimplemented API at Renderer level
 void GraphicsDevice::setDefaultShader(){}
-void GraphicsDevice::setShader(Shader& shader){}
+
+void GraphicsDevice::setShader(Shader& shader)
+{}
 
 GraphicsDevice::Type GraphicsDevice::getType()
 {

@@ -5,7 +5,7 @@
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/UI/UIComponent.h>
 #include <Nephilim/Foundation/Color.h>
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

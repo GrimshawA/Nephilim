@@ -33,7 +33,7 @@ World::World()
 //	createDefaultComponentManager<ComponentSkinnedModel>();
 
 	Level* defaultLevel = new Level();
-	_currentLevel = defaultLevel;
+	mPersistentLevel = defaultLevel;
 	levels.push_back(defaultLevel);
 
 	WorldViewport mainViewport;
@@ -65,8 +65,8 @@ void World::setPlayerController(PlayerController* playerController)
 /// This requires that the level is previously indexed into this world
 bool World::loadLevel(const String& name, bool async)
 {
-	_currentLevel = new Level();
-	_currentLevel->name = name;
+	mPersistentLevel = new Level();
+	mPersistentLevel->name = name;
 	return false;
 }
 
@@ -83,10 +83,10 @@ bool World::loadLevel(Level* level)
 void World::unloadLevels()
 {
 	// TODO; support multi level
-	if (_currentLevel)
+	if (mPersistentLevel)
 	{
-		delete _currentLevel;
-		_currentLevel = nullptr;
+		delete mPersistentLevel;
+		mPersistentLevel = nullptr;
 	}
 }
 
@@ -179,10 +179,10 @@ int World::getActorCount()
 Landscape* World::spawnLandscape()
 {
 	// Landscapes need to belong to their own levels, they are heavier map objects and need to be culled more efficiently
-	if (_currentLevel)
+	if (mPersistentLevel)
 	{
 		Landscape* land = new Landscape();
-		_currentLevel->landscapes.push_back(land);
+		mPersistentLevel->landscapes.push_back(land);
 		return land;
 	}
 

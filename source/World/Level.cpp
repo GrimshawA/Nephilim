@@ -6,6 +6,7 @@
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/CSprite.h>
+#include <Nephilim/World/CPointLight.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -50,5 +51,18 @@ bool Level::read(const String& filename)
 	else
 		return false;
 }
+
+/// Utility to quickly spawn a point light into our world
+void Level::createPointLight(Vector3D position, Vector3D lightColor)
+{
+	Entity e = entityManager.createEntity();
+
+	CPointLight& pointLight = componentWarehouse.createComponent<CPointLight>(e);
+	CTransform& transform = componentWarehouse.createComponent<CTransform>(e);
+
+	pointLight.mLightColor = lightColor;
+	transform.position = position;
+}
+
 
 NEPHILIM_NS_END

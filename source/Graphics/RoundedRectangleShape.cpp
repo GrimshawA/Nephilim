@@ -1,6 +1,6 @@
 #include <Nephilim/Graphics/RoundedRectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/Math.h>
 
 NEPHILIM_NS_BEGIN

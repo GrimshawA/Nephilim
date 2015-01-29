@@ -8,7 +8,7 @@
 
 #include <Nephilim/Game/Resource.h>
 
-#include <Nephilim/Graphics/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
 
 #include <Nephilim/Plugins/PluginLoader.h>

@@ -6,6 +6,8 @@
 #include <Nephilim/Foundation/String.h>
 
 #include <Nephilim/World/ComponentWarehouse.h>
+#include <Nephilim/World/EntityManager.h>
+
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/ASpriteComponent.h>
 
@@ -19,7 +21,7 @@ class Landscape;
 
 /**
 	\class Level
-	\brief A level is a collection of scene objects to make up gameplay
+	\brief Container for runtime information of our game level
 
 	Levels can be really big or really small. Everything inside a level
 	is relative to the level origin, and is moved together with this origin,
@@ -73,9 +75,14 @@ public:
 	/// List of all spawned actors in this level
 	std::vector<Actor*>     actors;
 
-public: // TEMP STUFF; FOR PROTOTYPING World MODULE
+public:
 
+	/// Where all the components are stored, nothing is hardcoded
+	/// But rather its all a dynamic soup of components, which the systems will have to deal with
+	/// This way Level remains incredibly flexible to support any game
 	ComponentWarehouse componentWarehouse;
+
+	EntityManager entityManager;
 
 public:
 
@@ -90,6 +97,9 @@ public:
 
 	/// Read data from a binary file into this Level
 	bool read(const String& filename);
+
+	/// Utility to quickly spawn a point light into our world
+	void createPointLight(Vector3D position, Vector3D lightColor);
 };
 
 NEPHILIM_NS_END

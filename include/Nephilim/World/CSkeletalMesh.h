@@ -4,15 +4,15 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/Component.h>
 
-
 #include <Nephilim/Foundation/Time.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
 #include <Nephilim/Graphics/Skeleton.h>
+#include <Nephilim/Graphics/Geometry.h>
+#include <Nephilim/Graphics/GL/GLShader.h>
 
 #include <Nephilim/Animation/AnimationClip.h>
-#include <Nephilim/Graphics/Geometry.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -43,7 +43,7 @@ public:
 	float mAnimationTime;
 	float mAnimationDuration;
 
-	Shader rigShader;
+	GLShader rigShader;
 
 
 public:

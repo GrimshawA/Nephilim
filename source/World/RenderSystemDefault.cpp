@@ -24,13 +24,13 @@
 #include <Nephilim/World/ASkeletalMeshComponent.h>
 
 #include <Nephilim/Foundation/Math.h>
-
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Path.h>
 
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Graphics/GLTextureCube.h>
-#include <Nephilim/Graphics/CGL.h>
+#include <Nephilim/Graphics/GL/GLTextureCube.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
+#include <Nephilim/Graphics/Shader.h>
 
 #include <Nephilim/World/PostEffectBloom.h>
 
@@ -271,7 +271,7 @@ void RenderSystemDefault::renderScene()
 	//Log("Num meshes: %d", meshComponentManager->getInstanceCount());
 
 	// -- We have N meshes, we need to render all of them, but take into account the lights in the scene
-	for (std::size_t i = 0; i < meshComponentManager->getInstanceCount(); ++i)
+	for (std::size_t i = 0; i < meshComponentManager->size(); ++i)
 	{
 		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(meshComponentManager->getInstanceEntity(i));
 		CStaticMesh* mesh = (CStaticMesh*)meshComponentManager->getInstance(i);
@@ -371,7 +371,9 @@ void RenderSystemDefault::renderScene()
 				mRenderer->setModelMatrix(actor->getTransform().getMatrix() * mat4::rotatey(math::pi));
 			
 				// Now activate the right shader and uniforms
-				mRenderer->setShader(skeletalMeshComponent->rigShader);
+				Shader s;
+				s.shaderImpl = &skeletalMeshComponent->rigShader;
+				mRenderer->setShader(s);
 				mRenderer->setModelMatrix(mRenderer->getModelMatrix());
 				mRenderer->setProjectionMatrix(mRenderer->getProjectionMatrix());
 				mRenderer->setViewMatrix(mRenderer->getViewMatrix());
@@ -533,7 +535,7 @@ void RenderSystemDefault::renderAllSprites()
 	ComponentManager* transformComponentManager = mWorld->getComponentManager<CTransform>();
 
 	// Iterate all sprites we have spawned
-	for (std::size_t i = 0; i < spriteComponentManager->getInstanceCount(); ++i)
+	for (std::size_t i = 0; i < spriteComponentManager->size(); ++i)
 	{
 		// Get the i-th component in the manager
 		CSprite* sprite = static_cast<CSprite*>(spriteComponentManager->getInstance(i));
