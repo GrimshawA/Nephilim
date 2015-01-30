@@ -9,7 +9,7 @@
 #include <Nephilim/World/EntityManager.h>
 
 #include <Nephilim/World/Actor.h>
-#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/Components/ASpriteComponent.h>
 
 #include <vector>
 #include <typeindex>

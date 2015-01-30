@@ -29,7 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <Nephilim/Platform.h>
-#include <Nephilim/Foundation/Transform.h>
+#include <Nephilim/Foundation/Transform2.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -299,7 +299,7 @@ public :
     /// \see getInverseTransform
     ///
     ////////////////////////////////////////////////////////////
-    const Transform& getTransform() const;
+    const Transform2& getTransform() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief get the inverse of the combined transform of the object
@@ -309,7 +309,7 @@ public :
     /// \see getTransform
     ///
     ////////////////////////////////////////////////////////////
-    const Transform& getInverseTransform() const;
+    const Transform2& getInverseTransform() const;
 
 private :
 
@@ -320,9 +320,9 @@ private :
     Vec2f          m_position;                   ///< Position of the object in the 2D world
     float             m_rotation;                   ///< Orientation of the object, in degrees
     Vec2f          m_scale;                      ///< Scale of the object
-    mutable Transform m_transform;                  ///< Combined transformation of the object
+    mutable Transform2 m_transform;                  ///< Combined transformation of the object
     mutable bool      m_transformNeedUpdate;        ///< Does the transform need to be recomputed?
-    mutable Transform m_inverseTransform;           ///< Combined transformation of the object
+    mutable Transform2 m_inverseTransform;           ///< Combined transformation of the object
     mutable bool      m_inverseTransformNeedUpdate; ///< Does the transform need to be recomputed?
 };
 

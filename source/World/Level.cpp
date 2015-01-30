@@ -5,15 +5,15 @@
 
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/ComponentArray.h>
-#include <Nephilim/World/CSprite.h>
-#include <Nephilim/World/CPointLight.h>
+#include <Nephilim/World/Components/ASpriteComponent.h>
+#include <Nephilim/World/Components/APointLightComponent.h>
 
 NEPHILIM_NS_BEGIN
 
 Level::Level()
 : world(nullptr)
 {
-	componentWarehouse.initComponentManager<CSprite>(new ComponentArray<CSprite>());
+	componentWarehouse.initComponentManager<ASpriteComponent>(new ComponentArray<ASpriteComponent>());
 }
 
 /// Ensure all stuff goes down when the level is destroyed
@@ -57,7 +57,7 @@ void Level::createPointLight(Vector3D position, Vector3D lightColor)
 {
 	Entity e = entityManager.createEntity();
 
-	CPointLight& pointLight = componentWarehouse.createComponent<CPointLight>(e);
+	APointLightComponent& pointLight = componentWarehouse.createComponent<APointLightComponent>(e);
 	CTransform& transform = componentWarehouse.createComponent<CTransform>(e);
 
 	pointLight.mLightColor = lightColor;

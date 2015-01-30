@@ -45,12 +45,12 @@ GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quaterni
 		Log("Spawning entity from prefab");
 		Entity entity = createEntity();
 		createComponent(CTransform(location), entity);
-		createComponent(CColliderBox(), entity);
+		createComponent(ABoxComponent(), entity);
 
 		StaticMesh* SM = new StaticMesh;
 		SM->makeDebugBox(20, 20, 20);
 
-		CStaticMesh csm;
+		AStaticMeshComponent csm;
 		csm.setStaticMesh(SM);
 		createComponent(csm, entity);
 	}

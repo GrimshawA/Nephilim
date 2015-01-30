@@ -1,18 +1,16 @@
 #include <Nephilim/World/World.h>
 #include <Nephilim/World/Landscape.h>
 
-#include <Nephilim/World/PhysicsSystem.h>
-#include <Nephilim/World/AudioSystem.h>
-#include <Nephilim/World/NetworkSystem.h>
+#include <Nephilim/World/Systems/PhysicsSystem.h>
+#include <Nephilim/World/Systems/AudioSystem.h>
+#include <Nephilim/World/Systems/NetworkSystem.h>
 
+#include <Nephilim/World/Components/AStaticMeshComponent.h>
 #include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CStaticMesh.h>
-#include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CSprite.h>
-#include <Nephilim/World/CInput.h>
-#include <Nephilim/World/CCameraLens.h>
-#include <Nephilim/World/CSkeletalMesh.h>
-#include <Nephilim/World/CColliderBox.h>
+#include <Nephilim/World/Components/ASpriteComponent.h>
+#include <Nephilim/World/Components/AInputComponent.h>
+#include <Nephilim/World/Components/ACameraComponent.h>
+#include <Nephilim/World/Components/ABoxComponent.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Math.h>
@@ -22,15 +20,16 @@
 NEPHILIM_NS_BEGIN
 
 World::World()
+: mEnabled(true)
+, mSimulationOnly(false)
 {
 	// Init some component managers
 	createDefaultComponentManager<CTransform>();
-	createDefaultComponentManager<CStaticMesh>();
-	createDefaultComponentManager<CSprite>();
-	createDefaultComponentManager<CColliderBox>();
-	createDefaultComponentManager<CCameraLens>();
-	createDefaultComponentManager<CInput>();
-//	createDefaultComponentManager<ComponentSkinnedModel>();
+	createDefaultComponentManager<AStaticMeshComponent>();
+	createDefaultComponentManager<ASpriteComponent>();
+	createDefaultComponentManager<ABoxComponent>();
+	createDefaultComponentManager<ACameraComponent>();
+	createDefaultComponentManager<AInputComponent>();
 
 	Level* defaultLevel = new Level();
 	mPersistentLevel = defaultLevel;
@@ -50,6 +49,11 @@ void World::update(const Time& deltaTime)
 	for (std::size_t i = 0; i < mRegisteredSystems.size(); ++i)
 	{
 		mRegisteredSystems[i]->update(deltaTime);
+	}
+
+	for (auto a : actors)
+	{
+		a->update(deltaTime);
 	}
 }
 
@@ -150,7 +154,7 @@ Level* World::getLevel(std::size_t index)
 Actor* World::spawnActor()
 {
 	Actor* actor = new Actor();
-	actor->mWorld = this;
+	actor->_world = this;
 	actors.push_back(actor);
 	return actor;
 }

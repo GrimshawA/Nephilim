@@ -5,7 +5,7 @@
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Matrix.h>
-#include <Nephilim/Foundation/Transform.h>
+#include <Nephilim/Foundation/Transform2.h>
 #include <Nephilim/Foundation/ReferenceCountable.h>
 
 NEPHILIM_NS_BEGIN
@@ -85,16 +85,16 @@ public:
 		/// Reset the view to this rect
 		void setRect(float x, float y, float width, float height);
 
-		const Transform& getInverseTransform() const;
-		const Transform& getTransform() const;
+		const Transform2& getInverseTransform() const;
+		const Transform2& getTransform() const;
 
 
     float m_rotation;
 private:
 	FloatRect m_rect;
 	FloatRect m_viewport;
-	mutable Transform m_transform;
-	mutable Transform m_inverseTransform;
+	mutable Transform2 m_transform;
+	mutable Transform2 m_inverseTransform;
 	
 	mutable bool m_transformUpdated;
 	mutable bool m_invTransformUpdated;

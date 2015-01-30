@@ -174,7 +174,7 @@ void Transformable::scale(const Vec2f& factor)
 
 
 ////////////////////////////////////////////////////////////
-const Transform& Transformable::getTransform() const
+const Transform2& Transformable::getTransform() const
 {
     // Recompute the combined transform if needed
     if (m_transformNeedUpdate)
@@ -189,7 +189,7 @@ const Transform& Transformable::getTransform() const
         float tx     = -m_origin.x * sxc - m_origin.y * sys + m_position.x;
         float ty     =  m_origin.x * sxs - m_origin.y * syc + m_position.y;
 
-        m_transform = Transform( sxc, sys, tx,
+        m_transform = Transform2( sxc, sys, tx,
                                 -sxs, syc, ty,
                                  0.f, 0.f, 1.f);
         m_transformNeedUpdate = false;
@@ -200,7 +200,7 @@ const Transform& Transformable::getTransform() const
 
 
 ////////////////////////////////////////////////////////////
-const Transform& Transformable::getInverseTransform() const
+const Transform2& Transformable::getInverseTransform() const
 {
     // Recompute the inverse transform if needed
     if (m_inverseTransformNeedUpdate)

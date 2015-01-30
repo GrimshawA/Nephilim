@@ -2,9 +2,13 @@
 #define NephilimGameObject_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Object.h>
+
 #include <stdint.h>
 
 NEPHILIM_NS_BEGIN
+
+class World;
 
 /**
 	\class GameObject
@@ -26,13 +30,15 @@ NEPHILIM_NS_BEGIN
 	for inherent compatibility with the property data sets in the pure ECS. GameObjects can also be used as mere stack based entity ID wrappers,
 	as they are extremely lightweight. They are also extremely important for concurrent live editing.
 */
-class NEPHILIM_API GameObject
+class NEPHILIM_API GameObject : public Object
 {
 public:	
 
+	/// World this GameObject was instanced in
+	World* _world = nullptr;
+
 	/// Unique ID
 	uint32_t uuid;
-
 };
 
 NEPHILIM_NS_END

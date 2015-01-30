@@ -2,9 +2,11 @@
 #define NephilimWorldLanscape_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CHeightmapTerrain.h>
+#include <Nephilim/World/Components/ATerrainComponent.h>
+
+#include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -22,7 +24,7 @@ class World;
 	components for it. Usually, its only inherited for custom streaming features
 	or really fancy new terrain handling methods.
 */
-class NEPHILIM_API Landscape
+class NEPHILIM_API Landscape : public GameObject
 {
 public:
 
@@ -31,7 +33,7 @@ public:
 
 	};
 
-	CHeightmapTerrain terrain;
+	ATerrainComponent terrain;
 
 	/// This is the root transform that affects the entire landscape
 	CTransform rootTransform;

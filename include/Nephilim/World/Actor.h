@@ -3,39 +3,17 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
-#include <Nephilim/World/ActorComponent.h>
-#include <Nephilim/World/ASceneComponent.h>
+#include <Nephilim/World/Components/ASceneComponent.h>
 #include <Nephilim/World/CTransform.h>
-#include <Nephilim/World/CInput.h>
-#include <Nephilim/World/CStaticMesh.h>
-#include <Nephilim/World/CSprite.h>
-#include <Nephilim/World/CColliderBox.h>
-#include <Nephilim/World/CSkeletalMesh.h>
+#include <Nephilim/World/Components/AInputComponent.h>
+#include <Nephilim/World/Components/AStaticMeshComponent.h>
+#include <Nephilim/World/Components/ABoxComponent.h>
 #include <Nephilim/Foundation/BBox.h>
+#include <Nephilim/Foundation/Time.h>
 
 #include <Nephilim/Scripting/IScript.h>
 
 NEPHILIM_NS_BEGIN
-
-class Actor;
-
-
-
-
-class SCStaticMesh : public ASceneComponent, public CStaticMesh
-{
-public:
-	SCStaticMesh()
-	{
-
-	}
-};
-
-class SCColliderBox : public ASceneComponent, public CColliderBox
-{
-public:
-
-};
 
 class World;
 
@@ -56,22 +34,22 @@ private:
 	/// World can access private members as he instances Actors
 	friend class World;
 
-	/// Pointer to the World instance that created this actor
-	World* mWorld = nullptr;
-
-
+	
 
 	/// The root component of this Actor
 	ASceneComponent* root = nullptr;
 
 public:
 	/// The array of components on this Actor
-	std::vector<ActorComponent*> components;
+	std::vector<Component*> components;
 
 	/// Name of this actor, it doesn't have to be unique
 	String mName;
 
 public:
+
+	/// Allows Actor subclasses to do their own logic
+	virtual void update(const Time& deltaTime);
 
 	/// Get the world instance that created this actor
 	World* getWorld();

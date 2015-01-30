@@ -336,6 +336,14 @@ void GameCore::PrimaryUpdate(Time time)
 
 	onUpdate(time);
 
+	for (auto w : sceneManager.mScenes)
+	{
+		if (w->mEnabled)
+		{
+			w->update(time);
+		}
+	}
+
 	// Now let's keep our scripts fresh
 	for (auto s : scriptingEnvironments)
 	{

@@ -315,7 +315,7 @@ void GraphicsDevice::setDefaultTexture()
 /// Draw a debug quad with the given color,angle and dimensions - slow
 void GraphicsDevice::drawDebugQuad(float x, float y, float angle, float width, float height, Color color)
 {
-	Transform vtransform;
+	Transform2 vtransform;
 	vtransform.rotate(angle);
 	vtransform.translate(x,y);
 

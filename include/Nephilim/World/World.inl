@@ -48,7 +48,7 @@ template<typename T>
 T* World::spawnActor()
 {
 	T* myObj = new T(this);
-	myObj->mWorld = this;
+	myObj->_world = this;
 
 	actors.push_back(myObj);
 

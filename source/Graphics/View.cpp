@@ -172,7 +172,7 @@ void View::zoom(float factor){
 };
 
 ////////////////////////////////////////////////////////////
-const Transform& View::getTransform() const
+const Transform2& View::getTransform() const
 {
 	// Recompute the matrix if needed
 	if (!m_transformUpdated)
@@ -194,7 +194,7 @@ const Transform& View::getTransform() const
 		float d = -b * m_center.y;
 
 		// Rebuild the projection matrix
-		m_transform = Transform( a * cosine, a * sine,   a * tx + c,
+		m_transform = Transform2( a * cosine, a * sine,   a * tx + c,
 			-b * sine,   b * cosine, b * ty + d,
 			0.f,        0.f,        1.f);
 		m_transformUpdated = true;
@@ -205,7 +205,7 @@ const Transform& View::getTransform() const
 
 
 ////////////////////////////////////////////////////////////
-const Transform& View::getInverseTransform() const
+const Transform2& View::getInverseTransform() const
 {
 	// Recompute the matrix if needed
 	if (!m_invTransformUpdated)

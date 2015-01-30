@@ -2,21 +2,23 @@
 #define NephilimScene_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Object.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Time.h>
+
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/Entity.h>
 #include <Nephilim/World/Prefab.h>
 #include <Nephilim/World/EntityManager.h>
 #include <Nephilim/World/ComponentManager.h>
-#include <Nephilim/World/System.h>
+#include <Nephilim/World/Systems/System.h>
 #include <Nephilim/World/Component.h>
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/Level.h>
 #include <Nephilim/World/WorldViewport.h>
 #include <Nephilim/World/PlayerController.h>
-#include <nephilim/World/RenderSystemDefault.h>
+#include <nephilim/World/Systems/RenderSystemDefault.h>
 
 #include <vector>
 #include <map>
@@ -35,12 +37,18 @@ class NetworkSystem;
 	\class World
 	\brief Contains a single world space, filled with entities and components
 */
-class NEPHILIM_API World
+class NEPHILIM_API World : public Object
 {
 public:
 
 	/// Game that owns this world
 	GameCore* _game = nullptr;
+
+	/// Whether the World is running or not
+	bool mEnabled;
+
+	/// Whether this world is only a simulation not meant to be run with graphics
+	bool mSimulationOnly;
 
 	/// The player controller bound to this world at the moment
 	std::unique_ptr<PlayerController> _playerController = nullptr;

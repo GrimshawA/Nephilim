@@ -3,10 +3,16 @@
 
 NEPHILIM_NS_BEGIN
 
+/// Allows Actor subclasses to do their own logic
+void Actor::update(const Time& deltaTime)
+{
+
+}
+
 /// Get the world instance that created this actor
 World* Actor::getWorld()
 {
-	return mWorld;
+	return _world;
 }
 
 /// Get the bounding box of this actor and its contents
@@ -14,12 +20,12 @@ BBox Actor::getActorBounds()
 {
 	Vector3D extents;
 
-	if (dynamic_cast<ASpriteComponent*>(root))
+	/*if (dynamic_cast<ASpriteComponent*>(root))
 	{
 		extents.z = 0.f;
 		extents.x = static_cast<ASpriteComponent*>(root)->getSize().x;
 		extents.y = static_cast<ASpriteComponent*>(root)->getSize().y;
-	}
+	}*/
 
 
 	BBox box;
@@ -53,9 +59,9 @@ void Actor::computeTransformHierarchy()
 /// As soon as this function is called, the Actor object may not be used anymore
 void Actor::destroy()
 {
-	if (mWorld)
+	if (_world)
 	{
-		mWorld->destroyActor(this);
+		_world->destroyActor(this);
 	}
 }
 

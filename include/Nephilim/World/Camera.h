@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/Matrix.h>
-#include <Nephilim/World/CCameraLens.h>
+#include <Nephilim/World/Components/ACameraComponent.h>
 #include <Nephilim/World/CTransform.h>
 
 NEPHILIM_NS_BEGIN
@@ -17,7 +17,7 @@ class NEPHILIM_API Camera
 {
 public:
 	CTransform transform;
-	CCameraLens lens;
+	ACameraComponent lens;
 };
 
 NEPHILIM_NS_END

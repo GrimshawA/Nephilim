@@ -2,20 +2,23 @@
 #define NephilimRazerComponent_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/World/CHandle.h>
+#include <Nephilim/Foundation/Object.h>
 
 NEPHILIM_NS_BEGIN
 
 /**
 	\class Component
-	\brief Represents one characteristic added to entities
+	\brief Represents one feature that can be added to a game object
 
-	It is recommended for each component to be 64 or less bytes,
-	due to possible performance gains by benefiting from the CPU cache lines.
+	Inherits Object for later implementing RTTI databases around the Object
+	inherited classes.
 */
-class NEPHILIM_API Component
+class NEPHILIM_API Component : public Object
 {
 public:
+
+	/// Destructor
+	virtual ~Component();
 };
 
 NEPHILIM_NS_END
