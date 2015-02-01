@@ -1,15 +1,15 @@
-#ifndef NephilimAudioEnvironment_h__
-#define NephilimAudioEnvironment_h__
+#ifndef NephilimExtensionAudio_h__
+#define NephilimExtensionAudio_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
-#include <Nephilim/Foundation/FeatureProvider.h>
+#include <Nephilim/Foundation/Extension.h>
 
 NEPHILIM_NS_BEGIN
 
 /**
-	\class AudioEnvironment
-	\brief Interface for implementing audio solutions
+	\class ExtensionAudio
+	\brief Allows to implement audio solutions
 
 	To keep the engine compact, it doesn't tightly coupled to any given
 	audio solution, but rather works with an abstract interface for anything
@@ -21,7 +21,7 @@ NEPHILIM_NS_BEGIN
 	By dragging a audio plugin DLL to the Plugins directory, we can easily
 	have audio support in our game. 
 */
-class NEPHILIM_API AudioEnvironment : public FeatureProvider
+class NEPHILIM_API ExtensionAudio : public Extension
 {
 public:
 
@@ -35,4 +35,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimAudioEnvironment_h__
+#endif // NephilimExtensionAudio_h__

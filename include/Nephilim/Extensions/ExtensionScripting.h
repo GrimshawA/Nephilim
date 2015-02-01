@@ -1,8 +1,8 @@
-#ifndef NephilimScriptingEnvironment_h__
-#define NephilimScriptingEnvironment_h__
+#ifndef NephilimExtensionScripting_h__
+#define NephilimExtensionScripting_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Foundation/FeatureProvider.h>
+#include <Nephilim/Foundation/Extension.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Time.h>
 #include <Nephilim/Game/GameMessage.h>
@@ -21,7 +21,7 @@ class ScriptSystem;
 	scripting language and interfaces with it to give scripting support 
 	to the game.
 */
-class NEPHILIM_API ScriptingEnvironment : public FeatureProvider
+class NEPHILIM_API ExtensionScripting : public Extension
 {
 public:
 
@@ -34,7 +34,7 @@ public:
 public:
 
 	/// Ensure safe destruction
-	virtual ~ScriptingEnvironment();
+	virtual ~ExtensionScripting();
 
 	/// Creates a new script system to pair up with a game world
 	virtual ScriptSystem* createScriptSystem(){ return nullptr; }
@@ -50,4 +50,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimScriptingEnvironment_h__
+#endif // NephilimExtensionScripting_h__

@@ -68,10 +68,10 @@ public:
 
 	/// Get the transform of this Actor
 	/// This is the transform that converts anything in actor space to world space
-	CTransform getTransform();
+	CTransform getActorTransform();
 
 	/// Set a transform for the root
-	void setTransform(const CTransform& transform);
+	void setActorTransform(const CTransform& transform);
 
 	/// Get the position of this Actor
 	vec3 getActorLocation();

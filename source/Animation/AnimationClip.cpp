@@ -12,7 +12,7 @@ mat4 AnimationClip::Track::getTransformFromTime(float t)
 	float blend = t - frameIndex;
 
 	vec3 finalPosition = vec3::lerp(frames[frameIndex].position, frames[nextFrameIndex].position, blend);
-	Quaternion finalOrientation = Quaternion::slerp(frames[frameIndex].orientation, frames[nextFrameIndex].orientation, blend);
+	Quat finalOrientation = Quat::slerp(frames[frameIndex].orientation, frames[nextFrameIndex].orientation, blend);
 
 	return (mat4::translate(finalPosition) * finalOrientation.toMatrix());
 }

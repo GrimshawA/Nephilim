@@ -24,7 +24,7 @@ public:
 	public:
 		vec3       position;
 		vec3       scale;
-		Quaternion orientation;
+		Quat orientation;
 		float      time;
 	};
 

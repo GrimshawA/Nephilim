@@ -253,12 +253,26 @@ void RenderSystemDefault::renderScene()
 			if (textComponent)
 			{
 				Text t;
-				t.setString("Grimshaw");
+				t.setString(textComponent->text);
 				t.setFont(mContentManager->font);
 				t.setCharacterSize(15);
 				t.useOwnTransform = false;
 				mRenderer->setModelMatrix(textComponent->t.getMatrix() * mat4::scale(1.f, -1.f, 1.f));
 				mRenderer->draw(t);
+			}
+
+			AParticleEmitterComponent* particleEmitter = dynamic_cast<AParticleEmitterComponent*>(actor->components[j]);
+			if (particleEmitter)
+			{
+				for (auto k = 0; k < particleEmitter->particles.size(); ++k)
+				{
+					mat4 model = mat4::translate(particleEmitter->particles[k].position);
+
+					RectangleShape c(FloatRect(0.f, 0.f, 30.f, 30.f), Color::Orange);
+					c.useOwnTransform = false;
+					mRenderer->setModelMatrix(model);
+					mRenderer->draw(c);
+				}
 			}
 
 			AStaticMeshComponent* staticMeshComponent = dynamic_cast<AStaticMeshComponent*>(actor->components[j]);
@@ -313,7 +327,7 @@ void RenderSystemDefault::renderScene()
 			if (skeletalMeshComponent)
 			{
 				// Prepare the model matrices
-				mRenderer->setModelMatrix(actor->getTransform().getMatrix() * mat4::rotatey(math::pi));
+				mRenderer->setModelMatrix(actor->getActorTransform().getMatrix() * mat4::rotatey(math::pi));
 			
 				// Now activate the right shader and uniforms
 				Shader s;

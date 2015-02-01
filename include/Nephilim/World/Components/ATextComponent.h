@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/Components/ASceneComponent.h>
+#include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -14,6 +15,8 @@ class NEPHILIM_API ATextComponent : public ASceneComponent
 {
 public:
 
+	/// The text string
+	String text;
 };
 
 NEPHILIM_NS_END

@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class AudioEnvironment;
+class ExtensionAudio;
 
 /**
 	\class GameAudio
@@ -26,7 +26,7 @@ class NEPHILIM_API GameAudio
 {
 public:
 	/// List of currently setup audio solutions
-	std::vector<AudioEnvironment*> audioEnvironments;
+	std::vector<ExtensionAudio*> audioEnvironments;
 
 public:
 

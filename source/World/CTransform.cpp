@@ -76,10 +76,10 @@ void CTransform::setLookAt(Vector3D target)
 	rmat[9] = Un.z;
 	rmat[10] = D.z;
 
-	rotation = Quaternion::fromMatrix(rmat);
+	rotation = Quat::fromMatrix(rmat);
 
 	mat4 m = mat4::lookAt(Vector3D(0.f, 0.f, 0.f), D, U).inverse();
-	rotation = Quaternion::fromMatrix(m);
+	rotation = Quat::fromMatrix(m);
 }
 
 /// Set the position from 3 floats

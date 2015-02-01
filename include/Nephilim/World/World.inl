@@ -57,7 +57,7 @@ T* World::spawnActor()
 
 /// Spawns an actor with type T (must be a subclass of Actor)
 template<typename T>
-T* World::spawnActor(Vector3D location, Quaternion orientation)
+T* World::spawnActor(Vector3D location, Quat orientation)
 {
 	T* actor = spawnActor<T>();
 	actor->setActorLocation(location);

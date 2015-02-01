@@ -21,7 +21,7 @@ NEPHILIM_NS_BEGIN
 class NEPHILIM_API GameMessage
 {
 public:
-	String temp;
+	
 };
 
 NEPHILIM_NS_END

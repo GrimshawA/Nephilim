@@ -1,10 +1,11 @@
-#include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Game/GameWorlds.h>
+
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 
 /// Create a new scene with a string name
-World* BaseSceneManager::createScene(const String& name)
+World* GameWorlds::createScene(const String& name)
 {
 	World* scene = new World();
 	scene->name = name;
@@ -12,7 +13,7 @@ World* BaseSceneManager::createScene(const String& name)
 	return scene;
 }
 
-World* BaseSceneManager::getScene(const String& name)
+World* GameWorlds::getScene(const String& name)
 {
 	//Log("world %d", mScenes.size());
 

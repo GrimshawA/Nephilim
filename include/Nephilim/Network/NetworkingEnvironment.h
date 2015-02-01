@@ -2,7 +2,7 @@
 #define NephilimNetworkingEnvironment_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/Foundation/FeatureProvider.h>
+#include <Nephilim/Foundation/Extension.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -16,7 +16,7 @@ NEPHILIM_NS_BEGIN
 
 	Creating a game protocol is out of the scope of this class
 */
-class NEPHILIM_API NetworkingEnvironment : public FeatureProvider
+class NEPHILIM_API NetworkingEnvironment : public Extension
 {
 public:
 

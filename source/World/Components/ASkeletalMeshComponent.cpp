@@ -74,11 +74,11 @@ vec3 getAbsolutePosition(AnimationClip& animationClip, Skeleton& skeleton, int f
 	return p;
 }
 
-Quaternion getAbsoluteRotation(AnimationClip& animationClip, Skeleton& skeleton, int frame, int bone_index)
+Quat getAbsoluteRotation(AnimationClip& animationClip, Skeleton& skeleton, int frame, int bone_index)
 {
 	int correspondentAnimationTrack = animationClip.getTrackIndexByName(skeleton.bones[bone_index].name);
 
-	Quaternion p = animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation;
+	Quat p = animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation;
 
 	if (skeleton.bones[bone_index].parentId >= 0)
 	{
@@ -94,7 +94,7 @@ mat4 getAbsoluteTransform(AnimationClip& animationClip, Skeleton& skeleton, int 
 
 	vec3 localPosition = animationClip.tracks[correspondentAnimationTrack].frames[frame].position;
 
-	mat4 boneRotation = Quaternion(animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.x, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.y, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.z, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.w).toMatrix();
+	mat4 boneRotation = Quat(animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.x, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.y, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.z, animationClip.tracks[correspondentAnimationTrack].frames[frame].orientation.w).toMatrix();
 	boneRotation[12] = localPosition.x;
 	boneRotation[13] = localPosition.y;
 	boneRotation[14] = localPosition.z;
@@ -114,11 +114,11 @@ mat4 InterpolateMatrix(mat4 a, mat4 b, float blend)
 	vec3 translationA(a[12], a[13], a[14]);
 	vec3 translationB(b[12], b[13], b[14]);
 
-	Quaternion rotA = Quaternion::fromMatrix(a);
-	Quaternion rotB = Quaternion::fromMatrix(b);
+	Quat rotA = Quat::fromMatrix(a);
+	Quat rotB = Quat::fromMatrix(b);
 
 	vec3 translationC = vec3::lerp(translationA, translationB, blend);
-	Quaternion rotC = Quaternion::slerp(rotA, rotB, blend);
+	Quat rotC = Quat::slerp(rotA, rotB, blend);
 
 	mat4 r = rotC.toMatrix();
 	r[12] = translationC.x;

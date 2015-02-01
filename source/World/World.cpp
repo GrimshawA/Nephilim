@@ -14,8 +14,7 @@
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Math.h>
-
-#include <Nephilim/Plugins/PluginLoader.h>
+#include <Nephilim/Foundation/PluginLoader.h>
 
 NEPHILIM_NS_BEGIN
 

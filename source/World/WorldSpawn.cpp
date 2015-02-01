@@ -38,7 +38,7 @@ GameObject* World::spawnPrefab(const Prefab& prefab)
 }
 
 /// Variant that allows to spawn the entity/actor/etc in a given location and orientation directly
-GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quaternion orientation)
+GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quat orientation)
 {
 	if (prefab.getRootClassName() == "Entity")
 	{
@@ -63,7 +63,7 @@ GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quaterni
 }
 
 /// Spawn a prefab definition directly into the world
-GameObject* World::spawnPrefab(const String& prefabAsset, Vector3D location, Quaternion orientation)
+GameObject* World::spawnPrefab(const String& prefabAsset, Vector3D location, Quat orientation)
 {
 	Prefab prefabDef;
 	if (prefabDef.load("./" + prefabAsset + ".prefab"))

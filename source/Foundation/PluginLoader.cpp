@@ -1,4 +1,4 @@
-#include <Nephilim/Plugins/PluginLoader.h>
+#include <Nephilim/Foundation/PluginLoader.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #ifdef NEPHILIM_WINDOWS
@@ -6,6 +6,8 @@
 #endif
 
 NEPHILIM_NS_BEGIN
+
+typedef Object*(*CreateInstanceFuncPtr)();
 
 PluginLoader::PluginLoader()
 {
@@ -41,9 +43,22 @@ PluginLoader::~PluginLoader()
 
 /// Get the feature provided by this plugin
 /// Returns nullptr if the plugin failed to load correctly
-FeatureProvider* PluginLoader::instance()
+Object* PluginLoader::instance()
 {
-	return mInstanceProvider;
+	if (mInstance)
+	{
+		return mInstance;
+	}
+	else
+	{
+		if (isLoaded())
+		{
+			CreateInstanceFuncPtr CreateInstanceFunc = (CreateInstanceFuncPtr)getFunctionAddress("CreateInstance");
+			if (CreateInstanceFunc)
+				mInstance = CreateInstanceFunc();
+		}
+		return mInstance;
+	}
 }
 
 /// Shorthand to check if its a loaded instance

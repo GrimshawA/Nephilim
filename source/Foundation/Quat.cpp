@@ -4,9 +4,9 @@
 
 NEPHILIM_NS_BEGIN
 
-Quaternion Quaternion::identity;
+Quat Quat::identity;
 
-Quaternion::Quaternion()
+Quat::Quat()
 : x(0.f)
 , y(0.f)
 , z(0.f)
@@ -14,7 +14,7 @@ Quaternion::Quaternion()
 {
 }
 
-Quaternion::Quaternion(float nx, float ny, float nz, float nw)
+Quat::Quat(float nx, float ny, float nz, float nw)
 : x(nx)
 , y(ny)
 , z(nz)
@@ -22,7 +22,7 @@ Quaternion::Quaternion(float nx, float ny, float nz, float nw)
 {
 }
 
-Quaternion::Quaternion(vec3 v, float nw)
+Quat::Quat(vec3 v, float nw)
 : x(v.x)
 , y(v.y)
 , z(v.z)
@@ -32,12 +32,12 @@ Quaternion::Quaternion(vec3 v, float nw)
 }
 
 
-vec3 Quaternion::xyz()
+vec3 Quat::xyz()
 {
 	return vec3(x,y,z);
 }
 
-void Quaternion::normalize()
+void Quat::normalize()
 {
 	float magnitude = sqrt(x * x + y * y + z * z + w * w);
 	if(magnitude != 0)
@@ -49,9 +49,9 @@ void Quaternion::normalize()
 	}
 }
 
-vec4 Quaternion::toAxisAngles()
+vec4 Quat::toAxisAngles()
 {
-	Quaternion q = *this;
+	Quat q = *this;
 
 	if (fabs(q.w) > 1.0f)
 		q.normalize();
@@ -89,7 +89,7 @@ float clamp(float v, float a, float b)
 	return v;
 }
 
-vec3 Quaternion::eulerAngles()
+vec3 Quat::eulerAngles()
 {
 	/*Quaternion q = *this;
 
@@ -99,7 +99,7 @@ vec3 Quaternion::eulerAngles()
 
 	return vec3(attitude, heading, bank);*/
 
-	Quaternion q = *this;
+	Quat q = *this;
 	q.normalize();
 
 	vec3 euler;
@@ -141,7 +141,7 @@ vec3 Quaternion::eulerAngles()
 	return euler;
 }
 
-Spherical Quaternion::sphericalCoordinates()
+Spherical Quat::sphericalCoordinates()
 {
 	Spherical sph;
 	sph.radius = 10;
@@ -171,7 +171,7 @@ Spherical Quaternion::sphericalCoordinates()
 }
 
 
-mat4 Quaternion::toMatrix()
+mat4 Quat::toMatrix()
 {
 	mat4 m = mat4::identity;
 
@@ -202,9 +202,9 @@ mat4 Quaternion::toMatrix()
 	return m;
 }
 
-Quaternion Quaternion::operator*(const Quaternion& q2)
+Quat Quat::operator*(const Quat& q2)
 {
-	Quaternion qr;
+	Quat qr;
 	vec3 va, vb, vc;
 	
 	qr.w = vec3(x,y,z).dot(vec3(q2.x, q2.y, q2.z));
@@ -230,15 +230,15 @@ Quaternion Quaternion::operator*(const Quaternion& q2)
 }
 
 
-void Quaternion::rotateEulerAngles(float ax, float ay, float az)
+void Quat::rotateEulerAngles(float ax, float ay, float az)
 {
 	vec3 vx(1.f, 0.f, 0.f), vy(0.f, 1.f, 0.f), vz(0.f, 0.f, 1.f);
-	Quaternion qx, qy, qz, qt;
+	Quat qx, qy, qz, qt;
 
 	// Extract a quaternion from a basis axis and a euler angle
-	Quaternion::fromAxisAngle( qx, vx, ax );
-	Quaternion::fromAxisAngle( qy, vy, ay );
-	Quaternion::fromAxisAngle( qz, vz, az );
+	Quat::fromAxisAngle( qx, vx, ax );
+	Quat::fromAxisAngle( qy, vy, ay );
+	Quat::fromAxisAngle( qz, vz, az );
 
 	qt = qx * qy;
 	qt = qt * qz;
@@ -248,26 +248,26 @@ void Quaternion::rotateEulerAngles(float ax, float ay, float az)
 	*this = *this * qt;
 }
 
-void Quaternion::rotateAxisAngle(float angle, float ax, float ay, float az)
+void Quat::rotateAxisAngle(float angle, float ax, float ay, float az)
 {
-	Quaternion qr;
-	Quaternion::fromAxisAngle(qr, vec3(ax,ay,az), angle);
+	Quat qr;
+	Quat::fromAxisAngle(qr, vec3(ax,ay,az), angle);
 
 	*this = *this * qr;
 }
 
-float Quaternion::dot(Quaternion& q1, Quaternion& q2)
+float Quat::dot(Quat& q1, Quat& q2)
 {
 	return (q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w);
 }
 
-float Quaternion::lengthSquared()
+float Quat::lengthSquared()
 {
 	return (x * x + y * y + z * z + w * w);
 }
 
 
-Quaternion Quaternion::slerp(Quaternion& q1, Quaternion& q2, float blend)
+Quat Quat::slerp(Quat& q1, Quat& q2, float blend)
 {
 	/*
 	// if either input is zero, return the other.
@@ -326,7 +326,7 @@ Quaternion Quaternion::slerp(Quaternion& q1, Quaternion& q2, float blend)
 		return Quaternion::identity;*/
 
 	float threshold = 0.05f;
-	float angle = Quaternion::dot(q1, q2);
+	float angle = Quat::dot(q1, q2);
 
 	if (angle < 0.0f)
 	{
@@ -336,7 +336,7 @@ Quaternion Quaternion::slerp(Quaternion& q1, Quaternion& q2, float blend)
 	
 	if (angle <= (1.f - threshold)) // spherical interpolation
 	{
-		Quaternion qr;
+		Quat qr;
 		const float theta = acosf(angle);
 		const float invsintheta = 1.f / sinf(theta);
 		const float scale = sinf(theta * (1.0f-blend)) * invsintheta;
@@ -348,14 +348,32 @@ Quaternion Quaternion::slerp(Quaternion& q1, Quaternion& q2, float blend)
 		return lerp(q1, q2, blend);
 }
 
-Quaternion Quaternion::lerp(Quaternion& q1, Quaternion& q2, float blend)
+/// Equivalent to mat4::rotatez
+Quat Quat::rotatez(float angle)
+{
+	return fromMatrix(mat4::rotatez(angle));
+}
+
+/// Equivalent to mat4::rotatez
+Quat Quat::rotatey(float angle)
+{
+	return fromMatrix(mat4::rotatey(angle));
+}
+
+/// Equivalent to mat4::rotatez
+Quat Quat::rotatex(float angle)
+{
+	return fromMatrix(mat4::rotatex(angle));
+}
+
+Quat Quat::lerp(Quat& q1, Quat& q2, float blend)
 {
 	const float scale = 1.0f - blend;
-	Quaternion q = (q1*scale) + (q2*blend);
+	Quat q = (q1*scale) + (q2*blend);
 	return q;
 }
 
-Quaternion& Quaternion::operator*=(float scalar)
+Quat& Quat::operator*=(float scalar)
 {
 	x *= scalar;
 	y *= scalar;
@@ -364,16 +382,16 @@ Quaternion& Quaternion::operator*=(float scalar)
 	return *this;
 }
 
-Quaternion Quaternion::operator*(float scalar)
+Quat Quat::operator*(float scalar)
 {
-	Quaternion qr = *this;
+	Quat qr = *this;
 	qr *= scalar;
 	return qr;
 }
 
-Quaternion Quaternion::operator+(const Quaternion& q2)
+Quat Quat::operator+(const Quat& q2)
 {
-	Quaternion qr = *this;
+	Quat qr = *this;
 	qr.x += q2.x;
 	qr.y += q2.y;
 	qr.z += q2.z;
@@ -382,7 +400,7 @@ Quaternion Quaternion::operator+(const Quaternion& q2)
 }
 
 
-void Quaternion::fromAxisAngle(Quaternion& q, vec3 axis, float angle)
+void Quat::fromAxisAngle(Quat& q, vec3 axis, float angle)
 {
 	float sin_a = sin( angle / 2 );
 	float cos_a = cos( angle / 2 );
@@ -396,9 +414,9 @@ void Quaternion::fromAxisAngle(Quaternion& q, vec3 axis, float angle)
 }
 
 
-Quaternion Quaternion::fromMatrix(mat4 m)
+Quat Quat::fromMatrix(mat4 m)
 {
-	Quaternion q;
+	Quat q;
 
 	float T = m[0] + m[5] + m[10] + 1;
 

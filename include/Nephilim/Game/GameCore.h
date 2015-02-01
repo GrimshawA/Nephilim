@@ -13,11 +13,12 @@
 #include <Nephilim/Game/GameContent.h>
 #include <Nephilim/Game/GameStateMachine.h>
 #include <Nephilim/Game/GameMessage.h>
-#include <Nephilim/Game/BaseSceneManager.h>
+#include <Nephilim/Game/GameWorlds.h>
 #include <Nephilim/Game/GameInput.h>
 #include <Nephilim/Game/GameServer.h>
 #include <Nephilim/Game/GameAudio.h> 
 #include <Nephilim/Game/GameNetwork.h> 
+#include <Nephilim/Game/GameExtensions.h> 
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
@@ -31,9 +32,8 @@ NEPHILIM_NS_BEGIN
 
 class Engine;
 class Window;
-
-class ScriptingEnvironment;
-class AudioEnvironment;
+class ExtensionScripting;
+class ExtensionAudio;
 
 /**
 	\ingroup Core
@@ -56,10 +56,13 @@ public:
 	std::unique_ptr<GameServer> gameServer;
 
 	/// List of currently setup scripting solutions
-	std::vector<ScriptingEnvironment*> scriptingEnvironments;
+	std::vector<ExtensionScripting*> scriptingEnvironments;
 
 	/// Hub for dealing with audio on this game
 	GameAudio gameAudio;
+
+	/// Hub for dealing with all the extensions in the game
+	GameExtensions gameExtensions;
 
 	/// Hub for dealing with networking on this game
 	GameNetwork gameNetwork;
@@ -71,7 +74,7 @@ public:
 	GameStateMachine stateManager;
 
 	/// The game is prepared to own an arbitrary number of scenes, stored in this object
-	BaseSceneManager sceneManager;
+	GameWorlds sceneManager;
 
 	/// The game is always prepared to handle N individual user interface systems
 	UIManager userInterfaceManager;
@@ -110,10 +113,10 @@ public:
 	void renderWorld(World* world);
 
 	/// Finds a registered scripting environment or returns nullptr
-	ScriptingEnvironment* getScriptingEnvironment(const String& name);
+	ExtensionScripting* getScriptingEnvironment(const String& name);
 
 	/// Finds a registered audio environment to play sounds with or returns nullptr
-	AudioEnvironment* getAudioEnvironment(const String& name);
+	ExtensionAudio* getAudioEnvironment(const String& name);
 
 	/// Create a new UICanvas for the game to use
 	UICanvas* createCanvas(const String& name);

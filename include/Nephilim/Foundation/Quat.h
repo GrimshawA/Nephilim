@@ -12,14 +12,14 @@ NEPHILIM_NS_BEGIN
 	\class Quaternion
 	\brief Represents a rotation in three dimensions without locking issues
 */
-class Quaternion
+class Quat
 {
 public:
-	Quaternion();
+	Quat();
 
-	Quaternion(float nx, float ny, float nz, float nw);
+	Quat(float nx, float ny, float nz, float nw);
 
-	Quaternion(vec3 v, float nw);
+	Quat(vec3 v, float nw);
 
 	vec3 xyz();
 
@@ -35,13 +35,13 @@ public:
 
 	float lengthSquared();
 
-	Quaternion operator*(const Quaternion& q2);
+	Quat operator*(const Quat& q2);
 
-	Quaternion operator*(float scalar);
+	Quat operator*(float scalar);
 
-	Quaternion operator+(const Quaternion& q2);
+	Quat operator+(const Quat& q2);
 
-	inline Quaternion& operator*=(float scalar);
+	inline Quat& operator*=(float scalar);
 
 	void normalize();  
 
@@ -49,16 +49,25 @@ public:
 
 	mat4 toMatrix();
 	
-	static Quaternion fromMatrix(mat4 m);
-	static void fromAxisAngle(Quaternion& q, vec3 axis, float angle);
+	static Quat fromMatrix(mat4 m);
+	static void fromAxisAngle(Quat& q, vec3 axis, float angle);
 
-	static Quaternion slerp(Quaternion& q1, Quaternion& q2, float blend);
+	static Quat slerp(Quat& q1, Quat& q2, float blend);
 
-	static Quaternion lerp(Quaternion& q1, Quaternion& q2, float blend);
+	static Quat lerp(Quat& q1, Quat& q2, float blend);
 
-	static float dot(Quaternion& q1, Quaternion& q2);
+	static float dot(Quat& q1, Quat& q2);
 
-	static Quaternion identity;
+	/// Equivalent to mat4::rotatez
+	static Quat rotatez(float angle);
+
+	/// Equivalent to mat4::rotatey
+	static Quat rotatey(float angle);
+
+	/// Equivalent to mat4::rotatex
+	static Quat rotatex(float angle);
+
+	static Quat identity;
 };
 
 NEPHILIM_NS_END

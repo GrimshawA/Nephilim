@@ -2,16 +2,16 @@
 #define NephilimGameContent_h__
 
 #include <Nephilim/Platform.h>
+
 #include <Nephilim/Foundation/VirtualFileSystem.h>
 #include <Nephilim/Foundation/StringHash.h>
 #include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/PluginLoader.h>
 
 #include <Nephilim/Game/Resource.h>
 
 #include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/Font.h>
-
-#include <Nephilim/Plugins/PluginLoader.h>
 
 #include <map>
 #include <memory>
@@ -21,7 +21,7 @@ NEPHILIM_NS_BEGIN
 class StaticMesh;
 class SkeletalMesh;
 
-class ModelLoader;
+class ExtensionImporter;
 
 class ContentGroupFonts
 {
@@ -58,7 +58,7 @@ public:
 
 	/// List of custom model loaders currently plugged in
 	/// This is just for third party formats, all native binary ones are handled automatically
-	std::vector<ModelLoader*> modelLoaders;
+	std::vector<ExtensionImporter*> modelLoaders;
 
 	std::vector<StaticMesh*> staticMeshContainer;
 	std::vector<String>      staticMeshNames;

@@ -1,7 +1,8 @@
-#ifndef NephilimIModelLoader_h__
-#define NephilimIModelLoader_h__
+#ifndef NephilimFoundationExtensionImporter_h__
+#define NephilimFoundationExtensionImporter_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Extension.h>
 #include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
@@ -27,6 +28,13 @@ struct ModelLoaderResult
 
 };
 
+struct NativeFormatExportAction
+{
+	/// Write one mesh per file or all together into one ngf
+	bool splitGeometryFiles = true;
+
+};
+
 /**
 	\class ModelLoader
 	\brief Interface for implementing third party model loaders
@@ -40,9 +48,13 @@ struct ModelLoaderResult
 
 	This class works by attaching implementations to the content manager, so it can understand new formats.
 */
-class NEPHILIM_API ModelLoader
+class NEPHILIM_API ExtensionImporter : public Extension
 {
 public:
+
+	/// Convert a source file into native formats
+	virtual bool importToNative(const String& filename){ return true; }
+
 	/// Interface: asks the loader to retrieve its set of mesh data to our storage container
 	virtual ModelLoaderResult load(const ModelLoaderParams& params){ return ModelLoaderResult(); }
 
@@ -51,4 +63,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimIModelLoader_h__
+#endif // NephilimFoundationExtensionImporter_h__

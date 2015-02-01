@@ -13,6 +13,9 @@ class NEPHILIM_API Object
 {
 public:
 
+	virtual void test()
+	{}
+
 	/// Destructor
 	virtual ~Object();
 };

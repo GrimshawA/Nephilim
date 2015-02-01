@@ -19,6 +19,8 @@ public:
 	class Particle
 	{
 	public:
+		Vector3D position;
+
 		RectangleShape mSprite;
 		vec3 velocity;
 		float angularVelocity;

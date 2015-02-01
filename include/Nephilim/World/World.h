@@ -133,10 +133,10 @@ public:
 	GameObject* spawnPrefab(const Prefab& prefab);
 
 	/// Variant that allows to spawn the entity/actor/etc in a given location and orientation directly
-	GameObject* spawnPrefab(const Prefab& prefab, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quaternion orientation = Quaternion::identity);
+	GameObject* spawnPrefab(const Prefab& prefab, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quat orientation = Quat::identity);
 
 	/// Spawn a prefab definition directly into the world
-	GameObject* spawnPrefab(const String& prefabAsset, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quaternion orientation = Quaternion::identity);
+	GameObject* spawnPrefab(const String& prefabAsset, Vector3D location = Vector3D(0.f, 0.f, 0.f), Quat orientation = Quat::identity);
 
 	/// Spawns an actor with type T (must be a subclass of Actor)
 	template<typename T>
@@ -144,7 +144,7 @@ public:
 
 	/// Spawns an actor with type T (must be a subclass of Actor)
 	template<typename T>
-	T* spawnActor(Vector3D location, Quaternion orientation = Quaternion::identity);
+	T* spawnActor(Vector3D location, Quat orientation = Quat::identity);
 
 	/// Spawns a vanilla Actor (not subclassed)
 	Actor* spawnActor();

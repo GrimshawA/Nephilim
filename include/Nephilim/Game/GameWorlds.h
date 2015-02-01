@@ -31,7 +31,7 @@ NEPHILIM_NS_BEGIN
 
 	This is entirely possible and supported.
 */
-class NEPHILIM_API BaseSceneManager
+class NEPHILIM_API GameWorlds
 {
 public:
 

@@ -50,7 +50,7 @@ public:
 
 	Int32 parent = -1;
 
-	Quaternion rotation;
+	Quat rotation;
 	vec3       position;
 	vec3       scale;
 

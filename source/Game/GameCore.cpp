@@ -1,5 +1,4 @@
 #include <Nephilim/Game/GameCore.h>
-#include <Nephilim/Plugins/PluginSDK.h>
 #include <Nephilim/Game/Engine.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Foundation/StringList.h>
@@ -11,9 +10,9 @@
 #include <Nephilim/UI/UICanvas.h>
 
 // Scripting of the GameCore
-#include <Nephilim/Scripting/ScriptingEnvironment.h>
-
-#include <Nephilim/Audio/AudioEnvironment.h>
+#include <Nephilim/Extensions/ExtensionScripting.h>
+#include <Nephilim/Extensions/PluginSDK.h>
+#include <Nephilim/Extensions/ExtensionAudio.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -39,8 +38,8 @@ void GameCore::onPreSetup()
 void GameCore::loadPlugins()
 {
 	typedef PluginSDK::Types(*getPluginTypeFunc)();
-	typedef ScriptingEnvironment*(*createScriptEnvironmentFunc)(GameCore*);
-	typedef AudioEnvironment*(*createAudioEnvironmentFunc)(GameCore*);
+	typedef ExtensionScripting*(*createScriptEnvironmentFunc)(GameCore*);
+	typedef ExtensionAudio*(*createAudioEnvironmentFunc)(GameCore*);
 
 	StringList dll_list = FileSystem::scanDirectory("Plugins", "dll", false);
 	for (auto& dll_name : dll_list)
@@ -64,7 +63,7 @@ void GameCore::loadPlugins()
 						 createScriptEnvironmentFunc funptr = (createScriptEnvironmentFunc)plugin->getFunctionAddress("createScriptingEnvironment");
 						 if (funptr)
 						 {
-							 ScriptingEnvironment* scriptingEnvironment = funptr(this);
+							 ExtensionScripting* scriptingEnvironment = funptr(this);
 							 if (scriptingEnvironment)
 							 {
 								 Log("Got the scripting environment, Registered.");
@@ -79,7 +78,7 @@ void GameCore::loadPlugins()
 						 createAudioEnvironmentFunc funptr = (createAudioEnvironmentFunc)plugin->getFunctionAddress("createAudioEnvironment");
 						 if (funptr)
 						 {
-							 AudioEnvironment* audioEnvironment = funptr(this);
+							 ExtensionAudio* audioEnvironment = funptr(this);
 							 if (audioEnvironment)
 							 {
 								 Log("Got the audio environment, Registered.");
@@ -119,7 +118,7 @@ void GameCore::renderWorld(World* world)
 }
 
 /// Finds a registered scripting environment or returns nullptr
-ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
+ExtensionScripting* GameCore::getScriptingEnvironment(const String& name)
 {
 	for (auto s : scriptingEnvironments)
 	{
@@ -132,7 +131,7 @@ ScriptingEnvironment* GameCore::getScriptingEnvironment(const String& name)
 }
 
 /// Finds a registered audio environment to play sounds with or returns nullptr
-AudioEnvironment* GameCore::getAudioEnvironment(const String& name)
+ExtensionAudio* GameCore::getAudioEnvironment(const String& name)
 {
 	for (auto s : gameAudio.audioEnvironments)
 	{

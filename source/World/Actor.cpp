@@ -67,7 +67,7 @@ void Actor::destroy()
 
 /// Get the transform of this Actor
 /// This is the transform that converts anything in actor space to world space
-CTransform Actor::getTransform()
+CTransform Actor::getActorTransform()
 {
 	CTransform transform;
 	if (root)
@@ -78,7 +78,7 @@ CTransform Actor::getTransform()
 }
 
 /// Set a transform for the root
-void Actor::setTransform(const CTransform& transform)
+void Actor::setActorTransform(const CTransform& transform)
 {
 	if (root)
 	{
@@ -89,7 +89,7 @@ void Actor::setTransform(const CTransform& transform)
 /// Get the position of this Actor
 vec3 Actor::getActorLocation()
 {
-	return getTransform().position;
+	return getActorTransform().position;
 }
 
 /// Set the location of this Actor directly

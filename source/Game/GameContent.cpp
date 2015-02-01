@@ -2,7 +2,8 @@
 
 #include <Nephilim/Graphics/StaticMesh.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
-#include <Nephilim/Graphics/ModelLoader.h>
+
+#include <Nephilim/Extensions/ExtensionImporter.h>
 
 #include <Nephilim/Foundation/Path.h>
 #include <Nephilim/Foundation/Clock.h>
