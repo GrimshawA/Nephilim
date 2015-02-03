@@ -22,6 +22,12 @@ Level::~Level()
 
 }
 
+/// Get total number of GameObject and its subclasses spawned in this Level
+int32_t Level::getGameObjectCount()
+{
+	return static_cast<int32_t>(actors.size());
+}
+
 /// Write this level to a binary file
 bool Level::write(const String& filename)
 {

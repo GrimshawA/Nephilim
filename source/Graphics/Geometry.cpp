@@ -17,7 +17,7 @@ NEPHILIM_NS_BEGIN
 Geometry Geometry::GeneratePlane(Vector3D origin, Vector3D normal, Vector2D dimensions)
 {
 	Geometry geom;
-
+	/*
 	geom._positions.resize(4);
 	geom._positions[0] = Vector3D(10.f, 10.f, -10.f);
 	geom._positions[1] = Vector3D(10.f, 10.f, 10.f);
@@ -43,7 +43,7 @@ Geometry Geometry::GeneratePlane(Vector3D origin, Vector3D normal, Vector2D dime
 	geom._faces[1].v1 = 0;
 	geom._faces[1].v2 = 2;
 	geom._faces[1].v3 = 3;
-	
+	*/
 	return geom;
 }
 
@@ -51,7 +51,7 @@ Geometry Geometry::GeneratePlane(Vector3D origin, Vector3D normal, Vector2D dime
 Geometry Geometry::GenerateSkyBox()
 {
 	Geometry geom;
-
+	/*
 	geom._positions.resize(4);
 	geom._faces.resize(2);
 	geom._colors.resize(4);
@@ -78,11 +78,22 @@ Geometry Geometry::GenerateSkyBox()
 	geom._faces[1].v1 = 0;
 	geom._faces[1].v2 = 2;
 	geom._faces[1].v3 = 3;
-
+	*/
 	return geom;
 }
 
-GeometryData::GeometryData()
+//////////////////////////////////////////////////////////////////////////
+
+/// Merges two meshes into one appropriately
+GeometryObject GeometryObject::Merge(const GeometryObject& A, const GeometryObject& B)
+{
+	GeometryObject C;
+	return C;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+GeometryObject::GeometryObject()
 : m_useColors(true)
 , m_useNormals(true)
 , m_useTexCoords(true)
@@ -90,7 +101,7 @@ GeometryData::GeometryData()
 	m_primitive = Render::Primitive::Triangles;
 }
 
-void GeometryData::toVertexArray(VertexArray& varray)
+void GeometryObject::toVertexArray(VertexArray& varray) const
 {
 	VertexFormat::Attribute position_attribute;
 	VertexFormat::Attribute color_attribute;
@@ -108,7 +119,7 @@ void GeometryData::toVertexArray(VertexArray& varray)
 	varray.format.attributes.push_back(color_attribute   );
 
 	// Two channels of data need to be copied now
-	varray.allocateData(m_vertices.size());
+	varray.allocateData(vertices.size());
 
 	struct vertex_format_struct
 	{
@@ -118,9 +129,9 @@ void GeometryData::toVertexArray(VertexArray& varray)
 
 	vertex_format_struct* vertex_data = reinterpret_cast<vertex_format_struct*>(&varray._data[0]);
 
-	for(std::size_t i = 0; i < m_vertices.size(); ++i)
+	for(std::size_t i = 0; i < vertices.size(); ++i)
 	{
-		vertex_data[i].p = m_vertices[i];
+		vertex_data[i].p = vertices[i];
 		vertex_data[i].c.x = (float)m_colors[i].r / 255.f;
 		vertex_data[i].c.y = (float)m_colors[i].g / 255.f;
 		vertex_data[i].c.z = (float)m_colors[i].b / 255.f;
@@ -129,9 +140,9 @@ void GeometryData::toVertexArray(VertexArray& varray)
 }
 
 
-void GeometryData::onDraw(GraphicsDevice* renderer)
+void GeometryObject::onDraw(GraphicsDevice* renderer)
 {
-	if (m_vertices.size() == 0)
+	if (vertices.size() == 0)
 		return;
 
 	renderer->enableVertexAttribArray(0);
@@ -141,14 +152,14 @@ void GeometryData::onDraw(GraphicsDevice* renderer)
 	if(boneIDs.size() > 0) renderer->enableVertexAttribArray(4);
 	if(boneWeights.size() > 0) renderer->enableVertexAttribArray(5);
 
-	renderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &m_vertices[0]);
+	renderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &vertices[0]);
 	if(m_useColors && m_colors.size() > 0)       renderer->setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, 0, &m_colors[0]);
 	if(m_useTexCoords && m_texCoords.size() > 0) renderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, 0, &m_texCoords[0]);
 	if(m_useNormals && m_normals.size() > 0)     renderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, 0, &m_normals[0]);
 	if(boneIDs.size() > 0)     renderer->setVertexAttribPointer(4, 4, GL_FLOAT, false, 0, &boneIDs[0]);
 	if(boneWeights.size() > 0)     renderer->setVertexAttribPointer(5, 4, GL_FLOAT, false, 0, &boneWeights[0]);
 	   
-	renderer->drawArrays(m_primitive, 0, m_vertices.size());
+	renderer->drawArrays(m_primitive, 0, vertices.size());
 
 	renderer->disableVertexAttribArray(0);
 	if(m_useColors && m_colors.size() > 0) renderer->disableVertexAttribArray(1);
@@ -160,7 +171,7 @@ void GeometryData::onDraw(GraphicsDevice* renderer)
 
 
 /// Save the geometry to a file in a raw format
-bool GeometryData::saveToFile(const String& filename)
+bool GeometryObject::saveToFile(const String& filename)
 {
 	File fp(filename, IODevice::BinaryWrite);
 	if(fp)
@@ -168,8 +179,8 @@ bool GeometryData::saveToFile(const String& filename)
 		DataStream writer(fp);
 
 		// write vertices
-		writer << static_cast<Int64>(m_vertices.size());
-		if(m_vertices.size() > 0) fp.write(reinterpret_cast<char*>(&m_vertices[0]), m_vertices.size() * sizeof(vec3));
+		writer << static_cast<Int64>(vertices.size());
+		if(vertices.size() > 0) fp.write(reinterpret_cast<char*>(&vertices[0]), vertices.size() * sizeof(vec3));
 
 		// write normals
 		writer << static_cast<Int64>(m_normals.size());
@@ -188,7 +199,7 @@ bool GeometryData::saveToFile(const String& filename)
 }
 
 /// Load the geometry from a raw format file
-bool GeometryData::loadFromFile(const String& filename)
+bool GeometryObject::loadFromFile(const String& filename)
 {
 	File fp(filename, IODevice::BinaryRead);
 	if(fp)
@@ -198,8 +209,8 @@ bool GeometryData::loadFromFile(const String& filename)
 		// read vertices
 		Int64 vertexCount;
 		reader >> vertexCount;
-		m_vertices.resize(vertexCount);
-		if(vertexCount > 0) fp.read(reinterpret_cast<char*>(&m_vertices[0]), sizeof(vec3) * vertexCount);
+		vertices.resize(vertexCount);
+		if(vertexCount > 0) fp.read(reinterpret_cast<char*>(&vertices[0]), sizeof(vec3) * vertexCount);
 
 		// read normals
 		Int64 normalCount;
@@ -228,13 +239,13 @@ bool GeometryData::loadFromFile(const String& filename)
 	return true;
 }
 
-void GeometryData::addBox(float width, float height, float depth)
+void GeometryObject::addBox(float width, float height, float depth)
 {
 	float hx = width / 2.f;
 	float hy = height / 2.f;
 	float hz = depth / 2.f;
 
-	float vertices[] = {
+	float verticesr[] = {
 		-hx,-hy,-hz, hx,-hy,-hz, hx,hy,-hz,   -hx,-hy,-hz,  hx,hy,-hz, -hx, hy,-hz, //back face
 
 		hx,-hy,hz, -hx,hy,hz, -hx,-hy,hz,  hx,-hy,hz,  hx,hy,hz, -hx, hy,hz, //front face
@@ -262,21 +273,20 @@ void GeometryData::addBox(float width, float height, float depth)
 		0.f,0.f ,  0.f,1.f , 1.f,1.f  , 1.f,0.f , 0.f, 0.f  , 1.f,1.f //top
 	};
 
-	m_vertices.resize(6 * 6);
-	memcpy(&m_vertices[0], vertices, sizeof(float) * 6 * 6 * 3);
+	vertices.resize(6 * 6);
+	memcpy(&vertices[0], verticesr, sizeof(float) * 6 * 6 * 3);
 
 	m_texCoords.resize(6*6);
-	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 6 * 2);
-	
+	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 6 * 2);	
 }
 
 /// Silly plane adding, to be refactored
-void GeometryData::addPlane(float width, float depth, float height)
+void GeometryObject::addPlane(float width, float depth, float height)
 {
 	float hx = width / 2.f;
 	float hz = depth / 2.f;
 
-	float vertices[] = {
+	float verticesraw[] = {
 		-hx,height,-hz ,  -hx,height,hz , hx, height, hz   ,  hx,height,-hz  ,-hx, height, -hz  , hx,height,hz //top
 	};
 
@@ -285,23 +295,23 @@ void GeometryData::addPlane(float width, float depth, float height)
 		0.f,0.f ,  0.f,1.f , 1.f,1.f  , 1.f,0.f , 0.f, 0.f  , 1.f,1.f //top
 	};
 
-	m_vertices.resize(6);
-	memcpy(&m_vertices[0], vertices, sizeof(float) * 6 * 3);
+	vertices.resize(6);
+	memcpy(&vertices[0], verticesraw, sizeof(float)* 6 * 3);
 
 	m_texCoords.resize(6);
 	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 2);
 }
 
-void GeometryData::randomFaceColors()
+void GeometryObject::randomFaceColors()
 {
-	m_colors.resize(m_vertices.size());
-	for(std::size_t i = 0; i < m_vertices.size(); i += 6)
+	m_colors.resize(vertices.size());
+	for(std::size_t i = 0; i < vertices.size(); i += 6)
 	{
 		Color c(math::randomInt(0,255), math::randomInt(0,255), math::randomInt(0,255));
 		m_colors[i] = c;
 		m_colors[i+1] = c;
 		m_colors[i+2] = c;
-		if(i+3 < m_vertices.size())
+		if(i+3 < vertices.size())
 		{
 			m_colors[i+3] = c;
 			m_colors[i+4] = c;
@@ -311,16 +321,16 @@ void GeometryData::randomFaceColors()
 	}
 }
 
-void GeometryData::setAllColors(Color color)
+void GeometryObject::setAllColors(Color color)
 {
-	m_colors.resize(m_vertices.size());
+	m_colors.resize(vertices.size());
 	for(std::size_t i = 0; i < m_colors.size(); ++i)
 	{
 		m_colors[i] = color;
 	}
 }
 
-void GeometryData::scaleUV(float factor)
+void GeometryObject::scaleUV(float factor)
 {
 	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
 	{
@@ -329,7 +339,7 @@ void GeometryData::scaleUV(float factor)
 	}
 }
 
-void GeometryData::offsetUV(float u, float v)
+void GeometryObject::offsetUV(float u, float v)
 {
 	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
 	{
@@ -342,16 +352,16 @@ void GeometryData::offsetUV(float u, float v)
 
 
 /// Generates normals for the geometry
-void GeometryData::generateNormals()
+void GeometryObject::generateNormals()
 {
-	m_normals.resize(m_vertices.size());
-	for(int i = 0; i < m_vertices.size(); i+=3)
+	m_normals.resize(vertices.size());
+	for(int i = 0; i < vertices.size(); i+=3)
 	{
 		// triangle is m_vertices[i] .. i+1 i+2
 		Vec3f normal(0,0,0);
 
-		Vec3f edge1 = m_vertices[i+1] - m_vertices[i];
-		Vec3f edge2 = m_vertices[i+2] - m_vertices[i];
+		Vec3f edge1 = vertices[i+1] - vertices[i];
+		Vec3f edge2 = vertices[i+2] - vertices[i];
 		normal = edge1.cross(edge2);
 		normal.normalize();
 
@@ -362,7 +372,7 @@ void GeometryData::generateNormals()
 }
 
 
-void GeometryData::addCylinder()
+void GeometryObject::addCylinder()
 {
 	float r = 1;
 	float h = 5;
@@ -388,13 +398,13 @@ void GeometryData::addCylinder()
 			p3 = Vec3f(cos(ptheta2), height, sin(ptheta2));
 			p4 = Vec3f(cos(ptheta2), pheight, sin(ptheta2));
 
-			m_vertices.push_back(p1);
-			m_vertices.push_back(p2);
-			m_vertices.push_back(p3);
+			vertices.push_back(p1);
+			vertices.push_back(p2);
+			vertices.push_back(p3);
 
-			m_vertices.push_back(p3);
-			m_vertices.push_back(p2);
-			m_vertices.push_back(p4);
+			vertices.push_back(p3);
+			vertices.push_back(p2);
+			vertices.push_back(p4);
 		}
 	}
 
@@ -411,19 +421,19 @@ void GeometryData::addCylinder()
 }
 
 /// Generates the geometry of a torus knot
-void GeometryData::addTorusKnot(int p, int q)
+void GeometryObject::addTorusKnot(int p, int q)
 {
 	int segments = 1500;
 	for(float theta = 0.f + math::pi*2 / segments; theta < math::pi*2; theta += math::pi*2 / segments)
 	{
 		float r = cos(q * theta) + 2;
 		Vec3f point(r * cos(p * theta), r * sin(p * theta), -sin(q * theta));
-		m_vertices.push_back(point);
+		vertices.push_back(point);
 	}
 }
 
 /// Generates the geometry of a torus knot
-void GeometryData::addTorus(int p, int q)
+void GeometryObject::addTorus(int p, int q)
 {
 	
 	float extrusionWidth = 2.f;
@@ -447,26 +457,40 @@ void GeometryData::addTorus(int p, int q)
 			p4 = Vec3f(cos(ptheta) * (p + cos(ptheta2)), sin(ptheta) * (p + cos(ptheta2)), sin(ptheta2));
 
 			
-			m_vertices.push_back(p1);
-			m_vertices.push_back(p2);
-			m_vertices.push_back(p3);
+			vertices.push_back(p1);
+			vertices.push_back(p2);
+			vertices.push_back(p3);
 
-			m_vertices.push_back(p3);
-			m_vertices.push_back(p2);
-			m_vertices.push_back(p4);
+			vertices.push_back(p3);
+			vertices.push_back(p2);
+			vertices.push_back(p4);
 		}
+	}
+
+	generateNormals();
+	setAllColors(Color::White);
+}
+
+/// Scales the mesh by a factor
+void GeometryObject::scale(float xfactor, float yfactor, float zfactor)
+{
+	for (auto& v : vertices)
+	{
+		v.x *= xfactor;
+		v.y *= yfactor;
+		v.z *= zfactor;
 	}
 }
 
 /// Operator overload for adding torus knots
-GeometryData& GeometryData::operator<<(const TorusKnotDef& torus)
+GeometryObject& GeometryObject::operator<<(const TorusKnotDef& torus)
 {
 	addTorusKnot(torus.p, torus.q);
 	return *this;
 }
 
 /// Operator overload for adding torus knots
-GeometryData& GeometryData::operator<<(const TorusDef& torus)
+GeometryObject& GeometryObject::operator<<(const TorusDef& torus)
 {
 	addTorus(torus.p, torus.q);
 	return *this;

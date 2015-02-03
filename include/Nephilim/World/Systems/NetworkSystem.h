@@ -12,16 +12,26 @@
 
 NEPHILIM_NS_BEGIN
 
+class GameNetwork;
+
 /**
 	\class NetworkSystem
-	\brief Synchronization of the world with remote peers
+	\brief Synchronization of World data
 
-	This network system is always instanced in the world by default,
-	you can add blocks of behavior to it to match your needs, or use
-	premade ones that will do proper server/client sync.
+	Base class for every World pluggable System
+	that handles networking. One World can have
+	multiple NetworkSystems in place for flexibility.
+
+	Each of them can be either a raw built-in network handler,
+	but a fully extended or customized one.
 */
 class NEPHILIM_API NetworkSystem : public System
 {
+public:
+
+	/// Its imperative that the NetworkSystem is connected to the high-level GameCore network manager
+	GameNetwork* gameNetwork = nullptr;
+
 public:
 	
 	NetworkSystem();

@@ -17,7 +17,7 @@ void UIComponentMenuCaster::onAttach(UIView* view)
 
 void UIComponentMenuCaster::toggleMenu()
 {
-	UICore* core = mParent->getContext();
+	UICore* core = mParent->getCore();
 	if (core && core->menuElementStack.empty())
 	{
 		Log("OPENING MENU");

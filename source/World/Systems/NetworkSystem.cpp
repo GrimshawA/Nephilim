@@ -1,4 +1,5 @@
 #include <Nephilim/World/Systems/NetworkSystem.h>
+#include <Nephilim/World/World.h>
 
 #include <Nephilim/Foundation/Logging.h>
 
@@ -22,19 +23,33 @@ NetworkSystemClient::NetworkSystemClient()
 	if (conn.connect(IpAddress("127.0.0.1"), 5000, Time::fromSeconds(3.f)) == TcpSocket::Done)
 	{
 		Log("Connection is established");
+		conn.setBlocking(false);
 	}
 }
 
 void NetworkSystemClient::update(const Time& deltaTime)
 {
-	pingTimer -= deltaTime.seconds();
-	if (pingTimer <= 0.f)
+	Packet pck;
+	if (conn.receive(pck) == TcpSocket::Done)
 	{
-		pingTimer = 1.f;
+		Uint32 count;
+		pck >> count;
 
-		Packet p;
-		p << "Hi";
-		conn.send(p);
+		for (int i = 0; i < count; ++i)
+		{
+			Uint32 UUID;
+			Vector3D location;
+
+			pck >> UUID >> location.x >> location.y >> location.z;
+
+			Log("Unpacking actor %d to %f %f %f", UUID, location.x, location.y, location.z);
+
+			Actor* actor = getWorld()->getActorByUUID(UUID);
+			if (actor)
+			{
+				actor->setActorLocation(location);
+			}
+		}
 	}
 }
 
@@ -64,6 +79,29 @@ void NetworkSystemServer::update(const Time& deltaTime)
 
 		Log("MESSAGE FROM CLIENT: %s", s.c_str());
 	}
+
+	// Let's send the actor positions
+	static float timeUntil = 0.1f;
+	timeUntil -= deltaTime.seconds();
+	if (timeUntil <= 0.f)
+	{
+		Packet pck;
+		pck << (Uint32)getWorld()->mPersistentLevel->actors.size();
+
+		for (auto actor : getWorld()->mPersistentLevel->actors)
+		{
+			Vector3D location = actor->getActorLocation();
+
+			pck << (Uint32)actor->uuid;
+			pck << location.x;
+			pck << location.y;
+			pck << location.z;
+		}
+		next->send(pck);
+
+		//Log("Just sent all the actor data");
+		timeUntil = 0.1f;
+	}	
 
 	//Log("Server is on");
 }

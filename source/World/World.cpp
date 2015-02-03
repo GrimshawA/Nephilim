@@ -37,8 +37,12 @@ World::World()
 	WorldViewport mainViewport;
 	_viewports.push_back(mainViewport);
 
-	_networkSystem = new NetworkSystem();
-	mRegisteredSystems.push_back(_networkSystem);
+	createNetworkSystem<NetworkSystem>();
+}
+
+/// Called after having the opportunity to set some initial settings
+void World::initialize()
+{
 
 }
 
@@ -50,7 +54,7 @@ void World::update(const Time& deltaTime)
 		mRegisteredSystems[i]->update(deltaTime);
 	}
 
-	for (auto a : actors)
+	for (auto a : mPersistentLevel->actors)
 	{
 		a->update(deltaTime);
 	}
@@ -154,16 +158,30 @@ Actor* World::spawnActor()
 {
 	Actor* actor = new Actor();
 	actor->_world = this;
-	actors.push_back(actor);
+	mPersistentLevel->actors.push_back(actor);
 	return actor;
 }
 
 /// Returns the first actor it finds with that name or nullptr
 Actor* World::getActorByName(const String& _name)
 {
-	for (auto actor : actors)
+	for (auto actor : mPersistentLevel->actors)
 	{
 		if (actor->mName == _name)
+		{
+			//Log("Compare %s with %s", actor->mName.c_str(), _na)
+			return actor;
+		}
+	}
+	return nullptr;
+}
+
+/// Returns the Actor with the given ID
+Actor* World::getActorByUUID(uint32_t _uuid)
+{
+	for (auto actor : mPersistentLevel->actors)
+	{
+		if (actor->uuid == _uuid)
 		{
 			//Log("Compare %s with %s", actor->mName.c_str(), _na)
 			return actor;
@@ -175,7 +193,7 @@ Actor* World::getActorByName(const String& _name)
 /// Get the total numbers of spawned actors
 int World::getActorCount()
 {
-	return actors.size();
+	return mPersistentLevel->actors.size();
 }
 
 /// Spawn a vanilla Landscape (not subclassed)
@@ -195,9 +213,9 @@ Landscape* World::spawnLandscape()
 /// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
 void World::updateTransformHierarchy()
 {
-	for (std::size_t i = 0; i < actors.size(); ++i)
+	for (std::size_t i = 0; i < mPersistentLevel->actors.size(); ++i)
 	{
-		if (actors[i]->root != nullptr)
+		if (mPersistentLevel->actors[i]->root != nullptr)
 		{
 
 		}
@@ -207,7 +225,7 @@ void World::updateTransformHierarchy()
 /// Registers a system to this scene
 void World::registerSystem(System* system)
 {
-	system->mWorld = this;
+	system->_World = this;
 	mRegisteredSystems.push_back(system);
 }
 

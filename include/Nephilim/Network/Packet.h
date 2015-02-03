@@ -94,37 +94,6 @@ private:
 	mutable std::size_t m_readPos;
 };
 
-/**
-	\ingroup Network
-	\class NetworkPacket
-	\brief Holds temporarily an Enet packet, and allows to retrieve the data
-
-	\warning This class' objects are only valid during the callback
-*/
-/*class NEPHILIM_API NetworkPacket{
-public:
-	/// Creates a packet
-	NetworkPacket(ENetEvent *event);
-
-	/// Destroy the packet, deallocate
-	~NetworkPacket();
-
-	/// Get the packet size in bytes
-	std::size_t getPacketSize();
-
-	/// Get the packet as a raw array
-	void* getRawData();
-
-	/// Get as a string
-	String toString();
-
-	/// Get the packet as an SFML packet
-	Packet getData();
-
-private:
-	ENetPacket *myPacket;
-};*/
-
 NEPHILIM_NS_END
 
 #endif // NephilimPacket_h__

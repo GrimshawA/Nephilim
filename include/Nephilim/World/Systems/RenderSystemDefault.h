@@ -2,21 +2,21 @@
 #define NephilimRazerSystemRenderer_h__
 
 #include <Nephilim/Platform.h>
+
 #include <Nephilim/World/Systems/RenderSystem.h>
 #include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
 
-
 #include <Nephilim/Graphics/GraphicsDevice.h>
-
 #include <Nephilim/Graphics/GL/GLFramebuffer.h>
 #include <Nephilim/Graphics/GL/GLTexture.h>
+
 #include <Nephilim/Game/GameContent.h>
-#include <Nephilim/World/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
 
 class Entity;
+class AStaticMeshComponent;
 
 /**
 	\class SystemRenderer
@@ -41,14 +41,23 @@ class NEPHILIM_API RenderSystemDefault : public RenderSystem
 {
 public:
 
-	mat4 camRot; // debug only
+	Texture mRenderTexture; ///< The final scene render goes here
+
+	GLFramebuffer mFramebuffer;
+
+	/// Current world framebuffer resolution
+	int mTargetWidth;
+
+	/// Current world framebuffer resolution
+	int mTargetHeight;
 
 public:
 
 
 	RenderSystemDefault();
 
-	void getActiveCamera(vec3& position, mat4& proj, mat4& view);
+	/// Draw a static mesh component
+	void Render(AStaticMeshComponent* mesh);
 
 	/// This function will initialize the frame buffer and other things in order to produce a new frame out of the scene
 	void startFrame();
@@ -59,33 +68,19 @@ public:
 	/// All this function does is to render the current rendered scene frame to the backbuffer
 	void drawToBackBuffer();
 
-	virtual void update(const Time& deltaTime);
 	virtual void render();
 
 	/// Render scene gets all scene render data and outputs it to the active target
 	void renderScene();
-	
-	void renderTilemap(Entity& entity);
-	void renderMesh(Entity& entity);
-	void renderModel(Entity& entity);
 
 	/// Render a sky box into the map
 	void renderSkyBox();
 
 	void renderAllSprites();
+
 	void renderSprite(CTransform* transform, ASpriteComponent* sprite);
 
 
-
-
-	Texture mRenderTexture; ///< The final scene render goes here
-	GLFramebuffer mFramebuffer;
-
-	int mTargetWidth;
-	int mTargetHeight;
-
-	/// Preliminary list of post effects
-	std::vector<PostEffect*> mPostEffects;
 };
 
 NEPHILIM_NS_END

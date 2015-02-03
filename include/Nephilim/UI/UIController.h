@@ -5,6 +5,8 @@
 
 NEPHILIM_NS_BEGIN
 
+class UIView;
+
 /**
 	\class UIController
 	\brief For managing a view in a MVC pattern
@@ -22,6 +24,8 @@ class NEPHILIM_API UIController
 {
 public:
 
+	/// The view we are linked to and we control directly
+	UIView* _view = nullptr;
 };
 
 NEPHILIM_NS_END

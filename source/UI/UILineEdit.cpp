@@ -125,8 +125,8 @@ void UILineEdit::setType(UILineEditTypes type)
 
 void UILineEdit::draw(GraphicsDevice* renderer)
 {
-	if(getContext() && getContext()->m_defaultFont)
-		t.setFont(*getContext()->m_defaultFont);
+	if(getCore() && getCore()->m_defaultFont)
+		t.setFont(*getCore()->m_defaultFont);
 
 	if(m_type == Regular)
 	{

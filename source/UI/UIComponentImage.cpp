@@ -34,11 +34,11 @@ void UIComponentImage::refreshTextureHandle()
 
 	if(mParent)
 	{
-		if(mParent->getContext()->content)
+		if(mParent->getCore()->content)
 		{
-			if(mParent->getContext()->content->load(mSourceTexture))
+			if(mParent->getCore()->content->load(mSourceTexture))
 			{
-				mTexture = mParent->getContext()->content->mGroups[""]->mTextures[mSourceTexture];
+				mTexture = mParent->getCore()->content->mGroups[""]->mTextures[mSourceTexture];
 			}
 			else
 			{

@@ -38,8 +38,8 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 			temp_view->addComponent(new UIComponentDebugColor(Color::Yellow));
 			temp_view->setSize(100.f, 100.f);
 			temp_view->setPosition(view->getWorldPosition().xy());
-			view->getContext()->dragElement = temp_view;
-			view->getContext()->dragElementOwner = this;
+			view->getCore()->dragElement = temp_view;
+			view->getCore()->dragElementOwner = this;
 
 			Log("Drag-Clone Start");
 		}
@@ -57,11 +57,11 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 			if(mAxis == Both || mAxis == VerticalOnly)
 				axisCancellation.y = 1.f;
 
-			if (view->getContext()->dragElement && view->getContext()->dragElementOwner == this)
+			if (view->getCore()->dragElement && view->getCore()->dragElementOwner == this)
 			{
-				//view->getContext()->dragElement->setPosition(view->getContext()->dragElement->getPosition() + vec2(offset.x, offset.y) * axisCancellation);
+				//view->getCore()->dragElement->setPosition(view->getCore()->dragElement->getPosition() + vec2(offset.x, offset.y) * axisCancellation);
 				
-				view->getContext()->dragElement->setPosition(event.getPointerPosition().x, event.getPointerPosition().y);
+				view->getCore()->dragElement->setPosition(event.getPointerPosition().x, event.getPointerPosition().y);
 
 			}
 			
@@ -82,21 +82,21 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 	{
 		dragging = false;
 
-		if (view->getContext()->dragElement  && view->getContext()->dragElementOwner == this)
+		if (view->getCore()->dragElement  && view->getCore()->dragElementOwner == this)
 		{
 			Log("Drag-Clone Drop");
 
 			UIDragEvent drag;
 			drag.dropPosition = event.getPointerPosition();
 			drag.dragSource = view;
-			drag.dragElement = view->getContext()->dragElement;
+			drag.dragElement = view->getCore()->dragElement;
 			onDragDrop(drag);
 
 			//Log("Emitted on %d", onDragDrop.size());
 
-			delete view->getContext()->dragElement;
-			view->getContext()->dragElement = nullptr;
-			view->getContext()->dragElementOwner = nullptr;
+			delete view->getCore()->dragElement;
+			view->getCore()->dragElement = nullptr;
+			view->getCore()->dragElementOwner = nullptr;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 #include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/GL/GLFramebuffer.h>
 
-#include <Nephilim/World/PostEffect.h>
+#include <Nephilim/Graphics/PostEffect.h>
 
 NEPHILIM_NS_BEGIN
 class GraphicsDevice;

@@ -1,6 +1,9 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/Window.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
+#include <Nephilim/Graphics/GL/GLVertexBuffer.h>
+
+
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Foundation/Image.h>
@@ -8,8 +11,7 @@
 #include <Nephilim/Graphics/IndexArray.h>
 #include <Nephilim/Graphics/VertexArray.h>
 
-#include <iostream>
-using namespace std;
+#include <Nephilim/Graphics/VertexBuffer.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -189,7 +191,21 @@ void GraphicsDevice::setBlendingEnabled(bool enable)
 
 void GraphicsDevice::setDefaultTarget()
 {
+	glBindFramebufferCGL(GL_FRAMEBUFFER_CGL, 0);
 	m_window->activate();
+}
+
+/// Activates a given vertex buffer for any subsequent draw calls
+void GraphicsDevice::setVertexBuffer(VertexBuffer* vertexBuffer)
+{
+	if (vertexBuffer)
+	{
+		static_cast<GLVertexBuffer*>(vertexBuffer->_impl)->bind();
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 }
 
 void GraphicsDevice::setClippingEnabled(bool enable)

@@ -35,7 +35,21 @@ class NetworkSystem;
 
 /**
 	\class World
-	\brief Contains a single world space, filled with entities and components
+	\brief Game world container
+
+	This class is like a shell for game worlds. You can plug lots of data to it,
+	to form single or multi level environments, populated by Component, either
+	native or created by the user.
+
+	To make something with this data, one plugs Systems into the World,
+	which will make it do interesting things from networking to playing audio,
+	rendering itself and so on.
+
+	World objects are rigged to be absolutely powerful from the moment they are
+	instanced, yet fully customizable to fit any game's needs.
+
+	Each world indexes a list of Level instances, usually only one, for smaller maps.
+	Its mandatory that a Level is indexed before doing anything with it.
 */
 class NEPHILIM_API World : public Object
 {
@@ -60,7 +74,7 @@ public:
 	RenderSystem* _renderSystem = nullptr;
 
 	/// Currently bound NetworkSystem, used to synchronize worlds and provide online gameplay
-	NetworkSystem* _networkSystem = nullptr;
+	std::vector<NetworkSystem*> _networkSystems;
 
 	/// Name of this world
 	String name;
@@ -85,9 +99,6 @@ public:
 	/// The content manager that provides assets for this world
 	GameContent* contentManager = nullptr;
 
-	/// The currently instanced list of actors
-	std::vector<Actor*> actors;
-
 	/// Array of levels in this world
 	std::vector<Level*> levels;
 
@@ -98,6 +109,9 @@ public:
 public:
 	/// Just prepare the world
 	World();
+
+	/// Called after having the opportunity to set some initial settings
+	void initialize();
 
 	/// Step the world state forward
 	void update(const Time& deltaTime);
@@ -152,6 +166,9 @@ public:
 	/// Returns the first actor it finds with that name or nullptr
 	Actor* getActorByName(const String& _name);
 
+	/// Returns the Actor with the given ID
+	Actor* getActorByUUID(uint32_t _uuid);
+
 	/// Destroys an actor
 	void destroyActor(Actor* actor);
 
@@ -172,6 +189,11 @@ public:
 	/// T must be a derived type of RenderSystem
 	template<typename T>
 	T* createRenderSystem();
+
+	/// Instances a new NetworkSystem or derived type and registers it
+	/// Can optionally remove all previously registered NetworkSystem
+	template<typename T>
+	T* createNetworkSystem();
 
 	/// Create a PhysicsSystem from its name
 	/// This means the physics system will be instanced via factory (plugin or not)

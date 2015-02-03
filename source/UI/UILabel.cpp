@@ -46,7 +46,7 @@ bool UILabel::onEventNotification(Event& event){
 void UILabel::draw(GraphicsDevice* renderer)
 {
 	Text t;
-	t.setFont(*mCore->m_defaultFont);
+	t.setFont(*_core->m_defaultFont);
 	t.setString(m_label);
 	t.setColor(m_color);
 	t.setPosition(mRect.left, mRect.top);

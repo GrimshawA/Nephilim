@@ -1,7 +1,7 @@
 #ifndef NephilimWorldSystem_h__
 #define NephilimWorldSystem_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Object.h>
 #include <Nephilim/Foundation/Time.h>
 
 #include <typeindex>
@@ -30,25 +30,28 @@ class World;
 	- Audio system ( keep the audio playing )
 	- Script system ( call methods on scripts and fetch data from them )
 */
-class NEPHILIM_API System
+class NEPHILIM_API System : public Object
 {
 public:
-	/// Reference to the world that owns this system
-	World* mWorld;
+
+	/// Every system plugged in knows the world that owns it
+	/// and one system cannot be plugged to two Worlds.
+	/// Use shared data or messaging for that kind of interaction
+	World* _World;
 
 public:
 
-	/// Ensure systems get destroyed correctly
+	/// Destructor
 	virtual ~System();
 
-	virtual void update(const Time& deltaTime){}
+	/// Generic update that systems can run
+	virtual void update(const Time& deltaTime);
 
 	virtual void render(){}
 
-	World* getWorld()
-	{
-		return mWorld;
-	}
+	/// Get the world this system is attached to
+	/// Any plugged system has exactly one World attached to it
+	World* getWorld();
 };
 
 NEPHILIM_NS_END

@@ -87,6 +87,9 @@ public:
 	static Int64 getFileSize(String path);
 };
 
+/// Utility to get the contents of a text file
+String getTextFileContents(const String& filename);
+
 namespace FileOps
 {
 	Int64 size(const String& src);

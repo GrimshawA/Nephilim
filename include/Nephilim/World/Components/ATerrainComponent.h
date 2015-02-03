@@ -24,7 +24,7 @@ public:
 	Image heightmap;
 	Uint8* heightmapRaw;
 
-	GeometryData geometry;
+	GeometryObject geometry;
 	Texture surfaceTex;
 };
 

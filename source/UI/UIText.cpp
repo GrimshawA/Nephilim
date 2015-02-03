@@ -12,7 +12,7 @@ void UIText::setContent(const String& content)
 
 void UIText::updateContent()
 {
-	buttonLabel.setFont(*getContext()->m_defaultFont);
+	buttonLabel.setFont(*getCore()->m_defaultFont);
 	buttonLabel.setString(text_string);
 	buttonLabel.setCharacterSize(12);
 	buttonLabel.setColor(Color::Black);

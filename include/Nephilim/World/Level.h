@@ -21,41 +21,22 @@ class Landscape;
 
 /**
 	\class Level
-	\brief Container for runtime information of our game level
+	\brief A finite sized domain with level data
 
-	Levels can be really big or really small. Everything inside a level
-	is relative to the level origin, and is moved together with this origin,
-	if the level moves around.
+	Levels are essential; They are a complex containers of world data
+	with many uses. One World always has 1 or more levels loaded into it,
+	otherwise its useless. These are used to spawn objects and their components
+	etc.  Levels are independent from each other but they can cross-reference in 
+	some ways.
 
-	Each level also has 64 bit integer bounds, that allow to define levels over an
-	insanely large world.
-
-	Levels are loaded into World objects and stay loaded in there until a streamer
-	decides to unload them, or user code.
+	These should always be used with the World instance owning it, never by themselves.
 
 	There is a maximum size for each level, which defined by a constant. This is needed
 	to ensure all things positioned inside this level with floating point coordinates,
 	stay with valid numbers.
 
-	Levels are usually cells in a bigger grid in the World object, in case of open world games.
-	By putting things well inside their own levels, the coordinate systems stay robust, content
-	can be loaded and unload on the fly with ease, etc.
-
-	Levels are a collection of static and dynamic assets, each in their own
-	organization, for maximizing performance. For example, if there are many objects with shared
-	render settings, they can be batched together to gain speed. If every prop laid in the map
-	is set as dynamic, and nothing is actually moving it around or changing anything about, then
-	a potential optimization was wasted.
-
-	A nice thing about levels is that maps made completely independently will be able to come together in the same world, and loaded/unloaded
-	at will. Its ideal that they are designed to fit seamlessly, but this is not required.
-
-	Levels are collections of:
-	1) Static sprites and meshes, which never ever change
-	2) Landscape objects with terrains, tilemaps, voxels or other.
-	3) Actor spawn locations, with Actor class and initial data
-
-	Levels should not be used on their own, but through World objects.
+	All things inside a Level will usually have a coordinate system relative to the Level
+	origin. This is a big help for keeping big worlds without precision issues.
 */
 class NEPHILIM_API Level
 {
@@ -91,6 +72,9 @@ public:
 
 	/// Ensure all stuff goes down when the level is destroyed
 	~Level();
+
+	/// Get total number of GameObject and its subclasses spawned in this Level
+	int32_t getGameObjectCount();
 
 	/// Write this level to a binary file
 	bool write(const String& filename);

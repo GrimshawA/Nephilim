@@ -112,6 +112,9 @@ public:
 	/// Render a given world
 	void renderWorld(World* world);
 
+	/// Returns whether this game is running as a server-only (no graphics)
+	bool isDedicatedServer();
+
 	/// Finds a registered scripting environment or returns nullptr
 	ExtensionScripting* getScriptingEnvironment(const String& name);
 

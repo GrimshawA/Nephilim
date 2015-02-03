@@ -120,8 +120,8 @@ void UIComponentLineEdit::onRender(GraphicsDevice* renderer, UIView* view)
 	backgroundRect.setRect(view->getBounds());
 	renderer->draw(backgroundRect);
 
-	if(view->getContext() && view->getContext()->m_defaultFont)
-		t.setFont(*view->getContext()->m_defaultFont);
+	if (view->getCore() && view->getCore()->m_defaultFont)
+		t.setFont(*view->getCore()->m_defaultFont);
 
 	FloatRect mRect = view->getBounds();
 

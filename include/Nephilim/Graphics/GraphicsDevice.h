@@ -28,6 +28,7 @@ class Image;
 class VertexArray;
 class IndexArray;
 class Shader;
+class VertexBuffer;
 
 /**
 	\class GraphicsDevice
@@ -83,6 +84,10 @@ public:
 	{
 		return nullptr;
 	}
+
+	/// Activates a given vertex buffer for any subsequent draw calls
+	/// Passing nullptr unbinds any vertex buffer
+	virtual void setVertexBuffer(VertexBuffer* vertexBuffer);
 
 
 	/// Push client-side geometry to the GPU

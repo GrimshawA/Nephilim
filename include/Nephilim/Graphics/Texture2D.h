@@ -5,6 +5,8 @@
 
 NEPHILIM_NS_BEGIN
 
+class GDI_Texture2D;
+
 /**
 	\class Texture2D
 	\brief Two dimensional texture
@@ -21,11 +23,25 @@ NEPHILIM_NS_BEGIN
 	to render the actual game. This allows for extreme
 	flexibility as the games will easily run in new software
 	or hardware rendering API's.
+	
+	By favoring the underlying implementation by composition,
+	Texture2D can be extended for more specialized before and
+	even swap low level implementation on the fly.
 */
 class NEPHILIM_API Texture2D
 {
 public:
 
+	/// The actual texture resource, implemented in a low level renderer
+	GDI_Texture2D* _impl = nullptr;
+
+public:
+
+	/// Construct the uninitialized texture
+	Texture2D();
+
+	/// Ensure destruction of the resource
+	virtual ~Texture2D();	
 };
 
 NEPHILIM_NS_END

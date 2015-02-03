@@ -9,6 +9,29 @@ NEPHILIM_NS_BEGIN
 class GraphicsDevice;
 class GameContent;
 
+/*
+	\class RenderingPath
+	\brief Base class for implementing world rendering techniques
+
+	This is used to be able to dynamically switch to different rendering techniques
+	on runtime. For example, in android we may use a ForwardRenderingPath implementation
+	and on PC a DeferredRenderingPath. This is important to counter platform limitations
+	and to be able to use the right tool for the job.
+
+	The RenderingPath is responsible for managing and generating its own shader architecture
+	for rendering the well defined World data.
+*/
+class RenderingPath
+{
+public:
+
+};
+
+class DeferredRenderingPath : public RenderingPath
+{
+
+};
+
 /**
 	\class RenderSystem
 	\brief Interface for scene renderers
@@ -27,6 +50,9 @@ public:
 
 	GraphicsDevice*        mRenderer = nullptr;
 	GameContent*  mContentManager = nullptr;
+
+	/// The current rendering technique for outputting the world into a frame
+	RenderingPath* _renderingPath = nullptr;
 
 public:
 

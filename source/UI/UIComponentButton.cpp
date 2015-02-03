@@ -35,7 +35,7 @@ void UIComponentButton::updateStyles()
 {
 	Log("BUTTON UPDATING STYLES!!!!!!!!!!!!!!!!");
 
-	StyleSheet& stylesheet = mParent->getContext()->stylesheet;
+	StyleSheet& stylesheet = mParent->getCore()->stylesheet;
 
 	StyleSheet::StyleArray& styles = stylesheet.getRule("button");
 	StyleSheet::StyleArray& hstyles = stylesheet.getRule("button:hover");
@@ -79,20 +79,20 @@ void UIComponentButton::refreshTextures()
 {
 	if(mParent)
 	{
-		if(mParent->getContext()->content)
+		if(mParent->getCore()->content)
 		{
-			mTexture = mParent->getContext()->content->getTexture(mNormalTextureSource);
+			mTexture = mParent->getCore()->content->getTexture(mNormalTextureSource);
 			if(!mTexture)
 			{
-				mParent->getContext()->content->load(mNormalTextureSource);
-				mTexture = mParent->getContext()->content->getTexture(mNormalTextureSource);
+				mParent->getCore()->content->load(mNormalTextureSource);
+				mTexture = mParent->getCore()->content->getTexture(mNormalTextureSource);
 			}
 
-			mHoverTexture = mParent->getContext()->content->getTexture(mHoverTextureSource);
+			mHoverTexture = mParent->getCore()->content->getTexture(mHoverTextureSource);
 			if(!mHoverTexture)
 			{
-				mParent->getContext()->content->load(mHoverTextureSource);
-				mHoverTexture = mParent->getContext()->content->getTexture(mHoverTextureSource);
+				mParent->getCore()->content->load(mHoverTextureSource);
+				mHoverTexture = mParent->getCore()->content->getTexture(mHoverTextureSource);
 			}
 		}
 	}
@@ -162,7 +162,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 
 	// -- Label
 	Text buttonLabel;
-	buttonLabel.setFont(*view->mCore->m_defaultFont);
+	buttonLabel.setFont(*view->_core->m_defaultFont);
 	buttonLabel.setString(mString);
 	buttonLabel.setCharacterSize(view->mRect.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));

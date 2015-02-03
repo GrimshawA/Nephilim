@@ -14,21 +14,21 @@ class World;
 	\class GameObject
 	\brief Base class for all objects that can be spawned in the world
 
-	This is the root class for every instance in the world. However, there may be objects in a level
-	that are property-centric, meaning they don't have an instance of a class at all are bound by different rules.
+	This is a component-based entity just like a raw Entity, except it
+	is more predictable in a OOP sense. This class is used to pass around
+	an actual object representing the game entity with utility functions etc.
 
-	However, it is planned that all or mostly all relevant things in the world are instanced and subclasses of GameObject.
+	The user and the engine inherits GameObject to provide even more specialized
+	subclasses. Actor, Landscape and Blueprint are such examples.
 
-	GameObject is not polymorphic but it can contain data. This is to reduce overhead to a minimum.
+	Any user looking for a pure ECS usage can get by with raw Entity, which is
+	GameObject's counterpart. Both interact with components just the same, though,
+	and are compatible with the ECS paradigm of implementing the logic in systems,
+	except GameObjects can directly define gameplay logic for commodity.
 
-	---------------
-
-	All game objects have a 32 bit integer ID. This allows more than 4 billion unique ID's, which is more than enough to any imaginable game,
-	and could be overcomed easily in any case. Thus, 64 bit integer naming isn't required, as ID's will usually be handles too, and indexing into
-	a storage buffer that big is also extremely unlikely. Also, in case of networking, things like Actor pointers are meaningless, and using their
-	index would quickly turn into hell as things could reorder due to synch problems. So all actors and all objects carry this ID, for networking,
-	for inherent compatibility with the property data sets in the pure ECS. GameObjects can also be used as mere stack based entity ID wrappers,
-	as they are extremely lightweight. They are also extremely important for concurrent live editing.
+	Every GameObject has a unique identifier, that makes it unique across all levels in the world.
+	This ID is crucial for networking simulations, as its how the client and server know they are
+	talking about the same thing.
 */
 class NEPHILIM_API GameObject : public Object
 {

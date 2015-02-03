@@ -1,4 +1,4 @@
-#include <Nephilim/World/PostEffectBloom.h>
+#include <Nephilim/Graphics/PostEffectBloom.h>
 #include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>

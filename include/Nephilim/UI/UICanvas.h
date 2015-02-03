@@ -1,7 +1,8 @@
 #ifndef NephilimUICanvas_h__
 #define NephilimUICanvas_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/UI/UIObject.h>
+
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/UI/UICore.h>
@@ -13,13 +14,12 @@ class UIWindow;
 class UIView;
 
 /**
-	\ingroup UI
 	\class UICanvas
 	\brief Container for UI elements
 
 	A UICanvas is an object that represents a rectangle of any dimension in which child UI elements are rendered to.
 */
-class NEPHILIM_API UICanvas : public Drawable
+class NEPHILIM_API UICanvas : public UIObject, public Drawable
 {
 public:
 
@@ -96,7 +96,7 @@ public:
 
 	void showMessageBox(const String& message);
 
-	UICore& getContext();
+	UICore& getCore();
 
 	/// Draw the UI
 	void draw(GraphicsDevice* renderer);

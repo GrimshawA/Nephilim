@@ -11,7 +11,9 @@
 #include <Nephilim/Game/Resource.h>
 
 #include <Nephilim/Graphics/GL/GLTexture.h>
+
 #include <Nephilim/Graphics/Font.h>
+#include <Nephilim/Graphics/Sprite.h>
 
 #include <map>
 #include <memory>
@@ -66,6 +68,20 @@ public:
 	std::vector<SkeletalMesh*> skeletalMeshContainer;
 	std::vector<String>      skeletalMeshNames;
 
+	typedef std::pair<String, Sprite> SpriteResource;
+	std::vector<SpriteResource> sprites;
+
+
+	String mDefaultGroup; ///< The current default group
+
+	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group
+
+	std::map<String, ContentGroup*> mGroups;
+
+	VirtualFileSystem* filesystems;
+
+	std::vector<std::unique_ptr<PluginLoader> > plugins;
+
 public:
 
 	/// Creates the default group - no name ""
@@ -99,16 +115,6 @@ public:
 	bool load(const String& filename);
 
 	Texture* getTexture(const String& name);
-
-	String mDefaultGroup; ///< The current default group
-
-	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group
-
-	std::map<String, ContentGroup*> mGroups;
-
-	VirtualFileSystem* filesystems;
-
-	std::vector<std::unique_ptr<PluginLoader> > plugins;
 };
 
 NEPHILIM_NS_END

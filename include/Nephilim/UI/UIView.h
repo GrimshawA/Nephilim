@@ -1,9 +1,9 @@
 #ifndef NephilimUIView_h__
 #define NephilimUIView_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIPainter.h>
+#include <Nephilim/UI/UIObject.h>
 
+#include <Nephilim/UI/UIPainter.h>
 #include <Nephilim/Foundation/Rect.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/Foundation/String.h>
@@ -19,15 +19,12 @@
 #include <map>
 #include <memory>
 
-#include "UISizePolicy.h"
 #include "UILayout.h"
 #include "UICore.h"
 #include "UIProperty.h"
 #include "UIComponent.h"
 
 #include <Nephilim/UI/UIAnimation.h>
-
-#include <libsigc++/sigc++/sigc++.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -129,7 +126,7 @@ namespace UIFlag
 
 class UIAnimation;
 
-class NEPHILIM_API UIView : public AxTarget, public sigc::trackable, public RefCountable
+class NEPHILIM_API UIView : public UIObject, public AxTarget, public RefCountable
 {
 public:
 	vec2    size;            ///< Size of the view rectangle
@@ -137,7 +134,7 @@ public:
 	float   rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
 	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
 	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
-	UICore* mCore = nullptr; ///< Soft reference to a UICore, for localization, content and others
+	
 	mat4    matrix;
 
 	vec2 scrolling_offset;   ///< Scroll bars just move this variable around, effectively shifting all elements all around 
@@ -359,9 +356,6 @@ public:
 
 	/// Get the current size of the control
 	vec2 getSize();
-
-	/// Returns the UIWindow context or NULL if not attached
-	UICore* getContext();
 
 	/// Returns true when the control is subject of being layout in a grid or other organization form
 	/// Most controls don't implement this function, as their default behavior is to respond to layouts always

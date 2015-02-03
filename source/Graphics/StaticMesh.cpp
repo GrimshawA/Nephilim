@@ -3,32 +3,46 @@
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 
 
+#include <Nephilim/Graphics/GL/GLVertexBuffer.h>
+
+
 NEPHILIM_NS_BEGIN
 
-/// Load the static mesh data from a file directly
-bool StaticMesh::load(const String& filename)
+/// Prepare our buffers with the given mesh
+void StaticMesh::uploadGeometry(const GeometryObject& object)
 {
-	return geom.loadFromFile(filename);
+	object.toVertexArray(clientData);
+
+	vertexBuffer._impl = new GLVertexBuffer();
+
+	GLVertexBuffer* vbo = (GLVertexBuffer*)vertexBuffer._impl;
+	vbo->create();
+	vbo->bind();
+	vbo->upload(clientData, GLVertexBuffer::StaticDraw);
 }
 
 void StaticMesh::makeDebugBox(float w, float h, float d)
 {
-	geom.addBox(w, h, d);
-	geom.setAllColors(Color::White);
+	GeometryObject ourBoxGeomData;
+	ourBoxGeomData.addBox(w, h, d);
+	ourBoxGeomData.generateNormals();
+	ourBoxGeomData.setAllColors(Color::Red);
+
+	for (auto& v : ourBoxGeomData.vertices)
+	{
+		v.x += w / 2.f;
+	}
+
+	//IndexArray indexes; 
+	ourBoxGeomData.toVertexArray(clientData);
+	//VertexArray::removeDuplicateVertices(ourBoxGeom, indexes);
+
+	vertexBuffer._impl = new GLVertexBuffer();
+	
+	GLVertexBuffer* vbo = (GLVertexBuffer*)vertexBuffer._impl;
+	vbo->create();
+	vbo->bind();
+	vbo->upload(clientData, GLVertexBuffer::StaticDraw);
 }
-
-
-void StaticMesh::test()
-{
-	geom.addBox(1.f, 1.f, 1.f);
-	geom.setAllColors(Color::White);
-}
-
-void StaticMesh::test2()
-{
-	geom.addCylinder();
-	geom.setAllColors(Color::White);
-}
-
 
 NEPHILIM_NS_END

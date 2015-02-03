@@ -170,7 +170,7 @@ World* GameCore::getWorld()
 UICanvas* GameCore::createCanvas(const String& name)
 {
 	UICanvas* c = userInterfaceManager.createCanvas(name);
-	c->getContext().m_defaultFont = &contentManager.font;
+	c->getCore().m_defaultFont = &contentManager.font;
 	return c;
 }
 
@@ -198,6 +198,12 @@ Engine* GameCore::getEngine()
 Window* GameCore::getWindow()
 {
     return m_creator->m_window;
+}
+
+/// Returns whether this game is running as a server-only (no graphics)
+bool GameCore::isDedicatedServer()
+{
+	return gameNetwork.isDedicatedServer;
 }
 
 /// Sets the base directory to load resources from
@@ -341,6 +347,11 @@ void GameCore::PrimaryUpdate(Time time)
 		{
 			w->update(time);
 		}
+	}
+
+	for (auto ux : userInterfaceManager.canvasList)
+	{
+		ux->update(time.seconds());
 	}
 
 	// Now let's keep our scripts fresh

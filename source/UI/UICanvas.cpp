@@ -12,7 +12,7 @@ UICanvas::UICanvas()
 : m_surfaceContainerLock(0)
 , m_backgroundColor(Color::Transparent)
 {
-	
+	_core = &m_state;
 }
 
 /// Adds a layer to this canvas for 2D controls
@@ -31,7 +31,7 @@ void UICanvas::addLayer3D(const String& name)
 bool UICanvas::loadStylesheet(const String& filename)
 {
 	CSSLoader css_loader;
-	return css_loader.load(filename, getContext().stylesheet);
+	return css_loader.load(filename, getCore().stylesheet);
 }
 
 /// Update the window size of the UI canvas
@@ -61,9 +61,9 @@ void UICanvas::onDraw(GraphicsDevice* renderer)
 	}
 	m_surfaceContainerLock--;
 
-	if (getContext().dragElement)
+	if (getCore().dragElement)
 	{
-		getContext().dragElement->drawItself(renderer, mat4::identity);
+		getCore().dragElement->drawItself(renderer, mat4::identity);
 		Log("Rendering the drag element");
 	}
 }
@@ -93,7 +93,7 @@ UIWindow* UICanvas::getLayer(const String& name)
 	return found;
 }
 
-UICore& UICanvas::getContext()
+UICore& UICanvas::getCore()
 {
 	return m_state;
 }
@@ -279,19 +279,19 @@ void UICanvas::draw(GraphicsDevice* renderer)
 	}
 
 
-	if (getContext().dragElement)
+	if (getCore().dragElement)
 	{
-		getContext().dragElement->drawItself(renderer, mat4::identity);
+		getCore().dragElement->drawItself(renderer, mat4::identity);
 	}
 
-	if (getContext().contextMenuElement)
+	if (getCore().contextMenuElement)
 	{
-		getContext().contextMenuElement->drawItself(renderer, mat4::identity);
+		getCore().contextMenuElement->drawItself(renderer, mat4::identity);
 	}
 
-	if (!getContext().menuElementStack.empty())
+	if (!getCore().menuElementStack.empty())
 	{
-		getContext().menuElementStack[0]->drawItself(renderer, mat4::identity);
+		getCore().menuElementStack[0]->drawItself(renderer, mat4::identity);
 	}
 };
 

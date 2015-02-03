@@ -8,14 +8,16 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 /// Start the empty packet
-Packet::Packet(){
+Packet::Packet()
+{
 	m_readPos = 0;
-};
+}
 
 /// Get the size in bytes of the buffer
-std::size_t Packet::getDataSize() const{
+std::size_t Packet::getDataSize() const
+{
 	return m_data.size();
-};
+}
 
 /// Get the data raw pointer
 const void* Packet::getData() const{
@@ -226,6 +228,7 @@ void Packet::onReceive(const void* data, std::size_t size)
 void Packet::clear()
 {
 	m_data.clear();
+	m_readPos = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////

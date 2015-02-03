@@ -18,7 +18,7 @@ void DebugDraw::drawBox(float x, float y, float z, float size, Color a)
 {
 	_graphics->setDefaultTexture();
 
-	GeometryData box;
+	GeometryObject box;
 	box.addBox(size, size, size);
 	box.setAllColors(a);
 	box.generateNormals();

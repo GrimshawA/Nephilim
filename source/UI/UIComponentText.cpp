@@ -82,7 +82,7 @@ void UIComponentText::onRender(GraphicsDevice* renderer, UIView* view, const mat
 		text.setOrigin(text.getOrigin().x, text.getLocalBounds().height / 2.f);
 	}
 
-	text.setFont(*view->getContext()->m_defaultFont);
+	text.setFont(*view->getCore()->m_defaultFont);
 	text.setOrigin(static_cast<int>(text.getOrigin().x + 0.5f), static_cast<int>(text.getOrigin().y + 0.5f));
 	text.setPosition(static_cast<int>(text.getPosition().x + 0.5f), static_cast<int>(text.getPosition().y + 0.5f));
 	

@@ -6,7 +6,22 @@
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Graphics/IndexArray.h>
 
+#include <Nephilim/Graphics/VertexBuffer.h>
+#include <Nephilim/Graphics/IndexBuffer.h>
+
 NEPHILIM_NS_BEGIN
+
+class NEPHILIM_API FStaticMeshVertexBuffer : public VertexBuffer
+{
+public:
+
+};
+
+class NEPHILIM_API FStaticMeshIndexBuffer : public IndexBuffer
+{
+public:
+
+};
 
 /**
 	\class StaticMesh
@@ -32,21 +47,19 @@ class NEPHILIM_API StaticMesh
 {
 public:
 
-	VertexArray _vertexArray;
-	IndexArray _indexArray;
+	/// This is the vertex buffer resource for this static mesh (link to the uploaded GPU data)
+	FStaticMeshVertexBuffer vertexBuffer;
+	FStaticMeshIndexBuffer  indexBuffer;
+
+	VertexArray clientData;
 
 public:
+	
+	/// Prepare our buffers with the given mesh
+	void uploadGeometry(const GeometryObject& object);
 
-
-	/// Load the static mesh data from a file directly
-	bool load(const String& filename);
-
+	// nice for prototyping stuff
 	void makeDebugBox(float w, float h, float d);
-
-	GeometryData geom;
-
-	void test();
-	void test2();
 };
 
 NEPHILIM_NS_END

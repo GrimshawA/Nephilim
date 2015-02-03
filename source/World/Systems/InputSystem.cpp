@@ -32,9 +32,9 @@ void InputSystem::emitAxisAction(const String& name, float scale)
 	Log("Emitting axis %s", name.c_str());
 
 	// Actors
-	for (std::size_t i = 0; i < mWorld->actors.size(); ++i)
+	for (std::size_t i = 0; i < _World->mPersistentLevel->actors.size(); ++i)
 	{
-		Actor* actor = mWorld->actors[i];
+		Actor* actor = _World->mPersistentLevel->actors[i];
 		for (std::size_t j = 0; j < actor->components.size(); ++j)
 		{
 			if (dynamic_cast<AInputComponent*>(actor->components[j]))
@@ -73,7 +73,7 @@ void InputSystem::emitAction(const String& name, AInputComponent::ActionModes mo
 {
 	Log("Action: %s", name.c_str());
 
-	ComponentManager* inputManager = mWorld->getComponentManager<AInputComponent>();
+	ComponentManager* inputManager = _World->getComponentManager<AInputComponent>();
 
 	// ECS
 	for (std::size_t i = 0; i < inputManager->size(); ++i)
@@ -83,9 +83,9 @@ void InputSystem::emitAction(const String& name, AInputComponent::ActionModes mo
 	}
 
 	// Actors
-	for (std::size_t i = 0; i < mWorld->actors.size(); ++i)
+	for (std::size_t i = 0; i < _World->mPersistentLevel->actors.size(); ++i)
 	{
-		Actor* actor = mWorld->actors[i];
+		Actor* actor = _World->mPersistentLevel->actors[i];
 		for (std::size_t j = 0; j < actor->components.size(); ++j)
 		{
 			if (dynamic_cast<AInputComponent*>(actor->components[j]))

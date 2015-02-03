@@ -24,7 +24,6 @@ UIView::UIView()
 , m_positionFlags(0)
 , m_sizeFlags(0)
 , m_childrenLock(0)
-, mCore(NULL)
 , m_hasFocus(false)
 , m_layoutController(NULL)
 , m_backgroundColor(91,91,91)
@@ -53,7 +52,6 @@ UIView::UIView(UIView* parent)
 , m_positionFlags(0)
 , m_sizeFlags(0)
 , m_childrenLock(0)
-, mCore(NULL)
 , m_hasFocus(false)
 , m_layoutController(NULL)
 , m_backgroundColor(91,91,91)
@@ -500,7 +498,7 @@ bool UIView::isScheduledForRemoval(UIView* v)
 void UIView::processPositionFlags()
 {
 	// Lets set the position flags now
-	if(getParent() && getContext())
+	if(getParent() && getCore())
 	{
 		if( hasPositionFlag(UIPositionFlag::AttachBottom))
 		{
@@ -513,7 +511,7 @@ void UIView::processPositionFlags()
 void UIView::processSizeFlags()
 {
 	// Lets set the position flags now
-	if(getParent() && getContext())
+	if(getParent() && getCore())
 	{
 		
 	}
@@ -694,9 +692,9 @@ bool UIView::focus()
 	// Fails to get focus if it is not focusable
 	if(!isFocusable()) return false;
 
-	if(getContext())
+	if(getCore())
 	{
-		getContext()->m_focusControl = this;
+		getCore()->m_focusControl = this;
 		m_hasFocus = true;
 	}
 	else
@@ -716,11 +714,11 @@ bool UIView::hasFocus()
 /// Hierarchicly sets the context to all children
 void UIView::setContext(UICore* states)
 {
-	mCore = states;
+	_core = states;
 
 	// -- Being inserted in a UICanvas hierarchy
-	setPositionFlags(mCore->defaultPositionFlags);
-	setSizeFlags(mCore->defaultSizeFlags);
+	setPositionFlags(_core->defaultPositionFlags);
+	setSizeFlags(_core->defaultSizeFlags);
 
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{
@@ -1029,13 +1027,6 @@ Vec2f UIView::getMiddlePosition(){
 	return Vec2f(mRect.left + mRect.width/2, mRect.top + mRect.height/2);
 };
 
-
-/// Returns the UIWindow context or NULL if not attached
-UICore* UIView::getContext()
-{
-	return mCore;
-};
-
 UIView* UIView::getParent()
 {
 	return m_parent;
@@ -1105,8 +1096,8 @@ void UIView::attach(UIView* control)
 	// Assign
 	control->m_parent = this;
 
-	if(mCore)
-		control->setContext(mCore);
+	if(_core)
+		control->setContext(_core);
 
 	//control->processSizeChange(getSize().x, getSize().y);
 
@@ -1358,8 +1349,8 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 	UIPainter painter;
 	painter.graphicsDevice = renderer;
 	painter.baseMatrix = absoluteTransform;
-	if (getContext())
-		painter.activeFont = getContext()->m_defaultFont;
+	if (getCore())
+		painter.activeFont = getCore()->m_defaultFont;
 	onPaint(painter);
 
 	// clip the overflowing children

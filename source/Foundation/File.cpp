@@ -297,4 +297,23 @@ namespace FileOps
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+/// Utility to get the contents of a text file
+String getTextFileContents(const String& filename)
+{
+	File myFile(filename, IODevice::TextRead);
+	if (!myFile)
+		return "";
+
+	String contents;
+
+	while (!myFile.atEnd())
+		contents += myFile.getChar();
+
+	contents += '\0';
+
+	return contents;
+}
+
 NEPHILIM_NS_END
