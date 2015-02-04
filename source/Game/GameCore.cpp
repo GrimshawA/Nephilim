@@ -339,6 +339,8 @@ void GameCore::PrimaryUpdate(Time time)
 {
 	gameInput.update(time);
 
+	stateManager.update(time);
+
 	onUpdate(time);
 
 	for (auto w : sceneManager.mScenes)

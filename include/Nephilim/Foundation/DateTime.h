@@ -43,6 +43,9 @@ public:
 
 	/// Returns a timeStamp of the local time on the format 'yyyy-mm-ddThh:mm::ss'
 	static String timeStamp();
+
+	/// Returns a string like 00:00:00 with the given time
+	static String createTimeString(int minutes, int seconds);
 };
 
 

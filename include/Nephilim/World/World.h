@@ -1,5 +1,5 @@
-#ifndef NephilimScene_h__
-#define NephilimScene_h__
+#ifndef NephilimWorld_h__
+#define NephilimWorld_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Object.h>
@@ -183,7 +183,7 @@ public:
 	void updateTransformHierarchy();
 
 	/// Registers a system to this scene
-	void registerSystem(System* system);
+	void attachSystem(System* system);
 
 	/// Instances a new RenderSystem with type T and initializes it
 	/// T must be a derived type of RenderSystem
@@ -217,12 +217,10 @@ public:
 
 	template<typename T>
 	void createComponent(T c, Entity e);
-
-
 };
 
 /// The template definitions are stored elsewhere
 #include <Nephilim/World/World.inl>
 
 NEPHILIM_NS_END
-#endif // NephilimScene_h__
+#endif // NephilimWorld_h__

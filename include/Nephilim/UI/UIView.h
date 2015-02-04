@@ -125,6 +125,7 @@ namespace UIFlag
 }
 
 class UIAnimation;
+class UIController;
 
 class NEPHILIM_API UIView : public UIObject, public AxTarget, public RefCountable
 {
@@ -150,7 +151,7 @@ public:
 	String     m_name;             ///< Name
 	UIView* m_parent;           ///< The parent control
 	
-	Color col;
+	UIController* _controller = nullptr;
 	
 // Inheritance
 protected:
@@ -190,6 +191,10 @@ public:
 
 	/// Get the current height of this widget
 	float height();
+
+	/// This will instance and bind a new controller to this view
+	template<typename T>
+	T* createController();
 
 	/// Refresh the visual styles on this view
 	void updateStyles();
@@ -609,6 +614,19 @@ T* UIView::createChild(const String& name)
 	attach(view);
 
 	return view;
+}
+
+/// This will instance and bind a new controller to this view
+template<typename T>
+T* UIView::createController()
+{
+	if (!_controller)
+	{
+		_controller = new T();
+		_controller->_view = this;
+	}
+
+	return _controller;
 }
 
 /// UIView or UIWidget are the same thing.

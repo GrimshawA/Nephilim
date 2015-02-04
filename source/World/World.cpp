@@ -115,7 +115,7 @@ PhysicsSystem* World::createPhysicsSystem(const String& name)
 		if (f)
 		{
 			physicsSystem = f();
-			registerSystem(physicsSystem);
+			attachSystem(physicsSystem);
 			Log("GOT PHYSICS!");
 		}
 	}
@@ -139,7 +139,7 @@ AudioSystem* World::createAudioSystem(const String& name)
 		if (f)
 		{
 			audioSystem = f();
-			registerSystem(audioSystem);
+			attachSystem(audioSystem);
 			Log("GOT AUDIO!");
 		}
 	}
@@ -223,7 +223,7 @@ void World::updateTransformHierarchy()
 }
 
 /// Registers a system to this scene
-void World::registerSystem(System* system)
+void World::attachSystem(System* system)
 {
 	system->_World = this;
 	mRegisteredSystems.push_back(system);

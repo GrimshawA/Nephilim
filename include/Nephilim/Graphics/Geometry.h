@@ -88,6 +88,32 @@ class NEPHILIM_API GeometryObject : public Drawable
 public:
 	
 	
+
+	/// The array of positions in the mesh
+	std::vector<Vector3D> vertices;
+
+	/// Each vertex can have an associated color
+	std::vector<Color> colors;
+
+	/// Normals for each vertex for lighting
+	std::vector<Vector3D> normals;
+
+	/// First channel of texture coordinates
+	std::vector<Vector2D> texcoords0;
+
+	/// Each vertex can have a bone influences list
+	std::vector<Vector4D> boneIDs;
+
+	/// Each vertex can have a bone influences list
+	std::vector<Vector4D> boneWeights;
+
+	/// Faces (triangles) of the mesh
+	std::vector<Vec3<uint16_t> > faces;
+
+	bool m_useColors;
+	bool m_useNormals;
+	bool m_useTexCoords;
+
 	Render::Primitive::Type m_primitive;
 
 public:
@@ -134,21 +160,6 @@ public:
 	void toVertexArray(VertexArray& varray) const;
 
 	virtual void onDraw(GraphicsDevice* renderer);
-
-	/// The array of positions in the mesh
-	std::vector<Vector3D> vertices;
-	std::vector<Color> m_colors;
-	std::vector<Vec3f> m_normals;
-	std::vector<Vec2f> m_texCoords;
-	std::vector<vec4> boneIDs;
-	std::vector<vec4> boneWeights;
-
-	/// Faces (triangles) of the mesh
-	std::vector<Vec3<uint16_t> > faces;
-
-	bool m_useColors;
-	bool m_useNormals;
-	bool m_useTexCoords;
 
 public:
 

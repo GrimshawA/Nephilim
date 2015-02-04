@@ -25,7 +25,7 @@ template<typename T>
 T* World::createRenderSystem()
 {
 	RenderSystem* renderSystem = new T();
-	registerSystem(renderSystem);
+	attachSystem(renderSystem);
 	renderSystem->mRenderer = this->graphicsDevice;
 	renderSystem->mContentManager = this->contentManager;
 	return static_cast<T*>(renderSystem);
@@ -37,7 +37,7 @@ template<typename T>
 T* World::createNetworkSystem()
 {
 	NetworkSystem* networkSystem = new T();
-	registerSystem(networkSystem);
+	attachSystem(networkSystem);
 	_networkSystems.push_back(networkSystem);
 	return networkSystem;
 }

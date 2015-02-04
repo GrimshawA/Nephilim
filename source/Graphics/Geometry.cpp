@@ -132,10 +132,10 @@ void GeometryObject::toVertexArray(VertexArray& varray) const
 	for(std::size_t i = 0; i < vertices.size(); ++i)
 	{
 		vertex_data[i].p = vertices[i];
-		vertex_data[i].c.x = (float)m_colors[i].r / 255.f;
-		vertex_data[i].c.y = (float)m_colors[i].g / 255.f;
-		vertex_data[i].c.z = (float)m_colors[i].b / 255.f;
-		vertex_data[i].c.w = (float)m_colors[i].a / 255.f;
+		vertex_data[i].c.x = (float)colors[i].r / 255.f;
+		vertex_data[i].c.y = (float)colors[i].g / 255.f;
+		vertex_data[i].c.z = (float)colors[i].b / 255.f;
+		vertex_data[i].c.w = (float)colors[i].a / 255.f;
 	}
 }
 
@@ -146,25 +146,25 @@ void GeometryObject::onDraw(GraphicsDevice* renderer)
 		return;
 
 	renderer->enableVertexAttribArray(0);
-	if(m_useColors && m_colors.size() > 0) renderer->enableVertexAttribArray(1);
-	if(m_useTexCoords && m_texCoords.size() > 0) renderer->enableVertexAttribArray(2);
-	if(m_useNormals && m_normals.size() > 0) renderer->enableVertexAttribArray(3);
+	if(m_useColors && colors.size() > 0) renderer->enableVertexAttribArray(1);
+	if(m_useTexCoords && texcoords0.size() > 0) renderer->enableVertexAttribArray(2);
+	if(m_useNormals && normals.size() > 0) renderer->enableVertexAttribArray(3);
 	if(boneIDs.size() > 0) renderer->enableVertexAttribArray(4);
 	if(boneWeights.size() > 0) renderer->enableVertexAttribArray(5);
 
 	renderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, 0, &vertices[0]);
-	if(m_useColors && m_colors.size() > 0)       renderer->setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, 0, &m_colors[0]);
-	if(m_useTexCoords && m_texCoords.size() > 0) renderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, 0, &m_texCoords[0]);
-	if(m_useNormals && m_normals.size() > 0)     renderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, 0, &m_normals[0]);
+	if(m_useColors && colors.size() > 0)       renderer->setVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, true, 0, &colors[0]);
+	if(m_useTexCoords && texcoords0.size() > 0) renderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, 0, &texcoords0[0]);
+	if(m_useNormals && normals.size() > 0)     renderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, 0, &normals[0]);
 	if(boneIDs.size() > 0)     renderer->setVertexAttribPointer(4, 4, GL_FLOAT, false, 0, &boneIDs[0]);
 	if(boneWeights.size() > 0)     renderer->setVertexAttribPointer(5, 4, GL_FLOAT, false, 0, &boneWeights[0]);
 	   
 	renderer->drawArrays(m_primitive, 0, vertices.size());
 
 	renderer->disableVertexAttribArray(0);
-	if(m_useColors && m_colors.size() > 0) renderer->disableVertexAttribArray(1);
-	if(m_useTexCoords && m_texCoords.size() > 0) renderer->disableVertexAttribArray(2);
-	if(m_useNormals && m_normals.size() > 0) renderer->disableVertexAttribArray(3);
+	if(m_useColors && colors.size() > 0) renderer->disableVertexAttribArray(1);
+	if(m_useTexCoords && texcoords0.size() > 0) renderer->disableVertexAttribArray(2);
+	if(m_useNormals && normals.size() > 0) renderer->disableVertexAttribArray(3);
 	if(boneIDs.size() > 0) renderer->disableVertexAttribArray(4);
 	if(boneWeights.size() > 0) renderer->disableVertexAttribArray(5);
 }
@@ -183,16 +183,16 @@ bool GeometryObject::saveToFile(const String& filename)
 		if(vertices.size() > 0) fp.write(reinterpret_cast<char*>(&vertices[0]), vertices.size() * sizeof(vec3));
 
 		// write normals
-		writer << static_cast<Int64>(m_normals.size());
-		if(m_normals.size() > 0) fp.write(reinterpret_cast<char*>(&m_normals[0]), m_normals.size() * sizeof(vec3));
+		writer << static_cast<Int64>(normals.size());
+		if(normals.size() > 0) fp.write(reinterpret_cast<char*>(&normals[0]), normals.size() * sizeof(vec3));
 
 		// write texcoords
-		writer << static_cast<Int64>(m_texCoords.size());
-		if(m_texCoords.size() > 0) fp.write(reinterpret_cast<char*>(&m_texCoords[0]), m_texCoords.size() * sizeof(vec2));
+		writer << static_cast<Int64>(texcoords0.size());
+		if(texcoords0.size() > 0) fp.write(reinterpret_cast<char*>(&texcoords0[0]), texcoords0.size() * sizeof(vec2));
 
 		// write colors
-		writer << static_cast<Int64>(m_colors.size());
-		if(m_colors.size() > 0) fp.write(reinterpret_cast<char*>(&m_colors[0]), m_colors.size() * sizeof(Color));
+		writer << static_cast<Int64>(colors.size());
+		if(colors.size() > 0) fp.write(reinterpret_cast<char*>(&colors[0]), colors.size() * sizeof(Color));
 	}
 
 	return true;
@@ -215,20 +215,20 @@ bool GeometryObject::loadFromFile(const String& filename)
 		// read normals
 		Int64 normalCount;
 		reader >> normalCount;
-		m_normals.resize(normalCount);
-		if(normalCount> 0) fp.read(reinterpret_cast<char*>(&m_normals[0]), sizeof(vec3) * normalCount);
+		normals.resize(normalCount);
+		if(normalCount> 0) fp.read(reinterpret_cast<char*>(&normals[0]), sizeof(vec3) * normalCount);
 
 		// read texcoords
 		Int64 texCoordCount;
 		reader >> texCoordCount;
-		m_texCoords.resize(texCoordCount);
-		if(texCoordCount> 0) fp.read(reinterpret_cast<char*>(&m_texCoords[0]), sizeof(vec2) * texCoordCount);
+		texcoords0.resize(texCoordCount);
+		if(texCoordCount> 0) fp.read(reinterpret_cast<char*>(&texcoords0[0]), sizeof(vec2) * texCoordCount);
 
 		// read colors
 		Int64 colorCount;
 		reader >> colorCount;
-		m_colors.resize(colorCount);
-		if(colorCount> 0) fp.read(reinterpret_cast<char*>(&m_colors[0]), sizeof(Color) * colorCount);
+		colors.resize(colorCount);
+		if(colorCount> 0) fp.read(reinterpret_cast<char*>(&colors[0]), sizeof(Color) * colorCount);
 
 		Log("GeometryData::loadFromFile(%s): Loaded %d vertices", filename.c_str(), vertexCount);
 	
@@ -276,8 +276,8 @@ void GeometryObject::addBox(float width, float height, float depth)
 	vertices.resize(6 * 6);
 	memcpy(&vertices[0], verticesr, sizeof(float) * 6 * 6 * 3);
 
-	m_texCoords.resize(6*6);
-	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 6 * 2);	
+	texcoords0.resize(6*6);
+	memcpy(&texcoords0[0], texcoords, sizeof(float) * 6 * 6 * 2);	
 }
 
 /// Silly plane adding, to be refactored
@@ -298,24 +298,24 @@ void GeometryObject::addPlane(float width, float depth, float height)
 	vertices.resize(6);
 	memcpy(&vertices[0], verticesraw, sizeof(float)* 6 * 3);
 
-	m_texCoords.resize(6);
-	memcpy(&m_texCoords[0], texcoords, sizeof(float) * 6 * 2);
+	texcoords0.resize(6);
+	memcpy(&texcoords0[0], texcoords, sizeof(float) * 6 * 2);
 }
 
 void GeometryObject::randomFaceColors()
 {
-	m_colors.resize(vertices.size());
+	colors.resize(vertices.size());
 	for(std::size_t i = 0; i < vertices.size(); i += 6)
 	{
 		Color c(math::randomInt(0,255), math::randomInt(0,255), math::randomInt(0,255));
-		m_colors[i] = c;
-		m_colors[i+1] = c;
-		m_colors[i+2] = c;
+		colors[i] = c;
+		colors[i+1] = c;
+		colors[i+2] = c;
 		if(i+3 < vertices.size())
 		{
-			m_colors[i+3] = c;
-			m_colors[i+4] = c;
-			m_colors[i+5] = c;
+			colors[i+3] = c;
+			colors[i+4] = c;
+			colors[i+5] = c;
 		}
 		
 	}
@@ -323,28 +323,28 @@ void GeometryObject::randomFaceColors()
 
 void GeometryObject::setAllColors(Color color)
 {
-	m_colors.resize(vertices.size());
-	for(std::size_t i = 0; i < m_colors.size(); ++i)
+	colors.resize(vertices.size());
+	for(std::size_t i = 0; i < colors.size(); ++i)
 	{
-		m_colors[i] = color;
+		colors[i] = color;
 	}
 }
 
 void GeometryObject::scaleUV(float factor)
 {
-	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
+	for(std::size_t i = 0; i < texcoords0.size(); ++i)
 	{
-		m_texCoords[i].x *= factor;
-		m_texCoords[i].y *= factor;
+		texcoords0[i].x *= factor;
+		texcoords0[i].y *= factor;
 	}
 }
 
 void GeometryObject::offsetUV(float u, float v)
 {
-	for(std::size_t i = 0; i < m_texCoords.size(); ++i)
+	for(std::size_t i = 0; i < texcoords0.size(); ++i)
 	{
-		m_texCoords[i].x += u;
-		m_texCoords[i].y += v;
+		texcoords0[i].x += u;
+		texcoords0[i].y += v;
 	}
 }
 
@@ -354,7 +354,7 @@ void GeometryObject::offsetUV(float u, float v)
 /// Generates normals for the geometry
 void GeometryObject::generateNormals()
 {
-	m_normals.resize(vertices.size());
+	normals.resize(vertices.size());
 	for(int i = 0; i < vertices.size(); i+=3)
 	{
 		// triangle is m_vertices[i] .. i+1 i+2
@@ -365,9 +365,9 @@ void GeometryObject::generateNormals()
 		normal = edge1.cross(edge2);
 		normal.normalize();
 
-		m_normals[i] = normal;
-		m_normals[i+1] = normal;
-		m_normals[i+2] = normal;
+		normals[i] = normal;
+		normals[i+1] = normal;
+		normals[i+2] = normal;
 	}
 }
 

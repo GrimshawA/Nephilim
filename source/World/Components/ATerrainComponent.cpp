@@ -31,17 +31,17 @@ bool ATerrainComponent::load(const String& heightmapFileName)
 				geometry.vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x + 1, y + 1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
 				geometry.vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x, y + 1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
 
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y+1 ) / static_cast<float>( heightmap.getSize().y)));
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x+1 ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y+1 ) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
 
 				geometry.vertices.push_back(vec3(x * GRID_SIZE + GRID_SIZE, heightmap.getPixel(x + 1, y).r * HEIGHT_FACTOR, y * GRID_SIZE));
 				geometry.vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x, y + 1).r * HEIGHT_FACTOR, y * GRID_SIZE + GRID_SIZE));
 				geometry.vertices.push_back(vec3(x * GRID_SIZE, heightmap.getPixel(x, y).r * HEIGHT_FACTOR, y * GRID_SIZE));
 
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x +1) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y +1) / static_cast<float>( heightmap.getSize().y)));
-				geometry.m_texCoords.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x +1) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y +1) / static_cast<float>( heightmap.getSize().y)));
+				geometry.texcoords0.push_back(vec2(static_cast<float>( x ) / static_cast<float>( heightmap.getSize().x), static_cast<float>( y ) / static_cast<float>( heightmap.getSize().y)));
 			}
 
 

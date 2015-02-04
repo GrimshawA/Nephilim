@@ -9,9 +9,23 @@
 
 NEPHILIM_NS_BEGIN
 
-	DateTime::DateTime(){
+DateTime::DateTime()
+{
+}
 
-	};
+String DateTime::createTimeString(int minutes, int seconds)
+{
+	String minString = String::number(minutes);
+	if (minString.length() == 1)
+		minString.insert(minString.begin(), '0');
+
+	String secString = String::number(seconds);
+	if (secString.length() == 1)
+		secString.insert(secString.begin(), '0');
+
+	return minString + ":" + secString;
+}
+
 
 	String DateTime::timeStamp(){
 		time_t ltime;
