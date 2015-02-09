@@ -43,7 +43,15 @@ public:
 	float screenHeight;
 	
 public:
+
+	/// Constructs a default camera at (0,0,0) looking down the -Z axis
 	ACameraComponent();
+
+	/// Returns the world point in screen homogeneous coordinates (-1 to 1)
+	Vector2D worldToHomogeneous(Vector3D point);
+
+	/// Get a combined matrix for this camera, projection * view
+	mat4 getCombinedMatrix();
 
 	void setSize(float width, float height);
 

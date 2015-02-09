@@ -109,6 +109,9 @@ public:
 	/// If there are no spawned worlds, one will be created, otherwise the world 0 is always the main one
 	World* getWorld();
 
+	/// Get the world by its name
+	World* getWorld(const String& name);
+
 	/// Render a given world
 	void renderWorld(World* world);
 
@@ -195,7 +198,7 @@ protected:
 	virtual void onCreate(); 
 
 	/// Callback when an event happens
-	virtual void onEvent(const Event &event);
+	virtual void onEvent(const Event& event);
 
 	/// Can only use relative path resources from this directory
 	/// The only alternative otherwise is to use absolute paths - which may be blocked in sandbox modes

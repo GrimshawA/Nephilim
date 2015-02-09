@@ -9,8 +9,9 @@
 NEPHILIM_NS_BEGIN
 
 /// Prepare our buffers with the given mesh
-void StaticMesh::uploadGeometry(const GeometryObject& object)
+void StaticMesh::uploadGeometry(GeometryObject& object)
 {
+	object.ensureUV0();
 	object.toVertexArray(clientData);
 
 	vertexBuffer._impl = new GLVertexBuffer();
@@ -27,6 +28,7 @@ void StaticMesh::makeDebugBox(float w, float h, float d)
 	ourBoxGeomData.addBox(w, h, d);
 	ourBoxGeomData.generateNormals();
 	ourBoxGeomData.setAllColors(Color::Red);
+	ourBoxGeomData.ensureUV0();
 
 	for (auto& v : ourBoxGeomData.vertices)
 	{

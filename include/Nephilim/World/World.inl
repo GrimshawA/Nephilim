@@ -1,3 +1,5 @@
+/*
+
 template<typename T>
 ComponentManager* World::getComponentManager()
 {
@@ -18,7 +20,7 @@ void World::createComponent(T c, Entity e)
 	T* component = static_cast<T*>(componentManager->createComponentForEntity(e));
 	*component = c;
 }
-
+*/
 /// Instances a new RenderSystem with type T and initializes it
 /// T must be a derived type of RenderSystem
 template<typename T>
@@ -41,7 +43,7 @@ T* World::createNetworkSystem()
 	_networkSystems.push_back(networkSystem);
 	return networkSystem;
 }
-
+/*
 template<typename T>
 void World::createDefaultComponentManager()
 {
@@ -53,7 +55,7 @@ void World::createDefaultComponentManager()
 
 	componentManagers[std::type_index(typeid(T))] = new ComponentArray<T>();
 }
-
+*/
 static uint32_t _IDGIVER = 1;
 
 /// Spawns an actor with type T (must be a subclass of Actor)

@@ -17,6 +17,17 @@ ACameraComponent::ACameraComponent()
 	
 }
 
+/// Returns the world point in screen homogeneous coordinates (-1 to 1)
+Vector2D ACameraComponent::worldToHomogeneous(Vector3D point)
+{
+	Vector3D cameraSpacePoint = t.getMatrix().inverse() * point;
+
+	// Project it
+	Vector4D projectedPoint = getProjection() * Vector4D(cameraSpacePoint, 1.f);
+
+	return Vector2D(projectedPoint.x / projectedPoint.w, projectedPoint.y / projectedPoint.w);
+}
+
 void ACameraComponent::setSize(float width, float height)
 {
 	size.x = width;
@@ -34,6 +45,12 @@ mat4 ACameraComponent::getProjection()
 	{
 		return mat4::perspective(70.f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.05f, 5000.f);
 	}
+}
+
+/// Get a combined matrix for this camera, projection * view
+mat4 ACameraComponent::getCombinedMatrix()
+{
+	return getProjection() * t.getMatrix().inverse();
 }
 
 /// Static: Unprojects a point from NDC to a world-space Ray

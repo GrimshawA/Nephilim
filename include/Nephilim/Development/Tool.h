@@ -8,6 +8,11 @@
 
 NEPHILIM_NS_BEGIN
 
+class Tool
+{
+
+};
+
 /**
 	\class ActionHistory
 	\brief [Editor] Holds a list of previous actions for undo/redo features

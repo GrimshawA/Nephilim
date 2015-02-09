@@ -4,14 +4,14 @@
 NEPHILIM_NS_BEGIN
 
 AxAlpha::AxAlpha()
-: AxBase()
+: Animation()
 , m_easing(AxEasingFunction::QuarticInterpolation)
 {
 
 }
 
 AxAlpha::AxAlpha(Uint8 alpha, float duration)
-: AxBase(duration)
+: Animation(duration)
 , m_easing(AxEasingFunction::QuarticInterpolation)
 , m_end(alpha / 255)
 {

@@ -32,6 +32,8 @@ class GameCore;
 class PhysicsSystem;
 class AudioSystem;
 class NetworkSystem;
+class ACameraComponent;
+
 
 /**
 	\class World
@@ -85,9 +87,6 @@ public:
 	/// This class is responsible for managing the entities alive
 	EntityManager entityManager;
 
-	/// Component storage units
-	/// &type_id(component_type) -> ComponentList
-	std::map<std::type_index, ComponentManager*> componentManagers;
 
 	/// The registered systems with this scene
 	/// Each of these systems, once hooked can observe the scene and get callbacks from it automatically
@@ -106,6 +105,9 @@ public:
 	/// Unless we are on the multi-level streaming mode, there is only one active level ever
 	Level* mPersistentLevel;
 
+	/// Current camera that renders this world
+	ACameraComponent* _camera = nullptr;
+
 public:
 	/// Just prepare the world
 	World();
@@ -119,6 +121,14 @@ public:
 	/// Set the player controller for this world if applicable (clients only)
 	/// The World _owns_ the object and destroys it when releasing
 	void setPlayerController(PlayerController* playerController);
+
+	/// Get the window-space coordinate of where the point lies in
+	Vec2<int> getScreenCoordinate(Vector3D point);
+
+	/// This will convert a window-space coordinate into a world position
+	/// Depends on the camera being orthogonal to the Z=0 plane
+	Vector2D getWorldCoordinate2D(Vec2<int> point);
+	
 
 	/// Load a level into memory by its name
 	/// This requires that the level is previously indexed into this world
@@ -175,13 +185,6 @@ public:
 	/// Get the total numbers of spawned actors
 	int getActorCount();
 
-	/// Allocate a component manager to type T as a ComponentArray<T>
-	template<typename T>
-	void createDefaultComponentManager();
-
-	/// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
-	void updateTransformHierarchy();
-
 	/// Registers a system to this scene
 	void attachSystem(System* system);
 
@@ -203,10 +206,6 @@ public:
 	/// Create a audio system from a plugin or factory
 	AudioSystem* createAudioSystem(const String& name);
 
-	/// Get the current component manager handling the type T
-	template<typename T>
-	ComponentManager* getComponentManager();
-
 	/// Create and return a new entity
 	Entity createEntity();
 
@@ -215,8 +214,6 @@ public:
 
 	Entity getEntityByIndex(std::size_t index);
 
-	template<typename T>
-	void createComponent(T c, Entity e);
 };
 
 /// The template definitions are stored elsewhere

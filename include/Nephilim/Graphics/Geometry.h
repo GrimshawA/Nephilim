@@ -118,8 +118,11 @@ public:
 
 public:
 
-
+	/// Construct the empty mesh
 	GeometryObject();
+
+	/// Apply an arbitrary transform to this mesh
+	void applyTransform(mat4 transf);
 
 	/// Scales the mesh by a factor
 	void scale(float xfactor, float yfactor, float zfactor);
@@ -133,6 +136,9 @@ public:
 	void addCylinder();
 
 	void randomFaceColors();
+
+	/// Make sure there is a uv set
+	void ensureUV0();
 
 	/// Save the geometry to a file in a raw format
 	bool saveToFile(const String& filename);

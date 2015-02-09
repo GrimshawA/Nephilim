@@ -5,7 +5,7 @@ NEPHILIM_NS_BEGIN
 
 AxList::~AxList()
 {
-	std::list<AxBase*>::iterator it = m_animations.begin();
+	std::list<Animation*>::iterator it = m_animations.begin();
 	while( it != m_animations.end())
 	{
 		delete (*it);
@@ -15,7 +15,7 @@ AxList::~AxList()
 
 void AxList::update(float delta)
 {
-	std::list<AxBase*>::iterator it = m_animations.begin();
+	std::list<Animation*>::iterator it = m_animations.begin();
 	while( it != m_animations.end())
 	{
 		(*it)->update(delta);
@@ -32,7 +32,7 @@ void AxList::update(float delta)
 	}
 }
 
-void AxList::commit(AxBase* animation)
+void AxList::commit(Animation* animation)
 {
 	m_animations.push_back(animation);
 }

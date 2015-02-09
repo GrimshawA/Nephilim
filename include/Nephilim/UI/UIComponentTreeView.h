@@ -1,16 +1,14 @@
 #ifndef NephilimUIComponentTreeView_h__
 #define NephilimUIComponentTreeView_h__
 
-#include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIComponent.h>
 
 #include <sigc++/sigc++.h>
-
 #include <vector>
 
 NEPHILIM_NS_BEGIN
 
-class UIDataModel;
+class DataModel;
 
 /**
 	\class UIComponentTreeView
@@ -26,14 +24,18 @@ class UIDataModel;
 */
 class NEPHILIM_API UIComponentTreeView : public UIComponent
 {
-public:
+private:
+
 	/// The model for this tree view
-	UIDataModel* model = nullptr;
+	DataModel* _dataModel = nullptr;
 
 	std::vector<UIView*> selectedItems;
 
 public:
 	UIComponentTreeView();
+
+	/// Set a new data model to this tree view
+	void setModel(DataModel* dataModel);
 
 	void itemClicked(UIView* node);
 
@@ -102,7 +104,7 @@ class NEPHILIM_API UIComponentTreeViewItem : public UIComponent
 public:
 	void toggle();
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);
 };
 
 NEPHILIM_NS_END

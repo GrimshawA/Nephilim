@@ -2,7 +2,7 @@
 #define NephilimAxSignal_h__
 
 #include <Nephilim/Platform.h>
-#include "AxBase.h"
+#include <Nephilim/Animation/Animation.h>
 
 #include <sigc++/sigc++.h>
 
@@ -13,7 +13,7 @@ NEPHILIM_NS_BEGIN
 	\class AxSignal
 	\brief Emits a signal when played
 */
-class NEPHILIM_API AxSignal : public AxBase
+class NEPHILIM_API AxSignal : public Animation
 {
 public:
 	sigc::signal<void> event;

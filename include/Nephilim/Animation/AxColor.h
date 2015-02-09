@@ -2,12 +2,13 @@
 #define NephilimAxColor_h__
 
 #include <Nephilim/Platform.h>
-#include "AxBase.h"
+#include <Nephilim/Animation/Animation.h>
+
 #include "AxEasing.h"
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API AxAlpha : public AxBase
+class NEPHILIM_API AxAlpha : public Animation
 {
 public:
 

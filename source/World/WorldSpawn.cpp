@@ -40,24 +40,6 @@ GameObject* World::spawnPrefab(const Prefab& prefab)
 /// Variant that allows to spawn the entity/actor/etc in a given location and orientation directly
 GameObject* World::spawnPrefab(const Prefab& prefab, Vector3D location, Quat orientation)
 {
-	if (prefab.getRootClassName() == "Entity")
-	{
-		Log("Spawning entity from prefab");
-		Entity entity = createEntity();
-		createComponent(CTransform(location), entity);
-		createComponent(ABoxComponent(), entity);
-
-		StaticMesh* SM = new StaticMesh;
-		SM->makeDebugBox(20, 20, 20);
-
-		AStaticMeshComponent csm;
-		csm.setStaticMesh(SM);
-		createComponent(csm, entity);
-	}
-	else if (prefab.getRootClassName() == "Actor")
-	{
-
-	}
 
 	return nullptr;
 }

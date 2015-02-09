@@ -97,7 +97,7 @@ bool GLShader::loadShaderFromFile(ShaderTypes type, const String& filename)
 					//mstr.removeCharacter('\n');
 					//std::cout << "GLSL: " << mstr << std::endl;
 					delete [] buf;
-				}
+				}	
 				glDeleteShader(shader);
 				shader = 0;
 			}

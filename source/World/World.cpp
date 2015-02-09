@@ -16,20 +16,15 @@
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/PluginLoader.h>
 
+#include <Nephilim/Game/GameCore.h>
+#include <Nephilim/Graphics/Window.h>
+
 NEPHILIM_NS_BEGIN
 
 World::World()
 : mEnabled(true)
 , mSimulationOnly(false)
 {
-	// Init some component managers
-	createDefaultComponentManager<CTransform>();
-	createDefaultComponentManager<AStaticMeshComponent>();
-	createDefaultComponentManager<ASpriteComponent>();
-	createDefaultComponentManager<ABoxComponent>();
-	createDefaultComponentManager<ACameraComponent>();
-	createDefaultComponentManager<AInputComponent>();
-
 	Level* defaultLevel = new Level();
 	mPersistentLevel = defaultLevel;
 	levels.push_back(defaultLevel);
@@ -59,6 +54,52 @@ void World::update(const Time& deltaTime)
 		a->update(deltaTime);
 	}
 }
+
+/// Get the window-space coordinate of where the point lies in
+Vec2<int> World::getScreenCoordinate(Vector3D point)
+{
+	Vec2<int> screenSpacePoint(0,0);
+
+	if (_camera)
+	{
+		Vector2D homo = _camera->worldToHomogeneous(point);
+		homo.x += 1.f;
+		homo.x /= 2.f;
+
+		homo.y += 1.f;
+		homo.y /= 2.f;
+		homo.y = 1.f - homo.y;
+
+		homo.x *= _game->getWindow()->width();
+		homo.y *= _game->getWindow()->width();
+
+		screenSpacePoint.x = static_cast<int>(homo.x);
+		screenSpacePoint.y = static_cast<int>(homo.y);
+	}
+
+	return screenSpacePoint;
+}
+
+/// This will convert a window-space coordinate into a world position
+/// Depends on the camera being orthogonal to the Z=0 plane
+Vector2D World::getWorldCoordinate2D(Vec2<int> point)
+{
+	Vector2D worldPoint(0.f, 0.f);
+
+	if (_camera)
+	{
+		mat4 cam = _camera->getCombinedMatrix();
+
+		Vector2D homo = _game->getWindow()->convertToHomogeneousCoordinate(point);
+		Vector4D worldCoordinate = cam.inverse() * Vector4D(homo.x, homo.y, 0.f, 1.f);
+
+		worldPoint.x = worldCoordinate.x;
+		worldPoint.y = worldCoordinate.y;
+	}
+
+	return worldPoint;
+}
+
 
 /// Set the player controller for this world if applicable (clients only)
 /// The World _owns_ the object and destroys it when releasing
@@ -210,18 +251,6 @@ Landscape* World::spawnLandscape()
 	return nullptr;
 }
 
-/// Cumulate the transform hierarchy so all model matrices are computed and can be used for rendering
-void World::updateTransformHierarchy()
-{
-	for (std::size_t i = 0; i < mPersistentLevel->actors.size(); ++i)
-	{
-		if (mPersistentLevel->actors[i]->root != nullptr)
-		{
-
-		}
-	}
-}
-
 /// Registers a system to this scene
 void World::attachSystem(System* system)
 {
@@ -244,11 +273,6 @@ Entity World::createEntity()
 void World::removeEntity(Entity entity)
 {
 	entityManager.destroy(entity);
-
-	for (auto it = componentManagers.begin(); it != componentManagers.end(); ++it)
-	{
-		it->second->removeComponentsFromEntity(entity);
-	}
 }
 
 Entity World::getEntityByIndex(std::size_t index)

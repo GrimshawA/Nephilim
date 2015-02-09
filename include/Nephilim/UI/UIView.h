@@ -28,7 +28,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class AxBase;
+class Animation;
 class UIComponent;
 
 struct UIPointerEvent
@@ -192,9 +192,15 @@ public:
 	/// Get the current height of this widget
 	float height();
 
+	/// Set the new Z value
+	void setZ(float _z);
+
 	/// This will instance and bind a new controller to this view
 	template<typename T>
 	T* createController();
+
+	/// This function allows to start an animation out of its definition file
+	void startAnimation(const String& animationAsset);
 
 	/// Refresh the visual styles on this view
 	void updateStyles();
@@ -301,7 +307,7 @@ public:
 	void destroyChild(UIView* child);
 
 	/// Submit an animation to be processed by the control
-	void commitAnimation(AxBase* animation);
+	void commitAnimation(Animation* animation);
 
 	/// Check if this control has animated children
 	bool hasAnimatedChildren();

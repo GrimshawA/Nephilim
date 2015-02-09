@@ -4,13 +4,13 @@
 NEPHILIM_NS_BEGIN
 
 AxPosition2D::AxPosition2D()
-: AxBase()
+: Animation()
 {
 
 }
 
 AxPosition2D::AxPosition2D(float target_x, float target_y, float duration)
-: AxBase()
+: Animation()
 , m_end(target_x, target_y)
 , m_easing(AxEasingFunction::QuarticInterpolation)
 {

@@ -88,6 +88,7 @@ void UIComponentText::onRender(GraphicsDevice* renderer, UIView* view, const mat
 	
 	mat4 localTransform = mat4::translate(vec3(0.f, 20.f, 1.f)) * mat4::rotatex(math::pi);
 
+	text.useOwnTransform = false;
 	renderer->setModelMatrix(parentTransform * text.getTransform().getMatrix());
 	renderer->draw(text);
 }

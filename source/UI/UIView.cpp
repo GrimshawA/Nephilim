@@ -393,7 +393,25 @@ void UIView::setSizeFlags(Uint64 flags)
 	processSizeFlags();
 }
 
-void UIView::commitAnimation(AxBase* animation)
+/// Set the new Z value
+void UIView::setZ(float _z)
+{
+	position.z = _z;
+	Log("Z set to %f", _z);
+}
+
+/// This function allows to start an animation out of its definition file
+void UIView::startAnimation(const String& animationAsset)
+{
+	UIAnimationLoaderXML loader;
+	Animation* anim = loader.load(animationAsset, this);
+	if (anim)
+	{
+		commitAnimation(anim);
+	}
+}
+
+void UIView::commitAnimation(Animation* animation)
 {
 	animation->addTarget(this);
 	animation->deduceInitialParameters();

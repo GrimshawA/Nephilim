@@ -7,9 +7,17 @@
 
 NEPHILIM_NS_BEGIN
 
+class UIComponentTreeView;
+
 class NEPHILIM_API UITreeView : public UIView
 {
 public:
+
+	/// The component that manages the tree view
+	UIComponentTreeView* treeViewComponent = nullptr;
+
+public:
+
 	/// Construct the tree view
 	UITreeView();
 };

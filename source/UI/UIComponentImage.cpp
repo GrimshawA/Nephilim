@@ -66,6 +66,7 @@ void UIComponentImage::onRender(GraphicsDevice* renderer, UIView* view, const ma
 	backgroundRect.setRect(view->getBounds());
 	if(mTexture) backgroundRect.setTexture(mTexture);
 	else backgroundRect.setColor(Color::Red);
+	backgroundRect.useOwnTransform = false;
 	renderer->draw(backgroundRect);
 }
 

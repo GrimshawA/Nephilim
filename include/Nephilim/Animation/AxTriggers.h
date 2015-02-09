@@ -2,11 +2,11 @@
 #define NephilimAxTriggers_h__
 
 #include <Nephilim/Platform.h>
-#include "AxBase.h"
+#include <Nephilim/Animation/Animation.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API AxKillTrigger : public AxBase
+class NEPHILIM_API AxKillTrigger : public Animation
 {
 public:
 

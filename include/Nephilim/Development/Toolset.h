@@ -1,5 +1,5 @@
-#ifndef NephilimEditor_h__
-#define NephilimEditor_h__
+#ifndef NephilimDevelopmentToolset_h__
+#define NephilimDevelopmentToolset_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/String.h>
@@ -47,4 +47,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimEditor_h__
+#endif // NephilimDevelopmentToolset_h__

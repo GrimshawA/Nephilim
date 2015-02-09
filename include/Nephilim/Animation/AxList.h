@@ -2,8 +2,7 @@
 #define NephilimAxList_h__
 
 #include <Nephilim/Platform.h>
-
-#include "AxBase.h"
+#include <Nephilim/Animation/Animation.h>
 
 #include <list>
 
@@ -25,12 +24,12 @@ public:
 	~AxList();
 
 	/// Commit a new animation for processing
-	void commit(AxBase* animation);
+	void commit(Animation* animation);
 
 	/// Updates the list of animations
 	void update(float delta);
 
-	std::list<AxBase*> m_animations; ///< Processing animation list
+	std::list<Animation*> m_animations; ///< Processing animation list
 };
 
 NEPHILIM_NS_END

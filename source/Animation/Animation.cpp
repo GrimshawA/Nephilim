@@ -1,9 +1,10 @@
-#include <Nephilim/Animation/AxBase.h>
+#include <Nephilim/Animation/Animation.h>
+
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 
-AxBase::AxBase()
+Animation::Animation()
 : m_looping(false)
 , m_duration(0.f)
 , m_elapsed(0.f)
@@ -12,7 +13,7 @@ AxBase::AxBase()
 }
 
 /// Initialize with a duration
-AxBase::AxBase(float duration)
+Animation::Animation(float duration)
 : m_looping(false)
 , m_duration(duration)
 , m_elapsed(0.f)
@@ -20,33 +21,33 @@ AxBase::AxBase(float duration)
 
 }
 
-AxBase::~AxBase()
+Animation::~Animation()
 {
 	//Log("AxBase destructor");
 }
 
-void AxBase::deduceInitialParameters()
+void Animation::deduceInitialParameters()
 {
 
 }
 
-void AxBase::addTarget(AxTarget* target)
+void Animation::addTarget(AxTarget* target)
 {
 	m_targets.push_back(target);
 }
 
-int AxBase::getTargetCount()
+int Animation::getTargetCount()
 {
 	return m_targets.size();
 }
 
-bool AxBase::isOver()
+bool Animation::isOver()
 {
 	return ((m_elapsed > m_duration) && !m_looping);
 }
 
 /// Get the duration of the animation
-float AxBase::getDuration()
+float Animation::getDuration()
 {
 	return m_duration;
 }

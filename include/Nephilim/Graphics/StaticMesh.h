@@ -53,10 +53,12 @@ public:
 
 	VertexArray clientData;
 
+	String TEX; /// test tex for static meshes
+
 public:
 	
 	/// Prepare our buffers with the given mesh
-	void uploadGeometry(const GeometryObject& object);
+	void uploadGeometry(GeometryObject& object);
 
 	// nice for prototyping stuff
 	void makeDebugBox(float w, float h, float d);

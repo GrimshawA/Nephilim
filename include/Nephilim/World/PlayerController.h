@@ -48,7 +48,7 @@ public:
 	bool _mouseEnabled;     ///< Deliver the mouse input or not; in editor, its usually blocked completely
 	bool _joystickEnabled;  ///< Deliver the joystick input or not
 	bool _keyboardEnabled;  ///< Deliver the keyboard input or not
-
+	 
 	World* _world;          ///< World this controller is attached to
 
 public:

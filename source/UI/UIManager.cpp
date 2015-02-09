@@ -6,11 +6,21 @@ NEPHILIM_NS_BEGIN
 /// Create a new canvas, uniquely named
 UICanvas* UIManager::createCanvas(const String& name)
 {
-	UICanvas* canvas = new UICanvas();
-	canvas->m_name = name;
+	UICanvas* canvas = nullptr;
 
-	canvasList.push_back(canvas);
+	for (auto c : canvasList)
+	{
+		if (c->m_name == name)
+			canvas = c;
+	}
 
+	if (!canvas)
+	{
+		canvas = new UICanvas();
+		canvas->m_name = name;
+		canvasList.push_back(canvas);
+	}
+	
 	return canvas;
 }
 

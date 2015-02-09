@@ -3,7 +3,10 @@
 #include <Nephilim/UI/UIComponentText.h>
 #include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIView.h>
+
 #include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/DataModel.h>
+#include <Nephilim/Foundation/Path.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -36,6 +39,19 @@ void UIComponentTreeView::addItem(const String& content)
 	item->onClick.connect(sigc::bind(sigc::mem_fun(this, &UIComponentTreeView::itemClicked), item));
 
 	positionRows();
+}
+
+/// Set a new data model to this tree view
+void UIComponentTreeView::setModel(DataModel* dataModel)
+{
+	_dataModel = dataModel;
+
+	// Let's add stuff
+	for (int i = 0; i < _dataModel->rows(); ++i)
+	{
+		Path p(_dataModel->data(i, 0).toString());
+		addItem(p.getFileName());
+	}
 }
 
 void UIComponentTreeView::itemClicked(UIView* node)
@@ -428,7 +444,7 @@ void UIComponentTreeViewItem::toggle()
 	}
 }
 
-void UIComponentTreeViewItem::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentTreeViewItem::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
 {
 	// Render this item full size
 
@@ -444,6 +460,8 @@ void UIComponentTreeViewItem::onRender(GraphicsDevice* renderer, UIView* view)
 		back.setRect(mParent->getChild(0)->getBounds());
 		back.setSize(5.f, back.getSize().y);
 		back.setColor(Color::Red);
+		back.useOwnTransform = false;
+		renderer->setModelMatrix(parentTransform * back.getTransform().getMatrix());
 		renderer->draw(back);
 	}
 }

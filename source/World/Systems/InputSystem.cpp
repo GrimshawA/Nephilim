@@ -73,14 +73,14 @@ void InputSystem::emitAction(const String& name, AInputComponent::ActionModes mo
 {
 	Log("Action: %s", name.c_str());
 
-	ComponentManager* inputManager = _World->getComponentManager<AInputComponent>();
+	//ComponentManager* inputManager = _World->getComponentManager<AInputComponent>();
 
 	// ECS
-	for (std::size_t i = 0; i < inputManager->size(); ++i)
+	/*for (std::size_t i = 0; i < inputManager->size(); ++i)
 	{
 		AInputComponent* inputComponent = (AInputComponent*)inputManager->getInstance(i);
 		inputComponent->fireAction(name);
-	}
+	}*/
 
 	// Actors
 	for (std::size_t i = 0; i < _World->mPersistentLevel->actors.size(); ++i)

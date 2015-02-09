@@ -166,12 +166,27 @@ World* GameCore::getWorld()
 	}
 }
 
+/// Get the world by its name
+World* GameCore::getWorld(const String& name)
+{
+	for (auto w : sceneManager.mScenes)
+	{
+		if (w->name == name)
+			return w;
+	}
+	return nullptr;
+}
+
 /// Create a new UICanvas for the game to use
 UICanvas* GameCore::createCanvas(const String& name)
 {
-	UICanvas* c = userInterfaceManager.createCanvas(name);
-	c->getCore().m_defaultFont = &contentManager.font;
-	return c;
+	UICanvas* _canvas = nullptr;
+
+	_canvas = userInterfaceManager.createCanvas(name);
+
+	_canvas->getCore().m_defaultFont = &contentManager.font;
+	
+	return _canvas;
 }
 
 /// Get a UI canvas 
@@ -366,6 +381,11 @@ void GameCore::PrimaryUpdate(Time time)
 /// This will handle the OS event and deliver it down the game structures
 void GameCore::PrimaryEventHandling(const Event& event)
 {
+	// Deliver the input to canvases
+	for (auto c : userInterfaceManager.canvasList)
+	{
+		c->pushEvent(event);
+	}
 
 	gameInput.updateWithEvent(event);
 

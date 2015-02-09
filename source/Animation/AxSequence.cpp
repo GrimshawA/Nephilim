@@ -5,7 +5,7 @@ NEPHILIM_NS_BEGIN
 
 /// Initializes in ordered mode by default
 AxSequence::AxSequence()
-: AxBase()
+: Animation()
 , m_mode(Ordered)
 , m_current(0)
 {
@@ -14,7 +14,7 @@ AxSequence::AxSequence()
 
 /// Initialize with a sequence mode
 AxSequence::AxSequence(SequenceModes mode)
-: AxBase()
+: Animation()
 , m_mode(mode)
 , m_current(0)
 {
@@ -22,8 +22,8 @@ AxSequence::AxSequence(SequenceModes mode)
 }
 
 /// Initialize with a sequence mode and 0 to 3 initial animations
-AxSequence::AxSequence(SequenceModes mode, AxBase *anim1, AxBase *anim2, AxBase* anim3)
-: AxBase()
+AxSequence::AxSequence(SequenceModes mode, Animation *anim1, Animation *anim2, Animation* anim3)
+: Animation()
 , m_mode(mode)
 , m_current(0)
 {
@@ -62,11 +62,11 @@ bool AxSequence::isOver()
 {
 	if(m_mode == Parallel)
 	{
-		return AxBase::isOver();
+		return Animation::isOver();
 	}
 	else
 	{
-		return (AxBase::isOver() && m_current == m_animations.size());
+		return (Animation::isOver() && m_current == m_animations.size());
 	}
 }
 
@@ -96,7 +96,7 @@ float AxSequence::getDuration()
 	}
 }
 
-void AxSequence::add(AxBase* animation)
+void AxSequence::add(Animation* animation)
 {
 	m_animations.push_back(animation);
 

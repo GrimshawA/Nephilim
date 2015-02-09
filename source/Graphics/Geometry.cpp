@@ -471,6 +471,28 @@ void GeometryObject::addTorus(int p, int q)
 	setAllColors(Color::White);
 }
 
+/// Make sure there is a uv set
+void GeometryObject::ensureUV0()
+{
+	if (texcoords0.size() == 0)
+	{
+		texcoords0.resize(vertices.size());
+		for (auto& uv : texcoords0)
+		{
+			uv.x = uv.y = 0.f;
+		}
+	}
+}
+
+/// Apply an arbitrary transform to this mesh
+void GeometryObject::applyTransform(mat4 transf)
+{
+	for (auto& v : vertices)
+	{
+		v = transf * v;
+	}
+}
+
 /// Scales the mesh by a factor
 void GeometryObject::scale(float xfactor, float yfactor, float zfactor)
 {

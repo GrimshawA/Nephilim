@@ -31,6 +31,7 @@
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GL/GLTextureCube.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
+#include <Nephilim/Graphics/GL/GLTexture.h>
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/Text.h>
 
@@ -145,7 +146,7 @@ void RenderSystemDefault::renderScene()
 		mRenderer->setDefaultShader();
 	}
 
-	renderAllSprites();
+
 
 	// Don't have actors caching their components by type, need to go get them directly in the actor
 	for (std::size_t i = 0; i < _World->mPersistentLevel->actors.size(); ++i)
@@ -360,25 +361,6 @@ void RenderSystemDefault::renderSprite(CTransform* transform, ASpriteComponent* 
 	}
 }
 
-
-void RenderSystemDefault::renderAllSprites()
-{
-	// Let's dirty draw all sprites
-	ComponentManager* spriteComponentManager = _World->getComponentManager<ASpriteComponent>();
-	ComponentManager* transformComponentManager = _World->getComponentManager<CTransform>();
-
-	// Iterate all sprites we have spawned
-	for (std::size_t i = 0; i < spriteComponentManager->size(); ++i)
-	{
-		// Get the i-th component in the manager
-		ASpriteComponent* sprite = static_cast<ASpriteComponent*>(spriteComponentManager->getInstance(i));
-		CTransform* transform = (CTransform*)transformComponentManager->getComponentFromEntity(spriteComponentManager->getInstanceEntity(i));
-		
-		renderSprite(transform, sprite);
-	}
-}
-
-
 void RenderSystemDefault::render()
 {
 	// Let's activate the proper camera
@@ -396,17 +378,31 @@ void RenderSystemDefault::render()
 void RenderSystemDefault::Render(AStaticMeshComponent* mesh)
 {
 
-	mRenderer->setDefaultTexture();
+	if (mesh->staticMesh->TEX.empty())
+	{
+		mRenderer->setDefaultTexture();
+	}
+	else
+	{
+		Texture* texture = mContentManager->getTexture(mesh->staticMesh->TEX);
+		if (texture)
+			texture->bind();
+		else
+			Log("FUCK");
+	}
+
 	mRenderer->setModelMatrix(mesh->t.getMatrix());
 	mRenderer->setVertexBuffer(&mesh->staticMesh->vertexBuffer);
 
 	mRenderer->enableVertexAttribArray(0);
 	mRenderer->enableVertexAttribArray(1);
+	mRenderer->enableVertexAttribArray(2);
 	mRenderer->enableVertexAttribArray(3);
 
 	mRenderer->setVertexAttribPointer(0, 3, GL_FLOAT, false, mesh->staticMesh->clientData.stride(), 0);
 	mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, mesh->staticMesh->clientData.stride(), ((char*)0) + mesh->staticMesh->clientData.getAttributeOffset(1));
-	mRenderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, mesh->staticMesh->clientData.stride(), ((char*)0) + mesh->staticMesh->clientData.getAttributeOffset(2));
+	mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, mesh->staticMesh->clientData.stride(), ((char*)0) + mesh->staticMesh->clientData.getAttributeOffset(2));
+	mRenderer->setVertexAttribPointer(3, 3, GL_FLOAT, false, mesh->staticMesh->clientData.stride(), ((char*)0) + mesh->staticMesh->clientData.getAttributeOffset(3));
 
 	mRenderer->drawArrays(Render::Primitive::Triangles, 0, mesh->staticMesh->clientData.getMemorySize() / mesh->staticMesh->clientData.getVertexSize());
 	

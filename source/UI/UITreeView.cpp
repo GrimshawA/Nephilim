@@ -7,7 +7,8 @@ NEPHILIM_NS_BEGIN
 UITreeView::UITreeView()
 : UIView()
 {
-	addComponent(new UIComponentTreeView);
+	treeViewComponent = new UIComponentTreeView;
+	addComponent(treeViewComponent);
 }
 
 NEPHILIM_NS_END

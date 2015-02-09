@@ -2,13 +2,14 @@
 #define NephilimAxPosition_h__
 
 #include <Nephilim/Platform.h>
-#include "AxBase.h"
+#include <Nephilim/Animation/Animation.h>
+
 #include "AxEasing.h"
 #include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API AxPosition2D : public AxBase
+class NEPHILIM_API AxPosition2D : public Animation
 {
 public:
 	AxPosition2D();

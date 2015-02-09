@@ -13,6 +13,10 @@
 
 #include <pugixml/pugixml.hpp>
 
+
+//test
+#include <Nephilim/Animation/AnimationZ.h>
+
 /*
 	<img> elements are instanced as UIView's with image components
 	<button> elements are instanced as UIViews with button components	
@@ -251,6 +255,36 @@ bool UILoaderXML::loadFromFile(const String& filename, UIView* root_view)
 	}
 
 	return result;
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+/// Just a test function, needs api changes
+Animation* UIAnimationLoaderXML::load(const String& filename, UIView* source_widget)
+{
+	Animation* anim = nullptr;
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(filename.c_str());
+
+	if (result)
+	{
+		pugi::xml_node root = doc.child("Animation");
+		
+		for (auto& n : root)
+		{
+			Log("FOUND NODE: %s", n.name());
+			if (String(n.name()) == "ZAnim")
+			{
+				anim = new AnimationZ(n.attribute("to").as_float(0.f), n.attribute("duration").as_float(1.f));
+				static_cast<AnimationZ*>(anim)->setZCallback.connect(sigc::mem_fun(source_widget, &UIView::setZ));
+			}			
+		}
+	}
+
+	return anim;
 }
 
 NEPHILIM_NS_END
