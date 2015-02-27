@@ -1,3 +1,5 @@
+#ifdef IGNOIBG
+
 #include <Nephilim/Network/TcpSocket.h>
 #include <Nephilim/Network/IpAddress.h>
 #include <Nephilim/Network/Packet.h>
@@ -357,3 +359,5 @@ Data        ()
 }
 
 NEPHILIM_NS_END
+
+#endif

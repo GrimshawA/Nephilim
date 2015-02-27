@@ -19,6 +19,44 @@ Path::Path(const String& path)
 	normalizeSlashes();
 }
 
+/// Makes this path relative to path _p, if applicable
+/// Which means this path will only make sense pre appended with _p
+void Path::makeRelativeTo(const Path& _p)
+{
+	m_path.erase(m_path.begin(), m_path.begin() + _p.get().size() + 1);
+}
+
+/// Returns true if there is no path pre prending the file name
+bool Path::isNameOnly()
+{
+	return m_path.find('/') == m_path.npos;
+}
+
+/// This is called on Path directories to know if a given file is their child
+bool Path::isParentOf(const String& _dirOrFile)
+{
+	if (_dirOrFile.substr(0, m_path.size()) == m_path)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/// Just get the path in the form of a string
+String Path::get() const
+{
+	return m_path;
+}
+
+/// Get the directory part only, always ending in a '/'
+String Path::getDirectory()
+{
+	return m_path.substr(0, m_path.find_last_of('/')) + "/";
+}
+
 void Path::normalizeSlashes()
 {
 	for (std::size_t i = 0; i < m_path.size(); ++i)
@@ -32,14 +70,32 @@ void Path::normalizeSlashes()
 /// Returns the file name only without the directory
 String Path::getFileName()
 {
-	String filename = m_path;
-	if(m_path.find_last_of('/') != m_path.npos)
+	// We have a directory, return the dir name
+	if (!m_path.empty() && m_path[m_path.size() - 1] == '/')
 	{
-		filename.erase(filename.begin(), filename.begin() + m_path.find_last_of('/') + 1);
-	}
+		String pathCopy = m_path;
+		pathCopy.erase(pathCopy.begin() + pathCopy.size()-1);
 
-	//Log("Result filename from path: %s", filename.c_str());
-	return filename;
+		if (pathCopy.find_last_of('/') != pathCopy.npos)
+		{
+			pathCopy.erase(pathCopy.begin(), pathCopy.begin() + pathCopy.find_last_of('/') + 1);
+		}
+
+		return pathCopy;
+	}
+	else
+	{
+		// We have a file, return the filename.extension
+
+		String filename = m_path;
+		if (m_path.find_last_of('/') != m_path.npos)
+		{
+			filename.erase(filename.begin(), filename.begin() + m_path.find_last_of('/') + 1);
+		}
+
+		//Log("Result filename from path: %s", filename.c_str());
+		return filename;
+	}
 }
 
 /// Get the extension of the file

@@ -1,7 +1,7 @@
 #ifndef NephilimGraphicsSkeletalMesh_h__
 #define NephilimGraphicsSkeletalMesh_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Graphics/VertexArray.h>
@@ -13,7 +13,7 @@ NEPHILIM_NS_BEGIN
 	\class SkeletalMesh
 	\brief A skeletal mesh resource, like a human body or creature with a rig for animation
 */
-class NEPHILIM_API SkeletalMesh
+class NEPHILIM_API SkeletalMesh : public Asset
 {
 public:
 	VertexArray _vertexArray;

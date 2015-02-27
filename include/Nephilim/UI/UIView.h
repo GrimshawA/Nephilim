@@ -1,7 +1,7 @@
 #ifndef NephilimUIView_h__
 #define NephilimUIView_h__
 
-#include <Nephilim/UI/UIObject.h>
+#include <Nephilim/UI/UxNode.h>
 
 #include <Nephilim/UI/UIPainter.h>
 #include <Nephilim/Foundation/Rect.h>
@@ -25,6 +25,7 @@
 #include "UIComponent.h"
 
 #include <Nephilim/UI/UIAnimation.h>
+#include <Nephilim/UI/UIController.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -127,7 +128,7 @@ namespace UIFlag
 class UIAnimation;
 class UIController;
 
-class NEPHILIM_API UIView : public UIObject, public AxTarget, public RefCountable
+class NEPHILIM_API UIView : public UxNode, public AxTarget, public RefCountable
 {
 public:
 	vec2    size;            ///< Size of the view rectangle
@@ -164,6 +165,9 @@ protected:
 
 	/// Called when the view receives a mouse/touch related event
 	virtual void onPointerEvent(const UIPointerEvent& event);
+
+	/// Called on the subclass when a new child is added
+	virtual void onChildAdded(UIView* widget);
 
 // Signals
 public:
@@ -417,6 +421,9 @@ public:
 	/// Immediately sets the new size of the control 
 	void setSize(float width, float height);
 
+	/// Set a new size to the widget
+	void setSize(Vector2D _size);
+
 	/// Immediately sets the center of the control to a new position
 	void setCenter(float x, float y);
 
@@ -436,7 +443,7 @@ public:
 	FloatRect getBounds();
 
 	/// Get the name of the control
-	String getName();
+	const char* getName();
 
 	/// Notification for the custom controls for updating
 	virtual void onUpdate(float elapsedTime);
@@ -618,6 +625,8 @@ T* UIView::createChild(const String& name)
 
 	// Attach
 	attach(view);
+
+	view->onSetup();
 
 	return view;
 }

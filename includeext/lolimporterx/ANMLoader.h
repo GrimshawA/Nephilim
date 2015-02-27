@@ -1,9 +1,9 @@
 #ifndef ANMLoader_h__
 #define ANMLoader_h__
 
-#include <Nephilim/Strings.h>
-#include <Nephilim/File.h>
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/DataStream.h>
 using namespace nx;
 
 #include "SKLLoader.h"
@@ -93,7 +93,7 @@ public:
 		// Local position of the bone
 		vec3 localPosition = bones[bone_index].frames[frame_index].position;
 
-		mat4 boneRotation = Quaternion(bones[bone_index].frames[frame_index].quaternion.x, bones[bone_index].frames[frame_index].quaternion.y, bones[bone_index].frames[frame_index].quaternion.z, bones[bone_index].frames[frame_index].quaternion.w).toMatrix();
+		mat4 boneRotation = Quat(bones[bone_index].frames[frame_index].quaternion.x, bones[bone_index].frames[frame_index].quaternion.y, bones[bone_index].frames[frame_index].quaternion.z, bones[bone_index].frames[frame_index].quaternion.w).toMatrix();
 		boneRotation[12] = localPosition.x;
 		boneRotation[13] = localPosition.y;
 		boneRotation[14] = localPosition.z;
@@ -141,7 +141,7 @@ static void convertANMToClip(AnimationANM& anm, AnimationClip& clip)
 		{
 			clip.tracks[i].frames[j].scale = vec3(1.f, 1.f, 1.f);
 			clip.tracks[i].frames[j].position = anm.bones[i].frames[j].position;
-			clip.tracks[i].frames[j].orientation = Quaternion(anm.bones[i].frames[j].quaternion.x, anm.bones[i].frames[j].quaternion.y, anm.bones[i].frames[j].quaternion.z, anm.bones[i].frames[j].quaternion.w);
+			clip.tracks[i].frames[j].orientation = Quat(anm.bones[i].frames[j].quaternion.x, anm.bones[i].frames[j].quaternion.y, anm.bones[i].frames[j].quaternion.z, anm.bones[i].frames[j].quaternion.w);
 			clip.tracks[i].frames[j].time = (1.f / anm.playbackFPS) * j;
 		}
 	}

@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Graphics/Glyph.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/Texture2D.h>
 
 #include <map>
 #include <string>
@@ -159,7 +159,7 @@ public :
     /// \return Texture containing the glyphs of the requested size
     ///
     ////////////////////////////////////////////////////////////
-    const Texture& getTexture(unsigned int characterSize) const;
+    const Texture2D& getTexture(unsigned int characterSize) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Overload of assignment operator
@@ -215,7 +215,7 @@ private :
 		~Page();
 
         GlyphTable       glyphs;  ///< Table mapping code points to their corresponding glyph
-        Texture      texture; ///< Texture containing the pixels of the glyphs
+        Texture2D        texture; ///< Texture containing the pixels of the glyphs
         unsigned int     nextRow; ///< Y position of the next new row in the texture
         std::vector<Row> rows;    ///< List containing the position of all the existing rows
     };

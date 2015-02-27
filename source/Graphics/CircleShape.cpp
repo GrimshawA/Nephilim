@@ -22,7 +22,7 @@ CircleShape::CircleShape()
 	
 }
 
-void CircleShape::setTexture(Texture* texture)
+void CircleShape::setTexture(Texture2D* texture)
 {
 	m_texture = texture;
 }
@@ -48,7 +48,7 @@ void CircleShape::onDraw(GraphicsDevice* renderer)
 	
 	if(m_texture)
 	{
-		m_texture->bind();
+		renderer->setTexture(*m_texture);
 	}
 	else
 	{

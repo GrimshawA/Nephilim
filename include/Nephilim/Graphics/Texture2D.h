@@ -1,11 +1,14 @@
 #ifndef NephilimTexture2D_h__
 #define NephilimTexture2D_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
 
 class GDI_Texture2D;
+class Image;
 
 /**
 	\class Texture2D
@@ -28,7 +31,7 @@ class GDI_Texture2D;
 	Texture2D can be extended for more specialized before and
 	even swap low level implementation on the fly.
 */
-class NEPHILIM_API Texture2D
+class NEPHILIM_API Texture2D : public Asset
 {
 public:
 
@@ -41,7 +44,44 @@ public:
 	Texture2D();
 
 	/// Ensure destruction of the resource
-	virtual ~Texture2D();	
+	virtual ~Texture2D();
+
+	/// Create the texture with the given size
+	bool create(std::size_t width, std::size_t height);
+
+	/// Set the texture as repeating for sampling outside its area
+	void setRepeated(bool repeated);
+
+	/// Set the texture filtering mode
+	void setSmooth(bool smooth);
+
+	/// Loads a texture from disk with the global graphics API
+	/// Should be avoided in favor of the central asset loading
+	bool loadFromFile(const String& filename);
+
+	/// Loads the texture from a image buffer
+	/// Should be avoided in favor of the central asset loading
+	bool loadFromImage(const Image& image);
+
+	/// Retrieve the texture from the GPU and into an image
+	/// Does not work in OpenGL ES platforms. An warning is logged in such platforms.
+	/// Returns false if the operation fails
+	bool copyToImage(Image& image) const;
+
+	/// A texture is a rectangle, with finite size
+	Vec2<int> getSize() const;
+
+	/// Updates a given region inside the texture with an array of pixels
+	void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
+
+	/// Update the texture on the GPU with an array of pixels
+	void update(const Uint8* pixels);
+
+	/// Update the texture on the GPU from an image
+	void update(const Image& image);
+
+	/// Get the maximum size a texture can be
+	static std::size_t getMaximumSize();
 };
 
 NEPHILIM_NS_END

@@ -40,7 +40,7 @@
 #include <SFML/System/String.hpp>
 
 
-#include <Nephilim/StringList.h>
+#include <Nephilim/Foundation/StringList.h>
 #include <sigc++/sigc++.h>
 
 namespace sf

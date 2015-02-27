@@ -3,8 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/Components/ASceneComponent.h>
-
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Graphics/Geometry.h>
 
 #include <Nephilim/Foundation/Image.h>
@@ -25,7 +24,7 @@ public:
 	Uint8* heightmapRaw;
 
 	GeometryObject geometry;
-	Texture surfaceTex;
+	Texture2D surfaceTex;
 };
 
 NEPHILIM_NS_END

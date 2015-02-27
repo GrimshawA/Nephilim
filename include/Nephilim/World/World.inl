@@ -62,14 +62,11 @@ static uint32_t _IDGIVER = 1;
 template<typename T>
 T* World::spawnActor()
 {
-	T* myObj = new T(this);
+	T* myObj = new T();
 	myObj->_world = this;
 
 	mPersistentLevel->actors.push_back(myObj);
-
-
 	myObj->uuid = _IDGIVER++;
-
 	return myObj;
 }
 

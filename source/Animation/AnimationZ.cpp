@@ -22,7 +22,7 @@ float AnimationZ::update(float delta)
 
 	float c = m_easing(m_elapsed, _currentZ, _targetZ - _currentZ, m_duration);
 
-	Log("%f of %f", m_elapsed, m_duration);
+	//Log("%f of %f", m_elapsed, m_duration);
 
 	setZCallback(c);
 

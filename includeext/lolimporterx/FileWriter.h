@@ -12,7 +12,7 @@ public:
 	/// 
 	static bool WriteGeometryFile(const String& skn_file, const String& skl_file, const String& filename)
 	{
-		GeometryData geom;
+		GeometryObject geom;
 		SKNLoader SKN;
 		SKN.Load(geom, skn_file);
 

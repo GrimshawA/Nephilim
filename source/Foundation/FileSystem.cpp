@@ -16,8 +16,8 @@
 #undef SetCurrentDirectory
 #endif
 #elif defined NEPHILIM_ANDROID
-#include "Nephilim/AndroidInterface.h"
-#include "Nephilim/Foundation/Logging.h"
+#include <Nephilim/Foundation/AndroidWrapper.h>
+#include <Nephilim/Foundation/Logging.h>
 #endif
 
 NEPHILIM_NS_BEGIN

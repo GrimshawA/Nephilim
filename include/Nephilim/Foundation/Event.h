@@ -513,5 +513,17 @@ public:
 	};
 };
 
+/// Check if the Event object is a key press with a given key, usually for shorter hand notation 
+bool isKeyPress(const Event& event, Keyboard::Key k);
+
+/// Check if the Event object is a key press with a given key, usually for shorter hand notation 
+bool isKeyRelease(const Event& event, Keyboard::Key k);
+
+/// Check if the event is a left mouse press
+bool isLeftMousePress(const Event& event);
+
+/// Check if the event is a left mouse press
+bool isRightMousePress(const Event& event);
+
 NEPHILIM_NS_END
 #endif // NephilimFoundationEvent_h__

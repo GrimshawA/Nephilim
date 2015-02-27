@@ -3,13 +3,15 @@
 
 #include <Nephilim/Platform.h>
 
+#include <Nephilim/Foundation/Transform.h>
+
+
 #include <Nephilim/World/Systems/RenderSystem.h>
-#include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Graphics/GL/GLFramebuffer.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/Framebuffer.h>
+#include <Nephilim/Graphics/Texture2D.h>
 
 #include <Nephilim/Game/GameContent.h>
 
@@ -41,9 +43,9 @@ class NEPHILIM_API RenderSystemDefault : public RenderSystem
 {
 public:
 
-	Texture mRenderTexture; ///< The final scene render goes here
+	Texture2D mRenderTexture; ///< The final scene render goes here
 
-	GLFramebuffer mFramebuffer;
+	Framebuffer mFramebuffer;
 
 	/// Current world framebuffer resolution
 	int mTargetWidth;
@@ -78,7 +80,7 @@ public:
 
 	void renderAllSprites();
 
-	void renderSprite(CTransform* transform, ASpriteComponent* sprite);
+	void renderSprite(ASpriteComponent* sprite);
 
 
 };

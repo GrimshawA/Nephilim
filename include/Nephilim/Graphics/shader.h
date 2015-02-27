@@ -1,7 +1,7 @@
 #ifndef NephilimGraphicsShader_h__
 #define NephilimGraphicsShader_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
 #include <Nephilim/Foundation/String.h>
 
 #include <vector>
@@ -23,7 +23,7 @@ class GDI_ShaderProgram;
 	implementation without even reallocating space for it. Also makes possible to inherit
 	Shader for either reason to extend it, composition rocks!
 */
-class NEPHILIM_API Shader
+class NEPHILIM_API Shader : public Asset
 {
 public:
 	

@@ -79,7 +79,7 @@ void Array<T>::reserve(std::size_t bytes)
 	{
 		for (std::size_t i = 0; i < capacity; ++i)
 		{
-			new (_buffers[i]) T();
+			new ((void*)_buffer[i]) T();
 		}
 	}
 }

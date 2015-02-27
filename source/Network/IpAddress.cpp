@@ -1,3 +1,5 @@
+#ifdef IGNOREMENOW
+
 #include <Nephilim/Network/IpAddress.h>
 //#include <SFML/Network/Http.hpp>
 #include "SocketImpl.hpp"
@@ -225,3 +227,5 @@ std::ostream& operator <<(std::ostream& stream, const IpAddress& address)
 }
 
 NEPHILIM_NS_END
+
+#endif

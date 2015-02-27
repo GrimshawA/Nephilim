@@ -24,7 +24,7 @@ public:
 	AnimationSprite();
 
 	/// Add a frame
-	void addFrame(Texture* texture, FloatRect rect, float duration);
+	void addFrame(GLTexture2D* texture, FloatRect rect, float duration);
 	/// Add a new frame to the animation
 	void addFrame2(AnimationFrame &frame);
 
@@ -50,24 +50,24 @@ public:
 		Builds the frames from a sprite sheet, in this case only a one-line sprite sheet.
 		Just specify the width of each frame, and how many you want, and from what texture, and it will do the work.
 	*/
-	int buildFromHorizontalSheet(float frameWidth, int frameCount, Texture* texture);
+	int buildFromHorizontalSheet(float frameWidth, int frameCount, GLTexture2D* texture);
 
-	sigc::signal<void, Texture*, FloatRect> onFrameChange;
+	sigc::signal<void, GLTexture2D*, FloatRect> onFrameChange;
 
 	class NEPHILIM_API AnimationFrame{
 	public:
 		AnimationFrame();
-		AnimationFrame(FloatRect &box, Texture *texture, double time);
+		AnimationFrame(FloatRect &box, GLTexture2D *texture, double time);
 
 		/// Define the texture wanted, if the rect is still undefined (positioned at -1 -1), it becomes the full texture rect
-		void setTexture(Texture* texture);
+		void setTexture(GLTexture2D* texture);
 
 		double time;
 		FloatRect myRect;
 
 		friend class AnimationSprite;
 	private:
-		Texture *myTexture;
+		GLTexture2D *myTexture;
 	};
 
 private:

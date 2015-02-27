@@ -1,7 +1,7 @@
 #ifndef NephilimUICanvas_h__
 #define NephilimUICanvas_h__
 
-#include <Nephilim/UI/UIObject.h>
+#include <Nephilim/UI/UxNode.h>
 
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Foundation/Event.h>
@@ -19,7 +19,7 @@ class UIView;
 
 	A UICanvas is an object that represents a rectangle of any dimension in which child UI elements are rendered to.
 */
-class NEPHILIM_API UICanvas : public UIObject, public Drawable
+class NEPHILIM_API UICanvas : public UxNode, public Drawable
 {
 public:
 
@@ -31,8 +31,17 @@ public:
 	/// Construct the window
 	UICanvas();
 
+	/// Get the object name of this node
+	virtual const char* getName();
+
+	/// Get the class name of this node
+	virtual const char* getClassName();
+
 	/// Create a window for this canvas
 	UIWindow* createWindow(const String& name);
+
+	virtual void render(GraphicsDevice* gdi);
+
 
 	/// Load a stylesheet file into the canvas
 	bool loadStylesheet(const String& filename);

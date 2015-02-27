@@ -125,7 +125,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 		else if (!mHoverTextureSource.empty())
 		{
 			// let's try to get the thing
-			mHoverTexture = new Texture();
+			mHoverTexture = new Texture2D();
 			if (mHoverTexture->loadFromFile(mHoverTextureSource))
 				Log("LOADED THE THING");
 
@@ -147,7 +147,7 @@ void UIComponentButton::onRender(GraphicsDevice* renderer, UIView* view, const m
 		else if (!mNormalTextureSource.empty())
 		{
 			// let's try to get the thing
-			mTexture = new Texture();
+			mTexture = new Texture2D();
 			if(mTexture->loadFromFile(mNormalTextureSource))
 				Log("LOADED THE THING");
 

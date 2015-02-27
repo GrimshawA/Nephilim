@@ -1,14 +1,17 @@
 #ifndef NephilimUIComponentButton_h__
 #define NephilimUIComponentButton_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/Foundation/String.h>
 #include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Color.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 
+class Texture2D;
+
+/**
+	\class UIComponentButton
+*/
 class NEPHILIM_API UIComponentButton : public UIComponent
 {
 public:
@@ -40,8 +43,8 @@ public:
 	String mHoverTextureSource;
 	String mNormalTextureSource;
 
-	Texture* mTexture;
-	Texture* mHoverTexture;
+	Texture2D* mTexture;
+	Texture2D* mHoverTexture;
 };
 
 NEPHILIM_NS_END

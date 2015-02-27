@@ -6,10 +6,12 @@
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/UI/UIWindow.h>
+#include <Nephilim/UI/UIListPanel.h>
 
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>
 #include <Nephilim/UI/UIComponentImage.h>
+#include <Nephilim/UI/UIComponentText.h>
 
 
 #endif // NephilimUIToolkit_h__

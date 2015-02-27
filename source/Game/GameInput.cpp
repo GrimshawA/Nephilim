@@ -5,10 +5,12 @@
 
 NEPHILIM_NS_BEGIN
 
+GameInput* gInput = nullptr;
+
 /// Construct to default values
 GameInput::GameInput()
 {
-
+	gInput = this;
 }
 
 void GameInput::loadKeyBindings(const String& filename)

@@ -32,15 +32,7 @@ public:
 
 public:
 
-	void moveTest(Vector3D displacement, Actor* a)
-	{
-		moving(displacement, a);
-
-		if (!userData)
-		{
-			t.position += displacement;
-		}
-	}
+	void moveTest(Vector3D displacement, Actor* a);
 };
 
 NEPHILIM_NS_END

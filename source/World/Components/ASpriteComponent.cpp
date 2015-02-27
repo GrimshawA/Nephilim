@@ -2,6 +2,7 @@
 #include <Nephilim/World/World.h>
 
 #include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/Math.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +12,10 @@ ASpriteComponent::ASpriteComponent()
 , color(Color::White)
 , scale(1.f, -1.f)
 {
+	setPosition(math::randomInt(0, 1000), math::randomInt(0, 1000), 0.f);
+	setSize(300.f, 300.f);
 
+	color.r = math::randomInt(0, 100);
 }
 
 /// Constructor with a texture name and size

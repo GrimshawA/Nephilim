@@ -305,13 +305,13 @@ int Font::getLineSpacing(unsigned int characterSize) const
 
 
 ////////////////////////////////////////////////////////////
-const Texture& Font::getTexture(unsigned int characterSize) const
+const Texture2D& Font::getTexture(unsigned int characterSize) const
 {
 	if(m_pages.find(characterSize) == m_pages.end())
 	{
 		m_pages[characterSize] = new Page();
 	}
-	const Texture& page = m_pages[characterSize]->texture;
+	const Texture2D& page = m_pages[characterSize]->texture;
 	
     return page;
 }
@@ -560,10 +560,11 @@ IntRect Font::findGlyphRect(Page& page, unsigned int width, unsigned int height)
             // Not enough space: resize the texture if possible
             unsigned int textureWidth  = page.texture.getSize().x;
             unsigned int textureHeight = page.texture.getSize().y;
-            if ((textureWidth * 2 <= Texture::getMaximumSize()) && (textureHeight * 2 <= Texture::getMaximumSize()))
+            if ((textureWidth * 2 <= Texture2D::getMaximumSize()) && (textureHeight * 2 <= Texture2D::getMaximumSize()))
             {
                 // Make the texture 2 times bigger
-                Image pixels = page.texture.copyToImage();
+				Image pixels;
+				page.texture.copyToImage(pixels);
 				cout<<"CALL TO COPY TO IMAGE. BUG FOUND"<<endl;
                 page.texture.create(textureWidth * 2, textureHeight * 2);
                 page.texture.update(pixels);
@@ -630,7 +631,6 @@ Font::Page::Page()
     texture.loadFromImage(image);
     texture.setSmooth(true);
 
-	//Log("The font page is %d. Object: %x", texture.m_texture, &texture );
 }
 
 Font::Page::~Page()

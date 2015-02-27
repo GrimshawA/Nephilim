@@ -54,4 +54,28 @@ void Event::setPointerPosition(vec2i pos)
 }
 
 
+/// Check if the Event object is a key press with a given key, usually for shorter hand notation 
+bool isKeyPress(const Event& event, Keyboard::Key k)
+{
+	return (event.type == Event::KeyPressed && event.key.code == k);
+}
+
+/// Check if the Event object is a key press with a given key, usually for shorter hand notation 
+bool isKeyRelease(const Event& event, Keyboard::Key k)
+{
+	return (event.type == Event::KeyReleased && event.key.code == k);
+}
+
+/// Check if the event is a left mouse press
+bool isLeftMousePress(const Event& event)
+{
+	return (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left);
+}
+
+/// Check if the event is a left mouse press
+bool isRightMousePress(const Event& event)
+{
+	return (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Right);
+}
+
 NEPHILIM_NS_END

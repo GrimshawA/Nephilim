@@ -29,7 +29,7 @@
 #ifndef NEPHILIM_WINDOWS
 
 #include "unix_ThreadImpl.h"
-#include <Nephilim/Thread.h>
+#include <Nephilim/Foundation/Thread.h>
 #include <Nephilim/Foundation/Logging.h>
 
 #include <iostream>

@@ -3,12 +3,7 @@
 NEPHILIM_NS_BEGIN
 
 ACameraComponent::ACameraComponent()
-: up(0.f, 1.f, 0.f)
-, eye(0.f, 20.f, 20.f)
-, x(0.f)
-, y(20.f)
-, z(20.f)
-, mOrtho(false)
+: mOrtho(false)
 , zNear(1.f)
 , zFar(800.f)
 , fieldOfView(90.f)
@@ -39,11 +34,11 @@ mat4 ACameraComponent::getProjection()
 {
 	if (mOrtho)
 	{
-		return mat4::ortho(0.f, size.x, 0.f, size.y, 1.f, 4000.f);
+		return mat4::ortho(-size.x / 2.f, size.x / 2.f, -size.x / 2.f, size.y / 2.f, zNear, zFar);
 	}
 	else
 	{
-		return mat4::perspective(70.f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.05f, 5000.f);
+		return mat4::perspective(fieldOfView, static_cast<float>(size.x) / static_cast<float>(size.y), zNear, zFar);
 	}
 }
 

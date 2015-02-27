@@ -1,5 +1,5 @@
-#ifndef NephilimFoundationTransform_h__
-#define NephilimFoundationTransform_h__
+#ifndef NephilimFoundationTransform2_h__
+#define NephilimFoundationTransform2_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Rect.h>
@@ -376,4 +376,4 @@ NEPHILIM_API Transform2& operator *=(Transform2& left, const Transform2& right);
 NEPHILIM_API Vec2f operator *(const Transform2& left, const Vec2f& right);
 
 NEPHILIM_NS_END
-#endif // NephilimFoundationTransform_h__
+#endif // NephilimFoundationTransform2_h__

@@ -1,7 +1,7 @@
 #ifndef NephilimGraphicsVertexBuffer_h__
 #define NephilimGraphicsVertexBuffer_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -16,7 +16,7 @@ class GDI_VertexBuffer;
 	to maintain easier a given vertex format and possible utilities like streaming 
 	contents into the buffer etc.
 */
-class NEPHILIM_API VertexBuffer
+class NEPHILIM_API VertexBuffer : public Asset
 {
 public:
 

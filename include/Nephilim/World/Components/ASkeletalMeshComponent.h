@@ -4,17 +4,17 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
-#include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/AInputComponent.h>
 #include <Nephilim/World/Components/AStaticMeshComponent.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
 #include <Nephilim/World/Components/ABoxComponent.h>
 
 #include <Nephilim/Foundation/BBox.h>
+#include <Nephilim/Foundation/Transform.h>
+#include <Nephilim/Foundation/Time.h>
 
 #include <Nephilim/Scripting/IScript.h>
 
-#include <Nephilim/Foundation/Time.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/SkeletalMesh.h>
@@ -58,13 +58,13 @@ public:
 	/// Load an animation to be played in our skeleton
 	void loadAnimation(const String& filename, const String& skeletonName);
 
-	Texture myT;
+	Texture2D myT;
 
 public:
 
 	void testTexture(const String& name)
 	{
-		myT.loadFromFile(name);
+		//myT.loadFromFile(name);
 	}
 
 	/// Update the animation

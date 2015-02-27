@@ -33,7 +33,7 @@ void GLFramebuffer::activate()
 }
 
 /// Attaches a texture to the color attachment 0
-void GLFramebuffer::attachTexture(const Texture& texture)
+void GLFramebuffer::attachTexture(const GLTexture2D& texture)
 {
 	if(m_id == 0)
 	{

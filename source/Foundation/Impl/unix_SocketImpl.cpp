@@ -1,3 +1,5 @@
+#ifdef DONTCOMPILETHISNOW
+
 #include <Nephilim/Platform.h>
 
 #ifndef NEPHILIM_WINDOWS
@@ -78,5 +80,7 @@ Socket::Status SocketImpl::getErrorStatus()
 } // namespace priv
 
 NEPHILIM_NS_END
+
+#endif
 
 #endif

@@ -1,33 +1,14 @@
 #include <Nephilim/Graphics/PostEffectBloom.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
 #include <Nephilim/Graphics/Shader.h>
 
 #include <Nephilim/Foundation/Logging.h>
-
 #include <Nephilim/Foundation/File.h>
 
-
-
 NEPHILIM_NS_BEGIN
-
-String getFile(const String& filename)
-{
-	String s = "";
-
-	File f(filename, IODevice::TextRead);
-	if(f)
-	{
-		while(!f.atEnd())
-		{
-			s += f.getChar();
-		}
-	}
-
-	return s;
-}
 
 PostEffectBloom::PostEffectBloom()
 {
@@ -56,11 +37,11 @@ PostEffectBloom::PostEffectBloom()
 	mSecondPassTextures[1].setSmooth(true);*/
 }
 
-void PostEffectBloom::apply(GraphicsDevice* renderer, Texture& renderTexture)
+void PostEffectBloom::apply(GraphicsDevice* renderer, Texture2D& renderTexture)
 {
 	
 	// After the brightness pass operation, mBrightnessTexture contains the output of the scene
-	renderTexture.bind();
+	/*renderTexture.bind();
 	brightnessPass(renderer);
 
 	// Draw the brightness pass texture to the screen
@@ -75,13 +56,13 @@ void PostEffectBloom::apply(GraphicsDevice* renderer, Texture& renderTexture)
 	finalComposite.invertTextureCoordinates();
 	finalComposite.setSize(1000.f, 500.f);
 	//finalComposite.setColor(Color::Grass);
-	renderer->draw(finalComposite);
+	renderer->draw(finalComposite);*/
 }
 
 void PostEffectBloom::brightnessPass(GraphicsDevice* mRenderer)
 {
 	// Trigger the right shader
-	Shader s;
+	/*Shader s;
 	s.shaderImpl = &mBrightnessShader;
 	mRenderer->setShader(s);
 
@@ -102,7 +83,7 @@ void PostEffectBloom::brightnessPass(GraphicsDevice* mRenderer)
 	mRenderer->draw(vertices);
 
 	//RectangleShape r(FloatRect(0,0,1000,500), Color::Red);
-	//mRenderer->draw(r);
+	//mRenderer->draw(r);*/
 }
 
 NEPHILIM_NS_END

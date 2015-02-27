@@ -1,3 +1,5 @@
+#ifdef IGNOREMENOW
+
 #include <Nephilim/Network/TcpListener.h>
 #include <Nephilim/Network/TcpSocket.h>
 #include "SocketImpl.hpp"
@@ -93,3 +95,5 @@ Socket::Status TcpListener::accept(TcpSocket& socket)
 }
 
 NEPHILIM_NS_END
+
+#endif

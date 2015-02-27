@@ -41,7 +41,7 @@ void Text::onDraw(GraphicsDevice* renderer)
 {
 	if(!m_font || m_vertices.m_vertices.empty()) return;
 
-	m_font->getTexture(m_characterSize).bind();
+	renderer->setTexture(m_font->getTexture(m_characterSize));
 	renderer->setBlendingEnabled(true);
 	renderer->setBlendMode(Render::Blend::Alpha);
 	if (useOwnTransform)

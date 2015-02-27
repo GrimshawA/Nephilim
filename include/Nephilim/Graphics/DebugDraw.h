@@ -5,8 +5,8 @@
 #include <Nephilim/Graphics/Transformable.h>
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Foundation/Color.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 

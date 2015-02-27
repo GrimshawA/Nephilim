@@ -4,11 +4,8 @@
 #include <Nephilim/World/World.h>
 #include <Nephilim/World/Level.h>
 #include <Nephilim/World/Landscape.h>
-
-
 #include <Nephilim/World/Entity.h>
 #include <Nephilim/World/Entity.inl>
-#include <Nephilim/World/CTransform.h>
 
 #include <Nephilim/World/Components/ATilemapComponent.h>
 #include <Nephilim/World/Components/ATerrainComponent.h>
@@ -23,17 +20,20 @@
 #include <Nephilim/World/Components/ASkeletalMeshComponent.h>
 #include <Nephilim/World/Components/APointLightComponent.h>
 
+#include <Nephilim/Foundation/Transform.h>
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Path.h>
 #include <Nephilim/Foundation/File.h>
 
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Graphics/GL/GLTextureCube.h>
-#include <Nephilim/Graphics/GL/GLHelpers.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/TextureCube.h>
+#include <Nephilim/Graphics/Texture2D.h>
+#include <Nephilim/Graphics/Texture3D.h>
 #include <Nephilim/Graphics/Shader.h>
 #include <Nephilim/Graphics/Text.h>
+
+#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 
 NEPHILIM_NS_BEGIN
@@ -88,12 +88,12 @@ void RenderSystemDefault::drawToBackBuffer()
 	mRenderer->setDefaultViewport();
 	mRenderer->setDepthTestEnabled(false);
 
-	RectangleShape finalComposite;
+	/*RectangleShape finalComposite;
 	finalComposite.setTexture(&mRenderTexture);
 	finalComposite.invertTextureCoordinates();
 	finalComposite.setSize(1000.f, 500.f);
 	//finalComposite.setColor(Color::Blue);
-	mRenderer->draw(finalComposite);
+	mRenderer->draw(finalComposite);*/
 }
 
 /// Render scene gets all scene render data and outputs it to the active target
@@ -123,7 +123,7 @@ void RenderSystemDefault::renderScene()
 
 		for (std::size_t j = 0; j < level->landscapes.size(); ++j)
 		{
-			level->landscapes[j]->terrain.surfaceTex.bind();
+			mRenderer->setTexture(level->landscapes[j]->terrain.surfaceTex);
 
 			// Let's use some point lights
 			ComponentWarehouse::ComponentStoreRef pointLights = level->componentWarehouse.getStore(std::type_index(typeid(APointLightComponent)));
@@ -149,15 +149,15 @@ void RenderSystemDefault::renderScene()
 
 
 	// Don't have actors caching their components by type, need to go get them directly in the actor
-	for (std::size_t i = 0; i < _World->mPersistentLevel->actors.size(); ++i)
+	for (std::size_t i = 0; i < _World->mPersistentLevel->gameObjects.size(); ++i)
 	{
-		Actor* actor = _World->mPersistentLevel->actors[i];
+		Actor* actor = (Actor*)_World->mPersistentLevel->gameObjects[i];
 		for (std::size_t j = 0; j < actor->components.size(); ++j)
 		{
 			ASpriteComponent* spriteComponent = dynamic_cast<ASpriteComponent*>(actor->components[j]);
 			if (spriteComponent)
 			{
-				//renderSprite(&spriteComponent->t, spriteComponent);
+				renderSprite(spriteComponent);
 			}
 
 			ATextComponent* textComponent = dynamic_cast<ATextComponent*>(actor->components[j]);
@@ -224,9 +224,7 @@ void RenderSystemDefault::renderScene()
 				
 				if (skeletalMeshComponent->skeletalMeshAsset)
 				{
-					skeletalMeshComponent->myT.bind();
-					//mRenderer->draw(skeletalMeshComponent->model->champion);
-
+					mRenderer->setTexture(skeletalMeshComponent->myT);
 					
 					mRenderer->enableVertexAttribArray(0);
 					mRenderer->enableVertexAttribArray(1);
@@ -265,13 +263,19 @@ void RenderSystemDefault::renderScene()
 	}
 }
 
-void RenderSystemDefault::renderSprite(CTransform* transform, ASpriteComponent* sprite)
+void RenderSystemDefault::renderSprite(ASpriteComponent* sprite)
 {
-	//Log("ACTOR SPRITE");
+	mRenderer->setModelMatrix(mat4::identity);
 
-	mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+	RectangleShape spriteRect;
+	spriteRect.setPosition(sprite->t.position.xy());
+	spriteRect.setSize(sprite->getSize());
+	spriteRect.setColor(sprite->color);
+	mRenderer->draw(spriteRect);
 
-	Texture* t = mContentManager->getTexture(sprite->tex);
+	Log("RENDER SPRITE");
+
+	Texture2D* t = mContentManager->getTexture(sprite->tex);
 	if (!t)
 	{
 		mContentManager->load(sprite->tex);
@@ -344,9 +348,9 @@ void RenderSystemDefault::renderSprite(CTransform* transform, ASpriteComponent* 
 		mRenderer->setVertexAttribPointer(1, 4, GL_FLOAT, false, va.getVertexSize(), &va._data[0] + va.getAttributeOffset(1));
 		mRenderer->setVertexAttribPointer(2, 2, GL_FLOAT, false, va.getVertexSize(), &va._data[0] + va.getAttributeOffset(2));
 
-		mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
+		//mRenderer->setModelMatrix(transform->getMatrix() * mat4::scale(sprite->scale.x, sprite->scale.y, 1.f) * mat4::translate(-sprite->width / 2.f, -sprite->height / 2.f, 0.f));
 
-		t->bind();
+		mRenderer->setTexture(*t);
 		mRenderer->drawArrays(Render::Primitive::Triangles, 0, 6);
 
 		mRenderer->disableVertexAttribArray(0);
@@ -364,11 +368,11 @@ void RenderSystemDefault::renderSprite(CTransform* transform, ASpriteComponent* 
 void RenderSystemDefault::render()
 {
 	// Let's activate the proper camera
-	if (_World->_viewports.empty())
+	/*if (_World->_viewports.empty())
 		return;
 
 	mRenderer->setProjectionMatrix(_World->_viewports[0]._camera.lens.getProjection());
-	mRenderer->setViewMatrix(_World->_viewports[0]._camera.transform.getMatrix().inverse());
+	mRenderer->setViewMatrix(_World->_viewports[0]._camera.transform.getMatrix().inverse());*/
 
 	startFrame();
 	renderScene();
@@ -384,9 +388,9 @@ void RenderSystemDefault::Render(AStaticMeshComponent* mesh)
 	}
 	else
 	{
-		Texture* texture = mContentManager->getTexture(mesh->staticMesh->TEX);
+		Texture2D* texture = mContentManager->getTexture(mesh->staticMesh->TEX);
 		if (texture)
-			texture->bind();
+			mRenderer->setTexture(*texture);
 		else
 			Log("FUCK");
 	}

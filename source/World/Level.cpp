@@ -3,6 +3,7 @@
 #include <Nephilim/Foundation/File.h>
 #include <Nephilim/Foundation/DataStream.h>
 
+#include <Nephilim/World/Prefab.h>
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
@@ -64,10 +65,38 @@ void Level::createPointLight(Vector3D position, Vector3D lightColor)
 	Entity e = entityManager.createEntity();
 
 	APointLightComponent& pointLight = componentWarehouse.createComponent<APointLightComponent>(e);
-	CTransform& transform = componentWarehouse.createComponent<CTransform>(e);
+	Transform& transform = componentWarehouse.createComponent<Transform>(e);
 
 	pointLight.mLightColor = lightColor;
 	transform.position = position;
+}
+
+/// Instance a new game object from a prefab
+GameObject* Level::instance(const Prefab& prefab)
+{
+	GameObject* go = nullptr;
+
+	// Instance every GO in the prefab
+	for (std::size_t i = 0; i < prefab.GameObjectPrefabs.size(); ++i)
+	{
+		const Prefab::GameObjectPrefab& goPrefab = prefab.GameObjectPrefabs[i];
+
+		go = (GameObject*)Factory::Create(Factory::GetClass(prefab.GameObjectPrefabs[i].Class));
+		go->_Class = Factory::GetClass(prefab.GameObjectPrefabs[i].Class);
+
+		gameObjects.push_back(go);
+
+
+		for (std::size_t j = 0; j < goPrefab.Components.size(); ++j)
+		{
+			String ComponentClass = goPrefab.Components[j]->ComponentClass;
+			Component* Component_ = (Component*)Factory::Create(Factory::GetClass(ComponentClass));
+			
+			go->components.push_back(Component_);
+		}
+	}
+
+	return go;
 }
 
 

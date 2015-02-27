@@ -3,11 +3,14 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Object.h>
+#include <Nephilim/Foundation/Factory.h>
 
 #include <stdint.h>
+#include <vector>
 
 NEPHILIM_NS_BEGIN
 
+class Component;
 class World;
 
 /**
@@ -37,8 +40,14 @@ public:
 	/// World this GameObject was instanced in
 	World* _world = nullptr;
 
+	/// RTTI
+	FClass* _Class = nullptr;
+
 	/// Unique ID
 	uint32_t uuid;
+
+	/// The array of components on this Actor
+	std::vector<Component*> components;
 };
 
 NEPHILIM_NS_END

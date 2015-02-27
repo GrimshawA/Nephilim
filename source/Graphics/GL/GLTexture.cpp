@@ -1,13 +1,14 @@
 #include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/GL/GLHelpers.h>
+
 #include <Nephilim/Foundation/Image.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #include <string.h>
 
 NEPHILIM_NS_BEGIN
 
-Texture::Texture()
+GLTexture2D::GLTexture2D()
 : m_size(0,0)
 , m_actualSize(0,0)
 , m_texture(0)
@@ -18,7 +19,7 @@ Texture::Texture()
 
 }
 
-Texture::Texture(const Texture& other)
+GLTexture2D::GLTexture2D(const GLTexture2D& other)
 : m_size(0,0)
 , m_actualSize(0,0)
 , m_texture(0)
@@ -33,13 +34,13 @@ Texture::Texture(const Texture& other)
 	}
 }
 
-Texture::~Texture()
+GLTexture2D::~GLTexture2D()
 {
 	// Ensure the texture is destroyed in the GPU when the texture dies
 	unload();
 }
 
-void Texture::unload()
+void GLTexture2D::unload()
 {
 	if(m_texture > 0)
 	{
@@ -49,12 +50,12 @@ void Texture::unload()
 	}
 }
 
-unsigned int Texture::getIdentifier() const
+unsigned int GLTexture2D::getIdentifier() const
 {
 	return m_texture;
 }
 
-bool Texture::create(unsigned int width, unsigned int height)
+bool GLTexture2D::create(unsigned int width, unsigned int height)
 {
 	// Check if texture parameters are valid before creating it
 	if ((width == 0) || (height == 0))
@@ -109,7 +110,7 @@ bool Texture::create(unsigned int width, unsigned int height)
 	return true;
 }
 
-void Texture::generateMipMaps()
+void GLTexture2D::generateMipMaps()
 {
 #ifdef NEPHILIM_DESKTOP
 	bind();
@@ -120,14 +121,14 @@ void Texture::generateMipMaps()
 }
 
 ////////////////////////////////////////////////////////////
-void Texture::update(const Image& image)
+void GLTexture2D::update(const Image& image)
 {
 	// Update the whole texture
 	update(image.getPixelsPtr(), image.getSize().x, image.getSize().y, 0, 0);
 }
 
 ////////////////////////////////////////////////////////////
-void Texture::update(const Uint8* pixels)
+void GLTexture2D::update(const Uint8* pixels)
 {
 	// Update the whole texture
 	update(pixels, m_size.x, m_size.y, 0, 0);
@@ -135,7 +136,7 @@ void Texture::update(const Uint8* pixels)
 
 
 ////////////////////////////////////////////////////////////
-unsigned int Texture::getValidSize(unsigned int size)
+unsigned int GLTexture2D::getValidSize(unsigned int size)
 {
 //	ensureGlContext();
 
@@ -160,11 +161,11 @@ unsigned int Texture::getValidSize(unsigned int size)
 	return size;
 }
 
-void Texture::loadFromImage(Image &image, bool generateMipMaps)
+bool GLTexture2D::loadFromImage(const Image &image)
 {
 	if(image.getSize().x == 0 && image.getSize().y == 0)
 	{
-		return;
+		return false;
 	}
 
 	// Make sure the previous texture ceases to exist
@@ -179,7 +180,7 @@ void Texture::loadFromImage(Image &image, bool generateMipMaps)
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	generateMipMaps = false;
+	bool generateMipMaps = false;
 	if(!generateMipMaps)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getPixelsPtr());
@@ -228,9 +229,11 @@ void Texture::loadFromImage(Image &image, bool generateMipMaps)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_isRepeated ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 	}
+
+	return true;
 }
 
-void Texture::setRepeated(bool repeated)
+void GLTexture2D::setRepeated(bool repeated)
 {
 	m_isRepeated = repeated;
 
@@ -244,7 +247,7 @@ void Texture::setRepeated(bool repeated)
 }
 
 
-bool Texture::loadFromFile(const String &path){
+bool GLTexture2D::loadFromFile(const String &path){
 	bool result = false;
 	Image image;
 	result = image.loadFromFile(path);
@@ -253,7 +256,7 @@ bool Texture::loadFromFile(const String &path){
 }
 
 /// Copy the texture buffer to an image
-Image Texture::copyToImage() const
+Image GLTexture2D::copyToImage() const
 {
 
 	// Easy case: empty texture
@@ -322,13 +325,13 @@ Image Texture::copyToImage() const
 };
 
 
-Vec2i Texture::getSize() const{
+Vec2i GLTexture2D::getSize() const{
 	return m_size;
 }
 
 
 ////////////////////////////////////////////////////////////
-void Texture::setSmooth(bool smooth)
+void GLTexture2D::setSmooth(bool smooth)
 {
 	if (smooth != m_isSmooth)
 	{
@@ -349,7 +352,7 @@ void Texture::setSmooth(bool smooth)
 }
 
 ////////////////////////////////////////////////////////////
-void Texture::update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y)
+void GLTexture2D::update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y)
 {
 	/*assert(x + width <= m_size.x);
 	assert(y + height <= m_size.y);*/
@@ -370,7 +373,7 @@ void Texture::update(const Uint8* pixels, unsigned int width, unsigned int heigh
 }
 
 ////////////////////////////////////////////////////////////
-unsigned int Texture::getMaximumSize()
+unsigned int GLTexture2D::getMaximumSize()
 {
 	//ensureGlContext();
 
@@ -380,13 +383,13 @@ unsigned int Texture::getMaximumSize()
 	return static_cast<unsigned int>(size);
 }
 
-void Texture::bind() const
+void GLTexture2D::bind() const
 {
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 };
 
 /// Get the id of the currently bound texture for the currently set texture unit
-unsigned int Texture::getCurrentBoundTexture()
+unsigned int GLTexture2D::getCurrentBoundTexture()
 {
 	GLint id;
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &id);

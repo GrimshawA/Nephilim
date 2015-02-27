@@ -18,7 +18,7 @@ UIComponentImage::UIComponentImage(const String& src)
 , mTexture(NULL)
 {
 	mSourceTexture = src;
-	mTexture = new Texture();
+	mTexture = new Texture2D();
 	mTexture->loadFromFile(src);
 }
 
@@ -29,23 +29,7 @@ void UIComponentImage::onAttach(UIView* view)
 
 void UIComponentImage::refreshTextureHandle()
 {
-	if(mSourceTexture.empty())
-		return;
-
-	if(mParent)
-	{
-		if(mParent->getCore()->content)
-		{
-			if(mParent->getCore()->content->load(mSourceTexture))
-			{
-				mTexture = mParent->getCore()->content->mGroups[""]->mTextures[mSourceTexture];
-			}
-			else
-			{
-				mTexture = NULL;
-			}
-		}
-	}
+	
 }
 
 

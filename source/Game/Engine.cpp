@@ -5,6 +5,8 @@
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 #include <Nephilim/Graphics/View.h>
 
+#include <Nephilim/World/World_RTTI.h>
+
 #ifdef NEPHILIM_ANDROID
 #include <Nephilim/Foundation/AndroidWrapper.h>
 #endif
@@ -17,18 +19,25 @@ NEPHILIM_NS_BEGIN
 	String Engine::m_versionString = "unknown";
 #endif
 
+/// Initialize to nullptr so the engine can be tested for validity anytime
+Engine* gEnv = nullptr;
+
 Engine::Engine()
 : m_currentApp(NULL)
 , m_renderer(NULL)
 , m_running(false)
 , m_window(nullptr)
 {
-};
+	gEnv = this;
+
+	// Register the RTTI on the modules
+	RegisterWorldRTTI();
+}
 
 Engine::~Engine()
 {
 	delete m_renderer;
-};
+}
 
 /// Get a basic string describing the current OS
 String Engine::getOS()
@@ -115,7 +124,7 @@ void Engine::update()
 /// Render one frame to the associated surface
 void Engine::render()
 {
-	m_currentApp->innerRender();
+	m_currentApp->PrimaryRender();
 	m_window->pushFrame();
 }
 

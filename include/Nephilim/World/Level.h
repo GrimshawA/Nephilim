@@ -1,7 +1,7 @@
 #ifndef NephilimLevel_h__
 #define NephilimLevel_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Object.h>
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 
@@ -10,6 +10,7 @@
 
 #include <Nephilim/World/Actor.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
+#include <Nephilim/World/Systems/PhysicsSystem.h>
 
 #include <vector>
 #include <typeindex>
@@ -18,6 +19,7 @@ NEPHILIM_NS_BEGIN
 
 class World;
 class Landscape;
+class Prefab;
 
 /**
 	\class Level
@@ -37,8 +39,12 @@ class Landscape;
 
 	All things inside a Level will usually have a coordinate system relative to the Level
 	origin. This is a big help for keeping big worlds without precision issues.
+
+	Each level may have one physics system only (can be shared with other levels).
+	This allows to put levels inside levels with different physics systems, as well as compartmentalize
+	the physics for streaming, among other uses.
 */
-class NEPHILIM_API Level
+class NEPHILIM_API Level : public Object
 {
 public:
 	/// The dimensions of the level, this computes the absolute bounding box
@@ -50,11 +56,17 @@ public:
 	/// World that has this level loaded
 	World* world;
 
+	/// The physics system responsible for handling the physics of this Level
+	RefObjectPtr<PhysicsSystem> physicsSystem;
+
 	/// Landscape array of this level
 	std::vector<Landscape*> landscapes;
 
 	/// List of all spawned actors in this level
 	std::vector<Actor*>     actors;
+
+	/// All the game objects instanced in this Level
+	std::vector<GameObject*> gameObjects;
 
 public:
 
@@ -84,6 +96,9 @@ public:
 
 	/// Utility to quickly spawn a point light into our world
 	void createPointLight(Vector3D position, Vector3D lightColor);
+
+	/// Instance a new game object from a prefab
+	GameObject* instance(const Prefab& prefab);
 };
 
 NEPHILIM_NS_END

@@ -55,6 +55,11 @@ class GraphicsDevice;
 class NEPHILIM_API Engine
 {
 public:
+
+	/// Currently active game in the engine
+	GameCore*	m_currentApp;
+
+public:
 	/// Constructs the engine and leaves it in a uninitialized state
 	Engine();
 
@@ -97,7 +102,6 @@ public:
 	int glesHint;
 
 public:
-	GameCore*	m_currentApp;		///< The currently executing game/application
 	Clock		m_clock;			///< Clock that counts the elapsed time since the engine was instanced
 	Clock		m_stepClock;		///< Clock that merely counts the time between updates
 	GraphicsDevice*	m_renderer;		///< The unified graphics renderer system
@@ -108,6 +112,9 @@ public:
 	int         mArgumentCount;
 	char**      mArguments;
 };
+
+/// The global access point to the engine object
+extern Engine* gEnv;
 
 NEPHILIM_NS_END
 #endif // NephilimGameEngine_h__

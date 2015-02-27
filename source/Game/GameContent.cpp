@@ -15,22 +15,13 @@ using namespace std;
 NEPHILIM_NS_BEGIN
 
 GameContent::GameContent()
-: mDefaultGroup("")
 {
-	// Create the anonymous group where assets are loaded to by default
-	createGroup("");
-	mDefaultFonts = &mGroups[""]->mFonts;
-
-	filesystems = new VirtualFileSystem();
-	filesystems->indexSearchPath("./", "/");
+	virtualfs.indexSearchPath("./", "/");
 }
 
 GameContent::~GameContent()
 {
-	while(!mGroups.empty())
-	{
-		removeGroup(mGroups.begin()->first);
-	}
+
 }
 
 /// Load a font
@@ -111,48 +102,28 @@ Resource<StaticMesh> GameContent::findMesh(const String& name)
 	return MakeNullResource<StaticMesh>();
 }
 
-ContentGroup* GameContent::createGroup(const String& name)
-{
-	mGroups[name] = new ContentGroup();
-	return mGroups[name];
-}
-
-void GameContent::removeGroup(const String& name)
-{
-	if(mGroups.find(name) != mGroups.end())
-	{
-		delete mGroups[name];
-		mGroups.erase(mGroups.find(name));
-	}
-}
-
 /// The most elemental form of loading an asset
 /// Simply takes the filename and tries to deduce how to load it from extension
 bool GameContent::load(const String& filename)
 {
-	// Make sure there is a target content holder
-	if(mGroups.find(mDefaultGroup) == mGroups.end())
-		return false;
 
 	String extension = Path(filename).getExtension();
 	extension.toLowerCase();
-
-	ContentGroup* targetGroup = mGroups[mDefaultGroup];
 
 	if(extension == "png" || extension == "jpg")
 	{
 		bool r = false;
 
-		String realPath = filesystems->translate(filename);
+		String realPath = virtualfs.translate(filename);
 
 		if(1/*filesystems->exists(filename)*/)
 		{
 			Log("Going to load texture %s at real path: %s", filename.c_str(), realPath.c_str());
 
-			targetGroup->mTextures[filename] = new Texture();
+		/*	targetGroup->mTextures[filename] = new Texture();
 			r = targetGroup->mTextures[filename]->loadFromFile(filename);
 			targetGroup->mTextures[filename]->setSmooth(false);
-			targetGroup->mTextures[filename]->setRepeated(false);
+			targetGroup->mTextures[filename]->setRepeated(false);*/
 		}
 		else
 		{
@@ -164,33 +135,15 @@ bool GameContent::load(const String& filename)
 	else if(extension == "ttf" || extension == "otf")
 	{
 		//Log("Loading font: %s", filename.c_str());
-		return targetGroup->mFonts.load(filename);
+		//return targetGroup->mFonts.load(filename);
 	}
 
 	return false;
 }
 
-Texture* GameContent::getTexture(const String& name)
+Texture2D* GameContent::getTexture(const String& name)
 {
-	if(mGroups[mDefaultGroup]->mTextures.find(name) == mGroups[mDefaultGroup]->mTextures.end())
-		return NULL;
-
-	return mGroups[mDefaultGroup]->mTextures[name];
-}
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-bool ContentGroupFonts::load(const String& filename)
-{
-	if(mFonts.find(filename) == mFonts.end())
-	{
-		mFonts[filename] = new Font();
-	}
-
-	return mFonts[filename]->loadFromFile(filename);
+	return nullptr;
 }
 
 NEPHILIM_NS_END

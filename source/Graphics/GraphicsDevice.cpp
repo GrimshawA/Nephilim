@@ -13,7 +13,12 @@
 
 #include <Nephilim/Graphics/VertexBuffer.h>
 
+#include <Nephilim/Graphics/GL/GLTexture.h>
+
 NEPHILIM_NS_BEGIN
+
+/// Global instance of graphics device, for the global calls
+GraphicsDevice* gGlobalGraphicsDevice = nullptr;
 
 GraphicsDevice::GraphicsDevice()
 : m_type(Other)
@@ -32,7 +37,22 @@ GraphicsDevice::GraphicsDevice()
 	Image whiteTexture;
 	whiteTexture.create(1,1,Color::White);
 	m_defaultTexture.loadFromImage(whiteTexture);
+
+	// Let's make sure the global device is up to date
+	gGlobalGraphicsDevice = this;
 };
+
+/// Ensure the graphics device releases its resources
+GraphicsDevice::~GraphicsDevice()
+{
+
+}
+
+/// Returns the current graphics device
+GraphicsDevice* GraphicsDevice::instance()
+{
+	return gGlobalGraphicsDevice;
+}
 
 // -- Unimplemented API at Renderer level
 void GraphicsDevice::setDefaultShader(){}
@@ -49,6 +69,12 @@ GraphicsDevice::Type GraphicsDevice::getType()
 String GraphicsDevice::getName()
 {
 	return m_name;
+}
+
+/// Binds the texture at texture unit 0
+void GraphicsDevice::setTexture(const Texture2D& texture)
+{
+	static_cast<GLTexture2D*>(texture._impl)->bind();
 }
 
 Window* GraphicsDevice::getWindow()
@@ -325,7 +351,7 @@ void GraphicsDevice::setDefaultDepthTesting()
 void GraphicsDevice::setDefaultTexture()
 {
 	glActiveTexture(GL_TEXTURE0);
-	m_defaultTexture.bind();
+	setTexture(m_defaultTexture);
 }
 
 /// Draw a debug quad with the given color,angle and dimensions - slow

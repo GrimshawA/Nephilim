@@ -17,6 +17,7 @@ namespace
 void UIPainter::drawRect(FloatRect rectangle)
 {
 	RectangleShape rectShape(rectangle, currentColor);
+	rectShape.useOwnTransform = false;
 	graphicsDevice->setModelMatrix(baseMatrix * rectShape.getTransform().getMatrix());
 	graphicsDevice->draw(rectShape);
 }
@@ -34,6 +35,7 @@ void UIPainter::drawText(const String& text)
 		textObject.setFont(*activeFont);
 
 		graphicsDevice->setModelMatrix(baseMatrix * textObject.getTransform().getMatrix());
+		textObject.useOwnTransform = false;
 		graphicsDevice->draw(textObject);
 	}
 }
@@ -52,6 +54,7 @@ void UIPainter::drawText(Vector2D point, const String& text)
 		textObject.setPosition(point);
 
 		graphicsDevice->setModelMatrix(baseMatrix * textObject.getTransform().getMatrix());
+		textObject.useOwnTransform = false;
 		graphicsDevice->draw(textObject);
 	}
 }
@@ -81,6 +84,7 @@ void UIPainter::drawText(FloatRect rectangle, int flags, const String& text)
 		
 
 		graphicsDevice->setModelMatrix(baseMatrix * textObject.getTransform().getMatrix());
+		textObject.useOwnTransform = false;
 		graphicsDevice->draw(textObject);
 	}
 }

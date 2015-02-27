@@ -22,8 +22,21 @@ GameCore::GameCore()
 , m_updateStep(1.f / 60.f)
 , m_windowTitle("No name window")
 , mCloseRequested(false)
+, uxScreen(new UxScreen())
 {
 	stateManager.mGame = this;
+}
+
+/// Ensure every game resource is destroyed in order
+GameCore::~GameCore()
+{
+
+}
+
+/// Get the root of the screen UX hierarchy
+UxScreen* GameCore::getScreenRoot()
+{
+	return uxScreen.get();
 }
 
 /// Called before the game initializes, to set some properties
@@ -185,7 +198,10 @@ UICanvas* GameCore::createCanvas(const String& name)
 	_canvas = userInterfaceManager.createCanvas(name);
 
 	_canvas->getCore().m_defaultFont = &contentManager.font;
-	
+	_canvas->setRect(0.f, 0.f, getWindow()->width(), getWindow()->height());
+
+	uxScreen->_children.push_back(_canvas);
+
 	return _canvas;
 }
 
@@ -331,18 +347,20 @@ void GameCore::innerUpdate(Time time)
 	}
 }
 
-/// Inner render of the game
-/// Callbacks to onRender()
-void GameCore::innerRender()
-{
-	onRender();
-}
+
 
 ////////////////////////////////////////////////////////////////////////// INTERNAL
 
 /// This will initialize the game effectively and then call onCreate()
 void GameCore::PrimaryCreate()
 {
+	// Prepare our screen contents
+	uxScreen->window = getWindow();
+	uxScreen->GDI    = getRenderer();
+	uxScreen->width  = getWindow()->width();
+	uxScreen->height = getWindow()->height();
+
+
 	// Plugins are ready when the game starts to construct
 	loadPlugins();
 
@@ -381,6 +399,12 @@ void GameCore::PrimaryUpdate(Time time)
 /// This will handle the OS event and deliver it down the game structures
 void GameCore::PrimaryEventHandling(const Event& event)
 {
+	if (event.type == Event::Resized)
+	{
+		uxScreen->width = event.size.width;
+		uxScreen->height = event.size.height;
+	}
+
 	// Deliver the input to canvases
 	for (auto c : userInterfaceManager.canvasList)
 	{
@@ -392,6 +416,20 @@ void GameCore::PrimaryEventHandling(const Event& event)
 	stateManager.pushEvent(event);
 
 	onEvent(event);
+}
+
+/// Inner render of the game
+/// Callbacks to onRender()
+void GameCore::PrimaryRender()
+{
+
+	uxScreen->render();
+
+	stateManager.drawStates(getRenderer());
+
+	// Give the user the opportunity to render something
+	onRender();
+
 }
 
 NEPHILIM_NS_END

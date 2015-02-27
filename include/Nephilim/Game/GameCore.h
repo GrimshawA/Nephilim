@@ -23,8 +23,10 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
 #include <Nephilim/UI/UIManager.h>
-
 #include <Nephilim/World/World.h>
+
+#include <Nephilim/UI/UxScreen.h>
+
 
 #include <memory>
 
@@ -54,6 +56,8 @@ public:
 
 	/// This game's server to sync remote clients and itself
 	std::unique_ptr<GameServer> gameServer;
+
+	std::unique_ptr<UxScreen> uxScreen;
 
 	/// List of currently setup scripting solutions
 	std::vector<ExtensionScripting*> scriptingEnvironments;
@@ -101,7 +105,13 @@ public:
 
 	/// Construct the game, its mandatory to call this base constructor when implementing GameCore
 	GameCore();
+
+	/// Ensure every game resource is destroyed in order
+	virtual ~GameCore();
 	
+	/// Get the root of the screen UX hierarchy
+	UxScreen* getScreenRoot();
+
 	/// Create a new scene or return if already exists
 	World* createWorld(const String& name);
 
@@ -215,9 +225,7 @@ private:
 	/// Callbacks to onUpdate(Time time) when appropriate
 	void innerUpdate(Time time);
 
-	/// Inner render of the game
-	/// Callbacks to onRender()
-	void innerRender();
+
 
 	/// Fixed update step
 	float m_updateStep;
@@ -241,6 +249,10 @@ private:
 
 	/// Internal update handling
 	void PrimaryUpdate(Time time);
+
+	/// Inner render of the game
+	/// Callbacks to onRender()
+	void PrimaryRender();
 };
 
 NEPHILIM_NS_END

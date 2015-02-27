@@ -13,8 +13,10 @@
 #include <Nephilim/Graphics/View.h>
 #include <Nephilim/Graphics/RenderModes.h>
 #include <Nephilim/Graphics/RenderState.h>
+#include <Nephilim/Graphics/Texture2D.h>
+#include <Nephilim/Graphics/Shader.h>
 
-#include <Nephilim/Graphics/GL/GLTexture.h>
+
 #include <Nephilim/Graphics/GL/GLShader.h>
 
 #include <map>
@@ -43,7 +45,7 @@ class VertexBuffer;
 */
 class NEPHILIM_API GraphicsDevice
 {
-public:
+protected:
 	/// Enumerates all types of native renderers
 	enum Type
 	{
@@ -53,8 +55,37 @@ public:
 		Other		///< Any other user-defined renderer
 	};
 
+	friend class Window;
+
+	Type                  m_type;            ///< The type of this renderer
+	String                m_name;            ///< The string with the name of this renderer
+	Window*               m_window;          ///< Guaranteed to be a valid surface while the renderer lives
+	RenderTarget*         m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
+	Color                 m_clearColor;      ///< The color of the background when clearing buffer
+	FloatRect             m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used
+	mat4                  m_projection;      ///< Current projection matrix
+	mat4                  m_view;            ///< Current view matrix
+	mat4                  m_model;           ///< Current model matrix
+	GLShader*               m_activeShader;    ///< Current active shader
+	bool		          m_shaderUsageHint; ///< Hint for the default shader usage
+	Texture2D	          m_defaultTexture;  ///< Full white 1x1 default texture
+	std::stack<FloatRect> m_scissorStack;    ///< Stack of scissor test regions
+
+	/// Conversion table of Render::Primitive::Type to GLenum
+	std::map<Render::Primitive::Type, int> m_primitiveTable;
+
+
+public:
+
+
 	/// Base constructor - virtual class 
 	GraphicsDevice();
+
+	/// Ensure the graphics device releases its resources
+	virtual ~GraphicsDevice();
+
+	/// Returns the current graphics device
+	static GraphicsDevice* instance();
 
 	/// Get the type of this renderer
 	Type getType();
@@ -123,6 +154,9 @@ public:
 
 	/// Binds the default 1x1 full white texture at texture unit 0
 	virtual void setDefaultTexture();
+
+	/// Binds the texture at texture unit 0
+	virtual void setTexture(const Texture2D& texture);
 
 	/// Activates the default render target
 	/// This means that rendering will now happen in the visible window
@@ -230,26 +264,6 @@ public:
 	/// The renderer always has a target resolution to operate
 	/// On windowed mode, its the size of the window's client area and in fullscreen the native resolution we're running at
 	int resolutionHeight();
-
-protected:
-	friend class Window;
-
-	Type                  m_type;            ///< The type of this renderer
-	String                m_name;            ///< The string with the name of this renderer
-	Window*               m_window;          ///< Guaranteed to be a valid surface while the renderer lives
-	RenderTarget*         m_target;          ///< The frame buffer being drawn to, either equals the surface or a custom created FBO
-	Color                 m_clearColor;      ///< The color of the background when clearing buffer
-	FloatRect             m_scissorRect;     ///< If scissor clipping is enabled, this is the rect being used
-	mat4                  m_projection;      ///< Current projection matrix
-	mat4                  m_view;            ///< Current view matrix
-	mat4                  m_model;           ///< Current model matrix
-	GLShader*             m_activeShader;    ///< Current active shader
-	bool		          m_shaderUsageHint; ///< Hint for the default shader usage
-	Texture		          m_defaultTexture;  ///< Full white 1x1 default texture
-	std::stack<FloatRect> m_scissorStack;    ///< Stack of scissor test regions
-
-	/// Conversion table of Render::Primitive::Type to GLenum
-	std::map<Render::Primitive::Type, int> m_primitiveTable;
 };
 
 NEPHILIM_NS_END

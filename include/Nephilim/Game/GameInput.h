@@ -77,5 +77,8 @@ public:
 	Vec2i getMousePosition();	
 };
 
+/// Global accessors to the input utilities
+extern GameInput* gInput;
+
 NEPHILIM_NS_END
 #endif // NephilimGameInput_h__

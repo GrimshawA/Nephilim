@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class Texture;
+class GLTexture2D;
 
 /**
 	\class Framebuffer
@@ -41,7 +41,7 @@ public:
 	void activate();
 
 	/// Attaches a texture to the color attachment 0
-	void attachTexture(const Texture& texture);
+	void attachTexture(const GLTexture2D& texture);
 
 	/// Attempts to create the framebuffer
 	bool create();

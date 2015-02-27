@@ -35,6 +35,9 @@ public:
 	/// Returns a normalized copy of this vector
 	Vec2<T> normalized();
 
+	/// Get this vector as a radian angle, must be normalized
+	float asRadianAngle();
+
 	/// Rotates the vector by radians. Must be normalized.
 	void rotate(float radians);
 	
@@ -46,6 +49,9 @@ public:
 
 	/// Manhattan distance between the vectors
 	float manhattanDistance(const Vec2<T> &vec) const;
+
+	/// Get the squared distance between the vectors, apply sqrt to get a final distance
+	float squaredDistance(const Vec2<T> &vec) const;
 
 	/// Comparison operator overload
 	bool operator==(const Vec2<T> &vec) const;

@@ -4,12 +4,6 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/Systems/System.h>
 
-// Prototypes
-#include <Nephilim/Network/TcpListener.h>
-#include <Nephilim/Network/TcpSocket.h>
-#include <Nephilim/Network/IpAddress.h>
-#include <Nephilim/Network/Packet.h>
-
 NEPHILIM_NS_BEGIN
 
 class GameNetwork;
@@ -47,8 +41,6 @@ class NetworkSystemClient : public NetworkSystem
 {
 public:
 
-	TcpSocket conn;
-	float pingTimer = 1.f;
 
 public:
 
@@ -62,9 +54,6 @@ class NetworkSystemServer : public NetworkSystem
 {
 public:
 
-	TcpListener listener;
-
-	TcpSocket* next = nullptr;
 
 public:
 	NetworkSystemServer();

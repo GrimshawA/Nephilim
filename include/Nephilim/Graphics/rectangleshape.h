@@ -10,10 +10,9 @@
 
 NEPHILIM_NS_BEGIN
 
-class Texture;
+class Texture2D;
 
 /**
-	\ingroup Graphics
 	\class RectangleShape
 	\brief A drawable rectangle
 */
@@ -51,7 +50,7 @@ public:
 
 	void setColors(const Color& topleft, const Color& topright, const Color& bottomright, const Color& bottomleft);
 
-	void setTexture(Texture* texture);
+	void setTexture(Texture2D* texture);
 
 	/// Set the sub region of the texture to display. These coordinates are in pixels and are normalized internally
 	void setTextureRect(float left, float top, float width, float height);
@@ -76,7 +75,7 @@ protected:
 
 	float m_outlineThickness;
 
-	Texture* m_texture;
+	Texture2D* m_texture;
 
 private:
 	void updateInternalOutline();

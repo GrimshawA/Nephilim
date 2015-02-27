@@ -1,4 +1,5 @@
 #include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/UxEvent.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIComponentButton.h>
@@ -20,6 +21,7 @@ NEPHILIM_NS_BEGIN
 
 UIView::UIView()
 : RefCountable()
+, position(0.f, 0.f, 0.f)
 , m_parent(NULL)
 , m_positionFlags(0)
 , m_sizeFlags(0)
@@ -103,14 +105,19 @@ UIView* UIView::createChild(const String& name)
 	// Instance a new view
 	UIView* view = new UIView();
 	view->setName(name);
-	view->setPosition(getPosition());
-
-	//view->addComponent(new UIComponentDebugColor(Color(100,100,100,100)));
 
 	// Attach
 	attach(view);
 
+	view->onSetup();
+
 	return view;
+}
+
+/// Set a new size to the widget
+void UIView::setSize(Vector2D _size)
+{
+	setSize(_size.x, _size.y);
 }
 
 /// Get the current width of this widget
@@ -397,7 +404,7 @@ void UIView::setSizeFlags(Uint64 flags)
 void UIView::setZ(float _z)
 {
 	position.z = _z;
-	Log("Z set to %f", _z);
+	//Log("Z set to %f", _z);
 }
 
 /// This function allows to start an animation out of its definition file
@@ -485,7 +492,7 @@ void UIView::printHierarchy(int tabs)
 	for(int i = 0; i < tabs; ++i)
 		tabss += "\t";
 
-	Log("%s: %s", tabss.c_str(), getName().c_str());
+	Log("%s: %s", tabss.c_str(), getName());
 
 	for(std::size_t i = 0; i < m_children.size(); ++i)
 	{
@@ -1117,9 +1124,12 @@ void UIView::attach(UIView* control)
 	if(_core)
 		control->setContext(_core);
 
-	//control->processSizeChange(getSize().x, getSize().y);
+	onChildAdded(control);
+}
 
-//	updateLayout();
+/// Called on the subclass when a new child is added
+void UIView::onChildAdded(UIView* widget)
+{
 }
 
 /// Makes the control invisible
@@ -1284,8 +1294,6 @@ void UIView::setSize(float width, float height)
 	mRect.width = width;
 	mRect.height = height;
 	
-
-
 	updateLayout();
 
 	// Let components know a resize was made
@@ -1308,6 +1316,13 @@ void UIView::setSize(float width, float height)
 
 	// Last thing
 	sizeChanged();
+
+	// After size changed, let's notify the hierarchy it happened for layouters etc
+	UxEvent event;
+	event.type = 1;
+	event.emitter = this;
+	if (getParent())
+		getParent()->dispatch(event);
 };
 
 /// Immediately sets the center of the control to a new position
@@ -1445,9 +1460,9 @@ void UIView::setName(const String& name){
 };
 
 /// Get the name of the control
-String UIView::getName()
+const char* UIView::getName()
 {
-	return m_name;
+	return m_name.c_str();
 }
 
 NEPHILIM_NS_END

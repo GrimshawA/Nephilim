@@ -7,13 +7,13 @@
 
 #if defined NEPHILIM_ANDROID
 
-#include <Nephilim/AndroidInterface.h>
+#include <Nephilim/Foundation/AndroidWrapper.h>
 
 #if !defined ANDROID_PACKAGE_NAME || !defined ANDROID_ACTIVITY_NAME
 #error Cannot build for Android platform without specifying the ANDROID_PACKAGE_NAME and ANDROID_ACTIVITY_CLASS
 #endif
 
-#include "AndroidJNI.h"
+#include <Nephilim/Helpers/AndroidGlue.h>
 #include <android/keycodes.h>
 
 Engine sdk;
@@ -54,8 +54,7 @@ void android_render(){
 
 void android_resize(int w, int h){
 	_engine = &sdk; // ensure
-	_engine->m_surface.m_windowWidth = w;
-	_engine->m_surface.m_windowHeight = h;
+	_engine->m_window->setSize(w, h);
 
 	/*
 	pE::Event ev;

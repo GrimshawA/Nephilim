@@ -7,6 +7,7 @@
 #include <Nephilim/Foundation/File.h>
 
 #include <assert.h>
+#include <unistd.h>
 
 NEPHILIM_NS_BEGIN
 	 

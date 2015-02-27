@@ -3,6 +3,8 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Object.h>
+#include <Nephilim/Foundation/Factory.h>
+
 
 NEPHILIM_NS_BEGIN
 

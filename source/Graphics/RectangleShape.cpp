@@ -1,8 +1,9 @@
 #include <Nephilim/Graphics/RectangleShape.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
-#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
+
+#include <Nephilim/Foundation/Logging.h>
 
 #include <cmath>
 
@@ -164,7 +165,7 @@ void RectangleShape::setSize(float width, float height)
 	updateInternalOutline();
 }
 
-void RectangleShape::setTexture(Texture* texture)
+void RectangleShape::setTexture(Texture2D* texture)
 {
 	if(texture)
 	{
@@ -215,7 +216,7 @@ void RectangleShape::setTextureRect(FloatRect rect)
 
 void RectangleShape::onDraw(GraphicsDevice* renderer)
 {
-	if(m_texture) m_texture->bind();
+	if (m_texture) renderer->setTexture(*m_texture);
 	else renderer->setDefaultTexture();
 
 	if (useOwnTransform)

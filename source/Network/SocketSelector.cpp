@@ -1,3 +1,5 @@
+#ifdef IGNOREMENOW
+
 #include <Nephilim/Network/SocketSelector.hpp>
 #include <Nephilim/Network/Socket.h>
 #include "SocketImpl.hpp"
@@ -111,3 +113,5 @@ SocketSelector& SocketSelector::operator =(const SocketSelector& right)
 }
 
 NEPHILIM_NS_END
+
+#endif

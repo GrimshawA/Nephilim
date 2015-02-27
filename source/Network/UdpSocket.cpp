@@ -1,3 +1,5 @@
+#ifdef IGNOREMENOW
+
 #include <Nephilim/Network/UdpSocket.h>
 #include <Nephilim/Network/IpAddress.h>
 #include <Nephilim/Network/Packet.h>
@@ -162,3 +164,5 @@ Socket::Status UdpSocket::receive(Packet& packet, IpAddress& remoteAddress, unsi
 }
 
 NEPHILIM_NS_END
+
+#endif

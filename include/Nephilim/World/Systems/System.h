@@ -30,7 +30,7 @@ class World;
 	- Audio system ( keep the audio playing )
 	- Script system ( call methods on scripts and fetch data from them )
 */
-class NEPHILIM_API System : public Object
+class NEPHILIM_API System : public ReferencedObject
 {
 public:
 
@@ -40,6 +40,9 @@ public:
 	World* _World;
 
 public:
+
+	/// Pass on the ReferenceObject constructor
+	System();
 
 	/// Destructor
 	virtual ~System();

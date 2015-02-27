@@ -59,7 +59,7 @@ public:
 
 	struct TextureInfo
 	{
-		Texture* texture;
+		Texture2D* texture;
 		FloatRect rect;
 	}; 
 
@@ -78,7 +78,7 @@ public:
 
 	Color m_color;
 
-	Texture* m_normalTexture; ///< Either NULL or a valid texture to display
+	Texture2D* m_normalTexture; ///< Either NULL or a valid texture to display
 
 	RectangleShape backgroundShape;
 	Text buttonLabel;

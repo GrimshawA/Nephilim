@@ -1,0 +1,1 @@
+This directory contains the entire source for the official plugin for AngelScript.

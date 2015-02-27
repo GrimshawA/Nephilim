@@ -67,9 +67,9 @@ void Actor::destroy()
 
 /// Get the transform of this Actor
 /// This is the transform that converts anything in actor space to world space
-CTransform Actor::getActorTransform()
+Transform Actor::getActorTransform()
 {
-	CTransform transform;
+	Transform transform;
 	if (root)
 	{
 		transform = root->t;
@@ -78,7 +78,7 @@ CTransform Actor::getActorTransform()
 }
 
 /// Set a transform for the root
-void Actor::setActorTransform(const CTransform& transform)
+void Actor::setActorTransform(const Transform& transform)
 {
 	if (root)
 	{

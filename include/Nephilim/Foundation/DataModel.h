@@ -40,6 +40,10 @@ class NEPHILIM_API DataModel
 {
 public:
 
+	/// Read-only data models will keep their views in sync, but never accept back modifications
+	bool readOnly;
+
+public:
 
 	/// Get the data in a given cell
 	virtual Variant data(int row, int col);

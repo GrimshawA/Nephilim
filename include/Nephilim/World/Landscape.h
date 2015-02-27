@@ -3,9 +3,9 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
-#include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/ATerrainComponent.h>
 
+#include <Nephilim/Foundation/Transform.h>
 #include <Nephilim/Foundation/Vector.h>
 
 NEPHILIM_NS_BEGIN
@@ -36,7 +36,7 @@ public:
 	ATerrainComponent terrain;
 
 	/// This is the root transform that affects the entire landscape
-	CTransform rootTransform;
+	Transform rootTransform;
 
 public:
 

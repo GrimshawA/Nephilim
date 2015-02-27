@@ -6,7 +6,6 @@
 #include <Nephilim/World/Systems/NetworkSystem.h>
 
 #include <Nephilim/World/Components/AStaticMeshComponent.h>
-#include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/ASpriteComponent.h>
 #include <Nephilim/World/Components/AInputComponent.h>
 #include <Nephilim/World/Components/ACameraComponent.h>
@@ -15,6 +14,7 @@
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/PluginLoader.h>
+#include <Nephilim/Foundation/Transform.h>
 
 #include <Nephilim/Game/GameCore.h>
 #include <Nephilim/Graphics/Window.h>
@@ -33,6 +33,9 @@ World::World()
 	_viewports.push_back(mainViewport);
 
 	createNetworkSystem<NetworkSystem>();
+
+	_renderSystem = createRenderSystem<RenderSystemDefault>();
+	_renderSystem->mRenderer = GraphicsDevice::instance();
 }
 
 /// Called after having the opportunity to set some initial settings

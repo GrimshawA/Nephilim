@@ -10,10 +10,9 @@
 
 #include <Nephilim/Game/Resource.h>
 
-#include <Nephilim/Graphics/GL/GLTexture.h>
-
 #include <Nephilim/Graphics/Font.h>
 #include <Nephilim/Graphics/Sprite.h>
+#include <Nephilim/Graphics/Texture2D.h>
 
 #include <map>
 #include <memory>
@@ -22,27 +21,8 @@ NEPHILIM_NS_BEGIN
 
 class StaticMesh;
 class SkeletalMesh;
-
 class ExtensionImporter;
 
-class ContentGroupFonts
-{
-public:
-	bool load(const String& filename);
-
-	std::map<String, Font*> mFonts;
-};
-
-/// A content group holds an indefinite number of resources of different types
-class ContentGroup
-{
-public:
-
-	ContentGroupFonts mFonts;
-
-	std::map<String, Texture*> mTextures;
-
-};
 
 // used to assist in automatic loading of third party importers
 // not needed for native formats
@@ -71,14 +51,7 @@ public:
 	typedef std::pair<String, Sprite> SpriteResource;
 	std::vector<SpriteResource> sprites;
 
-
-	String mDefaultGroup; ///< The current default group
-
-	ContentGroupFonts* mDefaultFonts; ///< A pointer to the font holder in the currently "default" group
-
-	std::map<String, ContentGroup*> mGroups;
-
-	VirtualFileSystem* filesystems;
+	VirtualFileSystem virtualfs;
 
 	std::vector<std::unique_ptr<PluginLoader> > plugins;
 
@@ -99,22 +72,17 @@ public:
 	/// This will cause a static mesh to be loaded from a file with native loader or an importer
 	bool loadStaticMesh(const String& urn, const String& filename);
 	
-
-	ContentGroup* createGroup(const String& name);
-
 	/// Find a mesh in our storage, so it can be used somewhere
 	Resource<StaticMesh> findMesh(const String& name);
 
 	/// Load a font
 	void loadFont(const String& filename);
 
-	void removeGroup(const String& name);
-
 	/// The most elemental form of loading an asset
 	/// Simply takes the filename and tries to deduce how to load it from extension
 	bool load(const String& filename);
 
-	Texture* getTexture(const String& name);
+	Texture2D* getTexture(const String& name);
 };
 
 NEPHILIM_NS_END

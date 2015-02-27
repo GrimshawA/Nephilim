@@ -1,12 +1,14 @@
 #ifndef SKLLoader_h__
 #define SKLLoader_h__
 
-#include <Nephilim/Strings.h>
-#include <Nephilim/File.h>
-#include <Nephilim/DataStream.h>
-#include <Nephilim/Math/Vectors.h>
-#include <Nephilim/Logger.h>
-#include <Nephilim/Math/Quaternion.h>
+#include <Nephilim/Foundation/String.h>
+
+#include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/DataStream.h>
+#include <Nephilim/Foundation/Logging.h>
+
+#include <Nephilim/Foundation/Vector.h>
+#include <Nephilim/Foundation/Quat.h>
 using namespace nx;
 
 #include <vector>
@@ -116,7 +118,7 @@ public:
 				mat4 originalBindPose(bindPoseRowMajor);
 				//originalBindPose.transpose();
 
-				Quaternion orientation = Quaternion::fromMatrix(originalBindPose);
+				Quat orientation = Quat::fromMatrix(originalBindPose);
 				orientation.z = orientation.z;
 				orientation.w = orientation.w;
 

@@ -13,6 +13,7 @@
 #include <Nephilim/World/EntityManager.h>
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/Systems/System.h>
+#include <Nephilim/World/Systems/NetworkSystem.h>
 #include <Nephilim/World/Component.h>
 #include <Nephilim/World/ComponentArray.h>
 #include <Nephilim/World/Level.h>

@@ -26,7 +26,7 @@ public:
 
 	void refreshTextureHandle();
 
-	Texture* mTexture;
+	Texture2D* mTexture;
 	String mSourceTexture;
 };
 

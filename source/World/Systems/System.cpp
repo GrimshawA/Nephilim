@@ -2,6 +2,13 @@
 
 NEPHILIM_NS_BEGIN
 
+/// Pass on the ReferenceObject constructor
+System::System()
+: ReferencedObject()
+{
+
+}
+
 System::~System()
 {
 }

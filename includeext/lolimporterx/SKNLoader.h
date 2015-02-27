@@ -1,11 +1,12 @@
 #ifndef SKNLoader_h__
 #define SKNLoader_h__
 
-#include <Nephilim/Strings.h>
-#include <Nephilim/Geometry.h>
-#include <Nephilim/Logger.h>
-#include <Nephilim/File.h>
-#include <Nephilim/DataStream.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Logging.h>
+#include <Nephilim/Foundation/File.h>
+#include <Nephilim/Foundation/DataStream.h>
+
+#include <Nephilim/Graphics/Geometry.h>
 
 using namespace nx;
 
@@ -108,7 +109,7 @@ public:
 		return true;
 	}
 
-	void Load(GeometryData& data, const String& filename)
+	void Load(GeometryObject& data, const String& filename)
 	{
 		File fp(filename, IODevice::BinaryRead);
 		if(fp)
@@ -227,8 +228,8 @@ public:
 				// ASSIGN GEOMETRY    
 				for(size_t i = 0; i < indices.size(); ++i)
 				{
-					data.m_vertices.push_back(vertices[indices[i]]);
-					data.m_texCoords.push_back(uv[indices[i]]);
+					data.vertices.push_back(vertices[indices[i]]);
+					data.texcoords0.push_back(uv[indices[i]]);
 					data.boneIDs.push_back(boneIDs[indices[i]]); // still need to remap from bone indices to actual bones with the skeleton data
 					data.boneWeights.push_back(boneWeights[indices[i]]);
 				}

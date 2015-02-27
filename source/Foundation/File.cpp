@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #ifdef NEPHILIM_ANDROID
-#include <Nephilim/AndroidInterface.h>
+#include <Nephilim/Foundation/AndroidWrapper.h>
 #endif
 
 NEPHILIM_NS_BEGIN

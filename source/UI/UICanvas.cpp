@@ -15,6 +15,24 @@ UICanvas::UICanvas()
 	_core = &m_state;
 }
 
+/// Get the object name of this node
+const char* UICanvas::getName()
+{
+	return m_name.c_str();
+}
+
+/// Get the class name of this node
+const char* UICanvas::getClassName()
+{
+	return "UICanvas";
+}
+
+
+void UICanvas::render(GraphicsDevice* gdi)
+{
+	draw(gdi);
+}
+
 /// Adds a layer to this canvas for 2D controls
 void UICanvas::addLayer2D(const String& name)
 {
@@ -159,7 +177,7 @@ void UICanvas::debugData()
 {
 	Log("Surface count: %d", m_surfaces.size());
 	for(std::vector<UIWindow*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++){
-		Log("Surface: %s", (*it)->getName().c_str());
+		//Log("Surface: %s", (*it)->getName().c_str());
 	}
 }
 
@@ -261,8 +279,12 @@ UIWindow* UICanvas::createWindow(const String& name)
 	if (!window)
 	{
 		addLayer2D(name);
+		window = getLayer(name);
 	}
-	return getLayer(name);
+
+	_children.push_back(window);
+
+	return window;
 }
 
 /// Draw the UI

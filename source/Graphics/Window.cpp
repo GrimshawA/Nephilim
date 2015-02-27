@@ -5,6 +5,8 @@
 
 #include <Nephilim/Foundation/Logging.h>
 
+#include <Nephilim/Game/Engine.h>
+
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 
 #ifdef NEPHILIM_DESKTOP
@@ -16,10 +18,11 @@
 #include <windows.h>
 #endif
 
-#include <iostream>
 #include <stdint.h>
-using namespace std;
 
+#ifdef NEPHILIM_ANDROID
+#include <Nephilim/Foundation/AndroidWrapper.h>
+#endif
 
 NEPHILIM_NS_BEGIN
 
@@ -140,10 +143,10 @@ GraphicsDevice* Window::createRenderer()
 	renderer = new RendererOpenGL();
 
 #elif defined NEPHILIM_ANDROID || defined NEPHILIM_IOS
-	if (m_engine->glesHint == 2)
+	if (gEnv->glesHint == 2)
 		renderer = new RendererGLES2();
-	else
-		renderer = new RendererGLES();
+	/*else
+		renderer = new RendererGLES();*/
 #endif
 
 	if (renderer)

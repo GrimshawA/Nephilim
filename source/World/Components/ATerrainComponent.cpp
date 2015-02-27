@@ -13,7 +13,7 @@ bool ATerrainComponent::load(const String& heightmapFileName)
 {
 	surfaceTex.loadFromFile("grass.png");
 	surfaceTex.setRepeated(true);
-	surfaceTex.generateMipMaps();
+	//surfaceTex.generateMipMaps();
 
 	
 	heightmap.loadFromFile(heightmapFileName);

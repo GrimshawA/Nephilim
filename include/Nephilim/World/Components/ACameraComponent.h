@@ -1,9 +1,7 @@
 #ifndef NephilimWorldACameraComponent_h__
 #define NephilimWorldACameraComponent_h__
 
-#include <Nephilim/Platform.h>
 #include <Nephilim/World/Components/ASceneComponent.h>
-
 
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/Matrix.h>
@@ -19,18 +17,14 @@ class NEPHILIM_API ACameraComponent : public ASceneComponent
 {
 public:
 	
+	/// The camera can be set to orthographic or perspective
+	bool mOrtho;
 
-	vec2 size; /// The size of the ortho camera
-
-	vec3 eye;
-	vec3 up;
+	/// Camera size, for defining aspect ratio and ortho size
+	vec2 size;
 
 	mat4 cameraTransform;
 
-	float x,y,z; // where the camera is
-	float center_x, center_y, center_z;
-
-	bool mOrtho; // is it ortho or perspective
 	float fieldOfView;
 
 	/// ZNear value defines how close to the camera position the "capturing" begins, clips anything before it
@@ -38,9 +32,6 @@ public:
 	
 	/// ZFar value defins the range this camera can render
 	float zFar;
-
-	float screenWidth;
-	float screenHeight;
 	
 public:
 

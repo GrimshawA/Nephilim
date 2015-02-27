@@ -1,9 +1,7 @@
-#ifndef NephilimGLTexture_h__
-#define NephilimGLTexture_h__
+#ifndef NephilimGL_Texture_h__
+#define NephilimGL_Texture_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/Graphics/Texture2D.h>
-#include <Nephilim/Graphics/TextureCube.h>
+#include <Nephilim/Graphics/GDI/GDI_Texture2D.h>
 
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
@@ -12,22 +10,22 @@
 NEPHILIM_NS_BEGIN
 
 class Image;
+
 /**
-	\ingroup Graphics
-	\class Texture
+	\class GLTexture2D
 	\brief OpenGL Texture. RGBA format - 8 bits per component
 */
-class NEPHILIM_API Texture : public Texture2D
+class NEPHILIM_API GLTexture2D : public GDI_Texture2D
 {
 public:
 	/// Creates a uninitialized texture
-	Texture();
+	GLTexture2D();
 
 	/// Copy to a new texture
-	Texture(const Texture& other);
+	GLTexture2D(const GLTexture2D& other);
 
 	/// Releases the texture resource
-	~Texture();
+	~GLTexture2D();
 
 	/// Unload the texture
 	void unload();
@@ -36,12 +34,6 @@ public:
 
 	/// Get the internal OpenGL identifier of this texture
 	unsigned int getIdentifier() const;
-
-	/// Update the texture on the GPU with an array of pixels
-	void update(const Uint8* pixels);
-
-	/// Update the texture on the GPU from an image
-	void update(const Image& image);
 
 	/// Enables smoothing in the texture
 	/// When smoothing is enabled, the pixels will be linearly interpolated when the image is scaled
@@ -63,20 +55,26 @@ public:
 	Image copyToImage() const;
 
 	/// Loads directly from an image
-	void loadFromImage(Image &image, bool generateMipMaps = false);
+	bool loadFromImage(const Image &image);
 
 	/// Load a texture from a file
 	/// This is a proxy for Image::loadFromFile() and then Texture::loadFromImage()
 	bool loadFromFile(const String &path);
 
 	/// Get the size of the texture
-	Vec2i getSize() const;
+	Vec2<int> getSize() const;
 
 	/// Bind this texture to the currently active texture unit
 	void bind() const;
 
 	/// Updates a given region inside the texture with an array of pixels
 	void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
+
+	/// Update the texture on the GPU with an array of pixels
+	void update(const Uint8* pixels);
+
+	/// Update the texture on the GPU from an image
+	void update(const Image& image);
 
 	/// Get the maximum allowed size of textures
 	/// The result will be hardward-dependent
@@ -95,4 +93,4 @@ private:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimGLTexture_h__
+#endif // NephilimGL_Texture_h__

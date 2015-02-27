@@ -1,3 +1,5 @@
+#ifdef IGNOREMENOW
+
 #include <Nephilim/Network/Packet.h>
 #include "../Network/SocketImpl.hpp"
 
@@ -268,3 +270,5 @@ Packet NetworkPacket::getData(){
 };
 */
 NEPHILIM_NS_END
+
+#endif

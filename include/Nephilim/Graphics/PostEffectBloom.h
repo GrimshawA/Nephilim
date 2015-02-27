@@ -1,14 +1,13 @@
 #ifndef NephilimRazerPostEffectBloom_h__
 #define NephilimRazerPostEffectBloom_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/Graphics/GL/GLShader.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
-#include <Nephilim/Graphics/GL/GLFramebuffer.h>
-
 #include <Nephilim/Graphics/PostEffect.h>
+#include <Nephilim/Graphics/Texture2D.h>
+#include <Nephilim/Graphics/Shader.h>
+#include <Nephilim/Graphics/Framebuffer.h>
 
 NEPHILIM_NS_BEGIN
+
 class GraphicsDevice;
 
 class NEPHILIM_API PostEffectBloom : public PostEffect
@@ -16,17 +15,17 @@ class NEPHILIM_API PostEffectBloom : public PostEffect
 public:
 	PostEffectBloom();
 
-	void apply(GraphicsDevice* renderer, Texture& renderTexture);
+	void apply(GraphicsDevice* renderer, Texture2D& renderTexture);
 
 	void brightnessPass(GraphicsDevice* mRenderer);
 
-	Texture	mBrightnessTexture;
-	Texture	mFirstPassTextures[2];
-	Texture	mSecondPassTextures[2];
+	Texture2D	mBrightnessTexture;
+	Texture2D	mFirstPassTextures[2];
+	Texture2D	mSecondPassTextures[2];
 
-	GLFramebuffer mBrightnessFramebuffer;
+	Framebuffer mBrightnessFramebuffer;
 
-	GLShader mBrightnessShader;
+	Shader mBrightnessShader;
 };
 
 

@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/Entity.h>
+#include <Nephilim/World/ComponentArray.h>
 
 #include <map>
 #include <typeindex>

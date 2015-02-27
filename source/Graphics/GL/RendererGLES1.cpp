@@ -1,3 +1,5 @@
+#ifdef IGNOREME
+
 #include <Nephilim/Platform.h>
 #include <Nephilim/Game/Engine.h>
 #include <Nephilim/Foundation/Logging.h>
@@ -221,4 +223,6 @@ void RendererGLES::display(){
 };
 
 NEPHILIM_NS_END
+#endif
+
 #endif

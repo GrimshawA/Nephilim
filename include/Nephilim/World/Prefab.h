@@ -1,7 +1,7 @@
 #ifndef NephilimSceneFormat_h__
 #define NephilimSceneFormat_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
 #include <Nephilim/Foundation/String.h>
 
 #include <vector>
@@ -12,8 +12,11 @@ NEPHILIM_NS_BEGIN
 /**
 	\class Prefab
 	\brief Defines the structure of prefab objects for instantiation
+
+	Usually, all object types are loaded in memory, and are used to quickly
+	spawn and setup instances of the prefab.
 */
-class NEPHILIM_API Prefab
+class NEPHILIM_API Prefab : public Asset
 {
 public:
 	struct Spawn
@@ -54,12 +57,36 @@ public:
 	/// This specifies the prefab root (what it spawns)
 	String rootClassName;
 
+	/// We have N components in our prefab, which we instance by name
+	struct ComponentInstance
+	{
+		String ComponentClass;
+
+		std::vector<ComponentInstance*> SubComponents;
+	};
+
+	std::vector<ComponentInstance> ComponentInstances;
+
+
+	struct GameObjectPrefab
+	{
+		std::vector<ComponentInstance*> Components;
+		String Class;
+	};
+
+	std::vector<GameObjectPrefab> GameObjectPrefabs;
+
 public:
+
+	/// Returns true if the prefab instances more than one game object
+	bool isMultiGameObject();
 
 	String getRootClassName() const
 	{
 		return rootClassName;
 	}
+
+	bool loadjson(const String& filename);
 
 	bool load(const String& filename);
 	bool save(const String& filename);

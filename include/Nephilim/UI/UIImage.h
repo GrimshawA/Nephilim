@@ -19,7 +19,7 @@ public:
 
 	void draw(GraphicsDevice* renderer);
 
-	Texture t;
+	Texture2D t;
 
 	String m_path;
 };

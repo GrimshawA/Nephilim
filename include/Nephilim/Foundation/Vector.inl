@@ -67,6 +67,20 @@ float Vec2<T>::manhattanDistance(const Vec2<T> &vec) const
 	return fabs(vec.x - x) + fabs(vec.y - y);
 }
 
+/// Get the squared distance between the vectors, apply sqrt to get a final distance
+template<class T>
+float Vec2<T>::squaredDistance(const Vec2<T> &vec) const
+{
+	return (vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y);
+}
+
+/// Get this vector as a radian angle, must be normalized
+template<class T>
+float Vec2<T>::asRadianAngle()
+{
+	return atan2(y, x);
+}
+
 /// Get the length of the vector
 template<class T>
 float Vec2<T>::length() const
@@ -429,14 +443,14 @@ float Vec3<T>::dot(const Vec3<T> &vec)
 template<class T>
 float Vec3<T>::distance(const Vec3<T> &vec)
 {
-	return sqrt((vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y));
+	return sqrt((vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y) + (vec.z - z) * (vec.z - z));
 }
 
 /// Calculate the squared distance between vectors
 template<class T>
 float Vec3<T>::squaredDistance(const Vec3<T> &vec)
 {
-	return (vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y);
+	return (vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y) + (vec.z - z) * (vec.z - z);
 }
 
 /************************************************************************/

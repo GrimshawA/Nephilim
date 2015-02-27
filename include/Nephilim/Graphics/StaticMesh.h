@@ -1,11 +1,11 @@
-#ifndef NephilimMesh_h__
-#define NephilimMesh_h__
+#ifndef NephilimStaticMesh_h__
+#define NephilimStaticMesh_h__
 
-#include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Asset.h>
+
 #include <Nephilim/Graphics/Geometry.h>
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Graphics/IndexArray.h>
-
 #include <Nephilim/Graphics/VertexBuffer.h>
 #include <Nephilim/Graphics/IndexBuffer.h>
 
@@ -43,7 +43,7 @@ public:
 	Supports multiple level of detail meshes. The renderer will pick a LOD level depending on the distance
 	from the camera to the instance.
 */
-class NEPHILIM_API StaticMesh
+class NEPHILIM_API StaticMesh : public Asset
 {
 public:
 
@@ -65,4 +65,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // NephilimMesh_h__
+#endif // NephilimStaticMesh_h__

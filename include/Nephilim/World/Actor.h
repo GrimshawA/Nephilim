@@ -4,12 +4,14 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Components/ASceneComponent.h>
-#include <Nephilim/World/CTransform.h>
 #include <Nephilim/World/Components/AInputComponent.h>
 #include <Nephilim/World/Components/AStaticMeshComponent.h>
 #include <Nephilim/World/Components/ABoxComponent.h>
+
 #include <Nephilim/Foundation/BBox.h>
 #include <Nephilim/Foundation/Time.h>
+#include <Nephilim/Foundation/Transform.h>
+
 
 #include <Nephilim/Scripting/IScript.h>
 
@@ -40,8 +42,6 @@ private:
 	ASceneComponent* root = nullptr;
 
 public:
-	/// The array of components on this Actor
-	std::vector<Component*> components;
 
 	/// Name of this actor, it doesn't have to be unique
 	String mName;
@@ -68,10 +68,10 @@ public:
 
 	/// Get the transform of this Actor
 	/// This is the transform that converts anything in actor space to world space
-	CTransform getActorTransform();
+	Transform getActorTransform();
 
 	/// Set a transform for the root
-	void setActorTransform(const CTransform& transform);
+	void setActorTransform(const Transform& transform);
 
 	/// Get the position of this Actor
 	vec3 getActorLocation();

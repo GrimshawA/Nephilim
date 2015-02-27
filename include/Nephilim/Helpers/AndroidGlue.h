@@ -13,8 +13,8 @@ extern void android_multitouchup(float x, float y, int index, int id);
 extern void android_multitouchmove(float x, float y, int index, int id);
 extern void android_keydown(int key);
  
-#include <Nephilim/Strings.h>
-#include <Nephilim/AndroidInterface.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/AndroidWrapper.h>
  
 // JNI Header
 #include <jni.h>

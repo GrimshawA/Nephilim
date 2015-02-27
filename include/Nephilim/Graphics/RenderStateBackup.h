@@ -6,17 +6,8 @@
 
 NEPHILIM_NS_BEGIN
 
-class Texture;
+class GLTexture2D;
 class GraphicsDevice;
-
-class NEPHILIM_API TextureBackup
-{
-public:
-	TextureBackup();
-	~TextureBackup();
-
-	unsigned int id;
-};
 
 class NEPHILIM_API RendererTransformBackup
 {

@@ -1,20 +1,9 @@
 #include <Nephilim/Graphics/RenderStateBackup.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 
 NEPHILIM_NS_BEGIN
-
-TextureBackup::TextureBackup()
-: id(Texture::getCurrentBoundTexture())
-{
-
-}
-
-TextureBackup::~TextureBackup()
-{
-	glBindTexture(GL_TEXTURE_2D, id);
-}
 
 RendererTransformBackup::RendererTransformBackup(GraphicsDevice* renderer)
 : m_renderer(renderer)

@@ -1,9 +1,9 @@
 #ifndef NephilimWorldActorASceneComponent_h__
 #define NephilimWorldActorASceneComponent_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/World/CTransform.h>
+#include <Nephilim/World/Component.h>
 
+#include <Nephilim/Foundation/Transform.h>
 #include <Nephilim/Foundation/Matrix.h>
 
 #include <vector>
@@ -23,7 +23,7 @@ class ASceneComponent : public Component
 public:
 	mat4 absoluteTransform;
 
-	CTransform t;
+	Transform t;
 
 	std::vector<ASceneComponent*> attachedComponents;
 

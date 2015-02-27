@@ -5,38 +5,18 @@
 #include <Nephilim/Graphics/Transformable.h>
 #include <Nephilim/Graphics/Drawable.h>
 #include <Nephilim/Graphics/VertexArray2D.h>
+#include <Nephilim/Graphics/Texture2D.h>
 #include <Nephilim/Foundation/Color.h>
-#include <Nephilim/Graphics/GL/GLTexture.h>
 
 NEPHILIM_NS_BEGIN
 
 /**
-	\ingroup Graphics
 	\class CircleShape
 	\brief Renderable circle
 */
 class NEPHILIM_API CircleShape : public Drawable, public Transformable
 {
 public:
-	CircleShape();
-
-	virtual void onDraw(GraphicsDevice* renderer);
-
-	void setPointCount(int segmentCount);
-
-	void setFillColor(Color color);
-
-	void setTexture(Texture* texture);
-
-	void setTextureCoords(float origin_x, float origin_y, float radius);
-
-	void setRadius(float radius);
-
-	void setOutlineThickness(float thickness);
-	void setOutlineColor(Color color);
-
-	void update();
-
 
 	VertexArray2D m_vertices;
 	VertexArray2D m_outlineGeometry;
@@ -52,11 +32,33 @@ public:
 	Color m_fillColor;
 	Color m_outlineColor;
 
-	Texture* m_texture;
+	Texture2D* m_texture;
 	vec2     m_textureOrigin;
 	float    m_textureRadius;
+
+public:
+
+
+	CircleShape();
+
+	virtual void onDraw(GraphicsDevice* renderer);
+
+	void setPointCount(int segmentCount);
+
+	void setFillColor(Color color);
+
+	void setTexture(Texture2D* texture);
+
+	void setTextureCoords(float origin_x, float origin_y, float radius);
+
+	void setRadius(float radius);
+
+	void setOutlineThickness(float thickness);
+
+	void setOutlineColor(Color color);
+
+	void update();
 };
 
 NEPHILIM_NS_END
-
 #endif // CircleShape_h__
