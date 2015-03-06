@@ -2,10 +2,9 @@
 #define NephilimUICanvas_h__
 
 #include <Nephilim/UI/UxNode.h>
-
-#include <Nephilim/Graphics/Drawable.h>
-#include <Nephilim/Foundation/Event.h>
 #include <Nephilim/UI/UICore.h>
+
+#include <Nephilim/Foundation/Event.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -19,7 +18,7 @@ class UIView;
 
 	A UICanvas is an object that represents a rectangle of any dimension in which child UI elements are rendered to.
 */
-class NEPHILIM_API UICanvas : public UxNode, public Drawable
+class NEPHILIM_API UICanvas : public UxNode
 {
 public:
 
@@ -30,6 +29,9 @@ public:
 
 	/// Construct the window
 	UICanvas();
+
+	/// Name of this node
+	UICanvas(const String& name);
 
 	/// Get the object name of this node
 	virtual const char* getName();
@@ -142,6 +144,7 @@ public:
 
 	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
 	Color m_backgroundColor;
+
 private:
 	/// The bounds of the window
 	/// In nearly every case, the bounds match exactly the dimensions of the screen

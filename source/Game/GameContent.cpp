@@ -146,4 +146,14 @@ Texture2D* GameContent::getTexture(const String& name)
 	return nullptr;
 }
 
+Texture2D* GameContent::createTexture(const String& filename)
+{
+	Texture2D* NewTexture = new Texture2D;
+	NewTexture->loadFromFile(filename);
+
+	_textures.push_back(NewTexture);
+
+	return NewTexture;
+}
+
 NEPHILIM_NS_END

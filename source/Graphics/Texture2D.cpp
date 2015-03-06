@@ -27,7 +27,7 @@ bool Texture2D::create(std::size_t width, std::size_t height)
 }
 
 /// A texture is a rectangle, with finite size
-Vec2<int> Texture2D::getSize() const
+Vector2<int> Texture2D::getSize() const
 {
 	return _impl->getSize();
 }

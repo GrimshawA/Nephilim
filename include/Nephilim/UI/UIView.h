@@ -19,18 +19,16 @@
 #include <map>
 #include <memory>
 
-#include "UILayout.h"
-#include "UICore.h"
-#include "UIProperty.h"
-#include "UIComponent.h"
-
+#include <Nephilim/UI/UILayoutEngine.h>
+#include <Nephilim/UI/UICore.h>
+#include <Nephilim/UI/UIProperty.h>
 #include <Nephilim/UI/UIAnimation.h>
 #include <Nephilim/UI/UIController.h>
 
 NEPHILIM_NS_BEGIN
 
 class Animation;
-class UIComponent;
+class UIController;
 
 struct UIPointerEvent
 { 
@@ -127,6 +125,7 @@ namespace UIFlag
 
 class UIAnimation;
 class UIController;
+class UILayoutEngine;
 
 class NEPHILIM_API UIView : public UxNode, public AxTarget, public RefCountable
 {
@@ -136,25 +135,71 @@ public:
 	float   rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
 	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
 	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
-	
+	Rect<float> mPadding;    ///< Padding on each border, left, top, right, bottom
+
+	RefObjectPtr<UILayoutEngine> mLayoutEngine; ///< Layout engine ruling this widget and downwards
+
 	mat4    matrix;
+	mat4 m_transform;
 
 	vec2 scrolling_offset;   ///< Scroll bars just move this variable around, effectively shifting all elements all around 
 	
 	Uint32 mFlags;
 
-	/// Holds the animations currently active on this view
-	/// Each animation is bound to the view itself, and is automatically destroyed with it
-	//std::vector<std::unique_ptr<UIAnimation> > animations;
-
-
 	vec3  position;   ///< The 3D position of this view
-	String     m_name;             ///< Name
+	String  m_name;             ///< Name
 	UIView* m_parent;           ///< The parent control
 	
 	UIController* _controller = nullptr;
+
+
+	bool m_clipContents; ///< Whether the contents of the control itself are clipped at the border
+	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle
+	bool m_visible;      ///< Whether the widget is visible at all or not
+	bool m_hasFocus;     ///< Whether this widget has currently keyboard focus
+	bool m_hovered;      ///< Whether this widget is being hovered by the mouse now
+
+
+	std::map<String, UIPropertyMap> m_styleInfo;
+	std::map<String, bool>          m_classInfo;
+
+	int m_pointerPressCount; // to remove, double and triple clicks need to be guessed in the central input manager
+
+	///< Animations
+	std::vector<UIAnimation*> mAnimations;
+	AxList m_animations; ///< Animation list
+
+	std::vector<UIController*> components; ///< List of components in this view
+
+	std::map<String, String> mStringProperties;
+
+public:
+
+	struct UIControlOperation
+	{
+		enum UIControlOperationType
+		{
+			Attachment,
+			Destruction,
+			Detachment
+		};
+
+		UIControlOperationType type;
+		UIView* control;
+	};
+
+	std::vector<UIControlOperation> m_pendingOperations;
+
+	void applyPendingOperations();
+
+
+
+	/// Children of the control
+	std::vector<UIView*> m_children;
+	int m_childrenLock;
+	typedef std::vector<UIView*>::iterator UIControlIterator;
 	
-// Inheritance
+////////////////////////////////////////////////////////////////////////// Subclass API
 protected:
 
 	/// Called on the subclass to have it paint its contents
@@ -169,7 +214,10 @@ protected:
 	/// Called on the subclass when a new child is added
 	virtual void onChildAdded(UIView* widget);
 
-// Signals
+	/// Called when the position of the control changed, for updating nested objects
+	virtual void onPositionChanged();
+
+////////////////////////////////////////////////////////////////////////// Delegates API
 public:
 
 	sigc::signal<void> sizeChanged; ///< Emitted when the widget changes size
@@ -190,6 +238,11 @@ public:
 	/// Base destructor
 	virtual ~UIView();
 
+	void offsetChildrenPosition(vec2 offset);
+
+	template<class T>
+	T* getComponent();
+
 	/// Get the current width of this widget
 	float width();
 
@@ -198,6 +251,9 @@ public:
 
 	/// Set the new Z value
 	void setZ(float _z);
+
+	/// Reload all graphics because they were destroyed and are unavailable now
+	virtual void reloadGraphicalAssets();
 
 	/// This will instance and bind a new controller to this view
 	template<typename T>
@@ -232,19 +288,14 @@ public:
 	vec3 getWorldPosition();
 
 	/// Add a component to the view
-	void addComponent(UIComponent* component);
-
-	/// Add a new component from a pre registered type
-	void addComponent(const String& name);
-
-	void addComponent(int type);
+	void addController(UIController* component);
 
 	void addStringProperty(const String& propertyName, const String& propertyValue);
 
 	String getStringProperty(const String& propertyName);
 
 	/// Returns the first component with the given type
-	UIComponent* getComponentByType(UIComponent::Type type);
+	UIController* getComponentByType(UIController::Type type);
 
 	void printHierarchy(int tabs = 0);
 
@@ -319,35 +370,10 @@ public:
 	/// Check if this control has any animation going on
 	bool hasAnimations();
 
-	/// Set a new layout to the control
-	void setLayout(UILayout* layout);
-
-	/// Set positioning flags to the control
-	void setPositionFlags(Uint64 flags);
-
-	/// Get the current positioning flags
-	Uint64 getPositionFlags();
-
-	/// Check the existence of a particular flag for positioning
-	bool hasPositionFlag(Uint64 flag);
-
-	/// Set the flags for sizing
-	void setSizeFlags(Uint64 flags);
-
-	/// Get the sizing flags
-	Uint64 getSizeFlags();
-
 	void enableAutoResize(bool enable);
-
-	/// Check if there is a particular sizing flag
-	bool hasSizeFlag(Uint64 flag);
 
 	/// Set a property from a string
 	void setProperty(const String& str);
-
-	/// Get the currently assigned layout controller
-	/// \return NULL if there is no layout controller assigned
-	UILayout* getLayout();
 
 	/// Get the number of children of this control
 	int getChildCount();
@@ -372,10 +398,6 @@ public:
 	/// Get the current size of the control
 	vec2 getSize();
 
-	/// Returns true when the control is subject of being layout in a grid or other organization form
-	/// Most controls don't implement this function, as their default behavior is to respond to layouts always
-	virtual bool respondsToLayouts();
-
 	/// Requests a tool tip text label from the control
 	/// If only a empty string is returned, no tooltip is shown
 	virtual String getToolTipLabel();
@@ -391,12 +413,6 @@ public:
 
 	/// Callback to handle events
 	virtual bool onEventNotification(Event& event);
-
-	/// Attempt to process positional flags
-	virtual void processPositionFlags();
-
-	/// Attempt to process size flags
-	virtual void processSizeFlags();
 
 	/// Process a mouve movement event
 	/// Returns false if the mouse isnt on any control
@@ -424,23 +440,11 @@ public:
 	/// Set a new size to the widget
 	void setSize(Vector2D _size);
 
-	/// Immediately sets the center of the control to a new position
-	void setCenter(float x, float y);
-
-	/// Immediately sets the center of the control to a new position
-	void setCenter(Vec2f position);
-
 	/// Define a new name for this control
 	void setName(const String& name);
 
 	/// Deep clone of the control and its hierarchy
 	virtual UIView* clone();
-
-	/// Adjusts children to the new sizes according to UISizeFlags
-	virtual void processSizeChange(float previousWidth, float previousHeight, float newWidth, float newHeight);
-
-	/// Get bounds of the control
-	FloatRect getBounds();
 
 	/// Get the name of the control
 	const char* getName();
@@ -451,18 +455,11 @@ public:
 	/// Update the control hierarchy
 	void update(float elapsedTime);
 
-	/// Update layout of children
-	void updateLayout();
-
 	void setRect(FloatRect rect);
 
 	void setRect(float left, float top, float width, float height);
 
 	FloatRect getRect();
-
-	void switchLanguage();
-
-	virtual void innerLanguageSwitch(){}
 
 	Vec2f getMiddlePosition();
 
@@ -489,6 +486,9 @@ public:
 
 	virtual void axKillTrigger();
 
+	/// Hierarchicly sets the context to all children
+	void setContext(UICore* states);
+
 public:                                                        // Old Properties
 
 	/// Signal emitted whenever the slider value changes
@@ -505,99 +505,6 @@ public:                                                        // Old Properties
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
 	sigc::signal<void, UIView*> onNewChild; /// Emitted when a child is attached
-
-
-	/// Hierarchicly sets the context to all children
-	void setContext(UICore* states);
-
-	bool m_clipContents; ///< Whether the contents of the control itself are clipped at the border
-	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle
-	/// Is the control being rendered?
-	bool m_visible;
-
-	bool m_drawBorder; /// temp
-
-	Uint64 m_positionFlags;
-	Uint64 m_sizeFlags;
-
-	std::map<String, UIPropertyMap> m_styleInfo;
-	std::map<String, bool>          m_classInfo;
-
-	/// Reload all graphics because they were destroyed and are unavailable now
-	virtual void reloadGraphicalAssets();
-
-	int m_pointerPressCount;
-
-	///< Animations
-	std::vector<UIAnimation*> mAnimations;
-
-	/// Cascaded transform
-	mat4 m_transform;
-
-	AxList m_animations; ///< Animation list
-
-	void offsetChildrenPosition(vec2 offset);
-
-	template<class T>
-	T* getComponent();
-
-
-	friend class UILayout;
-
-	std::vector<UIComponent*> components; ///< List of components in this view
-
-	std::map<String, String> mStringProperties;
-
-protected: // functions
-
-	/// Callback when the position of the control changed, for updating nested objects
-	virtual void onPositionChanged();
-
-
-public:
-
-	struct UIControlOperation
-	{
-		enum UIControlOperationType
-		{
-			Attachment,
-			Destruction,
-			Detachment
-		};
-
-		UIControlOperationType type;
-		UIView* control;
-	};
-
-	std::vector<UIControlOperation> m_pendingOperations;
-
-	void applyPendingOperations();
-
-
-	Vec2f m_minimumDimensions;
-	Vec2f m_maximumDimensions;
-
-	bool m_hasFocus;
-
-	bool m_hovered;
-
-
-	Color m_backgroundColor;
-	Color m_topBorderColor, m_bottomBorderColor, m_leftBorderColor, m_rightBorderColor;
-
-	/// Children of the control
-	std::vector<UIView*> m_children;
-	int m_childrenLock;
-	typedef std::vector<UIView*>::iterator UIControlIterator;
-
-	
-	UILayout*  m_layoutController; ///< Layouter
-
-	//////////////////////////////////////////////////////////////////////////
-	// -- UIView definition
-
-	Rect<float> mRect; ///< Bounds of this UIView
-	Rect<float> mPadding; ///< Padding in the view
 };
 
 

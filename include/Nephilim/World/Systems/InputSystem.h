@@ -5,7 +5,7 @@
 #include <Nephilim/Foundation/String.h>
 #include <Nephilim/Foundation/Event.h>
 #include <Nephilim/World/Systems/System.h>
-#include <Nephilim/World/Components/AInputComponent.h>
+#include <Nephilim/World/AInputComponent.h>
 
 NEPHILIM_NS_BEGIN
 

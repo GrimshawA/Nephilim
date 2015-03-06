@@ -22,7 +22,6 @@ void UIText::updateContent()
 	dirty = false;
 }
 
-
 /// Draw the text node
 void UIText::onDraw(GraphicsDevice* graphicsDevice, const mat4& viewToWorld)
 {	

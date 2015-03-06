@@ -1,15 +1,10 @@
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/UI/UxEvent.h>
-#include <Nephilim/UI/UIComponentTouchScroll.h>
-#include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIComponentButton.h>
-#include <Nephilim/UI/UIComponentImage.h>
-#include <Nephilim/UI/UIComponentText.h>
 
 #include <Nephilim/Graphics/VertexArray.h>
 #include <Nephilim/Graphics/GL/GLHelpers.h>
 
-#include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/UI/UIController.h>
 #include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Foundation/Logging.h>
 
@@ -23,22 +18,12 @@ UIView::UIView()
 : RefCountable()
 , position(0.f, 0.f, 0.f)
 , m_parent(NULL)
-, m_positionFlags(0)
-, m_sizeFlags(0)
 , m_childrenLock(0)
 , m_hasFocus(false)
-, m_layoutController(NULL)
-, m_backgroundColor(91,91,91)
-, m_topBorderColor(69,69,69)
-, m_leftBorderColor(m_topBorderColor)
-, m_rightBorderColor(m_topBorderColor)
-, m_bottomBorderColor(m_topBorderColor)
 , m_clipChildren(false)
 , m_clipContents(false)
 , m_visible(true)
-, m_drawBorder(true)
 , m_hovered(false)
-, mRect(0.f, 0.f, 1.f, 1.f)
 , m_pointerPressCount(0)
 {
 	rotation_x = rotation_y = rotation_z = 0.f;
@@ -51,22 +36,12 @@ UIView::UIView()
 UIView::UIView(UIView* parent)
 : RefCountable()
 , m_parent(parent)
-, m_positionFlags(0)
-, m_sizeFlags(0)
 , m_childrenLock(0)
 , m_hasFocus(false)
-, m_layoutController(NULL)
-, m_backgroundColor(91,91,91)
-, m_topBorderColor(69,69,69)
-, m_leftBorderColor(m_topBorderColor)
-, m_rightBorderColor(m_topBorderColor)
-, m_bottomBorderColor(m_topBorderColor)
 , m_clipChildren(false)
 , m_clipContents(false)
 , m_visible(true)
-, m_drawBorder(true)
 , m_hovered(false)
-, mRect(0.f, 0.f, 1.f, 1.f)
 , m_pointerPressCount(0)
 {
 	if(parent)
@@ -178,7 +153,7 @@ void UIView::setProperty(const String& str)
 }
 
 /// Add a component to the view
-void UIView::addComponent(UIComponent* component)
+void UIView::addController(UIController* component)
 {
 	if(!component)
 		return;
@@ -186,49 +161,6 @@ void UIView::addComponent(UIComponent* component)
 	components.push_back(component);
 	component->mParent = this;
 	component->onAttach(this);
-}
-
-/// Add a new component from a pre registered type
-void UIView::addComponent(const String& name)
-{
-	if(name == "scroller")
-	{
-		addComponent(new UIComponentScroll());
-	}
-	else if(name == "cbutton")
-	{
-		addComponent(new UIComponentButton());
-	}
-	else if(name == "debug")
-	{
-		addComponent(new UIComponentDebugColor());
-	}
-	else if(name == "image")
-	{
-		addComponent(new UIComponentImage());
-	}
-	else if(name == "text")
-	{
-		addComponent(new UIComponentText("None", UIComponentText::Center, UIComponentText::Center));
-	}
-
-	//Log("[UIView] Adding component by name '%s'", name.c_str());
-}
-
-void UIView::addComponent(int type)
-{
-	switch(type)
-	{
-	case UIComponentList::Button:
-		addComponent(new UIComponentButton());
-		break;
-	case UIComponentList::Background:
-		addComponent(new UIComponentDebugColor());
-		break;
-	case UIComponentList::Text:
-		addComponent(new UIComponentText());
-		break;
-	}
 }
 
 /// Set any flags for the view
@@ -264,14 +196,6 @@ void UIView::setPosition(float x, float y)
 	// Offset children
 	vec2 offset = vec2(x,y) - getPosition();
 
-	// -- update the top-left position of this control
-	mRect.left = x;
-	mRect.top = y;
-
-	//updateLayout();
-
-	//offsetChildrenPosition(offset);
-
 	onPositionChanged();
 
 	// update the correct vars
@@ -286,7 +210,7 @@ void UIView::setPosition(vec2 position)
 
 vec2 UIView::getPosition()
 {
-	return vec2(mRect.left, mRect.top);
+	return vec2(position.x, position.y);
 }
 
 void UIView::setLocalPosition(float x, float y)
@@ -371,12 +295,12 @@ void UIView::axSetPosition2D(vec2 position)
 
 void UIView::axSetAlpha(float alpha)
 {
-	m_backgroundColor.a = static_cast<Uint8>(alpha * 255);
+	
 }
 
 float UIView::axGetAlpha()
 {
-	return static_cast<float>(m_backgroundColor.a / 255);
+	return 1.f;
 }
 
 void UIView::axKillTrigger()
@@ -390,14 +314,6 @@ void UIView::offsetChildrenPosition(vec2 offset)
 	{
 		m_children[i]->setPosition(m_children[i]->getPosition() + offset);
 	}
-}
-
-/// Set the flags for sizing
-void UIView::setSizeFlags(Uint64 flags)
-{
-	m_sizeFlags = flags;
-
-	processSizeFlags();
 }
 
 /// Set the new Z value
@@ -446,40 +362,6 @@ bool UIView::hasAnimations()
 	return m_animations.m_animations.size() > 0;
 }
 
-/// Get the sizing flags
-Uint64 UIView::getSizeFlags()
-{
-	return m_sizeFlags;
-}
-
-/// Check if there is a particular sizing flag
-bool UIView::hasSizeFlag(Uint64 flag)
-{
-	return ( (m_sizeFlags & flag) == flag);
-}
-
-/// Get the current positioning flags
-Uint64 UIView::getPositionFlags()
-{
-	return m_positionFlags;
-}
-
-/// Check the existence of a particular flag for positioning
-bool UIView::hasPositionFlag(Uint64 flag)
-{
-	return ( (m_positionFlags & flag) == flag);
-}
-
-
-/// Set positioning flags to the control
-void UIView::setPositionFlags(Uint64 flags)
-{
-	m_positionFlags = flags;
-
-	//(~(Uint64)0))
-
-	processPositionFlags();
-}
 
 void UIView::onChildRemoved(UIView* control)
 {
@@ -518,30 +400,6 @@ bool UIView::isScheduledForRemoval(UIView* v)
 	return false;
 }
 
-
-/// Attempt to process positional flags
-void UIView::processPositionFlags()
-{
-	// Lets set the position flags now
-	if(getParent() && getCore())
-	{
-		if( hasPositionFlag(UIPositionFlag::AttachBottom))
-		{
-			setPosition(mRect.left, getParent()->getSize().y - getSize().y);
-		}
-	}
-}
-
-/// Attempt to process size flags
-void UIView::processSizeFlags()
-{
-	// Lets set the position flags now
-	if(getParent() && getCore())
-	{
-		
-	}
-}
-
 /// Requests a tool tip text label from the control
 /// If only a empty string is returned, no tooltip is shown
 String UIView::getToolTipLabel(){
@@ -565,21 +423,6 @@ vec2 UIView::getSize()
 {
 	return size;
 }
-
-/// Set a new layout to the control
-void UIView::setLayout(UILayout* layout){
-	m_layoutController = layout;
-
-	// Perform the layouting
-	m_layoutController->doLayout(this);
-};
-
-/// Get the currently assigned layout controller
-/// \return NULL if there is no layout controller assigned
-UILayout* UIView::getLayout()
-{
-	return m_layoutController;
-};
 
 /// Callback to render itself, renders children
 void UIView::draw(GraphicsDevice* renderer, mat4 transform)
@@ -699,12 +542,6 @@ bool UIView::onEventNotification(Event& event)
 	return false;
 };
 
-/// Get bounds of the control
-FloatRect UIView::getBounds()
-{
-	return mRect;
-};
-
 /// Is the control able to get input focus or not?
 bool UIView::isFocusable()
 {
@@ -741,16 +578,10 @@ void UIView::setContext(UICore* states)
 {
 	_core = states;
 
-	// -- Being inserted in a UICanvas hierarchy
-	setPositionFlags(_core->defaultPositionFlags);
-	setSizeFlags(_core->defaultSizeFlags);
-
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		(*it)->setContext(states);
 	}
-
-	switchLanguage();
 }
 
 /// Remove focus from the element
@@ -787,76 +618,6 @@ void UIView::move(float x, float y)
 	setPosition(getPosition() + vec2(x, y));
 }
 
-void UIView::switchLanguage()
-{
-	innerLanguageSwitch();
-
-	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); it++){
-		// lets see!
-		(*it)->switchLanguage();
-	}
-}
-
-void UIView::processSizeChange(float previousWidth, float previousHeight, float newWidth, float newHeight)
-{
-	// -- If the control was previously at a uninitialized size, don't process any flags
-	if(previousHeight == 0.f || previousWidth == 0.f)
-		return;
-
-	// -- Go through children and adapt them according to their flags
-	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); ++it)
-	{
-		if ((*it)->hasFlags(UIFlag::FILL_PARENT_WIDTH))
-		{
-			(*it)->setSize(newWidth, (*it)->getSize().y);
-			//Log("FILLING PARENT WIDTH");
-		}
-		if ((*it)->hasFlags(UIFlag::FILL_PARENT_HEIGHT))
-		{
-			(*it)->setSize((*it)->getSize().x, newHeight);
-			//Log("FILLING PARENT HEIGHT");
-		}
-		if ((*it)->hasFlags(UIFlag::ANCHOR_RIGHT))
-		{
-			(*it)->setPosition(newWidth - (*it)->width(), (*it)->getPosition().y);
-			//Log("FILLING PARENT HEIGHT");
-		}
-		if ((*it)->hasFlags(UIFlag::ANCHOR_BOTTOM))
-		{
-			(*it)->setPosition((*it)->getPosition().x, newHeight - (*it)->getSize().y);
-			//Log("ANCHORING");
-		}
-
-		// -- Auto Resize: Ensure the same % width of the parent is occupied
-		if((*it)->hasSizeFlag(UISizeFlag::KeepRelativeSizeX))
-		{
-			float percent = (*it)->getSize().x / previousWidth;
-			(*it)->setSize(newWidth * percent, (*it)->getSize().y);
-		}
-
-		// -- Auto Resize: Ensure the same % height of the parent is occupied
-		if((*it)->hasSizeFlag(UISizeFlag::KeepRelativeSizeY))
-		{
-			float percent = (*it)->getSize().y / previousHeight;
-			(*it)->setSize((*it)->getSize().x, newHeight * percent);
-		}
-
-		// -- Auto Reposition: Ensure the control sits at the same % of the parent widget
-		if((*it)->hasPositionFlag(UIPositionFlag::KeepRelativePositionX))
-		{
-			float percent = ((*it)->getPosition().x - getPosition().x) / previousWidth;
-			(*it)->setPosition(getPosition().x + (newWidth * percent), (*it)->getPosition().y);
-		}
-
-		// -- Auto Reposition: Ensure the control sits at the same % of the parent widget
-		if((*it)->hasPositionFlag(UIPositionFlag::KeepRelativePositionY))
-		{
-			float percent = ((*it)->getPosition().y - getPosition().y) / previousHeight;
-			(*it)->setPosition((*it)->getPosition().x, getPosition().y + (newHeight * percent));
-		}
-	}
-}
-
 /// Process a mouve movement event
 /// Returns false if the mouse isnt on any control
 bool UIView::processMouseMove(int x, int y)
@@ -870,7 +631,7 @@ bool UIView::processMouseMove(int x, int y)
 
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
-		FloatRect controlRect = (*it)->getBounds();
+		FloatRect controlRect = (*it)->getRect();
 		FloatRect testRect(controlRect.left, controlRect.top, controlRect.width - 1, controlRect.height - 1);
 
 		(*it)->processMouseMove(x,y);
@@ -933,7 +694,7 @@ bool UIView::processTouchMove(int x, int y)
 
 	for(std::vector<UIView*>::iterator it = m_children.begin(); it != m_children.end(); it++)
 	{
-		FloatRect controlRect = (*it)->getBounds();
+		FloatRect controlRect = (*it)->getRect();
 		FloatRect testRect(controlRect.left, controlRect.top, controlRect.width - 1, controlRect.height - 1);
 
 		(*it)->processTouchMove(x,y);
@@ -1044,13 +805,14 @@ void UIView::setRect(float left, float top, float width, float height)
 
 FloatRect UIView::getRect()
 {
-	return mRect;
+	return FloatRect(position.x, position.y, size.x, size.y);
 };
 
 /// Get the position of the exact middle of this UIWindow
-Vec2f UIView::getMiddlePosition(){
-	return Vec2f(mRect.left + mRect.width/2, mRect.top + mRect.height/2);
-};
+Vec2f UIView::getMiddlePosition()
+{
+	return Vec2f(position.x + size.x / 2.f, position.y + size.y / 2.f);
+}
 
 UIView* UIView::getParent()
 {
@@ -1097,7 +859,7 @@ void UIView::attach(UIView* control)
 		return;
 
 	// Notify components of new added control
-	for(std::vector<UIComponent*>::iterator it = components.begin(); it != components.end(); ++it)
+	for(std::vector<UIController*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
 		(*it)->onChildAttached(control);
 	}
@@ -1219,15 +981,6 @@ void UIView::resize(float width, float height, float duration)
 
 };
 
-/// Update layout of children
-void UIView::updateLayout()
-{
-	if(m_layoutController)
-	{
-		m_layoutController->doLayout(this);
-	}
-}
-
 void UIView::onUpdate(float elapsedTime)
 {	
 
@@ -1254,9 +1007,6 @@ void UIView::update(float elapsedTime)
 	{
 		components[i]->onUpdate(Time::fromSeconds(elapsedTime), this);
 	}
-
-	// let the layouter do its magic
-	updateLayout();
 }
 
 /// Get the current size of the control that encompasses all its children
@@ -1277,24 +1027,16 @@ FloatRect UIView::childrenRect()
 	return boundingRect;
 };
 
-/// Returns true when the control is subject of being layout in a grid or other organization form
-/// Most controls don't implement this function, as their default behavior is to respond to layouts always
-bool UIView::respondsToLayouts(){
-	return true;
-};
-
 void UIView::setSize(float width, float height)
 {
 	// -- This control is about to be resized, might need to do some automatic operations on children
-	processSizeChange(mRect.width, mRect.height, width, height);
+//	processSizeChange(size.x, size.y, width, height);
 
-	float pX = mRect.width;
-	float pY = mRect.height;
+	float pX = size.x;
+	float pY = size.y;
 
-	mRect.width = width;
-	mRect.height = height;
-	
-	updateLayout();
+	size.x = width;
+	size.y = height;
 
 	// Let components know a resize was made
 	for(std::size_t i = 0; i < components.size(); ++i)
@@ -1302,18 +1044,8 @@ void UIView::setSize(float width, float height)
 		components[i]->onResize(this);
 	}
 
-	size.x = width;
-	size.y = height;
-
 	onResize();
-
-
-	// lets try to notify the parent layouters 
-	if (getParent() && getParent()->getLayout())
-	{
-		//getParent()->getLayout()->doLayout(getParent());
-	}
-
+	
 	// Last thing
 	sizeChanged();
 
@@ -1325,14 +1057,6 @@ void UIView::setSize(float width, float height)
 		getParent()->dispatch(event);
 };
 
-/// Immediately sets the center of the control to a new position
-void UIView::setCenter(float x, float y)
-{
-	mRect.setCenter(x,y);
-	onPositionChanged();
-
-	updateLayout();
-};
 
 void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 {
@@ -1344,7 +1068,7 @@ void UIView::drawItself(GraphicsDevice* renderer, const mat4& transform )
 
 	if(m_clipContents)
 	{
-		renderer->pushClippingRect(FloatRect(mRect.left,mRect.top,mRect.width, mRect.height));
+		renderer->pushClippingRect(FloatRect(position.x, position.y, size.x, size.y));
 	}
 
 	mat4 localTransform = mat4::translate(position) * mat4::rotatey(rotation_y) * mat4::rotatex(rotation_x) * mat4::rotatez(rotation_z) 
@@ -1418,15 +1142,11 @@ vec3 UIView::getWorldPosition()
 
 void UIView::enableAutoResize(bool enable)
 {
-	if(enable)
-	{
-		setPositionFlags(UIPositionFlag::KeepRelativePositionX | UIPositionFlag::KeepRelativePositionY);
-		setSizeFlags(UISizeFlag::KeepRelativeSizeX | UISizeFlag::KeepRelativeSizeY);
-	}
+
 }
 
 /// Returns the first component with the given type
-UIComponent* UIView::getComponentByType(UIComponent::Type type)
+UIController* UIView::getComponentByType(UIController::Type type)
 {
 	for(std::size_t i = 0; i < components.size(); ++i)
 	{
@@ -1436,12 +1156,6 @@ UIComponent* UIView::getComponentByType(UIComponent::Type type)
 		}
 	}
 	return NULL;
-}
-
-/// Immediately sets the center of the control to a new position
-void UIView::setCenter(Vec2f position)
-{
-	setCenter(position.x, position.y);
 }
 
 /// Callback when the position of the control changed, for updating nested objects

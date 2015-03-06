@@ -23,6 +23,14 @@ namespace
 	}
 };
 
+/// Resize the tilemap to fit a new size
+void Tilemap::resize(int width, int height)
+{
+	_width = width;
+	_height = height;
+	tileGrid.resize(width * height);
+}
+
 /// This will save the
 bool Tilemap::saveToFile(const String& filename, FileFormat format)
 {

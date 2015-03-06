@@ -1,8 +1,7 @@
 #ifndef NephilimUIComponentDraggable_h__
 #define NephilimUIComponentDraggable_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/UI/UIController.h>
 
 #include <sigc++/sigc++.h>
 
@@ -10,7 +9,7 @@ NEPHILIM_NS_BEGIN
 
 class UIDragEvent;
 
-class NEPHILIM_API UIComponentDraggable : public UIComponent
+class NEPHILIM_API UIComponentDraggable : public UIController
 {
 public:
 

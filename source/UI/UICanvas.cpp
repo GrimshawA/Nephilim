@@ -15,6 +15,15 @@ UICanvas::UICanvas()
 	_core = &m_state;
 }
 
+/// Name of this node
+UICanvas::UICanvas(const String& name)
+: UxNode()
+, m_surfaceContainerLock(0)
+, m_backgroundColor(Color::Transparent)
+{
+	_core = &m_state;
+}
+
 /// Get the object name of this node
 const char* UICanvas::getName()
 {
@@ -229,7 +238,7 @@ void UICanvas::showMessageBox(const String& message)
 
 	UILabel* label = new UILabel(message);
 	label->setSize(700,50);
-	label->setCenter(modalBackground->getMiddlePosition());
+	//label->setCenter(modalBackground->getMiddlePosition());
 	modalBackground->attach(label);
 };
 

@@ -69,7 +69,7 @@ public:
 	bool copyToImage(Image& image) const;
 
 	/// A texture is a rectangle, with finite size
-	Vec2<int> getSize() const;
+	Vector2<int> getSize() const;
 
 	/// Updates a given region inside the texture with an array of pixels
 	void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);

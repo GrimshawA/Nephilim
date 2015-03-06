@@ -3,7 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
-#include <Nephilim/World/Components/ATerrainComponent.h>
+#include <Nephilim/World/ATerrainComponent.h>
 
 #include <Nephilim/Foundation/Transform.h>
 #include <Nephilim/Foundation/Vector.h>

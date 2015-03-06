@@ -1,25 +1,31 @@
-#ifndef UIConsole_h__
-#define UIConsole_h__
+#ifndef NephilimUI_Console_h__
+#define NephilimUI_Console_h__
 
-#include <Nephilim/Platform.h>
-#include "UIView.h"
+#include <Nephilim/UI/UIView.h>
 
 NEPHILIM_NS_BEGIN
 
+class UILineEdit;
+
 /**
-	\ingroup UserInterface
 	\class UIConsole
 	\brief A Console window to input commands
 */
-class NEPHILIM_API UIConsole : public UIView{
+class NEPHILIM_API UIConsole : public UIView
+{
 public:
-	bool onEventNotification(Event& event);
-	void draw(GraphicsDevice* renderer);
-
 	String m_input;
 
 	sigc::signal<void, String> onCommandSubmitted;
+
+	UILineEdit* InputLineEdit;
+
+public:
+
+	bool onEventNotification(Event& event);
+
+	void draw(GraphicsDevice* renderer);
 };
 
 NEPHILIM_NS_END
-#endif // UIConsole_h__
+#endif // NephilimUI_Console_h__

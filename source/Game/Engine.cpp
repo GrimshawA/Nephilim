@@ -6,6 +6,7 @@
 #include <Nephilim/Graphics/View.h>
 
 #include <Nephilim/World/World_RTTI.h>
+#include <Nephilim/UI/UX_RTTI.h>
 
 #ifdef NEPHILIM_ANDROID
 #include <Nephilim/Foundation/AndroidWrapper.h>
@@ -32,6 +33,7 @@ Engine::Engine()
 
 	// Register the RTTI on the modules
 	RegisterWorldRTTI();
+	RegisterUX_RTTI();
 }
 
 Engine::~Engine()
@@ -84,7 +86,7 @@ void Engine::update()
 	// Check for removal first
 	if(m_currentApp && m_currentApp->mCloseRequested)
 	{
-		m_currentApp = NULL;
+		m_currentApp = nullptr;
 		m_running = false;
 
 		// In android need to kill the activity

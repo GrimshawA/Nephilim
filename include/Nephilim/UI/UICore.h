@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 class UICanvas;
 class UIView;
 class GameContent;
-class UIComponent;
+class UIController;
 
 class NEPHILIM_API UIDragEvent
 {
@@ -59,7 +59,7 @@ public:
 
 	/// Drag components use this element to spawn the temporary element in drags
 	UIView* dragElement = nullptr;
-	UIComponent* dragElementOwner = nullptr;
+	UIController* dragElementOwner = nullptr;
 
 	/// Anyone can use this element to spawn tooltips anytime
 	UIView* toolTipElement = nullptr;

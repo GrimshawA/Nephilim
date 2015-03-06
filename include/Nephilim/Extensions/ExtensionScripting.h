@@ -7,11 +7,22 @@
 #include <Nephilim/Foundation/Time.h>
 #include <Nephilim/Game/GameMessage.h>
 
+#include <stdint.h>
+
 NEPHILIM_NS_BEGIN
 
 class GameCore;
 class IScript;
 class ScriptSystem;
+
+namespace ScriptType
+{
+	enum ClassTypeFlags
+	{
+		ReferenceOnly = 0,  ///< These types are not instanceable from script, only from the native side
+		RefCounted = 1
+	};
+};
 
 /**
 	\class ScriptingEnvironment
@@ -47,6 +58,9 @@ public:
 
 	/// Dispatch a GameMessage to all scripts
 	virtual void dispatchToAll(const GameMessage& gameMessage){}
+
+	/// Registers a new type in the scripting plugin
+	virtual void registerType(const String& name, std::size_t size, uint32_t classFlags);
 };
 
 NEPHILIM_NS_END

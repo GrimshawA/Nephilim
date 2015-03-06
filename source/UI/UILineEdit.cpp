@@ -136,7 +136,7 @@ void UILineEdit::draw(GraphicsDevice* renderer)
 	{
 		t.setString(String(s.length(), '*'));
 	}
-	t.setPosition(mRect.left,mRect.top);
+	t.setPosition(position.x, position.y);
 	t.setCharacterSize(static_cast<unsigned int>(getSize().y * 0.9f));	
 	t.setColor(m_textColor);
 
@@ -146,7 +146,7 @@ void UILineEdit::draw(GraphicsDevice* renderer)
 	if(m_hasFocus)
 	{
 		float pipePosition = t.getCharacterPosition(m_pipeIndex).x + 1;
-		renderer->drawDebugLine(Vec2f(mRect.left + pipePosition, mRect.top), Vec2f(mRect.left + pipePosition, mRect.top + t.getCharacterSize()), Color(0,0,0,150));
+		//renderer->drawDebugLine(Vec2f(mRect.left + pipePosition, mRect.top), Vec2f(mRect.left + pipePosition, mRect.top + t.getCharacterSize()), Color(0,0,0,150));
 	}
 };
 

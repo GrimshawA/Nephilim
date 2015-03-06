@@ -1,5 +1,4 @@
-#include <Nephilim/World/Camera.h>
-#include <Nephilim/Foundation/Math.h>
+#include <Nephilim/World/RigidBody.h>
 
 NEPHILIM_NS_BEGIN
 

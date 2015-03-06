@@ -6,15 +6,15 @@
 #include <Nephilim/World/Prefab.h>
 #include <Nephilim/World/ComponentManager.h>
 #include <Nephilim/World/ComponentArray.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
-#include <Nephilim/World/Components/APointLightComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/APointLightComponent.h>
 
 NEPHILIM_NS_BEGIN
 
 Level::Level()
 : world(nullptr)
 {
-	componentWarehouse.initComponentManager<ASpriteComponent>(new ComponentArray<ASpriteComponent>());
+	
 }
 
 /// Ensure all stuff goes down when the level is destroyed
@@ -62,13 +62,7 @@ bool Level::read(const String& filename)
 /// Utility to quickly spawn a point light into our world
 void Level::createPointLight(Vector3D position, Vector3D lightColor)
 {
-	Entity e = entityManager.createEntity();
-
-	APointLightComponent& pointLight = componentWarehouse.createComponent<APointLightComponent>(e);
-	Transform& transform = componentWarehouse.createComponent<Transform>(e);
-
-	pointLight.mLightColor = lightColor;
-	transform.position = position;
+	
 }
 
 /// Instance a new game object from a prefab

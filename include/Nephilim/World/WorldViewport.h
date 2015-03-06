@@ -2,7 +2,6 @@
 #define NephilimWorldViewport_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/World/Camera.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -24,7 +23,7 @@ class NEPHILIM_API WorldViewport
 {
 public:
 	Viewport _viewport;  ///< Viewport to draw to
-	Camera   _camera;    ///< Camera to use
+	//Camera   _camera;    ///< Camera to use
 };
 
 NEPHILIM_NS_END

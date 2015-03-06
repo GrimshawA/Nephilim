@@ -24,7 +24,7 @@ void draw(Drawable& drawable)
 }
 
 /// Use the active window and matrices to get a world position from a screen coordinate
-Vector2D ScreenToWorld2D(Vec2<int> point)
+Vector2D ScreenToWorld2D(Vector2<int> point)
 {
 	Vector2D worldPoint(0.f, 0.f);
 	Window* windowPtr = GraphicsDevice::instance()->getWindow();

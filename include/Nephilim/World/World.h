@@ -124,11 +124,11 @@ public:
 	void setPlayerController(PlayerController* playerController);
 
 	/// Get the window-space coordinate of where the point lies in
-	Vec2<int> getScreenCoordinate(Vector3D point);
+	Vector2<int> getScreenCoordinate(Vector3D point);
 
 	/// This will convert a window-space coordinate into a world position
 	/// Depends on the camera being orthogonal to the Z=0 plane
-	Vector2D getWorldCoordinate2D(Vec2<int> point);
+	Vector2D getWorldCoordinate2D(Vector2<int> point);
 	
 
 	/// Load a level into memory by its name

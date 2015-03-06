@@ -88,8 +88,8 @@ UITreeViewItem* UITreeViewItem::createItem(const String& title, int id)
 	children.push_back(treeViewItem);
 
 	UIView* item = itemWidget->createChild("item");
-	item->addComponent(new UIComponentDebugColor(Color::Transparent));
-	item->addComponent(new UIComponentText(title, UIComponentText::Left, UIComponentText::Center));
+	//item->addController(new UIComponentDebugColor(Color::Transparent));
+	//item->addController(new UITextNode(title, UITextNode::Left, UITextNode::Center));
 	item->setFlag(UIFlag::FILL_PARENT_WIDTH);
 	// This is a nested item, which means it has to start at 20.f to compensate the title
 	item->setRect(0.f, 20.f, itemWidget->width(), 20.f); // immutable dimensions, just the y position changes
@@ -100,7 +100,7 @@ UITreeViewItem* UITreeViewItem::createItem(const String& title, int id)
 	UIView* icon = item->createChild("icon");
 	icon->setSize(20.f, 20.f);
 	icon->setPosition(0.f, 0.f);
-	icon->addComponent(new UIComponentImage("./Core/EditorAssets/person14.png"));
+	//icon->addController(new UIComponentImage("./Core/EditorAssets/person14.png"));
 
 	// Were there previous items in this node?
 	if (children.size() > 1)

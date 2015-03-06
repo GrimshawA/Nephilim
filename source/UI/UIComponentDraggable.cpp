@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIComponentDraggable.h>
-#include <Nephilim/UI/UIComponentDebug.h>
+//#include <Nephilim/UI/UIComponentDebug.h>
 #include <Nephilim/UI/UIView.h>
 #include <Nephilim/Foundation/Logging.h>
 
@@ -35,7 +35,7 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 
 			// drag started, create the clone element
 			UIView* temp_view = new UIView();
-			temp_view->addComponent(new UIComponentDebugColor(Color::Yellow));
+//			temp_view->addController(new UIDebugWidget(Color::Yellow));
 			temp_view->setSize(100.f, 100.f);
 			temp_view->setPosition(view->getWorldPosition().xy());
 			view->getCore()->dragElement = temp_view;

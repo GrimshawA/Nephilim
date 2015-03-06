@@ -4,6 +4,17 @@
 #include <cmath>
 
 NEPHILIM_NS_BEGIN
+
+Vector2D Convert3DToIso(Vector3D p3d)
+{
+	Vector2D r;
+	r.x = p3d.x - p3d.z;
+	r.y = (p3d.x + p3d.z) / 2;
+	r.y += p3d.y; // height offset
+
+	return r;
+}
+
 namespace math
 {
 	double pi = 3.1415926;/* = atan(1.0)*4*/;
@@ -27,7 +38,7 @@ float clamp(float a, float b, float v)
 			return ( (float)sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))  ) );
 		};
 
-		double distance(const Vec2d &a, const Vec2d &b){
+		double distance(const Vector2<double> &a, const Vector2<double> &b){
 			return (sqrt(((b.x-a.x)*(b.x-a.x))+((b.y-a.y)*(b.y-a.y))  ) );
 		};
 		double distance(double x1, double y1, double x2, double y2){

@@ -1,5 +1,5 @@
-#ifndef UILineEdit_h__
-#define UILineEdit_h__
+#ifndef NephilimUI_LineEdit_h__
+#define NephilimUI_LineEdit_h__
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/UI/UIView.h>
@@ -52,4 +52,4 @@ class ASEngine;
 bool registerUILineEdit(ASEngine* engine);
 
 NEPHILIM_NS_END
-#endif // UILineEdit_h__
+#endif // NephilimUI_LineEdit_h__

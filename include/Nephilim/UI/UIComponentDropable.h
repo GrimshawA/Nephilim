@@ -1,8 +1,7 @@
 #ifndef NephilimUIComponentDropable_h__
 #define NephilimUIComponentDropable_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/UI/UIController.h>
 
 NEPHILIM_NS_BEGIN
 

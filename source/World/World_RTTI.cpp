@@ -2,29 +2,30 @@
 
 #include <Nephilim/Foundation/Factory.h>
 
-#include <Nephilim/World/Components/ACameraComponent.h>
-#include <Nephilim/World/Components/ACharacterComponent.h>
-#include <Nephilim/World/Components/AAudioComponent.h>
-#include <Nephilim/World/Components/ABoxComponent.h>
-#include <Nephilim/World/Components/AConvexShapeComponent.h>
-#include <Nephilim/World/Components/ADirectionalLightComponent.h>
-#include <Nephilim/World/Components/AInputComponent.h>
-#include <Nephilim/World/Components/AParticleEmitterComponent.h>
-#include <Nephilim/World/Components/APointLightComponent.h>
-#include <Nephilim/World/Components/AProjectedWaterComponent.h>
-#include <Nephilim/World/Components/ASceneComponent.h>
-#include <Nephilim/World/Components/AScriptComponent.h>
-#include <Nephilim/World/Components/ASkeletalMeshComponent.h>
-#include <Nephilim/World/Components/ASkyboxComponent.h>
-#include <Nephilim/World/Components/ASphereComponent.h>
-#include <Nephilim/World/Components/ASpotLightComponent.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
-#include <Nephilim/World/Components/AStaticMeshComponent.h>
-#include <Nephilim/World/Components/ATerrainComponent.h>
-#include <Nephilim/World/Components/ATextComponent.h>
-#include <Nephilim/World/Components/ATilemapComponent.h>
-#include <Nephilim/World/Components/AVoxelVolumeComponent.h>
-#include <Nephilim/World/Components/AWidgetComponent.h>
+#include <Nephilim/World/ACameraComponent.h>
+#include <Nephilim/World/ACharacterComponent.h>
+#include <Nephilim/World/AAudioComponent.h>
+#include <Nephilim/World/ABoxComponent.h>
+#include <Nephilim/World/AConvexShapeComponent.h>
+#include <Nephilim/World/ADirectionalLightComponent.h>
+#include <Nephilim/World/AInputComponent.h>
+#include <Nephilim/World/AParticleEmitterComponent.h>
+#include <Nephilim/World/APointLightComponent.h>
+#include <Nephilim/World/AProjectedWaterComponent.h>
+#include <Nephilim/World/ASceneComponent.h>
+#include <Nephilim/World/AFlipBookComponent.h>
+#include <Nephilim/World/AScriptComponent.h>
+#include <Nephilim/World/ASkeletalMeshComponent.h>
+#include <Nephilim/World/ASkyboxComponent.h>
+#include <Nephilim/World/ASphereComponent.h>
+#include <Nephilim/World/ASpotLightComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/AStaticMeshComponent.h>
+#include <Nephilim/World/ATerrainComponent.h>
+#include <Nephilim/World/ATextComponent.h>
+#include <Nephilim/World/ATilemapComponent.h>
+#include <Nephilim/World/AVoxelVolumeComponent.h>
+#include <Nephilim/World/AWidgetComponent.h>
 
 #include <Nephilim/World/GameObject.h>
 #include <Nephilim/World/Actor.h>
@@ -62,6 +63,8 @@ void RegisterWorldRTTI()
 	REGISTER_FACTORY_CLASS("ATilemapComponent", ATilemapComponent);
 	REGISTER_FACTORY_CLASS("AVoxelVolumeComponent", AVoxelVolumeComponent);
 	REGISTER_FACTORY_CLASS("AWidgetComponent", AWidgetComponent);
+	REGISTER_FACTORY_CLASS("AFlipBookComponent", AFlipBookComponent);
+
 	REGISTER_FACTORY_SUBCLASS("ACameraComponent",    "ASceneComponent");
 	REGISTER_FACTORY_SUBCLASS("ACharacterComponent", "ASceneComponent");
 	REGISTER_FACTORY_SUBCLASS("AAudioComponent",     "ASceneComponent");
@@ -85,6 +88,7 @@ void RegisterWorldRTTI()
 	REGISTER_FACTORY_SUBCLASS("ATilemapComponent", "ASceneComponent");
 	REGISTER_FACTORY_SUBCLASS("AVoxelVolumeComponent", "ASceneComponent");
 	REGISTER_FACTORY_SUBCLASS("AWidgetComponent", "ASceneComponent");
+	REGISTER_FACTORY_SUBCLASS("AFlipBookComponent", "ASceneComponent");
 
 
 

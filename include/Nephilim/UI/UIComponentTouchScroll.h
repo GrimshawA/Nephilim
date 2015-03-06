@@ -2,7 +2,7 @@
 #define NephilimUIComponentTouchScroll_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/UI/UIController.h>
 #include <Nephilim/Foundation/Color.h>
 #include <Nephilim/Foundation/Vector.h>
 
@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class UIView;
 
-class NEPHILIM_API UIComponentScroll : public UIComponent
+class NEPHILIM_API UIComponentScroll : public UIController
 {
 public:
 	//UIComponentScroll();

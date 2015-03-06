@@ -62,7 +62,7 @@ public:
 	bool loadFromFile(const String &path);
 
 	/// Get the size of the texture
-	Vec2<int> getSize() const;
+	Vector2<int> getSize() const;
 
 	/// Bind this texture to the currently active texture unit
 	void bind() const;

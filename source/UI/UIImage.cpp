@@ -29,7 +29,7 @@ void UIImage::setImage(const String& path)
 void UIImage::draw(GraphicsDevice* renderer)
 {
 	RectangleShape s;
-	s.setRect(getBounds());
+	s.setRect(getRect());
 	s.setTexture(&t);
 	renderer->draw(s);
 };

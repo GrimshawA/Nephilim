@@ -55,7 +55,15 @@ public:
 	int32_t width; ///< The number of horizontal tiles
 	int32_t height; ///< The number of vertical tiles
 
+	int _width;
+	int _height;
+	std::vector<Tile> tileGrid;
+
 public:
+
+	/// Resize the tilemap to fit a new size
+	void resize(int width, int height);
+
 	enum FileFormat
 	{
 		Binary,

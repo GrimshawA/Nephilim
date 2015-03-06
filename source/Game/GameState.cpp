@@ -58,14 +58,7 @@ void GameState::onUpdate(const Time &time)
 
 void GameState::onRender(GraphicsDevice* renderer)
 {
-	// Default will put the UI on screen
-	for (std::size_t i = 0; i < getGame().userInterfaceManager.canvasList.size(); ++i)
-	{
-		UICanvas* c = getGame().userInterfaceManager.canvasList[i];
-		
-		renderer->setProjectionMatrix(mat4::ortho(0.f, getGame().getWindow()->width(), getGame().getWindow()->height(), 0.f, 1.f, 5000.f));
-		c->draw(renderer);
-	}
+
 }
 
 /// Push a state batch down the stack
@@ -135,14 +128,6 @@ bool GameState::onDraw(GraphicsDevice *renderer){
 /// Handles the events automatically
 void GameState::PrimaryEventHandler(const Event& event)
 {
-	// Pass events to the UI
-	for (std::size_t i = 0; i < getGame().userInterfaceManager.canvasList.size(); ++i)
-	{
-		UICanvas* c = getGame().userInterfaceManager.canvasList[i];
-
-		c->pushEvent(event);
-	}
-
 	onEvent(event);
 }
 

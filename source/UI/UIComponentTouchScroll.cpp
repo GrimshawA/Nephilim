@@ -15,7 +15,7 @@ UIComponentScroll::UIComponentScroll()
 */
 void UIComponentScroll::onAttach(UIView* view)
 {
-	component_id = UIComponent::ScrollComponent;
+	component_id = UIController::ScrollComponent;
 	scrolling = false;
 
 	view->m_clipChildren = true;
@@ -46,7 +46,7 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 
 	if(event.type == Event::MouseButtonPressed)
 	{
-		if(view->getBounds().contains(event.mouseButton.x, event.mouseButton.y))
+		if(view->getRect().contains(event.mouseButton.x, event.mouseButton.y))
 		{
 			scrolling = true;
 			lastPosition = vec2(event.mouseButton.x, event.mouseButton.y);
@@ -156,7 +156,7 @@ void UIComponentScroll::onUpdate(const Time& time, UIView* view)
 
 void UIComponentScroll::onRender(GraphicsDevice* renderer, UIView* view)
 {
-	RectangleShape backRect(view->getBounds(), Color::Bittersweet);
+	RectangleShape backRect(view->getRect(), Color::Bittersweet);
 	renderer->draw(backRect);
 }
 

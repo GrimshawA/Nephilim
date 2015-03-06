@@ -7,7 +7,7 @@
 
 
 #include <Nephilim/World/Systems/RenderSystem.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/Framebuffer.h>

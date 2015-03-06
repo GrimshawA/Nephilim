@@ -18,7 +18,7 @@ void setVertexBuffer(const VertexBuffer& vertexBuffer);
 void draw(Drawable& drawable);
 
 /// Use the active window and matrices to get a world position from a screen coordinate
-Vector2D ScreenToWorld2D(Vec2<int> point);
+Vector2D ScreenToWorld2D(Vector2<int> point);
 
 };
 NEPHILIM_NS_END

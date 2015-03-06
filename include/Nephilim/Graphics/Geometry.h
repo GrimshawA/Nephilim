@@ -108,7 +108,7 @@ public:
 	std::vector<Vector4D> boneWeights;
 
 	/// Faces (triangles) of the mesh
-	std::vector<Vec3<uint16_t> > faces;
+	std::vector<Vector3<uint16_t> > faces;
 
 	bool m_useColors;
 	bool m_useNormals;

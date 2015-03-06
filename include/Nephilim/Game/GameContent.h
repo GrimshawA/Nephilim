@@ -55,6 +55,9 @@ public:
 
 	std::vector<std::unique_ptr<PluginLoader> > plugins;
 
+	/// All allocated textures
+	std::vector<Texture2D*> _textures;
+
 public:
 
 	/// Creates the default group - no name ""
@@ -68,6 +71,8 @@ public:
 
 	/// Create a new static mesh with a given resource name
 	SkeletalMesh* createSkeletalMesh(const String& urn);
+
+	Texture2D* createTexture(const String& filename);
 
 	/// This will cause a static mesh to be loaded from a file with native loader or an importer
 	bool loadStaticMesh(const String& urn, const String& filename);

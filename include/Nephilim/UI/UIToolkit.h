@@ -8,10 +8,9 @@
 #include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/UI/UIListPanel.h>
 
-#include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIComponentButton.h>
-#include <Nephilim/UI/UIComponentImage.h>
-#include <Nephilim/UI/UIComponentText.h>
-
+#include <Nephilim/UI/UIDebugWidget.h>
+#include <Nephilim/UI/UIButton.h>
+#include <Nephilim/UI/UITextNode.h>
+#include <Nephilim/UI/UILabel.h>
 
 #endif // NephilimUIToolkit_h__

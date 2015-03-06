@@ -1,32 +1,66 @@
-#ifndef NephilimUIController_h__
-#define NephilimUIController_h__
+#ifndef NephilimUIComponent_h__
+#define NephilimUIComponent_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Matrix.h>
+#include <Nephilim/Foundation/Event.h>
+#include <Nephilim/Foundation/Time.h>
 
 NEPHILIM_NS_BEGIN
 
 class UIView;
+class GraphicsDevice;
+class StringList;
+class String;
 
 /**
 	\class UIController
-	\brief For managing a view in a MVC pattern
-
-	Model view controller patterns are quite effective for programming
-	user interfaces.
-
-	The model works as the data source that populates the view with content,
-	while the controller maintains the logic for that view. This way, a plug
-	and play design is kept, while increasing modularity and code reusability.
-
-	The approach is not enforced though, there are multiple ways to work with the UI systems.
+	\brief Controllers allow to give dynamic behaviors to views
 */
-class NEPHILIM_API UIController
+class NEPHILIM_API UIController 
 {
 public:
+	UIController()
+	{
+		mParent = NULL;
+	}
 
-	/// The view we are linked to and we control directly
-	UIView* _view = nullptr;
+	Int32 component_id; ///< Identify the type of the component
+
+	UIView* mParent;
+
+	/// Called when the component is attached to a view
+	/// view is guaranteed to be valid until onRelease is called
+	virtual void onAttach(UIView* view);
+
+	/// Called when the parent view is being destroyed or the component is about to be removed
+	virtual void onRelease(UIView* view);
+
+	/// Called to refresh the component
+	virtual void updateStyles(){}
+
+	/// Called on the component when the UIView it is attached to has a new child
+	virtual void onChildAttached(UIView* child){};
+
+	virtual void onResize(UIView* view){}
+
+	virtual void onEvent(Event event, UIView* view){}
+
+	virtual void onUpdate(const Time& time, UIView* view){}
+
+	/// Render the component to the screen, giving it its view transform to know where to render
+	virtual void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform){}
+
+	virtual void onPropertySet(const StringList& targetObject, const String& value){}
+
+	enum Type
+	{
+		ButtonComponent,
+		ReloadComponent,
+		ScrollComponent,
+		TextComponent
+	};
 };
 
 NEPHILIM_NS_END
-#endif // NephilimUIController_h__
+#endif // NephilimUIComponent_h__

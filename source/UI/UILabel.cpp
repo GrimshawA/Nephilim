@@ -23,22 +23,26 @@ void UILabel::setText(const String& text)
 }
 
 /// Callback to handle an event
-bool UILabel::onEventNotification(Event& event){
-	if(event.type == Event::MouseButtonReleased){
-		if(mRect.contains(event.mouseButton.x, event.mouseButton.y)){
+bool UILabel::onEventNotification(Event& event)
+{
+	if(event.type == Event::MouseButtonReleased)
+	{
+		/*if(isHit(event.mouseButton.x, event.mouseButton.y))
+		{
 			onClick();
-		}
-}	
+		}*/
+	}	
 
 	if(event.type == Event::MouseMoved)
 	{
-		if(mRect.contains(event.mouseMove.x, event.mouseMove.y)){	
+		/*if(mRect.contains(event.mouseMove.x, event.mouseMove.y))
+		{	
 			//setProperty<Color>("background-color", Color::White);
 		}
 		else
 		{
 			//setProperty<Color>("background-color", Color(91,91,91));
-		}
+		}*/
 	}
 	return true;
 }
@@ -49,7 +53,7 @@ void UILabel::draw(GraphicsDevice* renderer)
 	t.setFont(*_core->m_defaultFont);
 	t.setString(m_label);
 	t.setColor(m_color);
-	t.setPosition(mRect.left, mRect.top);
+//	t.setPosition(mRect.left, mRect.top);
 	renderer->draw(t);
 }
 

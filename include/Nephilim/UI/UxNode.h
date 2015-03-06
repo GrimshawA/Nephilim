@@ -3,6 +3,7 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Object.h>
+#include <Nephilim/UI/UxRenderState.h>
 
 #include <sigc++/sigc++.h>
 #include <vector>
@@ -30,6 +31,8 @@ public:
 	/// Children of this node
 	std::vector<UxNode*> _children;
 
+
+
 public:
 
 	/// Destructor
@@ -50,21 +53,30 @@ public:
 	/// Dispatches an event into the hierarchy
 	virtual void dispatch(const UxEvent& event);
 
-	/// Render the node
-	virtual void render(GraphicsDevice* gdi)
-	{
+	/// Every node is the most elemental class in the UX hierarchy
+	/// This is the primary render function called on a node, causing it to draw itself in anyway
+	virtual void render(UxRenderState renderState);
 
-	}
 
-	/// 
 	template<typename T, typename ...Args>
 	static T* Create(UxNode* base, Args&& ...args);
+
+	template<typename T>
+	static T* Create2(UxNode* base);
 };
 
 template<typename T, typename ...Args>
 T* UxNode::Create(UxNode* base, Args&& ...args)
 {
 	UxNode* node = new T(std::forward<Args>(args)... );
+	base->_children.push_back(node);
+	return static_cast<T*>(node);
+}
+
+template<typename T>
+T* UxNode::Create2(UxNode* base)
+{
+	UxNode* node = new T();
 	base->_children.push_back(node);
 	return static_cast<T*>(node);
 }

@@ -26,7 +26,7 @@ public:
 	virtual bool copyToImage(Image& image) const;
 
 	/// Get the texture rectangle size
-	virtual Vec2<int> getSize() const = 0;
+	virtual Vector2<int> getSize() const = 0;
 
 	/// Loads the texture from disk
 	virtual bool loadFromFile(const String& filename);

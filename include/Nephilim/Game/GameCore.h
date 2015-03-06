@@ -22,7 +22,6 @@
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 
-#include <Nephilim/UI/UIManager.h>
 #include <Nephilim/World/World.h>
 
 #include <Nephilim/UI/UxScreen.h>
@@ -36,6 +35,7 @@ class Engine;
 class Window;
 class ExtensionScripting;
 class ExtensionAudio;
+class UICanvas;
 
 /**
 	\ingroup Core
@@ -79,9 +79,6 @@ public:
 
 	/// The game is prepared to own an arbitrary number of scenes, stored in this object
 	GameWorlds sceneManager;
-
-	/// The game is always prepared to handle N individual user interface systems
-	UIManager userInterfaceManager;
 
 	/// The game can hold multiple resource groups and ensures their deallocation when closing
 	GameContent contentManager;
@@ -219,22 +216,19 @@ protected:
 	String m_gameName;
 
 private:
+
 	friend class Engine;
 	/// Inner update of the game
 	/// Will handle fixed update steps
 	/// Callbacks to onUpdate(Time time) when appropriate
 	void innerUpdate(Time time);
-
-
-
+	
 	/// Fixed update step
 	float m_updateStep;
 	float m_stackedTime;
 
 	/// The title of the window when this game is active
 	String m_windowTitle;
-
-
 
 	bool mCloseRequested;
 

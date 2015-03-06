@@ -6,7 +6,6 @@
 #include <Nephilim/Foundation/Logging.h>
 
 // UI integration
-#include <Nephilim/UI/UIManager.h>
 #include <Nephilim/UI/UICanvas.h>
 
 // Scripting of the GameCore
@@ -195,27 +194,27 @@ UICanvas* GameCore::createCanvas(const String& name)
 {
 	UICanvas* _canvas = nullptr;
 
-	_canvas = userInterfaceManager.createCanvas(name);
+	/*_canvas = userInterfaceManager.createCanvas(name);
 
 	_canvas->getCore().m_defaultFont = &contentManager.font;
 	_canvas->setRect(0.f, 0.f, getWindow()->width(), getWindow()->height());
 
 	uxScreen->_children.push_back(_canvas);
-
+	*/
 	return _canvas;
 }
 
 /// Get a UI canvas 
 UICanvas* GameCore::getCanvas(const String& name)
 {
-	for (auto c : userInterfaceManager.canvasList)
+	/*for (auto c : userInterfaceManager.canvasList)
 	{
 		if (c->m_name == name)
 		{
 			return c;
 		}
 	}
-	
+	*/
 	return nullptr;
 }
 
@@ -284,9 +283,10 @@ String GameCore::getGLContextFlags()
 }
 
 /// Shutdown this game immediately
-void GameCore::close(){
+void GameCore::close()
+{
 	mCloseRequested = true;
-};
+}
 
 /// Set the name of the game
 void GameCore::setName(const String& name)
@@ -384,10 +384,10 @@ void GameCore::PrimaryUpdate(Time time)
 		}
 	}
 
-	for (auto ux : userInterfaceManager.canvasList)
+	/*for (auto ux : userInterfaceManager.canvasList)
 	{
 		ux->update(time.seconds());
-	}
+	}*/
 
 	// Now let's keep our scripts fresh
 	for (auto s : scriptingEnvironments)
@@ -406,10 +406,10 @@ void GameCore::PrimaryEventHandling(const Event& event)
 	}
 
 	// Deliver the input to canvases
-	for (auto c : userInterfaceManager.canvasList)
+	/*for (auto c : userInterfaceManager.canvasList)
 	{
 		c->pushEvent(event);
-	}
+	}*/
 
 	gameInput.updateWithEvent(event);
 
@@ -423,7 +423,7 @@ void GameCore::PrimaryEventHandling(const Event& event)
 void GameCore::PrimaryRender()
 {
 
-	uxScreen->render();
+	//uxScreen->render();
 
 	stateManager.drawStates(getRenderer());
 

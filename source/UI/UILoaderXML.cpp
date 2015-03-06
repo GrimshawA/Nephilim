@@ -1,15 +1,11 @@
 #include <Nephilim/UI/UILoaderXML.h>
 #include <Nephilim/UI/UIImage.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/UI/UIComponentImage.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/Foundation/StringList.h>
 
-#include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIComponentButton.h>
-#include <Nephilim/UI/UIComponentText.h>
-
-#include <Nephilim/UI/UIBoxLayout.h>
+//#include <Nephilim/UI/UIComponentDebug.h>
+#include <Nephilim/UI/UIButton.h>
 
 #include <pugixml/pugixml.hpp>
 
@@ -26,20 +22,6 @@ NEPHILIM_NS_BEGIN
 
 namespace
 {
-	// Take a list of components and initializations and add them to the view
-	void processComponentsString(UIView* view, const String& str)
-	{
-		// Process each component
-		if (str.find_first_of(':') != str.npos)
-		{
-
-		}
-		else
-		{
-			view->addComponent(str);
-		}
-	}
-
 	/// Extract the parameters from node and apply to the view
 	void process_general_params(pugi::xml_node& node, UIView* view)
 	{
@@ -122,10 +104,6 @@ namespace
 					Log("position set to %f, %f", width, height);
 				}
 			}
-			else if (attributeName == "components")
-			{
-				processComponentsString(view, it->as_string());
-			}
 			else if (attributeName == "debug")
 			{
 				// Its a tuple for a debug color
@@ -137,24 +115,13 @@ namespace
 					int g = elems[1].toInt();
 					int b = elems[2].toInt();
 
-					view->addComponent(new UIComponentDebugColor(Color(r, g, b)));
+//					view->addController(new UIDebugWidget(Color(r, g, b)));
 				}
 			}
 			// Check if we have a layouter
 			else if (attributeName == "layout")
 			{
-				String layout_string = it->as_string("");
-
-				Log("LAYOUT: %s", it->as_string());
-				if (layout_string == "box_h")
-				{
-					view->setLayout(new UIBoxLayout(UIBoxLayout::Horizontal, false));
-				}
-				if (layout_string == "box_v")
-				{
-					view->setLayout(new UIBoxLayout(UIBoxLayout::Vertical, false));
-
-				}
+			
 			}
 		}
 	}
@@ -173,21 +140,21 @@ namespace
 
 			String imageResource = node.attribute("src").as_string("");
 			imageResource = "Ui/" + imageResource;
-			v->addComponent(new UIComponentImage(imageResource));
+			//v->addController(new UIComponentImage(imageResource));
 		}
 		else if (String(node.name()) == "button")
 		{
 			v = parent->createChild("1");
 			v->setSize(500.f, 300.f);
 
-			v->addComponent(new UIComponentButton(node.attribute("label").as_string("none")));
+			//v->addComponent(new UIComponentButton(node.attribute("label").as_string("none")));
 		}
 		else if (String(node.name()) == "text")
 		{
 			v = parent->createChild("1");
 			v->setSize(100.f, 40.f);
 
-			v->addComponent(new UIComponentText(node.attribute("content").as_string("none")));
+			//v->addController(new UITextNode(node.attribute("content").as_string("none")));
 		}
 		else
 		{

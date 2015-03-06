@@ -6,6 +6,9 @@
 
 NEPHILIM_NS_BEGIN
 
+Vector2D Convert3DToIso(Vector3D p3d);
+
+
 /**
 	\ingroup Foundation
 	\namespace math
@@ -28,7 +31,7 @@ namespace math
 	NEPHILIM_API float distance(float x1, float y1, float x2, float y2);
 	/// Compute the distance between two points.
 	/// Takes two 2D Vectors of type double and returns double
-	NEPHILIM_API double distance(const Vec2d &a, const Vec2d &b);
+	NEPHILIM_API double distance(const Vector2<double> &a, const Vector2<double> &b);
 	/// Compute the distance between two points.
 	/// Takes the coordinates of two points (x1,y1) and (x2,y2) of type double
 	/// \return distance value of type double

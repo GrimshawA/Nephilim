@@ -7,18 +7,17 @@
 #include <Nephilim/World/Entity.h>
 #include <Nephilim/World/Entity.inl>
 
-#include <Nephilim/World/Components/ATilemapComponent.h>
-#include <Nephilim/World/Components/ATerrainComponent.h>
-#include <Nephilim/World/Components/ACameraComponent.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
-#include <Nephilim/World/Components/AParticleEmitterComponent.h>
-#include <Nephilim/World/Components/AStaticMeshComponent.h>
-#include <Nephilim/World/Components/ATextComponent.h>
-#include <Nephilim/World/Components/AInputComponent.h>
-#include <Nephilim/World/Components/AProjectedWaterComponent.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
-#include <Nephilim/World/Components/ASkeletalMeshComponent.h>
-#include <Nephilim/World/Components/APointLightComponent.h>
+#include <Nephilim/World/ATilemapComponent.h>
+#include <Nephilim/World/ATerrainComponent.h>
+#include <Nephilim/World/ACameraComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/AParticleEmitterComponent.h>
+#include <Nephilim/World/AStaticMeshComponent.h>
+#include <Nephilim/World/ATextComponent.h>
+#include <Nephilim/World/AProjectedWaterComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/ASkeletalMeshComponent.h>
+#include <Nephilim/World/APointLightComponent.h>
 
 #include <Nephilim/Foundation/Transform.h>
 #include <Nephilim/Foundation/Math.h>
@@ -125,22 +124,12 @@ void RenderSystemDefault::renderScene()
 		{
 			mRenderer->setTexture(level->landscapes[j]->terrain.surfaceTex);
 
-			// Let's use some point lights
-			ComponentWarehouse::ComponentStoreRef pointLights = level->componentWarehouse.getStore(std::type_index(typeid(APointLightComponent)));
-			for (std::size_t i = 0; i < pointLights->size(); ++i)
-			{
-				/*mRenderer->setShader(pointLightingShader);
-				static_cast<GLShader*>(pointLightingShader.shaderImpl)->setUniformMatrix("projection", mRenderer->getProjectionMatrix().get());
-				static_cast<GLShader*>(pointLightingShader.shaderImpl)->setUniformMatrix("view", mRenderer->getViewMatrix().get());
-				static_cast<GLShader*>(pointLightingShader.shaderImpl)->setUniformVec4("lightPosition", Vector4D(0.f, 0.f, 0.f, 0.f).get());
-				static_cast<GLShader*>(pointLightingShader.shaderImpl)->setUniformVec4("lightDiffuse", Vector4D(0.2, 0.f, 0.f, 1.f).get());
-				static_cast<GLShader*>(pointLightingShader.shaderImpl)->setUniformVec4("lightRadius", Vector4D(20.f, 0.f, 0.f, 1.f).get());
-				*/
 
-				mRenderer->setDepthTestEnabled(true);
-				mRenderer->setModelMatrix(level->landscapes[j]->rootTransform.getMatrix());
-				mRenderer->draw(level->landscapes[j]->terrain.geometry);
-			}
+
+			mRenderer->setDepthTestEnabled(true);
+			mRenderer->setModelMatrix(level->landscapes[j]->rootTransform.getMatrix());
+			mRenderer->draw(level->landscapes[j]->terrain.geometry);
+			
 		}
 
 		mRenderer->setDefaultShader();

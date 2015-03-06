@@ -72,8 +72,11 @@ public:
 	/// Take a lower level event directly and translate it into a UxEvent for dispatch()
 	void translateAndDispatch(const Event& windowEvent);
 
+	/// This is the primary call, that makes the entire hierarchy draw
+	void renderScreen();
+
 	/// Render the entire screen contents
-	void render();
+	void render(UxRenderState renderState);
 };
 
 NEPHILIM_NS_END

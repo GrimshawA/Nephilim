@@ -5,11 +5,10 @@
 #include <Nephilim/Foundation/Vector.h>
 #include <Nephilim/Foundation/String.h>
 
-#include <Nephilim/World/ComponentWarehouse.h>
 #include <Nephilim/World/EntityManager.h>
-
 #include <Nephilim/World/Actor.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
+#include <Nephilim/World/ComponentManager.h>
+#include <Nephilim/World/ASpriteComponent.h>
 #include <Nephilim/World/Systems/PhysicsSystem.h>
 
 #include <vector>
@@ -68,12 +67,16 @@ public:
 	/// All the game objects instanced in this Level
 	std::vector<GameObject*> gameObjects;
 
-public:
+	/// Each component type has its own storage pool
+	struct ComponentStoragePool
+	{
+		FClass* ComponentClass;
+		ComponentManager* ComponentStorage;
+	};
 
-	/// Where all the components are stored, nothing is hardcoded
-	/// But rather its all a dynamic soup of components, which the systems will have to deal with
-	/// This way Level remains incredibly flexible to support any game
-	ComponentWarehouse componentWarehouse;
+	/// All the component data this level contains is stored here
+	std::vector<ComponentStoragePool> componentStoragePools;
+
 
 	EntityManager entityManager;
 

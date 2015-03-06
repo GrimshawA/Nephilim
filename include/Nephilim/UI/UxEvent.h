@@ -2,6 +2,7 @@
 #define NephilimUxEvent_h__
 
 #include <Nephilim/Platform.h>
+#include <Nephilim/Foundation/Event.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -14,10 +15,18 @@ class UxNode;
 class NEPHILIM_API UxEvent
 {
 public:
+	enum EventType
+	{
+		Thing,
+		NativeEvent
+	};
+
 	int type;
 
 	/// The node who emitted this event
 	UxNode* emitter;
+
+	Event _event;
 
 	union
 	{

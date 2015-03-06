@@ -2,7 +2,6 @@
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/Logging.h>
-#include <Nephilim/World/Camera.h>
 
 NEPHILIM_NS_BEGIN
 

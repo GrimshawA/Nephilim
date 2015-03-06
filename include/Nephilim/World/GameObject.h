@@ -48,6 +48,12 @@ public:
 
 	/// The array of components on this Actor
 	std::vector<Component*> components;
+
+public:
+
+	/// Get the class RTTI for this game objectc class
+	FClass* getClass();
+
 };
 
 NEPHILIM_NS_END

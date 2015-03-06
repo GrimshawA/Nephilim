@@ -1,9 +1,7 @@
 #include <Nephilim/UI/UITreeView.h>
 #include <Nephilim/UI/UITreeViewItem.h>
-#include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIComponentText.h>
-#include <Nephilim/UI/UIComponentImage.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/UIDebugWidget.h>
+#include <Nephilim/UI/UITextNode.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/DataModel.h>
@@ -80,11 +78,11 @@ void UITreeView::itemClicked(UIView* node)
 {
 	for (std::size_t i = 0; i < selectedItems.size(); ++i)
 	{
-		selectedItems[i]->getComponent<UIComponentDebugColor>()->mColor = Color::Transparent;
+		selectedItems[i]->getComponent<UIDebugWidget>()->mColor = Color::Transparent;
 	}
 	selectedItems.clear();
 
-	node->getComponent<UIComponentDebugColor>()->mColor = Color::Blue;
+	node->getComponent<UIDebugWidget>()->mColor = Color::Blue;
 	selectedItems.push_back(node);
 }
 
@@ -128,8 +126,8 @@ void UITreeNode::setTitle(const String& content)
 	if (!titleView)
 	{
 		titleView = createChild("title");
-		titleView->addComponent(new UIComponentDebugColor(Color::NavyBlue));
-		titleView->addComponent(new UIComponentText(content, UIComponentText::Left, UIComponentText::Left));
+		//titleView->addController(new UIDebugWidget(Color::NavyBlue));
+///		titleView->addController(new UITextNode(content, UITextNode::Left, UITextNode::Left));
 		titleView->setSize(width(), 20.f);
 		titleView->setPosition(0.f, 0.f);
 		titleView->mPadding.left = 20.f;

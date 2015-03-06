@@ -141,6 +141,9 @@ void UIButton::onPaint(UIPainter& painter)
 {
 	GraphicsDevice* renderer = painter.graphicsDevice;
 
+	RectangleShape c(getRect(), Color::Yellow);
+	//renderer->draw(c);
+
 	if(_core->m_defaultFont && !_core->m_defaultFont->isLoaded())
 	{
 		Log("UI: There is no default font for showing text.");
@@ -178,11 +181,11 @@ void UIButton::onPaint(UIPainter& painter)
 	renderer->draw(backgroundShape);
 	
     // -- Label
-	buttonLabel.setFont(*_core->m_defaultFont);
+	//buttonLabel.setFont(*_core->m_defaultFont);
 	buttonLabel.setString(m_label);
-	buttonLabel.setCharacterSize(mRect.height / 2);
+//	buttonLabel.setCharacterSize(mRect.height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
-	buttonLabel.setPosition(static_cast<int>((mRect.left + mRect.width / 2.f ) + 0.5f), static_cast<int>((mRect.top +  mRect.height / 2.f) + 0.5f));
+	//buttonLabel.setPosition(static_cast<int>((mRect.left + mRect.width / 2.f ) + 0.5f), static_cast<int>((mRect.top +  mRect.height / 2.f) + 0.5f));
 	if(buttonLabel.getLocalBounds().width > getSize().x * 0.9f)
 	{
 		// The text is too big and passes the 90% of the button's width

@@ -5,11 +5,11 @@
 #include <Nephilim/World/Systems/AudioSystem.h>
 #include <Nephilim/World/Systems/NetworkSystem.h>
 
-#include <Nephilim/World/Components/AStaticMeshComponent.h>
-#include <Nephilim/World/Components/ASpriteComponent.h>
-#include <Nephilim/World/Components/AInputComponent.h>
-#include <Nephilim/World/Components/ACameraComponent.h>
-#include <Nephilim/World/Components/ABoxComponent.h>
+#include <Nephilim/World/AStaticMeshComponent.h>
+#include <Nephilim/World/ASpriteComponent.h>
+#include <Nephilim/World/AInputComponent.h>
+#include <Nephilim/World/ACameraComponent.h>
+#include <Nephilim/World/ABoxComponent.h>
 
 #include <Nephilim/Foundation/Logging.h>
 #include <Nephilim/Foundation/Math.h>
@@ -59,9 +59,9 @@ void World::update(const Time& deltaTime)
 }
 
 /// Get the window-space coordinate of where the point lies in
-Vec2<int> World::getScreenCoordinate(Vector3D point)
+Vector2<int> World::getScreenCoordinate(Vector3D point)
 {
-	Vec2<int> screenSpacePoint(0,0);
+	Vector2<int> screenSpacePoint(0,0);
 
 	if (_camera)
 	{
@@ -85,7 +85,7 @@ Vec2<int> World::getScreenCoordinate(Vector3D point)
 
 /// This will convert a window-space coordinate into a world position
 /// Depends on the camera being orthogonal to the Z=0 plane
-Vector2D World::getWorldCoordinate2D(Vec2<int> point)
+Vector2D World::getWorldCoordinate2D(Vector2<int> point)
 {
 	Vector2D worldPoint(0.f, 0.f);
 

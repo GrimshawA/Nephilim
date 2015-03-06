@@ -16,12 +16,23 @@ NEPHILIM_NS_BEGIN
 	Plugins (and not) can implement the extension interface to add
 	features to the engine like audio, scripting, physics, AI and so on.
 */
-class NEPHILIM_API Extension : public Object
+class NEPHILIM_API Extension : public ReferencedObject
 {
+public:
+
+	/// The instance name of this extension (comes from the plugin)
+	String _name;
+
+
+	
+
 public:
 
 	/// Destructor
 	virtual ~Extension();
+
+	/// Called when we want to unload an extension and all its resources prematurely
+	virtual void Release();
 };
 
 NEPHILIM_NS_END

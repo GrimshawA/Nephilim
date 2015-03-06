@@ -1,12 +1,11 @@
 #ifndef NephilimUIComponentResizable_h__
 #define NephilimUIComponentResizable_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIComponent.h>
+#include <Nephilim/UI/UIController.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIComponentResizable : public UIComponent
+class NEPHILIM_API UIComponentResizable : public UIController
 {
 public:
 	UIComponentResizable();

@@ -3,10 +3,10 @@
 
 #include <Nephilim/Platform.h>
 #include <Nephilim/World/GameObject.h>
-#include <Nephilim/World/Components/ASceneComponent.h>
-#include <Nephilim/World/Components/AInputComponent.h>
-#include <Nephilim/World/Components/AStaticMeshComponent.h>
-#include <Nephilim/World/Components/ABoxComponent.h>
+#include <Nephilim/World/ASceneComponent.h>
+#include <Nephilim/World/AInputComponent.h>
+#include <Nephilim/World/AStaticMeshComponent.h>
+#include <Nephilim/World/ABoxComponent.h>
 
 #include <Nephilim/Foundation/BBox.h>
 #include <Nephilim/Foundation/Time.h>
