@@ -3,7 +3,7 @@
 
 // Convenience wrapper to include the UI headers
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/UI/UICanvas.h>
 #include <Nephilim/UI/UIWindow.h>
 #include <Nephilim/UI/UIListPanel.h>

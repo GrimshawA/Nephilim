@@ -50,6 +50,7 @@ public:
 	bool hasAncestor(FClass* _class);
 };
 
+
 /**
 	\class Factory
 	\brief Global factory that manages dynamically allocated objects and how they are allocated
@@ -109,6 +110,23 @@ public:
 	}
 };
 
+/**
+	\class FactoryTypeName<T>
+	\brief Allows types to register themselves for type name information
+
+	This makes it possible to get type information for registered typenames
+	without c++ rtti. This is compile-time, so when we are resolving templates,
+	we can evaluate these types to actual runtime FClass and such.
+
+	It's also typesafe, as the base class has no defined functions, so when trying to use the API and 
+	that typename isn't found, it just errors.
+*/
+template<typename T>
+class FactoryTypeName
+{
+
+};
+
 #define REGISTER_FACTORY_CLASS(Name, Class)						\
 	FactoryAutoRegisterHelper<Class> kFactoryAuto##Class(Name);	\
 	\
@@ -117,7 +135,22 @@ public:
 {												\
 if (Factory::GetClass(Class) && Factory::GetClass(Superclass))	\
 	Factory::SetSubclassRelationship(Class, Superclass);		\
-}																\
+}\
+
+#define STRINGIFY(x) #x
+
+// Define the type traits static class that helps convert templates typenames back to FClass and strings
+#define REGISTER_FACTORY_TYPENAME(Class) \
+	template<> \
+class FactoryTypeName<Class>\
+{\
+public:\
+	\
+	static const char* GetClassName()\
+	{\
+		return STRINGIFY(Class);\
+	}\
+};\
 
 NEPHILIM_NS_END
 #endif // NephilimFactory_h__

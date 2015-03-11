@@ -29,11 +29,20 @@ public:
 	UICore*                _core = nullptr;
 
 	/// Children of this node
-	std::vector<UxNode*> _children;
+	std::vector<UxNode*> mChildren;
 
+	typedef std::vector<UxNode*>::iterator ChildrenIterator;
 
+	/// Usually, an UxNode object has a parent node
+	UxNode* mParent;
 
 public:
+
+	/// Construct with default initialization of the node
+	UxNode();
+
+	/// Construct directly as another node child
+	UxNode(UxNode* _parent);
 
 	/// Destructor
 	virtual ~UxNode();
@@ -69,7 +78,7 @@ template<typename T, typename ...Args>
 T* UxNode::Create(UxNode* base, Args&& ...args)
 {
 	UxNode* node = new T(std::forward<Args>(args)... );
-	base->_children.push_back(node);
+	base->mChildren.push_back(node);
 	return static_cast<T*>(node);
 }
 
@@ -77,7 +86,7 @@ template<typename T>
 T* UxNode::Create2(UxNode* base)
 {
 	UxNode* node = new T();
-	base->_children.push_back(node);
+	base->mChildren.push_back(node);
 	return static_cast<T*>(node);
 }
 

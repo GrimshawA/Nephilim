@@ -2,7 +2,7 @@
 #define NephilimUILabel_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	\class UILabel
 	\brief A simple label control
 */
-class NEPHILIM_API UILabel : public UIView{
+class NEPHILIM_API UILabel : public Widget{
 public:
 	/// Constructs the button
 	UILabel();

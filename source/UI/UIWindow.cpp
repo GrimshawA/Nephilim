@@ -6,7 +6,7 @@
 NEPHILIM_NS_BEGIN
 
 UIWindow::UIWindow()
-: UIView()
+: Widget()
 , m_modal(false)
 , m_parentDocument(NULL)
 , mCoordinateSpace(UI::LocalSpace)
@@ -48,10 +48,11 @@ void UIWindow::draw(GraphicsDevice* graphicsDevice)
 		graphicsDevice->setProjectionMatrix(mat4::ortho(0.f, width(), height(), 0.f, 1.f, 1000.f));
 		graphicsDevice->setViewMatrix(mat4::identity);
 	}
+	
 
-	for(std::vector<UIView*>::const_iterator it = m_children.begin(); it != m_children.end(); it++)
+	for (ChildrenIterator it = mChildren.begin(); it != mChildren.end(); it++)
 	{
-		(*it)->drawItself(graphicsDevice);
+		static_cast<Widget*>(*it)->drawItself(graphicsDevice);
 	}
 };
 
@@ -71,11 +72,9 @@ Ray UIWindow::getMouseRay(int x, int y)
 }
 
 /// Callback when a child of the control is removed
-void UIWindow::onChildRemoved(UIView* control)
+void UIWindow::onChildRemoved(Widget* control)
 {
-	Log("Surface detected child removal %d %d %s", m_children.size(), m_modal, m_name.c_str());
-
-	if(m_children.empty() && m_modal)
+	if(mChildren.empty() && m_modal)
 	{
 		Log("Destroying surface");
 		destroy();

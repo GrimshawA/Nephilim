@@ -1,7 +1,7 @@
 #ifndef NephilimUI_TextNode_h__
 #define NephilimUI_TextNode_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Graphics/Text.h>
 
 NEPHILIM_NS_BEGIN
@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 	\class UITextNode
 	\brief Displays a text with wrapping and selecting
 */
-class NEPHILIM_API UITextNode : public UIView
+class NEPHILIM_API UITextNode : public Widget
 {
 public:
 
@@ -26,7 +26,7 @@ public:
 	UITextNode(const String& text, Alignment horizontal = Center, Alignment vertical = Center);
 
 
-	void onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform);
+	void onRender(GraphicsDevice* renderer, Widget* view, const mat4& parentTransform);
 
 	void onPropertySet(const StringList& targetObject, const String& value);
 

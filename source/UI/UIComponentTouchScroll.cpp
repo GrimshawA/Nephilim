@@ -2,7 +2,7 @@
 
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 
@@ -13,7 +13,7 @@ UIComponentScroll::UIComponentScroll()
 	Log("UIComponentScroll()");
 }
 */
-void UIComponentScroll::onAttach(UIView* view)
+void UIComponentScroll::onAttach(Widget* view)
 {
 	component_id = UIController::ScrollComponent;
 	scrolling = false;
@@ -29,19 +29,19 @@ void UIComponentScroll::onAttach(UIView* view)
 	if(mPageBased)
 	{
 		float offset = 0.f;
-		for(std::size_t i = 0; i < view->m_children.size(); ++i)
+		for(std::size_t i = 0; i < view->mChildren.size(); ++i)
 		{
-			view->m_children[i]->setSize(view->getSize().x, view->getSize().y);
-			view->m_children[i]->setPosition(view->getPosition().x + offset, view->getPosition().y);
+			static_cast<Widget*>(view->mChildren[i])->setSize(view->getSize().x, view->getSize().y);
+			static_cast<Widget*>(view->mChildren[i])->setPosition(view->getPosition().x + offset, view->getPosition().y);
 
 			offset += view->getSize().x;
 		}
 	}
 }
 
-void UIComponentScroll::onEvent(Event event, UIView* view)
+void UIComponentScroll::onEvent(Event event, Widget* view)
 {
-	if(view->m_children.size() == 0)
+	if(view->mChildren.size() == 0)
 		return;
 
 	if(event.type == Event::MouseButtonPressed)
@@ -57,15 +57,16 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 	{
 		scrolling = false;
 
-		float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
-		UIView* closestView = view->m_children[0];
-		for(std::size_t i = 0; i < view->m_children.size(); ++i)
+		float smallest_distance = fabs(static_cast<Widget*>(view->mChildren[0])->getCenter().y - view->getCenter().y);
+		Widget* closestView = static_cast<Widget*>(view->mChildren[0]);
+
+		for(std::size_t i = 0; i < view->mChildren.size(); ++i)
 		{				
-			float dist = fabs(view->m_children[i]->getCenter().y - view->getCenter().y);
+			float dist = fabs(static_cast<Widget*>(view->mChildren[i])->getCenter().y - view->getCenter().y);
 			if(dist < smallest_distance)
 			{
 				smallest_distance = dist;
-				closestView = view->m_children[i];
+				closestView = static_cast<Widget*>(view->mChildren[i]);
 			}
 		}
 
@@ -128,12 +129,12 @@ void UIComponentScroll::onEvent(Event event, UIView* view)
 	}
 }
 
-UIView* UIComponentScroll::getSelectedView(UIView* view)
+Widget* UIComponentScroll::getSelectedView(Widget* view)
 {
-	if(view->m_children.size() == 0)
+	if(view->mChildren.size() == 0)
 		return NULL;
 
-	float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
+	/*float smallest_distance = fabs(view->m_children[0]->getCenter().y - view->getCenter().y);
 	UIView* closestView = view->m_children[0];
 	for(std::size_t i = 0; i < view->m_children.size(); ++i)
 	{				
@@ -145,16 +146,18 @@ UIView* UIComponentScroll::getSelectedView(UIView* view)
 		}
 	}
 
-	return closestView;
+	return closestView;*/
+
+	return nullptr;
 }
 
 
-void UIComponentScroll::onUpdate(const Time& time, UIView* view)
+void UIComponentScroll::onUpdate(const Time& time, Widget* view)
 {
 
 }
 
-void UIComponentScroll::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentScroll::onRender(GraphicsDevice* renderer, Widget* view)
 {
 	RectangleShape backRect(view->getRect(), Color::Bittersweet);
 	renderer->draw(backRect);

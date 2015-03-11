@@ -10,7 +10,7 @@ NEPHILIM_NS_BEGIN
 
 class GraphicsDevice;
 class UIWindow;
-class UIView;
+class Widget;
 
 /**
 	\class UICanvas
@@ -53,7 +53,7 @@ public:
 	void setWindowSize(int w, int h);
 
 	/// Returns a control in the hierarchy with the name, or NULL if not found
-	UIView* getControlByName(const String& name);
+	Widget* getControlByName(const String& name);
 
 	/// Adds a layer to this canvas for 2D controls
 	void addLayer2D(const String& name);
@@ -100,7 +100,7 @@ public:
 
 	void applyPendingChanges();
 
-	typedef std::vector<UIView*> ControlList;
+	typedef std::vector<Widget*> ControlList;
 
 	/// Makes a list of controls from a selector - CSS like
 	ControlList selectControls(const String& selector);

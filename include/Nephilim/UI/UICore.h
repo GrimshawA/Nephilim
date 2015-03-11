@@ -10,7 +10,7 @@
 NEPHILIM_NS_BEGIN
 
 class UICanvas;
-class UIView;
+class Widget;
 class GameContent;
 class UIController;
 
@@ -18,8 +18,8 @@ class NEPHILIM_API UIDragEvent
 {
 public:
 	vec2i dropPosition;
-	UIView* dragSource;
-	UIView* dragElement;
+	Widget* dragSource;
+	Widget* dragElement;
 };
 
 class NEPHILIM_API UIEventResult
@@ -58,18 +58,18 @@ public:
 
 
 	/// Drag components use this element to spawn the temporary element in drags
-	UIView* dragElement = nullptr;
+	Widget* dragElement = nullptr;
 	UIController* dragElementOwner = nullptr;
 
 	/// Anyone can use this element to spawn tooltips anytime
-	UIView* toolTipElement = nullptr;
+	Widget* toolTipElement = nullptr;
 
 	/// To instance context menus
-	UIView* contextMenuElement = nullptr;
+	Widget* contextMenuElement = nullptr;
 
 	/// Menus (drop down boxes, menus in the bars etc)
 	/// Its a stack because menus can cast other menus
-	std::vector<UIView*> menuElementStack;
+	std::vector<Widget*> menuElementStack;
 
 	/// Every UICore has a global stylesheet
 	StyleSheet stylesheet;
@@ -112,8 +112,8 @@ public:
 	bool m_fakeAndroidOptionsWithControl;
 	bool m_blockHardwareKeyboard;
 
-	UIView* m_focusControl;
-	UIView* m_dragControl;
+	Widget* m_focusControl;
+	Widget* m_dragControl;
 	Vec2f m_dragOffset;
 
 	/// Does the user interface system use animation globally?

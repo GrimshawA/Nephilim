@@ -8,23 +8,23 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 
 class NEPHILIM_API UIComponentScroll : public UIController
 {
 public:
 	//UIComponentScroll();
 
-	void onAttach(UIView* view);
+	void onAttach(Widget* view);
 
-	void onEvent(Event event, UIView* view);
+	void onEvent(Event event, Widget* view);
 
-	UIView* getSelectedView(UIView* view);
+	Widget* getSelectedView(Widget* view);
 	
-	void onUpdate(const Time& time, UIView* view);
+	void onUpdate(const Time& time, Widget* view);
 
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, Widget* view);
 
 	bool scrolling;
 	vec2 lastPosition;

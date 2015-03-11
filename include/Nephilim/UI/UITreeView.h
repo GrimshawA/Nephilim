@@ -1,7 +1,7 @@
 #ifndef UITreeView_h__
 #define UITreeView_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -13,7 +13,7 @@ class UITreeViewItem;
 	\class UITreeView
 	\brief Official widget for displaying tree views
 */
-class NEPHILIM_API UITreeView : public UIView
+class NEPHILIM_API UITreeView : public Widget
 {
 public:
 
@@ -24,7 +24,7 @@ public:
 	DataModel* _dataModel = nullptr;
 
 
-	std::vector<UIView*> selectedItems;
+	std::vector<Widget*> selectedItems;
 
 
 	float mLineHeight;
@@ -44,7 +44,7 @@ public:
 	/// Set a new data model to this tree view
 	void setModel(DataModel* dataModel);
 
-	void itemClicked(UIView* node);
+	void itemClicked(Widget* node);
 
 	/// Refresh the entire tree view structure, heavyweight, use with care
 	void refreshStructure();
@@ -62,13 +62,13 @@ public:
 \class UITreeNode
 \brief The tree view is composed of nested lists of UIView and UITreeNode
 */
-class NEPHILIM_API UITreeNode : public UIView
+class NEPHILIM_API UITreeNode : public Widget
 {
 public:
 	
 	Color c = Color::Transparent;
 
-	UIView* titleView = nullptr;
+	Widget* titleView = nullptr;
 
 	/// Index of this subtree in the model, used to add model items to it
 	int id;

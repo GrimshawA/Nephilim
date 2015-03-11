@@ -3,7 +3,7 @@
 #include <Nephilim/Graphics/GraphicsDevice.h>
 #include <Nephilim/Foundation/StringList.h>
 #include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/Math.h>
 #include <Nephilim/Foundation/Logging.h>
 
@@ -21,7 +21,7 @@ UIDebugWidget::UIDebugWidget(const Color& color)
 
 }
 
-void UIDebugWidget::onAttach(UIView* view)
+void UIDebugWidget::onAttach(Widget* view)
 {
 	
 }
@@ -49,7 +49,7 @@ void UIDebugWidget::onPropertySet(const StringList& targetObject, const String& 
 
 
 
-void UIDebugWidget::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
+void UIDebugWidget::onRender(GraphicsDevice* renderer, Widget* view, const mat4& parentTransform)
 {
 	renderer->setModelMatrix(parentTransform);
 	RectangleShape backRect(FloatRect(0.f, 0.f, view->size.x, view->size.y), mColor);

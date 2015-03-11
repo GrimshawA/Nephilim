@@ -3,6 +3,7 @@
 
 #include <Nephilim/UI/UxNode.h>
 #include <Nephilim/Foundation/Color.h>
+#include <Nephilim/Foundation/Time.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -74,6 +75,9 @@ public:
 
 	/// This is the primary call, that makes the entire hierarchy draw
 	void renderScreen();
+
+	/// This refreshes the screen and its contents with the elapsed time since last call
+	void updateScreen(Time time);
 
 	/// Render the entire screen contents
 	void render(UxRenderState renderState);

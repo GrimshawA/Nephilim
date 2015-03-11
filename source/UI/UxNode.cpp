@@ -2,6 +2,20 @@
 
 NEPHILIM_NS_BEGIN
 
+/// Just default initialization of the node
+UxNode::UxNode()
+: mParent(nullptr)
+{
+
+}
+
+/// Construct directly as another node child
+UxNode::UxNode(UxNode* _parent)
+{
+	mParent = _parent;
+	mParent->mChildren.push_back(this);
+}
+
 /// Destructor
 UxNode::~UxNode()
 {
@@ -40,7 +54,7 @@ const char* UxNode::getClassName()
 /// This is the primary render function called on a node, causing it to draw itself in anyway
 void UxNode::render(UxRenderState renderState)
 {
-	for (auto c : _children)
+	for (auto c : mChildren)
 	{
 		c->render(renderState);
 	}

@@ -10,7 +10,7 @@
 NEPHILIM_NS_BEGIN
 
 UITreeView::UITreeView()
-: UIView()
+: Widget()
 , mSubTreeView(false)
 , mSubTreeLevel(0)
 , mLineHeight(30.f)
@@ -74,7 +74,7 @@ void UITreeView::setModel(DataModel* dataModel)
 }
 
 
-void UITreeView::itemClicked(UIView* node)
+void UITreeView::itemClicked(Widget* node)
 {
 	for (std::size_t i = 0; i < selectedItems.size(); ++i)
 	{

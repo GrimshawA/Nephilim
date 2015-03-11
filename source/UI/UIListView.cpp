@@ -3,7 +3,7 @@
 
 NEPHILIM_NS_BEGIN
 
-void UIListView::onRender(GraphicsDevice* renderer, UIView* view)
+void UIListView::onRender(GraphicsDevice* renderer, Widget* view)
 {
 	RectangleShape backgroundRect;
 	backgroundRect.setColor(Color(240,240,240,40));

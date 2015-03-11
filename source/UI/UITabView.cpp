@@ -14,7 +14,7 @@ void UIComponentTabView::refreshTabButtons()
 	// Add a button per tab
 	for(std::size_t i = 0; i < tabs.size(); ++i)
 	{
-		UIView* tabButton = new UIView();
+		Widget* tabButton = new Widget();
 		tabButton->setRect(parent->getPosition().x + 50.f * i, parent->getPosition().y, 49.f, 20.f);
 		//tabButton->addController(new UIDebugWidget(Color::Grey));
 	///	tabButton->addController(new UITextNode("Tab " + String::number(i), UITextNode::Center, UITextNode::Center));
@@ -38,7 +38,7 @@ void UIComponentTabView::onTabButtonClicked(std::size_t index)
 	tabs[index]->setRect(FloatRect(parent->getPosition().x, parent->getPosition().y + 20, parent->getSize().x, parent->getSize().y - 20.f));
 }
 
-void UIComponentTabView::onEvent(Event event, UIView* view)
+void UIComponentTabView::onEvent(Event event, Widget* view)
 {
 	if(event.type == Event::KeyPressed)
 	{
@@ -67,7 +67,7 @@ void UIComponentTabView::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentTabView::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentTabView::onRender(GraphicsDevice* renderer, Widget* view)
 {
 	RectangleShape topRect(FloatRect(view->getPosition().x, view->getPosition().y, view->getSize().x, 20.f), Color::White);
 	renderer->draw(topRect);

@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UxScreen.h>
 #include <Nephilim/UI/UxEvent.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/UI/UICanvas.h>
 
 #include <Nephilim/Graphics/Window.h>
@@ -24,12 +24,12 @@ const char* UxScreen::getClassName()
 /// Dispatch an event down the hierarchy
 void UxScreen::dispatch(const UxEvent& event)
 {
-	for (auto node : _children)
+	for (std::vector<UxNode*>::reverse_iterator it = mChildren.rbegin(); it != mChildren.rend(); ++it)
 	{
 		// For now all children are expected to be nodes
-		if (dynamic_cast<UICanvas*>(node))
+		if (dynamic_cast<UICanvas*>((*it)))
 		{
-			UICanvas* view = static_cast<UICanvas*>(node);
+			UICanvas* view = static_cast<UICanvas*>((*it));
 			view->pushEvent(event._event);
 			//	Log("Canvas being drawn");
 		}
@@ -42,6 +42,21 @@ void UxScreen::translateAndDispatch(const Event& windowEvent)
 
 }
 
+/// This refreshes the screen and its contents with the elapsed time since last call
+void UxScreen::updateScreen(Time time)
+{
+	for (auto node : mChildren)
+	{
+		// For now all children are expected to be nodes
+		if (dynamic_cast<UICanvas*>(node))
+		{
+			UICanvas* view = static_cast<UICanvas*>(node);
+			view->update(time.seconds());
+			//	Log("Canvas being drawn");
+		}
+	}
+}
+
 /// Render the entire screen contents
 void UxScreen::render(UxRenderState renderState)
 {
@@ -51,7 +66,7 @@ void UxScreen::render(UxRenderState renderState)
 	GDI->setProjectionMatrix(View(0, 0, window->width(), window->height()).getMatrix());
 
 
-	for (auto node : _children)
+	for (auto node : mChildren)
 	{
 		// For now all children are expected to be nodes
 		if (dynamic_cast<UICanvas*>(node))
@@ -61,9 +76,9 @@ void UxScreen::render(UxRenderState renderState)
 		//	Log("Canvas being drawn");
 		}
 		// For now all children are expected to be nodes
-		if (dynamic_cast<UIView*>(node))
+		if (dynamic_cast<Widget*>(node))
 		{
-			UIView* view = static_cast<UIView*>(node);
+			Widget* view = static_cast<Widget*>(node);
 			view->drawItself(GDI, mat4::identity);
 		}
 	}

@@ -4,7 +4,7 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Matrix.h>
 #include <Nephilim/Foundation/Ray.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -38,7 +38,7 @@ namespace UI
 	[3] General controls window (orthogonal, some fancy buttons that we want to be flat)
 	[4] Modal window (orthogonal, just a typical widget like a message box here)
 */
-class NEPHILIM_API UIWindow : public UIView
+class NEPHILIM_API UIWindow : public Widget
 {
 private:
 	/// Coordinate space of the controls in this hierarchy
@@ -76,7 +76,7 @@ public:
 	virtual void draw(GraphicsDevice* graphicsDevice);
 
 	/// Callback when a child of the control is removed
-	virtual void onChildRemoved(UIView* control);
+	virtual void onChildRemoved(Widget* control);
 
 	/// Get the mouse ray in the coordinate system of this window
 	/// This is extremely helpful to convert window-space mouse coordinates into a 3D picking ray to use on this window

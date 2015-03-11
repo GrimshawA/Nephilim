@@ -1,20 +1,17 @@
-#ifndef NephilimUIButton_h__
-#define NephilimUIButton_h__
+#ifndef NephilimUI_Button_h__
+#define NephilimUI_Button_h__
 
-#include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIView.h>
-#include <Nephilim/Foundation/String.h>
+#include <Nephilim/UI/Widget.h>
+
 #include <Nephilim/Graphics/Text.h>
 
 NEPHILIM_NS_BEGIN
 
-class ASSlot;
 /**
-	\ingroup UserInterface
 	\class UIButton
 	\brief A simple button control
 */
-class NEPHILIM_API UIButton : public UIView
+class NEPHILIM_API UIButton : public Widget
 {
 public:
 	/// Constructs the button
@@ -34,20 +31,12 @@ public:
 	/// Get the label of the button
 	String getLabel();
 
-	void bindSignal(const String &signalName, ASSlot* slot );
-
-	/// Callback to handle an event
-	bool onEventNotification(Event& event);
-
 	void setNormalTexture(const String& filename);
 	void setHoverTexture(const String& filename);
 
-	void innerLanguageSwitch();
 
 	/// Called on the subclass to have it paint its contents
 	virtual void onPaint(UIPainter& painter);
-
-	virtual UIView* clone();
 
 	enum UIButtonState
 	{
@@ -67,12 +56,6 @@ public:
 
 	TextureInfo& getStateTextureInfo(UIButtonState state);
 
-	/// Signal is emitted when the button is clicked
-	
-	void setRawProperty(const String& name, const String& val);
-
-	bool hover;
-
 	FloatRect normal_texture_rect;
 	FloatRect hover_texture_rect;
 
@@ -88,5 +71,7 @@ private:
 	String m_baseLabel;
 };
 
+REGISTER_FACTORY_TYPENAME(UIButton);
+
 NEPHILIM_NS_END
-#endif // NephilimUIButton_h__
+#endif // NephilimUI_Button_h__

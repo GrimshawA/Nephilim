@@ -28,9 +28,9 @@ public:
 	UIComponentDraggable(MovementAxis axis);
 
 
-	void onAttach(UIView* view);
+	void onAttach(Widget* view);
 
-	void onEvent(Event event, UIView* view);
+	void onEvent(Event event, Widget* view);
 
 	vec2i previousMousePosition;
 

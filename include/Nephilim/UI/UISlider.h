@@ -1,7 +1,7 @@
 #ifndef NephilimUI_Slider_h__
 #define NephilimUI_Slider_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 	\class UISlider
 	\brief Slider box for setting values
 */
-class NEPHILIM_API UISlider : public UIView
+class NEPHILIM_API UISlider : public Widget
 {
 public:
 

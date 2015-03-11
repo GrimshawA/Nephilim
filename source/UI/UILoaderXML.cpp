@@ -23,7 +23,7 @@ NEPHILIM_NS_BEGIN
 namespace
 {
 	/// Extract the parameters from node and apply to the view
-	void process_general_params(pugi::xml_node& node, UIView* view)
+	void process_general_params(pugi::xml_node& node, Widget* view)
 	{
 		for (pugi::xml_attribute_iterator it = node.attributes_begin(); it != node.attributes_end(); ++it)
 		{
@@ -128,9 +128,9 @@ namespace
 
 	/// Process all data in the node to properly spawn the new UIView, attach it and do all configurations
 	/// Returns the spawned object, or nullptr if not applicable or failed (the setup won't continue down the hierarchy)
-	UIView* process_spawn(pugi::xml_node& node, UIView* parent)
+	Widget* process_spawn(pugi::xml_node& node, Widget* parent)
 	{
-		UIView* v = nullptr;
+		Widget* v = nullptr;
 		
 		// Let's spawn
 		if (String(node.name()) == "img")
@@ -177,14 +177,14 @@ namespace
 	}
 
 	/// Process the node, instantiate widgets and components and add it to parent properly
-	void process_node(pugi::xml_node& node, UIView* parent)
+	void process_node(pugi::xml_node& node, Widget* parent)
 	{
 		if (!parent)
 			return;
 
 		Log("Processing node %s", node.name());
 
-		UIView* spawnView = process_spawn(node, parent);	
+		Widget* spawnView = process_spawn(node, parent);	
 
 		if (!spawnView)
 			return;
@@ -199,7 +199,7 @@ namespace
 };
 
 /// Load the xml file into the node
-bool UILoaderXML::loadFromFile(const String& filename, UIView* root_view)
+bool UILoaderXML::loadFromFile(const String& filename, Widget* root_view)
 {
 	pugi::xml_document document;
 	pugi::xml_parse_result result = document.load_file(filename.c_str());
@@ -229,7 +229,7 @@ bool UILoaderXML::loadFromFile(const String& filename, UIView* root_view)
 
 
 /// Just a test function, needs api changes
-Animation* UIAnimationLoaderXML::load(const String& filename, UIView* source_widget)
+Animation* UIAnimationLoaderXML::load(const String& filename, Widget* source_widget)
 {
 	Animation* anim = nullptr;
 
@@ -246,7 +246,7 @@ Animation* UIAnimationLoaderXML::load(const String& filename, UIView* source_wid
 			if (String(n.name()) == "ZAnim")
 			{
 				anim = new AnimationZ(n.attribute("to").as_float(0.f), n.attribute("duration").as_float(1.f));
-				static_cast<AnimationZ*>(anim)->setZCallback.connect(sigc::mem_fun(source_widget, &UIView::setZ));
+				static_cast<AnimationZ*>(anim)->setZCallback.connect(sigc::mem_fun(source_widget, &Widget::setZ));
 			}			
 		}
 	}

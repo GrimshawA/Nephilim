@@ -11,7 +11,7 @@ UIMenu::UIMenu()
 
 }
 
-void UIMenu::onAttach(UIView* view)
+void UIMenu::onAttach(Widget* view)
 {
 	view->onClick.connect(sigc::mem_fun(this, &UIMenu::toggleMenu));
 }
@@ -37,12 +37,12 @@ void UIMenu::toggleMenu()
 }
 
 
-void UIMenu::onEvent(Event event, UIView* view)
+void UIMenu::onEvent(Event event, Widget* view)
 {
 
 }
 
-void UIMenu::onRender(GraphicsDevice* renderer, UIView* view)
+void UIMenu::onRender(GraphicsDevice* renderer, Widget* view)
 {
 
 }

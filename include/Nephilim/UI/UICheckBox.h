@@ -1,7 +1,7 @@
 #ifndef NephilimUI_CheckBox_h__
 #define NephilimUI_CheckBox_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -9,7 +9,7 @@ NEPHILIM_NS_BEGIN
 	\class UICheckBox
 	\brief A tick box control
 */
-class NEPHILIM_API UICheckBox : public UIView
+class NEPHILIM_API UICheckBox : public Widget
 {
 public:
 

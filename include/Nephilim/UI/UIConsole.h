@@ -1,7 +1,7 @@
 #ifndef NephilimUI_Console_h__
 #define NephilimUI_Console_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ class UILineEdit;
 	\class UIConsole
 	\brief A Console window to input commands
 */
-class NEPHILIM_API UIConsole : public UIView
+class NEPHILIM_API UIConsole : public Widget
 {
 public:
 	String m_input;
@@ -21,8 +21,6 @@ public:
 	UILineEdit* InputLineEdit;
 
 public:
-
-	bool onEventNotification(Event& event);
 
 	void draw(GraphicsDevice* renderer);
 };

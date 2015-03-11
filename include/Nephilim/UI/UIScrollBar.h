@@ -2,7 +2,7 @@
 #define NephilimUI_ScrollBar_h_
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -12,12 +12,12 @@ NEPHILIM_NS_BEGIN
 
 	This UIView usually doesn't show in the hierarchy, and instead its hidden under a manager component.
 */
-class NEPHILIM_API UIScrollBar : public UIView
+class NEPHILIM_API UIScrollBar : public Widget
 {
 public:
 
 	/// The scroll bar links to a UIView object to scroll it
-	UIView* linkedView = nullptr;
+	Widget* linkedView = nullptr;
 
 	bool draggingBar = false;
 	vec2i lastMouse;

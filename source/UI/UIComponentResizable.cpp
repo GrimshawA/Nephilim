@@ -1,5 +1,5 @@
 #include <Nephilim/UI/UIComponentResizable.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
@@ -9,12 +9,12 @@ UIComponentResizable::UIComponentResizable()
 	dragging = false;
 }
 
-void UIComponentResizable::onAttach(UIView* view)
+void UIComponentResizable::onAttach(Widget* view)
 {
 
 }
 
-void UIComponentResizable::onEvent(Event event, UIView* view)
+void UIComponentResizable::onEvent(Event event, Widget* view)
 {
 	if(event.isPointerPressed())
 	{
@@ -44,7 +44,7 @@ void UIComponentResizable::onEvent(Event event, UIView* view)
 	}
 }
 
-void UIComponentResizable::onRender(GraphicsDevice* renderer, UIView* view)
+void UIComponentResizable::onRender(GraphicsDevice* renderer, Widget* view)
 {
 
 }

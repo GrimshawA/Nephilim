@@ -16,7 +16,7 @@ void UIListPanel::onSetup()
 }
 
 /// Called on the subclass when a new child is added
-void UIListPanel::onChildAdded(UIView* widget)
+void UIListPanel::onChildAdded(Widget* widget)
 {
 	Log("Adding");
 }
@@ -33,19 +33,19 @@ void UIListPanel::dispatch(const UxEvent& event)
 		//static_cast<UIView*>(event.emitter)->size.x = width() - 20.f;
 
 		bool found = false;
-		for (std::size_t i = 0; i < m_children.size(); ++i)
+		for (std::size_t i = 0; i < mChildren.size(); ++i)
 		{
-			if (m_children[i] == event.emitter)
+			if (mChildren[i] == event.emitter)
 				found = true;
 
 			if (found)
 			{
 				if (i == 0)
 				{
-					m_children[i]->setPosition(0.f, 0.f);
+					static_cast<Widget*>(mChildren[i])->setPosition(0.f, 0.f);
 				}
 				else
-					m_children[i]->setPosition(0.f, m_children[i - 1]->getPosition().y + m_children[i - 1]->height());
+					static_cast<Widget*>(mChildren[i])->setPosition(0.f, static_cast<Widget*>(mChildren[i - 1])->getPosition().y + static_cast<Widget*>(mChildren[i - 1])->height());
 			}
 		}
 	}
@@ -54,11 +54,11 @@ void UIListPanel::dispatch(const UxEvent& event)
 void UIListPanel::refresh()
 {
 	float t = 0.f;
-	for (auto& c : m_children)
+	for (auto& c : mChildren)
 	{
-		c->setPosition(0.f, t);
+		static_cast<Widget*>(c)->setPosition(0.f, t);
 		
-		t += c->getSize().y;
+		t += static_cast<Widget*>(c)->getSize().y;
 	}
 }
 

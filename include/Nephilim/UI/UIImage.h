@@ -1,12 +1,15 @@
-#ifndef UIImage_h__
-#define UIImage_h__
+#ifndef NephilimUI_Image_h__
+#define NephilimUI_Image_h__
 
-#include <Nephilim/Platform.h>
-#include "UIView.h"
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
-class NEPHILIM_API UIImage : public UIView
+/**
+	\class UIImage
+	\brief Control that displays an image
+*/
+class NEPHILIM_API UIImage : public Widget
 {
 public:
 	UIImage();
@@ -25,4 +28,4 @@ public:
 };
 
 NEPHILIM_NS_END
-#endif // UIImage_h__
+#endif // NephilimUI_Image_h__

@@ -2,7 +2,7 @@
 #define NephilimUIRenderer_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/String.h>
 
 NEPHILIM_NS_BEGIN

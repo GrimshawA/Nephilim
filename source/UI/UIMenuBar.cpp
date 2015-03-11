@@ -1,7 +1,7 @@
 #include <Nephilim/UI/UIMenuBar.h>
 #include <Nephilim/UI/UIMenu.h>
 #include <Nephilim/UI/UIButton.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/UI/UIComponentTouchScroll.h>
 #include <Nephilim/UI/UITextNode.h>
 //#include <Nephilim/UI/UIComponentDebug.h>
@@ -14,7 +14,7 @@ UIMenuBar::UIMenuBar()
 
 }
 
-void UIMenuBar::onAttach(UIView* view)
+void UIMenuBar::onAttach(Widget* view)
 {
 	mParent = view;
 
@@ -61,23 +61,23 @@ void UIMenuBar::openMenu(const String& name)
 {
 	if(mParent->findByName(name))
 	{
-		UIView* fileMenu = mParent->findByName(name);
+		Widget* fileMenu = mParent->findByName(name);
 		if(fileMenu)
 		{
 			// The menu exists
-			UIView* dropDownMenu = fileMenu->getChild(0);
+			Widget* dropDownMenu = fileMenu->getChild(0);
 			dropDownMenu->m_visible = ! dropDownMenu->m_visible;			
 		}
 	}
 }
 
 
-void UIMenuBar::onEvent(Event event, UIView* view)
+void UIMenuBar::onEvent(Event event, Widget* view)
 {
 
 }
 
-void UIMenuBar::onRender(GraphicsDevice* renderer, UIView* view)
+void UIMenuBar::onRender(GraphicsDevice* renderer, Widget* view)
 {
 
 }

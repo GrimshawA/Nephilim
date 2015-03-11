@@ -1,29 +1,29 @@
-#ifndef NephilimUIView_h__
-#define NephilimUIView_h__
+#ifndef NephilimUI_Widget_h__
+#define NephilimUI_Widget_h__
 
 #include <Nephilim/UI/UxNode.h>
-
+#include <Nephilim/UI/UxEvent.h>
 #include <Nephilim/UI/UIPainter.h>
-#include <Nephilim/Foundation/Rect.h>
-#include <Nephilim/Foundation/Event.h>
-#include <Nephilim/Foundation/String.h>
-#include <Nephilim/Graphics/RectangleShape.h>
-#include <Nephilim/Graphics/GraphicsDevice.h>
-#include <Nephilim/Foundation/Event.h>
-#include <Nephilim/Animation/AxList.h>
-#include <Nephilim/Animation/AxTarget.h>
-#include <Nephilim/Foundation/Matrix.h>
-
-
-#include <vector>
-#include <map>
-#include <memory>
-
 #include <Nephilim/UI/UILayoutEngine.h>
 #include <Nephilim/UI/UICore.h>
 #include <Nephilim/UI/UIProperty.h>
 #include <Nephilim/UI/UIAnimation.h>
 #include <Nephilim/UI/UIController.h>
+
+#include <Nephilim/Foundation/Rect.h>
+#include <Nephilim/Foundation/Event.h>
+#include <Nephilim/Foundation/String.h>
+#include <Nephilim/Foundation/Factory.h>
+#include <Nephilim/Foundation/Matrix.h>
+
+#include <Nephilim/Graphics/RectangleShape.h>
+#include <Nephilim/Graphics/GraphicsDevice.h>
+#include <Nephilim/Animation/AxList.h>
+#include <Nephilim/Animation/AxTarget.h>
+
+#include <vector>
+#include <map>
+#include <memory>
 
 NEPHILIM_NS_BEGIN
 
@@ -67,45 +67,6 @@ struct UIPointerEvent
 	}
 };
 
-
-namespace UIPositionFlag
-{
-	enum Flags
-	{
-		AttachBottom = 1 << 0,
-		AttachRight = 1 << 1,
-		KeepRelativePositionX = 1 << 2,
-		KeepRelativePositionY = 1 << 3
-	};
-}
-
-namespace UISizeFlag
-{
-	enum Flags
-	{
-		KeepRelativeSizeX = 1 << 0,
-		KeepRelativeSizeY = 1 << 1
-	};
-}
-
-namespace UIComponentList
-{
-	enum Types
-	{
-		Button = 0,
-		Background,
-		Text,
-	};
-};
-
-namespace UIEventList
-{
-	enum EventTypes
-	{
-		Click
-	};
-}
-
 namespace UIFlag
 {
 	enum UIFlagTypes
@@ -127,31 +88,27 @@ class UIAnimation;
 class UIController;
 class UILayoutEngine;
 
-class NEPHILIM_API UIView : public UxNode, public AxTarget, public RefCountable
+/**
+	\class UIView
+	\brief Base class for different controls
+
+	Protected virtual functions are called as sizeChange(), event(), keyPressEvent().
+	Signals are named with a on prefix, like onSizeChange(), onClick()
+*/
+class NEPHILIM_API Widget : public UxNode, public AxTarget
 {
 public:
-	vec2    size;            ///< Size of the view rectangle
-	vec2    pivot;           ///< Pivot for positioning and rotations
-	float   rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
-	float   rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
-	float   rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
-	Rect<float> mPadding;    ///< Padding on each border, left, top, right, bottom
-
-	RefObjectPtr<UILayoutEngine> mLayoutEngine; ///< Layout engine ruling this widget and downwards
-
-	mat4    matrix;
-	mat4 m_transform;
-
-	vec2 scrolling_offset;   ///< Scroll bars just move this variable around, effectively shifting all elements all around 
-	
-	Uint32 mFlags;
-
-	vec3  position;   ///< The 3D position of this view
 	String  m_name;             ///< Name
-	UIView* m_parent;           ///< The parent control
-	
-	UIController* _controller = nullptr;
-
+	Vector3D        position;        ///< The 3D position of this view
+	Vector2D        size;            ///< Size of the view rectangle
+	Vector2D        anchor;           ///< Pivot for positioning and rotations
+	float       rotation_x;      ///< Rotation around the X axis; 0 means no rotation;
+	float       rotation_y;      ///< Rotation around the Y axis; 0 means no rotation;
+	float       rotation_z;      ///< Rotation around the Z axis; 0 means no rotation;
+	Rect<float> mPadding;        ///< Padding on each border, left, top, right, bottom
+	mat4    matrix;               ///< Transform matrix that converts a local point in the widget to a global coordinate system
+	vec2 scrolling_offset;   ///< Scroll bars just move this variable around, effectively shifting all elements all around 
+	Uint32 mFlags;           ///< Flags that configure the widget
 
 	bool m_clipContents; ///< Whether the contents of the control itself are clipped at the border
 	bool m_clipChildren; ///< Whether the children are clipped on the control rectangle
@@ -159,6 +116,11 @@ public:
 	bool m_hasFocus;     ///< Whether this widget has currently keyboard focus
 	bool m_hovered;      ///< Whether this widget is being hovered by the mouse now
 
+	/// Controllers bound to this widget
+	std::vector<UIController*> mControllers;
+
+	/// The layout engine that helps this widget organize
+	RefObjectPtr<UILayoutEngine> mLayoutEngine;
 
 	std::map<String, UIPropertyMap> m_styleInfo;
 	std::map<String, bool>          m_classInfo;
@@ -168,9 +130,7 @@ public:
 	///< Animations
 	std::vector<UIAnimation*> mAnimations;
 	AxList m_animations; ///< Animation list
-
-	std::vector<UIController*> components; ///< List of components in this view
-
+	
 	std::map<String, String> mStringProperties;
 
 public:
@@ -185,7 +145,7 @@ public:
 		};
 
 		UIControlOperationType type;
-		UIView* control;
+		Widget* control;
 	};
 
 	std::vector<UIControlOperation> m_pendingOperations;
@@ -193,14 +153,12 @@ public:
 	void applyPendingOperations();
 
 
-
 	/// Children of the control
-	std::vector<UIView*> m_children;
 	int m_childrenLock;
-	typedef std::vector<UIView*>::iterator UIControlIterator;
+	typedef std::vector<Widget*>::iterator UIControlIterator;
 	
 ////////////////////////////////////////////////////////////////////////// Subclass API
-protected:
+public:
 
 	/// Called on the subclass to have it paint its contents
 	virtual void onPaint(UIPainter& painter);
@@ -212,10 +170,13 @@ protected:
 	virtual void onPointerEvent(const UIPointerEvent& event);
 
 	/// Called on the subclass when a new child is added
-	virtual void onChildAdded(UIView* widget);
+	virtual void onChildAdded(Widget* widget);
 
 	/// Called when the position of the control changed, for updating nested objects
 	virtual void onPositionChanged();
+
+	/// Called to handle a key press event
+	virtual void keyPressEvent(UxKeyEvent* key);
 
 ////////////////////////////////////////////////////////////////////////// Delegates API
 public:
@@ -227,16 +188,16 @@ public:
 
 
 	/// Allows cleaner code, which uses UIView::Ptr as the type which can be changed anytime between other types of smart pointers without breaking code
-	typedef UIView* Ptr;
+	typedef Widget* Ptr;
 
 	/// Base constructor
-	UIView();
+	Widget();
 
 	/// Construct and assign a parent directly
-	UIView(UIView* parent);
+	Widget(Widget* parent);
 
 	/// Base destructor
-	virtual ~UIView();
+	virtual ~Widget();
 
 	void offsetChildrenPosition(vec2 offset);
 
@@ -251,9 +212,6 @@ public:
 
 	/// Set the new Z value
 	void setZ(float _z);
-
-	/// Reload all graphics because they were destroyed and are unavailable now
-	virtual void reloadGraphicalAssets();
 
 	/// This will instance and bind a new controller to this view
 	template<typename T>
@@ -299,7 +257,7 @@ public:
 
 	void printHierarchy(int tabs = 0);
 
-	bool isScheduledForRemoval(UIView* v);
+	bool isScheduledForRemoval(Widget* v);
 
 	/// Called before rendering the children UIView
 	virtual void preRender(GraphicsDevice* renderer);
@@ -330,24 +288,21 @@ public:
 	vec2 getLocalPosition();
 
 	/// Get the parent control
-	UIView* getParent();
+	Widget* getParent();
 
 	/// Find a control by its name in the control tree
-	UIView* findByName(const String& name);
+	Widget* findByName(const String& name);
 
 	/// Creates a new UIView, names it and attaches it as a child, then returns it
-	UIView* createChild(const String& name);
+	Widget* createChild(const String& name);
 
 	bool isHit(vec2 point);
 
 	/// Adds a child control
-	void attach(UIView* control);
+	void attach(Widget* control);
 
 	/// Detach a child control without destroying it
-	void detach(UIView* control);
-
-	/// Destroy all children
-	void clear();
+	void detach(Widget* control);
 
 	/// Destroys the control and removes from the hierarchy
 	void destroy();
@@ -359,7 +314,7 @@ public:
 	void show();
 
 	/// Destroy the child
-	void destroyChild(UIView* child);
+	void destroyChild(Widget* child);
 
 	/// Submit an animation to be processed by the control
 	void commitAnimation(Animation* animation);
@@ -393,7 +348,7 @@ public:
 	void blur();
 
 	/// Get a child at a index
-	UIView* getChild(int index);
+	Widget* getChild(int index);
 
 	/// Get the current size of the control
 	vec2 getSize();
@@ -444,7 +399,7 @@ public:
 	void setName(const String& name);
 
 	/// Deep clone of the control and its hierarchy
-	virtual UIView* clone();
+	virtual Widget* clone();
 
 	/// Get the name of the control
 	const char* getName();
@@ -459,7 +414,11 @@ public:
 
 	void setRect(float left, float top, float width, float height);
 
+	/// Get the local rectangle of this widget
 	FloatRect getRect();
+
+	/// Get the global coordinates for this widget
+	FloatRect getGlobalRect();
 
 	Vec2f getMiddlePosition();
 
@@ -473,7 +432,7 @@ public:
 	void setPseudoClass(const String& name, bool active);
 
 	/// Callback when a child of the control is removed
-	virtual void onChildRemoved(UIView* control);
+	virtual void onChildRemoved(Widget* control);
 
 	/// Feeds the position of the control to the animation systems
 	virtual vec2 axGetPosition2D();
@@ -504,16 +463,17 @@ public:                                                        // Old Properties
 	
 	sigc::signal<void> onFocus;
 	sigc::signal<void> onLostFocus;
-	sigc::signal<void, UIView*> onNewChild; /// Emitted when a child is attached
+	sigc::signal<void, Widget*> onNewChild; /// Emitted when a child is attached
 };
 
+REGISTER_FACTORY_TYPENAME(Widget);
 
 template<class T>
-T* UIView::getComponent()
+T* Widget::getComponent()
 {
-	for(std::size_t i = 0; i < components.size(); ++i)
+	for(std::size_t i = 0; i < mControllers.size(); ++i)
 	{
-		T* component = dynamic_cast<T*>(components[i]);
+		T* component = dynamic_cast<T*>(mControllers[i]);
 		if(component)
 			return component;
 	}
@@ -523,7 +483,7 @@ T* UIView::getComponent()
 
 /// Template to instance directly given types as children
 template<typename T>
-T* UIView::createChild(const String& name)
+T* Widget::createChild(const String& name)
 {
 	// Instance a new view
 	T* view = new T();
@@ -540,7 +500,7 @@ T* UIView::createChild(const String& name)
 
 /// This will instance and bind a new controller to this view
 template<typename T>
-T* UIView::createController()
+T* Widget::createController()
 {
 	if (!_controller)
 	{
@@ -551,8 +511,5 @@ T* UIView::createController()
 	return _controller;
 }
 
-/// UIView or UIWidget are the same thing.
-typedef UIView UIWidget;
-
 NEPHILIM_NS_END
-#endif // NephilimUIView_h__
+#endif // NephilimUI_Widget_h__

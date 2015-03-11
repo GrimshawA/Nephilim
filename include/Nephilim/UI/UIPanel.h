@@ -1,7 +1,7 @@
 #ifndef NephilimUI_Panel_h__
 #define NephilimUI_Panel_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -12,7 +12,7 @@ NEPHILIM_NS_BEGIN
 	Panel is a rectangular area to contain controls and
 	assist in their layout.
 */
-class NEPHILIM_API UIPanel : public UIView
+class NEPHILIM_API UIPanel : public Widget
 {
 public:
 

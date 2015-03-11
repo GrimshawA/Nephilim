@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 
 /**
 	\class UITreeViewItem
@@ -24,7 +24,7 @@ class NEPHILIM_API UITreeViewItem
 public:
 
 	/// Each item has its own widget, either a sub tree handler or the entry widget
-	UIView* itemWidget = nullptr;
+	Widget* itemWidget = nullptr;
 
 	/// The actual title of this item
 	String content;

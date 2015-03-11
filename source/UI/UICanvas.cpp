@@ -230,7 +230,7 @@ UIWindow* UICanvas::top()
 
 void UICanvas::showMessageBox(const String& message)
 {
-	UIView* modalBackground = new UIView();
+	Widget* modalBackground = new Widget();
 	
 	UIWindow* surface = addSurface("modal");
 	surface->attach(modalBackground);
@@ -244,9 +244,9 @@ void UICanvas::showMessageBox(const String& message)
 
 
 /// Returns a control in the hierarchy with the name, or NULL if not found
-UIView* UICanvas::getControlByName(const String& name)
+Widget* UICanvas::getControlByName(const String& name)
 {
-	UIView* control = NULL;
+	Widget* control = NULL;
 	for(std::vector<UIWindow*>::const_iterator it = m_surfaces.begin(); it != m_surfaces.end(); it++)
 	{
 		control = (*it)->findByName(name);
@@ -291,7 +291,7 @@ UIWindow* UICanvas::createWindow(const String& name)
 		window = getLayer(name);
 	}
 
-	_children.push_back(window);
+	mChildren.push_back(window);
 
 	return window;
 }
@@ -358,13 +358,6 @@ void UICanvas::update(float elapsedTime)
 UIEventResult UICanvas::pushEvent(const Event& event)
 {
 	Event processedEvent = event;
-
-	// If required, change the pointer coordinates to the target coordinate system
-	if(m_state.transformPointerCoordinates)
-	{
-		vec2 normalized_mouse(static_cast<float>(event.getPointerPosition().x) / static_cast<float>(m_state.realWindowSize.x), static_cast<float>(event.getPointerPosition().y) / static_cast<float>(m_state.realWindowSize.y));
-		processedEvent.setPointerPosition(vec2i(static_cast<int>(normalized_mouse.x * m_state.targetWindowSize.x), static_cast<int>(normalized_mouse.y * m_state.targetWindowSize.y)));
-	}
 	
 	UIEventResult eventUsage;
 
@@ -431,10 +424,28 @@ UIEventResult UICanvas::pushEvent(const Event& event)
 				// Deliver input to the focused control
 				if(m_state.m_focusControl)
 				{
-					m_state.m_focusControl->onTextEvent(processedEvent.text.unicode);
+					UxKeyEvent keyEvent;
+					keyEvent.type = UxKeyEvent::KeyPress;
+					keyEvent.unicode = processedEvent.text.unicode;
+					if (keyEvent.unicode >= 32)
+						m_state.m_focusControl->keyPressEvent(&keyEvent);
+
+					//m_state.m_focusControl->onTextEvent(processedEvent.text.unicode);
 				}
 			}
 			break;
+
+		case Event::KeyPressed:
+		{
+				// Deliver input to the focused control
+				if (m_state.m_focusControl)
+				{
+					   UxKeyEvent keyEvent;
+					   keyEvent.type = UxKeyEvent::KeyPress;
+					   keyEvent.key = processedEvent.key.code;
+					   m_state.m_focusControl->keyPressEvent(&keyEvent);
+				}
+		}break;
 	}
 
 	// now that surfaces were processed, apply changes to surfaces container

@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 
 /**
 	\class UILoaderNative

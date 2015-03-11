@@ -1,18 +1,16 @@
 #include <Nephilim/UI/UIButton.h>
 #include <Nephilim/Graphics/Text.h>
 #include <Nephilim/Graphics/RectangleShape.h>
+#include <Nephilim/Game/GameContent.h>
 
-#include <iostream>
-using namespace std;
+#include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
 
-
 UIButton::UIButton()
-: UIView()
+: Widget()
 , m_color(0,0,0)
-, m_label("")
-, hover(false)
+, m_label("button")
 , m_normalTexture(NULL)
 {
 	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
@@ -26,10 +24,9 @@ UIButton::UIButton()
 }
 
 UIButton::UIButton(const String& title)
-: UIView()
+: Widget()
 , m_color(0,0,0)
 , m_label(title)
-, hover(false)
 , m_normalTexture(NULL)
 {
 	UIPropertyMap& hoverproperties = m_styleInfo["hover"];
@@ -44,10 +41,9 @@ UIButton::UIButton(const String& title)
 
 /// Constructs a button with a given text directly at a given position
 UIButton::UIButton(const String& content, const FloatRect& rect)
-: UIView()
+: Widget()
 , m_color(0,0,0)
 , m_label(content)
-, hover(false)
 , m_normalTexture(NULL)
 {
 	setRect(rect);
@@ -63,43 +59,22 @@ UIButton::UIButton(const String& content, const FloatRect& rect)
 }
 
 /// Destructor
-UIButton::~UIButton(){}
+UIButton::~UIButton()
+{
 
+}
 
 void UIButton::setNormalTexture(const String& filename)
 {
-	
+	if (getCore())
+	{
+		m_normalTexture = getCore()->content->getTexture(filename);
+	}
 }
 
 void UIButton::setHoverTexture(const String& filename)
 {
 	
-}
-
-bool UIButton::onEventNotification(Event& event)
-{
-	
-
-	return true;
-}
-
-UIView* UIButton::clone()
-{
-	return new UIButton(*this);
-};
-
-void UIButton::innerLanguageSwitch()
-{
-/*	String res =  mCore->m_localization.getString(m_baseLabel);
-	if(!res.empty())m_label = res;*/
-}
-
-void UIButton::setRawProperty(const String& name, const String& val)
-{
-	if(name == "background-image")
-	{
-		cout<<"[UIButton] Assigning image"<<endl;
-	}
 }
 
 /// Sets the label of the button
@@ -181,11 +156,11 @@ void UIButton::onPaint(UIPainter& painter)
 	renderer->draw(backgroundShape);
 	
     // -- Label
-	//buttonLabel.setFont(*_core->m_defaultFont);
+	buttonLabel.setFont(*_core->m_defaultFont);
 	buttonLabel.setString(m_label);
-//	buttonLabel.setCharacterSize(mRect.height / 2);
+	buttonLabel.setCharacterSize(getRect().height / 2);
 	buttonLabel.setOrigin(static_cast<int>((buttonLabel.getLocalBounds().width / 2.f ) + 0.5f), static_cast<int>((buttonLabel.getLocalBounds().height / 2.f) + 0.5f));
-	//buttonLabel.setPosition(static_cast<int>((mRect.left + mRect.width / 2.f ) + 0.5f), static_cast<int>((mRect.top +  mRect.height / 2.f) + 0.5f));
+	buttonLabel.setPosition(static_cast<int>((getRect().left + getRect().width / 2.f) + 0.5f), static_cast<int>((getRect().top + getRect().height / 2.f) + 0.5f));
 	if(buttonLabel.getLocalBounds().width > getSize().x * 0.9f)
 	{
 		// The text is too big and passes the 90% of the button's width

@@ -22,12 +22,12 @@ class NEPHILIM_API UIViewController : public UIController
 public:
 
 	/// The view we are controlling
-	UIView* RootView = nullptr;
+	Widget* RootView = nullptr;
 
 public:
 
 	/// The view controller is built from a root view and attached to it immediately
-	UIViewController(UIView* rootView);
+	UIViewController(Widget* rootView);
 
 	/// Ensure the controlled view is destroyed along
 	virtual ~UIViewController();

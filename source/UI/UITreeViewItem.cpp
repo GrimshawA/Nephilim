@@ -64,7 +64,7 @@ UITreeViewItem* UITreeViewItem::createTree(const String& title, int id)
 	// Were there previous items in this node?
 	if (children.size() > 1)
 	{
-		UIView* previousWidget = children[children.size() - 2]->itemWidget;
+		Widget* previousWidget = children[children.size() - 2]->itemWidget;
 		widget->setPosition(Vector2D(0.f, previousWidget->getPosition().y + previousWidget->height()));
 	}
 
@@ -87,7 +87,7 @@ UITreeViewItem* UITreeViewItem::createItem(const String& title, int id)
 	treeViewItem->parent = this;
 	children.push_back(treeViewItem);
 
-	UIView* item = itemWidget->createChild("item");
+	Widget* item = itemWidget->createChild("item");
 	//item->addController(new UIComponentDebugColor(Color::Transparent));
 	//item->addController(new UITextNode(title, UITextNode::Left, UITextNode::Center));
 	item->setFlag(UIFlag::FILL_PARENT_WIDTH);
@@ -97,7 +97,7 @@ UITreeViewItem* UITreeViewItem::createItem(const String& title, int id)
 	treeViewItem->itemWidget = item;
 
 	// add a tiny icon as a sub of the item
-	UIView* icon = item->createChild("icon");
+	Widget* icon = item->createChild("icon");
 	icon->setSize(20.f, 20.f);
 	icon->setPosition(0.f, 0.f);
 	//icon->addController(new UIComponentImage("./Core/EditorAssets/person14.png"));
@@ -105,7 +105,7 @@ UITreeViewItem* UITreeViewItem::createItem(const String& title, int id)
 	// Were there previous items in this node?
 	if (children.size() > 1)
 	{
-		UIView* previousWidget = children[children.size() - 2]->itemWidget;
+		Widget* previousWidget = children[children.size() - 2]->itemWidget;
 		item->setPosition(Vector2D(0.f, previousWidget->getPosition().y + previousWidget->height()));
 	}
 
@@ -184,7 +184,7 @@ void UITreeViewItem::refreshStructure()
 	float pos_y = 20.f;
 	for (auto c : children)
 	{
-		UIView* child = c->itemWidget;
+		Widget* child = c->itemWidget;
 
 		child->position.y = pos_y;
 
@@ -209,7 +209,7 @@ void UITreeViewItem::notifyChildChange(UITreeViewItem* caller)
 
 		for (std::size_t i = 0; i < children.size(); ++i)
 		{
-			UIView* child = children[i]->itemWidget;
+			Widget* child = children[i]->itemWidget;
 
 			//child->position.y = pos_y;
 			

@@ -8,7 +8,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 class Renderer;
 
 /**
@@ -40,7 +40,7 @@ public:
 	String mName;
 
 	/// Editor tools need to run on a UIView, where they show their tools
-	UIView* mView;
+	Widget* mView;
 
 	/// Not always used, but is meant to store an unique ID of this editor instance
 	Int32 mInstanceId;

@@ -7,7 +7,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 class Animation;
 
 /**
@@ -18,7 +18,7 @@ class NEPHILIM_API UILoaderXML : public UILoader
 {
 public:
 	/// Load the xml file into the node
-	bool loadFromFile(const String& filename, UIView* root_view);
+	bool loadFromFile(const String& filename, Widget* root_view);
 };
 
 class NEPHILIM_API UIAnimationLoaderXML
@@ -26,7 +26,7 @@ class NEPHILIM_API UIAnimationLoaderXML
 public:
 
 	/// Just a test function, needs api changes
-	Animation* load(const String& filename, UIView* source_widget);
+	Animation* load(const String& filename, Widget* source_widget);
 };
 
 NEPHILIM_NS_END

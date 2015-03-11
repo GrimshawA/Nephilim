@@ -1,7 +1,7 @@
 #ifndef UxWorldViewport_h__
 #define UxWorldViewport_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -11,7 +11,7 @@ class World;
 	\class UxWorldViewport
 	\brief Widget to render a World's frame
 */
-class NEPHILIM_API UxWorldViewport : public UIView
+class NEPHILIM_API UxWorldViewport : public Widget
 {
 public:
 	/// The world we are rendering

@@ -1,7 +1,7 @@
 #ifndef NephilimUI_MenuBar_h__
 #define NephilimUI_MenuBar_h__
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -9,24 +9,24 @@ NEPHILIM_NS_BEGIN
 	\class UIMenuBar
 	\brief A menu bar widget for holding multiple sub menus
 */
-class NEPHILIM_API UIMenuBar : public UIView
+class NEPHILIM_API UIMenuBar : public Widget
 {
 public:
 	UIMenuBar();
 
 	void openMenu(const String& name);
 
-	void onAttach(UIView* view);
+	void onAttach(Widget* view);
 
-	void onEvent(Event event, UIView* view);
+	void onEvent(Event event, Widget* view);
 
-	void onRender(GraphicsDevice* renderer, UIView* view);
+	void onRender(GraphicsDevice* renderer, Widget* view);
 
 	void addMenu(const String& menuTitle);
 
 	void meteNojo(const String &name);
 
-	UIView* mParent;
+	Widget* mParent;
 };
 
 NEPHILIM_NS_END

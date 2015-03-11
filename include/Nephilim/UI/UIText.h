@@ -2,7 +2,7 @@
 #define NephilimUIText_h__
 
 #include <Nephilim/Platform.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Graphics/Text.h>
 
 NEPHILIM_NS_BEGIN
@@ -11,7 +11,7 @@ NEPHILIM_NS_BEGIN
 	\class UITabView
 	\brief A control that allows to display different contents according to the chosen tab
 */
-class NEPHILIM_API UIText : public UIView
+class NEPHILIM_API UIText : public Widget
 {
 public:
 	String text_string;	

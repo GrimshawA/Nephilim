@@ -2,7 +2,7 @@
 
 #include <Nephilim/Foundation/Logging.h>
 
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 
 NEPHILIM_NS_BEGIN
 
@@ -35,7 +35,7 @@ void AnimationZ::deduceInitialParameters()
 {
 	if (getTargetCount() > 0)
 	{
-		_currentZ = ((UIView*)m_targets.front())->position.z;
+		_currentZ = ((Widget*)m_targets.front())->position.z;
 	}
 }
 

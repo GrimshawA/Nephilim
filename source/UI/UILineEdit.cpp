@@ -1,59 +1,66 @@
 #include <Nephilim/UI/UILineEdit.h>
 
-
-#include <iostream>
-using namespace std;
-
-
 NEPHILIM_NS_BEGIN
 
 UILineEdit::UILineEdit()
-: UIView()
+: Widget()
 , m_pipeIndex(0)
 , m_textColor(Color::Black)
 , m_type(Regular)
 , m_charLimit(16)
+{
+	setSize(300.f, 60.f);
+}
 
+/// Constructs directly into a parent container
+UILineEdit::UILineEdit(Widget* ParentView)
+: Widget()
+, m_pipeIndex(0)
+, m_textColor(Color::Black)
+, m_type(Regular)
+, m_charLimit(16)
+{
+	ParentView->attach(this);
+	setSize(300.f, 60.f);
+}
+
+/// Clear the contents
+void UILineEdit::clear()
+{
+	m_pipeIndex = 0;
+	StringBuffer.clear();
+}
+
+/// Called on the subclass to have it paint its contents
+void UILineEdit::onPaint(UIPainter& painter)
+{
+	painter.drawRect(getRect());
+	painter.drawText(getGlobalRect(), PainterFlags::AlignCenterH | PainterFlags::AlignCenterV, StringBuffer);
+}
+
+/// Called when an event arrives at this widget
+void UILineEdit::event(UxEvent* event)
 {
 
+}
+
+/// Called when an event arrives at this widget
+void UILineEdit::keyPressEvent(UxKeyEvent* key)
+{
+	if (key->unicode)
+	{
+		addCharacter(key->unicode);
+	}
+	else if (key->key == Keyboard::Back)
+	{
+		eraseCharacter();
+	}
 }
 
 void UILineEdit::setTextColor(const Color& color)
 {
 	m_textColor = color;
 }
-
-
-bool UILineEdit::onEventNotification(Event& event)
-{
-	if(event.type == Event::MouseButtonPressed)
-	{
-		vec2 mouse(event.getPointerPosition().x, event.getPointerPosition().y);
-		if(mouse.x >= getPosition().x && mouse.y >= getPosition().y && mouse.x <= getPosition().x + getSize().x && mouse.y <= getPosition().y + getSize().y)
-		{
-			m_hasFocus = true;
-		}
-		else
-		{
-			m_hasFocus = false;
-		}
-	}
-
-	if(m_hasFocus)
-	{
-		if(event.type == Event::TextEntered)
-		{
-			onTextEvent(event.text.unicode);
-		}
-
-		if(event.type == Event::KeyPressed)
-		{
-			onKeyPressed(event.key.code);
-		}
-	}	
-
-	return true;
-};
 
 bool UILineEdit::onKeyPressed(Keyboard::Key key)
 {
@@ -93,62 +100,33 @@ void UILineEdit::setCharacterLimit(std::size_t limit)
 	m_charLimit = limit;
 }
 
-
 void UILineEdit::addCharacter(Uint32 charCode)
 {
-	if(s.length() < m_charLimit)
+	if(StringBuffer.length() < m_charLimit)
 	{
-		s.insert(s.begin() + m_pipeIndex, charCode);
+		StringBuffer.insert(StringBuffer.begin() + m_pipeIndex, charCode);
 		m_pipeIndex++;
-	}	
+	}
 }
 
 void UILineEdit::eraseCharacter()
 {
-	if(!s.empty())
+	if(!StringBuffer.empty())
 	{
-		s.erase(s.begin() + m_pipeIndex - 1);
+		StringBuffer.erase(StringBuffer.begin() + m_pipeIndex - 1);
 		m_pipeIndex--;
 	}
 }
 
-void UILineEdit::setText(const String& text){
-	s = text;
-	t.setString(s);
-};
+void UILineEdit::setText(const String& text)
+{
+	StringBuffer = text;
+	t.setString(StringBuffer);
+}
 
 void UILineEdit::setType(UILineEditTypes type)
 {
 	m_type = type;
 }
-
-
-void UILineEdit::draw(GraphicsDevice* renderer)
-{
-	if(getCore() && getCore()->m_defaultFont)
-		t.setFont(*getCore()->m_defaultFont);
-
-	if(m_type == Regular)
-	{
-		t.setString(s);
-	}
-	else
-	{
-		t.setString(String(s.length(), '*'));
-	}
-	t.setPosition(position.x, position.y);
-	t.setCharacterSize(static_cast<unsigned int>(getSize().y * 0.9f));	
-	t.setColor(m_textColor);
-
-	renderer->draw(t);
-
-	// The pipe
-	if(m_hasFocus)
-	{
-		float pipePosition = t.getCharacterPosition(m_pipeIndex).x + 1;
-		//renderer->drawDebugLine(Vec2f(mRect.left + pipePosition, mRect.top), Vec2f(mRect.left + pipePosition, mRect.top + t.getCharacterSize()), Color(0,0,0,150));
-	}
-};
-
 
 NEPHILIM_NS_END

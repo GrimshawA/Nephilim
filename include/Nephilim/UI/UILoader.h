@@ -6,7 +6,7 @@
 
 NEPHILIM_NS_BEGIN
 
-class UIView;
+class Widget;
 
 /**
 	\class UILoader
@@ -15,7 +15,7 @@ class UIView;
 class NEPHILIM_API UILoader
 {
 public:
-	virtual bool loadFromFile(const String& filename, UIView* root_view)
+	virtual bool loadFromFile(const String& filename, Widget* root_view)
 	{
 		return false;
 	}

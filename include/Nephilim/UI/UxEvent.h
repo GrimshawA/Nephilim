@@ -4,6 +4,8 @@
 #include <Nephilim/Platform.h>
 #include <Nephilim/Foundation/Event.h>
 
+#include <stdint.h>
+
 NEPHILIM_NS_BEGIN
 
 class UxNode;
@@ -18,7 +20,9 @@ public:
 	enum EventType
 	{
 		Thing,
-		NativeEvent
+		NativeEvent,
+		KeyPress,
+		KeyRelease
 	};
 
 	int type;
@@ -33,6 +37,23 @@ public:
 		int a;
 	};
 };
+
+/**
+	\class UxKeyEvent
+	\brief Subclass of UxEvent for keyboard events
+*/
+class NEPHILIM_API UxKeyEvent : public UxEvent
+{
+public:
+	Keyboard::Key key;
+	uint32_t unicode;
+
+public:
+
+	/// Construct initial state
+	UxKeyEvent();
+};
+
 
 NEPHILIM_NS_END
 #endif // NephilimUxEvent_h__

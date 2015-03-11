@@ -48,7 +48,7 @@ void UITextNode::onPropertySet(const StringList& targetObject, const String& val
 }
 
 
-void UITextNode::onRender(GraphicsDevice* renderer, UIView* view, const mat4& parentTransform)
+void UITextNode::onRender(GraphicsDevice* renderer, Widget* view, const mat4& parentTransform)
 {
 	text.setCharacterSize(12);
 	text.setString(m_string);

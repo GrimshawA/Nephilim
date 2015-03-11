@@ -1,6 +1,6 @@
 #include <Nephilim/UI/UIComponentDraggable.h>
 //#include <Nephilim/UI/UIComponentDebug.h>
-#include <Nephilim/UI/UIView.h>
+#include <Nephilim/UI/Widget.h>
 #include <Nephilim/Foundation/Logging.h>
 
 NEPHILIM_NS_BEGIN
@@ -18,12 +18,12 @@ UIComponentDraggable::UIComponentDraggable(MovementAxis axis)
 }
 
 
-void UIComponentDraggable::onAttach(UIView* view)
+void UIComponentDraggable::onAttach(Widget* view)
 {
 
 }
 
-void UIComponentDraggable::onEvent(Event event, UIView* view)
+void UIComponentDraggable::onEvent(Event event, Widget* view)
 {
 	if(event.isPointerPressed())
 	{
@@ -34,7 +34,7 @@ void UIComponentDraggable::onEvent(Event event, UIView* view)
 			dragging = true;
 
 			// drag started, create the clone element
-			UIView* temp_view = new UIView();
+			Widget* temp_view = new Widget();
 //			temp_view->addController(new UIDebugWidget(Color::Yellow));
 			temp_view->setSize(100.f, 100.f);
 			temp_view->setPosition(view->getWorldPosition().xy());
